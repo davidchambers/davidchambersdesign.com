@@ -1,0 +1,62 @@
+date: 20 September 2009
+time: 1:08am
+zone: Pacific/Auckland
+tags: CSS, HTML
+
+
+Sticky footers
+==============
+
+| **Sticky footers should be ubiquitous. They are not.**
+| 
+| This leads me to believe that many developers are unaware of how to prevent
+| footers from floating up on pages without much content.
+
+I'll explain how it's done. The markup must look something like the following:
+
+    <body>
+        <div id="wrap">
+            <div id="main">
+            </div>
+        </div>
+        <div id="footer">
+        </div>
+    </body>
+
+The required CSS is also straightforward. First, set the heights of the html
+and body elements to the height of the viewport:
+
+    html    { height: 100%; }
+    body    { height: 100%; }
+
+This makes it possible to set the _minimum_ height of the wrapper div to the
+height of the viewport:
+
+    #wrap   { min-height: 100%; }
+
+Next, pull up the footer so that it's visible without scrolling on pages
+without a lot of content:
+
+    #footer { margin-top: -5em; height: 5em; }
+
+Finally, apply bottom padding to the main content div to ensure that nothing
+is covered by the footer:
+
+    #main   { padding-bottom: 5em; }
+
+Putting it all together gives the following:
+
+    html    { height: 100%; }
+    body    { height: 100%; }
+    #wrap   { min-height: 100%; }
+    #main   { padding-bottom: 5em; }
+    #footer { margin-top: -5em; height: 5em; }
+
+This CSS works in all modern browsers. If you need to support
+antiquated browsers, you should have a look at the hacks suggested
+at [CSS Sticky Footer][1].
+
+**Check out the [sticky footer demo][2] to see all this theory in action.**
+
+[1]: http://www.cssstickyfooter.com/
+[2]: /examples/sticky-footers/

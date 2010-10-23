@@ -1,0 +1,31 @@
+date: 31 August 2010
+time: 10:20pm
+zone: Pacific/Auckland
+tags: JavaScript, optimization, performance
+
+
+Efficient rounding in JavaScript
+================================
+
+So you have some number, `x`, which you want to round to the nearest integer.
+Easy, right?
+
+    x = Math.round(x);
+
+Sure, but is this the fastest option? I think not.
+
+    x = x < 0 ? x - 0.5 >> 0 : x + 0.5 >> 0;
+
+What the heck's going on here? `>>` is JavaScript's right shift operator.
+It shifts a number's binary representation `n` bits to the right, where `n`
+is the value to the right of the operator. Since `n` is `0` in this case, no
+shifting will occur, although **the resulting value will be an integer**.
+
+Note that this approach results in `-82.5` being rounded to `-83`.
+
+If, for some reason, your code calls `Math.round()` millions of times, it may
+be worth investigating the bitwise approach to avoid the overhead of all those
+function calls.
+
+Stick to `Math.round()` the rest of the time, though, as it makes for much
+clearer code. **Never optimize prematurely.**

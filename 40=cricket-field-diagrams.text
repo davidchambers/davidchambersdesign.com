@@ -1,0 +1,44 @@
+date: 15 March 2010
+time: 12:58am
+zone: Pacific/Auckland
+tags: design, icons
+
+
+Cricket field diagrams
+======================
+
+While creating documentation for <i>Dice Cricket</i>, a game a friend and
+I designed many years ago, I produced a set of diagrams which represent the
+segments of a cricket field. The isolated nature of this small design challenge
+provided a refreshing break from the various and interrelated considerations
+involved in designing for the Web.
+
+<div id="cricket-field-diagrams"></div>
+
+![Cricket field with mid-wicket area highlighted][1]
+: Mid-wicket
+
+![Cricket field with covers highlighted][2]
+: Down the ground
+
+![Cricket field with covers highlighted][3]
+: Covers
+
+![Cricket field with area behind point highlighted][4]
+: Behind point
+
+![Cricket field with area behind the wicket highlighted][5]
+: Behind the wicket
+
+![Cricket field with area backward of square highlighted][6]
+: Behind square
+
+You're free to make use of these images (they're transparent PNGs). Attribution
+is appreciated but not required. :)
+
+[1]: /images/posts/40/mid-wicket.png
+[2]: /images/posts/40/down-the-ground.png
+[3]: /images/posts/40/covers.png
+[4]: /images/posts/40/behind-point.png
+[5]: /images/posts/40/behind-the-wicket.png
+[6]: /images/posts/40/behind-square.png

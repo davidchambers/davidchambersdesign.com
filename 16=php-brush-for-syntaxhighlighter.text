@@ -1,0 +1,91 @@
+date: 8 June 2009
+time: 5:00pm
+zone: Pacific/Auckland
+tags: JavaScript, PHP, SyntaxHighlighter
+
+
+PHP brush for SyntaxHighlighter
+===============================
+
+| Alex Gorbatchev's [SyntaxHighlighter][1] is a well-written bundle which
+| enables syntax highlighting of code via JavaScript. More than twenty
+| languages are supported "out of the box", and brushes (JavaScript files
+| containing language-specific regular expressions) can be created to
+| support additional languages.
+| 
+| Unfortunately, however, several of the brushes that come bundled with
+| SyntaxHighlighter are far from perfect. Have a look at the bundled PHP
+| brush in action below.
+| 
+| ![Screenshot of PHP code highlighted by SyntaxHighlighter's PHP brush][2]
+| : Screenshot of bundled PHP brush in action
+| 
+| [1]: http://alexgorbatchev.com/wiki/SyntaxHighlighter
+| [2]: /images/posts/16/bundled-php-brush-in-action.png
+
+I would give this brush 6/10. Here are its deficiencies, as I see them:
+
+* PHP opening and closing tags are not captured
+* Variables within double-quoted strings are not captured
+* Numerical values are not captured
+* Only a fraction of PHP's function names are recognized
+* Custom function names are not captured
+
+I've created an [improved PHP brush][3] which remedies these deficiencies.
+It uses the following class names: **phptag** for opening and closing PHP
+tags, including short tags; **comments** for both single- and multi-line
+comments; **string** for both single- and double-quoted strings; **varinstr**
+for variables within double-quoted strings; **numval** for numerical values;
+**function** for [documented PHP functions][4]; **custfunc** for custom
+(user-defined) functions; and **constant**, **keyword**, and **variable**
+for exactly what you'd expect.
+
+[3]: /downloads/shBrushPhp.js
+[4]: http://www.php.net/quickref.php
+
+|| date: 16 August 2009
+|| time: 2:33am
+|| zone: Pacific/Auckland
+|| 
+|| Until this point I have had a class name added to each div.syntaxhighlighter
+|| element to allow code to be coloured in a language-specific manner. This
+|| approach fails, however, when a highlighted block features two languages
+|| (PHP and HTML, for example). CSS selectors cannot differentiate between two
+|| code elements with the same class name in the same div.syntaxhighlighter
+|| element.
+|| 
+|| Each language, therefore, needs to use its own class names. It is easy to
+|| differentiate `code.php-comment` from `code.xml-comment`, allowing PHP
+|| comments to be styled differently from XML comments if desired.
+|| 
+|| The updated class names are **php-tag**, **php-comment**, **php-string**,
+|| **php-varinstr**, **php-numval**, **php-function**, **php-custfunc**,
+|| **php-constant**, **php-keyword**, and **php-variable**.
+
+    <?php
+    
+    'single-quoted string';
+    
+    "double-quoted string";
+    
+    // single-quoted string with literal dollar sign
+    'fruit smoothie: $5.50';
+    
+    // double-quoted string containing a variable
+    "fruit smoothie: $cost";
+    
+    // numerical value
+    $cost = 5.50;
+    
+    // a few common function calls
+    empty($variable);
+    isset($variable);
+    strlen($variable);
+    strrev($variable);
+    
+    // a call to a custom function
+    is_ready_to_order($customer);
+    
+    ?>
+
+Live rendering of improved PHP brush{@class=caption}

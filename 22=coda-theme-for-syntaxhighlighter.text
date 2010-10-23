@@ -1,0 +1,236 @@
+date: 16 August 2009
+time: 8:53am
+zone: Pacific/Auckland
+tags: Coda, CSS, JavaScript, Prototype, SyntaxHighlighter
+
+
+Coda theme for SyntaxHighlighter
+================================
+
+[Skip to setup instructions](#setup)
+
+| It's no secret – I love [Coda][1]! It's a pleasure to use. **It looks so
+| damn good.** When I started using [SyntaxHighlighter][2] I set out to create
+| a Coda theme. Thankfully, the good folks at Panic had done the ground work
+| for me. All I had to do was create a style sheet that would make my code
+| snippets look as sexy online as they do in my text editor.
+| 
+| [1]: http://www.panic.com/coda/
+| [2]: http://alexgorbatchev.com/wiki/SyntaxHighlighter
+| 
+| Or so I thought.
+
+As I delved deeper, it became apparent that realising my goal would require
+plenty of effort. In order for SyntaxHighlighter to work its magic it requires
+at least one brush and at least one theme. A brush is a JavaScript file that
+contains regular expressions to match the syntactical features of a particular
+language. A theme, as you might expect, is a CSS file which controls the way
+SyntaxHighlighter's output is displayed. At first glance, brushes and themes
+appear to be loosely coupled, allowing programmers to create language-specific
+brushes, and designers to create themes that can work with any number of
+brushes.
+
+It soon became apparent that brushes and themes are not so loosely coupled
+after all. For example, the bundled HTML brush does not include the angled
+brackets when highlighting a tag. Coda does. **So, the theme itself is
+accompanied by a number of customized brushes.**
+
+### Supported languages ###
+
+The theme currently supports a handful of languages: CSS, HTML/XML, JavaScript,
+PHP, and Python. These are the languages with which I'm familiar. **If you'd
+like to see another language supported, please let me know.**
+
+#### CSS ####
+
+    p.error.message   { border: 1px solid #c00; background-color: #fcc; }
+    p.info.message    { border: 1px solid #fc3; background-color: #ffc; }
+    p.success.message { border: 1px solid #0b0; background-color: #cfc; }
+
+#### HTML ####
+
+    <form id="searchform" action="http://davidchambersdesign.com/" method="get">
+        <div>
+            <label for="s" class="structural">search davidchambersdesign.com</label>
+            <input type="text" id="s" name="s" value="" class="text" />
+            <input type="submit" id="searchsubmit" value="Search" />
+        </div>
+    </form><!--/searchform-->
+
+#### JavaScript ####
+
+    // simulate textarea:focus
+    document.observe('dom:loaded', function () {
+        $$('textarea').each(function (e) {
+            Event.observe(e, 'focus', function (event) {
+                $(e.parentNode).addClassName('focus')
+            });
+            Event.observe(e, 'blur', function (event) {
+                $(e.parentNode).removeClassName('focus')
+            });
+        });
+    });
+
+#### PHP ####
+
+    /**
+     * echoes nicely formatted filesize
+     * @param string $filename
+     * @param string $before
+     * @param string $after
+     */
+    function print_filesize($filename, $before = ' <span class="filesize">(', $after = ')</span>')
+    {
+        if (file_exists($filename))
+        {
+            $size = filesize($filename);
+            $unit = 'B';
+    
+            if (intval($size/(1024*1024*1024)))
+            {
+                $size = number_format(($size/(1024*1024*1024)), 1);
+                $unit = 'GB';
+            }
+            elseif (intval($size/(1024*1024)))
+            {
+                $size = number_format(($size/(1024*1024)), 1);
+                $unit = 'MB';
+            }
+            elseif (intval($size/1024))
+            {
+                $size = number_format(($size/1024), 1);
+                $unit = 'KB';
+            }
+    
+            $approx = $unit == 'B' ? '' : '≈' ;
+    
+            echo "{$before}{$approx}{$size} {$unit}{$after}";
+        }
+    }
+
+Note that the variable names in the double-quoted string above are a different
+colour from the rest of the string. Nice!
+
+#### Python ####
+
+    # function accepts any number of arguments since *all_sales is a tuple
+    def daily_sales_total(*all_sales):
+        total = 0.0
+        for each_sale in all_sales:
+            total += float(each_sale)
+        return total
+
+### Including non-HTML code in HTML snippets ###
+
+The Coda theme, like Coda itself, can handle non-HTML code inside HTML
+snippets.
+
+#### CSS inside HTML{@id=css-inside-html}
+
+For HTML snippets that contain some CSS, use
+`<pre class="brush: css; html-script: true;"></pre>`.
+
+    <head>
+        <title>Coda theme for SyntaxHighlighter</title>
+        <style type="text/css">
+            p {
+                margin: 0.75em 0;
+                font: 1.0em/1.5em "Lucida Grande", Helvetica, Arial, sans-serif;
+                padding: 0.75em;
+            }
+            p.js-off {
+                border: 1px solid #c00; /* red */
+                background-color: #fcc;
+            }
+            p.js-on {
+                border: 1px solid #0b0; /* green */
+                background-color: #cfc;
+            }
+        </style>
+    </head>
+
+#### JavaScript inside HTML{@id=javascript-inside-html}
+
+For HTML snippets that contain some JavaScript, use
+`<pre class="brush: javascript; html-script: true;"></pre>`.
+
+    <body>
+        <p class="js-off">
+            JavaScript is currently <strong>disabled</strong>.
+        </p>
+        <p class="js-on" style="display:none">
+            JavaScript is currently <strong>enabled</strong>.
+        </p>
+        <script type="text/javascript">
+            google.load('prototype', '1.6');
+        </script>
+        <script type="text/javascript">
+            document.observe('dom:loaded', function () {
+                $$('.js-off').invoke('hide');
+                $$('.js-on').invoke('show');
+            });
+        </script>
+    </body>
+
+#### PHP inside HTML{@id=php-inside-html}
+
+For HTML snippets that contain some PHP, use
+`<pre class="brush: php; html-script: true;"></pre>`.
+
+    <ul>
+    <?php foreach ($names as $name): ?>
+        <li><?php echo $name; ?></li>
+    <?php endforeach; ?>
+    </ul>
+
+### Limitations and known issues ###
+
+Unfortunately, the Coda brush does not perform quite as well as the text editor
+from which it gets its name. The failings are as follows:
+
+* It is not possible to mix more than one additional language with HTML. While
+  it _is_ possible to mix CSS with HTML, or JavaScript with HTML, it is not
+  possible to mix both CSS _and_ JavaScript with HTML. This is a limitation of
+  SyntaxHighlighter itself.
+
+* When mixing CSS or JavaScript with HTML, the style/script opening tags are
+  given the class 'script' rather than being processed in the same manner as
+  the rest of the HTML code. As a result these tags appear in red, the colour
+  used for PHP tags. (If no workaround exists I'm going to suggest that Alex
+  make the necessary changes to ensure that style/script opening tags are
+  treated normally.)
+
+* In order to correctly colour all HTML tags, each `<` that is not part of a
+  string is considered to be part of a tag. This causes incorrect highlighting,
+  as can be seen in this example:
+  
+        <script type="text/javascript">
+            function isLarger(x, y) {
+                return (x > y);
+            }
+        </script>
+
+### Setup{@id=setup}
+
+1. Download and unzip [coda-theme-for-syntaxhighlighter.zip][3].
+2. Open **example.html** to confirm that everything is working correctly.
+3. Upload **styles/shThemeCoda.css** to your SyntaxHighlighter **styles**
+   directory.
+4. Upload **styles/bg.png** to your SyntaxHighlighter **styles** directory.
+5. Upload the brushes in **scripts/** to your SyntaxHighlighter **scripts**
+   directory, replacing the existing CSS, JavaScript, PHP, Python, and XML
+   brushes. Three versions of each brush are included: **.js**, **.min.js**
+   (minified), and **.min.js.gz** (minified and gzipped). Use whichever version
+   suits you best.
+6. Add a link to the Coda theme wherever you link to shCore.css. If you're
+   using the standard setup, this will be in the head section of the document.
+
+[3]: /downloads/coda-theme-for-syntaxhighlighter.zip
+
+|| date: 24 August 2009
+|| time: 10:51pm
+|| zone: Pacific/Auckland
+|| 
+|| Coda theme has been updated so that comments are now italicized
+|| (as they are in Coda). XML brush for Coda theme now applies the
+|| correct class name ("xml-comment") to HTML comments.

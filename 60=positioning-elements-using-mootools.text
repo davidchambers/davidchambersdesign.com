@@ -1,0 +1,26 @@
+date: 19 July 2010
+time: 5:45pm
+zone: Pacific/Auckland
+tags: JavaScript, MooTools
+
+
+Positioning elements using MooTools
+===================================
+
+I've spent the afternoon creating a custom scrollbar for a products viewer
+which utilizes CSS transitions, reflections, and other goodness.
+
+Simple arithmetic dictates how long to make the scrollbar and where to position
+it, but I could not get my theoretical calculations to play out in the browser.
+
+It turns out that I'd been calling the wrong MooTools method. I'd been doing...
+
+    element.setStyle('left', offset);
+
+rather than...
+
+    element.setPosition({ x: offset });
+
+Frustratingly, `setStyle('left', offset)` _appeared_ to work, but its behaviour
+was unpredictable. I'm still confused by this, but at least I'm no longer
+stuck.

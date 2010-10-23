@@ -1,0 +1,56 @@
+date: 4 July 2010
+time: 8:23am
+zone: Pacific/Auckland
+tags: Django, Mac OS X
+
+
+Testing Django apps using localhost subdomains
+==============================================
+
+This turned out to be quite a bit easier than I'd imagined. Here are the things
+I did:
+
+1.  I saved [Dave Fowler's subdomain middleware][1] as `middleware.py` in my
+    project directory:
+    
+        class SubdomainMiddleware:
+            def process_request(self, request):
+                '''Parse out the subdomain from the request'''
+                request.subdomain = None
+                host = request.META.get('HTTP_HOST', '')
+                host_s = host.replace('www.', '').split('.')
+                if len(host_s) > 2:
+                    request.subdomain = ''.join(host_s[:-2])
+
+2.  I added this to my project's `MIDDLEWARE_CLASSES`:
+    
+        MIDDLEWARE_CLASSES = (
+            ...,
+            'middleware.SubdomainMiddleware',
+        )
+
+3.  I edited my `/etc/hosts` file as per Dave's suggestion:
+    
+        127.0.0.1 test.com
+        127.0.0.1 blog.test.com
+        127.0.0.1 search.test.com
+    
+    Initially I replaced `test.com` with the site's domain name, but I decided
+    that it's useful to be able to access both the live site and the test site
+    without editing the `/etc/hosts` file.
+    
+    At this point I expected everything to work as advertised. Instead, I got
+    this:
+    
+    ![It works!](/images/posts/windows/it-works!.png)
+    
+    That would depend on one's definition of "works". I wanted my Django site
+    to appear, which required a very simple tweak...
+
+4.  I added the port number to the address:
+    
+        http://test.com:8000/
+    
+    This _actually_ worked. :)
+
+[1]: http://thingsilearned.com/2009/01/05/using-subdomains-in-django/

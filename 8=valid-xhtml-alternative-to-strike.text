@@ -1,0 +1,28 @@
+date: 17 March 2009
+time: 9:53pm
+zone: Pacific/Auckland
+tags: CSS, HTML
+
+
+Valid XHTML alternative to <strike>
+===================================
+
+Today I noticed that a page on this site failed validation.
+[W3C's markup validation service][1] gave the following error:
+
+[1]: http://validator.w3.org/
+
+    element "strike" undefined
+
+`<strike>` is not valid XHTML; I'd forgotten the correct XHTML markup for
+this purpose:
+
+    my favourite colour is <del>red</del> <ins>white</ins>
+
+The above gives: my favourite colour is <del>red</del> <ins>white</ins>
+
+It's a good idea to explicitly define the appearance of deleted and inserted
+text in your style sheet:
+
+    del { text-decoration: line-through; }
+    ins { text-decoration: underline; }

@@ -1,0 +1,33 @@
+date: 21 July 2010
+time: 10:56am
+zone: Pacific/Auckland
+tags: design, Gmail
+
+
+Gmail's favicon confusion
+=========================
+
+Gmail currently serves up two possible favicons, a 16x16 `shortcut icon` and a
+32x32 `icon`. I've no idea why the latter is included, but my browser is happy
+to accept either version, which can lead to a rather amusing situation.
+
+![Browser tabs featuring different Gmail icons][1]
+: Scaled down 32x32 icon (left) and regular favicon
+
+Most days when Gmail loads I get the favicon, but I've had a couple of extended
+periods of seeing the other version instead. I'd even wondered whether Google
+was undertaking some A/B testing, although this seemed rather far-fetched. I
+now believe that there's a race condition, and that the smaller image usually
+wins this race.
+
+I far prefer the 32x32 version (it makes the favicon look anaemic), but when I
+had a close look at it I was upset by its sloppiness.
+
+![32x32 Gmail icon at 1000%][2]
+: 32x32 Gmail icon at 1000%
+
+[Sebastiaan de With][3] would not stand for this!
+
+[1]: /images/posts/63/gmail-icons.png
+[2]: /images/posts/63/gmail-icon-32*10.png
+[3]: http://blog.cocoia.com/

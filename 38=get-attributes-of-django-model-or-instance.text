@@ -1,0 +1,43 @@
+date: 22 February 2010
+time: 8:24pm
+zone: Pacific/Auckland
+tags: Django, Python
+
+
+Get attributes of Django model or instance
+==========================================
+
+What is the best way to get the attributes of a Django model or instance?
+
+    from django.db import models
+    
+    class Musician(models.Model):
+        first_name = models.CharField()
+        last_name  = models.CharField()
+        instrument = models.CharField()
+
+One option is to use `__dict__.keys()`:
+
+    >>> m = Musician(first_name='Norah', last_name='Jones', instrument='piano')
+    >>> print m.__dict__.keys()
+    ['last_name', 'instrument', 'first_name', 'id']
+
+Another options is to use `_meta.fields`:
+
+    >>> print [f.name for f in m._meta.fields]
+    ['id', 'first_name', 'last_name', 'instrument']
+
+This approach also works on models directly:
+
+    >>> print [f.name for f in Musician._meta.fields]
+    ['id', 'first_name', 'last_name', 'instrument']
+
+### Advantages of using <code>_meta.fields</code> ###
+
+* items in returned list are correctly ordered
+* applicable to both models and instances
+* only _fields_ are returned
+
+The fact that only fields are returned is extremely useful. Django appears
+to add its own attributes to instances in certain circumstances; using
+`_meta.fields` prevents these from interfering with one's own code.

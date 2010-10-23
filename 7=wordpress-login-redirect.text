@@ -1,0 +1,25 @@
+date: 1 March 2009
+time: 3:01am
+zone: Pacific/Auckland
+tags: PHP, WordPress
+
+
+WordPress login redirect
+========================
+
+Sometimes we require users to log in to a WordPress site in order to access
+_front-end_ functionality hidden from guests. In such instances, we can simply
+provide a standard login link:
+
+    <a href="<?php bloginfo('url'); ?>/wp-login.php">log in</a>
+
+While this gets the job done, it takes users to the dashboard after they have
+logged in: they must then click on a link to return to the front-end, at which
+point an additional click may be required to get them back to the page they
+were viewing. Since WordPress 2.6.2 it has been possible to circumvent this
+round trip from **origin** to **wp-login.php** to **wp-admin/** to **/** and
+finally back to **origin** by including a value for `redirect_to` in the href:
+
+    <a href="<?php bloginfo('url'); ?>/wp-login.php?redirect_to=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">log in</a>
+
+The above returns users to their starting point after they've logged in.

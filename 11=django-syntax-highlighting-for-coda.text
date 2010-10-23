@@ -1,0 +1,24 @@
+date: 16 April 2009
+time: 10:15pm
+zone: Pacific/Auckland
+tags: Coda, Django, Mac OS X
+
+
+Django syntax highlighting for Coda
+===================================
+
+I love [Coda][1]. It's just so... sexy, somehow. I've just discovered
+[Django][2], with which I'm fast falling in love as well. Naturally, when I
+came to write my first Django template I opened Coda.app and started coding.
+
+It soon became apparent, however, that **Coda does not apply syntax
+highlighting to Django**. The solution? Juan Pablo Claude's
+[Django and Django-template bundles for Coda][3].
+
+![Django syntax highlighting in Coda][4]
+: Django syntax highlighting in Coda
+
+[1]: http://www.panic.com/coda/
+[2]: http://www.djangoproject.com/
+[3]: http://weblog.bignerdranch.com/?p=49
+[4]: /images/posts/11/django-syntax-highlighting-in-coda.png

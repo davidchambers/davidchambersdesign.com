@@ -1,0 +1,128 @@
+date: 4 June 2009
+time: 3:12am
+zone: Pacific/Auckland
+tags: AppleScript, JavaScript, Mac OS X, SyntaxHighlighter
+
+
+AppleScript syntax highlighting
+===============================
+
+[Skip to setup instructions](#setup)
+
+| I've been using Alex Gorbatchev's [SyntaxHighlighter][1] to syntactically
+| display code of various languages for several months now. When I decided
+| to post an AppleScript snippet, however, I realised that I was out of luck.
+| SyntaxHighlighter does not include an AppleScript "brush", and a quick flick
+| through the [SyntaxHighlighter forums][2] did not bring me any joy.
+| 
+| [1]: http://alexgorbatchev.com/wiki/SyntaxHighlighter
+| [2]: http://alexgorbatchev.com/forums/
+| 
+| **How hard could it be to write a brush for AppleScript?**, I wondered. The
+| handy guide to [developing a custom brush][3] got me started, and I was soon
+| busy trying to encapsulate AppleScript's syntax -- along with its keywords
+| and countless words and phrases with special meanings -- into a handful of
+| regular expressions.
+| 
+| [3]: http://alexgorbatchev.com/wiki/SyntaxHighlighter:Brushes:Custom
+
+Having created the brush (that's SyntaxHighlighter lingo for the JavaScript
+file containing the language-specific regular expressions), I proceeded to
+create a style sheet that would display AppleScript snippets on the Web as
+they appear on OS X. You can judge my success by comparing the three snippets
+below: the first is a screenshot of Script Editor's rendering; the second is
+a screenshot of the same snippet as it appears in my browser; and the final
+snippet is text rendered by _your_ browser.
+
+![](/images/posts/15/script-editor-syntax-highlighting.png)
+: Screenshot of Script Editor's rendering of an AppleScript snippet
+
+![](/images/posts/15/syntaxhighlighter-applescript-theme.png)
+: Screenshot of snippet styled by AppleScript theme for SyntaxHighlighter
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(*
+    This handler determines whether someone is happy.
+    It's actually just a good way to showcase AppleScript syntax highlighting using Alex Gorbatchev's SyntaxHighlighter.
+    (* Hey, nested comments. Woot! *)
+*)
+
+on user_is_happy()
+    -- determine which application is currently frontmost
+    tell application "System Events" to set app_list to the name of application processes whose frontmost is true
+    set front_app to the first item of app_list
+    tell application "Finder"
+        activate
+        display dialog ¬
+            "Enter your name" default answer "" buttons {"Cancel", "OK"} ¬
+            default button 2 with icon note
+        set user_name to the text returned of the result
+        (* The word "return" in the line below should not be in bold. The regex does its best to determine whether the word is being used in a return statement or as a line return. *)
+        display dialog "Hello, " &amp; user_name &amp; "!" &amp; return &amp; return &amp; ¬
+            "Are you happy?" buttons {"Yes", "No"} with icon note
+        set is_happy to the button returned of the result
+    end tell
+    -- activate the application that was frontmost initially
+    tell application front_app to activate
+    return is_happy = "Yes" -- this time the word "return" should be in bold
+end user_is_happy
+
+if user_is_happy() then
+    say "Woohoo!" using "Alex"
+else
+    repeat 3 times
+        beep
+        delay 0.5
+    end repeat
+end if
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Live rendering of AppleScript snippet{@class=caption}
+
+### Setup{@id=setup}
+
+To add AppleScript syntax highlighting to your own site or blog, do the
+following:
+
+1.  Download [SyntaxHighlighter][4], and follow the setup instructions.
+
+2.  Download [AppleScript brush](/downloads/shBrushAppleScript.js)
+    {{ filesize:'../../dcd_downloads/shBrushAppleScript.js' }}, and upload it
+    to your SyntaxHighlighter **scripts** directory.
+
+3.  Download [AppleScript theme](/downloads/shThemeAppleScript.css)
+    {{ filesize:'../../dcd_downloads/shThemeAppleScript.css' }}, and upload it
+    to your SyntaxHighlighter **styles** directory.
+
+4.  Download [background image](/downloads/bg.png)
+    {{ filesize:'../../dcd_downloads/bg.png' }}, and upload it to your
+    SyntaxHighlighter **styles** directory.
+
+5.  Include the brush like so:
+    
+        <script type="text/javascript" src="/path/to/scripts/shCore.js"></script>
+        <script type="text/javascript" src="/path/to/scripts/shBrushAppleScript.js"></script>
+        <script type="text/javascript">
+            SyntaxHighlighter.all();
+        </script>
+
+[4]: http://alexgorbatchev.com/wiki/SyntaxHighlighter
+
+### Usage{@id=usage}
+
+To have SyntaxHighlighter parse a block of AppleScript, wrap the code in `pre`
+tags like so:
+
+    <pre class="brush: applescript; class-name: applescript;"></pre>
+
+`brush: applescript;` tells SyntaxHighlighter to use the AppleScript brush for
+the text within the pre tag. `class-name: applescript;` tells SyntaxHighlighter
+to add the class name "applescript" to the container div that is inserted into
+the page. (Hopefully I'm able to convince Alex that the brush name should be
+added as a class name automatically, which would remove the need to include
+`class-name: applescript;` each time.)
+
+Note that including `ruler: true;` will have no effect. Since AppleScript
+is displayed in a variable-width font, the ruler serves no purpose. The ruler
+is still inserted into the page (unless `ruler: false;` is included), but is
+hidden by the style sheet.
