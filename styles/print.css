@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+#skip, .skip, #header, ul.links, #respond, #respond+p.info, .respond, .respond+p.info, ul.edit-comment-admin-links li, #commentform, #footer { display: none; }
+
+body                                                { background-color: #fff; padding: 1.6em 1.6em 0 1.6em; font: 10pt/1.6em "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif; color: #000; }
+h1 + div.post, div.post + div.post, div.post + p    { margin: 3.2em 0 0 0; }
+a                                                   { font-weight: bold; color: #000; text-decoration: none; }
+a:after                                             { content: " [" attr(href) "]"; font-size: 0.8em; line-height: 2.0em; font-weight: normal; }
+a[href^="/"]:after                                  { content: " [http://davidchambersdesign.com" attr(href) "]"; }
+a[href^="#"]                                        { font-weight: normal; }
+a[href^="#"]:after, div.post-head a:after           { content: ""; }
+strong                                              { font-weight: bold; }
+p, div.post ul, div.post ol, div.post dl dt         { margin: 1.6em 0 0 0; }
+h3, h4, h5                                          { margin: 1.6em 0 0 0; font-weight: bold; }
+h1                                                  { font: bold 1.5em/1.067em Helvetica, Arial, sans-serif; letter-spacing: 0.025em; }
+div.post-head p, div.post-head h1, div.post-head h3 { display: inline; margin: 0 0.25em 0 0; font: bold 1.5em/1.067em Helvetica, Arial, sans-serif; letter-spacing: 0.025em; }
+div.post-head p                                     { white-space: nowrap; font-weight: normal; }
+div.update                                          { padding: 0 0 0 1.6em; }
+span.filesize                                       { font-size: 0.8em; line-height: 2.0em; }
+#main div.syntaxhighlighter                         { top: 0 !important; margin: 0.7em 0 !important; }
+#main div.syntaxhighlighter div.line code.number    { display: none !important; }
+#main div.syntaxhighlighter div.line span.content   { margin-left: 0 !important; }
+#main img                                           { max-width: 100%; }
+footer.tags                                         { margin: 1.6em 0 0 0; }
+footer.tags h4, footer.tags ul, footer.tags ul li   { display: inline; font-weight: normal; }
+footer.tags ul li:after                             { content: ","; }
+footer.tags ul li:last-child:after                  { content: "."; }
+footer.tags ul li a                                 { font-weight: normal; }
+footer.tags ul li a:after                           { content: ""; }
+.pingbacks, .comments, #pingbacks, #comments        { page-break-before: always; margin: 0 0 1.25em 0; font-size: 1.2em; line-height: 1.333; }
+.pingbacks #pingbacks, .comments #comments          { page-break-before: never; margin: 0; }
+#main article article                               { margin: 1.5em 0 0 0; border-top: 0.1em solid #000; }
+#main article article footer                        { margin: 1.6em 0 0 0; font-style: italic; }
+#main article article footer img                    { display: none; }
+#main article article footer strong:before          { content: "— "; }
+#main article article footer time span              { color: #666; }
+#main article article footer time span+span         { display: none; }
+#contactform                                        { margin: 1.6em 0 0 0; }
+#contactform:before                                 { content: '"﻿David﻿﻿ Chambers﻿﻿" <david.chambers.05@gmail.com>'; }
+#contactform *                                      { display: none; }
+ul.archives li h3, ul.tags                          { margin: 1.6em 0 0 0; }
+ul.square                                           { margin: 1.6em 0 0 0; list-style-image: url(http://resources.davidchambersdesign.com/images/square-bullet.png); list-style-position: outside; }
+dl.border dt img                                    { margin: 0 0 -0.1em 0; border: 0.1em solid #ccc; }
+dl dd                                               { font-style: italic; }
+code                                                { white-space: nowrap; font-family: "Andale Mono", Courier, monospace; }
+pre                                                 { margin: 1.6em 0 0 0; font-family: "Andale Mono", Courier, monospace; }
+ol                                                  { margin: 1.6em 0 0 0; list-style-type: decimal; list-style-position: outside; }
+ul                                                  { margin: 1.6em 0 0 0; }
+.float-left                                         { float: left; margin-right: 1.0em; }
+.float-right                                        { float: right; margin-left: 1.0em; }
+.margin-top                                         { display: block; margin-top: 1.6em; }
