@@ -1,0 +1,91 @@
+date: 28 November 2010
+time: 1:45am
+zone: Australia/Sydney
+tags: HTML5, i18n, JavaScript, jQuery, localization, meaningful markup
+
+
+JavaScript date and time localization
+=====================================
+
+| **This post has been a long time coming.**
+| 
+| ![Reminder message](/images/posts/74/email-message-screenshot.png)
+| : Reminder message, dated 18 January 2010
+| 
+| **It's unacceptable for any website or web application to output dates and
+| times using an arbitrary time zone.** Displaying dates and times in UTC/GMT
+| is only slightly better: dates cannot be relied upon, and users must perform
+| mental gymnastics in order to localize date–time combos.
+
+![Bitbucket status message](/images/posts/74/gmt-ftl.png)
+: The link to a time zone converter highlights the need for localization
+
+Implementing client-side localization of dates and times is not terribly
+difficult -- I first managed it with only a superficial understanding of
+JavaScript -- but it's a challenge to do so in a simple, reusable manner.
+
+### HTML5
+
+For localization to be possible date, time, and time zone information must be
+stored somewhere. In the past we'd have been forced to misappropriate `title`
+or `rel`, or use an unsupported attribute and accept invalid markup. We can
+now have our cake and eat it too: HTML5 sanctions arbitrary attribute names,
+prefixed with `data-`.
+
+As it turns out, though, HTML5 provides the perfect hook for date and time
+localization: the `time` element, whose `datetime` attribute provides the
+canonical representation of a point in time.
+
+    <time datetime="1984-04-26">26 April 1984</time>
+
+Simply by using the `time` element correctly our scripts gain access to date,
+time, and even time zone information.
+
+### jQuery
+
+I was not quick to embrace [jQuery][]. Soon after I discovered DOM scripting
+and the incompatible DOM APIs provided by the various browsers, I understood
+the need for a JavaScript library. Soon after that I <del>decided</del>
+<ins>stumbled</ins> upon [Prototype][]. More recently I became an advocate of
+[MooTools][] which -- like Prototype -- fixes deficiencies in the JavaScript
+language itself, in addition to fixing the DOM.
+
+While reading John Resig's <i>Secrets of the JavaScript Ninja</i> I began at
+last to appreciate the beauty of jQuery's design. Having embraced jQuery I set
+out to encapsulate the site-specific localization code I'd been writing again
+and again in an elagant, reusable package.
+
+### jQuery.localize
+
+At [Atlassian][] we're lucky enough to have "20 percent time". A couple of
+weeks ago I spent the day working on [jQuery.localize][1], my first jQuery
+plugin. I've spent much of the last two weekends making the plugin more
+flexible and documenting its relatively simple API.
+
+Assume that a page contains the following `time` element.
+
+    <time datetime="2010-11-27T13:30-00:00">27 November 2010</time>
+
+We could localize this element (along with any other `time` elements on the
+page) with a simple call to `localize`.
+
+    $('time').localize();
+
+This updates both the visible text and the value of the `datetime` attribute.
+
+    <time datetime="2010-11-28T00:30+11:00">28 November 2010</time>
+
+Date and time formats are fully customizable via [directives][2], and there
+is support for [internationalization][3]. I won't go into the details here;
+there's extensive [documentation][4] at the project's home on Bitbucket.
+
+
+[Atlassian]: http://www.atlassian.com/
+[jQuery]: http://jquery.com/
+[MooTools]: http://mootools.net/
+[Prototype]: http://prototypejs.org/
+
+[1]: http://bitbucket.org/davidchambers/jquery.localize
+[2]: http://bitbucket.org/davidchambers/jquery.localize/src#directives
+[3]: http://bitbucket.org/davidchambers/jquery.localize/src#i18n
+[4]: http://bitbucket.org/davidchambers/jquery.localize/src#wiki
