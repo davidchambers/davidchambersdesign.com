@@ -23,15 +23,15 @@ JavaScript.
 
 ### JavaScript
 
-	function ordinal(n) {
-		if (10 < n && n < 14) return n + 'th';
-		switch (n % 10) {
-			case 1: return n + 'st';
-			case 2: return n + 'nd';
-			case 3: return n + 'rd';
-			default: return n + 'th';
-		}
-	}
+    function ordinal(n) {
+        if (10 < n && n < 14) return n + 'th';
+        switch (n % 10) {
+            case 1: return n + 'st';
+            case 2: return n + 'nd';
+            case 3: return n + 'rd';
+            default: return n + 'th';
+        }
+    }
 
 By special-casing 11, 12, and 13, the function becomes incredibly simple.
 
