@@ -62,9 +62,12 @@ dl dt object                                                    { display: block
 dl dd                                                           { font-style: italic; color: #666; }
 dl dt.textual~dd                                                { font-style: normal; color: inherit; padding: 1.75em 0 0; }
 em                                                              { font-style: italic; }
-h1                                                              { font: bold 1.667em/1.05em Helvetica, Arial, sans-serif; letter-spacing: 1px; }
-h2, h3                                                          { margin: 1.313em 0 0; padding: 0 0 0.063em; font: normal 1.333em/1.25em "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif; color: #111; }
-h4                                                              { margin: 1.5em 0 0; font: normal 1.167em/1.5em "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif; color: #111; }
+#main article header h1,
+#main article header h2,
+#main article header time,
+h1, h2, h3, h4                                                  { font: bold 1.667em/1.05em "proxima-nova-1", "proxima-nova-2", Helvetica, Arial, sans-serif; color: #111; text-shadow: 0 1px 0 #fff; }
+h2, h3                                                          { margin: 1.312em 0 0; font-size: 1.334em; line-height: 1.312em; }
+h4                                                              { margin: 1.5em 0 0; font-size: 1.167em; line-height: 1.5em; }
 .unidentified span                                              { float: left; margin: -159px 0 0 0; }
 .unidentified a                                                 { visibility: hidden; }
 .unidentified:hover a                                           { visibility: visible; }
@@ -151,8 +154,8 @@ ol li.interviewer~li                                            { list-style-typ
 ol li.interviewer:nth-child(1),
 ol li.interviewer~li:nth-child(odd)                             { color: #666; }
 
-h2#comments, .comments.unidentified                             { margin: 2.625em 0 0; font-weight: normal; }
-h3#respond, .respond.unidentified                               { margin: 2.625em 0 0; font-weight: normal; }
+#comments, .comments.unidentified,
+#respond, .respond.unidentified                                 { margin: 2.625em 0 0; }
 
 #main h2.unidentified a, #main h3.unidentified a                { visibility: hidden; }
 #main h2.unidentified:hover a, #main h3.unidentified:hover a    { visibility: visible; color: #c00; }
@@ -161,16 +164,14 @@ h3#respond, .respond.unidentified                               { margin: 2.625e
 #main>article+h2                                                { margin: 2.625em 0 0; }
 
 #main article header                                            { line-height: 1em; }
-#main article header h1, #main article header h2                { display: inline; margin: 0 0.25em 0 0; padding: 0; font: bold 1.667em/1.05em Helvetica, Arial, sans-serif; letter-spacing: 1px; }
-#main article header time                                       { display: inline; margin: 0; padding: 0; font: normal 1.667em/1.05em Helvetica, Arial, sans-serif; letter-spacing: 1px; white-space: nowrap; }
+#main article header h1, #main article header h2                { display: inline; margin: 0 0.25em 0 0; }
+#main article header time                                       { display: inline; font-weight: normal; color: #666; white-space: nowrap; }
 
 #main img                                                       { max-width: 100%; }
 
-article div.update                                              { margin: 1.75em -1000% -1px -1000%; border-top: 1px solid #b85; border-bottom: 1px solid #b85; background-color: #feb; padding: 1.667em 1000% 1.75em 1000%; }
-article div.update h4:first-child                               { margin: 0; font-size: 1em; line-height: 1.75em; font-weight: bold; }
-article div.update p                                            { margin: 0; }
-article div.update *+p                                          { margin: 1.75em 0 0 0; }
-article div.update pre                                          { border-color: #a96; background-color: #eda; }
+.update                                                         { margin: 1.75em -1000% -1px; border-width: 1px 0; border-style: solid; border-color: #b85; background-color: #feb; padding: 1.667em 1000% 1.75em; }
+.update h4:first-child                                          { margin: 0; }
+.update pre                                                     { border-color: #a96; background-color: #eda; }
 
 footer.metadata                                                 { margin-left: -1em; padding: 1.75em 0 0 1em; overflow: hidden; }
 footer.metadata a                                               { float: left; margin: 0 0.5em 0 0; }
@@ -206,7 +207,9 @@ form>fieldset>div>input[type="email"]                           { position: abso
 form>fieldset+div>label                                         { position: absolute; left: -9999px; }
 form>fieldset+div+div>label                                     { left: 1.75em; }
 form>fieldset+div+div>input[type="checkbox"]                    { margin: 0; }
-form>fieldset+div+div+div>input[type="submit"]                  { margin: 2em 0 0; }
+input[type="submit"]                                            { margin: 7px 0 0; }
+label[for="cc_sender"]                                          { position: relative; display: inline-block; margin: 5px 0 1px; }
+#cc_sender                                                      { position: absolute; left: 0; top: 9px; }
 
 ol.pages                                                        { list-style: none; }
 ol.posts                                                        { list-style: none; color: #666; }
