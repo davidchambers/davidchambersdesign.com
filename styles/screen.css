@@ -121,26 +121,26 @@ article>header>dl>dd>a                          { font-weight: normal; }
 #tags                                           { margin: 1.75em 0 0; list-style: none; }
 #tags li                                        { position: relative; float: left; margin: 0 1px 0 0; width: 24.5%; height: 3.5em; }
 #tags li:hover                                  { z-index: 100; }
-#tags li a                                      { background-color: rgb(225, 225, 225); color: rgba(0, 0, 0, 0.732); position: absolute; top: 0; left: 0; display: block; width: 100%; border: 1px solid #ccc; padding: 10px 0; text-align: center; -webkit-transition-property: top, left, -webkit-box-shadow, padding, font-size, z-index; -webkit-transition-duration: 0.2s, 0.2s, 0.2s, 0.2s, 0.167s, 0.2s; -webkit-transition-timing-function: ease; -moz-transition-property: top, left, -moz-box-shadow, padding, font-size, z-index; -moz-transition-duration: 0.2s, 0.2s, 0.2s, 0.2s, 0.167s, 0.2s; -moz-transition-timing-function: ease; -o-transition-property: top, left, box-shadow, padding, font-size, z-index; -o-transition-duration: 0.2s, 0.2s, 0.2s, 0.2s, 0.167s, 0.2s; -o-transition-timing-function: ease; }
-#tags li[data-count="19"] a                     { background-color: rgb(226, 226, 226); color: rgba(0, 0, 0, 0.725); }
-#tags li[data-count="18"] a                     { background-color: rgb(226, 226, 226); color: rgba(0, 0, 0, 0.717); }
-#tags li[data-count="17"] a                     { background-color: rgb(227, 227, 227); color: rgba(0, 0, 0, 0.709); }
-#tags li[data-count="16"] a                     { background-color: rgb(227, 227, 227); color: rgba(0, 0, 0, 0.700); }
-#tags li[data-count="15"] a                     { background-color: rgb(227, 227, 227); color: rgba(0, 0, 0, 0.691); }
-#tags li[data-count="14"] a                     { background-color: rgb(228, 228, 228); color: rgba(0, 0, 0, 0.681); }
-#tags li[data-count="13"] a                     { background-color: rgb(228, 228, 228); color: rgba(0, 0, 0, 0.670); }
-#tags li[data-count="12"] a                     { background-color: rgb(229, 229, 229); color: rgba(0, 0, 0, 0.658); }
-#tags li[data-count="11"] a                     { background-color: rgb(230, 230, 230); color: rgba(0, 0, 0, 0.646); }
-#tags li[data-count="10"] a                     { background-color: rgb(230, 230, 230); color: rgba(0, 0, 0, 0.632); }
-#tags li[data-count="9"] a                      { background-color: rgb(231, 231, 231); color: rgba(0, 0, 0, 0.617); }
-#tags li[data-count="8"] a                      { background-color: rgb(232, 232, 232); color: rgba(0, 0, 0, 0.600); }
-#tags li[data-count="7"] a                      { background-color: rgb(233, 233, 233); color: rgba(0, 0, 0, 0.581); }
-#tags li[data-count="6"] a                      { background-color: rgb(234, 234, 234); color: rgba(0, 0, 0, 0.558); }
-#tags li[data-count="5"] a                      { background-color: rgb(235, 235, 235); color: rgba(0, 0, 0, 0.532); }
-#tags li[data-count="4"] a                      { background-color: rgb(237, 237, 237); color: rgba(0, 0, 0, 0.500); }
-#tags li[data-count="3"] a                      { background-color: rgb(239, 239, 239); color: rgba(0, 0, 0, 0.458); }
-#tags li[data-count="2"] a                      { background-color: rgb(242, 242, 242); color: rgba(0, 0, 0, 0.400); }
-#tags li[data-count="1"] a                      { background-color: rgb(247, 247, 247); color: rgba(0, 0, 0, 0.300); }
+#tags li a                                      { background: rgb(225, 225, 225); color: rgba(0, 0, 0, 0.732); position: absolute; top: 0; left: 0; display: block; width: 100%; border: 1px solid #ccc; padding: 10px 0; text-align: center; -webkit-transition-property: top, left, -webkit-box-shadow, padding, font-size, z-index; -webkit-transition-duration: 0.2s, 0.2s, 0.2s, 0.2s, 0.167s, 0.2s; -webkit-transition-timing-function: ease; -moz-transition-property: top, left, -moz-box-shadow, padding, font-size, z-index; -moz-transition-duration: 0.2s, 0.2s, 0.2s, 0.2s, 0.167s, 0.2s; -moz-transition-timing-function: ease; -o-transition-property: top, left, box-shadow, padding, font-size, z-index; -o-transition-duration: 0.2s, 0.2s, 0.2s, 0.2s, 0.167s, 0.2s; -o-transition-timing-function: ease; }
+#tags li[data-count="19"] a                     { background: rgb(226, 226, 226); color: rgba(0, 0, 0, 0.725); }
+#tags li[data-count="18"] a                     { background: rgb(226, 226, 226); color: rgba(0, 0, 0, 0.717); }
+#tags li[data-count="17"] a                     { background: rgb(227, 227, 227); color: rgba(0, 0, 0, 0.709); }
+#tags li[data-count="16"] a                     { background: rgb(227, 227, 227); color: rgba(0, 0, 0, 0.700); }
+#tags li[data-count="15"] a                     { background: rgb(227, 227, 227); color: rgba(0, 0, 0, 0.691); }
+#tags li[data-count="14"] a                     { background: rgb(228, 228, 228); color: rgba(0, 0, 0, 0.681); }
+#tags li[data-count="13"] a                     { background: rgb(228, 228, 228); color: rgba(0, 0, 0, 0.670); }
+#tags li[data-count="12"] a                     { background: rgb(229, 229, 229); color: rgba(0, 0, 0, 0.658); }
+#tags li[data-count="11"] a                     { background: rgb(230, 230, 230); color: rgba(0, 0, 0, 0.646); }
+#tags li[data-count="10"] a                     { background: rgb(230, 230, 230); color: rgba(0, 0, 0, 0.632); }
+#tags li[data-count="9"] a                      { background: rgb(231, 231, 231); color: rgba(0, 0, 0, 0.617); }
+#tags li[data-count="8"] a                      { background: rgb(232, 232, 232); color: rgba(0, 0, 0, 0.600); }
+#tags li[data-count="7"] a                      { background: rgb(233, 233, 233); color: rgba(0, 0, 0, 0.581); }
+#tags li[data-count="6"] a                      { background: rgb(234, 234, 234); color: rgba(0, 0, 0, 0.558); }
+#tags li[data-count="5"] a                      { background: rgb(235, 235, 235); color: rgba(0, 0, 0, 0.532); }
+#tags li[data-count="4"] a                      { background: rgb(237, 237, 237); color: rgba(0, 0, 0, 0.500); }
+#tags li[data-count="3"] a                      { background: rgb(239, 239, 239); color: rgba(0, 0, 0, 0.458); }
+#tags li[data-count="2"] a                      { background: rgb(242, 242, 242); color: rgba(0, 0, 0, 0.400); }
+#tags li[data-count="1"] a                      { background: rgb(247, 247, 247); color: rgba(0, 0, 0, 0.300); }
 #tags li a:focus,
 #tags li a:hover, #tags li a.hover              { top: -6px; left: -21px; width: 100%; padding: 16px 21px; -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); font-size: 1.167em; z-index: 99; }
 
