@@ -219,7 +219,7 @@ input[type="submit"]:focus                      { border-color: #6ad; outline: n
 input[type="submit"]:hover                      { background: #ccc; background: -webkit-gradient(linear, 0 0, 0 100%, from(#ddd), to(#bbb)); background: -moz-linear-gradient(top, #ddd, #bbb); cursor: pointer; }
 input[type="submit"]:active                     { background: -webkit-gradient(linear, 0 0, 0 100%, from(#bbb), to(#ddd)); background: -moz-linear-gradient(top, #bbb, #ddd); }
 label[for="cc_sender"]                          { position: relative; top: 5px; margin: 0; }
-#cc_sender                                      { position: absolute; left: 0; top: 9px; }
+#cc_sender                                      { position: absolute; left: 0; top: 10px; }
 
 ol.pages                                        { list-style: none; }
 ol.posts                                        { list-style: none; color: #666; }
