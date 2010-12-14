@@ -21,29 +21,11 @@
 
 
 // accommodate fixed-position header
-(function () {
-    if (!Sizzle) return;
-    var a, i, id, len, node, nodes = [], span;
-    Sizzle('h2[id]', document.body, nodes);
-    Sizzle('h3[id]', document.body, nodes);
-    Sizzle('h4[id]', document.body, nodes);
-
-    for (i = 0, len = nodes.length; i < len; i++) {
-        node = nodes[i];
-        id = node.id;
-        node.id = null;
-        node.className += node.className ? ' ' + id + ' unidentified' : id + ' unidentified';
-
-        span = document.createElement('span');
-        span.id = id;
-        node.insertBefore(span, node.firstChild);
-
-        a = document.createElement('a');
-        a.href = '#' + id;
-        a.appendChild(document.createTextNode('\u00B6')); // pilcrow
-        node.appendChild(a);
-    }
-}());
+(function ($, id) {
+    $.each($('h2[id],h3[id],h4[id]'), function () {
+        (id = this.id) && $(this).attr('id', null).addClass(id+' unidentified').prepend('<span id='+id+'>').append('<a href=#'+id+'>\u00B6</a>');
+    });
+}(jQuery));
 
 
 (function () {
