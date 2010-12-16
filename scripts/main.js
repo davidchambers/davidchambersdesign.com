@@ -50,4 +50,12 @@ jQuery(function ($) {
   $('pre>code').addClass('prettyprint');
   prettyPrint();
 
+  // reload link
+  $('#nav').find('a[href="/flushcache/"]').click(function (event) {
+    event.preventDefault();
+    $.get(this.href, function () {
+      window.location.reload(true);
+    });
+  });
+
 });
