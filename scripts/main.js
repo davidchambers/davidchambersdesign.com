@@ -13,47 +13,35 @@
 }(jQuery));
 
 
-(function () {
-    if (!Sizzle) return;
-    function slide(event) {
-        event = event || window.event;
-        var delta, i, intervalId, n, positions,
-            hash = this.getAttribute('href'),
-            destination = document.getElementById(hash.substr(1)),
-            pageYOffset = window.pageYOffset,
-            y = parseInt(window.getComputedStyle(document.body, null).getPropertyValue('margin-top'), 10) || 0,
-            e = destination;
+(function ($) {
+    $('a[href^="#"]').click(function (event) {
+        event.preventDefault();
+        var delta, intervalId, n, offset,
+            positions, round = Math.round,
+            hash = $(this).attr('href'),
+            $el = $(hash);
 
-        while (e) {
-            y += e.offsetTop;
-            e = e.offsetParent;
-        }
+        if ($el.length != 1) return;
 
-        delta = y - pageYOffset;
-        n = Math.round(Math.log(Math.abs(delta)) * 2) || 1;
+        offset = $el.offset().top;
+        delta = offset - window.pageYOffset;
+        n = round(Math.log(Math.abs(delta)) * 2) || 1;
 
-        for (i = 0, positions = new Array(n); i < n;) {
-            positions[i] = Math.round(pageYOffset + (delta / n) * ++i);
-        }
+        $.each(positions = new Array(n), function (index) {
+            positions[index] = round(offset - index*(delta/n));
+        });
 
-        i = 0;
         intervalId = window.setInterval(function () {
-            if (i < n) {
-                window.scrollTo(0, positions[i++]);
+            var position = positions.pop();
+            if (typeof position != 'undefined') {
+                window.scrollTo(0, position);
             } else {
                 window.location.hash = hash;
                 window.clearInterval(intervalId);
             }
         }, 20);
-        event.preventDefault();
-    }
-    var i, internalLinks = Sizzle('a[href^="#"]'), len, link;
-    for (i = 0, len = internalLinks.length; i < len; i++) {
-        link = internalLinks[i];
-        if (link.addEventListener) link.addEventListener('click', slide, false);
-        else if (link.attachEvent) link.attachEvent('onclick', slide);
-    }
-}());
+    });
+}(jQuery));
 
 
 (function ($) {
