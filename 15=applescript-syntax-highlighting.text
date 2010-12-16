@@ -58,7 +58,7 @@ on user_is_happy()
             default button 2 with icon note
         set user_name to the text returned of the result
         (* The word "return" in the line below should not be in bold. The regex does its best to determine whether the word is being used in a return statement or as a line return. *)
-        display dialog "Hello, " &amp; user_name &amp; "!" &amp; return &amp; return &amp; ¬
+        display dialog "Hello, " & user_name & "!" & return & return & ¬
             "Are you happy?" buttons {"Yes", "No"} with icon note
         set is_happy to the button returned of the result
     end tell
