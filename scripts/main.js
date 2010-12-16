@@ -1,23 +1,8 @@
-(function () {
-    function removeClassName(element, className) {
-        var classNames = element.className.split(' '), i = classNames.length;
-        while (i--) if (!classNames[i] || classNames[i] == 'hover') classNames.splice(i, 1);
-        return classNames.join(' ');
-    }
+(function ($) {
     if (navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
-        if (!Sizzle) return;
-        var i, len, node, nodes = Sizzle('a');
-        for (i = 0, len = nodes.length; i < len; i++) {
-            node = nodes[i];
-            node.addEventListener('touchstart', function () {
-                this.className = removeClassName(this, 'hover') + ' hover';
-            }, false);
-            node.addEventListener('touchend', function () {
-                this.className = removeClassName(this, 'hover');
-            }, false);
-        }
+        var $a = $('a').live('touchstart', function () { $(this).addClass('hover'); }).live('touchend', function () { $a.removeClass('hover'); });
     }
-}());
+}(jQuery));
 
 
 // accommodate fixed-position header
