@@ -56,12 +56,7 @@
 }());
 
 
-(function () {
-    if (typeof Sizzle != 'function') return;
-    if (typeof prettyPrint != 'function') return;
-    var blocks = Sizzle('pre>code', document.body), i, len;
-    for (i = 0, len = blocks.length; i < len; i++) {
-        blocks[i].className = 'prettyprint';
-    }
+(function ($) {
+    $('pre>code').addClass('prettyprint');
     prettyPrint();
-}());
+}(jQuery));
