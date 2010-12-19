@@ -50,6 +50,17 @@ jQuery(function ($) {
   $('pre>code').addClass('prettyprint');
   prettyPrint();
 
+  // date and time localization
+  (function () {
+    var $comments = $('time>span+span').parent();
+    $('time').not($comments).localize();
+    $comments.localize({
+      escaped: true,
+      format: '<span>%d %mmmm %yyyy</span> <span>%h.%MM\u2009%a</span>',
+      periods: ['am', 'pm']
+    });
+  }());
+
   // reload link
   $('#nav').find('a[href="/flushcache/"]').click(function (event) {
     event.preventDefault();
