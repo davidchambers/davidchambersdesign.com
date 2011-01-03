@@ -13,7 +13,7 @@ Self-caching functions in JavaScript and Python
 | my immediate problem) and JavaScript (because I find that language endlessly
 | fascinating).
 | 
-| I played around with [Fibonacci][], which is a well suited to the task: it
+| I played around with [Fibonacci][1], which is a well suited to the task: it
 | can be described in just a couple of lines of code yet benefits enormously
 | from caching due to its recursive nature.
 | 
@@ -23,8 +23,6 @@ Self-caching functions in JavaScript and Python
 |         if (n <= 1) return n;
 |         return fibonacci(n - 2) + fibonacci(n - 1);
 |     }
-| 
-| [Fibonacci]: http://en.wikipedia.org/wiki/Fibonacci_number
 
 I created a simple timer:
 
@@ -203,3 +201,6 @@ I had fun experimenting with these various approaches, furthering my
 understanding of both JavaScript and Python in the process. I've been writing
 JavaScript casually for several years; now that I'm making an effort to
 actually _learn_ the language I'm starting to appreciate its brilliance.
+
+
+[1]: http://en.wikipedia.org/wiki/Fibonacci_number

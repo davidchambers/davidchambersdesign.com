@@ -62,6 +62,7 @@ Note the empty array (`[]`) on line 5 – that's our "accumulator".
 Not bad. It's not as elegant as the Ruby code, but it's not "inside out" the
 way the Python code is.
 
+
 [1]: http://blog.extracheese.org/2010/02/python-vs-ruby-a-battle-to-the-death.html
 [2]: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Filter
 [3]: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Reduce

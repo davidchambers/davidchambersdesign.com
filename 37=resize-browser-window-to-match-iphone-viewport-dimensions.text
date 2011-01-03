@@ -24,18 +24,20 @@ Resize browser window to match iPhone viewport dimensions
 | 
 |         javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
 | 
-| ![iPhone testing bookmarklets](/images/posts/37/iphone-testing-bookmarklets.png)
+| ![iPhone testing bookmarklets][1]
 | : iPhone testing bookmarklets: portrait and landscape
 
 
-![Safari window resized to iPhone portrait dimensions][1]
+![Safari window resized to iPhone portrait dimensions][2]
 : 320x480: iPhone portrait dimensions
 
-![Safari window resized to iPhone landscape dimensions][2]
+![Safari window resized to iPhone landscape dimensions][3]
 : 480x320: iPhone landscape dimensions
 
 It appears that I need to rework this site's style sheet to better present
 content in these smaller viewports!
 
-[1]: /images/posts/windows/safari-window-iphone-dimensions-portrait.png
-[2]: /images/posts/windows/safari-window-iphone-dimensions-landscape.png
+
+[1]: /images/posts/37/iphone-testing-bookmarklets.png
+[2]: /images/posts/windows/safari-window-iphone-dimensions-portrait.png
+[3]: /images/posts/windows/safari-window-iphone-dimensions-landscape.png

@@ -18,10 +18,6 @@ Tiny calendar icons sprite
 | 
 | ![Tiny calendar icons sprite][3]
 | : Tiny calendar icons sprite, which you're welcome to save and use
-| 
-| [1]: /archives/
-| [2]: /tiny-calendar-icon-set/
-| [3]: /images/posts/23/calendar.png
 
 One uses a sprite by applying a background image to an element using CSS. One
 could start with an empty span element:
@@ -118,5 +114,9 @@ appear in the HTML, as in this example:
 
     <span class="day day-31"></span>
 
+
+[1]: /archives/
+[2]: /tiny-calendar-icon-set/
+[3]: /images/posts/23/calendar.png
 [4]: /images/posts/23/calendar-span-default-bg-pos.png
 [5]: /images/posts/23/calendar-span-specified-bg-pos.png

@@ -41,4 +41,5 @@ as_sitesearch
 If you decide to implement this yourself you may find the documentation on
 [Google custom search request parameters][1] useful.
 
+
 [1]: http://www.google.com/cse/docs/resultsxml.html#wsRequestParameters

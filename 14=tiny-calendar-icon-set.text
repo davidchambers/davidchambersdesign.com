@@ -12,7 +12,7 @@ Tiny calendar icon set
 || zone: Pacific/Auckland
 || 
 || An update to this post has been published:
-|| [Tiny calendar icons sprite](/tiny-calendar-icons-sprite/).
+|| [Tiny calendar icons sprite][1].
 
 I've always enjoyed creating icons in Photoshop. Not the gorgeous, often richly
 detailed icons that grace OS X applications -- although I would love to learn
@@ -24,15 +24,17 @@ hexadecimal colours that can be written in shorthand) is a challenge, but
 I find the experience rewarding. I recently redesigned this site's archives
 page, for which I created a set of 16 x 16px calendar icons.
 
-![Calendar icons for every possible day of the month][1]
+![Calendar icons for every possible day of the month][2]
 : Calendar icons shown at 300% of actual size
 
-![Calendar icons for every possible day of the month][2]
+![Calendar icons for every possible day of the month][3]
 : Calendar icons shown actual size
 
-You are welcome to [download the tiny calendar icon set][3]
+You are welcome to [download the tiny calendar icon set][4]
 {{ filesize:'../../dcd_downloads/tiny-calendar-icon-set.zip' }}.
 
-[1]: /images/posts/14/calendar-300pc.png
-[2]: /images/posts/14/calendar.png
-[3]: /downloads/tiny-calendar-icon-set.zip
+
+[1]: /tiny-calendar-icons-sprite/
+[2]: /images/posts/14/calendar-300pc.png
+[3]: /images/posts/14/calendar.png
+[4]: /downloads/tiny-calendar-icon-set.zip

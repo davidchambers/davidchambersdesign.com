@@ -10,8 +10,6 @@ Valid XHTML alternative to <strike>
 Today I noticed that a page on this site failed validation.
 [W3C's markup validation service][1] gave the following error:
 
-[1]: http://validator.w3.org/
-
     element "strike" undefined
 
 `<strike>` is not valid XHTML; I'd forgotten the correct XHTML markup for
@@ -26,3 +24,6 @@ text in your style sheet:
 
     del { text-decoration: line-through; }
     ins { text-decoration: underline; }
+
+
+[1]: http://validator.w3.org/

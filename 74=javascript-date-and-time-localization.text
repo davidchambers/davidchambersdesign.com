@@ -81,8 +81,8 @@ there's extensive [documentation][4] at the project's home on Bitbucket.
 
 
 [Atlassian]: http://www.atlassian.com/
-[jQuery]: http://jquery.com/
-[MooTools]: http://mootools.net/
+[jQuery]:    http://jquery.com/
+[MooTools]:  http://mootools.net/
 [Prototype]: http://prototypejs.org/
 
 [1]: http://bitbucket.org/davidchambers/jquery.localize

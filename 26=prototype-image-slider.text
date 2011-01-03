@@ -12,9 +12,6 @@ Prototype image slider
 | whether this meaningful markup could be used in conjunction with an
 | "image slider" such as [Easy Slider 1.5][2].
 | 
-| [1]: /captions-over-images/
-| [2]: http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding
-| 
 | I had a look at the Easy Slider source code and decided to write my own
 | image slider using Prototype rather than hacking someone else's code to
 | pieces. It's a proof of concept rather than a full-blown "plugin", but
@@ -22,8 +19,6 @@ Prototype image slider
 | meaningful markup.
 | 
 | Check out the [Prototype image slider demo][3] to see the code in action.
-| 
-| [3]: /examples/prototype-image-slider/
 
 || date: 17 September 2009
 || time: 1:17am
@@ -35,9 +30,7 @@ Prototype image slider
 ||     li: new Element('li', { class: 'prev' }),
 || 
 || Wrapping the word "class" in quotes as per this [recommendation by Tobie
-|| Langel][1] did the trick!
-|| 
-|| [1]: http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777
+|| Langel][4] did the trick!
 
 ### Usage{@id=usage}
 
@@ -82,6 +75,11 @@ If you find this code useful and would like me to flesh it out, let me know.
 || time: 11:53am
 || zone: Pacific/Auckland
 || 
-|| I neglected to mention that this code also requires [script.aculo.us][1].
-|| 
-|| [1]: http://script.aculo.us/
+|| I neglected to mention that this code also requires [script.aculo.us][5].
+
+
+[1]: /captions-over-images/
+[2]: http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding
+[3]: /examples/prototype-image-slider/
+[4]: http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777
+[5]: http://script.aculo.us/

@@ -41,8 +41,6 @@ I decided that it was time to find a reliable solution to the above problems.
 I came across an article on [timestamping CSS][1] which suggests appending a
 unique string to a style sheet's href when linking to it in a page's `<head>`.
 
-[1]: http://css-tricks.com/can-we-prevent-css-caching/
-
 After reading the replies to the above post, and taking on board several good
 suggestions, here is the PHP code I have decided upon:
 
@@ -57,4 +55,6 @@ is dependent on the time at which the CSS file was last modified. This means
 that the cached style sheet is used when it is **up to date**, but the file is
 retrieved from the server when it has been **changed in any way**.
 
+
+[1]: http://css-tricks.com/can-we-prevent-css-caching/
 [2]: http://php.net/manual/en/function.filectime.php

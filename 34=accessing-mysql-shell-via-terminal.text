@@ -20,4 +20,5 @@ I managed to find the solution in a thread with subject
 
     mysql -u root -p mysql
 
+
 [1]: http://www.oreillynet.com/cs/user/view/cs_msg/7078#id_7118

@@ -14,9 +14,6 @@ the browser _(Internet Explorer, I'm looking at you!)_ needs a gentle nudge.
 [Forcing a UI redraw from JavaScript][1] highlights the solution employed by
 Thomas Fuchs, creator of the popular JavaScript library [script.aculo.us][2]:
 
-[1]: http://ajaxian.com/archives/forcing-a-ui-redraw-from-javascript
-[2]: http://script.aculo.us/
-
     Element.addMethods({
         redraw: function (element) {
             element = $(element);
@@ -34,3 +31,7 @@ The post's first comment includes an alternative approach:
 I gather that there are situations in which this simple solution fails -- it's
 no silver bullet -- but it fixed a problem I encountered in IE8 earlier this
 evening so I'm pleased to have discovered it!
+
+
+[1]: http://ajaxian.com/archives/forcing-a-ui-redraw-from-javascript
+[2]: http://script.aculo.us/

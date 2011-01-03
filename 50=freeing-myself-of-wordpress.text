@@ -32,10 +32,6 @@ previewing while writing.
 | So, [Mango][] was born. Mango is file-based blogging software built on
 | [Django][], the excellent Python web framework. I conceived Mango to
 | scratch an itch, and I'll bet that others out there are itchy, too.
-| 
-| [Django]:   http://www.djangoproject.com/
-| [Mango]:    http://bitbucket.org/davidchambers/mango
-| [Markdown]: http://daringfireball.net/projects/markdown/syntax
 
 ### Going without
 
@@ -118,9 +114,13 @@ to share my thoughts with the world.
 
 ![Publish a post from Coda](/images/posts/50/publish.png)
 
+
 [Akismet]:   http://akismet.com/
 [Coda]:      http://panic.com/coda/
 [Disqus]:    http://disqus.com/
+[Django]:    http://www.djangoproject.com/
+[Mango]:     http://bitbucket.org/davidchambers/mango
+[Markdown]:  http://daringfireball.net/projects/markdown/syntax
 [MarsEdit]:  http://www.red-sweater.com/marsedit/
 [Transmit]:  http://panic.com/transmit/
 [WordPress]: http://wordpress.org/

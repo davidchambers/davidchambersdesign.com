@@ -19,7 +19,6 @@ Application-specific volume control in Mac OS X?
 | ### System Preferences > Sound > Application Volumes ###
 | 
 | ![Possible interface for application-specific volume settings in Mac OS X][1]
-| [1]: /images/posts/windows/application-volumes.png
 | 
 | Wouldn't this be nice? Many months ago I did some Googling to find out
 | whether it's possible to control volume on an application-by-application
@@ -39,15 +38,12 @@ Application-specific volume control in Mac OS X?
 || time: 2:36pm
 || zone: Pacific/Auckland
 || 
-|| [Hear][1] offers this functionality, but isn't cheap. I hope Hear's
+|| [Hear][2] offers this functionality, but isn't cheap. I hope Hear's
 || developers decide to release a preference pane that provides the
 || functionality of Hear's mixer pane and nothing more (I'm about to
 || make this request).
 || 
-|| ![Hear's mixer pane][2]
-|| 
-|| [1]: http://www.joesoft.com/products/hear.php
-|| [2]: /images/posts/windows/hear-mixer-pane.png
+|| ![Hear's mixer pane][3]
 
 #### Bonus titbit ####
 
@@ -55,8 +51,7 @@ While faking the drop shadow on the Sound window above I discovered a
 combination of drop shadow values which pretty much perfectly match those
 of an active window in OS X:
 
-![Photoshop's drop shadow dialog][2]
-[2]: /images/posts/47/drop-shadow-settings.png
+![Photoshop's drop shadow dialog][4]
 
 shadow color{@class=textual}
 : \#000000 (black)
@@ -75,3 +70,9 @@ spread
 
 size
 : 32px
+
+
+[1]: /images/posts/windows/application-volumes.png
+[2]: http://www.joesoft.com/products/hear.php
+[3]: /images/posts/windows/hear-mixer-pane.png
+[4]: /images/posts/47/drop-shadow-settings.png

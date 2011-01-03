@@ -30,6 +30,7 @@ This prevents caching issues that might otherwise arise upon updating to a
 newer version of prototype+scriptaculous (I'll update the three files -- and
 this post -- each time a new version of Prototype is released).
 
+
 [1]: http://prototypejs.org/2009/9/1/prototype-1-6-1-released
 [2]: http://script.aculo.us/downloads
 [3]: http://developer.yahoo.com/yui/compressor/

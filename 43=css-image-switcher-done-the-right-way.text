@@ -12,8 +12,6 @@ CSS image switcher (done the right way)
 | [CSS Image Switcher][1], he demonstrates how to create an "image switcher"
 | using CSS. The problem, though, is that **his process is wrong**.
 | 
-| [1]: http://css-tricks.com/video-screencasts/82-css-image-switcher/
-| 
 | #### Incorrect process ####
 | 
 | 1. What effect or experience do I want to create?
@@ -106,6 +104,8 @@ and Camino. Unfortunately the core feature does _not_ work in Safari or Google
 Chrome, as these WebKit-based browsers fail to handle the `dt+dd:hover~dt`
 selector.
 
+
+[1]: http://css-tricks.com/video-screencasts/82-css-image-switcher/
 [2]: http://css-tricks.com/examples/CSSImageSwitcher/
 [3]: http://www.sitepoint.com/blogs/2009/07/20/youtube-drop-ie6/
 [4]: http://www.flickr.com/

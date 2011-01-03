@@ -23,8 +23,9 @@ display links to slightly older posts on the sidebar. I discovered a WpRecipes
 post on [using two different WordPress loops][1] which suggests adding the
 following line of code just before the loop:
 
-[1]: http://www.wprecipes.com/avinash-asked-how-to-use-two-different-wordpress-loops
-
     query_posts('showposts=5&offset=3');
 
 The `offset` ensures that posts do not appear in both places.
+
+
+[1]: http://www.wprecipes.com/avinash-asked-how-to-use-two-different-wordpress-loops

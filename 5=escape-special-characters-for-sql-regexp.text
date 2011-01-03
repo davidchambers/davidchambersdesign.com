@@ -10,8 +10,6 @@ Escape special characters for SQL REGEXP
 While using the [MTG card search][1] that I've been developing recently,
 I encountered an error that MySQL reported as follows:
 
-[1]: http://games.davidchambersdesign.com/mtg-card-search/
-
     Got error 'repetition-operator operand invalid' from regexp
 
 The problem resulted from an unescaped **{** being passed to MySQL's REGEXP
@@ -23,8 +21,6 @@ preceding it with a backslash (**\\**).
 | to escape problematic characters before submitting a query. When the query in
 | question involves MySQL's REGEXP function, however, we need to go one step
 | further and escape regex's special characters.
-| 
-| [2]: http://php.net/manual/en/function.mysql-real-escape-string.php
 
 I had a look on php.net to see whether such a function exists. Having failed to
 find one there, I did a Google search but again came away empty-handed. I wrote
@@ -46,3 +42,7 @@ the same problem:
 
 It is quite possible that a solution to this problem already exists. If this is
 the case, I am eager to know about it.
+
+
+[1]: http://search.mtg-apps.com/
+[2]: http://php.net/manual/en/function.mysql-real-escape-string.php

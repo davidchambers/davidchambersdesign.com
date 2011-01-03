@@ -39,4 +39,5 @@ Here's the verbose equivalent for those averse to one-liners:
 instances and from the model itself. [_meta.fields][1] is one of the few
 features not covered in Django's excellent documentation.
 
+
 [1]: http://www.djangofoo.com/tag/meta-fields

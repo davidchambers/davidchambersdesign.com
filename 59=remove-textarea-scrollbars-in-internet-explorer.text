@@ -8,7 +8,7 @@ Remove textarea scrollbars in Internet Explorer
 ===============================================
 
 I was delighted to discover this "trick" over on CSS-Tricks in a post titled
-[Textarea Tricks][]. (See, Chris, I _do_ like you!)
+[Textarea Tricks][1]. (See, Chris, I _do_ like you!)
 
 Internet Explorer displays a (completely pointless) inactive scrollbar in empty
 `textarea` elements, unlike other browsers which wait until a scrollbar is
@@ -27,4 +27,5 @@ children rather than letting them "hang".
 One thing that I sometimes ponder, though, is why `visible` was selected as the
 default `overflow` value – it seems inferior to `auto` in most use cases.
 
-[Textarea Tricks]: http://css-tricks.com/textarea-tricks/
+
+[1]: http://css-tricks.com/textarea-tricks/

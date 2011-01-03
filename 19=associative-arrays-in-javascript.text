@@ -23,4 +23,5 @@ To gain a more detailed understanding of why
 JavaScript _appears_ to have associative arrays, read
 [JavaScript "Associative Arrays" Considered Harmful][1].
 
+
 [1]: http://andrewdupont.net/2006/05/18/javascript-associative-arrays-considered-harmful/

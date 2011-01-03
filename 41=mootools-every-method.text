@@ -46,15 +46,8 @@ are plenty of good ones out there. I recently made the switch to [MooTools][1]
 from [Prototype][2], after deciding that while [jQuery][3] is fantastic, the
 [MooTools philosophy][4] is more to my liking.
 
-[1]: http://mootools.net/
-[2]: http://prototypejs.org/
-[3]: http://jquery.com/
-[4]: http://jqueryvsmootools.com/#jsfun
-
 With MooTools, one might consider using the [Array object's each method][5]
 instead of a `for` or `while` loop.
-
-[5]: http://mootools.net/docs/core/Native/Array#Array:each
 
     var allPositive = true;
     list.each(function (item) {
@@ -73,11 +66,17 @@ As is so often the case in programming, if something seems fiddly and difficult
 there's probably a better tool for the job. In this case the [Array object's
 every method][6] is the perfect tool for the job.
 
-[6]: http://mootools.net/docs/core/Native/Array#Array:every
-
     var allPositive = list.every(function (item) {
         return item > 0;
     });
 
 This is terser than is possible with vanilla JavaScript. It reads better too,
 in my opinion!
+
+
+[1]: http://mootools.net/
+[2]: http://prototypejs.org/
+[3]: http://jquery.com/
+[4]: http://jqueryvsmootools.com/#jsfun
+[5]: http://mootools.net/docs/core/Native/Array#Array:each
+[6]: http://mootools.net/docs/core/Native/Array#Array:every

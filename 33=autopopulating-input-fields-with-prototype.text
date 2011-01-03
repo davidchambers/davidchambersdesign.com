@@ -14,16 +14,12 @@ Auto-populating input fields with Prototype
 | I approached the problem from a slightly different angle,
 | I made sure to avoid the pitfalls Roger mentions.
 | 
-| [1]: http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/
-| 
 | || date: 9 June 2010
 | || time: 11:31pm
 | || zone: Pacific/Auckland
 | || 
 | || I've written an update to this article for those interested in
 | || [auto-populating input fields with MooTools][2].
-| || 
-| || [2]: /autopopulating-input-fields-with-mootools/
 
 ### Contents ###
 
@@ -120,9 +116,7 @@ event listener. This also avoids polluting the global namespace.
 || For those that would like placeholder text in _password_ input
 || fields not to appear as dots or asterisks in older browsers, I've
 || written an alternative snippet. I drew inspiration from a post on
-|| [iPhone-like password fields using jQuery][1].
-|| 
-|| [1]: http://blog.decaf.de/2009/07/iphone-like-password-fields-using-jquery/
+|| [iPhone-like password fields using jQuery][3].
 || 
 ||     // provide input hints
 ||     document.observe('dom:loaded', function () {
@@ -182,3 +176,8 @@ event listener. This also avoids polluting the global namespace.
 ||             }
 ||         });
 ||     });
+
+
+[1]: http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/
+[2]: /autopopulating-input-fields-with-mootools/
+[3]: http://blog.decaf.de/2009/07/iphone-like-password-fields-using-jquery/

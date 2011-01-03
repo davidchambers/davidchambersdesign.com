@@ -23,12 +23,11 @@ highlighting to Django**. The solution? Juan Pablo Claude's
 || zone: Australia/Sydney
 || 
 || I've since discovered an alternative mode which is actively maintained over
-|| on GitHub. I now use [jbergantine's Django-Template][1].
-|| 
-|| [1]: https://github.com/jbergantine/Django-Template
+|| on GitHub. I now use [jbergantine's Django-Template][5].
 
 
 [1]: http://www.panic.com/coda/
 [2]: http://www.djangoproject.com/
 [3]: http://weblog.bignerdranch.com/?p=49
 [4]: /images/posts/11/django-syntax-highlighting-in-coda.png
+[5]: https://github.com/jbergantine/Django-Template

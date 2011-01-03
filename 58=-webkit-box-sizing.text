@@ -37,5 +37,6 @@ level, but either way I would say that it's the result of Apple fiddling with
 the controls to make search inputs look sexy on Mac OS X (where they're
 rendered very differently).
 
+
 [before]: /images/posts/58/-webkit-box-sizing=border-box.png
 [after]: /images/posts/58/-webkit-box-sizing=content-box.png

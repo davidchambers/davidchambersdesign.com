@@ -21,8 +21,6 @@ I stumbled upon this useful information while reading [Camino's FAQ][1].
 I have reproduced its step-by-step instructions below, since they are right
 on the money.
 
-[1]: http://caminobrowser.org/documentation/faq/#cust_change
-
 * First, quit <application>; if it is running.
 * Open **System Preferences**.
 * Choose the **"Keyboard & Mouse"** pane.
@@ -33,3 +31,6 @@ on the money.
   change, and in the "Keyboard Shortcut" field, type the new shortcut you want
   that menu item to have. Press the "OK" button to save the new shortcut.
 * You may now relaunch <application>.
+
+
+[1]: http://caminobrowser.org/documentation/faq/#cust_change

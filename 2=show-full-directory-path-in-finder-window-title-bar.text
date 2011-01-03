@@ -12,8 +12,6 @@ Show full directory path in Finder window title bar
 | is one I've double-checked many times), you'll understand how pleased I was
 | to discover that there is a command which can be entered in Terminal to
 | [show full directory paths in Finder window title bars][1].
-| 
-| [1]: http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/
 
 ![Finder windows without paths][2]
 : **Before:** Finder windows with directory name only in title bar
@@ -44,5 +42,7 @@ Then, restart Finder once again:
 
     killall Finder
 
+
+[1]: http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/
 [2]: /images/posts/2/finder-windows-without-paths.png
 [3]: /images/posts/2/finder-windows-with-paths.png

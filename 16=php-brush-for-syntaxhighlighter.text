@@ -19,9 +19,6 @@ PHP brush for SyntaxHighlighter
 | 
 | ![Screenshot of PHP code highlighted by SyntaxHighlighter's PHP brush][2]
 | : Screenshot of bundled PHP brush in action
-| 
-| [1]: http://alexgorbatchev.com/wiki/SyntaxHighlighter
-| [2]: /images/posts/16/bundled-php-brush-in-action.png
 
 I would give this brush 6/10. Here are its deficiencies, as I see them:
 
@@ -39,9 +36,6 @@ for variables within double-quoted strings; **numval** for numerical values;
 **function** for [documented PHP functions][4]; **custfunc** for custom
 (user-defined) functions; and **constant**, **keyword**, and **variable**
 for exactly what you'd expect.
-
-[3]: /downloads/shBrushPhp.js
-[4]: http://www.php.net/quickref.php
 
 || date: 16 August 2009
 || time: 2:33am
@@ -89,3 +83,9 @@ for exactly what you'd expect.
     ?>
 
 Live rendering of improved PHP brush{@class=caption}
+
+
+[1]: http://alexgorbatchev.com/wiki/SyntaxHighlighter
+[2]: /images/posts/16/bundled-php-brush-in-action.png
+[3]: /downloads/shBrushPhp.js
+[4]: http://www.php.net/quickref.php

@@ -22,8 +22,6 @@ CSS fixed-position headers
 | and error. To save others from going through this tortuous process I'll
 | describe my various approaches, and list the benefits and drawbacks
 | of each.
-| 
-| [1]: http://css-tricks.com/forums/viewtopic.php?t=3496
 
 ### Requirements ###
 
@@ -147,11 +145,13 @@ visible when jumped to:
 * {@class=con}Association between an id and the element it identifies is
   broken.
 
-[2]: http://prototypejs.org/
-
 ### Summary ###
 
 I have implemented the JavaScript approach, and it works nicely. I am still
 hopeful that there exists a simpler and/or more universal solution to the
 problem posed by fixed-position headers. Please let me know if you have any
 ideas or suggestions.
+
+
+[1]: http://css-tricks.com/forums/viewtopic.php?t=3496
+[2]: http://prototypejs.org/

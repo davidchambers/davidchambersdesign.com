@@ -13,8 +13,6 @@ The days of the compact disc are surely numbered. The [MacBook Air][1] is
 the first computer from Apple to jettison the optical drive; others will
 undoubtedly follow, eventually.
 
-[1]: http://www.apple.com/macbookair/
-
 Since the vast majority of Mac OS X users currently possess the means to
 read and burn CDs, however, I thought this information -- lifted straight
 from Disk Utility Help -- worth sharing. These instructions apply to Snow
@@ -50,3 +48,6 @@ directly to your computer. You can’t burn a disc using a remote optical drive.
 
 To add more files to the disc later, follow the steps above. You can continue
 this process until all available space on the disc is used.
+
+
+[1]: http://www.apple.com/macbookair/

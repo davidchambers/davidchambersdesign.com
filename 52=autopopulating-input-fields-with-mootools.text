@@ -32,4 +32,5 @@ I really appreciate the fact that MooTools provides `addEvents` in addition
 to `addEvent`. As a result, the code above is clearer than a well-written
 Prototype equivalent.
 
+
 [1]: /autopopulating-input-fields-with-prototype/

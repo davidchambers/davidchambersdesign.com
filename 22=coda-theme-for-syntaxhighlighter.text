@@ -15,9 +15,6 @@ Coda theme for SyntaxHighlighter
 | for me. All I had to do was create a style sheet that would make my code
 | snippets look as sexy online as they do in my text editor.
 | 
-| [1]: http://www.panic.com/coda/
-| [2]: http://alexgorbatchev.com/wiki/SyntaxHighlighter
-| 
 | Or so I thought.
 
 As I delved deeper, it became apparent that realising my goal would require
@@ -225,8 +222,6 @@ from which it gets its name. The failings are as follows:
 6. Add a link to the Coda theme wherever you link to shCore.css. If you're
    using the standard setup, this will be in the head section of the document.
 
-[3]: /downloads/coda-theme-for-syntaxhighlighter.zip
-
 || date: 24 August 2009
 || time: 10:51pm
 || zone: Pacific/Auckland
@@ -234,3 +229,8 @@ from which it gets its name. The failings are as follows:
 || Coda theme has been updated so that comments are now italicized
 || (as they are in Coda). XML brush for Coda theme now applies the
 || correct class name ("xml-comment") to HTML comments.
+
+
+[1]: http://www.panic.com/coda/
+[2]: http://alexgorbatchev.com/wiki/SyntaxHighlighter
+[3]: /downloads/coda-theme-for-syntaxhighlighter.zip

@@ -59,4 +59,5 @@ The regular expression involved in matching hyperlinks is more complex. I'll
 point you to John Gruber's [liberal regex for matching URLs][1] as he's clearly
 put a great deal of thought into what is essentially a single line of code!
 
+
 [1]: http://daringfireball.net/2009/11/liberal_regex_for_matching_urls

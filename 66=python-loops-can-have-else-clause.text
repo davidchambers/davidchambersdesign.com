@@ -23,7 +23,7 @@ joining a list.
 Often -- as is the case above -- the syntactical differences are minor, but
 there are times when there's no direct translation.
 
-[MooTools][], for example, adds the [`every` method][1] to the `Array` object.
+[MooTools][1], for example, adds the [`every` method][2] to the `Array` object.
 This makes it possible to write some rather terse conditional statements.
 
     var numbers = [87, 33, 21, 75];
@@ -82,7 +82,7 @@ statements may have an `else` clause!**
         else: # every term was found
             matches.append(document)
 
-From [4. More Control Flow Tools][2]:
+From [4. More Control Flow Tools][3]:
 
 > Loop statements may have an `else` clause; it is executed when the
 > loop terminates through exhaustion of the list (with `for`) or when
@@ -92,6 +92,7 @@ From [4. More Control Flow Tools][2]:
 **I'm looking forward to finding more good spots to make use of `else`
 clauses with my Python loops.** :D
 
-[MooTools]: http://mootools.net/
-[1]: http://mootools.net/docs/core/Native/Array#Array:every
-[2]: http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops
+
+[1]: http://mootools.net/
+[2]: http://mootools.net/docs/core/Native/Array#Array:every
+[3]: http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops

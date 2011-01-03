@@ -26,8 +26,6 @@ Next, click on the **Mobile Setup** tab.
 
 | ![Mobile Setup tab in Google Calendar][3]
 | : **Mobile Setup** tab in Google Calendar
-| 
-| [3]: /images/posts/13/mobile-setup-tab-in-google-calendar.png
 
 Enter your cell phone number and click **Send Verification Code**. In a matter
 of seconds you should receive a text message from Google containing the
@@ -48,7 +46,9 @@ You're then able to set default event reminders, which may include one or more
 text messages. You'll also be able to add SMS reminders against individual
 calendar events.
 
+
 [1]: http://calendar.google.com/
 [2]: /images/posts/13/settings-link-in-google-calendar.png
+[3]: /images/posts/13/mobile-setup-tab-in-google-calendar.png
 [4]: /images/posts/13/phone-number-successfully-validated.png
 [5]: /images/posts/13/event-reminders-in-google-calendar.png
