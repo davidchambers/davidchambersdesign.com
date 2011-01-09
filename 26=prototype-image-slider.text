@@ -32,7 +32,7 @@ Prototype image slider
 || Wrapping the word "class" in quotes as per this [recommendation by Tobie
 || Langel][4] did the trick!
 
-### Usage{@id=usage}
+### Usage {#usage}
 
 First, you'll need to save a copy of
 [prototype-image-slider.js](/examples/prototype-image-slider/prototype-image-slider.js)

@@ -30,7 +30,7 @@ Skip to [setup](#setup) or [usage](#usage)
 | || more elegant and more reliable. Additionally, style sheets are now also
 | || retrieved on demand.
 
-### Setup{@id=setup}
+### Setup {#setup}
 
 **Requires Prototype!**
 
@@ -85,7 +85,7 @@ dynamically:
 3.  Replace both instances of `http://example.com/sh/` in the above snippet
     with the path to your **SyntaxHighlighter** directory.
 
-### Usage{@id=usage}
+### Usage {#usage}
 
 The `settings` object provides flexibility by allowing various things to be
 modified or included.

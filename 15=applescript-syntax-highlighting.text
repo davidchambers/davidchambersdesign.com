@@ -74,7 +74,7 @@ end if
 
 Live rendering of AppleScript snippet{@class=caption}
 
-### Setup{@id=setup}
+### Setup {#setup}
 
 To add AppleScript syntax highlighting to your own site or blog, do the
 following:
@@ -101,7 +101,7 @@ following:
             SyntaxHighlighter.all();
         </script>
 
-### Usage{@id=usage}
+### Usage {#usage}
 
 To have SyntaxHighlighter parse a block of AppleScript, wrap the code in `pre`
 tags like so:
