@@ -74,9 +74,7 @@ I decided to use `#a9a9a9` as Safari uses this colour for placeholder text.
         }
     });
 
-The Placeholder class requires [Prototype][2].
-
-[2]: http://prototypejs.org/
+The Placeholder class requires [Prototype][3].
 
 ### Usage{@id=usage}
 
@@ -116,7 +114,7 @@ event listener. This also avoids polluting the global namespace.
 || For those that would like placeholder text in _password_ input
 || fields not to appear as dots or asterisks in older browsers, I've
 || written an alternative snippet. I drew inspiration from a post on
-|| [iPhone-like password fields using jQuery][3].
+|| [iPhone-like password fields using jQuery][4].
 || 
 ||     // provide input hints
 ||     document.observe('dom:loaded', function () {
@@ -180,4 +178,5 @@ event listener. This also avoids polluting the global namespace.
 
 [1]: http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/
 [2]: /autopopulating-input-fields-with-mootools/
-[3]: http://blog.decaf.de/2009/07/iphone-like-password-fields-using-jquery/
+[3]: http://prototypejs.org/
+[4]: http://blog.decaf.de/2009/07/iphone-like-password-fields-using-jquery/
