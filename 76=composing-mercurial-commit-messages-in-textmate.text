@@ -1,7 +1,7 @@
 date: 10 January 2011
 time: 1:25am
 zone: Australia/Sydney
-tags: hg, Mac OS X, Mercurial, TextMate
+tags: hg, Mac OS X, Markdown, Mercurial, TextMate
 
 
 Composing Mercurial commit messages in TextMate
@@ -17,13 +17,13 @@ write my commit messages in a text editor:
   * No need to escape quotation marks
 
 [TextMate][1] is particularly well suited to my needs due to its built-in
-Markdown highlighting and previewing – yes, I write commit messages in
+[Markdown][2] highlighting and previewing – yes, I write commit messages in
 Markdown!
 
 **To set TextMate as Mercurial's editor, add `editor = mate -w` to the `[ui]`
 section of your `~/.hgrc` file.**
 
-[Vince Cima explains][2]:
+[Vince Cima explains][3]:
 
 > Next time you do `hg commit` TextMate will open a temporary file you write
 > your commit message into. Type your message, save the file and then close
@@ -33,4 +33,5 @@ section of your `~/.hgrc` file.**
 
 
 [1]: http://macromates.com/
-[2]: http://vincecima.com/post/578017364/using-textmate-as-mercurials-editor
+[2]: http://daringfireball.net/projects/markdown/syntax
+[3]: http://vincecima.com/post/578017364/using-textmate-as-mercurials-editor
