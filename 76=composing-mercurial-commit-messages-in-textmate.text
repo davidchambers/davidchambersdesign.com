@@ -31,6 +31,17 @@ section of your `~/.hgrc` file.**
 > TextMate not to return control to the command line until the editor window
 > has been closed.
 
+|| date: 22 January 2011
+|| time: 3:20pm
+|| zone: Australia/Sydney
+|| 
+|| To use TextMate as your git editor, run the following command:
+|| 
+||     git config --global core.editor "mate -w"
+|| 
+|| This adds `editor = mate -w` to the `[core]` section of your `~/.gitconfig`
+|| file.
+
 
 [1]: http://macromates.com/
 [2]: http://daringfireball.net/projects/markdown/syntax
