@@ -46,8 +46,7 @@ a:focus                                         { color: #d70; outline: none; }
 a:hover                                         { color: #d70; }
 a code, a var                                   { color: #05b; }
 aside                                           { margin: 1.75em 0 0; font-style: italic; color: #666; }
-blockquote                                      { width: 75%; font: italic 1.167em/1.5em Georgia, serif; color: #666; }
-blockquote p                                    { margin: 1.5em 0 0 !important; }
+blockquote                                      { border-left: 0.5em solid #ddd; padding: 0 2.25em 0 1.75em; font-style: italic; color: #666; }
 blockquote em                                   { font-style: normal; }
 caption                                         { text-align: left; font-weight: normal; }
 code, var                                       { font: normal 110%/1em Courier, "Courier New", monospace; color: #250; }
@@ -195,7 +194,6 @@ article h2+article                              { margin: 1.25em 0 0 -30px; bord
 article article>div                             { float: left; width: 65%; }
 article article>div>p:first-child               { margin: 0; }
 article article>div>blockquote:first-child>p:first-child { margin: 0 !important; }
-article article>div blockquote                  { width: 100%; }
 article article footer                          { position: relative; float: right; width: 30%; padding: 0; color: #000; }
 article article footer img                      { position: absolute; top: 0.417em; left: 0; display: block; }
 article article footer strong,
