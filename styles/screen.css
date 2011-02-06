@@ -44,7 +44,7 @@ a#title:focus, a#title:hover, a#title.hover     { background: url(data:image/png
 a                                               { font-weight: bold; text-decoration: none; color: #05b; }
 a:focus                                         { color: #d70; outline: none; }
 a:hover                                         { color: #d70; }
-a code, a var                                   { color: #05b; }
+a code, a var                                   { color: inherit; }
 aside                                           { margin: 1.75em 0 0; font-style: italic; color: #666; }
 blockquote                                      { border-left: 0.5em solid #ddd; padding: 0 2.25em 0 1.75em; font-style: italic; color: #666; }
 blockquote em                                   { font-style: normal; }
