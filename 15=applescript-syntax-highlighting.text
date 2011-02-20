@@ -2,6 +2,7 @@ date: 4 June 2009
 time: 3:12am
 zone: Pacific/Auckland
 tags: AppleScript, JavaScript, Mac OS X, SyntaxHighlighter
+require: SyntaxHighlighter, AppleScript mode
 
 
 AppleScript syntax highlighting
