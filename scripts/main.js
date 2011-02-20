@@ -47,7 +47,20 @@ jQuery(function ($) {
   }());
 
   // syntax highlighting
-  $('pre>code').addClass('prettyprint');
+  $('pre>code').each(function () {
+    var
+      $this = $(this),
+      text = $.trim($this.text());
+
+    if (text.split('\n')[0] === '#!/usr/bin/osascript')
+      $this
+        .parent()
+          .addClass('brush:applescript')
+          .text(text);
+    else
+      $this
+        .addClass('prettyprint');
+  });
   prettyPrint();
 
   // date and time localization
