@@ -99,7 +99,7 @@ label.required:after                            { content: "*"; color: #999; }
 object.youtube                                  { width: 100%; height: 385px; }
 ol                                              { margin: 1.75em 0 0; list-style: decimal outside; }
 p                                               { margin: 1.75em 0 0; }
-p.caption                                       { margin: 0.417em 0 0; font-style: italic; color: #666; }
+p.caption                                       { margin: 0.5em 0 0; font-style: italic; color: #666; }
 pre                                             { margin: 1.286em 0 -0.214em; border: 1px solid #ccc; background-color: #fff; padding: 0.143em 0.714em; font: 1.167em/1.5em Courier, "Courier New", monospace; overflow: auto; }
 li pre                                          { margin: 1.286em 0; }
 select                                          { min-width: 150px; }
@@ -146,7 +146,7 @@ article>header>dl>dd>a                          { font-weight: normal; }
 #tags li a:hover, #tags li a.hover              { top: -6px; left: -21px; width: 100%; padding: 16px 21px; -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); font-size: 1.167em; z-index: 99; }
 
 div.syntaxhighlighter                           { margin: 1.75em 0 -1px !important; }
-div.syntaxhighlighter code                      { white-space: normal; }
+div.syntaxhighlighter code                      { color: inherit; }
 
 .clearfix                                       { clear: both; }
 .filesize                                       { color: #666; }
