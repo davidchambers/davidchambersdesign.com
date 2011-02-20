@@ -36,6 +36,8 @@ snippet is text rendered by _your_ browser.
 : Screenshot of snippet styled by AppleScript theme for SyntaxHighlighter
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#!/usr/bin/osascript
+
 (*
     This handler determines whether someone is happy.
     It's actually just a good way to showcase AppleScript syntax highlighting using Alex Gorbatchev's SyntaxHighlighter.
