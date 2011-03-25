@@ -13,7 +13,7 @@ setTimeout fix for -webkit-transition
 |    style="position:relative;left:0;top:0;width:200px;line-height:5.25em;
 |           background-color:#ccc;text-align:center;">Click to animate</p>
 | 
-| <script type="text/javascript">
+| <script>
 |     (function () {
 |         var element = document.getElementById('transition-example-1');
 |         element.style.webkitTransitionProperty = 'left';
@@ -44,7 +44,7 @@ The following example, though, does not act as one might expect!
    style="position:relative;left:0;top:0;width:200px;line-height:5.25em;
           background-color:#ccc;text-align:center;">Click to reposition</p>
 
-<script type="text/javascript">
+<script>
     (function () {
         var element = document.getElementById('transition-example-2');
         element.addEventListener('click', function () {
@@ -83,7 +83,7 @@ I did manage to get the element to behave as I had intended:
    style="position:relative;left:0;top:0;width:200px;line-height:5.25em;
           background-color:#ccc;text-align:center;">Click to reposition</p>
 
-<script type="text/javascript">
+<script>
     (function () {
         var element = document.getElementById('transition-example-3');
         element.addEventListener('click', function () {
