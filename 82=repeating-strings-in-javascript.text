@@ -1,0 +1,30 @@
+date: 31 March 2011
+time: 5:30pm
+zone: America/Los_Angeles
+tags: JavaScript, programming
+
+
+Repeating strings in JavaScript
+===============================
+
+Python and Ruby share beautiful syntax for repeating strings; PHP's syntax is
+characteristically ugly.
+
+### Python {#python}
+
+    '=' * 5
+
+### Ruby {#ruby}
+
+    '=' * 5
+
+### PHP {#php}
+
+    str_repeat('=', 5)
+
+### JavaScript? {#javascript}
+
+True to form, repeating strings in JavaScript is ugly and counterintuitive,
+but kinda cool.
+
+    new Array(5 + 1).join('=')
