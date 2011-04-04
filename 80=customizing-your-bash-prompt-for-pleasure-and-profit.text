@@ -26,7 +26,7 @@ line_ (with a preceding `\n` providing much-needed breathing room).
 
 Add something like the following to your **~/.bashrc**.
 
-    PS1="\n\e[1;36m\]\w\n\e[1;32m\]> \e[00m\]"
+    PS1="\n\[\e[1;36m\]\w\n\[\e[1;32m\]> \[\e[0m\]"
 
 #### What the heck does all this mean?
 
@@ -35,19 +35,31 @@ things.
 
 `\n` is a newline.
 
-`\e[` begins a sequence of non-printing characters.
+`\[` begins a sequence of non-printing characters.
 
-`1;36m` is the code for "light cyan".
+`\e[1;36m` is the code for "light cyan".
 
 `\]` ends the sequence of non-printing characters.
 
 `\w` is the current working directory (with a tilde used in place of `$HOME`).
 
-`\n\e[1;32m\]` is another newline, followed by another colour ("light green").
+`\n` is another newline.
+
+`\[\e[1;32m\]` is a sequence of non-printing characters containing the code
+for "light green".
 
 `> ` is simply a ">" followed by a space.
 
-`\e[00m\]` puts an end to the colouring, preventing it from "spilling out".
+`\[\e[0m\]` puts an end to the colouring, preventing it from "spilling out".
+
+|| date: 3 April 2011
+|| time: 9:00pm
+|| zone: America/Los_Angeles
+|| 
+|| When first this post was published colour codes were not preceded by `\[`.
+|| The colour codes themselves were thus considered when calculating the
+|| prompt's length, meaning that the first several characters of a command
+|| would sometimes remain visible when arrowing up and down. >.<
 
 #### Note for Mac OS X users
 
