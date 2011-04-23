@@ -1,66 +1,100 @@
 jQuery(function ($) {
 
   // simulate `:hover`
-  (function () {
-    if (navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
-      var $a = $('a').live('touchstart', function () { $(this).addClass('hover'); }).live('touchend', function () { $a.removeClass('hover'); });
-    }
-  }());
+  if (navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
+    $('a')
+      .live(
+        'touchstart',
+        function () {
+          $(this).addClass('hover');
+        }
+      )
+      .live(
+        'touchend',
+        function () {
+          $(this).removeClass('hover');
+        }
+      );
+  }
 
   // accommodate fixed-position header
-  (function (id) {
-    $.each($('h2[id],h3[id],h4[id]'), function () {
-      (id = this.id) && $(this).attr('id', null).addClass(id+' unidentified').prepend('<span id='+id+'>').append('<a href=#'+id+'>\u00B6</a>');
-    });
+  (function () {
+    $('h2[id],h3[id],h4[id]')
+      .each(
+        function () {
+          var id = this.id;
+          if (id) {
+            $(this)
+              .attr('id', null)
+              .addClass(id+' unidentified')
+              .prepend('<span id='+id+'>')
+              .append('<a href=#'+id+'>¶</a>');
+          }
+        }
+      );
   }());
 
   // scrolling
-  (function () {
-    $('a[href^="#"]').click(function (event) {
-      event.preventDefault();
-      var
-        delta, intervalId, n, offset,
-        positions, round = Math.round,
-        hash = $(this).attr('href'),
-        $el = $(hash);
+  (function (undef) {
+    $('a[href^="#"]')
+      .click(
+        function (event) {
+          var
+            delta, intervalId, n, offset,
+            positions, round = Math.round,
+            hash = $(this).attr('href'),
+            $el = $(hash);
 
-      if ($el.length != 1) return;
+          if ($el.length === 1) {
+            offset = $el.offset().top;
+            delta = offset - window.pageYOffset;
+            n = round(Math.log(Math.abs(delta)) * 2) || 1;
 
-      offset = $el.offset().top;
-      delta = offset - window.pageYOffset;
-      n = round(Math.log(Math.abs(delta)) * 2) || 1;
+            $.each(
+              positions = new Array(n),
+              function (index) {
+                positions[index] = round(offset - index*(delta/n));
+              }
+            );
 
-      $.each(positions = new Array(n), function (index) {
-        positions[index] = round(offset - index*(delta/n));
-      });
-
-      intervalId = window.setInterval(function () {
-        var position = positions.pop();
-        if (typeof position != 'undefined') {
-          window.scrollTo(0, position);
-        } else {
-          window.location.hash = hash;
-          window.clearInterval(intervalId);
+            intervalId =
+              window.setInterval(
+                function () {
+                  var position = positions.pop();
+                  if (position === undef) {
+                    window.scrollTo(0, position);
+                  } else {
+                    window.location.hash = hash;
+                    window.clearInterval(intervalId);
+                  }
+                },
+                20
+              );
+            event.preventDefault();
+          }
         }
-      }, 20);
-    });
+      );
   }());
 
   // syntax highlighting
-  $('pre>code').each(function () {
-    var
-      $this = $(this),
-      text = $.trim($this.text());
+  $('pre>code')
+    .each(
+      function () {
+        var
+          $this = $(this),
+          text = $.trim($this.text());
 
-    if (text.split('\n')[0] === '#!/usr/bin/osascript')
-      $this
-        .parent()
-          .addClass('brush:applescript')
-          .text(text);
-    else
-      $this
-        .addClass('prettyprint');
-  });
+        if (text.split('\n')[0] === '#!/usr/bin/osascript') {
+          $this
+            .parent()
+              .addClass('brush:applescript')
+              .text(text);
+        } else {
+          $this
+            .addClass('prettyprint');
+        }
+      }
+    );
   prettyPrint();
 
   // date and time localization
@@ -75,11 +109,18 @@ jQuery(function ($) {
   }());
 
   // reload link
-  $('#nav').find('a[href="/flushcache/"]').click(function (event) {
-    event.preventDefault();
-    $.get(this.href, function () {
-      window.location.reload(true);
-    });
-  });
+  $('#nav')
+    .find('a[href="/flushcache/"]')
+      .click(
+        function (event) {
+          $.get(
+            this.href,
+            function () {
+              window.location.reload(true);
+            }
+          );
+          event.preventDefault();
+        }
+      );
 
 });
