@@ -1,7 +1,7 @@
 jQuery(function ($) {
 
   // simulate `:hover`
-  if (navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
+  if (/(iPhone|iPod|iPad)/i.test(navigator.userAgent)) {
     $('a')
       .live(
         'touchstart',
@@ -84,7 +84,7 @@ jQuery(function ($) {
           $this = $(this),
           text = $.trim($this.text());
 
-        if (text.split('\n')[0] === '#!/usr/bin/osascript') {
+        if (/^#!\/usr\/bin\/osascript\s/.test(text)) {
           $this
             .parent()
               .addClass('brush:applescript')
