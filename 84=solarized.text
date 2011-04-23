@@ -1,0 +1,37 @@
+date: 23 April 2011
+time: 2:20am
+zone: America/Los_Angeles
+tags: Coda, design, programming, Solarized
+
+
+Solarized
+=========
+
+Earlier this week I discovered [Solarized][1], "a sixteen color palette [...]
+designed for use with terminal and gui applications".
+
+Bundles are available for all the popular editors; I went ahead and cloned
+the [Coda bundle][2]. While the code on my screen immediately looked very
+nice, a few of Justin's colour choices didn't sit well with me.* I spent
+an hour or two trying a large number of different combinations until my
+JavaScript file was harmoniously highlighted.
+
+![Solarized code snippet](/images/posts/84/solarized-code-snippet.png)
+: Solarized code snippet
+
+I wanted an even intensity, but didn't allow myself to deviate from Ethan's
+prescribed colours. I'm happy with the result: the soft highlighting makes the
+code easier to understand without being a distraction. Only regular expression
+literals leap forward, but these tend to occur infrequently.
+
+Coda users may be surprised to see method invocations highlighted. That's one
+of the minor enhancements I've made to the default mode. If you're interested,
+have a look at [Javascript.mode][3] on Bitbucket.
+
+\* Blue escape sequences within red regular expression literals are too
+striking for my liking!
+
+
+[1]: http://ethanschoonover.com/solarized
+[2]: https://github.com/bobthecow/solarized-seestyle
+[3]: https://bitbucket.org/davidchambers/javascript.mode
