@@ -104,7 +104,7 @@ pre                                             { margin: 1.286em 0 -0.214em; bo
 li pre                                          { margin: 1.286em 0; }
 select                                          { min-width: 150px; }
 strong                                          { font-weight: bold; }
-textarea                                        { display: block; width: 98%; height: 15.75em; border: 1px solid #ccc; padding: 0 0.5em; font: 1em/1.75 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif; outline: none; overflow: auto; }
+textarea                                        { display: block; width: 98%; height: 15em; border: 1px solid #ccc; padding: 0.333em 0.5em; font: 1em/1.25 Monaco, monospace; outline: none; overflow: auto; }
 textarea:focus                                  { border-color: #6ad; }
 time span                                       { display: block; color: #666; }
 time span+span                                  { color: #a9a9a9; }
@@ -144,6 +144,8 @@ article>header>dl>dd>a                          { font-weight: normal; }
 #tags li[data-count="1"] a                      { background: rgb(247, 247, 247); color: rgba(0, 0, 0, 0.300); }
 #tags li a:focus,
 #tags li a:hover, #tags li a.hover              { top: -6px; left: -21px; width: 100%; padding: 16px 21px; -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); font-size: 1.167em; z-index: 99; }
+
+.hashify-editor                                 { margin-top: 2px; }
 
 div.syntaxhighlighter                           { margin: 1.75em 0 -1px !important; }
 div.syntaxhighlighter code                      { color: inherit; }

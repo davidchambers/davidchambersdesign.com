@@ -123,4 +123,11 @@ jQuery(function ($) {
         }
       );
 
+  $('textarea')
+    .each(
+      function () {
+        Hashify.editor(this);
+      }
+    );
+
 });
