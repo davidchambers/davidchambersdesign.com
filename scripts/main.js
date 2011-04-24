@@ -59,7 +59,7 @@ jQuery(function ($) {
               window.setInterval(
                 function () {
                   var position = positions.pop();
-                  if (position === undef) {
+                  if (position !== undef) {
                     window.scrollTo(0, position);
                   } else {
                     window.location.hash = hash;
