@@ -18,21 +18,19 @@ jQuery(function ($) {
   }
 
   // accommodate fixed-position header
-  (function () {
-    $('h2[id],h3[id],h4[id]')
-      .each(
-        function () {
-          var id = this.id;
-          if (id) {
-            $(this)
-              .attr('id', null)
-              .addClass(id+' unidentified')
-              .prepend('<span id='+id+'>')
-              .append('<a href=#'+id+'>¶</a>');
-          }
+  $('h2[id],h3[id],h4[id]')
+    .each(
+      function () {
+        var id = this.id;
+        if (id) {
+          $(this)
+            .attr('id', null)
+            .addClass(id+' unidentified')
+            .prepend('<span id='+id+'>')
+            .append('<a href=#'+id+'>¶</a>');
         }
-      );
-  }());
+      }
+    );
 
   // scrolling
   (function (undef) {
