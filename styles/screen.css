@@ -73,8 +73,8 @@ h4                                              { margin: 1.5em 0 0; font-size: 
 .unidentified a                                 { visibility: hidden; }
 .unidentified:hover a                           { visibility: visible; }
 hr                                              { height: 0; border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #999; }
-iframe.youtube                                  { display: block; margin: 1.75em 0 0; width: 100%; height: 385px; }
-dt>iframe.youtube                               { margin: 0; }
+iframe.video                                    { display: block; margin: 1.75em 0 0; width: 100%; height: 385px; }
+dt>iframe.video                                 { margin: 0; }
 img                                             { display: block; vertical-align: text-bottom; }
 img[src*="/decorative/left/"]                   { float: left; margin: 0 1em 0 0; border: none !important; }
 img[src*="/decorative/right/"]                  { float: right; margin: 0 0 0 1em; border: none !important; }
@@ -98,7 +98,7 @@ input.placeholder                               { color: #a9a9a9 !important; }
 ins                                             { background-color: transparent; text-decoration: underline; }
 label                                           { position: absolute; top: 0; left: 19.833em; margin: 1px 0 0; color: #666; }
 label.required:after                            { content: "*"; color: #999; }
-object.youtube                                  { width: 100%; height: 385px; }
+object.video                                    { width: 100%; height: 385px; }
 ol                                              { margin: 1.75em 0 0; list-style: decimal outside; }
 p                                               { margin: 1.75em 0 0; }
 p.caption                                       { margin: 0.5em 0 0; font-style: italic; color: #666; }
