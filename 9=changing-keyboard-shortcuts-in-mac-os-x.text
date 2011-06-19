@@ -21,7 +21,7 @@ I stumbled upon this useful information while reading [Camino's FAQ][1].
 I have reproduced its step-by-step instructions below, since they are right
 on the money.
 
-* First, quit <application>; if it is running.
+* First, quit «application»; if it is running.
 * Open **System Preferences**.
 * Choose the **"Keyboard & Mouse"** pane.
 * Select the "Keyboard Shortcuts" tab.
