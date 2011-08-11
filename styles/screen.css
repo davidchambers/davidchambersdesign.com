@@ -970,7 +970,10 @@ input[type="submit"] {
   border: 1px solid #999;
   background: #ddd;
   background: -webkit-gradient(linear, 0 0, 0 100%, from(#eee), to(#ccc));
-  background: -moz-linear-gradient(top, #eee, #ccc);
+  background: -webkit-linear-gradient(#eee, #ccc);
+  background: -moz-linear-gradient(#eee, #ccc);
+  background: -ms-linear-gradient(#eee, #ccc);
+  background: -o-linear-gradient(#eee, #ccc);
   padding: 0 10px;
   font: 1.167em/30px "proxima-nova-1", "proxima-nova-2", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
   text-shadow: 0 1px 0 #fff;
@@ -984,13 +987,19 @@ input[type="submit"]:focus {
 input[type="submit"]:hover {
   background: #ccc;
   background: -webkit-gradient(linear, 0 0, 0 100%, from(#ddd), to(#bbb));
-  background: -moz-linear-gradient(top, #ddd, #bbb);
+  background: -webkit-linear-gradient(#ddd, #bbb);
+  background: -moz-linear-gradient(#ddd, #bbb);
+  background: -ms-linear-gradient(#ddd, #bbb);
+  background: -o-linear-gradient(#ddd, #bbb);
   cursor: pointer;
 }
 
 input[type="submit"]:active {
   background: -webkit-gradient(linear, 0 0, 0 100%, from(#bbb), to(#ddd));
-  background: -moz-linear-gradient(top, #bbb, #ddd);
+  background: -webkit-linear-gradient(#bbb, #ddd);
+  background: -moz-linear-gradient(#bbb, #ddd);
+  background: -ms-linear-gradient(#bbb, #ddd);
+  background: -o-linear-gradient(#bbb, #ddd);
 }
 
 label[for="cc_sender"],
