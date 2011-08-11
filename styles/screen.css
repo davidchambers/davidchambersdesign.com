@@ -304,12 +304,18 @@ caption {
 
 code,
 var {
-  font: normal 110%/1 Courier, "Courier New", monospace;
-  color: #250;
+  border: 1px solid #eee8d5;
+  background: #fdf6e3;
+  padding: 1px 4px;
+  font: normal 120%/1 Courier, "Courier New", monospace;
+  color: #586e75;
 }
 
 pre code {
   display: block;
+  border: none;
+  background: none;
+  padding: 0;
   font-size: 1em;
   line-height: 1.5;
   color: inherit;
