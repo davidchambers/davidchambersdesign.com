@@ -2,14 +2,14 @@
 
 html {
   height: 100%;
-  background-color: #f7f7f7;
+  background-color: #fdf6e3;
 }
 
 body {
   position: relative;
   min-width: 675px;
   height: 100%;
-  background-color: #f7f7f7;
+  background-color: #fdf6e3;
   font-size: 75%; /* for IE 6 and earlier */
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
   color: #222;
@@ -40,7 +40,7 @@ html>body {
   top: 0;
   width: 100%;
   height: 160px;
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAACgCAYAAADNVQbCAAAAKElEQVQoz2P4/v37f4ZRYpQYcsQrVOI0KrEclWhAJSJQCRNUQhRBAAB6tWQrfjcAUAAAAABJRU5ErkJggg==) repeat-x;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAACgCAYAAADNVQbCAAAAUElEQVQoke3JsQ0CQRAEwd5+EPlniYE3J+E8NxhEgfROOcXn/awAFxd/xsxEILYsZ4jQCMZ2r98yE+leUiMSnUZ6xLPn8rYbOe6RB5EXC4AvwzcoH+3LgngAAAAASUVORK5CYII=) repeat-x;
   z-index: 10;
 }
 
@@ -305,7 +305,7 @@ caption {
 code,
 var {
   border: 1px solid #eee8d5;
-  background: #fdf6e3;
+  background: #fef9ec;
   padding: 1px 4px;
   font: normal 120%/1 Courier, "Courier New", monospace;
   color: #586e75;
@@ -545,7 +545,7 @@ p.caption {
 pre {
   margin: 1.286em 0 -0.214em;
   border: 1px solid #eee8d5;
-  background-color: #fdf6e3;
+  background-color: #fef9ec;
   padding: 0.143em 0.714em;
   font: 1.167em/1.5 Courier, "Courier New", monospace;
   overflow: auto;
