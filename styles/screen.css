@@ -500,6 +500,7 @@ input[type="search"] {
   -webkit-box-sizing: content-box;
   height: 15px;
   border: 1px solid #ccc;
+  background: #fef9ec;
   padding: 3px 0.5em;
   font-size: 1em;
 }
@@ -580,6 +581,7 @@ textarea {
   width: 98%;
   height: 15em;
   border: 1px solid #ccc;
+  background: #fef9ec;
   padding: 0.333em 0.5em;
   font: 1em/1.25 Monaco, monospace;
   outline: none;
