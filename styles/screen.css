@@ -508,7 +508,7 @@ input[type="url"]:focus,
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="search"]:focus {
-  border-color: #6ad;
+  border-color: #268bd2;
   outline: none;
 }
 
@@ -587,7 +587,7 @@ textarea {
 }
 
 textarea:focus {
-  border-color: #6ad;
+  border-color: #268bd2;
 }
 
 time span {
@@ -998,7 +998,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:focus {
-  border-color: #6ad;
+  border-color: #268bd2;
   outline: none;
 }
 
