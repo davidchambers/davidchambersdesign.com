@@ -263,16 +263,16 @@ a#title.hover {
 a {
   font-weight: bold;
   text-decoration: none;
-  color: #05b;
+  color: #268bd2;
 }
 
 a:focus {
-  color: #d70;
+  color: #cb4b16;
   outline: none;
 }
 
 a:hover {
-  color: #d70;
+  color: #cb4b16;
 }
 
 a code,
@@ -834,14 +834,14 @@ footer.metadata ul a {
   -webkit-border-radius: 0.875em;
   -moz-border-radius: 0.875em;
   border-radius: 0.875em;
-  background: #05b;
+  background: #268bd2;
   padding: 0 0.667em 0 0.833em;
   color: #fff;
 }
 
 footer.metadata ul a:focus,
 footer.metadata ul a:hover {
-  background: #d70;
+  background: #cb4b16;
 }
 
 footer.metadata h4 {
