@@ -29,9 +29,9 @@ I created a simple timer:
     function timer(func) {
         var i = 10, start;
         while (i--) {
-            start = (new Date()).getTime();
-            func.apply(this, Array.prototype.slice.call(arguments, 1));
-            console.log(func.name, 'executed in', (new Date()).getTime() - start, 'ms');
+            start = new Date;
+            func.apply(this, [].slice.call(arguments, 1));
+            console.log(func.name, 'executed in', new Date - start, 'ms');
         }
     }
 
@@ -56,7 +56,7 @@ Fortunately, it's easy to improve the performance significantly.
 
 JavaScript has closure, which means that each function has access to the
 variables and parameters or its outer function (and the variables and
-paramaters of its outer function's outer function, and so on).
+parameters of its outer function's outer function, and so on).
 
 This is incredibly powerful. It makes it possible to create a variable,
 `cache`, which can _only_ be accessed by our `fibonacci` function. This
@@ -106,7 +106,7 @@ is now 0, however, the `if (cached)` statement is no longer appropriate.
         return function (n) {
 
             var cached = cache[n];
-            if (typeof cached != 'undefined') return cached;
+            if (typeof cached !== 'undefined') return cached;
 
             return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
         };
