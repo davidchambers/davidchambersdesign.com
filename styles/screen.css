@@ -12,7 +12,7 @@ body {
   background-color: #fdf6e3;
   font-size: 75%; /* for IE 6 and earlier */
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
-  color: #222;
+  color: #657b83;
   cursor: default;
 }
 
@@ -257,7 +257,7 @@ a#title.hover {
 
 #wrap+footer>:first-child {
   margin: -1px 0 0;
-  color: #666;
+  color: #93a1a1;
 }
 
 ::-moz-selection {
@@ -295,14 +295,14 @@ a var {
 aside {
   margin: 1.75em 0 0;
   font-style: italic;
-  color: #666;
+  color: #93a1a1;
 }
 
 blockquote {
-  border-left: 0.5em solid #ddd;
+  border-left: 0.5em solid #eee8d5;
   padding: 0 2.25em 0 1.75em;
   font-style: italic;
-  color: #666;
+  color: #93a1a1;
 }
 
 blockquote em {
@@ -374,7 +374,7 @@ dl dt object {
 
 dl dd {
   font-style: italic;
-  color: #666;
+  color: #93a1a1;
 }
 
 dl dt.textual~dd {
@@ -392,7 +392,7 @@ em {
 #main article header time,
 h1, h2, h3, h4 {
   font: bold 1.667em/1.05 "proxima-nova-1", "proxima-nova-2", Helvetica, Arial, sans-serif;
-  color: #111;
+  color: #586e75;
   text-shadow: 0 1px 0 #fff;
 }
 
@@ -526,7 +526,7 @@ label {
   left: 19.833em;
   top: 0;
   margin: 1px 0 0;
-  color: #666;
+  color: #93a1a1;
 }
 
 label.required:after {
@@ -551,7 +551,7 @@ p {
 p.caption {
   margin: 0.5em 0 0;
   font-style: italic;
-  color: #666;
+  color: #93a1a1;
 }
 
 pre {
@@ -592,7 +592,7 @@ textarea:focus {
 
 time span {
   display: block;
-  color: #666;
+  color: #93a1a1;
 }
 
 time span+span {
@@ -625,7 +625,7 @@ video {
 article>header>dl {
   margin: 1.571em 0 -0.071em;
   font: 1.167em/1.5 Courier, "Courier New", monospace;
-  color: #666;
+  color: #93a1a1;
   overflow: auto;
 }
 
@@ -739,7 +739,7 @@ div.syntaxhighlighter code {
 }
 
 .filesize {
-  color: #666;
+  color: #93a1a1;
 }
 
 .structural {
@@ -758,7 +758,7 @@ ol li.interviewer~li {
 
 ol li.interviewer:nth-child(1),
 ol li.interviewer~li:nth-child(odd) {
-  color: #666;
+  color: #93a1a1;
 }
 
 #comments, .comments.unidentified,
@@ -800,7 +800,7 @@ ol li.interviewer~li:nth-child(odd) {
 #main article header time {
   display: inline;
   font-weight: normal;
-  color: #666;
+  color: #93a1a1;
   white-space: nowrap;
 }
 
@@ -1040,7 +1040,7 @@ ol.pages {
 
 ol.posts {
   list-style: none;
-  color: #666;
+  color: #93a1a1;
 }
 
 ol.archives {
@@ -1052,7 +1052,7 @@ ol.archives li h2 {
   margin: 1.75em 0 0 21px;
   padding: 0;
   font: bold 1em/1.75 "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
-  color: #666;
+  color: #93a1a1;
 }
 
 ol.archives li ol {
