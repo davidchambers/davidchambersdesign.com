@@ -538,8 +538,8 @@ p.caption {
 
 pre {
   margin: 1.286em 0 -0.214em;
-  border: 1px solid #ccc;
-  background-color: #fff;
+  border: 1px solid #eee8d5;
+  background-color: #fdf6e3;
   padding: 0.143em 0.714em;
   font: 1.167em/1.5 Courier, "Courier New", monospace;
   overflow: auto;
@@ -1170,14 +1170,14 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
   border: none;
 }
 
-.atn { color: #994500; }
-.atv { color: #1a1aa6; }
-.com { color: #236e25; font-style: italic; }
-.dec { color: #236e25; }
-.kwd { color: #881350; }
-.lit { color: #00f; }
-.pln { color: #000; }
-.pun { color: #000; }
-.str { color: #760f15; }
-.tag { color: #881280; }
-.typ { color: #000; }
+.atn { color: #657b83; }
+.atv { color: #2aa198; }
+.com { color: #93a1a1; }
+.dec { color: #93a1a1; }
+.kwd { color: #859900; }
+.lit { color: #d33682; }
+.pln { color: #657b83; }
+.pun { color: #657b83; }
+.str { color: #2aa198; }
+.tag { color: #268bd2; }
+.typ { color: #657b83; }
