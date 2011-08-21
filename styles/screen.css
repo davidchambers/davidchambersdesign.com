@@ -814,21 +814,15 @@ ol li.interviewer~li:nth-child(odd) {
 }
 
 .update {
-  margin: 1.75em -1000% -1px;
+  margin: 1.75em 0 -1px;
   border-width: 1px 0;
   border-style: solid;
-  border-color: #b85;
-  background-color: #feb;
-  padding: 1.667em 1000% 1.75em;
+  border-color: #93a1a1;
+  padding: 1.667em 0 1.75em;
 }
 
 .update h4:first-child {
   margin: 0;
-}
-
-.update pre {
-  border-color: #a96;
-  background-color: #eda;
 }
 
 footer.metadata {
