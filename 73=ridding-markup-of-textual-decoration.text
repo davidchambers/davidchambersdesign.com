@@ -7,15 +7,19 @@ tags: CSS, HTML, meaningful markup
 Ridding markup of textual decoration
 ====================================
 
-| On the Web it's not uncommon to see characters with no inherent meaning used
-| for stylistic reasons. A good example is the [Read more »](#) link. Perhaps
-| the directionality of the "»" is suggestive of travelling to another page,
-| or perhaps the letterform is included solely for its aesthetic appeal.
-| Whatever the case, one thing is certain: links do not require right-pointing
-| double angle quotation marks in order to function.
-| 
-| **The inclusion of such a character is therefore a design decision.** It is
-| decoration, not content. It belongs in a style sheet, not in a page's markup.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+On the Web it's not uncommon to see characters with no inherent meaning used
+for stylistic reasons. A good example is the [Read more »](#) link. Perhaps
+the directionality of the "»" is suggestive of travelling to another page, or
+perhaps the letterform is included solely for its aesthetic appeal. Whatever
+the case, one thing is certain: links do not require right-pointing double
+angle quotation marks in order to function.
+
+**The inclusion of such a character is therefore a design decision.** It is
+decoration, not content. It belongs in a style sheet, not in a page's markup.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 Adding decorative textual content via CSS
 -----------------------------------------

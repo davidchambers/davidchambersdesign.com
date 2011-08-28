@@ -7,18 +7,22 @@ tags: JavaScript, PHP, SyntaxHighlighter
 PHP brush for SyntaxHighlighter
 ===============================
 
-| Alex Gorbatchev's [SyntaxHighlighter][1] is a well-written bundle which
-| enables syntax highlighting of code via JavaScript. More than twenty
-| languages are supported "out of the box", and brushes (JavaScript files
-| containing language-specific regular expressions) can be created to
-| support additional languages.
-| 
-| Unfortunately, however, several of the brushes that come bundled with
-| SyntaxHighlighter are far from perfect. Have a look at the bundled PHP
-| brush in action below.
-| 
-| ![Screenshot of PHP code highlighted by SyntaxHighlighter's PHP brush][2]
-| : Screenshot of bundled PHP brush in action
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+Alex Gorbatchev's [SyntaxHighlighter][1] is a well-written bundle which
+enables syntax highlighting of code via JavaScript. More than twenty
+languages are supported "out of the box", and brushes (JavaScript files
+containing language-specific regular expressions) can be created to
+support additional languages.
+
+Unfortunately, however, several of the brushes that come bundled with
+SyntaxHighlighter are far from perfect. Have a look at the bundled PHP
+brush in action below.
+
+![Screenshot of PHP code highlighted by SyntaxHighlighter's PHP brush][2]
+: Screenshot of bundled PHP brush in action
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 I would give this brush 6/10. Here are its deficiencies, as I see them:
 
@@ -37,24 +41,26 @@ for variables within double-quoted strings; **numval** for numerical values;
 (user-defined) functions; and **constant**, **keyword**, and **variable**
 for exactly what you'd expect.
 
-|| date: 16 August 2009
-|| time: 2:33am
-|| zone: Pacific/Auckland
-|| 
-|| Until this point I have had a class name added to each div.syntaxhighlighter
-|| element to allow code to be coloured in a language-specific manner. This
-|| approach fails, however, when a highlighted block features two languages
-|| (PHP and HTML, for example). CSS selectors cannot differentiate between two
-|| code elements with the same class name in the same div.syntaxhighlighter
-|| element.
-|| 
-|| Each language, therefore, needs to use its own class names. It is easy to
-|| differentiate `code.php-comment` from `code.xml-comment`, allowing PHP
-|| comments to be styled differently from XML comments if desired.
-|| 
-|| The updated class names are **php-tag**, **php-comment**, **php-string**,
-|| **php-varinstr**, **php-numval**, **php-function**, **php-custfunc**,
-|| **php-constant**, **php-keyword**, and **php-variable**.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 16 August 2009, 2:33am (Pacific/Auckland)
+
+Until this point I have had a class name added to each div.syntaxhighlighter
+element to allow code to be coloured in a language-specific manner. This
+approach fails, however, when a highlighted block features two languages
+(PHP and HTML, for example). CSS selectors cannot differentiate between two
+code elements with the same class name in the same div.syntaxhighlighter
+element.
+
+Each language, therefore, needs to use its own class names. It is easy to
+differentiate `code.php-comment` from `code.xml-comment`, allowing PHP
+comments to be styled differently from XML comments if desired.
+
+The updated class names are **php-tag**, **php-comment**, **php-string**,
+**php-varinstr**, **php-numval**, **php-function**, **php-custfunc**,
+**php-constant**, **php-keyword**, and **php-variable**.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
     <?php
     

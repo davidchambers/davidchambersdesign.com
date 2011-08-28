@@ -7,26 +7,29 @@ tags: bookmarklets, iPhone, JavaScript
 Resize browser window to match iPhone viewport dimensions
 =========================================================
 
-| I've recently become interested in optimizing sites for the iPhone and
-| iPod touch. While nothing beats testing on the device itself, I often find it
-| quicker to test changes on my Mac. Changing the user agent string is a piece
-| of cake in Safari (Develop > User Agent > Mobile Safari) but what about
-| adjusting the browser window's dimensions to match those of the iPhone?
-| 
-| I've created two bookmarklets to allow the current page to be loaded in an
-| iPhone-sized window with a single click:
-| 
-| * **Portrait** (labelled "⁑")
-| 
-|         javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
-| 
-| * **Landscape** (labelled "**")
-| 
-|         javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
-| 
-| ![iPhone testing bookmarklets][1]
-| : iPhone testing bookmarklets: portrait and landscape
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+I've recently become interested in optimizing sites for the iPhone and iPod
+touch. While nothing beats testing on the device itself, I often find it
+quicker to test changes on my Mac. Changing the user agent string is a piece
+of cake in Safari (Develop > User Agent > Mobile Safari) but what about
+adjusting the browser window's dimensions to match those of the iPhone?
+
+I've created two bookmarklets to allow the current page to be loaded in an
+iPhone-sized window with a single click:
+
+* **Portrait** (labelled "⁑")
+
+        javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
+
+* **Landscape** (labelled "**")
+
+        javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
+
+![iPhone testing bookmarklets][1]
+: iPhone testing bookmarklets: portrait and landscape
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ![Safari window resized to iPhone portrait dimensions][2]
 : 320x480: iPhone portrait dimensions

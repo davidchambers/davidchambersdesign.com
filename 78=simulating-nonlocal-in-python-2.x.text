@@ -7,31 +7,35 @@ tags: hacks, programming, Python
 Simulating `nonlocal` in Python 2.x
 ===================================
 
-| [Closure][1] is truly wonderful. JavaScript -- despite its plethora
-| of quirks -- is now widely appreciated, thanks in large part to its
-| lexical scoping. Python 3 is lexically-scoped, too, as the following
-| code demonstrates.
-| 
-|     def cache(saved=None):
-|         def _(thing=None):
-|             nonlocal saved
-|             if thing is not None:
-|                 saved = thing
-|             return saved
-|         return _
-|     cache = cache()
-| 
-| If (the rebound) `cache` is passed no arguments (or `None`), `saved` is
-| returned. Otherwise, `thing` is assigned to `saved` and returned.
-| 
-|     >>> cache(2**3)
-|     8
-|     >>> cache()
-|     8
-| 
-| This works thanks to the `nonlocal` keyword introduced in Python 3, which
-| enables variables in outer scopes to be rebound. So how would one achieve
-| the same result in earlier versions of Python?
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+[Closure][1] is truly wonderful. JavaScript -- despite its plethora of
+quirks -- is now widely appreciated, thanks in large part to its lexical
+scoping. Python 3 is lexically-scoped, too, as the following code
+demonstrates.
+
+    def cache(saved=None):
+        def _(thing=None):
+            nonlocal saved
+            if thing is not None:
+                saved = thing
+            return saved
+        return _
+    cache = cache()
+
+If (the rebound) `cache` is passed no arguments (or `None`), `saved` is
+returned. Otherwise, `thing` is assigned to `saved` and returned.
+
+    >>> cache(2**3)
+    8
+    >>> cache()
+    8
+
+This works thanks to the `nonlocal` keyword introduced in Python 3, which
+enables variables in outer scopes to be rebound. So how would one achieve
+the same result in earlier versions of Python?
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ### Bringing lexical scoping to Python 2.x
 

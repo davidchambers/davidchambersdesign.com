@@ -7,36 +7,40 @@ tags: CSS3, JavaScript
 setTimeout fix for -webkit-transition
 =====================================
 
-| Here's a simple animation which utilizes `webkitTransition`:
-| 
-| <p id="transition-example-1"
-|    style="position:relative;left:0;top:0;width:200px;line-height:5.25em;
-|           background-color:#ccc;text-align:center;">Click to animate</p>
-| 
-| <script>
-|     (function () {
-|         var element = document.getElementById('transition-example-1');
-|         element.style.webkitTransitionProperty = 'left';
-|         element.style.webkitTransitionDuration = '2s';
-|         element.addEventListener('click', function () {
-|             this.style.left = '100px';
-|             this.addEventListener('webkitTransitionEnd', function () {
-|                 this.style.left = 0;
-|             });
-|         });
-|     })();
-| </script>
-| 
-| The code behind this example is not complicated:
-| 
-|     element.style.webkitTransitionProperty = 'left';
-|     element.style.webkitTransitionDuration = '2s';
-|     element.addEventListener('click', function () {
-|         this.style.left = '100px';
-|         this.addEventListener('webkitTransitionEnd', function () {
-|             this.style.left = 0;
-|         });
-|     });
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+Here's a simple animation which utilizes `webkitTransition`:
+
+<p id="transition-example-1"
+   style="position:relative;left:0;top:0;width:200px;line-height:5.25em;
+          background-color:#ccc;text-align:center;">Click to animate</p>
+
+<script>
+    (function () {
+        var element = document.getElementById('transition-example-1');
+        element.style.webkitTransitionProperty = 'left';
+        element.style.webkitTransitionDuration = '2s';
+        element.addEventListener('click', function () {
+            this.style.left = '100px';
+            this.addEventListener('webkitTransitionEnd', function () {
+                this.style.left = 0;
+            });
+        });
+    })();
+</script>
+
+The code behind this example is not complicated:
+
+    element.style.webkitTransitionProperty = 'left';
+    element.style.webkitTransitionDuration = '2s';
+    element.addEventListener('click', function () {
+        this.style.left = '100px';
+        this.addEventListener('webkitTransitionEnd', function () {
+            this.style.left = 0;
+        });
+    });
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 The following example, though, does not act as one might expect!
 
@@ -117,28 +121,30 @@ I'd love to know whether the behaviour described here is correct behaviour.
 If I manage to find the answer to this I'll post an update. If you are able to
 enlighten me, please do so by leaving a comment!
 
-|| date: 2 July 2010
-|| time: 12:15am
-|| zone: Pacific/Auckland
-|| 
-|| I've just been watching one of the [WWDC 2010 session videos][1], and it
-|| turns out the the fix I stumbled upon is actually the "correct" solution.
-|| 
-|| From <i>Session 504 – CSS Effects, Part 2: Galleries and 3D Effects</i>:
-|| 
-|| ### Aside: How Browsers Apply CSS Styles
-|| 
-|| * Browsers optimize away redundant style changes
-|| * This matters with transitions, because they are temporal
-|| 
-|| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-|| var box = document.getElementById('box');
-|| box.style.backgroundColor = 'red';
-|| box.style.webkitTransition = 'background-color 2s';
-|| window.setTimeout(function() {
-||   box.style.backgroundColor = 'blue';
-|| }, 0);
-|| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 2 July 2010, 12:15am (Pacific/Auckland)
+
+I've just been watching one of the [WWDC 2010 session videos][1], and it
+turns out the the fix I stumbled upon is actually the "correct" solution.
+
+From <i>Session 504 – CSS Effects, Part 2: Galleries and 3D Effects</i>:
+
+### Aside: How Browsers Apply CSS Styles
+
+* Browsers optimize away redundant style changes
+* This matters with transitions, because they are temporal
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+var box = document.getElementById('box');
+box.style.backgroundColor = 'red';
+box.style.webkitTransition = 'background-color 2s';
+window.setTimeout(function() {
+  box.style.backgroundColor = 'blue';
+}, 0);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 
 [1]: http://developer.apple.com/videos/wwdc/2010/

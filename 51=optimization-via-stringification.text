@@ -7,10 +7,14 @@ tags: CSS, optimization, Python
 Optimization via stringification
 ================================
 
-| One way to reduce the number of HTTP requests a page requires is to group
-| (non-content) images into sprites. An even better way is to remove these
-| images from the server altogether; instead include them as encoded strings
-| in your style sheet.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+One way to reduce the number of HTTP requests a page requires is to group
+(non-content) images into sprites. An even better way is to remove these
+images from the server altogether; instead include them as encoded strings
+in your style sheet.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 Instead of...
 

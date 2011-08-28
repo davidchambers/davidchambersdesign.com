@@ -7,16 +7,19 @@ tags: icons, Mac OS X, Terminal.app
 Customizing file and folder icons in Mac OS X
 =============================================
 
-| Customizing the appearance of files and folders in OS X is a cinch. ⌘C, ⌘I,
-| ⌘V, punctuated by a few mouse clicks.
-| 
-| **Actually, that's total bullshit.**
-| 
-| Sure, in the simplest of cases the copy and paste approach gets the job
-| done, assuming one knows to copy from Preview.app if copying from the
-| original source fails. As soon as one decides to do something a bit more
-| advanced, such as providing versions for display at different sizes, one's
-| shit outta luck.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+Customizing the appearance of files and folders in OS X is a cinch. ⌘C, ⌘I,
+⌘V, punctuated by a few mouse clicks.
+
+**Actually, that's total bullshit.**
+
+Sure, in the simplest of cases the copy and paste approach gets the job done,
+assuming one knows to copy from Preview.app if copying from the original
+source fails. As soon as one decides to do something a bit more advanced, such
+as providing versions for display at different sizes, one's shit outta luck.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ### Creating .icns and applying them to files, folders, or bundles
 

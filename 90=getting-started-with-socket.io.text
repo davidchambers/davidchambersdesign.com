@@ -7,11 +7,15 @@ tags: CoffeeScript, HTML5, Node.js, Socket.IO, WebSockets
 Getting started with Socket.IO
 ==============================
 
-| There's no shortage of blog posts which -- like this one -- provide an
-| introduction to [Socket.IO][1]. Many, though, were written prior to the
-| release of 0.7, which ushered in [significant API changes][2]. Here I'll
-| provide examples of server- and client-side code using APIs provided by
-| the *current* version (0.7.4 at time of writing).
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+There's no shortage of blog posts which -- like this one -- provide an
+introduction to [Socket.IO][1]. Many, though, were written prior to the
+release of 0.7, which ushered in [significant API changes][2]. Here I'll
+provide examples of server- and client-side code using APIs provided by
+the *current* version (0.7.4 at time of writing).
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 The code snippets are in [CoffeeScript][3] and as such are largely free of
 the parentheses, squiggly brackets, and semicolons that riddle the equivalent

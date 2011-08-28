@@ -7,15 +7,19 @@ tags: HTML5, i18n, JavaScript, jQuery, localization, meaningful markup
 JavaScript date and time localization
 =====================================
 
-| **This post has been a long time coming.**
-| 
-| ![Reminder message](/images/posts/74/email-message-screenshot.png)
-| : Reminder message, dated 18 January 2010
-| 
-| **It's unacceptable for any website or web application to output dates and
-| times using an arbitrary time zone.** Displaying dates and times in UTC/GMT
-| is only slightly better: dates cannot be relied upon, and users must perform
-| mental gymnastics in order to localize date–time combos.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+**This post has been a long time coming.**
+
+![Reminder message](/images/posts/74/email-message-screenshot.png)
+: Reminder message, dated 18 January 2010
+
+**It's unacceptable for any website or web application to output dates and
+times using an arbitrary time zone.** Displaying dates and times in UTC/GMT
+is only slightly better: dates cannot be relied upon, and users must perform
+mental gymnastics in order to localize date–time combos.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ![Bitbucket status message](/images/posts/74/gmt-ftl.png)
 : The link to a time zone converter highlights the need for localization

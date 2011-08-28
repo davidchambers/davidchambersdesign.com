@@ -7,36 +7,39 @@ tags: CSS, HTML, JavaScript, meaningful markup, Prototype
 Prototype image slider
 ======================
 
-| In my post titled [Captions over images][1] I advocate the use of
-| definition lists for captioning images. Earlier today I was asked
-| whether this meaningful markup could be used in conjunction with an
-| "image slider" such as [Easy Slider 1.5][2].
-| 
-| I had a look at the Easy Slider source code and decided to write my own
-| image slider using Prototype rather than hacking someone else's code to
-| pieces. It's a proof of concept rather than a full-blown "plugin", but
-| it demonstrates that such functionality is achievable using elegant,
-| meaningful markup.
-| 
-| Check out the [Prototype image slider demo][3] to see the code in action.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-|| date: 17 September 2009
-|| time: 1:17am
-|| zone: Pacific/Auckland
-|| 
-|| I noticed that the script was failing miserably in Safari, which didn't like
-|| the following line:
-|| 
-||     li: new Element('li', { class: 'prev' }),
-|| 
-|| Wrapping the word "class" in quotes as per this [recommendation by Tobie
-|| Langel][4] did the trick!
+In my post titled [Captions over images][1] I advocate the use of definition
+lists for captioning images. Earlier today I was asked whether this meaningful
+markup could be used in conjunction with an "image slider" such as
+[Easy Slider 1.5][2].
+
+I had a look at the Easy Slider source code and decided to write my own image
+slider using Prototype rather than hacking someone else's code to pieces. It's
+a proof of concept rather than a full-blown "plugin", but it demonstrates that
+such functionality is achievable using elegant, meaningful markup.
+
+Check out the [Prototype image slider demo][3] to see the code in action.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 17 September 2009, 1:17am (Pacific/Auckland)
+
+I noticed that the script was failing miserably in Safari, which didn't like
+the following line:
+
+    li: new Element('li', { class: 'prev' }),
+
+Wrapping the word "class" in quotes as per this [recommendation by Tobie
+Langel][4] did the trick!
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ### Usage {#usage}
 
-First, you'll need to save a copy of
-[prototype-image-slider.js](/examples/prototype-image-slider/prototype-image-slider.js)
-{{ filesize:'../../dcd_examples/prototype-image-slider/prototype-image-slider.js' }}.
+First, you'll need to save a copy of [prototype-image-slider.js][5].
 
 To create a new `Slider` simply call the constructor. The constructor requires
 one argument, either a DOM node or a string that references a node's ID.
@@ -71,15 +74,18 @@ are 1.0 and 0 (slides are numbered from zero).
 
 If you find this code useful and would like me to flesh it out, let me know.
 
-|| date: 21 September 2009
-|| time: 11:53am
-|| zone: Pacific/Auckland
-|| 
-|| I neglected to mention that this code also requires [script.aculo.us][5].
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 21 September 2009, 11:53am (Pacific/Auckland)
+
+I neglected to mention that this code also requires [script.aculo.us][6].
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 
 [1]: /captions-over-images/
 [2]: http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding
 [3]: /examples/prototype-image-slider/
 [4]: http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777
-[5]: http://script.aculo.us/
+[5]: /examples/prototype-image-slider/prototype-image-slider.js
+[6]: http://script.aculo.us/

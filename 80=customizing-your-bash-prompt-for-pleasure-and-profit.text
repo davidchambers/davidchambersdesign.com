@@ -7,14 +7,17 @@ tags: Mac OS X, productivity, Terminal.app
 Customizing your bash prompt for pleasure and profit
 ====================================================
 
-| Mac OS X's default bash prompt is dull and uninformative.
-| 
-| ![Mac OS X's default bash prompt][1]
-| : Mac OS X's default bash prompt
-| 
-| Since only the current directory name is visible, I find myself running
-| `pwd` more often than is healthy. Also, I find the uneven prompt length
-| jarring.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+Mac OS X's default bash prompt is dull and uninformative.
+
+![Mac OS X's default bash prompt][1]
+: Mac OS X's default bash prompt
+
+Since only the current directory name is visible, I find myself running `pwd`
+more often than is healthy. Also, I find the uneven prompt length jarring.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 My solution to both of these problems is to include the full path _on its own
 line_ (with a preceding `\n` providing much-needed breathing room).
@@ -52,14 +55,16 @@ for "light green".
 
 `\[\e[0m\]` puts an end to the colouring, preventing it from "spilling out".
 
-|| date: 3 April 2011
-|| time: 9:00pm
-|| zone: America/Los_Angeles
-|| 
-|| When first this post was published colour codes were not preceded by `\[`.
-|| The colour codes themselves were thus considered when calculating the
-|| prompt's length, meaning that the first several characters of a command
-|| would sometimes remain visible when arrowing up and down. >.<
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 3 April 2011, 9:00pm (America/Los_Angeles)
+
+When first this post was published colour codes were not preceded by `\[`.
+The colour codes themselves were thus considered when calculating the prompt's
+length, meaning that the first several characters of a command would sometimes
+remain visible when arrowing up and down. >.<
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 #### Note for Mac OS X users
 

@@ -7,19 +7,23 @@ tags: JavaScript, Node.js, SproutCore
 JavaScript, JavaScript, everywhere
 ==================================
 
-| Over the past few months I've reached a startling realization: **JavaScript
-| is a tremendously capable language.**
-| 
-| The reason that it took me so long to discover this is that the playing field
-| has never been fair. On the one hand I've been writing application code for
-| the server, a stable, predictable environment. On the other hand I've been
-| adding interactivity on the client's side, dealing with inconsistencies on
-| multiple fronts, not least of which is the DOM API.
-| 
-| Comparing Python and JavaScript, for example, by using the former to quickly
-| put together a website using the excellent Django framework while using the
-| latter to add drag and drop functionality is to compare apples and oranges.
-| **Actually, it's more like comparing apples to root canals.**
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+Over the past few months I've reached a startling realization: **JavaScript is
+a tremendously capable language.**
+
+The reason that it took me so long to discover this is that the playing field
+has never been fair. On the one hand I've been writing application code for
+the server, a stable, predictable environment. On the other hand I've been
+adding interactivity on the client's side, dealing with inconsistencies on
+multiple fronts, not least of which is the DOM API.
+
+Comparing Python and JavaScript, for example, by using the former to quickly
+put together a website using the excellent Django framework while using the
+latter to add drag and drop functionality is to compare apples and oranges.
+**Actually, it's more like comparing apples to root canals.**
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 Had I been writing application code in JavaScript (without touching the DOM),
 I'd have been in a much better position to weigh each on its merits. Thanks to

@@ -7,21 +7,24 @@ tags: CSS, HTML, JavaScript, Prototype
 CSS fixed-position headers
 ==========================
 
-| I began this post three months ago, got stuck, and put it in the too hard
-| basket. I wanted to devise a workable solution to my stumbling block before
-| publishing this information. I'm getting ahead of myself, though. First, the
-| background.
-| 
-| As I began writing this post, I had just completed a redesign of this
-| site. The new design removed unnecessary distractions to allow readers
-| to focus on the clearly presented content. I moved site navigation
-| from the sidebar (which I axed altogether) to the header. I decided to
-| fix the header in place so that the navigation and search form would
-| always be visible. This required very little effort, but overcoming the
-| [problem posed by fixed-position headers][1] took a great deal of trial
-| and error. To save others from going through this tortuous process I'll
-| describe my various approaches, and list the benefits and drawbacks
-| of each.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+I began this post three months ago, got stuck, and put it in the too hard
+basket. I wanted to devise a workable solution to my stumbling block before
+publishing this information. I'm getting ahead of myself, though. First, the
+background.
+
+As I began writing this post, I had just completed a redesign of this site.
+The new design removed unnecessary distractions to allow readers to focus on
+the clearly presented content. I moved site navigation from the sidebar (which
+I axed altogether) to the header. I decided to fix the header in place so that
+the navigation and search form would always be visible. This required very
+little effort, but overcoming the [problem posed by fixed-position headers][1]
+took a great deal of trial and error. To save others from going through this
+tortuous process I'll describe my various approaches, and list the benefits
+and drawbacks of each.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ### Requirements ###
 

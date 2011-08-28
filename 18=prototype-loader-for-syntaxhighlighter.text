@@ -9,26 +9,32 @@ Prototype loader for SyntaxHighlighter
 
 Skip to [setup](#setup) or [usage](#usage)
 
-| [SyntaxHighlighter][1] is a fully functional self-contained code syntax
-| highlighter developed in JavaScript (as stated on its wiki). One of its
-| deficiencies is that it retrieves all its brushes each time a page is
-| loaded, despite the fact that in many cases only one or two (or none)
-| are required.
-| 
-| Currently, [Prototype][2] is my JavaScript framework of choice (although
-| I'm really looking forward to trying [jQuery][3]). I have used Prototype to
-| create a **brush loader for SyntaxHighlighter**, which retrieves brushes on
-| demand to reduce page loading times (in certain circumstances).
-| 
-| || date: 27 June 2009
-| || time: 6:21am
-| || zone: Pacific/Auckland
-| || 
-| || I have completely rewritten the code so that it no longer requires
-| || empty functions inside the brush files to act as indicators of readiness.
-| || Instead, the required brushes are retrieved in a daisy chain. This is both
-| || more elegant and more reliable. Additionally, style sheets are now also
-| || retrieved on demand.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+[SyntaxHighlighter][1] is a fully functional self-contained code syntax
+highlighter developed in JavaScript (as stated on its wiki). One of its
+deficiencies is that it retrieves all its brushes each time a page is
+loaded, despite the fact that in many cases only one or two (or none)
+are required.
+
+Currently, [Prototype][2] is my JavaScript framework of choice (although
+I'm really looking forward to trying [jQuery][3]). I have used Prototype to
+create a **brush loader for SyntaxHighlighter**, which retrieves brushes on
+demand to reduce page loading times (in certain circumstances).
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 27 June 2009, 6:21am (Pacific/Auckland)
+
+I have completely rewritten the code so that it no longer requires empty
+functions inside the brush files to act as indicators of readiness. Instead,
+the required brushes are retrieved in a daisy chain. This is both more elegant
+and more reliable. Additionally, style sheets are now also retrieved on
+demand.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ### Setup {#setup}
 
@@ -41,30 +47,26 @@ overhead associated with loading `prototype.js`.
 If you _are_ using Prototype, follow these steps to have brushes retrieved
 dynamically:
 
-1.  Download [loader.js](/downloads/loader.js)
-    {{ filesize:'../../dcd_downloads/loader.js' }} or the
-    [minified and gzipped version](/downloads/loader.min.js.gz)
-    {{ filesize:'../../dcd_downloads/loader.min.js.gz' }} and
+1.  Download [loader.js](/downloads/loader.js) or the
+    [minified and gzipped version](/downloads/loader.min.js.gz) and
     upload it to your SyntaxHighlighter **scripts** directory.
 
 2.  Replace:
     
-        <script type="text/javascript" src="/path/to/scripts/shCore.js"></script>
-        <script type="text/javascript" src="/path/to/scripts/shBrushAS3.js"></script>
-        <script type="text/javascript" src="/path/to/scripts/shBrushBash.js"></script>
+        <script src="/path/to/scripts/shCore.js"></script>
+        <script src="/path/to/scripts/shBrushAS3.js"></script>
+        <script src="/path/to/scripts/shBrushBash.js"></script>
         .
         .
         .
-        <script type="text/javascript" src="/path/to/scripts/shBrushVb.js"></script>
-        <script type="text/javascript" src="/path/to/scripts/shBrushXml.js"></script>
+        <script src="/path/to/scripts/shBrushVb.js"></script>
+        <script src="/path/to/scripts/shBrushXml.js"></script>
         
-        <script type="text/javascript">
-            SyntaxHighlighter.all();
-        </script>
+        <script>SyntaxHighlighter.all()</script>
     
     with:
     
-        <script type="text/javascript">
+        <script>
             function Brush(name, filename, aliases)
             {
                 this.name = name;
@@ -80,7 +82,7 @@ dynamically:
                 defaults: {}
             };
         </script>
-        <script type="text/javascript" src="/path/to/scripts/loader.js"></script>
+        <script src="/path/to/scripts/loader.js"></script>
 
 3.  Replace both instances of `http://example.com/sh/` in the above snippet
     with the path to your **SyntaxHighlighter** directory.
@@ -128,24 +130,27 @@ Many thanks to Dan Breslau for letting me know about
 early iterations of this code. Dan's [SyntaxHighlighter improvements][4] are
 well worth a look!
 
-|| date: 27 June 2009
-|| time: 6:21am
-|| zone: Pacific/Auckland
-|| 
-|| Thanks also to Bob Matsuoka for sharing his
-|| [technique for lazy script loading][5] which provides
-|| workarounds for browsers that do not support the onload
-|| event when applied to script elements.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-|| date: 16 August 2009
-|| time: 1:24am
-|| zone: Pacific/Auckland
-|| 
-|| I've updated the script to ensure that the XML brush is always loaded when
-|| at least one of the following conditions is true:
-|| 
-|| 1. `settings.defaults['html-script']` is set to `true`
-|| 2. a pre element to be highlighted has `html-script: true` in its class name
+#### Update: 27 June 2009, 6:21am (Pacific/Auckland)
+
+Thanks also to Bob Matsuoka for sharing his [technique for lazy script
+loading][5] which provides workarounds for browsers that do not support the
+onload event when applied to script elements.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 16 August 2009, 1:24am (Pacific/Auckland)
+
+I've updated the script to ensure that the XML brush is always loaded when
+at least one of the following conditions is true:
+
+1. `settings.defaults['html-script']` is set to `true`
+2. a pre element to be highlighted has `html-script: true` in its class name
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 
 [1]: http://alexgorbatchev.com/wiki/SyntaxHighlighter

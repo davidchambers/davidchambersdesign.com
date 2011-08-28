@@ -10,17 +10,21 @@ AppleScript syntax highlighting
 
 [Skip to setup instructions](#setup)
 
-| I've been using Alex Gorbatchev's [SyntaxHighlighter][1] to syntactically
-| display code of various languages for several months now. When I decided
-| to post an AppleScript snippet, however, I realised that I was out of luck.
-| SyntaxHighlighter does not include an AppleScript "brush", and a quick flick
-| through the [SyntaxHighlighter forums][2] did not bring me any joy.
-| 
-| **How hard could it be to write a brush for AppleScript?**, I wondered. The
-| handy guide to [developing a custom brush][3] got me started, and I was soon
-| busy trying to encapsulate AppleScript's syntax -- along with its keywords
-| and countless words and phrases with special meanings -- into a handful of
-| regular expressions.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+I've been using Alex Gorbatchev's [SyntaxHighlighter][1] to syntactically
+display code of various languages for several months now. When I decided
+to post an AppleScript snippet, however, I realised that I was out of luck.
+SyntaxHighlighter does not include an AppleScript "brush", and a quick flick
+through the [SyntaxHighlighter forums][2] did not bring me any joy.
+
+**How hard could it be to write a brush for AppleScript?**, I wondered. The
+handy guide to [developing a custom brush][3] got me started, and I was soon
+busy trying to encapsulate AppleScript's syntax -- along with its keywords and
+countless words and phrases with special meanings -- into a handful of regular
+expressions.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 Having created the brush (that's SyntaxHighlighter lingo for the JavaScript
 file containing the language-specific regular expressions), I proceeded to
@@ -84,25 +88,20 @@ following:
 
 1.  Download [SyntaxHighlighter][1], and follow the setup instructions.
 
-2.  Download [AppleScript brush](/downloads/shBrushAppleScript.js)
-    {{ filesize:'../../dcd_downloads/shBrushAppleScript.js' }}, and upload it
-    to your SyntaxHighlighter **scripts** directory.
+2.  Download [AppleScript brush](/downloads/shBrushAppleScript.js), and upload
+    it to your SyntaxHighlighter **scripts** directory.
 
-3.  Download [AppleScript theme](/downloads/shThemeAppleScript.css)
-    {{ filesize:'../../dcd_downloads/shThemeAppleScript.css' }}, and upload it
-    to your SyntaxHighlighter **styles** directory.
+3.  Download [AppleScript theme](/downloads/shThemeAppleScript.css), and
+    upload it to your SyntaxHighlighter **styles** directory.
 
-4.  Download [background image](/downloads/bg.png)
-    {{ filesize:'../../dcd_downloads/bg.png' }}, and upload it to your
+4.  Download [background image](/downloads/bg.png), and upload it to your
     SyntaxHighlighter **styles** directory.
 
 5.  Include the brush like so:
     
-        <script type="text/javascript" src="/path/to/scripts/shCore.js"></script>
-        <script type="text/javascript" src="/path/to/scripts/shBrushAppleScript.js"></script>
-        <script type="text/javascript">
-            SyntaxHighlighter.all();
-        </script>
+        <script src="/path/to/scripts/shCore.js"></script>
+        <script src="/path/to/scripts/shBrushAppleScript.js"></script>
+        <script>SyntaxHighlighter.all()</script>
 
 ### Usage {#usage}
 

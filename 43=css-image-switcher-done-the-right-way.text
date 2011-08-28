@@ -7,23 +7,27 @@ tags: accessibility, best practice, CSS, meaningful markup, SEO, UX
 CSS image switcher (done the right way)
 =======================================
 
-| **Chris Coyier has done it again.** Compelled me to stay up all night,
-| that is (it's 7am as I type this). In Chris's latest screencast,
-| [CSS Image Switcher][1], he demonstrates how to create an "image switcher"
-| using CSS. The problem, though, is that **his process is wrong**.
-| 
-| #### Incorrect process ####
-| 
-| 1. What effect or experience do I want to create?
-| 2. How can I achieve this using CSS (and JavaScript if necessary)?
-| 3. What can my markup do to help me?
-| 
-| #### Correct process ####
-| 
-| 1. What effect or experience do I want to create?
-| 2. What is the most correct and meaningful way to describe the content?
-| 3. How can I achieve the desired effect or experience (or something close to it)
-|    _without_ altering my markup?
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+**Chris Coyier has done it again.** Compelled me to stay up all night,
+that is (it's 7am as I type this). In Chris's latest screencast, [CSS Image
+Switcher][1], he demonstrates how to create an "image switcher" using CSS.
+The problem, though, is that **his process is wrong**.
+
+#### Incorrect process ####
+
+1. What effect or experience do I want to create?
+2. How can I achieve this using CSS (and JavaScript if necessary)?
+3. What can my markup do to help me?
+
+#### Correct process ####
+
+1. What effect or experience do I want to create?
+2. What is the most correct and meaningful way to describe the content?
+3. How can I achieve the desired effect or experience (or something close to it)
+   _without_ altering my markup?
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 Chris simply isn't in the right mindset. He's thinking about _how_
 he's going to present the content on the page, but he's forgetting to

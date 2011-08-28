@@ -7,14 +7,18 @@ tags: Gmail, Google Calendar, SMS
 SMS event reminders from Google Calendar
 ========================================
 
-| I tend to forget things. Until recently, I had no system to keep track of
-| appointments. I began using Google Calendar, but soon realised that I did not
-| want _another_ thing to check each day.
-| 
-| **Enter event reminders.** With Google Calendar sending event reminders to my
-| inbox, I no longer had to check my calendar each day. Google Calendar can now
-| send event reminders via text message. **Below is a walk through of the steps
-| involved in setting up SMS event reminders in Google Calendar.**
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+I tend to forget things. Until recently, I had no system to keep track of
+appointments. I began using Google Calendar, but soon realised that I did not
+want _another_ thing to check each day.
+
+**Enter event reminders.** With Google Calendar sending event reminders to my
+inbox, I no longer had to check my calendar each day. Google Calendar can now
+send event reminders via text message. **Below is a walk through of the steps
+involved in setting up SMS event reminders in Google Calendar.**
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 The first step is to open [Google Calendar][1]. Once you have signed in, you
 will see several links at the top right of the page. Click on **Settings**.
@@ -24,8 +28,12 @@ will see several links at the top right of the page. Click on **Settings**.
 
 Next, click on the **Mobile Setup** tab.
 
-| ![Mobile Setup tab in Google Calendar][3]
-| : **Mobile Setup** tab in Google Calendar
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+![Mobile Setup tab in Google Calendar][3]
+: **Mobile Setup** tab in Google Calendar
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 Enter your cell phone number and click **Send Verification Code**. In a matter
 of seconds you should receive a text message from Google containing the

@@ -7,13 +7,17 @@ tags: best practice, CSS, HTML, JavaScript, jQuery, meaningful markup
 Captions over images
 ====================
 
-| This is my response to Chris Coyier's screencast titled
-| [jQuery Part 3 – Image Title Plugin][1] which I watched a couple of days ago.
-| Something didn't sit right with me at the time, and I've now worked out what
-| it was: **JavaScript is not required!**
-| 
-| I'll present a JavaScript-free approach for displaying captions over images
-| that uses _truly_ meaningful markup.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+This is my response to Chris Coyier's screencast titled [jQuery Part 3 – Image
+Title Plugin][1] which I watched a couple of days ago. Something didn't sit
+right with me at the time, and I've now worked out what it was: **JavaScript
+is not required!**
+
+I'll present a JavaScript-free approach for displaying captions over images
+that uses _truly_ meaningful markup.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 So what _is_ meaningful markup for images and image captions? This is a debated
 issue, but I believe the definition list to be the most appropriate element at

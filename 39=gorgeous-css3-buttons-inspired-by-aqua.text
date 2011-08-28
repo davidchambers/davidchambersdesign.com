@@ -4,12 +4,12 @@ zone: Pacific/Auckland
 tags: CSS, CSS3, HTML, Mac OS X
 
 
-| Modern browsers can display exciting visual effects such as drop shadows
-| (without the use of background images). CSS3 makes it possible to turn
-| submit inputs and even links into rich, Aqua-like buttons in these
-| browsers (alternative style rules can be provided for older browsers).
-| 
-| ![](/images/posts/39/start-game-hyperlink-and-button.png)
+Modern browsers can display exciting visual effects such as drop shadows
+(without the use of background images). CSS3 makes it possible to turn
+submit inputs and even links into rich, Aqua-like buttons in these browsers
+(alternative style rules can be provided for older browsers).
+
+![](/images/posts/39/start-game-hyperlink-and-button.png)
 
 
 Gorgeous CSS3 buttons inspired by Aqua

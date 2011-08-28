@@ -9,13 +9,17 @@ Coda theme for SyntaxHighlighter
 
 [Skip to setup instructions](#setup)
 
-| It's no secret – I love [Coda][1]! It's a pleasure to use. **It looks so
-| damn good.** When I started using [SyntaxHighlighter][2] I set out to create
-| a Coda theme. Thankfully, the good folks at Panic had done the ground work
-| for me. All I had to do was create a style sheet that would make my code
-| snippets look as sexy online as they do in my text editor.
-| 
-| Or so I thought.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+It's no secret – I love [Coda][1]! It's a pleasure to use. **It looks so damn
+good.** When I started using [SyntaxHighlighter][2] I set out to create a Coda
+theme. Thankfully, the good folks at Panic had done the ground work for me.
+All I had to do was create a style sheet that would make my code snippets look
+as sexy online as they do in my text editor.
+
+Or so I thought.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 As I delved deeper, it became apparent that realising my goal would require
 plenty of effort. In order for SyntaxHighlighter to work its magic it requires
@@ -222,13 +226,15 @@ from which it gets its name. The failings are as follows:
 6. Add a link to the Coda theme wherever you link to shCore.css. If you're
    using the standard setup, this will be in the head section of the document.
 
-|| date: 24 August 2009
-|| time: 10:51pm
-|| zone: Pacific/Auckland
-|| 
-|| Coda theme has been updated so that comments are now italicized
-|| (as they are in Coda). XML brush for Coda theme now applies the
-|| correct class name ("xml-comment") to HTML comments.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 24 August 2009, 10:51pm (Pacific/Auckland)
+
+Coda theme has been updated so that comments are now italicized (as they
+are in Coda). XML brush for Coda theme now applies the correct class name
+("xml-comment") to HTML comments.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 
 [1]: http://www.panic.com/coda/

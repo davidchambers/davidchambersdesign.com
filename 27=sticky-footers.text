@@ -7,10 +7,14 @@ tags: CSS, HTML
 Sticky footers
 ==============
 
-| **Sticky footers should be ubiquitous. They are not.**
-| 
-| This leads me to believe that many developers are unaware of how to prevent
-| footers from floating up on pages without much content.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+**Sticky footers should be ubiquitous. They are not.**
+
+This leads me to believe that many developers are unaware of how to prevent
+footers from floating up on pages without much content.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 I'll explain how it's done. The markup must look something like the following:
 

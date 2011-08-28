@@ -25,13 +25,17 @@ writing posts in HTML -- I'm a control freak and can't live without definition
 lists -- and generating 50 or more database records for each post by frequently
 previewing while writing.
 
-| **I wanted to simplify everything.** I wanted to write posts in [Markdown][],
-| not HTML. I wanted to save posts as files, not database entries. I wanted to
-| free myself of my dependence on WordPress, PHP, and MySQL in one fell swoop.
-| 
-| So, [Mango][] was born. Mango is file-based blogging software built on
-| [Django][], the excellent Python web framework. I conceived Mango to
-| scratch an itch, and I'll bet that others out there are itchy, too.
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+**I wanted to simplify everything.** I wanted to write posts in [Markdown][],
+not HTML. I wanted to save posts as files, not database entries. I wanted to
+free myself of my dependence on WordPress, PHP, and MySQL in one fell swoop.
+
+So, [Mango][] was born. Mango is file-based blogging software built on
+[Django][], the excellent Python web framework. I conceived Mango to
+scratch an itch, and I'll bet that others out there are itchy, too.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ### Going without
 

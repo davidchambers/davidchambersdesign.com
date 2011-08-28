@@ -7,22 +7,26 @@ tags: JavaScript, programming, Python
 Self-caching functions in JavaScript and Python
 ===============================================
 
-| Earlier I wrote some code which repeatedly calls a function which performs
-| a database query – often **the same** query. This encouraged me to explore
-| various ways to cache the results of function calls in both Python (to solve
-| my immediate problem) and JavaScript (because I find that language endlessly
-| fascinating).
-| 
-| I played around with [Fibonacci][1], which is a well suited to the task: it
-| can be described in just a couple of lines of code yet benefits enormously
-| from caching due to its recursive nature.
-| 
-| ### JavaScript Fibonacci without caching
-| 
-|     function fibonacci(n) {
-|         if (n <= 1) return n;
-|         return fibonacci(n - 2) + fibonacci(n - 1);
-|     }
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+Earlier I wrote some code which repeatedly calls a function which performs
+a database query – often **the same** query. This encouraged me to explore
+various ways to cache the results of function calls in both Python (to solve
+my immediate problem) and JavaScript (because I find that language endlessly
+fascinating).
+
+I played around with [Fibonacci][1], which is a well suited to the task: it
+can be described in just a couple of lines of code yet benefits enormously
+from caching due to its recursive nature.
+
+### JavaScript Fibonacci without caching
+
+    function fibonacci(n) {
+        if (n <= 1) return n;
+        return fibonacci(n - 2) + fibonacci(n - 1);
+    }
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 I created a simple timer:
 

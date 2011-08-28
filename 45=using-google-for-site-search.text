@@ -7,20 +7,24 @@ tags: Google, search
 Using Google for site search
 ============================
 
-| WordPress is a great piece of software, although I've never been satisfied
-| with its search functionality. Last night I decided to switch to a very simple
-| solution:
-| 
-|     <form action="http://www.google.com/search" method="get">
-|         <div>
-|             <label for="q">Search davidchambersdesign.com</label>
-|             <input type="search" name="q" id="q" maxlength="256" placeholder="search..." />
-|             <input type="hidden" name="ie" value="UTF-8" />
-|             <input type="hidden" name="hl" value="en" />
-|             <input type="hidden" name="as_sitesearch" value="davidchambersdesign.com" />
-|             <input type="submit" value="Search" />
-|         </div>
-|     </form>
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+WordPress is a great piece of software, although I've never been satisfied
+with its search functionality. Last night I decided to switch to a very simple
+solution:
+
+    <form action="http://www.google.com/search" method="get">
+        <div>
+            <label for="q">Search davidchambersdesign.com</label>
+            <input type="search" name="q" id="q" maxlength="256" placeholder="search..." />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="hidden" name="hl" value="en" />
+            <input type="hidden" name="as_sitesearch" value="davidchambersdesign.com" />
+            <input type="submit" value="Search" />
+        </div>
+    </form>
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 Search queries on this site are now submitted to Google with the specification
 that only results from this domain are to be returned. Here's a breakdown of

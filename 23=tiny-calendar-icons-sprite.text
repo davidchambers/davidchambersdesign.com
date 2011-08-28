@@ -7,17 +7,21 @@ tags: CSS, design, HTML, icons
 Tiny calendar icons sprite
 ==========================
 
-| Recently I've been on a mission to minimize the number of HTTP requests made
-| while loading pages on this site. Until yesterday, the [archives][1] page was
-| making an HTTP request for each of the [tiny calendar icons][2] used on the
-| page. Therefore, up to 31 HTTP requests were required just to retrieve the
-| calendar icons. Not good.
-| 
-| The same result can be achieved with a single HTTP request through the use of
-| a sprite:
-| 
-| ![Tiny calendar icons sprite][3]
-| : Tiny calendar icons sprite, which you're welcome to save and use
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+Recently I've been on a mission to minimize the number of HTTP requests made
+while loading pages on this site. Until yesterday, the [archives][1] page was
+making an HTTP request for each of the [tiny calendar icons][2] used on the
+page. Therefore, up to 31 HTTP requests were required just to retrieve the
+calendar icons. Not good.
+
+The same result can be achieved with a single HTTP request through the use of
+a sprite:
+
+![Tiny calendar icons sprite][3]
+: Tiny calendar icons sprite, which you're welcome to save and use
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 One uses a sprite by applying a background image to an element using CSS. One
 could start with an empty span element:

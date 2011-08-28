@@ -4,11 +4,11 @@ zone: Pacific/Auckland
 tags: CSS, PHP
 
 
-| If you've ever worked with CSS, you'll understand how frustrating it is
-| to edit a style sheet and be unable to view the change because a cached
-| version of the file is being used. One line of PHP will fix this problem,
-| and will also ensure that visitors never view your site through the lens
-| of an outdated style sheet.
+If you've ever worked with CSS, you'll understand how frustrating it is to
+edit a style sheet and be unable to view the change because a cached version
+of the file is being used. One line of PHP will fix this problem, and will
+also ensure that visitors never view your site through the lens of an outdated
+style sheet.
 
 
 Intelligent CSS caching

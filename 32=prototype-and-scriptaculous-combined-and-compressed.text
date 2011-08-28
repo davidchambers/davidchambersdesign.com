@@ -14,17 +14,13 @@ has been achieved by gzipping the minified file. All three versions are
 available for download:
 
 * [prototype+scriptaculous.js][4]
-  {{ filesize:'../../dcd_static/scripts/prototype+scriptaculous.js' }}
 * [prototype+scriptaculous.min.js][5]
-  {{ filesize:'../../dcd_static/scripts/prototype+scriptaculous.min.js' }}
 * [prototype+scriptaculous.min.js.gz][6]
-  {{ filesize:'../../dcd_static/scripts/prototype+scriptaculous.min.js.gz' }}
 
 I suggest including the Prototype and script.aculo.us version numbers in the
 `src`:
 
-    <script type="text/javascript"
-            src="/scripts/prototype+scriptaculous.min.js?p=1.6.1&amp;s=1.8.3"></script>
+    <script src="/scripts/prototype+scriptaculous.min.js?p=1.6.1&amp;s=1.8.3"></script>
 
 This prevents caching issues that might otherwise arise upon updating to a
 newer version of prototype+scriptaculous (I'll update the three files -- and

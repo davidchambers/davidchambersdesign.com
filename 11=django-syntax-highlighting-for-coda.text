@@ -18,12 +18,14 @@ highlighting to Django**. The solution? Juan Pablo Claude's
 ![Django syntax highlighting in Coda][4]
 : Django syntax highlighting in Coda
 
-|| date: 14 November 2010
-|| time: 2:00pm
-|| zone: Australia/Sydney
-|| 
-|| I've since discovered an alternative mode which is actively maintained over
-|| on GitHub. I now use [jbergantine's Django-Template][5].
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 14 November 2010, 2:00pm (Australia/Sydney)
+
+I've since discovered an alternative mode which is actively maintained over on
+GitHub. I now use [jbergantine's Django-Template][5].
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 
 [1]: http://www.panic.com/coda/
