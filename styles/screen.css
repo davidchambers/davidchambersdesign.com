@@ -1107,12 +1107,12 @@ ol.archives time[datetime*="29T"] { background-position:  -60px -100px; }
 ol.archives time[datetime*="30T"] { background-position:  -80px -100px; }
 ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
 
-#cricket-field-diagrams+dl {
+#cricket-field-diagrams dl {
   margin: 2.25em 0 0 0;
   height: 367px;
 }
 
-#cricket-field-diagrams+dl dt {
+#cricket-field-diagrams dl dt {
   position: absolute;
   left: 0;
   top: 0;
@@ -1124,32 +1124,32 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
   padding: 0;
 }
 
-#cricket-field-diagrams+dl dt~dt {
+#cricket-field-diagrams dl dt~dt {
   left: 170px;
   top: 0;
 }
 
-#cricket-field-diagrams+dl dt~dt~dt {
+#cricket-field-diagrams dl dt~dt~dt {
   left: 340px;
   top: 0;
 }
 
-#cricket-field-diagrams+dl dt~dt~dt~dt {
+#cricket-field-diagrams dl dt~dt~dt~dt {
   left: 0;
   top: 191px;
 }
 
-#cricket-field-diagrams+dl dt~dt~dt~dt~dt {
+#cricket-field-diagrams dl dt~dt~dt~dt~dt {
   left: 170px;
   top: 191px;
 }
 
-#cricket-field-diagrams+dl dt~dt~dt~dt~dt~dt {
+#cricket-field-diagrams dl dt~dt~dt~dt~dt~dt {
   left: 340px;
   top: 191px;
 }
 
-#cricket-field-diagrams+dl dt~dd {
+#cricket-field-diagrams dl dt~dd {
   position: absolute;
   left: 0;
   top: 155px;
@@ -1157,32 +1157,32 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
   text-align: center;
 }
 
-#cricket-field-diagrams+dl dt~dd~dd {
+#cricket-field-diagrams dl dt~dd~dd {
   left: 170px;
   top: 155px;
 }
 
-#cricket-field-diagrams+dl dt~dd~dd~dd {
+#cricket-field-diagrams dl dt~dd~dd~dd {
   left: 340px;
   top: 155px;
 }
 
-#cricket-field-diagrams+dl dt~dd~dd~dd~dd {
+#cricket-field-diagrams dl dt~dd~dd~dd~dd {
   left: 0;
   top: 346px;
 }
 
-#cricket-field-diagrams+dl dt~dd~dd~dd~dd~dd {
+#cricket-field-diagrams dl dt~dd~dd~dd~dd~dd {
   left: 170px;
   top: 346px;
 }
 
-#cricket-field-diagrams+dl dt~dd~dd~dd~dd~dd~dd {
+#cricket-field-diagrams dl dt~dd~dd~dd~dd~dd~dd {
   left: 340px;
   top: 346px;
 }
 
-#cricket-field-diagrams+dl dt img {
+#cricket-field-diagrams dl dt img {
   margin: -1px; /* negate border */
   border: none;
 }
