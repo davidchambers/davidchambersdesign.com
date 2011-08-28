@@ -2,6 +2,7 @@ date: 15 March 2010
 time: 12:58am
 zone: Pacific/Auckland
 tags: design, icons
+id: cricket-field-diagrams
 
 
 # Cricket field diagrams
@@ -11,8 +12,6 @@ I designed many years ago, I produced a set of diagrams which represent the
 segments of a cricket field. The isolated nature of this small design challenge
 provided a refreshing break from the various and interrelated considerations
 involved in designing for the Web.
-
-<div id="cricket-field-diagrams"></div>
 
 ![Cricket field with mid-wicket area highlighted][1]
 : Mid-wicket
