@@ -4,8 +4,7 @@ zone: America/Los_Angeles
 tags: JavaScript, regex, regular expressions
 
 
-End of string anchor in JavaScript regular expressions
-======================================================
+# End of string anchor in JavaScript regular expressions
 
 JavaScript's regular expressions are less than awesome, sadly. One
 limitation is the lack of start of string and end of string anchors.

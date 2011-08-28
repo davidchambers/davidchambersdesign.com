@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: JavaScript, programming, Python, Ruby
 
 
-Filtering lists in Python, Ruby, and JavaScript
-===============================================
+# Filtering lists in Python, Ruby, and JavaScript
 
 Recently I listened to [Gary Bernhardt comparing Python and Ruby][1]. In
 the talk Gary states that he finds Ruby code ugly and Python code beautiful.

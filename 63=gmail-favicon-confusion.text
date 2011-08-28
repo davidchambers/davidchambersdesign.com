@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: design, Gmail
 
 
-Gmail's favicon confusion
-=========================
+# Gmail's favicon confusion
 
 Gmail currently serves up two possible favicons, a 16x16 `shortcut icon` and a
 32x32 `icon`. I've no idea why the latter is included, but my browser is happy

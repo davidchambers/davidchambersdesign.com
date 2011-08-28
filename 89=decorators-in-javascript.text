@@ -4,8 +4,7 @@ zone: America/Los_Angeles
 tags: CoffeeScript, JavaScript, programming
 
 
-Decorators in JavaScript
-========================
+# Decorators in JavaScript
 
 A decorator is a function which takes a function and returns a function:
 

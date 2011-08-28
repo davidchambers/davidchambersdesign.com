@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: JavaScript, MooTools
 
 
-MooTools every method
-=====================
+# MooTools every method
 
 A reasonably common task is to determine whether a particular statement
 evaluates as true for every item in a collection. Take <var>list</var>,

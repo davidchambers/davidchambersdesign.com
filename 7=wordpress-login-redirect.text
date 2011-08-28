@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: PHP, WordPress
 
 
-WordPress login redirect
-========================
+# WordPress login redirect
 
 Sometimes we require users to log in to a WordPress site in order to access
 _front-end_ functionality hidden from guests. In such instances, we can simply

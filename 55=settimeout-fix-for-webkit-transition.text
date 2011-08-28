@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: CSS3, JavaScript
 
 
-setTimeout fix for -webkit-transition
-=====================================
+# setTimeout fix for -webkit-transition
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 

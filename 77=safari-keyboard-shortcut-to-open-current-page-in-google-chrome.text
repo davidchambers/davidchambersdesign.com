@@ -4,8 +4,7 @@ zone: America/Los_Angeles
 tags: Flash, Google Chrome, keyboard shortcuts, Mac OS X, Safari
 
 
-Safari keyboard shortcut to open current page in Google Chrome
-==============================================================
+# Safari keyboard shortcut to open current page in Google Chrome
 
 I followed [John Gruber's suggestion][1] and removed Flash Player from my Mac.
 Like John, I've come to rely upon Google Chrome for viewing the occasional

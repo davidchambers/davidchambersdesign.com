@@ -4,8 +4,7 @@ zone: America/Los_Angeles
 tags: best practice, JavaScript, security
 
 
-Escaping HTML in JavaScript
-===========================
+# Escaping HTML in JavaScript
 
 I recently came across an interesting article at [wonko.com][1] on
 [HTML escaping][2], which provoked me to rewrite Bitbucket's escape

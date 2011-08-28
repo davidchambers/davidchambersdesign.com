@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: Django
 
 
-Empty collections are valid cache data
-======================================
+# Empty collections are valid cache data
 
 When using Django's cache, ensure that empty collections (`[]`, `()`, `{}`) are
 treated as valid cache data.

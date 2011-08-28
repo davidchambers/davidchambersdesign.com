@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: programming
 
 
-First matching item
-===================
+# First matching item
 
 When writing code one often needs to grab the first item in a collection that
 has certain characteristics. For example, one may have a list of `Student`

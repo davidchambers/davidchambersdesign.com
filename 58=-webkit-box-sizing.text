@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: CSS, WebKit
 
 
--webkit-box-sizing
-==================
+# -webkit-box-sizing
 
 This site's search field has been virtually unusable in Chrome and Safari on
 Windows for several months. Fixing it was not high on my priority list, but I

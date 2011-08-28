@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: JavaScript, Mac OS X, Photoshop
 
 
-Photoshop "save for web" JavaScript
-===================================
+# Photoshop "save for web" JavaScript
 
 This is a JavaScript function for Photoshop which saves the active document
 as a 24-bit PNG file. It is equivalent to manually selecting **File > Save for

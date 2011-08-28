@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: best practice, JavaScript
 
 
-Associative arrays in JavaScript
-================================
+# Associative arrays in JavaScript
 
 **JavaScript does not have associative arrays.** (This will be old news
 to many.)

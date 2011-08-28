@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: HTML5, PHP, WordPress
 
 
-Using HTML5 time element in WordPress themes
-============================================
+# Using HTML5 time element in WordPress themes
 
 I've begun retrofitting this site with HTML5 elements. I'm thoroughly enjoying
 the process (I love meaningful markup).

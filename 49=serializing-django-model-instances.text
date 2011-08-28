@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: Django, Python
 
 
-Serializing Django model instances
-==================================
+# Serializing Django model instances
 
 One might expect the following code to serialize a Django model instance:
 

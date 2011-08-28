@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: JavaScript, optimization, performance
 
 
-Efficient rounding in JavaScript
-================================
+# Efficient rounding in JavaScript
 
 So you have some number, `x`, which you want to round to the nearest integer.
 Easy, right?

@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: JavaScript, MooTools, programming, Python
 
 
-Python loops can have else clause?!
-===================================
+# Python loops can have else clause?!
 
 I write a lot of Python. I also write a lot of JavaScript. As I switch between
 the two (often several times in a day) I sometimes find myself trying to do

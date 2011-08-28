@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: HTML5, JavaScript, MooTools, UX
 
 
-Auto-populating input fields with MooTools
-==========================================
+# Auto-populating input fields with MooTools
 
 Early this year I wrote a post titled
 [Auto-populating input fields with Prototype][1]. Looking at the code now,

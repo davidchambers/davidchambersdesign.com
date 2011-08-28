@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: CSS
 
 
-Remove textarea scrollbars in Internet Explorer
-===============================================
+# Remove textarea scrollbars in Internet Explorer
 
 I was delighted to discover this "trick" over on CSS-Tricks in a post titled
 [Textarea Tricks][1]. (See, Chris, I _do_ like you!)

@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: CSS, HTML, video
 
 
-Embed YouTube clips using valid XHTML markup
-============================================
+# Embed YouTube clips using valid XHTML markup
 
 There are blog posts all over the Web explaining how to write valid XHTML
 markup to embed YouTube videos. There are also a number of online converters

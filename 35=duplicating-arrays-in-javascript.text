@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: JavaScript
 
 
-Duplicating arrays in JavaScript
-================================
+# Duplicating arrays in JavaScript
 
 Many of those who write JavaScript do not come from programming backgrounds
 (while I've written plenty of PHP, Python, and JavaScript, I don't have much

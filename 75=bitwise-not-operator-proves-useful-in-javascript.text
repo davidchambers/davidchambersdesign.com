@@ -4,8 +4,7 @@ zone: Australia/Sydney
 tags: JavaScript, programming
 
 
-Bitwise NOT operator proves useful in JavaScript
-================================================
+# Bitwise NOT operator proves useful in JavaScript
 
 JavaScript is a wonderful language. Its syntax, though, leaves a lot to be
 desired at times. String pattern matching, for example, is rather ugly.

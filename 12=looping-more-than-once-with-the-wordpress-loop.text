@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: PHP, WordPress
 
 
-Looping more than once with the WordPress loop
-==============================================
+# Looping more than once with the WordPress loop
 
 When I decided to write my own WordPress theme, I thought a good approach would
 be to duplicate the default theme and go from there. Since that day I have

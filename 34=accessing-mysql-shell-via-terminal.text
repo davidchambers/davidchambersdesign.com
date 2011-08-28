@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: Mac OS X, MySQL, Terminal.app
 
 
-Accessing MySQL shell via Terminal
-==================================
+# Accessing MySQL shell via Terminal
 
 Certain things are extremely well documented on the Web; certain other things,
 however, seem to appear only deep in the comments of obscure blog entries.

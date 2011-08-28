@@ -4,8 +4,7 @@ zone: Australia/Sydney
 tags: CSS, HTML, meaningful markup
 
 
-Ridding markup of textual decoration
-====================================
+# Ridding markup of textual decoration
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -21,8 +20,7 @@ decoration, not content. It belongs in a style sheet, not in a page's markup.
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-Adding decorative textual content via CSS
------------------------------------------
+## Adding decorative textual content via CSS
 
 The [`content`][1] property is extremely powerful. It's used in conjunction
 with the [`:before`][2] and [`:after`][3] pseudo-elements.
@@ -89,8 +87,7 @@ without touching the markup.
         content: "";
     }
 
-Summary
--------
+## Summary
 
 When marking up content, one should use the elements which best _describe_
 that content. _Styling_ content is a separate (though not unrelated) issue.

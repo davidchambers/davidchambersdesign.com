@@ -1,5 +1,4 @@
-Commands
-========
+# Commands
 
 Remove glass from Snow Leopard dock:
 
@@ -39,8 +38,7 @@ Create MySQL database with UTF-8 as the default encoding:
     mysql> CREATE DATABASE dbname CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
 
-Other useful tidbits
---------------------
+## Other useful tidbits
 
 Specify character set in CSS file:
 

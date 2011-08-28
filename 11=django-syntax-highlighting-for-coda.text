@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: Coda, Django, Mac OS X
 
 
-Django syntax highlighting for Coda
-===================================
+# Django syntax highlighting for Coda
 
 I love [Coda][1]. It's just so... sexy, somehow. I've just discovered
 [Django][2], with which I'm fast falling in love as well. Naturally, when I

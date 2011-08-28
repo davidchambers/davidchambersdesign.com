@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: JavaScript, MooTools
 
 
-Positioning elements using MooTools
-===================================
+# Positioning elements using MooTools
 
 I've spent the afternoon creating a custom scrollbar for a products viewer
 which utilizes CSS transitions, reflections, and other goodness.

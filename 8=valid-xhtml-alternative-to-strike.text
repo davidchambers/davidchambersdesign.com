@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: CSS, HTML
 
 
-Valid XHTML alternative to `<strike>`
-=====================================
+# Valid XHTML alternative to `<strike>`
 
 Today I noticed that a page on this site failed validation.
 [W3C's markup validation service][1] gave the following error:

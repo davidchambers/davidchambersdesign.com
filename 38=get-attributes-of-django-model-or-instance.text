@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: Django, Python
 
 
-Get attributes of Django model or instance
-==========================================
+# Get attributes of Django model or instance
 
 What is the best way to get the attributes of a Django model or instance?
 

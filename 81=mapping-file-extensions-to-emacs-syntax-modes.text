@@ -4,8 +4,7 @@ zone: America/Los_Angeles
 tags: Emacs, syntax highlighting
 
 
-Mapping file extensions to Emacs syntax modes
-=============================================
+# Mapping file extensions to Emacs syntax modes
 
 I spent much of my day at work editing Django templates in Emacs, which does
 a decent job of applying syntax highlighting to HTML. When I got home, though,

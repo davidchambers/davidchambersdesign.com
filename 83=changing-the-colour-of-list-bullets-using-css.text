@@ -4,8 +4,7 @@ zone: America/Los_Angeles
 tags: CSS, meaningful markup
 
 
-Changing the colour of list bullets using CSS
-=============================================
+# Changing the colour of list bullets using CSS
 
 So, you're about to style an unordered list of some sort...
 

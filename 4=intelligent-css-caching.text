@@ -11,8 +11,7 @@ also ensure that visitors never view your site through the lens of an outdated
 style sheet.
 
 
-Intelligent CSS caching
-=======================
+# Intelligent CSS caching
 
 If you've ever worked with CSS, you'll understand how frustrating it is to edit
 a style sheet and be unable to view the change because a cached version of the

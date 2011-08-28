@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: DOM, IE, JavaScript
 
 
-Forcing browsers to rerender elements
-=====================================
+# Forcing browsers to rerender elements
 
 Generally speaking browsers rerender elements as required – in response to DOM
 changes effected via JavaScript, for instance. There are times, though, when

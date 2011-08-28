@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: Django, Mac OS X
 
 
-Testing Django apps using localhost subdomains
-==============================================
+# Testing Django apps using localhost subdomains
 
 This turned out to be quite a bit easier than I'd imagined. Here are the things
 I did:

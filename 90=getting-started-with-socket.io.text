@@ -4,8 +4,7 @@ zone: America/Los_Angeles
 tags: CoffeeScript, HTML5, Node.js, Socket.IO, WebSockets
 
 
-Getting started with Socket.IO
-==============================
+# Getting started with Socket.IO
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 

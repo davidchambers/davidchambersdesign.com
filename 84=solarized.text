@@ -4,8 +4,7 @@ zone: America/Los_Angeles
 tags: Coda, design, programming, Solarized
 
 
-Solarized
-=========
+# Solarized
 
 Earlier this week I discovered [Solarized][1], "a sixteen color palette [...]
 designed for use with terminal and gui applications".

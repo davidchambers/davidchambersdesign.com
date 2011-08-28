@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: JavaScript, programming, Python
 
 
-Converting integers to ordinals
-===============================
+# Converting integers to ordinals
 
 When dealing with dates, it's not uncommon to need to convert an integer
 into an ordinal number (1st, 2nd, 3rd, etc.). While making improvements to

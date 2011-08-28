@@ -4,8 +4,7 @@ zone: America/Los_Angeles
 tags: JavaScript, programming
 
 
-Repeating strings in JavaScript
-===============================
+# Repeating strings in JavaScript
 
 Python and Ruby share beautiful syntax for repeating strings; PHP's syntax is
 characteristically ugly.

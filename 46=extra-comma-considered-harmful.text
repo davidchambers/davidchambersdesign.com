@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: best practice, JavaScript
 
 
-Extra comma considered harmful
-==============================
+# Extra comma considered harmful
 
 On <time datetime="2010-03-19T13:58-00:00">19 March 2010</time>,
 David Chambers wrote:

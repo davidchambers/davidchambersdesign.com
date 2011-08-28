@@ -4,8 +4,7 @@ zone: Pacific/Auckland
 tags: PHP, SQL
 
 
-Escape special characters for SQL REGEXP
-========================================
+# Escape special characters for SQL REGEXP
 
 While using the [MTG card search][1] that I've been developing recently,
 I encountered an error that MySQL reported as follows:

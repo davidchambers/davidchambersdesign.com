@@ -4,8 +4,7 @@ zone: Australia/Sydney
 tags: hg, Mac OS X, Markdown, Mercurial, TextMate
 
 
-Composing Mercurial commit messages in TextMate
-===============================================
+# Composing Mercurial commit messages in TextMate
 
 ![](/images/posts/decorative/right/textmate-icon.png)
 
