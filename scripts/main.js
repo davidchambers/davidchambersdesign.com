@@ -54,7 +54,7 @@ jQuery(function($) {
     text = trim($code.text());
     if (/^#!\/usr\/bin\/osascript\s/.test(text)) {
       return $code.parent().addClass('brush:applescript').text(text);
-    } else {
+    } else if (!/^(\$|>{1,3}) /.test(text)) {
       return $code.addClass('prettyprint');
     }
   });
