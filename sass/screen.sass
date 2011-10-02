@@ -1,0 +1,863 @@
+@import compass/css3/border-radius
+@import compass/css3/box-shadow
+@import compass/css3/images
+@import compass/css3/text-shadow
+@import compass/css3/transition
+
+$default-border-radius: 4px
+
+// Solarized
+$base03:  #002b36
+$base02:  #073642
+$base01:  #586e75
+$base00:  #657b83
+$base0:   #839496
+$base1:   #93a1a1
+$base2:   #eee8d5
+$base3:   #fdf6e3
+$yellow:  #b58900
+$orange:  #cb4b16
+$red:     #dc322f
+$magenta: #d33682
+$violet:  #6c71c4
+$blue:    #268bd2
+$cyan:    #2aa198
+$green:   #859900
+
+$mid-gray: #a9a9a9
+$pink: #ff5e99
+$recycled-paper: #fef9ec
+
+$leading: 21px
+
+$sans-serif-fallback: Helvetica, Arial, sans-serif
+$body-text: "Lucida Grande", "Lucida Sans Unicode", $sans-serif-fallback
+$monospace: Courier, "Courier New", monospace
+
+@mixin border($side: all, $color: #ccc, $width: 1px, $style: solid)
+  @if $side == all
+    border: $width $style $color
+  @else
+    border-#{$side}: $width $style $color
+
+@mixin heading
+  font: bold 1.667em/1.05 "proxima-nova-1", "proxima-nova-2", $sans-serif-fallback
+  color: $base01
+  text-shadow: 0 1px 0 #fff
+
+@mixin hidden
+  position: absolute
+  left: -9999px
+
+html
+  height: 100%
+  background-color: $base3
+  > body
+    font-size: 12px // this is applied by all modern browsers
+
+body
+  position: relative
+  min-width: 675px
+  height: 100%
+  background-color: $base3
+  font-size: 75% // for IE 6 and earlier
+  font-family: $body-text
+  color: $base00
+  cursor: default
+
+#skip
+  +hidden
+
+#wrap
+  position: relative
+  height: auto
+  min-height: 100%
+  font-size: 1em
+  line-height: 1.75
+  overflow: hidden
+
+#header
+  position: fixed
+  left: 0
+  top: 0
+  width: 100%
+  height: 160px
+  background: inline-image("header-gradient.png") repeat-x
+  z-index: 10
+  header
+    position: relative
+    margin: 0 auto
+    width: 65%
+    min-width: 615px
+    max-width: 60em
+    padding: 24px 30px 0
+    hr
+      margin: 6px auto 0 0
+      width: 354px
+      text-align: left // without this, hr is centred in Opera (9.64)
+    p
+      margin: 0
+      height: $leading
+      background: inline-image("tagline.png") no-repeat
+      line-height: 10
+      overflow: hidden
+    form
+      position: absolute
+      right: 27px // this value is unrelated to the (identical) width value
+      top: 24px
+      width: 27px // Chrome 5.0 on OS X fails to position form correctly if width is 0 or "auto"
+      div
+        position: relative
+        label
+          +hidden
+        input[type="search"]
+          position: absolute
+          right: 27px
+          top: 0
+          display: block
+          float: left
+          width: 12.5em
+          max-width: 200px
+          height: 16px
+          font-size: (13em/12)
+        input[type="submit"]
+          position: absolute
+          right: 0
+          top: 0
+          display: block
+          margin: 0
+          width: 0
+          height: 0
+          border: none
+          background: inline-image("search.png") no-repeat 100%
+          padding: 24px 0 0 27px
+          cursor: pointer
+
+#title
+  display: block
+  width: 354px
+  height: 24px
+  background: inline-image("masthead.png") no-repeat
+  line-height: 10
+  overflow: hidden
+
+a#title
+  &:focus, &:hover, &.hover
+    background: inline-image("masthead-hover.png") no-repeat
+
+@mixin nav-item($name, $href: "/#{$name}/")
+  &[href="#{$href}"]
+    background-image: inline-image("nav/icon/#{$name}.png")
+    > span
+      background-image: inline-image("nav/text/#{$name}.png")
+
+#nav
+  > ul
+    position: relative
+    margin: 12px 0 0
+    > li
+      float: left
+      margin: 0 6px 0 0
+  a
+    display: block
+    width: 28px
+    height: 28px
+    +border-radius
+    +border(all, #999)
+    background: no-repeat 50%
+    &:focus
+      border-color: $orange
+      background-color: #ec6
+      > span
+        visibility: visible
+    &:hover, &.hover
+      border-color: $orange
+      background-color: #fff
+      > span
+        visibility: visible
+        z-index: 20
+    > span
+      position: absolute
+      left: 0
+      top: 36px
+      display: block
+      width: 354px
+      height: 10px
+      background: $base3
+      line-height: 10
+      overflow: hidden
+      visibility: hidden
+    +nav-item(about)
+    +nav-item(archives)
+    +nav-item(bitbucket, "https://bitbucket.org/davidchambers")
+    +nav-item(contact)
+    +nav-item(flushcache)
+    +nav-item(forrst, "http://forrst.com/people/davidchambers")
+    +nav-item(tags)
+    +nav-item(twitter)
+
+#main
+  margin: 0 auto
+  width: 65%
+  min-width: 615px
+  max-width: 60em
+  padding: 159px 0 10em
+
+#wrap + footer
+  position: relative
+  margin: -5.25em auto 0
+  width: 65%
+  min-width: 615px
+  max-width: 60em
+  +border(top)
+  padding: 0.5em 0 1.25em
+  line-height: 1.75
+  z-index: 20
+  > :first-child
+    margin: -1px 0 0
+    color: $base1
+
+@mixin selection
+  background: $pink
+  color: #fff
+  +text-shadow(none)
+
+::-moz-selection
+  +selection
+
+::selection
+  +selection
+
+a
+  font-weight: bold
+  text-decoration: none
+  color: $blue
+  &:focus
+    color: $orange
+    outline: none
+  &:hover
+    color: $orange
+  code, var
+    color: inherit
+
+aside
+  margin: 1.75em 0 0
+  font-style: italic
+  color: $base1
+
+blockquote
+  +border(left, $base2, 0.5em)
+  padding: 0 2.25em 0 1.75em
+  font-style: italic
+  color: $base1
+  em
+    font-style: normal
+
+caption
+  text-align: left
+  font-weight: normal
+
+code, var
+  +border(all, $base2)
+  background: $recycled-paper
+  padding: 1px 4px
+  font: normal 120%/1 $monospace
+  color: $base01
+
+pre code
+  display: block
+  border: none
+  background: none
+  padding: 0
+  font-size: 1em
+  line-height: 1.5
+  color: inherit
+
+del
+  text-decoration: line-through
+
+dl
+  position: relative
+  dt
+    clear: left
+    margin: 1.75em 0 0
+    padding: 0.5em 0
+    font-weight: bold
+    &.textual,
+    &.textual ~ dt
+      float: left
+      margin: 0
+      padding: 1.75em 0.5em 0 0
+      &:after
+        content: ":"
+    &.textual ~ dd
+      font-style: normal
+      color: inherit
+      padding: 1.75em 0 0
+    embed, img, object
+      display: block
+      margin: 0 0 -1px
+    embed, img
+      +border
+  dd
+    font-style: italic
+    color: $base1
+
+em
+  font-style: italic
+
+h1, h2, h3, h4
+  +heading
+
+h2, h3
+  margin: 1.312em 0 0
+  font-size: 1.334em
+  line-height: 1.312
+
+h4
+  margin: 1.5em 0 0
+  font-size: 1.167em
+  line-height: 1.5
+
+.unidentified
+  span
+    float: left
+    margin: -159px 0 0
+  a
+    visibility: hidden
+  &:hover a
+    visibility: visible
+
+hr
+  height: 0
+  border: none
+  +border(bottom, #999)
+
+iframe.video
+  display: block
+  margin: 1.75em 0 0
+  width: 100%
+  height: 385px
+  dt > &
+    margin: 0
+
+img
+  display: block
+  vertical-align: text-bottom
+
+  &[src*="/decorative/left/"]
+    float: left
+    margin: 0 1em 0 0
+    border: none !important
+
+  &[src*="/decorative/right/"]
+    float: right
+    margin: 0 0 0 1em
+    border: none !important
+
+  &[src*="/elam/"],
+  &[src*="/lightbox/"]
+    margin: 1.75em 0 -1px
+    +border
+
+  &[src*="/lightbox/large/"]
+    margin: 0
+
+  &[src*="/windows/"]
+    margin: 3px -40px -29px
+    max-width: none !important
+    border: none !important
+
+  dt > &[src*="/windows/"]
+    margin: -24px -40px -35px
+
+  p > &[src*="/windows/"]
+    margin: -18px -40px -29px
+
+  p > &:only-child
+    +border
+
+  &.margin-top
+    margin-top: 1.75em
+
+input
+  &[type="url"],
+  &[type="text"],
+  &[type="email"],
+  &[type="search"]
+    -webkit-box-sizing: content-box
+    height: 15px
+    +border
+    background: $recycled-paper
+    padding: 3px 0.5em
+    font-size: 1em
+    &:focus
+      border-color: $blue
+      outline: none
+  &.placeholder
+    color: $mid-gray !important
+
+ins
+  background-color: transparent
+  text-decoration: underline
+
+label
+  position: absolute
+  left: 19.833em
+  top: 0
+  margin: 1px 0 0
+  color: $base1
+  &.required:after
+    content: "*"
+    color: #999
+
+object.video
+  width: 100%
+  height: 385px
+
+ol
+  margin: 1.75em 0 0
+  list-style: decimal outside
+
+p
+  margin: 1.75em 0 0
+  &.caption
+    margin: 0.5em 0 0
+    font-style: italic
+    color: $base1
+
+pre
+  margin: 1.286em 0 -0.214em
+  +border(all, $base2)
+  background-color: $recycled-paper
+  padding: 0.143em 0.714em
+  font: 1.167em/1.5 $monospace
+  overflow: auto
+  li &
+    margin: 1.286em 0
+
+select
+  min-width: 150px
+
+strong
+  font-weight: bold
+
+textarea
+  display: block
+  width: 98%
+  height: 15em
+  +border
+  background: $recycled-paper
+  padding: 0.333em 0.5em
+  font: 1em/1.25 Monaco, monospace
+  outline: none
+  overflow: auto
+  &:focus
+    border-color: $blue
+
+time
+  span
+    display: block
+    color: $base1
+    + span
+      color: $mid-gray
+
+ul
+  margin: 1.75em 0 0
+  list-style: square outside inline-image("bullet.png")
+  li.pro, li.con
+    margin: 0
+    margin-left: -$leading
+    background: no-repeat 0 0.25em
+    padding: 0 0 0 $leading
+    list-style: none
+  li.pro
+    background-image: inline-image("tick.png")
+  li.con
+    background-image: inline-image("cross.png")
+
+video
+  +border
+
+article
+  > header
+    > dl
+      margin: 1.571em 0 -0.071em
+      font: 1.167em/1.5 $monospace
+      color: $base1
+      overflow: auto
+      > dt
+        float: left
+        margin: 0
+        min-width: 7em
+        padding: 0
+        font-weight: normal
+        &:after
+          content: ":"
+      > dd
+        font-style: normal
+        > a
+          font-weight: normal
+
+@mixin tag-colors($count)
+  $value: 247 - 5 * log2($count)
+  background: rgb($value, $value, $value)
+  color: rgba(0, 0, 0, 0.1 * log2($count) + 0.3)
+
+#tags
+  margin: 1.75em 0 0
+  list-style: none
+  li
+    position: relative
+    float: left
+    margin: 0 1px 0 0
+    width: 24.5%
+    height: 3.5em
+    &:hover
+      z-index: 100
+    a
+      position: absolute
+      left: 0
+      top: 0
+      display: block
+      width: 100%
+      +border
+      padding: 10px 0
+      text-align: center
+      -moz-transition-property:     top, left,    -moz-box-shadow, padding, font-size, z-index
+      -webkit-transition-property:  top, left, -webkit-box-shadow, padding, font-size, z-index
+      -o-transition-property:       top, left,         box-shadow, padding, font-size, z-index
+      transition-property:          top, left,         box-shadow, padding, font-size, z-index
+      +transition-property("top, left, box-shadow, padding, font-size, z-index")
+      +transition-duration("0.2s, 0.2s, 0.2s, 0.2s, 0.167s, 0.2s")
+      +transition-timing-function(ease)
+      +tag-colors(20)
+      &:focus, &:hover, &.hover
+        left: -$leading
+        top: -6px
+        width: 100%
+        padding: 16px $leading
+        +box-shadow(0 1px 3px rgba(0, 0, 0, 0.2))
+        font-size: 1.167em
+        z-index: 99
+    @for $count from 1 to 20
+      &[data-count="#{$count}"] a
+        +tag-colors($count)
+
+.hashify-editor
+  margin-top: 2px
+
+div.syntaxhighlighter
+  margin: 1.75em 0 -1px !important
+  code
+    border: none
+    background: none
+    padding: 0
+    color: inherit
+
+.clearfix
+  clear: both
+
+.filesize
+  color: $base1
+
+.structural
+  position: absolute !important
+  left: -9999px !important
+
+ol li.interviewer
+  list-style: none
+  ~ li
+    list-style: none
+    margin-top: 1.75em
+  &:nth-child(1),
+  ~ li:nth-child(odd)
+    color: $base1
+
+#comments, #related, #respond
+  margin: 2.625em 0 0
+
+.unidentified
+  &.comments, &.related, &.respond
+    margin: 2.625em 0 0
+
+#main
+  h2.unidentified,
+  h3.unidentified
+    a
+      visibility: hidden
+    &:hover a
+      visibility: visible
+      color: #c00
+  > article + article,
+  > h1 + article
+    margin: 3.5em 0 0
+  > article + h2
+    margin: 2.625em 0 0
+  img
+    max-width: 100%
+  article
+    header
+      line-height: 1
+      h1, h2
+        display: inline
+        margin: 0 0.25em 0 0
+        +heading
+      time
+        display: inline
+        +heading
+        font-weight: normal
+        color: $base1
+        white-space: nowrap
+
+.update
+  margin: 1.75em 0 -1px
+  border-width: 1px 0
+  border-style: solid
+  border-color: $base1
+  padding: 1.667em 0 1.75em
+  h4:first-child
+    margin: 0
+
+footer.metadata
+  margin-left: -1em
+  padding: 1.75em 0 0 1em
+  overflow: hidden
+  a
+    float: left
+    margin: 0 0.5em 0 0
+  ul
+    list-style: none
+    a
+      margin-left: -0.833em
+      +border-radius(0.875em)
+      background: $blue
+      padding: 0 0.667em 0 0.833em
+      color: #fff
+      &:focus, &:hover
+        background: $orange
+  h4
+    +hidden
+  ol
+    margin: 0
+    list-style: none
+    a
+      background: inline-image("tag.png") no-repeat 0
+      padding: 0 0 0 20px
+
+article
+  article
+    margin: 0 0 0 -30px
+    +border(bottom)
+    padding: 0.417em 0 1.25em 30px
+    overflow: auto
+    > div
+      float: left
+      width: 65%
+      > p:first-child
+        margin: 0
+      > blockquote:first-child > p:first-child
+        margin: 0 !important
+    footer
+      position: relative
+      float: right
+      width: 30%
+      padding: 0
+      color: #000
+      img
+        position: absolute
+        left: 0
+        top: 0.417em
+        display: block
+      strong, time
+        display: block
+        margin: 0 0 0 32px
+        padding: 0 0 0 1em
+  h2 + article
+    margin: 1.25em 0 0 -30px
+    +border(top)
+
+fieldset
+  form[action="comment/"] &
+    margin: 1em 0 0
+  &#author-details
+    margin: 1.75em 0 0
+    padding: 0 0 0.083em
+    + div + div
+      height: 1.75em
+      + div
+        height: 3.5em
+    ~ div:last-child
+      padding: 0 0 1px
+
+form
+  div
+    position: relative
+  > fieldset
+    margin: 1.75em 0 0
+    > div
+      height: 2.25em
+      > label
+        text-transform: lowercase
+      > input[type="url"],
+      > input[type="text"],
+      > input[type="email"]
+        position: absolute
+        left: 0
+        top: 0
+        margin: 0 0.75em 0 0
+        width: 18em
+        max-width: 300px
+    + div
+      > label
+        +hidden
+      + div
+        > label
+          left: 1.75em
+        > input[type="checkbox"]
+          margin: 0
+
+input[type="submit"]
+  margin: 20px 0 0
+  height: 30px
+  +border-radius
+  +border(all, #999)
+  background: #ddd
+  +background-image(linear-gradient(#eee, #ccc))
+  padding: 0 10px
+  font: 1.167em/30px "proxima-nova-1", "proxima-nova-2", "Lucida Grande", "Lucida Sans Unicode", sans-serif
+  +text-shadow(0 1px 0 #fff)
+  &:focus
+    border-color: $blue
+    outline: none
+  &:hover
+    background: #ccc
+    +background-image(linear-gradient(#ddd, #bbb))
+    cursor: pointer
+  &:active
+    +background-image(linear-gradient(#bbb, #ddd))
+
+label[for="cc_sender"],
+label[for="subscribe"]
+  position: relative
+  top: 5px
+  margin: 0
+
+#cc_sender,
+#subscribe
+  position: absolute
+  left: 0
+  top: 10px
+
+ol.pages
+  list-style: none
+
+ol.posts
+  list-style: none
+  color: $base1
+
+ol.archives
+  margin: 0
+  margin-left: -$leading
+  list-style: none
+  li
+    h2
+      margin: 1.75em 0 0 $leading
+      padding: 0
+      font: bold 1em/1.75 $body-text
+      color: $base1
+    ol
+      margin: 0
+      list-style: none
+  time
+    display: block
+    float: left
+    margin: 0.167em 0.5em 0 0
+    width: 16px
+    height: 16px
+    background-image: inline-image("calendar.png")
+    background-repeat: no-repeat
+    line-height: 10
+    overflow: hidden
+    $offset: -20px
+    $x: 3
+    $y: 1
+    @for $date from 1 through 31
+      @if $date < 10
+        $date: "0#{$date}"
+      &[datetime*="#{$date}T"]
+        background-position: $x * $offset $y * $offset
+      @if $x == 7
+        $x: 1
+        $y: $y + 1
+      @else
+        $x: $x + 1
+
+#cricket-field-diagrams dl
+  margin: 2.25em 0 0
+  height: 367px
+  dt
+    $offset: 170px
+    position: absolute
+    left: 0 * $offset
+    top: 0
+    margin: 0
+    width: 148px
+    height: 148px
+    +border
+    background-color: #fff
+    padding: 0
+    ~ dt
+      left: 1 * $offset
+      ~ dt
+        left: 2 * $offset
+        ~ dt
+          left: 0 * $offset
+          top: 191px
+          ~ dt
+            left: 1 * $offset
+            ~ dt
+              left: 2 * $offset
+    ~ dd
+      position: absolute
+      left: 0 * $offset
+      top: 155px
+      width: 150px
+      text-align: center
+      ~ dd
+        left: 1 * $offset
+        ~ dd
+          left: 2 * $offset
+          ~ dd
+            left: 0 * $offset
+            top: 346px
+            ~ dd
+              left: 1 * $offset
+              ~ dd
+                left: 2 * $offset
+    img
+      margin: -1px // negate border
+      border: none
+
+.atn
+  color: $base00
+.atv
+  color: $cyan
+.com
+  color: $base1
+.dec
+  color: $base1
+.kwd
+  color: $green
+.lit
+  color: $magenta
+.pln
+  color: $base00
+.pun
+  color: $base00
+.str
+  color: $cyan
+.tag
+  color: $blue
+.typ
+  color: $base00

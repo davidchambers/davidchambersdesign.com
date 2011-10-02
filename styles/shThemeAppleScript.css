@@ -1,0 +1,51 @@
+/* AppleScript theme for SyntaxHighlighter
+ * 
+ * SyntaxHighlighter by Alex Gorbatchev
+ * http://alexgorbatchev.com/
+ * 
+ * AppleScript theme by David Chambers
+ * https://bitbucket.org/davidchambers/applescript-theme
+ */
+.syntaxhighlighter.applescript {
+  border: 1px solid #cccccc;
+  background: white;
+  padding: 2px;
+  font-size: 1em;
+  color: black;
+}
+.syntaxhighlighter.applescript div, .syntaxhighlighter.applescript code {
+  font: 1em/1.25 Verdana, sans-serif !important;
+}
+.syntaxhighlighter.applescript .gutter, .syntaxhighlighter.applescript .toolbar, .syntaxhighlighter.applescript textarea {
+  display: none;
+}
+.syntaxhighlighter.applescript .code .line {
+  padding: 0 !important;
+  white-space: pre-wrap !important;
+  overflow: hidden !important;
+}
+.syntaxhighlighter.applescript .code .line.highlighted {
+  background: #b5d5ff !important;
+}
+.syntaxhighlighter.applescript .code .line > :first-child {
+  margin-left: 4px !important;
+}
+.syntaxhighlighter.applescript .comments {
+  color: #4d4e4e;
+}
+.syntaxhighlighter.applescript .keyword {
+  font-weight: bold !important;
+  color: #3207fd;
+}
+.syntaxhighlighter.applescript .color3 {
+  color: #3207fd;
+}
+.syntaxhighlighter.applescript .plain {
+  color: #417f0a;
+}
+.syntaxhighlighter.applescript .spaces {
+  display: inline-block;
+  height: 0 !important;
+  font-size: 1.75em !important;
+  line-height: 0 !important;
+}
