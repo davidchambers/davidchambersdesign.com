@@ -14,7 +14,7 @@ to memory addresses. This leads to confusion in cases such as this:
 
     var fruits = ['orange', 'lime'];
     var colours = fruits; // naïve attempt to duplicate array
-    colours.append('yellow');
+    colours.push('yellow');
 
 One might be surprised to learn that `fruits` now contains not just "orange"
 and "lime" but also "yellow". Oops! Here's how it went wrong:
