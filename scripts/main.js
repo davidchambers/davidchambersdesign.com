@@ -1,3 +1,4 @@
+
 jQuery(function($) {
   var $comments, $time, clearInterval, get, location, setInterval, trim;
   location = window.location, setInterval = window.setInterval, clearInterval = window.clearInterval;
