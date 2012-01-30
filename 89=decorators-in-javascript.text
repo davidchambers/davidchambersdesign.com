@@ -50,24 +50,21 @@ users are permitted to perform:
 The CoffeeScript equivalent is quite a bit clearer:
 
     changeUsername = loginRequired (username) ->
-      $.ajax {
+      $.ajax
         type: 'PUT'
         url: "/api/1.0/users/#{user.id}"
         data: {username}
-      }
     
     changePassword = loginRequired (password) ->
-      $.ajax {
+      $.ajax
         type: 'PUT'
         url: "/api/1.0/users/#{user.id}"
         data: {password}
-      }
     
     deleteAccount = loginRequired ->
-      $.ajax {
-        type: 'DELETE',
+      $.ajax
+        type: 'DELETE'
         url: "/api/1.0/users/#{user.id}"
-      }
 
 Decorators are commonly used in Python -- which provides special syntax for
 "decorating" functions -- but are rarely seen in JavaScript code. This despite
