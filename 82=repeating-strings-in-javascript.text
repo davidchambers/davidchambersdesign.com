@@ -9,19 +9,19 @@ tags: JavaScript, programming
 Python and Ruby share beautiful syntax for repeating strings; PHP's syntax is
 characteristically ugly.
 
-### Python {#python}
+### Python {@id=python}
 
     '=' * 5
 
-### Ruby {#ruby}
+### Ruby {@id=ruby}
 
     '=' * 5
 
-### PHP {#php}
+### PHP {@id=php}
 
     str_repeat('=', 5)
 
-### JavaScript? {#javascript}
+### JavaScript? {@id=javascript}
 
 True to form, repeating strings in JavaScript is ugly and counterintuitive,
 but kinda cool.

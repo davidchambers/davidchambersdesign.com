@@ -125,7 +125,7 @@ colour from the rest of the string. Nice!
 The Coda theme, like Coda itself, can handle non-HTML code inside HTML
 snippets.
 
-#### CSS inside HTML {#css-inside-html}
+#### CSS inside HTML {@id=css-inside-html}
 
 For HTML snippets that contain some CSS, use
 `<pre class="brush: css; html-script: true;"></pre>`.
@@ -149,7 +149,7 @@ For HTML snippets that contain some CSS, use
         </style>
     </head>
 
-#### JavaScript inside HTML {#javascript-inside-html}
+#### JavaScript inside HTML {@id=javascript-inside-html}
 
 For HTML snippets that contain some JavaScript, use
 `<pre class="brush: javascript; html-script: true;"></pre>`.
@@ -172,7 +172,7 @@ For HTML snippets that contain some JavaScript, use
         </script>
     </body>
 
-#### PHP inside HTML {#php-inside-html}
+#### PHP inside HTML {@id=php-inside-html}
 
 For HTML snippets that contain some PHP, use
 `<pre class="brush: php; html-script: true;"></pre>`.
@@ -210,7 +210,7 @@ from which it gets its name. The failings are as follows:
             }
         </script>
 
-### Setup {#setup}
+### Setup {@id=setup}
 
 1. Download and unzip [coda-theme-for-syntaxhighlighter.zip][3].
 2. Open **example.html** to confirm that everything is working correctly.

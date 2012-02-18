@@ -35,7 +35,7 @@ demand.
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-### Setup {#setup}
+### Setup {@id=setup}
 
 **Requires Prototype!**
 
@@ -86,7 +86,7 @@ dynamically:
 3.  Replace both instances of `http://example.com/sh/` in the above snippet
     with the path to your **SyntaxHighlighter** directory.
 
-### Usage {#usage}
+### Usage {@id=usage}
 
 The `settings` object provides flexibility by allowing various things to be
 modified or included.

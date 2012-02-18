@@ -31,7 +31,7 @@ distracting...
 This should do the trick, but doesn't for some reason! How the heck does one
 target the bullets and only the bullets? As far as I know it's not possible.
 
-### Conventional hack {#conventional-hack}
+### Conventional hack {@id=conventional-hack}
 
     <h1>TXJS 2011 Speakers</h1>
     <ul>
@@ -53,7 +53,7 @@ target the bullets and only the bullets? As far as I know it's not possible.
 This gets the job done, but those `span`s are ugly – there are ways to achieve
 the desired visual effect without hacking the markup.
 
-### Background image technique {#background-image-technique}
+### Background image technique {@id=background-image-technique}
 
     ul {
       list-style: none;
@@ -68,7 +68,7 @@ the desired visual effect without hacking the markup.
 This requires very little CSS. To avoid incurring the overhead of an extra
 HTTP request, one could Base64-encode the image in a [data URI][1].
 
-### Pseudo-element technique {#pseudo-element-technique}
+### Pseudo-element technique {@id=pseudo-element-technique}
 
     ul {
       list-style: none;
