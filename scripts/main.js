@@ -4,21 +4,13 @@ jQuery(function($) {
   location = window.location, setInterval = window.setInterval, clearInterval = window.clearInterval;
   get = $.get, trim = $.trim;
   if (/(iPhone|iPod|iPad)/i.test(navigator.userAgent)) {
-    $(document.body).delegate('a', {
-      touchstart: function() {
-        return $(this).addClass('hover');
-      },
-      touchend: function() {
-        return $(this).removeClass('hover');
-      }
+    $(document.body).on('touchstart touchend', 'a', function(event) {
+      return $(this).toggleClass('hover', event.type === 'touchstart');
     });
   }
   $('h2[id],h3[id],h4[id]').each(function() {
-    var id;
-    id = this.id;
-    if (id) {
-      return $(this).addClass("" + id + " unidentified").prepend("<span id='" + id + "'>").append("<a href='#" + id + "'>¶</a>").attr('id', null);
-    }
+    if (!this.id) return;
+    return $(this).addClass("" + this.id + " unidentified").prepend("<span id='" + this.id + "'>").append("<a href='#" + this.id + "'>¶</a>").attr('id', null);
   });
   $('a[href^="#"]').click(function(event) {
     var abs, delta, hash, idx, intervalId, log, offset, positions, round, steps;

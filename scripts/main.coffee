@@ -5,19 +5,17 @@ jQuery ($) ->
 
   # simulate `:hover`
   if /(iPhone|iPod|iPad)/i.test navigator.userAgent
-    $(document.body).delegate 'a',
-      touchstart: -> $(this).addClass 'hover'
-      touchend: -> $(this).removeClass 'hover'
+    $(document.body).on 'touchstart touchend', 'a', (event) ->
+      $(this).toggleClass('hover', event.type is 'touchstart')
 
   # accommodate fixed-position header
   $('h2[id],h3[id],h4[id]').each ->
-    {id} = this
-    if id
-      $(this)
-        .addClass("#{id} unidentified")
-        .prepend("<span id='#{id}'>")
-        .append("<a href='##{id}'>¶</a>")
-        .attr('id', null)
+    return unless @id
+    $(this)
+      .addClass("#{@id} unidentified")
+      .prepend("<span id='#{@id}'>")
+      .append("<a href='##{@id}'>¶</a>")
+      .attr('id', null)
 
   # scrolling
   $('a[href^="#"]').click (event) ->
@@ -26,7 +24,7 @@ jQuery ($) ->
       {abs, log, round} = Math
       offset = $(hash).offset().top
       delta = offset - window.pageYOffset
-      steps = round(2 * log abs delta) || 1
+      steps = round(2 * log abs delta) or 1
       positions = (round offset - idx * (delta / steps) for idx in [0..steps])
       intervalId = setInterval ->
         position = positions.pop()
