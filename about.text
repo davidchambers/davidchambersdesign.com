@@ -3,33 +3,23 @@
 **Greetings! My name is David Chambers and I'm a software developer based in
 San Francisco.**
 
-I work at [Atlassian][1] with a fantastic team dedicated to making
-[Bitbucket][2] awesome. I've studied graphic design and computer science,
-both of which are relevant in my role as a (primarily front-end) developer.
-In a typical work day I write CSS, jQuery, and Python, and in my spare time
-I'm rewriting our Django templates to use [meaningful markup][3].
+I work at [Atlassian][1] with a great group of people dedicated to making
+[Bitbucket][2] awesome. Our efforts benefit tens of thousands of software
+developers, which makes the job incredibly rewarding.
 
-My [open source projects][4] are hosted on Bitbucket; [Mango][5] and
-[jQuery.localize][6] are the most substantial.
+I've created several dozen [open source projects][3], many of which are small,
+self-contained JavaScript utilities written in CoffeeScript. In 2011 I created
+and released [Hashify][4], a little gift to the Internet. :)
 
-![Me with friends Jo and Shaun at the Luge in Rotorua][7]
+![Me with friends Jo and Shaun at the Luge in Rotorua][5]
 : Me with friends at the Luge in Rotorua
 
-I love Python, Django, JavaScript (thanks to Douglas Crockford), pixel art,
-Coda, Growl, elegant code, and things that work. I dislike badly-designed
-interfaces, badly-documented APIs, brussel sprouts, and making spelling
-mistakes.
-
-I hope to design a typeface someday.
-
-Feel free to [follow me on Twitter][8]. I tweet sporadically and infrequently.
+Feel free to [follow me on Twitter][6]. I tweet sporadically and infrequently.
 
 
 [1]: http://www.atlassian.com/
 [2]: https://bitbucket.org/
-[3]: /tag/meaningful-markup/
-[4]: https://bitbucket.org/davidchambers
-[5]: https://bitbucket.org/davidchambers/mango
-[6]: https://bitbucket.org/davidchambers/jquery.localize
-[7]: /images/about/david-jo-shaun.jpg
-[8]: http://twitter.com/davidchambers
+[3]: https://bitbucket.org/davidchambers
+[4]: http://hashify.me/
+[5]: /images/about/david-jo-shaun.jpg
+[6]: http://twitter.com/davidchambers
