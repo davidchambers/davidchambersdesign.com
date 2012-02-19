@@ -30,6 +30,9 @@ find one there, I did a Google search but again came away empty-handed. I wrote
 my own function for the job, and thought I'd share it in case others encounter
 the same problem:
 
+    :::php
+    <?php
+    
     function mysql_regexp_escape_string($string)
     {
         $special_chars = array('*', '.', '?', '+', '[', ']', '(', ')', '{', '}', '^', '$', '|', '\\');
@@ -42,6 +45,8 @@ the same problem:
     
         return str_replace($special_chars, $replacements, $string);
     }
+    
+    ?>
 
 It is quite possible that a solution to this problem already exists. If this is
 the case, I am eager to know about it.

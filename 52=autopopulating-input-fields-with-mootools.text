@@ -11,6 +11,7 @@ Early this year I wrote a post titled
 I realize that it's not very pretty. I'm rewriting this site's JavaScript
 in MooTools, and the new code is quite a bit more elegant.
 
+    :::javascript
     // provide input hints
     window.addEvent('domready', function () {
         $$('input[placeholder]').addEvents({

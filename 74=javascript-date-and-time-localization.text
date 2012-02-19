@@ -39,6 +39,7 @@ As it turns out, though, HTML5 provides the perfect hook for date and time
 localization: the `time` element, whose `datetime` attribute provides the
 canonical representation of a point in time.
 
+    :::html
     <time datetime="1984-04-26">26 April 1984</time>
 
 Simply by using the `time` element correctly our scripts gain access to date,
@@ -67,15 +68,18 @@ flexible and documenting its relatively simple API.
 
 Assume that a page contains the following `time` element.
 
+    :::html
     <time datetime="2010-11-27T13:30-00:00">27 November 2010</time>
 
 We could localize this element (along with any other `time` elements on the
 page) with a simple call to `localize`.
 
+    :::javascript
     $('time').localize();
 
 This updates both the visible text and the value of the `datetime` attribute.
 
+    :::html
     <time datetime="2010-11-28T00:30+11:00">28 November 2010</time>
 
 Date and time formats are fully customizable via [directives][2], and there

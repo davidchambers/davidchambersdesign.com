@@ -14,6 +14,7 @@ Today I noticed that a page on this site failed validation.
 `<strike>` is not valid XHTML; I'd forgotten the correct XHTML markup for
 this purpose:
 
+    :::html
     my favourite colour is <del>red</del> <ins>white</ins>
 
 The above gives: my favourite colour is <del>red</del> <ins>white</ins>
@@ -21,6 +22,7 @@ The above gives: my favourite colour is <del>red</del> <ins>white</ins>
 It's a good idea to explicitly define the appearance of deleted and inserted
 text in your style sheet:
 
+    :::css
     del { text-decoration: line-through; }
     ins { text-decoration: underline; }
 

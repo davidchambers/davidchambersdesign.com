@@ -8,6 +8,7 @@ tags: Django, Python
 
 One might expect the following code to serialize a Django model instance:
 
+    :::python
     import simplejson
     simplejson.dumps(instance)
 
@@ -16,12 +17,14 @@ serializable. I don't understand _why_ model instances are not serializable,
 but I do have a solution: define a serialization method on the instance's
 model.
 
+    :::python
     def toJSON(self):
         import simplejson
         return simplejson.dumps(dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]]))
 
 Here's the verbose equivalent for those averse to one-liners:
 
+    :::python
     def toJSON(self):
         fields = []
         for field in self._meta.fields:

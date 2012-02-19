@@ -37,6 +37,7 @@ These pipes commonly appear in the site's markup. **This is wrong!** Last week
 I was horrified to discover that [Bitbucket][4] is guilty of this. I've since
 rectified the situation (although the change is yet to go live).
 
+    :::css
     .footer-nav li {
         display: inline;
         list-type: none;
@@ -52,6 +53,7 @@ the first_.
 Another case in which there's a temptation to mark up content in a certain way
 in order to achieve a certain visual appearance is the comma-separated list.
 
+    :::html
     <p><strong>Tags:</strong> Apple, iOS, iPad</p>
 
 This approach is inflexible. Displaying the tags as Twitter-style hashtags,
@@ -63,6 +65,7 @@ we have a _list_ of tags, we should use a list of some sort. Since the list is
 in non-arbitrary order (alphabetical), an ordered list is probably appropriate.
 "Tags" is a heading that relates to the list of tags.
 
+    :::html
     <h4>Tags</h4>
     <ol>
         <li>Apple</li>
@@ -74,6 +77,7 @@ It takes a bit of work to display this markup as a simple comma-separated
 list, but it gives us the freedom to dramatically alter the list's appearance
 without touching the markup.
 
+    :::css
     h4, ol, li {
         display: inline;
     }

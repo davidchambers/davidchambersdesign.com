@@ -11,12 +11,14 @@ the two (often several times in a day) I sometimes find myself trying to do
 something in one using the syntax of the other. The most common example is
 joining a list.
 
-    # Python
+Python:
     
+    :::python
     ' '.join(['foo', 'bar'])
 
-    // JavaScript
+JavaScript:
     
+    :::javascript
     ['foo', 'bar'].join(' ')
 
 Often -- as is the case above -- the syntactical differences are minor, but
@@ -25,6 +27,7 @@ there are times when there's no direct translation.
 [MooTools][1], for example, adds the [`every` method][2] to the `Array` object.
 This makes it possible to write some rather terse conditional statements.
 
+    :::javascript
     var numbers = [87, 33, 21, 75];
     if (numbers.every(function (n) { return n % 3 == 0; })) {
         window.alert('The numbers are all divisible by 3.');
@@ -32,6 +35,7 @@ This makes it possible to write some rather terse conditional statements.
 
 Python lists have no comparable method, so how would one write this in Python?
 
+    :::python
     numbers = [87, 33, 21, 75]
     if [n for n in numbers if n % 3 == 0] == numbers:
         print 'The numbers are all divisible by 3.'
@@ -45,6 +49,7 @@ are equal, everything in `numbers` is divisible by 3.
 Assume that we have a list of documents, and we want to know which of the
 documents contain all the terms in a list of search terms.
 
+    :::javascript
     // (MooTools) JavaScript
     
     var terms = ['python', 'list', 'methods'], matches = [];
@@ -56,6 +61,7 @@ documents contain all the terms in a list of search terms.
 
 Here, we _could_ use the list comprehension approach as before.
 
+    :::python
     # Python
     
     terms = ['python', 'list', 'methods']
@@ -72,6 +78,7 @@ so that we don't waste time on lost causes.
 It turns out that Python has just the thing for the job: **in Python, a loop
 statements may have an `else` clause!**
 
+    :::python
     terms = ['python', 'list', 'methods']
     matches = []
     for document in documents:

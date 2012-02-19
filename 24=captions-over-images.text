@@ -24,6 +24,7 @@ our disposal. While an image is clearly not a "term", a caption does _describe_
 an image, just as a definition _describes_ a term. Meaningful markup for an
 image and its caption should look something like the following:
 
+    :::html
     <dl>
         <dt><img src="images/paris.jpg" alt="View from Notre Dame de Paris" /></dt>
         <dd>View from Notre Dame de Paris</dd>
@@ -39,6 +40,7 @@ for multiple images and captions: the nature of CSS positioning dictates that
 each image–caption pair reside in its own element. The final markup, however,
 is still quite clean:
 
+    :::html
     <dl class="captioned-image">
         <dt><img src="images/paris.jpg" alt="View from Notre Dame de Paris" /></dt>
         <dd><span>View from Notre Dame de Paris</span></dd>
@@ -53,6 +55,7 @@ Additional markup required:
 Check out the [captions over images demo][3] to see the approach in action. The
 CSS responsible for the appearance of the captions is as follows:
 
+    :::css
     dl.captioned-image         { position: relative; margin: 1em 0; }
     dl.captioned-image dt img  { display: block; }
     dl.captioned-image dd      { position: absolute; left: 0; bottom: 1.25em;

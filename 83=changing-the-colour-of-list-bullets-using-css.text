@@ -8,6 +8,7 @@ tags: CSS, meaningful markup
 
 So, you're about to style an unordered list of some sort...
 
+    :::html
     <h1>TXJS 2011 Speakers</h1>
     <ul>
       <li>Brendan Eich</li>
@@ -19,11 +20,11 @@ So, you're about to style an unordered list of some sort...
 You've decided upon hanging square bullets in a light grey – nothing too
 distracting...
 
+    :::css
     ul {
       list-style: square outside;
       color: #ccc;
     }
-    
     li {
       color: #000;
     }
@@ -33,6 +34,7 @@ target the bullets and only the bullets? As far as I know it's not possible.
 
 ### Conventional hack {@id=conventional-hack}
 
+    :::html
     <h1>TXJS 2011 Speakers</h1>
     <ul>
       <li><span>Brendan Eich</span></li>
@@ -41,24 +43,25 @@ target the bullets and only the bullets? As far as I know it's not possible.
       <li><span>Paul Irish</span></li>
     </ul>
 
-    ul {
-      list-style: square outside;
-      color: #ccc;
-    }
-    
-    li>span {
-      color: #000;
-    }
+    <style>
+      ul {
+        list-style: square outside;
+        color: #ccc;
+      }
+      li > span {
+        color: #000;
+      }
+    </style>
 
 This gets the job done, but those `span`s are ugly – there are ways to achieve
 the desired visual effect without hacking the markup.
 
 ### Background image technique {@id=background-image-technique}
 
+    :::css
     ul {
       list-style: none;
     }
-    
     li {
       margin-left: -12px;
       background: url(bullet.png) no-repeat 0;
@@ -70,14 +73,13 @@ HTTP request, one could Base64-encode the image in a [data URI][1].
 
 ### Pseudo-element technique {@id=pseudo-element-technique}
 
+    :::css
     ul {
       list-style: none;
     }
-    
     li {
       position: relative;
     }
-    
     li:before {
       position: absolute;
       top: 8px;
@@ -96,6 +98,7 @@ of straightforward declarations. Nice!
 
 Prefer round bullets? No problem. :)
 
+    :::css
       ...
       -webkit-border-radius: 2px;
       -moz-border-radius: 2px;

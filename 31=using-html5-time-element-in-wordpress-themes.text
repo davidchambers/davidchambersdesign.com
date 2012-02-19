@@ -13,11 +13,15 @@ One of the first HTML5 elements I've introduced is the **time** element which,
 through its **datetime** attribute, provides a machine-readable version of
 dates and times.
 
+    :::html
     <time datetime="2009-11-01T16:41:53+13:00">1 November 2009</time>
 
 I wrote a function to generate the machine-readable dates and times for blog
 comments.
 
+    :::php
+    <?php
+    
     /**
      * echoes comment's date and time in format 2009-11-01T03:41:53+13:00
      */
@@ -40,8 +44,11 @@ comments.
     
         echo $output;
     }
+    
+    ?>
 
 While looping through comments in your WordPress theme, call the above function
 to print a valid datetime string.
 
+    :::html+php
     <time datetime="<?php comment_datetime(); ?>">

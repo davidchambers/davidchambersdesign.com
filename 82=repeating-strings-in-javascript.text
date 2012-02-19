@@ -11,10 +11,12 @@ characteristically ugly.
 
 ### Python {@id=python}
 
+    :::python
     '=' * 5
 
 ### Ruby {@id=ruby}
 
+    :::ruby
     '=' * 5
 
 ### PHP {@id=php}
@@ -26,4 +28,5 @@ characteristically ugly.
 True to form, repeating strings in JavaScript is ugly and counterintuitive,
 but kinda cool.
 
+    :::javascript
     new Array(5 + 1).join('=')

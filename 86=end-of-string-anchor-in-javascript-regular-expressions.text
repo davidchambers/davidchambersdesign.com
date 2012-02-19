@@ -17,6 +17,7 @@ end of any line.
 It's possible, though, to have a lookahead act as an end of string anchor
 in multiline mode:
 
+    :::javascript
     > /bar(?![\s\S])/m.test('foo\nbar')
     true
     > /bar(?![\s\S])/m.test('foo\nbar\n')

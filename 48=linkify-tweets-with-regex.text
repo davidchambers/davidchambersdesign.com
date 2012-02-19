@@ -26,10 +26,12 @@ prevents the regular expression from matching "@example" in "me@example.com".
 
 #### JavaScript implementation ####
 
+    :::javascript
     tweet.replace(/(^|\s)(@\w+)/gm, '$1<a href="http://twitter.com/$2">$2</a>');
 
 It would of course be nicer to write:
 
+    :::javascript
     tweet.replace(/(?<=(?:^|\s))(@\w+)/gm, '<a href="http://twitter.com/$1">$1</a>');
 
 Unfortunately, JavaScript does not support lookbehinds in regular expressions,
@@ -45,6 +47,7 @@ one) and spit it out in the replacement string.
 Python _does_ support lookbehinds, but only _fixed-width_ lookbehinds, so it
 won't allow `(?<=^|\s)`. No matter.
 
+    :::python
     import re
     re.sub(r'(?m)(^|\s)(@\w+)',
             lambda m: m.group(1) + '<a href="http://twitter.com/' + m.group(2) + '">' + m.group(2) + '</a>',

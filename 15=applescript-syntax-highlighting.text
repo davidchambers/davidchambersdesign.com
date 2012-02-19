@@ -107,6 +107,7 @@ following:
 To have SyntaxHighlighter parse a block of AppleScript, wrap the code in `pre`
 tags like so:
 
+    :::html
     <pre class="brush: applescript; class-name: applescript;"></pre>
 
 `brush: applescript;` tells SyntaxHighlighter to use the AppleScript brush for

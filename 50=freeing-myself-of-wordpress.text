@@ -77,6 +77,7 @@ Django -- and by extension Mango -- has a different approach, which is
 incredibly simple. One provides Django with an ordered list of places to
 look for templates.
 
+    :::python
     TEMPLATE_DIRS = (
         '/webapps/dcd/blog/templates',
         '/webapps/dcd/blog/mango/templates',

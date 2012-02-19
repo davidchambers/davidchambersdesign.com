@@ -29,6 +29,7 @@ Check out the [Prototype image slider demo][3] to see the code in action.
 I noticed that the script was failing miserably in Safari, which didn't like
 the following line:
 
+    :::javascript
     li: new Element('li', { class: 'prev' }),
 
 Wrapping the word "class" in quotes as per this [recommendation by Tobie
@@ -43,11 +44,13 @@ First, you'll need to save a copy of [prototype-image-slider.js][5].
 To create a new `Slider` simply call the constructor. The constructor requires
 one argument, either a DOM node or a string that references a node's ID.
 
+    :::javascript
     new Slider('slider');
 
 There's nothing to prevent multiple image sliders from appearing on a page. The
 following code turns each div with class of 'slider' into a `Slider` object.
 
+    :::javascript
     $$('div.slider').each(function (e) {
         new Slider(e);
     })
@@ -55,6 +58,7 @@ following code turns each div with class of 'slider' into a `Slider` object.
 Of course, it's a good idea to wait until the page is ready to be manipulated
 before... er... manipulating the page.
 
+    :::javascript
     document.observe('dom:loaded', function () {
         $$('div.slider').each(function (e) {
             new Slider(e);
@@ -66,6 +70,7 @@ arguments: a float specifying the duration of each transition, and an integer
 specifying the number of the slide to be displayed first. The default values
 are 1.0 and 0 (slides are numbered from zero).
 
+    :::javascript
     new Slider('slider', 0.5);     // faster transitions
     new Slider('slider', 1.0, 3);  // fourth slide displayed first
     new Slider('slider', 1.0, -1); // last slide displayed first

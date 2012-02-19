@@ -12,6 +12,7 @@ WordPress is a great piece of software, although I've never been satisfied
 with its search functionality. Last night I decided to switch to a very simple
 solution:
 
+    :::html
     <form action="http://www.google.com/search" method="get">
         <div>
             <label for="q">Search davidchambersdesign.com</label>

@@ -36,6 +36,7 @@ Thanks to this alias I can enter `site-packages` and be taken straight there.
 Another cool thing to know about is `cd -`, which takes you to the directory
 you were in most recently.
 
+    :::console
     $ cd ~/Desktop
     $ site-packages
     $ pwd

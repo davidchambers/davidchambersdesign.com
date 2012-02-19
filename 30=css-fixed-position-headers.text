@@ -36,6 +36,7 @@ and drawbacks of each.
 
 The CSS for the header initially looked like this:
 
+    :::css
     #header
     {
         position: fixed;
@@ -48,6 +49,7 @@ The CSS for the header initially looked like this:
 
 Here's the CSS:
 
+    :::css
     h1, h2, h3, h4, h5, h6, p
     {
         padding-top: 160px;
@@ -70,6 +72,7 @@ This approach adds top padding (equal to the height of the header) to each of th
 
 Again, the CSS:
 
+    :::css
     div.id
     {
         position: relative;
@@ -79,12 +82,14 @@ Again, the CSS:
 This approach introduces meaningless markup. Where previously we may have had
 something like this:
 
+    :::html
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus volutpat risus nec mollis. Integer dapibus dictum ultrices. Aenean vel lectus odio. Nam a mi ligula. Nam in dolor quis metus pretium imperdiet sit amet sed elit.</p>
     <h3 id="example">Example</h3>
     <p>Suspendisse potenti. Proin convallis lacinia nibh, nec auctor ligula mattis consectetur. Mauris vel elit sit amet nibh volutpat varius id vel sem. Pellentesque id purus ligula. Vivamus vel nulla vel justo tempor ultricies.</p>
 
 We now have the following:
 
+    :::html
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus volutpat risus nec mollis. Integer dapibus dictum ultrices. Aenean vel lectus odio. Nam a mi ligula. Nam in dolor quis metus pretium imperdiet sit amet sed elit.</p>
     <div id="example" class="id"></div>
     <h3>Example</h3>
@@ -116,6 +121,7 @@ good one.
 The previous approach got the job done, but introduced meaningless elements.
 This task is best performed with JavaScript.
 
+    :::javascript
     // accommodate fixed-position header
     document.observe('dom:loaded', function () {
         $$('h2[id]', 'h3[id]', 'h4[id]', 'h5[id]', 'h6[id]').each(function (e) {
@@ -134,6 +140,7 @@ its parent's id.
 CSS can be used to position these empty divs in such a way that headings are
 visible when jumped to:
 
+    :::css
     h2.unidentified div, h3.unidentified div
     {
         float: left;

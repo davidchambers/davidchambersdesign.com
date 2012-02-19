@@ -14,6 +14,7 @@ I've always found it easier to write the markup myself, as there's really
 nothing to it. Simply replace both instances of `video_id` in the following
 code with -- you guessed it -- the video's ID.
 
+    :::html
     <object class="youtube"
             type="application/x-shockwave-flash"
             data="http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0">
@@ -32,6 +33,7 @@ Finally, be aware of the fact that it's possible to change the size of the
 YouTube object using CSS. There's no need to include the `width` and `height`
 attributes in the markup.
 
+    :::css
     object.youtube
     {
         width: 100%;

@@ -25,6 +25,7 @@ involved this site's [archives][4] styles.
 
 ### Original CSS
 
+    :::css
     ol.archives {
       margin: 0 0 0 -21px;
       list-style: none;
@@ -124,6 +125,7 @@ Sass allows selectors to be nested. The main advantage of this approach is
 that selectors needn't include their "context" (ancestors). It also means
 that a style sheet's structure resembles that of the corresponding markup.
 
+    :::sass
     ol.archives
       margin: 0 0 0 -21px
       list-style: none
@@ -168,6 +170,7 @@ nuisance. Compass offers an extremely elegant solution: a Sass function named
 data URI – the Base64-encoded representation of calendar.png. If calendar.png
 is changed, `compass compile` is all that's required to update the data URI.
 
+    :::sass
     ol.archives
       ...
       time
@@ -191,17 +194,20 @@ declarations not so much. Compass provides helpers for generating and working
 with sprites, but in this case all that's required is to generate background
 positions for an existing sprite. The first step is to add a loop:
 
+    :::sass
     @for $date from 1 through 31
       // do stuff
 
 The loop variable, `$date`, can be interpolated to generate the selectors:
 
+    :::sass
     @for $date from 1 through 31
       &[datetime*="#{$date}T"]
 
 Almost. This gives `datetime*="1T"`, `datetime*="2T"`, etc. rather than their
 zero-padded equivalents. Adding a leading zero when required is not difficult:
 
+    :::sass
     @for $date from 1 through 31
       @if $date < 10
         $date: "0#{$date}"
@@ -210,6 +216,7 @@ zero-padded equivalents. Adding a leading zero when required is not difficult:
 Finally, variables can be used to calculate the `background-position` of each
 element:
 
+    :::sass
     $offset: -20px
     $x: 3
     $y: 1

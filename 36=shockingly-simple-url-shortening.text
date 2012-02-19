@@ -49,6 +49,7 @@ With dċd.ws safely registered in my name I began looking for an open source
 URL shortener to run on that domain. I then struck upon a **simple, elegant
 solution** which took all of ten minutes to implement.
 
+    :::apache
     RewriteEngine On
     RewriteRule ^(.*)$ http://davidchambersdesign.com/$1 [R=301,L]
 

@@ -16,6 +16,7 @@ actually _required_ before displaying it.
 As it turns out, there's a dead simple way to prevent this, and once again its
 everybody's friend `overflow` to the rescue.
 
+    :::css
     textarea { overflow: auto; }
 
 The `overflow` property seems to be a magical remedy for a variety of different

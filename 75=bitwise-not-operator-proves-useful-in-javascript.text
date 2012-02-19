@@ -9,6 +9,7 @@ tags: JavaScript, programming
 JavaScript is a wonderful language. Its syntax, though, leaves a lot to be
 desired at times. String pattern matching, for example, is rather ugly.
 
+    :::javascript
     // ugly option 1
     if (text.indexOf('✈') != -1)
 
@@ -22,6 +23,7 @@ It'd be nice to be able to write `text.contains('✈')`, which is both intuitive
 and self-documenting. The language does provide a way to make such expressions
 terser, but it's far from obvious.
 
+    :::javascript
     // bitwise NOT
     if (~text.indexOf('✈'))
 
@@ -31,6 +33,7 @@ operator does what it does, but I've played with it enough to know how it
 behaves. It's equivalent to the following function, at least for the values
 that can be returned by [`indexOf`][2].
 
+    :::javascript
     function bitwiseNot(n) {
         return -n - 1;
     }

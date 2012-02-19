@@ -9,6 +9,7 @@ tags: Django
 When using Django's cache, ensure that empty collections (`[]`, `()`, `{}`) are
 treated as valid cache data.
 
+    :::python
     cached = cache.get(cache_key)
     if cached:
         return cached
@@ -20,6 +21,7 @@ cached result is ignored and the value is recalculated unnecessarily.
 
 Avoid this by explicitly comparing the return value to `None`:
 
+    :::python
     cached = cache.get(cache_key)
     if cached is not None: # much better!
         return cached

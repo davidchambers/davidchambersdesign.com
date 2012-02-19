@@ -9,10 +9,12 @@ tags: JavaScript, optimization, performance
 So you have some number, `x`, which you want to round to the nearest integer.
 Easy, right?
 
+    :::javascript
     x = Math.round(x);
 
 Sure, but is this the fastest option? I think not.
 
+    :::javascript
     x = x < 0 ? x - 0.5 >> 0 : x + 0.5 >> 0;
 
 What the heck's going on here? `>>` is JavaScript's right shift operator.

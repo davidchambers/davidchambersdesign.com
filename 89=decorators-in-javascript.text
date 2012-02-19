@@ -8,6 +8,7 @@ tags: CoffeeScript, JavaScript, programming
 
 A decorator is a function which takes a function and returns a function:
 
+    :::coffeescript
     decorator = (fn) -> fn
 
 Obviously, this doesn't do anything useful. It's the fact that a decorator
@@ -15,6 +16,7 @@ can return a function which behaves _similarly_ to the function passed to it
 that makes the pattern interesting. Commonly a decorator will simply wrap a
 function invocation in a check of some sort:
 
+    :::javascript
     var loginRequired = function (fn) {
       return function () {
         if (!user.authenticated) {
@@ -27,6 +29,7 @@ function invocation in a check of some sort:
 The above decorator could be used to "guard" actions that only authenticated
 users are permitted to perform:
 
+    :::javascript
     var changeUsername = loginRequired(function (username) {
       $.ajax({
         type: 'PUT',
@@ -49,6 +52,7 @@ users are permitted to perform:
 
 The CoffeeScript equivalent is quite a bit clearer:
 
+    :::coffeescript
     changeUsername = loginRequired (username) ->
       $.ajax
         type: 'PUT'

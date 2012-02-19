@@ -13,6 +13,7 @@ the browser _(Internet Explorer, I'm looking at you!)_ needs a gentle nudge.
 [Forcing a UI redraw from JavaScript][1] highlights the solution employed by
 Thomas Fuchs, creator of the popular JavaScript library [script.aculo.us][2]:
 
+    :::javascript
     Element.addMethods({
         redraw: function (element) {
             element = $(element);
@@ -25,6 +26,7 @@ Thomas Fuchs, creator of the popular JavaScript library [script.aculo.us][2]:
 
 The post's first comment includes an alternative approach:
 
+    :::javascript
     element.className = element.className;
 
 I gather that there are situations in which this simple solution fails -- it's

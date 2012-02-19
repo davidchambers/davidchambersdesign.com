@@ -20,6 +20,7 @@ from caching due to its recursive nature.
 
 ### JavaScript Fibonacci without caching
 
+    :::javascript
     function fibonacci(n) {
         if (n <= 1) return n;
         return fibonacci(n - 2) + fibonacci(n - 1);
@@ -29,6 +30,7 @@ from caching due to its recursive nature.
 
 I created a simple timer:
 
+    :::javascript
     function timer(func) {
         var i = 10, start;
         while (i--) {
@@ -65,6 +67,7 @@ This is incredibly powerful. It makes it possible to create a variable,
 `cache`, which can _only_ be accessed by our `fibonacci` function. This
 ensures that our cache cannot be overwritten, accidentally or otherwise.
 
+    :::javascript
     fibonacci = (function () {
 
         var cache = {};
@@ -102,6 +105,7 @@ A slightly different approach is to initialize the cache with values for 0 and
 1, making the `if (n <= 1)` logic unnecessary. Since one of the cached values
 is now 0, however, the `if (cached)` statement is no longer appropriate.
 
+    :::javascript
     fibonacci = (function () {
 
         var cache = { 0:0, 1:1 };
@@ -120,6 +124,7 @@ is now 0, however, the `if (cached)` statement is no longer appropriate.
 It's also possible to cache results without using closure. This is important
 since Python (which I'll get to shortly) does not have this capability.
 
+    :::javascript
     function fibonacci(n) {
 
         if (!fibonacci.cache) fibonacci.cache = {};
@@ -135,6 +140,7 @@ since Python (which I'll get to shortly) does not have this capability.
 To avoid the overhead of checking for the existence of the cache on each
 invocation, the cache could be initialized outside of the function definition.
 
+    :::javascript
     function fibonacci(n) {
         // function body
     }
@@ -145,6 +151,7 @@ for me in Safari on Mac OS X.
 
 ### Python Fibonacci without caching
 
+    :::python
     def fibonacci(n):
         if n <= 1:
             return n
@@ -153,6 +160,7 @@ for me in Safari on Mac OS X.
 
 Does the vanilla Python function outperform the vanilla JavaScript function?
 
+    :::pycon
     >>> import time
     >>> for i in range(10): t = time.time(); fibonacci(35); print time.time() - t;
 
@@ -163,6 +171,7 @@ caching makes in each case.
 
 ### Python Fibonacci with caching via function property
 
+    :::python
     def fibonacci(n):
         if n in fibonacci.cache:
             return fibonacci.cache[n]
@@ -181,6 +190,7 @@ on an empty cache as the vanilla function.
 
 For the sake of completion I'll include this unappealing approach.
 
+    :::python
     def fibonacci(n, _cache={}):
         if n <= 1:
             return n

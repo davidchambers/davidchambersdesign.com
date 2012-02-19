@@ -10,6 +10,7 @@ I recently came across an interesting article at [wonko.com][1] on
 [HTML escaping][2], which provoked me to rewrite Bitbucket's escape
 function (invoked from within Underscore templates):
 
+    :::javascript
     function makeSafe(text) {
       return text.replace(/[&<>"'`]/g, function (chr) {
         return '&#' + chr.charCodeAt(0) + ';';
@@ -28,6 +29,7 @@ attribute value. Unquoted attributes are more problematic:
 To accommodate unquoted attribute values, the following function could be
 used instead:
 
+    :::javascript
     function makeSafe(text) {
       return text.replace(/\W/g, function (chr) {
         return '&#' + chr.charCodeAt(0) + ';';

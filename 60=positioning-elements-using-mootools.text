@@ -14,10 +14,12 @@ it, but I could not get my theoretical calculations to play out in the browser.
 
 It turns out that I'd been calling the wrong MooTools method. I'd been doing...
 
+    :::javascript
     element.setStyle('left', offset);
 
 rather than...
 
+    :::javascript
     element.setPosition({ x: offset });
 
 Frustratingly, `setStyle('left', offset)` _appeared_ to work, but its behaviour

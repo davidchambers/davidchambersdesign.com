@@ -81,6 +81,7 @@ Each term in a definition list should have _at least_ one definition. This
 enables more than one description -- a title and a caption, for instance -- to
 be tied to an image:
 
+    :::html
     <dl>
         <dt><img src="images/ds81.jpg" alt="Vancouver architecture" /></dt>
         <dd>This is not like that</dd>

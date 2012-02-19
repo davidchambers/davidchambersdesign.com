@@ -21,10 +21,12 @@ the parentheses, squiggly brackets, and semicolons that riddle the equivalent
 JavaScript code. For those unfamiliar with CoffeeScript's syntax, here's the
 fifteen second rundown:
 
+    :::coffeescript
     qux = foo 'bar', (baz) -> 'Hello, world!'
 
 The above is equivalent to:
 
+    :::javascript
     var qux = foo('bar', function (baz) {
       return 'Hello, world!';
     });
@@ -36,6 +38,7 @@ are optional for most function invocations. Now, let's get started.
 
 This is Node 101 stuff:
 
+    :::coffeescript
     fs   = require 'fs'
     http = require 'http'
     
@@ -52,6 +55,7 @@ the script we're creating.
 
 ### Step 2: Add server-side event handlers
 
+    :::coffeescript
     io = require('socket.io').listen server
     
     io.sockets.on 'connection', (socket) ->
@@ -86,6 +90,7 @@ file we'll run in Node. We're now ready to tackle the client-side component.
 
 ### Step 3: Create the HTML file
 
+    :::html
     <!doctype html>
     <html>
       <head>
@@ -121,6 +126,7 @@ client-side logic in CoffeeScript, too. :)
 
 ### Step 4: Add client-side Socket.IO event handlers
 
+    :::coffeescript
     $status = $ '#status'
     socket = io.connect()
     
@@ -161,6 +167,7 @@ response to input from users.
 
 ### Step 5: Add DOM event handlers which emit custom events
 
+    :::coffeescript
     $input = $ 'input'
     
     $('button').click ->

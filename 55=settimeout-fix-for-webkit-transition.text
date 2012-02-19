@@ -30,6 +30,7 @@ Here's a simple animation which utilizes `webkitTransition`:
 
 The code behind this example is not complicated:
 
+    :::javascript
     element.style.webkitTransitionProperty = 'left';
     element.style.webkitTransitionDuration = '2s';
     element.addEventListener('click', function () {
@@ -64,6 +65,7 @@ The following example, though, does not act as one might expect!
 
 The code:
 
+    :::javascript
     element.style.left = '100px';
     element.style.webkitTransitionProperty = 'left';
     element.style.webkitTransitionDuration = '2s';
@@ -105,6 +107,7 @@ I did manage to get the element to behave as I had intended:
 
 The working code:
 
+    :::javascript
     element.style.left = '100px';
     setTimeout(function () {
         element.style.webkitTransitionProperty = 'left';

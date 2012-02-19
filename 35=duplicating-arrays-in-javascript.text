@@ -12,6 +12,7 @@ experience with "real" programming languages[*](#footnote)). As a result, a
 significant portion of JavaScript coders do not think of variables as pointers
 to memory addresses. This leads to confusion in cases such as this:
 
+    :::javascript
     var fruits = ['orange', 'lime'];
     var colours = fruits; // naïve attempt to duplicate array
     colours.push('yellow');
@@ -19,6 +20,7 @@ to memory addresses. This leads to confusion in cases such as this:
 One might be surprised to learn that `fruits` now contains not just "orange"
 and "lime" but also "yellow". Oops! Here's how it went wrong:
 
+    :::javascript
     var fruits = ['orange', 'lime'];
     // fruits points to array containing "orange" and "lime"
     
@@ -27,6 +29,7 @@ and "lime" but also "yellow". Oops! Here's how it went wrong:
 
 How, then, does one create a copy of the original array? _Slice!_
 
+    :::javascript
     var colours = fruits.slice();
 
 <aside id="footnote">* Languages such as C. Like

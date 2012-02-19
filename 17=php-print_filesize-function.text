@@ -22,6 +22,9 @@ to be displayed dynamically.
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+    :::php
+    <?php
+    
     /**
      * echoes nicely formatted filesize
      * @param string $filename
@@ -56,9 +59,12 @@ to be displayed dynamically.
             echo "{$before}{$approx}{$size} {$unit}{$after}";
         }
     }
+    
+    ?>
 
 Example usage:
 
+    :::html+php
     <a href="favicon.ico">favicon.ico</a><?php print_filesize('favicon.ico'); ?>
 
 This gives: [favicon.ico][1] <span class="filesize">(≈1.1 kB)</span>.

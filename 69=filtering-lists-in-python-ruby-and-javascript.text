@@ -16,12 +16,18 @@ Gary provides several examples of equivalent code in Python and Ruby to
 highlight situations in which one language reads better than the other, such
 as the following.
 
+Python:
+
+    :::python
     '\n'.join(obj.name
         for obj in (
             repository.retrieve(id)
             for id in ids)
         if obj)
 
+Ruby:
+
+    :::ruby
     ids.map do |id|
       repository.retrieve(id)
     end.compact.map do |obj|
@@ -37,6 +43,7 @@ pleasure I worked out the JavaScript equivalent.
 
 My first attempt used the `filter` array method.
 
+    :::javascript
     ids.filter(function (id) {
         var obj = repository.retrieve(id);
         return obj && obj.name;
@@ -52,6 +59,7 @@ array -- whatever!
 
 Note the empty array (`[]`) on line 5 – that's our "accumulator".
 
+    :::javascript
     ids.reduce(function (ids, id) {
         var obj = repository.retrieve(id);
         if (obj && obj.name) ids.push(obj.name);

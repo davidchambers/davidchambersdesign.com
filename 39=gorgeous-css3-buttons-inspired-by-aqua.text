@@ -106,26 +106,32 @@ than one state may apply at one time.
 
 #### Hover ####
 
-    border-color: #740;
-    background: #fb4;
-    background: -webkit-gradient(linear, left top, left bottom,
-        from(#fb4), to(#fb4),
-        color-stop(0.1, #fea), color-stop(0.2, #fb4),
-        color-stop(0.5, #fb4), color-stop(0.5, #f90));
-    background: -moz-linear-gradient(-90deg,
-        #fb4 5%, #fea 15%, #fb4 25%, #fb4 50%, #f90 50%, #fb4);
-    color: #740;
-    cursor: pointer;
+    :::css
+    .aqua:hover {
+        border-color: #740;
+        background: #fb4;
+        background: -webkit-gradient(linear, left top, left bottom,
+            from(#fb4), to(#fb4),
+            color-stop(0.1, #fea), color-stop(0.2, #fb4),
+            color-stop(0.5, #fb4), color-stop(0.5, #f90));
+        background: -moz-linear-gradient(-90deg,
+            #fb4 5%, #fea 15%, #fb4 25%, #fb4 50%, #f90 50%, #fb4);
+        color: #740;
+        cursor: pointer;
+    }
 
 ![Hover state][k]
 : Hover state (right) alongside default state
 
 #### Focus ####
 
-    -webkit-box-shadow: #740 0 1px 0.75em;
-    -moz-box-shadow: #740 0 1px 0.75em;
-    color: #740;
-    outline: none;
+    :::css
+    .aqua:focus {
+        -webkit-box-shadow: #740 0 1px 0.75em;
+        -moz-box-shadow: #740 0 1px 0.75em;
+        color: #740;
+        outline: none;
+    }
 
 ![Focus state][l]
 : Focus state (right) alongside default state
@@ -135,15 +141,18 @@ than one state may apply at one time.
 
 #### Active ####
 
-    border-color: #630;
-    background: #f90;
-    background: -webkit-gradient(linear, left top, left bottom,
-        from(#f90), to(#f90),
-        color-stop(0.1, #fd8), color-stop(0.3, #fb4),
-        color-stop(0.5, #fb4), color-stop(0.5, #f90));
-    background: -moz-linear-gradient(-90deg,
-        #f90 5%, #fd8 15%, #fb4 35%, #fb4 50%, #f90 50%, #f90);
-    color: #630;
+    :::css
+    .aqua:active {
+        border-color: #630;
+        background: #f90;
+        background: -webkit-gradient(linear, left top, left bottom,
+            from(#f90), to(#f90),
+            color-stop(0.1, #fd8), color-stop(0.3, #fb4),
+            color-stop(0.5, #fb4), color-stop(0.5, #f90));
+        background: -moz-linear-gradient(-90deg,
+            #f90 5%, #fd8 15%, #fb4 35%, #fb4 50%, #f90 50%, #f90);
+        color: #630;
+    }
 
 ![Active state][n]
 : Active state (right) alongside default state
