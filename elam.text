@@ -1,3 +1,6 @@
+require: lightbox
+
+
 # Elam
 
 I attended Elam School of Fine Arts in Auckland between 2002 and 2005. After
@@ -121,9 +124,6 @@ not possess much aesthetic appeal, so the challenge was to package them in an
 exciting way.
 
 ![Packaged motors ready to send][16]
-
-<script src="http://static.davidchambersdesign.com/scripts/prototype+scriptaculous.min.js"></script>
-<script src="http://static.davidchambersdesign.com/scripts/lightbox.js"></script>
 
 
 [1]:  /images/elam/lightbox/design-philosophies-poster.png
