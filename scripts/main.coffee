@@ -42,10 +42,6 @@ jQuery ($) ->
     text = trim $code.text()
     if /^#!\/usr\/bin\/osascript\s/.test text
       $code.parent().addClass('brush:applescript').text text
-    else if not /^(\$|>{1,3}) /.test text # likely a prompt of some sort
-      $code.addClass 'prettyprint'
-
-  do prettyPrint
 
   # date and time localization
   $time = $ 'time'
