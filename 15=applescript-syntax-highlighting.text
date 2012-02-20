@@ -87,17 +87,15 @@ following:
 
 1.  Download [SyntaxHighlighter][1], and follow the setup instructions.
 
-2.  Download [AppleScript brush](/downloads/shBrushAppleScript.js), and upload
-    it to your SyntaxHighlighter **scripts** directory.
+2.  Download [AppleScript brush][4], and upload it to your SyntaxHighlighter
+    **scripts** directory.
 
-3.  Download [AppleScript theme](/downloads/shThemeAppleScript.css), and
-    upload it to your SyntaxHighlighter **styles** directory.
+3.  Download [AppleScript theme][5], and upload it to your SyntaxHighlighter
+    **styles** directory.
 
-4.  Download [background image](/downloads/bg.png), and upload it to your
-    SyntaxHighlighter **styles** directory.
-
-5.  Include the brush like so:
+4.  Include the brush like so:
     
+        :::html
         <script src="/path/to/scripts/shCore.js"></script>
         <script src="/path/to/scripts/shBrushAppleScript.js"></script>
         <script>SyntaxHighlighter.all()</script>
@@ -126,3 +124,5 @@ hidden by the style sheet.
 [1]: http://alexgorbatchev.com/wiki/SyntaxHighlighter
 [2]: http://alexgorbatchev.com/forums/
 [3]: http://alexgorbatchev.com/wiki/SyntaxHighlighter:Brushes:Custom
+[4]: https://bitbucket.org/davidchambers/applescript-theme/raw/default/shBrushAppleScript.js
+[5]: https://bitbucket.org/davidchambers/applescript-theme/raw/default/shThemeAppleScript.css
