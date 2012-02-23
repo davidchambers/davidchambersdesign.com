@@ -1,11 +1,11 @@
 
-jQuery('.codehilitetable').replaceWith(function() {
-  var $pre;
-  $pre = jQuery(this).find('.code').find('pre');
+jQuery('.codehilitetable').each(function() {
+  var $el, $pre;
+  $el = jQuery(this);
+  $pre = $el.find('.code').find('pre');
   if (/\s*#!\/usr\/bin\/osascript/.test($pre.text())) {
-    $pre.attr('class', 'brush:applescript');
+    return $el.replaceWith($pre.attr('class', 'brush:applescript'));
   }
-  return $pre;
 });
 
 SyntaxHighlighter.all();
