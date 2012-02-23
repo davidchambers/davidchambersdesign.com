@@ -1,4 +1,7 @@
 jQuery('.codehilitetable').replaceWith ->
-  jQuery(this).find('.code').find('pre').attr('class', 'brush:applescript')
+  $pre = jQuery(this).find('.code').find('pre')
+  if ///\s*#!/usr/bin/osascript///.test $pre.text()
+    $pre.attr('class', 'brush:applescript')
+  $pre
 
 SyntaxHighlighter.all()

@@ -1,6 +1,11 @@
 
 jQuery('.codehilitetable').replaceWith(function() {
-  return jQuery(this).find('.code').find('pre').attr('class', 'brush:applescript');
+  var $pre;
+  $pre = jQuery(this).find('.code').find('pre');
+  if (/\s*#!\/usr\/bin\/osascript/.test($pre.text())) {
+    $pre.attr('class', 'brush:applescript');
+  }
+  return $pre;
 });
 
 SyntaxHighlighter.all();
