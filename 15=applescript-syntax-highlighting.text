@@ -115,6 +115,18 @@ the page. (Hopefully I'm able to convince Alex that the brush name should be
 added as a class name automatically, which would remove the need to include
 `class-name: applescript;` each time.)
 
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 22 February 2012, 11:11pm (America/Los_Angeles)
+
+Providing a `class-name` in the, ahem, class name is no longer necessary
+(apparently I made a convincing argument). This is now sufficient:
+
+    :::html
+    <pre class="brush:applescript"></pre>
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
 Note that including `ruler: true;` will have no effect. Since AppleScript
 is displayed in a variable-width font, the ruler serves no purpose. The ruler
 is still inserted into the page (unless `ruler: false;` is included), but is
