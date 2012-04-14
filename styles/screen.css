@@ -188,12 +188,6 @@ a#title:focus, a#title:hover, a#title.hover {
 #nav a[href="/flushcache/"] > span {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAAAu0lEQVRo3u3a0QrCMAwF0PxT///b4rOyma7tsOp5OKAUQh3hNnRGay1PxMvnGavqfHwPmQmwVBVQglgQA5sFcfU9DqbqGJiy86ROtfZuvWcPVW1NA9waxDkQvD3BHBevPI5qxsRB0buHrt+iaYDdJ+Jqio2BIK6m1tG6Q1O7pgF+4WpiJohX1u09RAQx8HVBfEdgzkzos4fK07qmAXb410Tvi7TRq4m4+DJu5R7KupoGWB7EHgKAIAb4aw9tcYNEXXm9DwAAAABJRU5ErkJggg==');
 }
-#nav a[href="http://forrst.com/people/davidchambers"] {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATklEQVQ4y2P4//8/AwiXryrHhv9DMYYcTB8DLQ34j4bpa8B/HHiIGPCfAKatASiK08rTwBibIYPTgP8kGPCf+gZgw6Fpof9BGJ8aig0AABbab2nY6GoXAAAAAElFTkSuQmCC');
-}
-#nav a[href="http://forrst.com/people/davidchambers"] > span {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAABs0lEQVRo3u1ay5LEIAjkn/K1+VqmamsPqanEQNOg7nLog9aIDI8WJXIch95AinG773med9BfiAPIGjZ21ftJj1V0W9GOs3w9koHKV8LaP+t/VaVAJpLvfyNi6UBuIp5IxDPkNRGTiHhUKV/n1DAvD7Ie9wCNeneCX8dP63Vw+n+vt64b6f2mk0Uftq4j2430R2389jvr2GsvBRIY9QHLnx6bZsSfBmN+dt4xbFtCxDogVHEQqFVeRkVsJRiUNBGCsMgUIKHZunrt6v0/DFtljb1JHJXP9vVK8SfEmGDkXaptKypiLzFb57WAiJHgUYfjPSc+o8oToJIRcJ0WBXL0BhGxCZrwER9ooIpmkiIz/ph7MmO5idjx1JH1RqyFFZQC1RUrEaK3gshBVk3E6rimIrYXsi1n+XpXIs6I5Sbil+afhYh/xoGH92oi/p6rTAQh67oKETP9kEXE6H5Zvt65Is6I5fT4Xa1Zx36aQIm4+mmC1axDr2bez8qsjYuMQEaaZiw/MJp1UR8o6LeKZp2QdWI3WSN5x7StpBHxxp8kNfbG7p/ENRrSRNzYmXybhBtNxBd8AIomz0a11Al8AAAAAElFTkSuQmCC');
-}
 #nav a[href="/tags/"] {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAqElEQVRIx+3W4QmEMAwF4KzgCl3hVnAnZ3EWV7hZboVopBUvijbmiT9M4dF/fiQ8ocTM9EQo4IDfBaeUuGsbmsIqdBYXLB8QnH/DX2pwLzxDMy7HgENgOVYcA2dcr7zg030jvMq3/2zx3AlYuTQuaMnR2hHwJRwFm3EkbMKhcG4vBLdOvNv22yc+WrsF9cIbfI2eFcwLL7ie1AXXRk9a8y/HCyTggGEZAaqDtevE4e1UAAAAAElFTkSuQmCC');
 }
