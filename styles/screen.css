@@ -793,6 +793,9 @@ ol li.interviewer ~ li:nth-child(odd) {
   border-color: #93a1a1;
   padding: 1.667em 0 1.75em;
 }
+.update + .update {
+  margin-top: 0;
+}
 .update h4:first-child {
   margin: 0;
 }
