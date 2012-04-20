@@ -65,6 +65,21 @@ remain visible when arrowing up and down. >.<
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 20 April 2012, 1:15am (America/Los_Angeles)
+
+I've recently taken up Vim. In Vim, one can enter `:shell` while in command
+mode to open a shell. The first time I did so I noticed that the colour codes
+appeared in the prompt. Feature detection can be used to ensure that colour
+codes are only provided to "smart" terminals:
+
+    :::bash
+    [[ "$TERM" == dumb ]] && PS1="\n\w\n> "
+    [[ "$TERM" != dumb ]] && PS1="\n\[\e[1;36m\]\w\n\[\e[1;32m\]> \[\e[0m\]"
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
 #### Note for Mac OS X users
 
 Terminal loads your **~/.bash_profile** but not your **~/.bashrc**. As a
