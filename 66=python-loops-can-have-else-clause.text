@@ -12,12 +12,12 @@ something in one using the syntax of the other. The most common example is
 joining a list.
 
 Python:
-    
+
     :::python
     ' '.join(['foo', 'bar'])
 
 JavaScript:
-    
+
     :::javascript
     ['foo', 'bar'].join(' ')
 
@@ -43,6 +43,19 @@ Python lists have no comparable method, so how would one write this in Python?
 This approach involves using a list comprehension to create a list of numbers
 which are divisible by 3, and comparing this list to `numbers`. If the lists
 are equal, everything in `numbers` is divisible by 3.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 20 June 2012, 2:15pm (America/Los_Angeles)
+
+As [Rafael Almeida pointed out on Twitter][3], there *is* an elegant way to
+express this in Python:
+
+    :::python
+    if all((n % 3 == 0 for n in numbers)):
+        print 'The numbers are all divisible by 3.'
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 ### Now for something a bit more challenging
 
@@ -88,7 +101,7 @@ statements may have an `else` clause!**
         else: # every term was found
             matches.append(document)
 
-From [4. More Control Flow Tools][3]:
+From [4. More Control Flow Tools][4]:
 
 > Loop statements may have an `else` clause; it is executed when the
 > loop terminates through exhaustion of the list (with `for`) or when
@@ -101,4 +114,5 @@ clauses with my Python loops.** :D
 
 [1]: http://mootools.net/
 [2]: http://mootools.net/docs/core/Native/Array#Array:every
-[3]: http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops
+[3]: https://twitter.com/rafael_ab/status/215428832872771584
+[4]: http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops
