@@ -7,3 +7,5 @@ css_dir = "styles"
 preferred_syntax = :sass
 output_style = :expanded
 line_comments = false
+
+Sass::Script::Number.precision = 3

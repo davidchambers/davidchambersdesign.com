@@ -1,0 +1,27 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16">
+  <path fill="#741" d="M 2,0 l 4,0 l 0,1 l 1,0 l 0,1 l 1,0 l 0,1 l 1,0 l 0,1
+                       l 1,0 l 0,1 l 1,0 l 0,1 l 1,0 l 0,1 l 1,0 l 0,1 l 1,0
+                       l 0,1 l 1,0 l 0,1 l 1,0 l 0,1 l -1,0 l 0,1 l -1,0 l 0,1
+                       l -1,0 l 0,1 l -1,0 l 0,1 l -1,0 l 0,1 l -1,0 l 0,-1
+                       l -1,0 l 0,-1 l -1,0 l 0,-1 l -1,0 l 0,-1 l -1,0 l 0,-1
+                       l -1,0 l 0,-1 l -1,0 l 0,-1 l -1,0 l 0,-1 l -1,0 l 0,-1
+                       l -1,0 l 0,-1 l -1,0 l 0,-4 l 2,0 l 0,-2" />
+  <path fill="#feb" d="M 1,1 l 5,0 l 0,1 l 1,0 l 0,1 l 1,0 l 0,1 l 1,0 l 0,1
+                       l 1,0 l 0,1 l 1,0 l 0,1 l 1,0 l 0,1 l 1,0 l 0,1 l 1,0
+                       l 0,1 l 1,0 l 0,1 l -1,0 l 0,1 l -1,0 l 0,1 l -1,0
+                       l 0,1 l -1,0 l 0,1 l -1,0 l 0,-1 l -1,0 l 0,-1 l -1,0
+                       l 0,-1 l -1,0 l 0,-1 l -1,0 l 0,-1 l -1,0 l 0,-1 l -1,0
+                       l 0,-1 l -1,0 l 0,-1 l -1,0 l 0,-1 l -1,0 l 0,-5" />
+  <path fill="#c93" d="M 6,5 l 1,0 l 0,1 l 1,0 l 0,1 l 1,0 l 0,1 l 1,0
+                       l 0,1 l 1,0 l 0,1 l 1,0 l 0,1 l -1,0 l 0,1 l -1,0
+                       l 0,-1 l -1,0 l 0,-1 l -1,0 l 0,-1 l -1,0 l 0,-1
+                       l -1,0 l 0,-1 l -1,0 l 0,-1 l 1,0 l 0,-1" />
+  <path fill="#fff" d="M 3,2 l 1,0 l 0,2 l 1,0 l 0,-1 l -3,0 l 0,1 l 2,0
+                       l 0,1 l -1,0 l 0,-3" />
+  <path fill="#333" d="M 0,0 l 1,0 l 0,2 l 2,0 l 0,2 l 1,0 l 0,-1 l -2,0
+                       l 0,-2 l -2,0 l 0,-1" />
+</svg>

@@ -147,7 +147,7 @@ a#title
 
 @mixin nav-item($name, $href: "/#{$name}/")
   &[href="#{$href}"]
-    background-image: inline-image("nav/icon/#{$name}.png")
+    background-image: url(../images/nav/icon/#{$name}.svg)
     > span
       background-image: inline-image("nav/text/#{$name}.png")
 
