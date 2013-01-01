@@ -1,0 +1,117 @@
+date: 31 December 2012
+time: 10:00pm
+zone: America/Los_Angeles
+tags: workflow
+
+
+# Title to come
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+I've been writing code for a few years now, but this year I made a concerted
+effort to improve not just the quality of the code I write, but also by
+proficiency with the computer in general. In no particular, here are the
+changes I've made to the way in which I do things.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+### Switching from Coda to Vim
+
+I'd been a happy Coda user for several years, but as I strove to hide as many
+parts of its user interface as possible it became apparent that I was spending
+several hours each day typing into what was effectively TextEdit with syntax
+highlighting.
+
+I was writing Python at the time, so my options were to switch to an IDE such
+as [PyCharm][1] or one of the Unix stalwarts (Emacs and Vim). I opted to learn
+Vim and I'm extremely pleased with the decision. I now spend around three
+quarters of my time writing CoffeeScript and the rest writing prose, and the
+time I've spent learning Vim is just as applicable today as it was when I
+wrote a lot of Python.
+
+Here's a screenshot of my current setup:
+
+TODO: insert screenshot
+
+### Creating a dotfiles repo
+
+I've had two computers for the past couple of years. This can be problematic
+I one likes to customize one's environment. A popular solution to this problem
+is to store configuration files -- so called “dotfiles” -- in a repository.
+This year I created my own [dotfiles repo][x].
+
+### Using option as meta key in Terminal
+
+__Terminal__ > __Settings__ > __Keyboard__ > __Use option as meta key__
+
+This enables wordwise movement (&#8997;&#8592; and &#8997;&#8594;) and
+deletion (&#8997;&#9003;). I can't believe it took me so many years to
+discover this checkbox!
+
+### Making bash prompt useful (time, path, branch name)
+
+![Default Bash prompt][y]
+
+The default bash prompt (as seen above) lacks the most fundamental piece of
+information: *Where the hell am I?* Sure, it includes the name of the current
+directory, but directory names such as “assets” and “src” are common
+
+![Custom Bash prompt][z]
+
+### Going from two monitors to one
+
+I was never really happy with two monitors: two large monitors in landscape
+orientation seem preposterously wide to me, and adjacent monitors in portrait
+work well in theory, but feel weird.
+
+More significantly, I seem to get more done when I can see less. I've spent
+many hours working on my 11-inch MacBook Air, and its the smallness rather
+than the inability to have multiple apps visible at once that bothers me.
+
+- making everything BIG
+
+# Switching from Mercurial to Git
+
+Mercurial was the first version control system I learnt, and I rate it highly.
+As I became more active in the open-source community, where the majority of
+projects live in Git repositories, switching between the two mental models
+(and they are very different mental models) became a source of friction.
+
+### Better shifting
+
+[Steve Losh][2] recently published a tremendously detailed post,
+[A Modern Space Cadet][3], in which he covers the various tweaks he's made to
+his hardware, software, and work habits in an effort “to make [his] typing
+experience more pleasant and efficient”.
+
+In the post Steve states that he used to use the *left* shift key exclusively.
+I had the same bad habit, but it wasn't until I read this post that I realized
+it's not to late to fix it. It took me several weeks with [training wheels][4]
+to make the change, but I consider it time well spent.
+
+### Steve Losh fu
+
+  - [Control/Escape][5] (great for Vim users!)
+  - [Shift Parentheses][6] (all programmers should try this)
+
+### Abandoning Podcasts.app
+
+Earlier versions of iOS gave podcasts a tab in the Music app. Now, Apple ships
+a dedicated Podcast app. It never worked well for me: podcasts would often
+stop in midstream, and sometimes nothing short of rebooting the OS would coax
+the app into resuming playback. I few months ago I switched to [Downcast][7]
+and I'm very happy with it. Funnily enough one of the things I most enjoy
+about not using Podcast.app is that I no longer have any podcasts in iTunes.
+The fewer things to sync the better.
+
+
+[1]: http://www.jetbrains.com/pycharm/
+[2]: http://stevelosh.com/
+[3]: http://stevelosh.com/blog/2012/10/a-modern-space-cadet/
+[4]: http://stevelosh.com/blog/2012/10/a-modern-space-cadet/#shift-key-training-wheels
+[5]: http://stevelosh.com/blog/2012/10/a-modern-space-cadet/#controlescape
+[6]: http://stevelosh.com/blog/2012/10/a-modern-space-cadet/#shift-parentheses
+[7]: http://www.downcastapp.com/
+[x]: https://bitbucket.org/davidchambers/dotfiles
+[y]: /images/posts/95/windows/lion/default-bash-prompt.png
+[z]: /images/posts/95/windows/lion/custom-bash-prompt.png
