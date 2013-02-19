@@ -1,11 +1,14 @@
-require "./sass-extensions/logarithms"
+require './src/sass-extensions/logarithms'
 
-images_dir = "images"
-sass_dir = "sass"
-css_dir = "styles"
+images_dir = 'src/images'
 
+if ENV['env'] == 'dev'
+  output_style = :expanded
+  line_comments = true
+else
+  output_style = :compressed
+  line_comments = false
+end
 preferred_syntax = :sass
-output_style = :expanded
-line_comments = false
 
 Sass::Script::Number.precision = 3

@@ -1,0 +1,3 @@
+[submodule "lib/coffee-script"]
+	path = lib/coffee-script
+	url = git://github.com/jashkenas/coffee-script.git
