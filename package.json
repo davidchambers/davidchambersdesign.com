@@ -1,0 +1,11 @@
+{
+  "name": "TK",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "fluture": "12.3.1",
+    "fluture-sanctuary-types": "6.0.1",
+    "luxon": "1.24.1",
+    "sanctuary": "3.0.0"
+  }
+}
