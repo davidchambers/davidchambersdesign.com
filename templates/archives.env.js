@@ -7,7 +7,7 @@ export default {
   body: (attrs, children) => ({tagName: 'body', attrs: transformAttrs (attrs), children: S.Just (children.flat (1)), inline: false}),
   div: (attrs, children) => ({tagName: 'div', attrs: transformAttrs (attrs), children: S.Just (children.flat (1)), inline: false}),
   head: (attrs, children) => ({tagName: 'head', attrs: transformAttrs (attrs), children: S.Just (children.flat (1)), inline: false}),
-  hr: (attrs, children) => ({tagName: 'hr', attrs: transformAttrs (attrs), children: S.Nothing, inline: true}),
+  hr: (attrs) => ({tagName: 'hr', attrs: transformAttrs (attrs), children: S.Nothing, inline: true}),
   html: (attrs, children) => ({tagName: 'html', attrs: transformAttrs (attrs), children: S.Just (children.flat (1)), inline: false}),
   li: (attrs, children) => ({tagName: 'li', attrs: transformAttrs (attrs), children: S.Just (children.flat (1)), inline: true}),
   link: (attrs) => ({tagName: 'link', attrs: transformAttrs (attrs), children: S.Nothing, inline: true}),
