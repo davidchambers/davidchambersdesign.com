@@ -10,13 +10,13 @@ const transformAttrs = attrs => (
 export default (
   S.reduce (S.concat)
            ({})
-           ([S.map (tagName =>  attrs            => ({type: 'self-closing',
+           ([S.map (tagName => attrs             => ({type: 'self-closing',
                                                       tagName,
                                                       attrs: transformAttrs (attrs)}))
                    (S.fromPairs (S.join (S.zip)
                                         (['hr',
                                           'link']))),
-             S.map (tagName => (attrs, children) => ({type: 'single-line',
+             S.map (tagName => attrs => children => ({type: 'single-line',
                                                       tagName,
                                                       attrs: transformAttrs (attrs),
                                                       children}))
@@ -26,7 +26,7 @@ export default (
                                           'p',
                                           'span',
                                           'strong']))),
-             S.map (tagName => (attrs, children) => ({type: 'multi-line',
+             S.map (tagName => attrs => children => ({type: 'multi-line',
                                                       tagName,
                                                       attrs: transformAttrs (attrs),
                                                       children}))
