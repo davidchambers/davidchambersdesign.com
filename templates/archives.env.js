@@ -1,5 +1,7 @@
 import S from 'sanctuary';
 
+import {datetime} from '../lib/index.js';
+
 const transformAttrs = attrs => (
   Object.fromEntries (
     Object.getOwnPropertySymbols (attrs)
@@ -9,7 +11,9 @@ const transformAttrs = attrs => (
 
 export default (
   S.reduce (S.concat)
-           ({})
+           ({'datetime': zone => time => date => datetime ([date, time, zone]),
+             'format-datetime': format => datetime => datetime.toFormat (format),
+             'iso': datetime => datetime.toISO ()})
            ([S.map (tagName => attrs             => ({'tag-name': tagName,
                                                       'format': 'inline',
                                                       'self-closing': true,

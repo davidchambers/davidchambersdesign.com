@@ -317,50 +317,46 @@
                     (li {}
                        [(h2 {} ["July 2010"])
                         (ol {}
-                           [(li {}
-                               [(a {:href "/TK/testing-django-apps-using-localhost-subdomains"} ["Testing Django apps using localhost subdomains"])
-                                " "
-                                (time {:datetime "2010-07-04T08:23:00.000+12:00"} ["4 July 2010 | 8:23am"])])
-                            (li {}
-                               [(a {:href "/TK/empty-collections-are-valid-cache-data"} ["Empty collections are valid cache data"])
-                                " "
-                                (time {:datetime "2010-07-06T09:34:00.000+12:00"} ["6 July 2010 | 9:34am"])])
-                            (li {}
-                               [(a {:href "/TK/-webkit-box-sizing"} ["-webkit-box-sizing"])
-                                " "
-                                (time {:datetime "2010-07-18T21:30:00.000+12:00"} ["18 July 2010 | 9:30pm"])])
-                            (li {}
-                               [(a {:href "/TK/remove-textarea-scrollbars-in-internet-explorer"} ["Remove textarea scrollbars in Internet Explorer"])
-                                " "
-                                (time {:datetime "2010-07-18T22:00:00.000+12:00"} ["18 July 2010 | 10:00pm"])])
-                            (li {}
-                               [(a {:href "/TK/positioning-elements-using-mootools"} ["Positioning elements using MooTools"])
-                                " "
-                                (time {:datetime "2010-07-19T17:45:00.000+12:00"} ["19 July 2010 | 5:45pm"])])
-                            (li {}
-                               [(a {:href "/TK/javascript-everywhere"} ["JavaScript, JavaScript, everywhere"])
-                                " "
-                                (time {:datetime "2010-07-20T19:05:00.000+12:00"} ["20 July 2010 | 7:05pm"])])
-                            (li {}
-                               [(a {:href "/TK/dieter-rams-video-interview"} ["Dieter Rams video interview"])
-                                " "
-                                (time {:datetime "2010-07-20T19:30:00.000+12:00"} ["20 July 2010 | 7:30pm"])])
-                            (li {}
-                               [(a {:href "/TK/gmail-favicon-confusion"} ["Gmail's favicon confusion"])
-                                " "
-                                (time {:datetime "2010-07-21T10:56:00.000+12:00"} ["21 July 2010 | 10:56am"])])
-                            (li {}
-                               [(a {:href "/TK/man-after-my-own-heart"} ["Man after my own heart"])
-                                " "
-                                (time {:datetime "2010-07-23T00:07:00.000+12:00"} ["23 July 2010 | 12:07am"])])
-                            (li {}
-                               [(a {:href "/TK/digitalcolor-meter"} ["DigitalColor Meter"])
-                                " "
-                                (time {:datetime "2010-07-23T01:45:00.000+12:00"} ["23 July 2010 | 1:45am"])])
-                            (li {}
-                               [(a {:href "/TK/python-loops-can-have-else-clause"} ["Python loops can have else clause?!"])
-                                " "
-                                (time {:datetime "2010-07-25T18:11:00.000+12:00"} ["25 July 2010 | 6:11pm"])])])])
+                           (map (lambda [post]
+                                   (li {}
+                                      [(a {:href (concat "/TK/" (:slug post))} [(:title post)])
+                                       " "
+                                       (time {:datetime (iso (:datetime post))}
+                                          [(format-datetime "d MMMM y | h:mm" (:datetime post))
+                                           (to-lower (format-datetime "a" (:datetime post)))])]))
+                                [{:slug "testing-django-apps-using-localhost-subdomains"
+                                  :title "Testing Django apps using localhost subdomains"
+                                  :datetime (datetime "Pacific/Auckland" "8:23am" "4 July 2010")}
+                                 {:slug "empty-collections-are-valid-cache-data"
+                                  :title "Empty collections are valid cache data"
+                                  :datetime (datetime "Pacific/Auckland" "9:34am" "6 July 2010")}
+                                 {:slug "-webkit-box-sizing"
+                                  :title "-webkit-box-sizing"
+                                  :datetime (datetime "Pacific/Auckland" "9:30pm" "18 July 2010")}
+                                 {:slug "remove-textarea-scrollbars-in-internet-explorer"
+                                  :title "Remove textarea scrollbars in Internet Explorer"
+                                  :datetime (datetime "Pacific/Auckland" "10:00pm" "18 July 2010")}
+                                 {:slug "positioning-elements-using-mootools"
+                                  :title "Positioning elements using MooTools"
+                                  :datetime (datetime "Pacific/Auckland" "5:45pm" "19 July 2010")}
+                                 {:slug "javascript-everywhere"
+                                  :title "JavaScript, JavaScript, everywhere"
+                                  :datetime (datetime "Pacific/Auckland" "7:05pm" "20 July 2010")}
+                                 {:slug "dieter-rams-video-interview"
+                                  :title "Dieter Rams video interview"
+                                  :datetime (datetime "Pacific/Auckland" "7:30pm" "20 July 2010")}
+                                 {:slug "gmail-favicon-confusion"
+                                  :title "Gmail's favicon confusion"
+                                  :datetime (datetime "Pacific/Auckland" "10:56am" "21 July 2010")}
+                                 {:slug "man-after-my-own-heart"
+                                  :title "Man after my own heart"
+                                  :datetime (datetime "Pacific/Auckland" "12:07am" "23 July 2010")}
+                                 {:slug "digitalcolor-meter"
+                                  :title "DigitalColor Meter"
+                                  :datetime (datetime "Pacific/Auckland" "1:45am" "23 July 2010")}
+                                 {:slug "python-loops-can-have-else-clause"
+                                  :title "Python loops can have else clause?!"
+                                  :datetime (datetime "Pacific/Auckland" "6:11pm" "25 July 2010")}]))])
                     (li {}
                        [(h2 {} ["August 2010"])
                         (ol {}
