@@ -321,9 +321,10 @@
                                    (li {}
                                       [(a {:href (concat "/TK/" (:slug post))} [(:title post)])
                                        " "
-                                       (time {:datetime (iso (:datetime post))}
-                                          [(format-datetime "d MMMM y | h:mm" (:datetime post))
-                                           (to-lower (format-datetime "a" (:datetime post)))])]))
+                                       (let [datetime (:datetime post)]
+                                          (time {:datetime (iso datetime)}
+                                             [(format-datetime "d MMMM y | h:mm" datetime)
+                                              (to-lower (format-datetime "a" datetime))]))]))
                                 [{:slug "testing-django-apps-using-localhost-subdomains"
                                   :title "Testing Django apps using localhost subdomains"
                                   :datetime (datetime "Pacific/Auckland" "8:23am" "4 July 2010")}
