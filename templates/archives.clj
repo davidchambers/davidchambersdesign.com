@@ -11,8 +11,8 @@
                                           [(a {:href (concat "/TK/" (:slug post))} [(:title post)])
                                            " "
                                            (let [datetime (:datetime post)]
-                                              (time {:datetime (iso datetime)}
-                                                 [(format-datetime "d MMMM y | h:mm" datetime)
-                                                  (to-lower (format-datetime "a" datetime))]))]))
+                                              (time {:datetime (invoke "toISO" [] datetime)}
+                                                 [(invoke "toFormat" ["d MMMM y | h:mm"] datetime)
+                                                  (to-lower (invoke "toFormat" ["a"] datetime))]))]))
                                     (:posts section)))]))
                      sections))])))

@@ -1,6 +1,5 @@
 import S from 'sanctuary';
 
-
 //    rename :: String -> String
 const rename = name => (
   name
