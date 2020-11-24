@@ -41,9 +41,9 @@
                [(h1 {} ["Archives"])
                 (let
                    [render-section
-                    (lambda [title posts]
+                    (lambda [heading posts]
                        (li {}
-                          [(h2 {} [title])
+                          [(h2 {} [heading])
                            (ol {}
                               (map (lambda [post]
                                       (li {}
