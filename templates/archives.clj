@@ -24,16 +24,16 @@
                                            (concat " " (:desc x))])])]))
                             [{:slug  "about"
                               :label "About"
-                              :desc  "Who I am and what I do."},
+                              :desc  "Who I am and what I do."}
                              {:slug  "contact"
                               :label "Contact"
-                              :desc  "Just in case you want to get in touch."},
+                              :desc  "Just in case you want to get in touch."}
                              {:slug  "archives"
                               :label "Archives"
-                              :desc  "Old posts, recent posts, they're all here."},
+                              :desc  "Old posts, recent posts, they're all here."}
                              {:slug  "tags"
                               :label "Tags"
-                              :desc  "Helpful if you're after posts on a particular topic."},
+                              :desc  "Helpful if you're after posts on a particular topic."}
                              {:slug  "bitbucket"
                               :label "Bitbucket"
                               :desc  "Who I am and what I do."}]))])])
@@ -64,7 +64,7 @@
                          {:heading "December 2008"
                           :posts [{:slug "rounded-rectangles-in-adobe-illustrator-cs3"
                                    :title "Rounded rectangles in Adobe Illustrator CS3"
-                                   :datetime (datetime "Pacific/Auckland" "12:49pm" "3 December 2008")},
+                                   :datetime (datetime "Pacific/Auckland" "12:49pm" "3 December 2008")}
                                   {:slug "intelligent-css-caching"
                                    :title "Intelligent CSS caching"
                                    :datetime (datetime "Pacific/Auckland" "2:50pm" "18 December 2008")}]}
