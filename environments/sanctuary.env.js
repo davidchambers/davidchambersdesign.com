@@ -12,7 +12,7 @@ const rename = name => (
 const renameKeys = object => (
   Object.fromEntries (
     Object.entries (object)
-    .map (([key, value]) => [rename (key), value])
+    .map (([key, value]) => [Symbol.for (rename (key)), value])
   )
 );
 
