@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "fluture": "12.3.1",
-    "fluture-sanctuary-types": "6.0.1",
+    "fluture": "13.0.1",
+    "fluture-sanctuary-types": "7.0.0",
     "luxon": "1.24.1",
     "sanctuary": "3.0.0"
   }

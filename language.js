@@ -4,6 +4,8 @@ import {createRequire} from 'module';
 import path from 'path';
 import url from 'url';
 
+import Future from './node_modules/fluture/index.js';
+
 import baseEnv from './environments/base.env.js';
 
 
@@ -88,6 +90,22 @@ const parse = input => reject => resolve => {
     const [name] = identifierRegex.exec (input);
     return resolve ({type: 'identifier', name}) (input.slice (name.length));
   }
+};
+
+const evaluateFile_ = env => filename => reject => resolve => {
+  let src;
+  try {
+    src = fs.readFileSync (filename, {encoding: 'utf8'});
+  } catch (err) {
+    return reject (err);
+  }
+  return parse (src)
+               (reject)
+               (value => _ => evaluate (path.dirname (filename))
+                                       (env)
+                                       (value)
+                                       (reject)
+                                       (resolve));
 };
 
 const evaluate = dirname => env => term => reject => resolve => {
@@ -267,10 +285,10 @@ const evaluate = dirname => env => term => reject => resolve => {
 
         let env_ = env;
         for (const sym of Object.getOwnPropertySymbols (imports.value)) {
-          const {success, value} = evaluateFile (env)
-                                                (path.join (dirname, imports.value[sym]))
-                                                (value => ({success: false, value}))
-                                                (value => ({success: true, value}));
+          const {success, value} = evaluateFile_ (env)
+                                                 (path.join (dirname, imports.value[sym]))
+                                                 (value => ({success: false, value}))
+                                                 (value => ({success: true, value}));
           if (!success) return reject (value);
           env_ = {...env_, [sym]: value};
         }
@@ -296,10 +314,10 @@ const evaluate = dirname => env => term => reject => resolve => {
         }
         let env_ = env;
         for (const p of paths.value) {
-          const {success, value} = evaluateFile (env_)
-                                                (path.join (dirname, p))
-                                                (value => ({success: false, value}))
-                                                (value => ({success: true, value}));
+          const {success, value} = evaluateFile_ (env_)
+                                                 (path.join (dirname, p))
+                                                 (value => ({success: false, value}))
+                                                 (value => ({success: true, value}));
           if (!success) return reject (value);
           env_ = {...env_, ...value};
         }
@@ -332,22 +350,24 @@ const evaluate = dirname => env => term => reject => resolve => {
   }
 };
 
-export const evaluateFile = env => filename => reject => resolve => {
+export const evaluateFile = env => filename => Future ((reject, resolve) => {
   switch (path.extname (filename)) {
     case '.clj': {
       let src;
       try {
         src = fs.readFileSync (filename, {encoding: 'utf8'});
       } catch (err) {
-        return reject (err);
+        reject (err);
+        return () => {};
       }
-      return parse (src)
-                   (reject)
-                   (value => _ => evaluate (path.dirname (filename))
-                                           (env)
-                                           (value)
-                                           (reject)
-                                           (resolve));
+      parse (src)
+            (reject)
+            (value => _ => evaluate (path.dirname (filename))
+                                    (env)
+                                    (value)
+                                    (reject)
+                                    (resolve));
+      return () => {};
     }
     case '.js': {
       const require = createRequire (import.meta.url);
@@ -355,15 +375,18 @@ export const evaluateFile = env => filename => reject => resolve => {
       try {
         result = require (filename);
       } catch (err) {
-        return reject (err);
+        reject (err);
+        return () => {};
       }
-      return resolve (result);
+      resolve (result);
+      return () => {};
     }
     default: {
-      return reject (new Error ('Unsupported file extension'));
+      reject (new Error ('Unsupported file extension'));
+      return () => {};
     }
   }
-};
+});
 
 
 if (url.fileURLToPath (import.meta.url) === process.argv[1]) {
