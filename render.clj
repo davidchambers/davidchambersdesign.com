@@ -1,9 +1,7 @@
-(function render
-   [indent level inline nodes]
+(function render [indent level inline nodes]
    (fold-map
       String
-      (lambda
-         [node]
+      (lambda [node]
          (if (equals "string" (typeof node))
              (invoke "replace"
                      [(regex "g" ">") "&gt;"]
@@ -15,12 +13,12 @@
              (let
                 [indentation (invoke "repeat" [level] indent)
                  tag-name (symbol->string (:tag-name node))
-                 attrs (fold-map String
-                                 (pair (lambda [k v] (reduce concat "" [" " k "=\"" v "\""])))
-                                 (pairs (invoke "fromEntries"
-                                                [(map (lambda [sym] [(symbol->string sym) (sym (:attrs node))])
-                                                      (invoke "getOwnPropertySymbols" [(:attrs node)] Object))]
-                                                Object)))]
+                 attrs (reduce (lambda [acc sym]
+                                  (reduce concat
+                                          ""
+                                          [acc " " (symbol->string sym) "=\"" (sym (:attrs node)) "\""]))
+                               ""
+                               (invoke "getOwnPropertySymbols" [(:attrs node)] Object))]
                 (reduce concat
                         ""
                         (if (:self-closing node)
