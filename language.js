@@ -254,6 +254,33 @@ const evaluate = dirname => env => term => reject => resolve => {
         return resolve (f);
       }
       if (term.elements[0].type === 'identifier' &&
+          term.elements[0].name === 'import') {
+        if (term.elements.length !== 3) {
+          return reject (new Error ('Invalid import expression'));
+        }
+        const imports = evaluate (dirname)
+                                 (env)
+                                 (term.elements[1])
+                                 (value => ({success: false, value}))
+                                 (value => ({success: true, value}));
+        if (!imports.success) return reject (imports.value);
+
+        let env_ = env;
+        for (const sym of Object.getOwnPropertySymbols (imports.value)) {
+          const {success, value} = evaluateFile (env)
+                                                (path.join (dirname, imports.value[sym]))
+                                                (value => ({success: false, value}))
+                                                (value => ({success: true, value}));
+          if (!success) return reject (value);
+          env_ = {...env_, [sym]: value};
+        }
+        return evaluate (dirname)
+                        (env_)
+                        (term.elements[2])
+                        (reject)
+                        (resolve);
+      }
+      if (term.elements[0].type === 'identifier' &&
           term.elements[0].name === 'import*') {
         if (term.elements.length !== 3) {
           return reject (new Error ('Invalid import* expression'));
