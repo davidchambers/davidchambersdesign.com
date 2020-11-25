@@ -22,26 +22,13 @@
                :self-closing true
                :attrs attrs})]
 
-   {:body     (block-element "body")
-    :div      (block-element "div")
-    :head     (block-element "head")
-    :html     (block-element "html")
-    :nav      (block-element "nav")
-    :ol       (block-element "ol")
-    :ul       (block-element "ul")
-
-    :a        (inline-element "a")
-    :h1       (inline-element "h1")
-    :h2       (inline-element "h2")
-    :h3       (inline-element "h3")
-    :h4       (inline-element "h4")
-    :h5       (inline-element "h5")
-    :h6       (inline-element "h6")
-    :li       (inline-element "li")
-    :p        (inline-element "p")
-    :span     (inline-element "span")
-    :strong   (inline-element "strong")
-    :time     (inline-element "time")
-
-    :hr       (self-closing-element "hr")
-    :link     (self-closing-element "link")})
+   (invoke "fromEntries"
+           [(reduce concat
+                    []
+                    [(map (lambda [tag-name] [tag-name (block-element tag-name)])
+                          [:body :div :head :html :nav :ol :ul])
+                     (map (lambda [tag-name] [tag-name (inline-element tag-name)])
+                          [:a :h1 :h2 :h3 :h4 :h5 :h6 :li :p :span :strong :time])
+                     (map (lambda [tag-name] [tag-name (self-closing-element tag-name)])
+                          [:hr :link])])]
+           Object))
