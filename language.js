@@ -254,9 +254,9 @@ const evaluate = dirname => env => term => reject => resolve => {
         return resolve (f);
       }
       if (term.elements[0].type === 'identifier' &&
-          term.elements[0].name === 'import') {
+          term.elements[0].name === 'import*') {
         if (term.elements.length !== 3) {
-          return reject (new Error ('Invalid import expression'));
+          return reject (new Error ('Invalid import* expression'));
         }
         const paths = evaluate (dirname)
                                (env)
@@ -265,7 +265,7 @@ const evaluate = dirname => env => term => reject => resolve => {
                                (value => ({success: true, value}));
         if (!paths.success) return reject (paths.value);
         if (!(paths.value.every (path => typeof path === 'string'))) {
-          return reject (new Error ('Invalid import expression'));
+          return reject (new Error ('Invalid import* expression'));
         }
         let env_ = env;
         for (const p of paths.value) {

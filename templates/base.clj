@@ -1,4 +1,4 @@
-(import ["../elements.clj"]
+(import* ["../elements.clj"]
    {:base (lambda [main]
              (html {}
                 [(head {}

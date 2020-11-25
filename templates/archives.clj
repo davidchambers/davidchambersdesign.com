@@ -1,4 +1,4 @@
-(import ["../elements.clj" "./base.clj"]
+(import* ["../elements.clj" "./base.clj"]
    (lambda [sections]
       (base [(h1 {} ["Archives"])
              (ol {:class "archives"}
