@@ -4,7 +4,7 @@ import {createRequire} from 'module';
 import path from 'path';
 import url from 'url';
 
-import baseEnv from '../environments/base.env.js';
+import baseEnv from './environments/base.env.js';
 
 
 const I = x => x;
