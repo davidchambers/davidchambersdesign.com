@@ -5,7 +5,7 @@
 const import_ = require ('../src/import.js');
 
 process.argv
-.slice (2)
+.slice (2, 3)
 .forEach (filename => {
   const e = import_ ({}) (filename);
   if (e.isLeft) throw e.value;

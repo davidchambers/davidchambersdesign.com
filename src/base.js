@@ -7,7 +7,10 @@ module.exports = {
 
   [Symbol.for ('true')]: true,
   [Symbol.for ('false')]: false,
+  [Symbol.for ('Infinity')]: Infinity,
+  [Symbol.for ('-Infinity')]: -Infinity,
 
+  [Symbol.for ('Number')]: Number,
   [Symbol.for ('Object')]: Object,
   [Symbol.for ('RegExp')]: RegExp,
   [Symbol.for ('String')]: String,
