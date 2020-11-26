@@ -15,6 +15,7 @@ const {
   compose: B,
   either,
   encase,
+  equals,
   flip: C,
   match,
   maybe,
@@ -24,24 +25,34 @@ const {
   pipeK,
   prop,
   stripPrefix,
+  unless,
 } = S;
 
 const matchIdentifier = match (/^[^()[\]{}"\s]+/);
 
+const trimLeft = s => (
+  unless (equals (s))
+         (trimLeft)
+         (s
+          .replace (/^\s*/, '')
+          .replace (/^;.*/, ''))
+);
+
 const readGroup = closing => type => elements => (
-  B (rest => maybe_ (() => chain (pair (C (B (readGroup (closing) (type))
-                                             (C (append) (elements)))))
+  B (rest => maybe_ (() => chain (pair (rest => element => readGroup (closing)
+                                                                     (type)
+                                                                     (append (element) (elements))
+                                                                     (rest)))
                                  (read (rest)))
                     (rest => Right (Pair (rest) ({type, elements})))
                     (stripPrefix (closing) (rest)))
-    (rest => rest.replace (/^\s*/, ''))
+    (trimLeft)
 );
 
 const read = module.exports = pipe ([
+  trimLeft,
   Right,
   pipeK ([
-    s => Right (s.replace (/^\s*/, '')),
-    s => Right (s.replace (/^;.*\n?/, '')),
     s => s.startsWith ('(') ? Left (readGroup (')') ('parenthesized') ([]) (s.slice (1))) : Right (s),
     s => s.startsWith (')') ? Left (Left (new SyntaxError ('Unmatched )'))) : Right (s),
     s => s.startsWith ('[') ? Left (readGroup (']') ('array-literal') ([]) (s.slice (1))) : Right (s),
@@ -249,6 +260,16 @@ if (__filename === process.argv[1]) {
                     elements: [{type: 'identifier', name: 'foo'},
                                {type: 'identifier', name: 'bar'},
                                {type: 'identifier', name: 'baz'}]})));
+
+  eq (read ('; comment\n foo'))
+     (Right (Pair ('')
+                  ({type: 'identifier', name: 'foo'})));
+
+  eq (read ('(foo\n;(\n;)\n bar)'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'identifier', name: 'foo'},
+                               {type: 'identifier', name: 'bar'}]})));
 
   eq (read ('";"'))
      (Right (Pair ('')

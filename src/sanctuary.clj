@@ -6,7 +6,7 @@
                      [(invoke "for"
                               [(invoke "replace"
                                        [(new RegExp ["_" "g"])
-                                        ""]
+                                        "'"]
                                        (invoke "replace"
                                                [(new RegExp ["(?!\\b)[A-Z]" "g"])
                                                 (lambda [c] (invoke "concat" [(invoke "toLowerCase" [] c)] "-"))]
