@@ -356,4 +356,7 @@ if (__filename === process.argv[1]) {
                            (* x (factorial (- 1 x)))))]
                    (fact 5))`))
      (Right (120));
+
+  eq (eval_ (baseEnv) ('(=== :foo (:x {:x :foo}))'))
+     (Right (true));
 }

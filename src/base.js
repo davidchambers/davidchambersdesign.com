@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+  [Symbol.for ('===')]: y => x => x === y,
   [Symbol.for ('-')]: y => x => x - y,
   [Symbol.for ('new')]: Constructor => args => new Constructor (...args),
   [Symbol.for ('typeof')]: x => typeof x,

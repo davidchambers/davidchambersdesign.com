@@ -13,17 +13,17 @@
           (body {}
              [(div {:id "wrap"}
                  [(div {:id "header"}
-                     [(a {:id "title" :href "/TK"} ["David Chambers Design"])
+                     [(a {:id "title" :href "/TK"} [(text "David Chambers Design")])
                       (hr {})
-                      (p {} ["It's where I share interesting info with other web geeks"])
+                      (p {} [(text "It's where I share interesting info with other web geeks")])
                       (nav {:id "nav"}
                          [(ul {}
                              (map (lambda [x]
                                      (li {}
                                         [(a {:href (reduce concat "" ["/TK/" (:slug x) "/"])}
                                             [(span {}
-                                                [(strong {} [(concat (:label x) ".")])
-                                                 (concat " " (:desc x))])])]))
+                                                [(strong {} [(text (concat (:label x) "."))])
+                                                 (text (concat " " (:desc x)))])])]))
                                   [{:slug  "about"
                                     :label "About"
                                     :desc  "Who I am and what I do."}
