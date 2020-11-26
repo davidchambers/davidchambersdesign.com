@@ -5,7 +5,6 @@
 
       Future      (import "fluture")
       luxon       (import "luxon")
-      marked      (import "marked")
 
       render      (import "./render.clj")
       archives    (import "./templates/archives.clj")
