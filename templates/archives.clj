@@ -1,5 +1,5 @@
 (import* ["../elements.clj"]
-   (import {:base "./base.clj"}
+   (let' {:base (import "./base.clj")}
       (lambda [sections]
          (base [(h1 {} ["Archives"])
                 (ol {:class "archives"}

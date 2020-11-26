@@ -219,16 +219,12 @@ const evaluate = dirname => env => term => {
              return Right (f);
            }
            if (head.type === 'identifier' && head.name === 'import') {
-             if (tail.length !== 2) {
+             if (tail.length !== 1) {
                return Left (new Error ('Invalid import expression'));
              }
-             const [bindings, body] = tail;
-             return chain (C (evaluate (dirname)) (body))
-                          (chain (bindings => reduce (C (sym => chain (env_ => map (value => ({...env_, [sym]: value}))
-                                                                                   (evaluateFile (env) (path.join (dirname, bindings[sym]))))))
-                                                     (Right (env))
-                                                     (Object.getOwnPropertySymbols (bindings)))
-                                 (evaluate (dirname) (env) (bindings)));
+             const [importPath] = tail;
+             return chain (importPath => evaluateFile (env) (path.join (dirname, importPath)))
+                          (evaluate (dirname) (env) (importPath));
            }
            if (head.type === 'identifier' && head.name === 'import*') {
              if (tail.length !== 2) {
