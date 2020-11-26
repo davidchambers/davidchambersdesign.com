@@ -1,3 +1,5 @@
+(import* ["./base.js" "./prelude.clj" "./sanctuary.clj"]
+
 (let [str (join-with "")]
    (function render [indent level inline nodes]
       (str (map (lambda [node]
@@ -23,4 +25,4 @@
                                        [indentation "<" tag-name attrs ">\n"
                                         (render indent (add 1 level) false (:children node))
                                         indentation "</" tag-name ">\n"]))))))
-                nodes))))
+                nodes)))))

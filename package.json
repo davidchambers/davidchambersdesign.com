@@ -1,7 +1,7 @@
 {
   "name": "TK",
   "private": true,
-  "type": "module",
+  "type": "script",
   "dependencies": {
     "fluture": "13.0.1",
     "fluture-sanctuary-types": "7.0.0",

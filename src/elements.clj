@@ -1,3 +1,5 @@
+(import* ["./base.js" "./sanctuary.clj"]
+
 (let
    [block-element
       (lambda [tag-name attrs children]
@@ -31,4 +33,4 @@
                           [:a :h1 :h2 :h3 :h4 :h5 :h6 :li :p :span :strong :time])
                      (map (lambda [tag-name] [tag-name (self-closing-element tag-name)])
                           [:hr :link])])]
-           Object))
+           Object)))

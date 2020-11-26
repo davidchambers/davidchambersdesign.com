@@ -1,13 +1,12 @@
-import assert from 'assert';
-import fs from 'fs';
-import {createRequire} from 'module';
-import path from 'path';
-import url from 'url';
+'use strict';
 
-import S from 'sanctuary';
-import $ from 'sanctuary-def';
+const assert = require ('assert');
+const fs = require ('fs');
+const path = require ('path');
+const url = require ('url');
 
-import baseEnv from './environments/base.env.js';
+const S = require ('sanctuary');
+const $ = require ('sanctuary-def');
 
 
 const {
@@ -25,6 +24,7 @@ const {
   chain,
   compose: B,
   either,
+  elem,
   encase,
   flip: C,
   is,
@@ -223,27 +223,32 @@ const evaluate = dirname => env => term => {
                return Left (new Error ('Invalid import expression'));
              }
              const [importPath] = tail;
-             return chain (importPath => evaluateFile (env) (path.join (dirname, importPath)))
+             return chain (importPath => evaluateFile (env)
+                                                      (importPath.includes ('/') && !(importPath.startsWith ('/')) ?
+                                                       path.join (dirname, importPath) :
+                                                       importPath))
                           (evaluate (dirname) (env) (importPath));
            }
            if (head.type === 'identifier' && head.name === 'import*') {
              if (tail.length !== 2) {
                return Left (new Error ('Invalid import* expression'));
              }
-             const [paths, body] = tail;
+             const [importPaths, body] = tail;
              return chain (C (evaluate (dirname)) (body))
-                          (chain (reduce (C (p => chain (env_ => map (bindings => ({...env_, ...bindings}))
-                                                                     (evaluateFile (env_) (path.join (dirname, p))))))
+                          (chain (reduce (C (importPath => chain (env_ => map (bindings => ({...env_, ...bindings}))
+                                                                              (evaluateFile (env_)
+                                                                                            (importPath.includes ('/') && !(importPath.startsWith ('/')) ?
+                                                                                             path.join (dirname, importPath) :
+                                                                                             importPath)))))
                                          (Right (env)))
-                                 (chain (paths => traverse (Either)
-                                                           (B (mapLeft (K (new Error ('Invalid import* expression'))))
-                                                              (tagBy (is ($.String))))
-                                                           (paths))
-                                        (evaluate (dirname) (env) (paths))));
+                                 (chain (traverse (Either)
+                                                  (B (mapLeft (K (new Error ('Invalid import* expression'))))
+                                                     (tagBy (is ($.String)))))
+                                        (evaluate (dirname) (env) (importPaths))));
            }
            return map (([f, ...args]) => args.length === 0 ?
                                          f () :
-                                         reduce (f => x => (is ($.Symbol) (f) ? o => o[f] : f) (x))
+                                         reduce (f => x => (elem (typeof f) (['number', 'string', 'symbol']) ? o => o[f] : f) (x))
                                                 (f)
                                                 (args))
                       (traverse (Either)
@@ -255,26 +260,19 @@ const evaluate = dirname => env => term => {
   }
 };
 
-export const evaluateFile = env => filename => {
-  switch (path.extname (filename)) {
-    case '.clj': {
-      return chain (B (evaluate (path.dirname (filename)) (env)) (snd))
-                   (chain (parse)
-                          (encase (filename => fs.readFileSync (filename, {encoding: 'utf8'}))
-                                  (filename)));
-    }
-    case '.js': {
-      return encase (createRequire (import.meta.url)) (filename);
-    }
-    default: {
-      return Left (new Error ('Unsupported file extension'));
-    }
-  }
-};
+const evaluateFile = exports.evaluateFile = env => filename => (
+  path.extname (filename) === '.clj' ?
+  chain (B (evaluate (path.dirname (filename)) (env)) (snd))
+        (chain (parse)
+               (encase (filename => fs.readFileSync (filename, {encoding: 'utf8'}))
+                       (filename))) :
+  encase (require) (filename)
+);
 
 
-const __filename = url.fileURLToPath (import.meta.url);
 if (__filename === process.argv[1]) {
+  const baseEnv = require ('./base.js');
+
   const eq = actual => expected => {
     assert.deepStrictEqual (S.show (actual), S.show (expected));
     assert.deepStrictEqual (actual, expected);

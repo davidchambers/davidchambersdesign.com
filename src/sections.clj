@@ -1,11 +1,12 @@
-(let
-   [datetime
-    (lambda [zone time date]
-       (invoke "fromFormat"
-               [(reduce concat "" [date ", " (invoke "replace" [(regex "" "(?=[ap]m)") " "] time) " (" zone ")"])
-                "d MMMM y, t (z)"
-                {"setZone" true}]
-               DateTime))]
+(import* ["./base.js" "./sanctuary.clj"]
+
+(let [DateTime ("DateTime" (import "luxon"))
+      datetime (lambda [zone time date]
+                  (invoke "fromFormat"
+                          [(reduce concat "" [date ", " (invoke "replace" [(regex "" "(?=[ap]m)") " "] time) " (" zone ")"])
+                           "d MMMM y, t (z)"
+                           {"setZone" true}]
+                          DateTime))]
 
    [{:heading "August 2008"
      :posts [{:slug "beautiful-painted-alphabet"
@@ -326,4 +327,4 @@
     {:heading "December 2012"
      :posts [{:slug "xxx"
               :title "Title to come"
-              :datetime (datetime "America/Los_Angeles" "10:00pm" "31 December 2012")}]}])
+              :datetime (datetime "America/Los_Angeles" "10:00pm" "31 December 2012")}]}]))
