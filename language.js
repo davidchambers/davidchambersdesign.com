@@ -277,348 +277,451 @@ export const evaluateFile = env => filename => {
 };
 
 
-if (url.fileURLToPath (import.meta.url) === process.argv[1]) {
-  { // parse
-    const expect = success => input => value => {
-      assert.deepStrictEqual (
-        either (value => ({success: false, value}))
-               (value => ({success: true, value: value.snd}))
-               (parse (input)),
-        {success, value}
-      );
-    };
-    const succeeds = expect (true);
-    const fails = expect (false);
-
-    fails ('') (new SyntaxError ('Unexpected end of input'));
-    fails ('(') (new SyntaxError ('Unexpected end of input'));
-    fails (')') (new SyntaxError ('Unmatched )'));
-    fails (' ') (new SyntaxError ('Unexpected end of input'));
-    fails ('\n') (new SyntaxError ('Unexpected end of input'));
-
-    succeeds ('foo')
-             ({type: 'identifier', name: 'foo'});
-
-    succeeds ('foo bar')
-             ({type: 'identifier', name: 'foo'});
-
-    succeeds ('foo)')
-             ({type: 'identifier', name: 'foo'});
-
-    succeeds ('foo(bar))')
-             ({type: 'identifier', name: 'foo'});
-
-    succeeds ('(foo)')
-             ({type: 'parenthesized',
-               elements: [{type: 'identifier', name: 'foo'}]});
-
-    succeeds ('(foo bar)')
-             ({type: 'parenthesized',
-               elements: [{type: 'identifier', name: 'foo'},
-                          {type: 'identifier', name: 'bar'}]});
-
-    succeeds ('(foo bar baz)')
-             ({type: 'parenthesized',
-               elements: [{type: 'identifier', name: 'foo'},
-                          {type: 'identifier', name: 'bar'},
-                          {type: 'identifier', name: 'baz'}]});
-
-    succeeds ('((foo))')
-             ({type: 'parenthesized',
-               elements: [{type: 'parenthesized',
-                           elements: [{type: 'identifier', name: 'foo'}]}]});
-
-    succeeds ('(((foo)))')
-             ({type: 'parenthesized',
-               elements: [{type: 'parenthesized',
-                           elements: [{type: 'parenthesized',
-                                       elements: [{type: 'identifier', name: 'foo'}]}]}]});
-
-    succeeds ('((foo) bar)')
-             ({type: 'parenthesized',
-               elements: [{type: 'parenthesized',
-                           elements: [{type: 'identifier', name: 'foo'}]},
-                          {type: 'identifier', name: 'bar'}]});
-
-    succeeds ('(foo (bar))')
-             ({type: 'parenthesized',
-               elements: [{type: 'identifier', name: 'foo'},
-                          {type: 'parenthesized',
-                           elements: [{type: 'identifier', name: 'bar'}]}]});
-
-    succeeds ('((foo) (bar))')
-             ({type: 'parenthesized',
-               elements: [{type: 'parenthesized',
-                           elements: [{type: 'identifier', name: 'foo'}]},
-                          {type: 'parenthesized',
-                           elements: [{type: 'identifier', name: 'bar'}]}]});
-
-    succeeds ('(foo )')
-             ({type: 'parenthesized',
-               elements: [{type: 'identifier', name: 'foo'}]});
-
-    succeeds ('( foo)')
-             ({type: 'parenthesized',
-               elements: [{type: 'identifier', name: 'foo'}]});
-
-    succeeds ('( foo )')
-             ({type: 'parenthesized',
-               elements: [{type: 'identifier', name: 'foo'}]});
-
-    succeeds (':foo') ({type: 'symbol', value: Symbol.for ('foo')});
-    succeeds (':<*>') ({type: 'symbol', value: Symbol.for ('<*>')});
-
-    fails ('"') (new SyntaxError ('Unterminated string literal'));
-
-    succeeds ('""')
-             ({type: 'string-literal', value: ''});
-
-    succeeds ('"foo"')
-             ({type: 'string-literal', value: 'foo'});
-
-    succeeds ('"foo bar"')
-             ({type: 'string-literal', value: 'foo bar'});
-
-    succeeds ('"foo bar baz"')
-             ({type: 'string-literal', value: 'foo bar baz'});
-
-    succeeds ('"foo \\"bar\\" baz"')
-             ({type: 'string-literal', value: 'foo "bar" baz'});
-
-    succeeds ('"\\\\"')
-             ({type: 'string-literal', value: '\\'});
-
-    succeeds ('"\\n"')
-             ({type: 'string-literal', value: '\n'});
-
-    succeeds ('"\\t"')
-             ({type: 'string-literal', value: '\t'});
-
-    fails ('"\\"') (new SyntaxError ('Invalid string literal'));
-
-    succeeds ('0') ({type: 'number-literal', value: 0});
-    succeeds ('1') ({type: 'number-literal', value: 1});
-    succeeds ('12') ({type: 'number-literal', value: 12});
-    succeeds ('123') ({type: 'number-literal', value: 123});
-    succeeds ('123.4') ({type: 'number-literal', value: 123.4});
-    succeeds ('123.45') ({type: 'number-literal', value: 123.45});
-    succeeds ('-1') ({type: 'number-literal', value: -1});
-    succeeds ('-12') ({type: 'number-literal', value: -12});
-    succeeds ('-123') ({type: 'number-literal', value: -123});
-    succeeds ('-123.4') ({type: 'number-literal', value: -123.4});
-    succeeds ('-123.45') ({type: 'number-literal', value: -123.45});
-    succeeds ('0.001') ({type: 'number-literal', value: 0.001});
-    succeeds ('-0.001') ({type: 'number-literal', value: -0.001});
-
-    succeeds ('; comment\nfoo\n; comment')
-             ({type: 'identifier', name: 'foo'});
-
-    succeeds ('; comment\n"foo"\n; comment')
-             ({type: 'string-literal', value: 'foo'});
-
-    succeeds ('(foo ; comment\nbar ; comment\nbaz) ; comment')
-             ({type: 'parenthesized',
-               elements: [{type: 'identifier', name: 'foo'},
-                          {type: 'identifier', name: 'bar'},
-                          {type: 'identifier', name: 'baz'}]});
-
-    succeeds ('";"')
-             ({type: 'string-literal', value: ';'});
-
-    succeeds ('[]')
-             ({type: 'array-literal',
-               elements: []});
-
-    succeeds ('[foo]')
-             ({type: 'array-literal',
-               elements: [{type: 'identifier', name: 'foo'}]});
-
-    succeeds ('[foo bar]')
-             ({type: 'array-literal',
-               elements: [{type: 'identifier', name: 'foo'},
-                          {type: 'identifier', name: 'bar'}]});
-
-    succeeds ('[foo bar baz]')
-             ({type: 'array-literal',
-               elements: [{type: 'identifier', name: 'foo'},
-                          {type: 'identifier', name: 'bar'},
-                          {type: 'identifier', name: 'baz'}]});
-
-    succeeds ('[foo ]')
-             ({type: 'array-literal',
-               elements: [{type: 'identifier', name: 'foo'}]});
-
-    succeeds ('[ foo]')
-             ({type: 'array-literal',
-               elements: [{type: 'identifier', name: 'foo'}]});
-
-    succeeds ('[ foo ]')
-             ({type: 'array-literal',
-               elements: [{type: 'identifier', name: 'foo'}]});
-
-    succeeds ('[:foo]')
-             ({type: 'array-literal',
-               elements: [{type: 'symbol', value: Symbol.for ('foo')}]});
-
-    succeeds ('[:foo :bar]')
-             ({type: 'array-literal',
-               elements: [{type: 'symbol', value: Symbol.for ('foo')},
-                          {type: 'symbol', value: Symbol.for ('bar')}]});
-
-    succeeds ('[:foo :bar :baz]')
-             ({type: 'array-literal',
-               elements: [{type: 'symbol', value: Symbol.for ('foo')},
-                          {type: 'symbol', value: Symbol.for ('bar')},
-                          {type: 'symbol', value: Symbol.for ('baz')}]});
-
-    succeeds ('[:foo ]')
-             ({type: 'array-literal',
-               elements: [{type: 'symbol', value: Symbol.for ('foo')}]});
-
-    succeeds ('[ :foo]')
-             ({type: 'array-literal',
-               elements: [{type: 'symbol', value: Symbol.for ('foo')}]});
-
-    succeeds ('[ :foo ]')
-             ({type: 'array-literal',
-               elements: [{type: 'symbol', value: Symbol.for ('foo')}]});
-
-    succeeds ('{}')
-             ({type: 'map-literal',
-               elements: []});
-
-    succeeds ('{foo}')
-             ({type: 'map-literal',
-               elements: [{type: 'identifier', name: 'foo'}]});
-
-    succeeds ('{foo bar}')
-             ({type: 'map-literal',
-               elements: [{type: 'identifier', name: 'foo'},
-                          {type: 'identifier', name: 'bar'}]});
-
-    succeeds ('{foo bar baz}')
-             ({type: 'map-literal',
-               elements: [{type: 'identifier', name: 'foo'},
-                          {type: 'identifier', name: 'bar'},
-                          {type: 'identifier', name: 'baz'}]});
-
-    succeeds ('{foo }')
-             ({type: 'map-literal',
-               elements: [{type: 'identifier', name: 'foo'}]});
-
-    succeeds ('{ foo}')
-             ({type: 'map-literal',
-               elements: [{type: 'identifier', name: 'foo'}]});
-
-    succeeds ('{ foo }')
-             ({type: 'map-literal',
-               elements: [{type: 'identifier', name: 'foo'}]});
-
-    succeeds ('{"x" 1 "y" 2 "z" 3}')
-             ({type: 'map-literal',
-               elements: [{type: 'string-literal', value: 'x'},
-                          {type: 'number-literal', value: 1},
-                          {type: 'string-literal', value: 'y'},
-                          {type: 'number-literal', value: 2},
-                          {type: 'string-literal', value: 'z'},
-                          {type: 'number-literal', value: 3}]});
-
-    succeeds ('(lambda [x] x)')
-             ({type: 'parenthesized',
-               elements: [{type: 'identifier', name: 'lambda'},
-                          {type: 'array-literal',
-                           elements: [{type: 'identifier', name: 'x'}]},
-                          {type: 'identifier', name: 'x'}]});
-  }
-
-  { // evaluate
-    const expect = success => env => input => expected => {
-      either (actual => { assert.deepStrictEqual (false, success);
-                          assert.deepStrictEqual (actual, expected); })
-             (actual => { assert.deepStrictEqual (true, success);
-                          assert.deepStrictEqual (actual, expected); })
-             (chain (B (evaluate (path.dirname (url.fileURLToPath (import.meta.url)))
-                                 (env))
-                       (snd))
-                    (parse (input)));
-    };
-    const succeeds = expect (true);
-    const fails = expect (false);
-
-    succeeds ({}) (':foo') (Symbol.for ('foo'));
-    succeeds ({}) (':<*>') (Symbol.for ('<*>'));
-
-    succeeds ({}) ('"foo"') ('foo');
-    succeeds ({}) ('123.45') (123.45);
-    succeeds ({[Symbol.for ('x')]: 1, [Symbol.for ('y')]: 2}) ('x') (1);
-    succeeds ({[Symbol.for ('x')]: 1, [Symbol.for ('y')]: 2}) ('y') (2);
-    fails ({x: 1, y: 2}) ('z') (new ReferenceError ('z is not defined'));
-
-    succeeds ({}) ('{}') ({});
-    succeeds ({}) ('{"x"}') ({x: undefined});
-    succeeds ({}) ('{"x" 1}') ({x: 1});
-    succeeds ({}) ('{"x" 1 "y"}') ({x: 1, y: undefined});
-    succeeds ({}) ('{"x" 1 "y" 2}') ({x: 1, y: 2});
-    succeeds ({}) ('{"x" 1 "y" 2 "z"}') ({x: 1, y: 2, z: undefined});
-    succeeds ({}) ('{"x" 1 "y" 2 "z" 3}') ({x: 1, y: 2, z: 3});
-
-    fails ({}) ('()') (new Error ('Empty parentheses'));
-    succeeds ({[Symbol.for ('Math.sqrt')]: Math.sqrt}) ('(Math.sqrt 64)') (8);
-    succeeds ({[Symbol.for ('Math.sqrt')]: Math.sqrt, [Symbol.for ('*')]: x => y => y * x}) ('(Math.sqrt (* 8 8))') (8);
-    succeeds ({[Symbol.for ('get')]: k => m => m[k]}) ('(get :x {:x 1 :y 2})') (1);
-    succeeds ({[Symbol.for ('get')]: k => m => m[k]}) ('(get :y {:x 1 :y 2})') (2);
-    succeeds ({[Symbol.for ('get')]: k => m => m[k]}) ('(get :z {:x 1 :y 2})') (undefined);
-
-    succeeds ({}) ('(:x {:x 1 :y 2})') (1);
-    succeeds ({}) ('(:y {:x 1 :y 2})') (2);
-    succeeds ({}) ('(:z {:x 1 :y 2})') (undefined);
-
-//  succeeds ({[Symbol.for ('map')]: f => xs => xs.map (x => f (x))}) ('(map :x [{:x 1 :y 2} {:x 3 :y 4}])') ([1, 3]);
-//  succeeds ({[Symbol.for ('map')]: f => xs => xs.map (x => f (x))}) ('(map :y [{:x 1 :y 2} {:x 3 :y 4}])') ([2, 4]);
-//  succeeds ({[Symbol.for ('map')]: f => xs => xs.map (x => f (x))}) ('(map :z [{:x 1 :y 2} {:x 3 :y 4}])') ([undefined, undefined]);
-
-    succeeds ({}) ('((lambda [x] x) 64)') (64);
-    succeeds ({[Symbol.for ('*')]: x => y => y * x}) ('((lambda [x] (* x x)) 4)') (16);
-
-    succeeds ({}) ('((lambda [k] (k {:x 1 :y 2})) :x)') (1);
-    succeeds ({}) ('((lambda [k] (k {:x 1 :y 2})) :y)') (2);
-    succeeds ({}) ('((lambda [k] (k {:x 1 :y 2})) :z)') (undefined);
-
-    succeeds ({}) ('((lambda [x y z] x) 1 2 3)') (1);
-    succeeds ({}) ('((lambda [x y z] y) 1 2 3)') (2);
-    succeeds ({}) ('((lambda [x y z] z) 1 2 3)') (3);
-
-    succeeds ({}) ('(let [x 8] x)') (8);
-    succeeds ({}) ('(let [x 8 y x] y)') (8);
-
-    succeeds ({}) ("(let' {:x 8} x)") (8);
-    fails ({}) ("(let' {:x 8 :y x} y)") (new ReferenceError ('x is not defined'));
-    succeeds (baseEnv) (`(let' (invoke "fromEntries" [[[:x 1] [:y 2]]] Object) x)`) (1);
-    succeeds (baseEnv) (`(let' (invoke "fromEntries" [[[:x 1] [:y 2]]] Object) y)`) (2);
-    fails (baseEnv) (`(let' (invoke "fromEntries" [[[:x 1] [:y 2]]] Object) z)`) (new ReferenceError ('z is not defined'));
-
-    fails ({}) ('true') (new ReferenceError ('true is not defined'));
-    fails ({}) ('false') (new ReferenceError ('false is not defined'));
-    succeeds ({[Symbol.for ('true')]: true, [Symbol.for ('false')]: false}) ('true') (true);
-    succeeds ({[Symbol.for ('true')]: true, [Symbol.for ('false')]: false}) ('false') (false);
-
-    succeeds ({[Symbol.for ('true')]: true, [Symbol.for ('false')]: false}) ('(if true 8 x)') (8);
-    succeeds ({[Symbol.for ('true')]: true, [Symbol.for ('false')]: false}) ('(if false x 8)') (8);
-    fails ({}) ('(if "xxx" x x)') (new TypeError ('Predicate evaluated to non-Boolean value'));
-
-    succeeds (baseEnv) ('(invoke "toUpperCase" [] "foo")') ('FOO');
-    succeeds (baseEnv) ('(invoke "toFixed" [2] 123.456)') ('123.46');
-    succeeds (baseEnv) ('(invoke "abs" [-1] Math)') (1);
-
-    succeeds ({[Symbol.for ('=')]: y => x => x === y,
-               [Symbol.for ('*')]: y => x => x * y,
-               [Symbol.for ('-')]: y => x => x - y})
-             (`(let [fact
-                     (function factorial [x]
-                        (if (= 0 x)
-                            1
-                            (* x (factorial (- 1 x)))))]
-                    (fact 5))`)
-             (120);
-  }
+const __filename = url.fileURLToPath (import.meta.url);
+if (__filename === process.argv[1]) {
+  const eq = actual => expected => {
+    assert.deepStrictEqual (S.show (actual), S.show (expected));
+    assert.deepStrictEqual (actual, expected);
+  };
+
+  eq (parse ('')) (Left (new SyntaxError ('Unexpected end of input')));
+  eq (parse ('(')) (Left (new SyntaxError ('Unexpected end of input')));
+  eq (parse (')')) (Left (new SyntaxError ('Unmatched )')));
+  eq (parse (' ')) (Left (new SyntaxError ('Unexpected end of input')));
+  eq (parse ('\n')) (Left (new SyntaxError ('Unexpected end of input')));
+
+  eq (parse ('foo'))
+     (Right (Pair ('')
+                  ({type: 'identifier', name: 'foo'})));
+
+  eq (parse ('foo bar'))
+     (Right (Pair (' bar')
+                  ({type: 'identifier', name: 'foo'})));
+
+  eq (parse ('foo)'))
+     (Right (Pair (')')
+                  ({type: 'identifier', name: 'foo'})));
+
+  eq (parse ('foo(bar))'))
+     (Right (Pair ('(bar))')
+                  ({type: 'identifier', name: 'foo'})));
+
+  eq (parse ('(foo)'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'identifier', name: 'foo'}]})));
+
+  eq (parse ('(foo bar)'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'identifier', name: 'foo'},
+                               {type: 'identifier', name: 'bar'}]})));
+
+  eq (parse ('(foo bar baz)'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'identifier', name: 'foo'},
+                               {type: 'identifier', name: 'bar'},
+                               {type: 'identifier', name: 'baz'}]})));
+
+  eq (parse ('((foo))'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'parenthesized',
+                                elements: [{type: 'identifier', name: 'foo'}]}]})));
+
+  eq (parse ('(((foo)))'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'parenthesized',
+                                elements: [{type: 'parenthesized',
+                                            elements: [{type: 'identifier', name: 'foo'}]}]}]})));
+
+  eq (parse ('((foo) bar)'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'parenthesized',
+                                elements: [{type: 'identifier', name: 'foo'}]},
+                               {type: 'identifier', name: 'bar'}]})));
+
+  eq (parse ('(foo (bar))'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'identifier', name: 'foo'},
+                               {type: 'parenthesized',
+                                elements: [{type: 'identifier', name: 'bar'}]}]})));
+
+  eq (parse ('((foo) (bar))'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'parenthesized',
+                                elements: [{type: 'identifier', name: 'foo'}]},
+                               {type: 'parenthesized',
+                                elements: [{type: 'identifier', name: 'bar'}]}]})));
+
+  eq (parse ('(foo )'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'identifier', name: 'foo'}]})));
+
+  eq (parse ('( foo)'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'identifier', name: 'foo'}]})));
+
+  eq (parse ('( foo )'))
+     (Right (Pair ('')
+            ({type: 'parenthesized',
+              elements: [{type: 'identifier', name: 'foo'}]})));
+
+  eq (parse (':foo'))
+     (Right (Pair ('')
+                  ({type: 'symbol', value: Symbol.for ('foo')})));
+
+  eq (parse (':<*>'))
+     (Right (Pair ('')
+                  ({type: 'symbol', value: Symbol.for ('<*>')})));
+
+  eq (parse ('"')) (Left (new SyntaxError ('Unterminated string literal')));
+
+  eq (parse ('""'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: ''})));
+
+  eq (parse ('"foo"'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: 'foo'})));
+
+  eq (parse ('"foo bar"'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: 'foo bar'})));
+
+  eq (parse ('"foo bar baz"'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: 'foo bar baz'})));
+
+  eq (parse ('"foo \\"bar\\" baz"'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: 'foo "bar" baz'})));
+
+  eq (parse ('"\\\\"'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: '\\'})));
+
+  eq (parse ('"\\n"'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: '\n'})));
+
+  eq (parse ('"\\t"'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: '\t'})));
+
+  eq (parse ('"\\"')) (Left (new SyntaxError ('Invalid string literal')));
+
+  eq (parse ('0')) (Right (Pair ('') ({type: 'number-literal', value: 0})));
+  eq (parse ('1')) (Right (Pair ('') ({type: 'number-literal', value: 1})));
+  eq (parse ('12')) (Right (Pair ('') ({type: 'number-literal', value: 12})));
+  eq (parse ('123')) (Right (Pair ('') ({type: 'number-literal', value: 123})));
+  eq (parse ('123.4')) (Right (Pair ('') ({type: 'number-literal', value: 123.4})));
+  eq (parse ('123.45')) (Right (Pair ('') ({type: 'number-literal', value: 123.45})));
+  eq (parse ('-1')) (Right (Pair ('') ({type: 'number-literal', value: -1})));
+  eq (parse ('-12')) (Right (Pair ('') ({type: 'number-literal', value: -12})));
+  eq (parse ('-123')) (Right (Pair ('') ({type: 'number-literal', value: -123})));
+  eq (parse ('-123.4')) (Right (Pair ('') ({type: 'number-literal', value: -123.4})));
+  eq (parse ('-123.45')) (Right (Pair ('') ({type: 'number-literal', value: -123.45})));
+  eq (parse ('0.001')) (Right (Pair ('') ({type: 'number-literal', value: 0.001})));
+  eq (parse ('-0.001')) (Right (Pair ('') ({type: 'number-literal', value: -0.001})));
+
+  eq (parse ('; comment\nfoo\n; comment'))
+     (Right (Pair ('\n; comment')
+                  ({type: 'identifier', name: 'foo'})));
+
+  eq (parse ('; comment\n"foo"\n; comment'))
+     (Right (Pair ('\n; comment')
+                  ({type: 'string-literal', value: 'foo'})));
+
+  eq (parse ('(foo ; comment\nbar ; comment\nbaz) ; comment'))
+     (Right (Pair (' ; comment')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'identifier', name: 'foo'},
+                               {type: 'identifier', name: 'bar'},
+                               {type: 'identifier', name: 'baz'}]})));
+
+  eq (parse ('";"'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: ';'})));
+
+  eq (parse ('[]'))
+     (Right (Pair ('')
+                  ({type: 'array-literal',
+                    elements: []})));
+
+  eq (parse ('[foo]'))
+     (Right (Pair ('')
+                  ({type: 'array-literal',
+                    elements: [{type: 'identifier', name: 'foo'}]})));
+
+  eq (parse ('[foo bar]'))
+     (Right (Pair ('')
+                  ({type: 'array-literal',
+                    elements: [{type: 'identifier', name: 'foo'},
+                               {type: 'identifier', name: 'bar'}]})));
+
+  eq (parse ('[foo bar baz]'))
+     (Right (Pair ('')
+                  ({type: 'array-literal',
+                    elements: [{type: 'identifier', name: 'foo'},
+                               {type: 'identifier', name: 'bar'},
+                               {type: 'identifier', name: 'baz'}]})));
+
+  eq (parse ('[foo ]'))
+     (Right (Pair ('')
+                  ({type: 'array-literal',
+                    elements: [{type: 'identifier', name: 'foo'}]})));
+
+  eq (parse ('[ foo]'))
+     (Right (Pair ('')
+                  ({type: 'array-literal',
+                    elements: [{type: 'identifier', name: 'foo'}]})));
+
+  eq (parse ('[ foo ]'))
+     (Right (Pair ('')
+            ({type: 'array-literal',
+              elements: [{type: 'identifier', name: 'foo'}]})));
+
+  eq (parse ('[:foo]'))
+     (Right (Pair ('')
+                  ({type: 'array-literal',
+                    elements: [{type: 'symbol', value: Symbol.for ('foo')}]})));
+
+  eq (parse ('[:foo :bar]'))
+     (Right (Pair ('')
+                  ({type: 'array-literal',
+                    elements: [{type: 'symbol', value: Symbol.for ('foo')},
+                               {type: 'symbol', value: Symbol.for ('bar')}]})));
+
+  eq (parse ('[:foo :bar :baz]'))
+     (Right (Pair ('')
+                  ({type: 'array-literal',
+                    elements: [{type: 'symbol', value: Symbol.for ('foo')},
+                               {type: 'symbol', value: Symbol.for ('bar')},
+                               {type: 'symbol', value: Symbol.for ('baz')}]})));
+
+  eq (parse ('[:foo ]'))
+     (Right (Pair ('')
+                  ({type: 'array-literal',
+                    elements: [{type: 'symbol', value: Symbol.for ('foo')}]})));
+
+  eq (parse ('[ :foo]'))
+     (Right (Pair ('')
+                  ({type: 'array-literal',
+                    elements: [{type: 'symbol', value: Symbol.for ('foo')}]})));
+
+  eq (parse ('[ :foo ]'))
+     (Right (Pair ('')
+                  ({type: 'array-literal',
+                    elements: [{type: 'symbol', value: Symbol.for ('foo')}]})));
+
+  eq (parse ('{}'))
+     (Right (Pair ('')
+                  ({type: 'map-literal',
+                    elements: []})));
+
+  eq (parse ('{foo}'))
+     (Right (Pair ('')
+                  ({type: 'map-literal',
+                    elements: [{type: 'identifier', name: 'foo'}]})));
+
+  eq (parse ('{foo bar}'))
+     (Right (Pair ('')
+                  ({type: 'map-literal',
+                    elements: [{type: 'identifier', name: 'foo'},
+                               {type: 'identifier', name: 'bar'}]})));
+
+  eq (parse ('{foo bar baz}'))
+     (Right (Pair ('')
+                  ({type: 'map-literal',
+                    elements: [{type: 'identifier', name: 'foo'},
+                               {type: 'identifier', name: 'bar'},
+                               {type: 'identifier', name: 'baz'}]})));
+
+  eq (parse ('{foo }'))
+     (Right (Pair ('')
+                  ({type: 'map-literal',
+                    elements: [{type: 'identifier', name: 'foo'}]})));
+
+  eq (parse ('{ foo}'))
+     (Right (Pair ('')
+                  ({type: 'map-literal',
+                    elements: [{type: 'identifier', name: 'foo'}]})));
+
+  eq (parse ('{ foo }'))
+     (Right (Pair ('')
+                  ({type: 'map-literal',
+                    elements: [{type: 'identifier', name: 'foo'}]})));
+
+  eq (parse ('{"x" 1 "y" 2 "z" 3}'))
+     (Right (Pair ('')
+                  ({type: 'map-literal',
+                    elements: [{type: 'string-literal', value: 'x'},
+                               {type: 'number-literal', value: 1},
+                               {type: 'string-literal', value: 'y'},
+                               {type: 'number-literal', value: 2},
+                               {type: 'string-literal', value: 'z'},
+                               {type: 'number-literal', value: 3}]})));
+
+  eq (parse ('(lambda [x] x)'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'identifier', name: 'lambda'},
+                               {type: 'array-literal',
+                                elements: [{type: 'identifier', name: 'x'}]},
+                               {type: 'identifier', name: 'x'}]})));
+
+  const eval_ = env => input => (
+    chain (B (evaluate (path.dirname (__filename)) (env)) (snd))
+          (parse (input))
+  );
+
+  eq (eval_ ({}) (':foo'))
+     (Right (Symbol.for ('foo')));
+
+  eq (eval_ ({}) (':<*>'))
+     (Right (Symbol.for ('<*>')));
+
+  eq (eval_ ({}) ('"foo"'))
+     (Right ('foo'));
+
+  eq (eval_ ({}) ('123.45'))
+     (Right (123.45));
+
+  eq (eval_ ({[Symbol.for ('x')]: 1, [Symbol.for ('y')]: 2}) ('x'))
+     (Right (1));
+
+  eq (eval_ ({[Symbol.for ('x')]: 1, [Symbol.for ('y')]: 2}) ('y'))
+     (Right (2));
+
+  eq (eval_ ({x: 1, y: 2}) ('z'))
+     (Left (new ReferenceError ('z is not defined')));
+
+  eq (eval_ ({}) ('{}')) (Right ({}));
+  eq (eval_ ({}) ('{"x"}')) (Right ({x: undefined}));
+  eq (eval_ ({}) ('{"x" 1}')) (Right ({x: 1}));
+  eq (eval_ ({}) ('{"x" 1 "y"}')) (Right ({x: 1, y: undefined}));
+  eq (eval_ ({}) ('{"x" 1 "y" 2}')) (Right ({x: 1, y: 2}));
+  eq (eval_ ({}) ('{"x" 1 "y" 2 "z"}')) (Right ({x: 1, y: 2, z: undefined}));
+  eq (eval_ ({}) ('{"x" 1 "y" 2 "z" 3}')) (Right ({x: 1, y: 2, z: 3}));
+
+  eq (eval_ ({}) ('()'))
+     (Left (new Error ('Empty parentheses')));
+
+  eq (eval_ ({[Symbol.for ('Math.sqrt')]: Math.sqrt}) ('(Math.sqrt 64)'))
+     (Right (8));
+
+  eq (eval_ ({[Symbol.for ('Math.sqrt')]: Math.sqrt, [Symbol.for ('*')]: x => y => y * x}) ('(Math.sqrt (* 8 8))'))
+     (Right (8));
+
+  eq (eval_ ({[Symbol.for ('get')]: k => m => m[k]}) ('(get :x {:x 1 :y 2})'))
+     (Right (1));
+
+  eq (eval_ ({[Symbol.for ('get')]: k => m => m[k]}) ('(get :y {:x 1 :y 2})'))
+     (Right (2));
+
+  eq (eval_ ({[Symbol.for ('get')]: k => m => m[k]}) ('(get :z {:x 1 :y 2})'))
+     (Right (undefined));
+
+  eq (eval_ ({}) ('(:x {:x 1 :y 2})'))
+     (Right (1));
+
+  eq (eval_ ({}) ('(:y {:x 1 :y 2})'))
+     (Right (2));
+
+  eq (eval_ ({}) ('(:z {:x 1 :y 2})'))
+     (Right (undefined));
+
+  eq (eval_ ({}) ('((lambda [x] x) 64)'))
+     (Right (64));
+
+  eq (eval_ ({[Symbol.for ('*')]: x => y => y * x}) ('((lambda [x] (* x x)) 4)'))
+     (Right (16));
+
+  eq (eval_ ({}) ('((lambda [k] (k {:x 1 :y 2})) :x)'))
+     (Right (1));
+
+  eq (eval_ ({}) ('((lambda [k] (k {:x 1 :y 2})) :y)'))
+     (Right (2));
+
+  eq (eval_ ({}) ('((lambda [k] (k {:x 1 :y 2})) :z)'))
+     (Right (undefined));
+
+  eq (eval_ ({}) ('((lambda [x y z] x) 1 2 3)'))
+     (Right (1));
+
+  eq (eval_ ({}) ('((lambda [x y z] y) 1 2 3)'))
+     (Right (2));
+
+  eq (eval_ ({}) ('((lambda [x y z] z) 1 2 3)'))
+     (Right (3));
+
+  eq (eval_ ({}) ('(let [x 8] x)'))
+     (Right (8));
+
+  eq (eval_ ({}) ('(let [x 8 y x] y)'))
+     (Right (8));
+
+  eq (eval_ ({}) ("(let' {:x 8} x)"))
+     (Right (8));
+
+  eq (eval_ ({}) ("(let' {:x 8 :y x} y)"))
+     (Left (new ReferenceError ('x is not defined')));
+
+  eq (eval_ (baseEnv) (`(let' (invoke "fromEntries" [[[:x 1] [:y 2]]] Object) x)`))
+     (Right (1));
+
+  eq (eval_ (baseEnv) (`(let' (invoke "fromEntries" [[[:x 1] [:y 2]]] Object) y)`))
+     (Right (2));
+
+  eq (eval_ (baseEnv) (`(let' (invoke "fromEntries" [[[:x 1] [:y 2]]] Object) z)`))
+     (Left (new ReferenceError ('z is not defined')));
+
+  eq (eval_ ({}) ('true'))
+     (Left (new ReferenceError ('true is not defined')));
+
+  eq (eval_ ({}) ('false'))
+     (Left (new ReferenceError ('false is not defined')));
+
+  eq (eval_ ({[Symbol.for ('true')]: true, [Symbol.for ('false')]: false}) ('true'))
+     (Right (true));
+
+  eq (eval_ ({[Symbol.for ('true')]: true, [Symbol.for ('false')]: false}) ('false'))
+     (Right (false));
+
+  eq (eval_ ({[Symbol.for ('true')]: true, [Symbol.for ('false')]: false}) ('(if true 8 x)'))
+     (Right (8));
+
+  eq (eval_ ({[Symbol.for ('true')]: true, [Symbol.for ('false')]: false}) ('(if false x 8)'))
+     (Right (8));
+
+  eq (eval_ ({}) ('(if "xxx" x x)'))
+     (Left (new TypeError ('Predicate evaluated to non-Boolean value')));
+
+  eq (eval_ (baseEnv) ('(invoke "toUpperCase" [] "foo")'))
+     (Right ('FOO'));
+
+  eq (eval_ (baseEnv) ('(invoke "toFixed" [2] 123.456)'))
+     (Right ('123.46'));
+
+  eq (eval_ (baseEnv) ('(invoke "abs" [-1] Math)'))
+     (Right (1));
+
+  eq (eval_ ({[Symbol.for ('=')]: y => x => x === y,
+              [Symbol.for ('*')]: y => x => x * y,
+              [Symbol.for ('-')]: y => x => x - y})
+            (`(let [fact
+                    (function factorial [x]
+                       (if (= 0 x)
+                           1
+                           (* x (factorial (- 1 x)))))]
+                   (fact 5))`))
+     (Right (120));
 }
