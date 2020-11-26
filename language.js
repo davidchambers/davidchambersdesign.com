@@ -4,398 +4,286 @@ import {createRequire} from 'module';
 import path from 'path';
 import url from 'url';
 
-import Future from './node_modules/fluture/index.js';
+import S from 'sanctuary';
+import $ from 'sanctuary-def';
 
 import baseEnv from './environments/base.env.js';
 
 
-const I = x => x;
-const K = x => y => x;
+const {
+  Either,
+  I,
+  Just,
+  K,
+  Left,
+  Nothing,
+  Pair,
+  Right,
+  append,
+  array,
+  bimap,
+  chain,
+  compose: B,
+  either,
+  encase,
+  flip: C,
+  is,
+  map,
+  mapLeft,
+  match,
+  maybe,
+  maybe_,
+  pair,
+  pipe,
+  pipeK,
+  prepend,
+  prop,
+  reduce,
+  snd,
+  stripPrefix,
+  tagBy,
+  traverse,
+  unfoldr,
+  value,
+  zip,
+} = S;
 
-const identifierRegex = /^[^()[\]{}"\s]*/;
+const matchIdentifier = match (/^[^()[\]{}"\s]+/);
 
-const parse = input => reject => resolve => {
-  let match;
-  if (input === '') {
-    return reject (new SyntaxError ('Unexpected end of input'));
-  } else if (input.startsWith (';')) {
-    return parse (input.replace (/.*\n?/, '')) (reject) (resolve);
-  } else if (input.startsWith ('(')) {
-    let rest = input.slice (1);
-    const elements = [];
-    while ((match = /^\s*\)/.exec (rest)) == null) {
-      const result = parse (rest)
-                           (error => ({success: false, error}))
-                           (element => rest => ({success: true, element, rest}));
-      if (!result.success) return reject (result.error);
-      elements.push (result.element);
-      rest = result.rest;
-    }
-    return resolve ({type: 'parenthesized', elements})
-                   (rest.slice (match[0].length));
-  } else if (input.startsWith (')')) {
-    return reject (new SyntaxError ('Unmatched )'));
-  } else if (input.startsWith ('[')) {
-    let rest = input.slice (1);
-    const elements = [];
-    while ((match = /^\s*\]/.exec (rest)) == null) {
-      const result = parse (rest)
-                           (error => ({success: false, error}))
-                           (element => rest => ({success: true, element, rest}));
-      if (!result.success) return reject (result.error);
-      elements.push (result.element);
-      rest = result.rest;
-    }
-    return resolve ({type: 'array-literal', elements})
-                   (rest.slice (match[0].length));
-  } else if (input.startsWith (']')) {
-    return reject (new SyntaxError ('Unmatched ]'));
-  } else if (input.startsWith ('{')) {
-    const recur = elements => input => (
-      input.startsWith ('}') ?
-      resolve ({type: 'map-literal', elements}) (input.slice (1)) :
-      parse (input)
-            (reject)
-            (element => recur ([...elements, element]))
-    );
-    return recur ([]) (input.slice (1));
-  } else if (input.startsWith ('}')) {
-    return reject (new SyntaxError ('Unmatched }'));
-  } else if (input.startsWith ('"')) {
-    const match = /"(\\"|[^"])*"/.exec (input);
-    if (match == null) {
-      return reject (new SyntaxError ('Unterminated string literal'));
-    }
-    const [raw] = match;
-    let value;
-    try {
-      value = JSON.parse (raw);
-    } catch (err) {
-      return reject (new SyntaxError ('Invalid string literal'));
-    }
-    return resolve ({type: 'string-literal', value})
-                   (input.slice (raw.length));
-  } else if (input.startsWith (':')) {
-    const [name] = identifierRegex.exec (input.slice (1));
-    return name === '' ?
-           reject (new SyntaxError ('Empty symbol')) :
-           resolve ({type: 'symbol', value: Symbol.for (name)})
-                   (input.slice (1 + name.length));
-  } else if ((match = /^-?[0-9]+([.][0-9]+)?/.exec (input)) != null) {
-    return resolve ({type: 'number-literal', value: Number (match[0])})
-                   (input.slice (match[0].length));
-  } else if ((match = /^\s+/.exec (input)) != null) {
-    return parse (input.slice (match[0].length)) (reject) (resolve);
-  } else {
-    const [name] = identifierRegex.exec (input);
-    return resolve ({type: 'identifier', name}) (input.slice (name.length));
-  }
-};
+const parseGroup = closing => type => elements => (
+  B (rest => maybe_ (() => chain (pair (C (B (parseGroup (closing) (type))
+                                             (C (append) (elements)))))
+                                 (parse (rest)))
+                    (rest => Right (Pair (rest) ({type, elements})))
+                    (stripPrefix (closing) (rest)))
+    (rest => rest.replace (/^\s*/, ''))
+);
 
-const evaluateFile_ = env => filename => reject => resolve => {
-  let src;
-  try {
-    src = fs.readFileSync (filename, {encoding: 'utf8'});
-  } catch (err) {
-    return reject (err);
-  }
-  return parse (src)
-               (reject)
-               (value => _ => evaluate (path.dirname (filename))
-                                       (env)
-                                       (value)
-                                       (reject)
-                                       (resolve));
-};
+const parse = pipe ([
+  Right,
+  pipeK ([
+    s => Right (s.replace (/^\s*/, '')),
+    s => Right (s.replace (/^;.*\n?/, '')),
+    s => s.startsWith ('(') ? Left (parseGroup (')') ('parenthesized') ([]) (s.slice (1))) : Right (s),
+    s => s.startsWith (')') ? Left (Left (new SyntaxError ('Unmatched )'))) : Right (s),
+    s => s.startsWith ('[') ? Left (parseGroup (']') ('array-literal') ([]) (s.slice (1))) : Right (s),
+    s => s.startsWith (']') ? Left (Left (new SyntaxError ('Unmatched ]'))) : Right (s),
+    s => s.startsWith ('{') ? Left (parseGroup ('}') ('map-literal') ([]) (s.slice (1))) : Right (s),
+    s => s.startsWith ('}') ? Left (Left (new SyntaxError ('Unmatched }'))) : Right (s),
+    s => s.startsWith ('"') ?
+         Left (maybe (Left (new SyntaxError ('Unterminated string literal')))
+                     (B (raw => bimap (K (new SyntaxError ('Invalid string literal')))
+                                      (value => Pair (s.slice (raw.length))
+                                                     ({type: 'string-literal', value}))
+                                      (encase (JSON.parse) (raw)))
+                        (prop ('match')))
+                     (match (/"(\\"|[^"])*"/) (s))) :
+         Right (s),
+    s => maybe (Right (s))
+               (s => Left (maybe (Left (new SyntaxError ('Empty symbol')))
+                                 (B (name => Right (Pair (s.slice (name.length))
+                                                         ({type: 'symbol', value: Symbol.for (name)})))
+                                    (prop ('match')))
+                                 (matchIdentifier (s))))
+               (stripPrefix (':') (s)),
+    s => maybe (Right (s))
+               (B (raw => Left (Right (Pair (s.slice (raw.length))
+                                            ({type: 'number-literal', value: Number (raw)}))))
+                  (prop ('match')))
+               (match (/^-?[0-9]+([.][0-9]+)?/) (s)),
+    s => Left (maybe (Left (new SyntaxError ('Unexpected end of input')))
+                     (B (name => Right (Pair (s.slice (name.length))
+                                             ({type: 'identifier', name})))
+                        (prop ('match')))
+                     (matchIdentifier (s))),
+  ]),
+  either (I) (K (Left (new Error ('Invalid input')))),
+]);
 
-const evaluate = dirname => env => term => reject => resolve => {
+const evaluate = dirname => env => term => {
   switch (term.type) {
     case 'symbol':
     case 'string-literal':
     case 'number-literal': {
-      return resolve (term.value);
+      return Right (term.value);
     }
     case 'identifier': {
-      const key = Symbol.for (term.name);
-      if (Object.prototype.hasOwnProperty.call (env, key)) {
-        return resolve (env[key]);
-      } else {
-        return reject (new ReferenceError (`${term.name} is not defined`));
-      }
+      return maybe (Left (new ReferenceError (`${term.name} is not defined`)))
+                   (Right)
+                   (value (Symbol.for (term.name)) (env));
     }
     case 'array-literal': {
-      const values = [];
-      for (const element of term.elements) {
-        const {success, value} = evaluate (dirname)
-                                          (env)
-                                          (element)
-                                          (value => ({success: false, value}))
-                                          (value => ({success: true, value}));
-        if (!success) return reject (value);
-        values.push (value);
-      }
-      return resolve (values);
+      return traverse (Either)
+                      (evaluate (dirname) (env))
+                      (term.elements);
     }
     case 'map-literal': {
-      const values = [];
-      for (const element of term.elements) {
-        const {success, value} = evaluate (dirname)
-                                          (env)
-                                          (element)
-                                          (value => ({success: false, value}))
-                                          (value => ({success: true, value}));
-        if (!success) return reject (value);
-        values.push (value);
-      }
-      const map = Object.create (null);
-      for (let idx = 0; idx < values.length; idx += 2) {
-        map[values[idx]] = values[idx + 1];
-      }
-      return resolve (map);
+      return map (values => reduce (m => ([k, v]) => ({...m, [k]: v}))
+                                   ({})
+                                   (unfoldr (array (Nothing)
+                                                   (k => B (pair (v => B (Just)
+                                                                         (Pair (Pair (k) (v)))))
+                                                           (array (Pair (undefined) ([]))
+                                                                  (Pair))))
+                                            (values)))
+                 (traverse (Either)
+                           (evaluate (dirname) (env))
+                           (term.elements));
     }
     case 'parenthesized': {
-      if (term.elements.length === 0) {
-        return reject (new Error ('Empty parentheses'));
-      }
-      if (term.elements[0].type === 'identifier' &&
-          term.elements[0].name === 'if') {
-        if (term.elements.length !== 4) {
-          return reject (new Error ('Invalid if expression'));
-        }
-        const predicate = evaluate (dirname)
-                                   (env)
-                                   (term.elements[1])
-                                   (value => ({success: false, value}))
-                                   (value => ({success: true, value}));
-        if (!predicate.success) return reject (predicate.value);
-        if (typeof predicate.value !== 'boolean') {
-          return reject (new TypeError ('Predicate evaluated to non-Boolean value'));
-        }
-        if (predicate.value) {
-          const consequent = evaluate (dirname)
-                                      (env)
-                                      (term.elements[2])
-                                      (value => ({success: false, value}))
-                                      (value => ({success: true, value}));
-          if (!consequent.success) return reject (consequent.value);
-          return resolve (consequent.value);
-        } else {
-          const alternative = evaluate (dirname)
-                                       (env)
-                                       (term.elements[3])
-                                       (value => ({success: false, value}))
-                                       (value => ({success: true, value}));
-          if (!alternative.success) return reject (alternative.value);
-          return resolve (alternative.value);
-        }
-      }
-      if (term.elements[0].type === 'identifier' &&
-          term.elements[0].name === 'let') {
-        if (term.elements.length !== 3) {
-          return reject (new Error ('Invalid let expression'));
-        }
-        if (!(term.elements[1].type === 'array-literal' &&
-              term.elements[1].elements
-              .every ((e, idx) => idx % 2 === 1 || e.type === 'identifier'))) {
-          return reject (new Error ('Invalid let expression'));
-        }
-        let env_ = env;
-        for (let idx = 0; idx < term.elements[1].elements.length; idx += 2) {
-          const name = term.elements[1].elements[idx].name;
-          const {success, value} = evaluate (dirname)
-                                            (env_)
-                                            (term.elements[1].elements[idx + 1])
-                                            (value => ({success: false, value}))
-                                            (value => ({success: true, value}));
-          if (!success) return reject (value);
-          env_ = {...env_, [Symbol.for (name)]: value};
-        }
-        return evaluate (dirname) (env_) (term.elements[2]) (reject) (resolve);
-      }
-      if (term.elements[0].type === 'identifier' &&
-          term.elements[0].name === "let'") {
-        if (term.elements.length !== 3) {
-          return reject (new Error ("Invalid let' expression"));
-        }
-        const {success, value} = evaluate (dirname)
-                                          (env)
-                                          (term.elements[1])
-                                          (value => ({success: false, value}))
-                                          (value => ({success: true, value}));
-        if (!success) return reject (value);
-        return evaluate (dirname) ({...env, ...value}) (term.elements[2]) (reject) (resolve);
-      }
-      if (term.elements[0].type === 'identifier' &&
-          term.elements[0].name === 'lambda') {
-        if (term.elements.length !== 3) {
-          return reject (new Error ('Invalid lambda expression'));
-        }
-        if (!(term.elements[1].type === 'array-literal' &&
-              term.elements[1].elements.every (e => e.type === 'identifier'))) {
-          return reject (new Error ('Invalid lambda expression'));
-        }
-        const params = term.elements[1].elements.map (e => e.name);
-        return resolve (
-          params.reduce (
-            f => args => arg => f ([...args, arg]),
-            args => evaluate (dirname)
-                             (params.reduce ((env, param, idx) =>
-                                               ({...env, [Symbol.for (param)]: args[idx]}),
-                                             env))
-                             (term.elements[2])
-                             (err => { throw err; })
-                             (I)
-          ) ([])
-        );
-      }
-      if (term.elements[0].type === 'identifier' &&
-          term.elements[0].name === 'function') {
-        if (term.elements.length !== 4) {
-          return reject (new Error ('Invalid function expression'));
-        }
-        if (!(term.elements[1].type === 'identifier' &&
-              term.elements[2].type === 'array-literal' &&
-              term.elements[2].elements.every (e => e.type === 'identifier'))) {
-          return reject (new Error ('Invalid function expression'));
-        }
-        const params = term.elements[2].elements.map (e => e.name);
-        const f = params.reduce (
-          f => args => arg => f ([...args, arg]),
-          args => evaluate (dirname)
-                           (params.reduce ((env, param, idx) =>
-                                             ({...env, [Symbol.for (param)]: args[idx]}),
-                                           {...env, [Symbol.for (term.elements[1].name)]: f}))
-                           (term.elements[3])
-                           (err => { throw err; })
-                           (I)
-        ) ([]);
-        return resolve (f);
-      }
-      if (term.elements[0].type === 'identifier' &&
-          term.elements[0].name === 'import') {
-        if (term.elements.length !== 3) {
-          return reject (new Error ('Invalid import expression'));
-        }
-        const imports = evaluate (dirname)
-                                 (env)
-                                 (term.elements[1])
-                                 (value => ({success: false, value}))
-                                 (value => ({success: true, value}));
-        if (!imports.success) return reject (imports.value);
-
-        let env_ = env;
-        for (const sym of Object.getOwnPropertySymbols (imports.value)) {
-          const {success, value} = evaluateFile_ (env)
-                                                 (path.join (dirname, imports.value[sym]))
-                                                 (value => ({success: false, value}))
-                                                 (value => ({success: true, value}));
-          if (!success) return reject (value);
-          env_ = {...env_, [sym]: value};
-        }
-        return evaluate (dirname)
-                        (env_)
-                        (term.elements[2])
-                        (reject)
-                        (resolve);
-      }
-      if (term.elements[0].type === 'identifier' &&
-          term.elements[0].name === 'import*') {
-        if (term.elements.length !== 3) {
-          return reject (new Error ('Invalid import* expression'));
-        }
-        const paths = evaluate (dirname)
-                               (env)
-                               (term.elements[1])
-                               (value => ({success: false, value}))
-                               (value => ({success: true, value}));
-        if (!paths.success) return reject (paths.value);
-        if (!(paths.value.every (path => typeof path === 'string'))) {
-          return reject (new Error ('Invalid import* expression'));
-        }
-        let env_ = env;
-        for (const p of paths.value) {
-          const {success, value} = evaluateFile_ (env_)
-                                                 (path.join (dirname, p))
-                                                 (value => ({success: false, value}))
-                                                 (value => ({success: true, value}));
-          if (!success) return reject (value);
-          env_ = {...env_, ...value};
-        }
-        return evaluate (dirname)
-                        (env_)
-                        (term.elements[2])
-                        (reject)
-                        (resolve);
-      }
-      const values = [];
-      for (const element of term.elements) {
-        const {success, value} = evaluate (dirname)
-                                          (env)
-                                          (element)
-                                          (value => ({success: false, value}))
-                                          (value => ({success: true, value}));
-        if (!success) return reject (value);
-        values.push (value);
-      }
-      const [f, ...args] = values;
-      return resolve (
-        args.length === 0 ?
-        f () :
-        args.reduce ((f, x) => (typeof f === 'symbol' ? o => o[f] : f) (x), f)
-      );
-    }
-    default: {
-      return reject (new Error ('TK'));
+      return array
+        (Left (new Error ('Empty parentheses')))
+        (head => tail => {
+           if (head.type === 'identifier' && head.name === 'if') {
+             if (tail.length !== 3) {
+               return Left (new Error ('Invalid if expression'));
+             }
+             const [predicate, consequent, alternative] = tail;
+             return chain (value => evaluate (dirname) (env) (value ? consequent : alternative))
+                          (chain (B (mapLeft (K (new TypeError ('Predicate evaluated to non-Boolean value'))))
+                                    (tagBy (is ($.Boolean))))
+                                 (evaluate (dirname) (env) (predicate)));
+           }
+           if (head.type === 'identifier' && head.name === 'let') {
+             if (tail.length !== 2) {
+               return Left (new Error ('Invalid let expression'));
+             }
+             const [bindings, body] = tail;
+             if (!(bindings.type === 'array-literal' &&
+                   bindings.elements.every ((e, idx) => idx % 2 === 1 || e.type === 'identifier'))) {
+               return Left (new Error ('Invalid let expression'));
+             }
+             return chain (env => evaluate (dirname) (env) (body))
+                          (reduce (C (([name, value]) => chain (env => map (value => ({...env, [Symbol.for (name)]: value}))
+                                                                           (evaluate (dirname) (env) (value)))))
+                                  (Right (env))
+                                  (unfoldr (array (Nothing)
+                                                  (k => B (pair (v => B (Just)
+                                                                        (Pair (Pair (k.name) (v)))))
+                                                          (array (Pair (undefined) ([]))
+                                                                 (Pair))))
+                                           (bindings.elements)));
+           }
+           if (head.type === 'identifier' && head.name === "let'") {
+             if (tail.length !== 2) {
+               return Left (new Error ("Invalid let' expression"));
+             }
+             const [bindings, body] = tail;
+             return chain (bindings => evaluate (dirname) ({...env, ...bindings}) (body))
+                          (evaluate (dirname) (env) (bindings));
+           }
+           if (head.type === 'identifier' && head.name === 'lambda') {
+             if (tail.length !== 2) {
+               return Left (new Error ('Invalid lambda expression'));
+             }
+             const [params, body] = tail;
+             if (!(params.type === 'array-literal' &&
+                   params.elements.every (e => e.type === 'identifier'))) {
+               return Left (new Error ('Invalid lambda expression'));
+             }
+             return Right (
+               reduce (f => _ => args => arg => f ([...args, arg]))
+                      (args => either (err => { throw err; })
+                                      (I)
+                                      (evaluate (dirname)
+                                                (reduce (env => ([{name}, value]) => ({...env, [Symbol.for (name)]: value}))
+                                                        (env)
+                                                        (zip (params.elements) (args)))
+                                                (body)))
+                      (params.elements)
+                      ([])
+             );
+           }
+           if (head.type === 'identifier' && head.name === 'function') {
+             if (tail.length !== 3) {
+               return Left (new Error ('Invalid function expression'));
+             }
+             const [ident, params, body] = tail;
+             if (!(ident.type === 'identifier' &&
+                   params.type === 'array-literal' &&
+                   params.elements.every (e => e.type === 'identifier'))) {
+               return Left (new Error ('Invalid function expression'));
+             }
+             const names = params.elements.map (e => e.name);
+             const f = reduce
+               (f => K (args => arg => f (append (arg) (args))))
+               (args => either (err => { throw err; })
+                               (I)
+                               (evaluate (dirname)
+                                         (reduce (env => ([{name}, value]) => ({...env, [Symbol.for (name)]: value}))
+                                                         ({...env, [Symbol.for (ident.name)]: f})
+                                                         (zip (params.elements) (args)))
+                                         (body)))
+               (params.elements)
+               ([]);
+             return Right (f);
+           }
+           if (head.type === 'identifier' && head.name === 'import') {
+             if (tail.length !== 2) {
+               return Left (new Error ('Invalid import expression'));
+             }
+             const [bindings, body] = tail;
+             return chain (C (evaluate (dirname)) (body))
+                          (chain (bindings => reduce (C (sym => chain (env_ => map (value => ({...env_, [sym]: value}))
+                                                                                   (evaluateFile (env) (path.join (dirname, bindings[sym]))))))
+                                                     (Right (env))
+                                                     (Object.getOwnPropertySymbols (bindings)))
+                                 (evaluate (dirname) (env) (bindings)));
+           }
+           if (head.type === 'identifier' && head.name === 'import*') {
+             if (tail.length !== 2) {
+               return Left (new Error ('Invalid import* expression'));
+             }
+             const [paths, body] = tail;
+             return chain (C (evaluate (dirname)) (body))
+                          (chain (reduce (C (p => chain (env_ => map (bindings => ({...env_, ...bindings}))
+                                                                     (evaluateFile (env_) (path.join (dirname, p))))))
+                                         (Right (env)))
+                                 (chain (paths => traverse (Either)
+                                                           (B (mapLeft (K (new Error ('Invalid import* expression'))))
+                                                              (tagBy (is ($.String))))
+                                                           (paths))
+                                        (evaluate (dirname) (env) (paths))));
+           }
+           return map (([f, ...args]) => args.length === 0 ?
+                                         f () :
+                                         reduce (f => x => (is ($.Symbol) (f) ? o => o[f] : f) (x))
+                                                (f)
+                                                (args))
+                      (traverse (Either)
+                                (evaluate (dirname) (env))
+                                (prepend (head) (tail)));
+         })
+        (term.elements);
     }
   }
 };
 
-export const evaluateFile = env => filename => Future ((reject, resolve) => {
+export const evaluateFile = env => filename => {
   switch (path.extname (filename)) {
     case '.clj': {
-      let src;
-      try {
-        src = fs.readFileSync (filename, {encoding: 'utf8'});
-      } catch (err) {
-        reject (err);
-        return () => {};
-      }
-      parse (src)
-            (reject)
-            (value => _ => evaluate (path.dirname (filename))
-                                    (env)
-                                    (value)
-                                    (reject)
-                                    (resolve));
-      return () => {};
+      return chain (B (evaluate (path.dirname (filename)) (env)) (snd))
+                   (chain (parse)
+                          (encase (filename => fs.readFileSync (filename, {encoding: 'utf8'}))
+                                  (filename)));
     }
     case '.js': {
-      const require = createRequire (import.meta.url);
-      let result;
-      try {
-        result = require (filename);
-      } catch (err) {
-        reject (err);
-        return () => {};
-      }
-      resolve (result);
-      return () => {};
+      return encase (createRequire (import.meta.url)) (filename);
     }
     default: {
-      reject (new Error ('Unsupported file extension'));
-      return () => {};
+      return Left (new Error ('Unsupported file extension'));
     }
   }
-});
+};
 
 
 if (url.fileURLToPath (import.meta.url) === process.argv[1]) {
   { // parse
     const expect = success => input => value => {
       assert.deepStrictEqual (
-        parse (input)
-              (value => ({success: false, value}))
-              (value => _ => ({success: true, value})),
+        either (value => ({success: false, value}))
+               (value => ({success: true, value: value.snd}))
+               (parse (input)),
         {success, value}
       );
     };
@@ -614,6 +502,18 @@ if (url.fileURLToPath (import.meta.url) === process.argv[1]) {
                           {type: 'identifier', name: 'bar'},
                           {type: 'identifier', name: 'baz'}]});
 
+    succeeds ('{foo }')
+             ({type: 'map-literal',
+               elements: [{type: 'identifier', name: 'foo'}]});
+
+    succeeds ('{ foo}')
+             ({type: 'map-literal',
+               elements: [{type: 'identifier', name: 'foo'}]});
+
+    succeeds ('{ foo }')
+             ({type: 'map-literal',
+               elements: [{type: 'identifier', name: 'foo'}]});
+
     succeeds ('{"x" 1 "y" 2 "z" 3}')
              ({type: 'map-literal',
                elements: [{type: 'string-literal', value: 'x'},
@@ -632,17 +532,15 @@ if (url.fileURLToPath (import.meta.url) === process.argv[1]) {
   }
 
   { // evaluate
-    const expect = success => env => input => value => {
-      assert.deepStrictEqual (
-        parse (input)
-              (value => ({success: false, value}))
-              (value => _ => evaluate (path.dirname (url.fileURLToPath (import.meta.url)))
-                                      (env)
-                                      (value)
-                                      (value => ({success: false, value}))
-                                      (value => ({success: true, value}))),
-        {success, value}
-      );
+    const expect = success => env => input => expected => {
+      either (actual => { assert.deepStrictEqual (false, success);
+                          assert.deepStrictEqual (actual, expected); })
+             (actual => { assert.deepStrictEqual (true, success);
+                          assert.deepStrictEqual (actual, expected); })
+             (chain (B (evaluate (path.dirname (url.fileURLToPath (import.meta.url)))
+                                 (env))
+                       (snd))
+                    (parse (input)));
     };
     const succeeds = expect (true);
     const fails = expect (false);
@@ -656,13 +554,13 @@ if (url.fileURLToPath (import.meta.url) === process.argv[1]) {
     succeeds ({[Symbol.for ('x')]: 1, [Symbol.for ('y')]: 2}) ('y') (2);
     fails ({x: 1, y: 2}) ('z') (new ReferenceError ('z is not defined'));
 
-    succeeds ({}) ('{}') (Object.create (null));
-    succeeds ({}) ('{"x"}') (Object.assign (Object.create (null), {x: undefined}));
-    succeeds ({}) ('{"x" 1}') (Object.assign (Object.create (null), {x: 1}));
-    succeeds ({}) ('{"x" 1 "y"}') (Object.assign (Object.create (null), {x: 1, y: undefined}));
-    succeeds ({}) ('{"x" 1 "y" 2}') (Object.assign (Object.create (null), {x: 1, y: 2}));
-    succeeds ({}) ('{"x" 1 "y" 2 "z"}') (Object.assign (Object.create (null), {x: 1, y: 2, z: undefined}));
-    succeeds ({}) ('{"x" 1 "y" 2 "z" 3}') (Object.assign (Object.create (null), {x: 1, y: 2, z: 3}));
+    succeeds ({}) ('{}') ({});
+    succeeds ({}) ('{"x"}') ({x: undefined});
+    succeeds ({}) ('{"x" 1}') ({x: 1});
+    succeeds ({}) ('{"x" 1 "y"}') ({x: 1, y: undefined});
+    succeeds ({}) ('{"x" 1 "y" 2}') ({x: 1, y: 2});
+    succeeds ({}) ('{"x" 1 "y" 2 "z"}') ({x: 1, y: 2, z: undefined});
+    succeeds ({}) ('{"x" 1 "y" 2 "z" 3}') ({x: 1, y: 2, z: 3});
 
     fails ({}) ('()') (new Error ('Empty parentheses'));
     succeeds ({[Symbol.for ('Math.sqrt')]: Math.sqrt}) ('(Math.sqrt 64)') (8);
@@ -675,9 +573,9 @@ if (url.fileURLToPath (import.meta.url) === process.argv[1]) {
     succeeds ({}) ('(:y {:x 1 :y 2})') (2);
     succeeds ({}) ('(:z {:x 1 :y 2})') (undefined);
 
-//  succeeds ({map: f => xs => xs.map (x => f (x))}) ('(map :x [{:x 1 :y 2} {:x 3 :y 4}])') ([1, 3]);
-//  succeeds ({map: f => xs => xs.map (x => f (x))}) ('(map :y [{:x 1 :y 2} {:x 3 :y 4}])') ([2, 4]);
-//  succeeds ({map: f => xs => xs.map (x => f (x))}) ('(map :z [{:x 1 :y 2} {:x 3 :y 4}])') ([undefined, undefined]);
+//  succeeds ({[Symbol.for ('map')]: f => xs => xs.map (x => f (x))}) ('(map :x [{:x 1 :y 2} {:x 3 :y 4}])') ([1, 3]);
+//  succeeds ({[Symbol.for ('map')]: f => xs => xs.map (x => f (x))}) ('(map :y [{:x 1 :y 2} {:x 3 :y 4}])') ([2, 4]);
+//  succeeds ({[Symbol.for ('map')]: f => xs => xs.map (x => f (x))}) ('(map :z [{:x 1 :y 2} {:x 3 :y 4}])') ([undefined, undefined]);
 
     succeeds ({}) ('((lambda [x] x) 64)') (64);
     succeeds ({[Symbol.for ('*')]: x => y => y * x}) ('((lambda [x] (* x x)) 4)') (16);
