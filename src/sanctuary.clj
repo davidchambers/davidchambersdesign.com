@@ -2,7 +2,7 @@
 
 (invoke "fromEntries"
         [(invoke "map"
-                 [(lambda [kv]
+                 [(lambda [entry]
                      [(invoke "for"
                               [(invoke "replace"
                                        [(new RegExp ["_" "g"])
@@ -10,8 +10,8 @@
                                        (invoke "replace"
                                                [(new RegExp ["(?!\\b)[A-Z]" "g"])
                                                 (lambda [c] (invoke "concat" [(invoke "toLowerCase" [] c)] "-"))]
-                                               (0 kv)))]
+                                               (0 entry)))]
                               Symbol)
-                      (1 kv)])]
+                      (1 entry)])]
                  (invoke "entries" [(import "sanctuary")] Object))]
         Object))
