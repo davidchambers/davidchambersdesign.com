@@ -1,12 +1,25 @@
 {
-  "name": "TK",
+  "name": "davidchambersdesign.com",
   "private": true,
   "type": "script",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/davidchambers/davidchambersdesign.com.git"
+  },
   "dependencies": {
     "fluture": "13.0.1",
     "fluture-sanctuary-types": "7.0.0",
     "luxon": "1.24.1",
     "sanctuary": "3.0.0",
     "sanctuary-def": "0.22.0"
+  },
+  "devDependencies": {
+    "sanctuary-scripts": "4.0.0"
+  },
+  "scripts": {
+    "doctest": "sanctuary-doctest",
+    "lint": "sanctuary-lint",
+    "release": "sanctuary-release",
+    "test": "npm run lint && sanctuary-test && npm run doctest"
   }
 }

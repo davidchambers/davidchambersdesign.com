@@ -2,11 +2,11 @@
 
 'use strict';
 
-const {evaluateFile} = require ('../src/language.js');
+const import_ = require ('../src/import.js');
 
 process.argv
 .slice (2)
 .forEach (filename => {
-  const e = evaluateFile ({}) (filename);
+  const e = import_ ({}) (filename);
   if (e.isLeft) throw e.value;
 });
