@@ -1,7 +1,7 @@
 (import* ["./base.js" "./node.js" "./sanctuary.clj" "./prelude.clj"]
 
 (let [basename (curry-2 ("basename" (import "path")))
-      DateTime ("DateTime" (import "luxon"))
+      from-format (curry-3 ("fromFormat" ("DateTime" (import "luxon"))))
 
       metadata (pipe [lines
                       (reduce (lambda [pairs line]
@@ -24,11 +24,9 @@
                               (from-maybe metadata
                                           (lift3 (lambda [date time zone]
                                                     (insert :datetime
-                                                            (invoke "fromFormat"
-                                                                    [(join-with "" [date ", " (join-with " " (split-on-regex (regex "g" "(?=[ap]m)") time)) " (" zone ")"])
-                                                                     "d MMMM y, t (z)"
-                                                                     {"setZone" true}]
-                                                                    DateTime)
+                                                            (from-format (join-with "" [date ", " (join-with " " (split-on-regex (regex "g" "(?=[ap]m)") time)) " (" zone ")"])
+                                                                         "d MMMM y, t (z)"
+                                                                         {"setZone" true})
                                                             metadata))
                                                  (value :date metadata)
                                                  (value :time metadata)
