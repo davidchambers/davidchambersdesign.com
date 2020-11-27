@@ -40,7 +40,9 @@
                      concat
                      (metadata (0 groups))
                      {:title   (1 groups)
-                      :body    (2 groups)
+                      :body    (invoke "replace"
+                                       [(regex "g" " -- ") "\u2009\u2014\u2009"]
+                                       (2 groups))
                       :slug    (invoke "replace"
                                        [(regex "" "^[^=]+=") ""]
                                        (basename filename ".text"))}))
