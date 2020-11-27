@@ -15,9 +15,9 @@ const {
   snd,
 } = S;
 
-module.exports = env => filename => (
+module.exports = filename => (
   path.extname (filename) === '.clj' ?
-  chain (B (require ('./eval.js') (path.dirname (filename)) (env)) (snd))
+  chain (B (require ('./eval.js') (path.dirname (filename)) ({})) (snd))
         (chain (read)
                (encase (filename => fs.readFileSync (filename, {encoding: 'utf8'}))
                        (filename))) :

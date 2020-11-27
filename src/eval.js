@@ -162,8 +162,7 @@ const evaluate = module.exports = dirname => env => term => {
                return Left (new Error ('Invalid import expression'));
              }
              const [importPath] = tail;
-             return chain (importPath => import_ (env)
-                                                 (importPath.includes ('/') && !(importPath.startsWith ('/')) ?
+             return chain (importPath => import_ (importPath.includes ('/') && !(importPath.startsWith ('/')) ?
                                                   path.join (dirname, importPath) :
                                                   importPath))
                           (evaluate (dirname) (env) (importPath));
@@ -175,8 +174,7 @@ const evaluate = module.exports = dirname => env => term => {
              const [importPaths, body] = tail;
              return chain (C (evaluate (dirname)) (body))
                           (chain (reduce (C (importPath => chain (env_ => map (bindings => ({...env_, ...bindings}))
-                                                                              (import_ (env_)
-                                                                                       (importPath.includes ('/') && !(importPath.startsWith ('/')) ?
+                                                                              (import_ (importPath.includes ('/') && !(importPath.startsWith ('/')) ?
                                                                                         path.join (dirname, importPath) :
                                                                                         importPath)))))
                                          (Right (env)))
