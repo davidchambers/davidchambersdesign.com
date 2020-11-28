@@ -13,5 +13,7 @@
                                                (0 entry)))]
                               Symbol)
                       (1 entry)])]
-                 (invoke "entries" [(import "sanctuary")] Object))]
+                 (invoke "filter"
+                         [(lambda [entry] (!== "unchecked" (0 entry)))]
+                         (invoke "entries" [(import "sanctuary")] Object)))]
         Object))

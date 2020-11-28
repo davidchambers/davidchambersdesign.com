@@ -1,9 +1,7 @@
 (import* ["./base.js" "./sanctuary.clj" "./prelude.clj"]
 
-(let [luxon (import "luxon")
-      $ (import "sanctuary-def")
-
-      $.Object ("Object" $)
+(let [DateTime ("DateTime" (import "luxon"))
+      $.Object ("Object" (import "sanctuary-def"))
       is-array ("isArray" Array)
       property-names ("getOwnPropertyNames" Object)
       property-symbols ("getOwnPropertySymbols" Object)]
@@ -15,7 +13,7 @@
                             (concat prefix)
                             (flip concat suffix)]))
             paren (group I "(" ")")]
-         (if (equals "DateTime" ("name" ("constructor" (Object x))))
+         (if (instance-of DateTime x)
              (let [format "yyyy-MM-dd HH:mm:ss (z)"]
                 (paren ["invoke"
                         (print "fromFormat")
@@ -26,10 +24,10 @@
                  (group print "{" "}" (chain (lambda [k] [k (k x)]) (concat (property-names x) (property-symbols x))))
                  (if (is-array x)
                      (group print "[" "]" x)
-                     (if (equals "function" (typeof x))
+                     (if (equals "function" (type-of x))
                          "(lambda [...] ...)"
-                         (if (equals "symbol" (typeof x))
+                         (if (equals "symbol" (type-of x))
                              (concat ":" (symbol->string x))
-                             (if (equals "string" (typeof x))
+                             (if (equals "string" (type-of x))
                                  ("stringify" JSON x)
                                  (String x)))))))))))

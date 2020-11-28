@@ -15,7 +15,7 @@
                                   (either (lambda [error]
                                              (if (equals (new SyntaxError ["Unexpected end of input"]) error)
                                                  (callback (new Recoverable [error]))
-                                                 (callback (error))))
+                                                 (callback error)))
                                           (lambda [value]
                                              (apply callback [null value]))
                                           (chain (eval ("dirname" path filename) base-env)
