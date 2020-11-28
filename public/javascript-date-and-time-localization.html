@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>JavaScript date and time localization</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>JavaScript date and time localization</h1>
+            <time datetime="2010-11-28T01:45:00+11:00" pubdate="pubdate">28 November 2010</time>
+          </header>
+<hr />
+<p><strong>This post has been a long time coming.</strong></p>
+<dl>
+<dt><img alt="Reminder message" src="/images/posts/74/email-message-screenshot.png" /></dt>
+<dd>Reminder message, dated 18 January 2010</dd>
+</dl>
+<p><strong>It's unacceptable for any website or web application to output dates and
+times using an arbitrary time zone.</strong> Displaying dates and times in UTC/GMT
+is only slightly better: dates cannot be relied upon, and users must perform
+mental gymnastics in order to localize date–time combos.</p>
+<hr />
+<dl>
+<dt><img alt="Bitbucket status message" src="/images/posts/74/gmt-ftl.png" /></dt>
+<dd>The link to a time zone converter highlights the need for localization</dd>
+</dl>
+<p>Implementing client-side localization of dates and times is not terribly
+difficult — I first managed it with only a superficial understanding of
+JavaScript — but it's a challenge to do so in a simple, reusable manner.</p>
+<h3>HTML5</h3>
+<p>For localization to be possible date, time, and time zone information must be
+stored somewhere. In the past we'd have been forced to misappropriate <code>title</code>
+or <code>rel</code>, or use an unsupported attribute and accept invalid markup. We can
+now have our cake and eat it too: HTML5 sanctions arbitrary attribute names,
+prefixed with <code>data-</code>.</p>
+<p>As it turns out, though, HTML5 provides the perfect hook for date and time
+localization: the <code>time</code> element, whose <code>datetime</code> attribute provides the
+canonical representation of a point in time.</p>
+<pre><code>:::html
+&lt;time datetime="1984-04-26"&gt;26 April 1984&lt;/time&gt;
+</code></pre>
+<p>Simply by using the <code>time</code> element correctly our scripts gain access to date,
+time, and even time zone information.</p>
+<h3>jQuery</h3>
+<p>I was not quick to embrace <a href="http://jquery.com/">jQuery</a>. Soon after I discovered DOM scripting
+and the incompatible DOM APIs provided by the various browsers, I understood
+the need for a JavaScript library. Soon after that I <del>decided</del>
+<ins>stumbled</ins> upon <a href="http://prototypejs.org/">Prototype</a>. More recently I became an advocate of
+<a href="http://mootools.net/">MooTools</a> which — like Prototype — fixes deficiencies in the JavaScript
+language itself, in addition to fixing the DOM.</p>
+<p>While reading John Resig's <i>Secrets of the JavaScript Ninja</i> I began at
+last to appreciate the beauty of jQuery's design. Having embraced jQuery I set
+out to encapsulate the site-specific localization code I'd been writing again
+and again in an elagant, reusable package.</p>
+<h3>jQuery.localize</h3>
+<p>At <a href="http://www.atlassian.com/">Atlassian</a> we're lucky enough to have "20 percent time". A couple of
+weeks ago I spent the day working on <a href="http://bitbucket.org/davidchambers/jquery.localize">jQuery.localize</a>, my first jQuery
+plugin. I've spent much of the last two weekends making the plugin more
+flexible and documenting its relatively simple API.</p>
+<p>Assume that a page contains the following <code>time</code> element.</p>
+<pre><code>:::html
+&lt;time datetime="2010-11-27T13:30-00:00"&gt;27 November 2010&lt;/time&gt;
+</code></pre>
+<p>We could localize this element (along with any other <code>time</code> elements on the
+page) with a simple call to <code>localize</code>.</p>
+<pre><code>:::javascript
+$('time').localize();
+</code></pre>
+<p>This updates both the visible text and the value of the <code>datetime</code> attribute.</p>
+<pre><code>:::html
+&lt;time datetime="2010-11-28T00:30+11:00"&gt;28 November 2010&lt;/time&gt;
+</code></pre>
+<p>Date and time formats are fully customizable via <a href="http://bitbucket.org/davidchambers/jquery.localize/src#directives">directives</a>, and there
+is support for <a href="http://bitbucket.org/davidchambers/jquery.localize/src#i18n">internationalization</a>. I won't go into the details here;
+there's extensive <a href="http://bitbucket.org/davidchambers/jquery.localize/src#wiki">documentation</a> at the project's home on Bitbucket.</p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/HTML5/">HTML5</a></li>
+              <li><a href="/tag/i18n/">i18n</a></li>
+              <li><a href="/tag/JavaScript/">JavaScript</a></li>
+              <li><a href="/tag/jQuery/">jQuery</a></li>
+              <li><a href="/tag/localization/">localization</a></li>
+              <li><a href="/tag/meaningful markup/">meaningful markup</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

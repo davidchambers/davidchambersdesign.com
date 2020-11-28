@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Show full directory path in Finder window title bar</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Show full directory path in Finder window title bar</h1>
+            <time datetime="2008-11-29T19:07:00+13:00" pubdate="pubdate">29 November 2008</time>
+          </header>
+<hr />
+<p>If you have ever found yourself command-clicking the title of a Finder
+window to find out where you are (<strong>/Library/Fonts</strong> or <strong>~/Library/Fonts</strong>
+is one I've double-checked many times), you'll understand how pleased I was
+to discover that there is a command which can be entered in Terminal to
+<a href="http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/">show full directory paths in Finder window title bars</a>.</p>
+<hr />
+<dl>
+<dt><img alt="Finder windows without paths" src="/images/posts/2/finder-windows-without-paths.png" /></dt>
+<dd><strong>Before:</strong> Finder windows with directory name only in title bar</dd>
+</dl>
+<p>In the screenshot above, it is clear that the two Finder windows are displaying
+different Fonts folders, but it is unclear which is which.</p>
+<p>To display the full path, copy and paste the following into Terminal and hit
+<strong>return</strong>.</p>
+<pre><code>defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES
+</code></pre>
+<p>For the changes to take effect, you will need to restart Finder:</p>
+<pre><code>killall Finder
+</code></pre>
+<dl>
+<dt><img alt="Finder windows with paths" src="/images/posts/2/finder-windows-with-paths.png" /></dt>
+<dd><strong>After:</strong> Finder windows with full directory path in title bar</dd>
+</dl>
+<p>Confusion resolved! Please note that this is <strong>only applicable for OS X 10.5</strong>
+users.</p>
+<p>To revert to the default title bar treatment, simply enter:</p>
+<pre><code>defaults write com.apple.finder _FXShowPosixPathInTitle -bool NO
+</code></pre>
+<p>Then, restart Finder once again:</p>
+<pre><code>killall Finder
+</code></pre>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/Mac OS X/">Mac OS X</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

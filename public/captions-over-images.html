@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Captions over images</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Captions over images</h1>
+            <time datetime="2009-08-31T03:36:00+12:00" pubdate="pubdate">31 August 2009</time>
+          </header>
+<hr />
+<p>This is my response to Chris Coyier's screencast titled <a href="http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/">jQuery Part 3 – Image
+Title Plugin</a> which I watched a couple of days ago. Something didn't sit
+right with me at the time, and I've now worked out what it was: <strong>JavaScript
+is not required!</strong></p>
+<p>I'll present a JavaScript-free approach for displaying captions over images
+that uses <em>truly</em> meaningful markup.</p>
+<hr />
+<p>So what <em>is</em> meaningful markup for images and image captions? This is a debated
+issue, but I believe the definition list to be the most appropriate element at
+our disposal. While an image is clearly not a "term", a caption does <em>describe</em>
+an image, just as a definition <em>describes</em> a term. Meaningful markup for an
+image and its caption should look something like the following:</p>
+<pre><code>:::html
+&lt;dl&gt;
+    &lt;dt&gt;&lt;img src="images/paris.jpg" alt="View from Notre Dame de Paris" /&gt;&lt;/dt&gt;
+    &lt;dd&gt;View from Notre Dame de Paris&lt;/dd&gt;
+&lt;/dl&gt;
+</code></pre>
+<p>Ideally, images appearing one after the other should belong to the same
+definition list.</p>
+<p>My aim was to achieve a result similar to Chris's <a href="http://css-tricks.com/examples/TypeOverImagePlugin/">image title plugin demo</a>
+simply by styling a definition list containing images and their captions. In
+the end, I was forced to abandon the ideal of using a single definition list
+for multiple images and captions: the nature of CSS positioning dictates that
+each image–caption pair reside in its own element. The final markup, however,
+is still quite clean:</p>
+<pre><code>:::html
+&lt;dl class="captioned-image"&gt;
+    &lt;dt&gt;&lt;img src="images/paris.jpg" alt="View from Notre Dame de Paris" /&gt;&lt;/dt&gt;
+    &lt;dd&gt;&lt;span&gt;View from Notre Dame de Paris&lt;/span&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+</code></pre>
+<p>Additional markup required:</p>
+<ul>
+<li>Each definition list must have a class name of <strong>captioned-image</strong> applied</li>
+<li>Each caption must be wrapped in a span element (captions to appear on
+  multiple lines require multiple span elements)</li>
+</ul>
+<p>Check out the <a href="/examples/captions-over-images/">captions over images demo</a> to see the approach in action. The
+CSS responsible for the appearance of the captions is as follows:</p>
+<pre><code>:::css
+dl.captioned-image         { position: relative; margin: 1em 0; }
+dl.captioned-image dt img  { display: block; }
+dl.captioned-image dd      { position: absolute; left: 0; bottom: 1.25em;
+                             font: bold 2em/1.25em Helvetica, sans-serif; }
+dl.captioned-image.top dd  { top: 1.25em; }
+dl.captioned-image dd span { display: block; float: left; clear: both;
+                             background: #000; background: rgba(0, 0, 0, 0.7);
+                             padding: 0.25em 0.5em; color: #fff; }
+</code></pre>
+<p>I set out to display captions over images without the use of JavaScript while
+keeping meaningless markup to a minimum. <strong>Have I succeeded, do you think?</strong></p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/best practice/">best practice</a></li>
+              <li><a href="/tag/CSS/">CSS</a></li>
+              <li><a href="/tag/HTML/">HTML</a></li>
+              <li><a href="/tag/JavaScript/">JavaScript</a></li>
+              <li><a href="/tag/jQuery/">jQuery</a></li>
+              <li><a href="/tag/meaningful markup/">meaningful markup</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

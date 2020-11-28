@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Linkify tweets with regex</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Linkify tweets with regex</h1>
+            <time datetime="2010-04-10T03:22:00+12:00" pubdate="pubdate">10 April 2010</time>
+          </header>
+<hr />
+<p><img alt="" src="/images/posts/decorative/right/at-sign-in-speech-bubble.png" /></p>
+<p>Regular expressions are powerful, useful, and — in my opinion — lots of fun!
+Thanks to the prevalence of Twitter, every web developer will be exposed to
+regex sooner or later: before outputting tweets in HTML, Twitter names and
+hyperlinks must be wrapped in anchor tags.</p>
+<h3>Matching @names</h3>
+<p>Here's the gist: a match will begin with "@" and the at sign must be followed
+by one or more word (letter / number / underscore) characters. The @name must
+either appear at the beginning of the tweet or be preceded by a space. This
+prevents the regular expression from matching "@example" in "me@example.com".</p>
+<hr />
+<h4>JavaScript implementation</h4>
+<pre><code>:::javascript
+tweet.replace(/(^|\s)(@\w+)/gm, '$1&lt;a href="http://twitter.com/$2"&gt;$2&lt;/a&gt;');
+</code></pre>
+<p>It would of course be nicer to write:</p>
+<pre><code>:::javascript
+tweet.replace(/(?&lt;=(?:^|\s))(@\w+)/gm, '&lt;a href="http://twitter.com/$1"&gt;$1&lt;/a&gt;');
+</code></pre>
+<p>Unfortunately, JavaScript does not support lookbehinds in regular expressions,
+so one's forced to capture the preceding space character (if in fact there is
+one) and spit it out in the replacement string.</p>
+<h4>PHP implementation</h4>
+<pre><code>preg_replace('/(^|\s)(@\w+)/m', '$1&lt;a href="http://twitter.com/$2"&gt;$2&lt;/a&gt;', $tweet);
+</code></pre>
+<h4>Python implementation</h4>
+<p>Python <em>does</em> support lookbehinds, but only <em>fixed-width</em> lookbehinds, so it
+won't allow <code>(?&lt;=^|\s)</code>. No matter.</p>
+<pre><code>:::python
+import re
+re.sub(r'(?m)(^|\s)(@\w+)',
+        lambda m: m.group(1) + '&lt;a href="http://twitter.com/' + m.group(2) + '"&gt;' + m.group(2) + '&lt;/a&gt;',
+        tweet)
+</code></pre>
+<p>For once, Python's syntax is the least elegant!</p>
+<p>Interestingly, while testing these snippets I found I did not need to
+specify multi-line mode. Perhaps multi-line mode is assumed? I'd like to
+know the answer.</p>
+<h3>Matching hyperlinks</h3>
+<p>The regular expression involved in matching hyperlinks is more complex. I'll
+point you to John Gruber's <a href="http://daringfireball.net/2009/11/liberal_regex_for_matching_urls">liberal regex for matching URLs</a> as he's clearly
+put a great deal of thought into what is essentially a single line of code!</p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/JavaScript/">JavaScript</a></li>
+              <li><a href="/tag/PHP/">PHP</a></li>
+              <li><a href="/tag/Python/">Python</a></li>
+              <li><a href="/tag/regex/">regex</a></li>
+              <li><a href="/tag/regular expressions/">regular expressions</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

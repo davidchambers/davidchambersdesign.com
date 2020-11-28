@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Faster Terminal navigation via aliases</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Faster Terminal navigation via aliases</h1>
+            <time datetime="2011-02-12T22:10:00-08:00" pubdate="pubdate">12 February 2011</time>
+          </header>
+<hr />
+<p>Workmates will be quick to confirm that I'm <strong>not exactly leet</strong> on the
+command line. Efforts to advance beyond <code>cd</code> and <code>ls</code> have been hampered by
+the fact that many posts and discussion threads assume a level of competency
+which as yet I lack.</p>
+<p>When I sit down to write a post, oftentimes <strong>I write the post I wish I'd
+read an hour earlier</strong>. As I unravel the mysteries of ack and bash and Emacs
+and the like, I'll publish tips and explanations so that others can benefit
+from my discoveries (or, as will likely be the case, so that you people can
+further enlighten <em>me</em>).</p>
+<hr />
+<h3>Aliases</h3>
+<p>Do you find yourself <code>cd</code>-ing to a particular directory dozens of times each
+day? Perhaps you — like me — forget <strong>where the heck Python's site-packages
+directory lives</strong>, and resort to Googling to find out? Aliases to the rescue!</p>
+<p>Aliases can be placed in your <strong>.bashrc</strong> or <strong>.bash_profile</strong>, or in a
+separate file which either one of these imports.</p>
+<pre><code>alias site-packages="cd /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages"
+</code></pre>
+<p>Thanks to this alias I can enter <code>site-packages</code> and be taken straight there.
+Another cool thing to know about is <code>cd -</code>, which takes you to the directory
+you were in most recently.</p>
+<pre><code>:::console
+$ cd ~/Desktop
+$ site-packages
+$ pwd
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages
+$ cd -
+/Users/dc/Desktop
+</code></pre>
+<p><a href="https://github.com/r00k/dotfiles/blob/master/bash/aliases">r00k's bash aliases</a> provide some ideas as to other ways in which aliases
+can be put to use. :D</p>
+<h3>Finder.app</h3>
+<p>I've sworn off it, and I'm pleased to have done so. It's great to be able
+to edit settings files on a server in place, rather than opening Transmit,
+navigating to the relevant directory, right-clicking and selecting "Open",
+making the change in Coda, and saving to have the updated file sent back
+via FTP.</p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/Mac OS X/">Mac OS X</a></li>
+              <li><a href="/tag/productivity/">productivity</a></li>
+              <li><a href="/tag/Terminal.app/">Terminal.app</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

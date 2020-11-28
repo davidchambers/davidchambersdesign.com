@@ -19,7 +19,7 @@ module.exports = env => filename => (
   path.extname (filename) === '.clj' ?
   chain (B (require ('./eval.js') (path.dirname (filename)) (env)) (snd))
         (chain (read)
-               (encase (filename => fs.readFileSync (filename, {encoding: 'utf8'}))
+               (encase (filename => fs.readFileSync (filename, 'utf8'))
                        (filename))) :
   encase (require) (filename)
 );

@@ -16,7 +16,6 @@ const {
   either,
   encase,
   equals,
-  flip: C,
   match,
   maybe,
   maybe_,
@@ -26,7 +25,7 @@ const {
   prop,
   stripPrefix,
   unless,
-} = S;
+} = S.create ({checkTypes: false, env: []});
 
 const matchIdentifier = match (/^[^()[\]{}"\s]+/);
 

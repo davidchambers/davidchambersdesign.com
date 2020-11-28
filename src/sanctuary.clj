@@ -15,5 +15,5 @@
                       (1 entry)])]
                  (invoke "filter"
                          [(lambda [entry] (!== "unchecked" (0 entry)))]
-                         (invoke "entries" [(import "sanctuary")] Object)))]
+                         (invoke "entries" [("unchecked" (import "sanctuary"))] Object)))]
         Object))

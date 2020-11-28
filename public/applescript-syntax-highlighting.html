@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>AppleScript syntax highlighting</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>AppleScript syntax highlighting</h1>
+            <time datetime="2009-06-04T03:12:00+12:00" pubdate="pubdate">4 June 2009</time>
+          </header>
+<p><a href="#setup">Skip to setup instructions</a></p>
+<hr />
+<p>I've been using Alex Gorbatchev's <a href="http://alexgorbatchev.com/wiki/SyntaxHighlighter">SyntaxHighlighter</a> to syntactically
+display code of various languages for several months now. When I decided
+to post an AppleScript snippet, however, I realised that I was out of luck.
+SyntaxHighlighter does not include an AppleScript "brush", and a quick flick
+through the <a href="http://alexgorbatchev.com/forums/">SyntaxHighlighter forums</a> did not bring me any joy.</p>
+<p><strong>How hard could it be to write a brush for AppleScript?</strong>, I wondered. The
+handy guide to <a href="http://alexgorbatchev.com/wiki/SyntaxHighlighter:Brushes:Custom">developing a custom brush</a> got me started, and I was soon
+busy trying to encapsulate AppleScript's syntax — along with its keywords and
+countless words and phrases with special meanings — into a handful of regular
+expressions.</p>
+<hr />
+<p>Having created the brush (that's SyntaxHighlighter lingo for the JavaScript
+file containing the language-specific regular expressions), I proceeded to
+create a style sheet that would display AppleScript snippets on the Web as
+they appear on OS X. You can judge my success by comparing the three snippets
+below: the first is a screenshot of Script Editor's rendering; the second is
+a screenshot of the same snippet as it appears in my browser; and the final
+snippet is text rendered by <em>your</em> browser.</p>
+<dl>
+<dt><img alt="" src="/images/posts/15/script-editor-syntax-highlighting.png" /></dt>
+<dd>Screenshot of Script Editor's rendering of an AppleScript snippet</dd>
+<dt><img alt="" src="/images/posts/15/syntaxhighlighter-applescript-theme.png" /></dt>
+<dd>Screenshot of snippet styled by AppleScript theme for SyntaxHighlighter</dd>
+</dl>
+<p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+<h1>!/usr/bin/osascript</h1>
+<p>(<em>
+    This handler determines whether someone is happy.
+    It's actually just a good way to showcase AppleScript syntax highlighting using Alex Gorbatchev's SyntaxHighlighter.
+    (</em> Hey, nested comments. Woot! <em>)
+</em>)</p>
+<p>on user_is_happy()
+    — determine which application is currently frontmost
+    tell application "System Events" to set app_list to the name of application processes whose frontmost is true
+    set front_app to the first item of app_list
+    tell application "Finder"
+        activate
+        display dialog ¬
+            "Enter your name" default answer "" buttons {"Cancel", "OK"} ¬
+            default button 2 with icon note
+        set user_name to the text returned of the result
+        (<em> The word "return" in the line below should not be in bold. The regex does its best to determine whether the word is being used in a return statement or as a line return. </em>)
+        display dialog "Hello, " &amp; user_name &amp; "!" &amp; return &amp; return &amp; ¬
+            "Are you happy?" buttons {"Yes", "No"} with icon note
+        set is_happy to the button returned of the result
+    end tell
+    — activate the application that was frontmost initially
+    tell application front_app to activate
+    return is_happy = "Yes" — this time the word "return" should be in bold
+end user_is_happy</p>
+<p>if user_is_happy() then
+    say "Woohoo!" using "Alex"
+else
+    repeat 3 times
+        beep
+        delay 0.5
+    end repeat
+end if
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+<p>Live rendering of AppleScript snippet{@class=caption}</p>
+<h3>Setup {@id=setup}</h3>
+<p>To add AppleScript syntax highlighting to your own site or blog, do the
+following:</p>
+<ol>
+<li>
+<p>Download <a href="http://alexgorbatchev.com/wiki/SyntaxHighlighter">SyntaxHighlighter</a>, and follow the setup instructions.</p>
+</li>
+<li>
+<p>Download <a href="https://bitbucket.org/davidchambers/applescript-theme/raw/default/shBrushAppleScript.js">AppleScript brush</a>, and upload it to your SyntaxHighlighter
+    <strong>scripts</strong> directory.</p>
+</li>
+<li>
+<p>Download <a href="https://bitbucket.org/davidchambers/applescript-theme/raw/default/shThemeAppleScript.css">AppleScript theme</a>, and upload it to your SyntaxHighlighter
+    <strong>styles</strong> directory.</p>
+</li>
+<li>
+<p>Include the brush like so:</p>
+<pre><code>:::html
+&lt;script src="/path/to/scripts/shCore.js"&gt;&lt;/script&gt;
+&lt;script src="/path/to/scripts/shBrushAppleScript.js"&gt;&lt;/script&gt;
+&lt;script&gt;SyntaxHighlighter.all()&lt;/script&gt;
+</code></pre>
+</li>
+</ol>
+<h3>Usage {@id=usage}</h3>
+<p>To have SyntaxHighlighter parse a block of AppleScript, wrap the code in <code>pre</code>
+tags like so:</p>
+<pre><code>:::html
+&lt;pre class="brush: applescript; class-name: applescript;"&gt;&lt;/pre&gt;
+</code></pre>
+<p><code>brush: applescript;</code> tells SyntaxHighlighter to use the AppleScript brush for
+the text within the pre tag. <code>class-name: applescript;</code> tells SyntaxHighlighter
+to add the class name "applescript" to the container div that is inserted into
+the page. (Hopefully I'm able to convince Alex that the brush name should be
+added as a class name automatically, which would remove the need to include
+<code>class-name: applescript;</code> each time.)</p>
+<hr />
+<h4>Update: 22 February 2012, 11:11pm (America/Los_Angeles)</h4>
+<p>Providing a <code>class-name</code> in the, ahem, class name is no longer necessary
+(apparently I made a convincing argument). This is now sufficient:</p>
+<pre><code>:::html
+&lt;pre class="brush:applescript"&gt;&lt;/pre&gt;
+</code></pre>
+<hr />
+<p>Note that including <code>ruler: true;</code> will have no effect. Since AppleScript
+is displayed in a variable-width font, the ruler serves no purpose. The ruler
+is still inserted into the page (unless <code>ruler: false;</code> is included), but is
+hidden by the style sheet.</p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/AppleScript/">AppleScript</a></li>
+              <li><a href="/tag/JavaScript/">JavaScript</a></li>
+              <li><a href="/tag/Mac OS X/">Mac OS X</a></li>
+              <li><a href="/tag/SyntaxHighlighter/">SyntaxHighlighter</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

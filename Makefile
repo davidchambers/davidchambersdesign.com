@@ -1,9 +1,12 @@
 SRC = $(shell find src -type f | sort)
 POSTDIR = /Users/dc/github.com/davidchambers/davidchambersdesign.com
-POSTS = $(shell find $(POSTDIR) -name '*=*.text' | sort)
+REPRS = $(patsubst %.text,cache/%.clj,$(shell find '$(POSTDIR)' -name '*=*.text' -print0 | xargs -0 basename | sort -n | cut -d = -f 2))
 
-public/archives.html: bin/eval-file Makefile $(SRC) $(POSTS)
-	NODE_ENV=production '$<' '$(CURDIR)/src/archives.clj' -- $(POSTS) >'$@'
+cache/%.clj: $(POSTDIR)/*\=%.text
+	bin/eval-file '$(CURDIR)/src/extract-post.clj' '$<' >'$@'
 
-public/tiny-calendar-icon-set.html: $(POSTDIR)/14\=tiny-calendar-icon-set.text bin/eval-file Makefile $(SRC) $(POSTS)
-	NODE_ENV=production bin/eval-file '$(CURDIR)/src/tiny-calendar-icon-set.clj' -- '$<' >'$@'
+public/archives.html: $(REPRS) $(SRC)
+	bin/eval-file '$(CURDIR)/src/archives.clj' $(REPRS:%=$(CURDIR)/%) >'$@'
+
+public/%.html: cache/%.clj $(SRC)
+	bin/eval-file '$(CURDIR)/src/post.clj' '$(<:%=$(CURDIR)/%)' >'$@'

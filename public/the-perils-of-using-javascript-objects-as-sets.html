@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>The perils of using JavaScript objects as sets</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>The perils of using JavaScript objects as sets</h1>
+            <time datetime="2012-09-03T20:00:00-07:00" pubdate="pubdate">3 September 2012</time>
+          </header>
+<hr />
+<p>One question I'm fond of asking in interviews is how to create a set of
+strings to which values may be added in an efficient manner. Furthermore,
+membership checks must be reliable and as fast as possible. This post can
+be considered the model answer. ;)</p>
+<hr />
+<hr />
+<p>JavaScript is a small language. So small, in fact, that several useful
+constructs are entirely absent. Just two types of collection are provided:
+arrays and objects (and even these are less different than they appear).
+Sets (collections of unique values) and dictionaries (collections which
+map unique values to other values) are the most glaring omissions.</p>
+<h3>How does Python do it?</h3>
+<p>Python has literal syntax for sets, and supports membership checks via the
+<code>in</code> keyword:</p>
+<pre><code>&gt;&gt;&gt; usernames = {'brodie', 'jespern', 'nvenegas'}
+&gt;&gt;&gt; 'brodie' in usernames
+True
+&gt;&gt;&gt; 'davidchambers' in usernames
+False
+</code></pre>
+<p>Incidentally, since sets are essentially dictionaries without values, it's
+unsurprising that the same form can be used to determine whether a value is
+among a dictionary's keys:</p>
+<pre><code>&gt;&gt;&gt; settings = {'lines': 50, 'number': False, 'spell': True}
+&gt;&gt;&gt; 'number' in settings
+True
+&gt;&gt;&gt; 'wrap' in settings
+False
+</code></pre>
+<h3>Fashioning a poor man’s set from the limited materials JavaScript provides</h3>
+<p>How might one create a set of strings in JavaScript given the limited, ahem,
+<em>set</em> of data structures at our disposal? One could use a string:</p>
+<pre><code>&gt; usernames = ',brodie,jespern,nvenegas,'
+&gt; /,brodie,/.test(usernames)
+true
+&gt; /,davidchambers,/.test(username)
+false
+</code></pre>
+<p>This approach is problematic for several reasons: it assumes that "," won't
+appear in a username, membership checks are inefficient, inserting an existing
+member will cause the string to grow unless an expensive membership check is
+performed, and the separators make things awkward.</p>
+<p>An array is clearly a better choice:</p>
+<pre><code>&gt; usernames = ['brodie', 'jespern', 'nvenegas']
+&gt; usernames.indexOf('brodie') &gt;= 0
+true
+&gt; usernames.indexOf('davidchambers') &gt;= 0
+false
+</code></pre>
+<p>Though this is an improvement, membership checks are still inefficient, and
+each insert still requires a member check if we're to avoid having the array
+grow needlessly. If we kept the array ordered we could use binary search, but
+inserts would be even slower as each member would need to be inserted in the
+correct position.</p>
+<p>An object, then, is the <em>best</em> choice:</p>
+<pre><code>&gt; usernames = {'brodie': 1, 'jespern': 1, 'nvenegas': 1}
+&gt; 'brodie' in usernames
+true
+&gt; 'davidchambers' in usernames
+false
+</code></pre>
+<p>This addresses the outstanding problems, and the <code>in</code> keyword makes the intent
+of these expressions clear.</p>
+<p>But it also introduces a subtle bug:</p>
+<pre><code>&gt; 'constructor' in usernames
+true
+&gt; 'toString' in usernames
+true
+&gt; 'valueOf' in usernames
+true
+</code></pre>
+<p>The <code>in</code> check tells us whether the property exists on the object <em>or anywhere
+in its prototype chain</em>. Ugh.</p>
+<p><code>in</code> is out, then, but there is a way to ask whether a property exists on the
+object itself:</p>
+<pre><code>&gt; usernames.hasOwnProperty('brodie')
+true
+&gt; usernames.hasOwnProperty('davidchambers')
+false
+</code></pre>
+<p>This fixes the unwanted inheritance problem, but introduces another subtle
+error:</p>
+<pre><code>&gt; usernames['davidchambers'] = 1 // add "davidchambers" to set
+1
+&gt; usernames['hasOwnProperty'] = 1 // add "hasOwnProperty" to set
+1
+&gt; usernames.hasOwnProperty('davidchambers')
+TypeError: Property 'hasOwnProperty' of object #&lt;Object&gt; is not a function
+</code></pre>
+<p>If we rely on <code>usernames.hasOwnProperty</code> we lose the ability to perform
+membership checks as soon as we add "hasOwnProperty" as a member. The solution
+is to grab the function from a reliable source (<code>Object.prototype</code>):</p>
+<pre><code>&gt; Object.prototype.hasOwnProperty.call(usernames, 'davidchambers')
+true
+</code></pre>
+<p>What a mouthful! This is, though, the correct way to maintain a collection of
+unique strings in JavaScript. It's efficient, and avoids the pitfalls of the
+aforementioned approaches.</p>
+<h3>Bonus section</h3>
+<p>In working through this question with a candidate I realized there's another
+solution, thought I can't think of a compelling reason to favour it:</p>
+<pre><code>&gt; sentinel = {}
+&gt; usernames = {'brodie': sentinel, 'jespern': sentinel, 'nvenegas': sentinel}
+&gt; usernames['brodie'] === sentinel
+true
+&gt; usernames['davidchambers'] === sentinel
+false
+&gt; usernames['constructor'] === sentinel
+false
+</code></pre>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/best practice/">best practice</a></li>
+              <li><a href="/tag/data structures/">data structures</a></li>
+              <li><a href="/tag/JavaScript/">JavaScript</a></li>
+              <li><a href="/tag/programming/">programming</a></li>
+              <li><a href="/tag/Python/">Python</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

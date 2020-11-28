@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Customizing your bash prompt for pleasure and profit</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Customizing your bash prompt for pleasure and profit</h1>
+            <time datetime="2011-02-13T01:30:00-08:00" pubdate="pubdate">13 February 2011</time>
+          </header>
+<hr />
+<p>Mac OS X's default bash prompt is dull and uninformative.</p>
+<dl>
+<dt><img alt="Mac OS X's default bash prompt" src="/images/posts/80/windows/default-os-x-bash-prompt.png" /></dt>
+<dd>Mac OS X's default bash prompt</dd>
+</dl>
+<p>Since only the current directory name is visible, I find myself running <code>pwd</code>
+more often than is healthy. Also, I find the uneven prompt length jarring.</p>
+<hr />
+<p>My solution to both of these problems is to include the full path <em>on its own
+line</em> (with a preceding <code>\n</code> providing much-needed breathing room).</p>
+<dl>
+<dt><img alt="Custom bash prompt which displays the full path" src="/images/posts/80/windows/custom-bash-prompt.png" /></dt>
+<dd>Custom bash prompt which displays the full path</dd>
+</dl>
+<h3>Configuring the bash prompt</h3>
+<p>Add something like the following to your <strong>~/.bashrc</strong>.</p>
+<pre><code>PS1="\n\[\e[1;36m\]\w\n\[\e[1;32m\]&gt; \[\e[0m\]"
+</code></pre>
+<h4>What the heck does all this mean?</h4>
+<p><code>PS1</code> refers to the bash prompt. <code>PS2</code>, <code>PS3</code>, and <code>PS4</code> relate to similar
+things.</p>
+<p><code>\n</code> is a newline.</p>
+<p><code>\[</code> begins a sequence of non-printing characters.</p>
+<p><code>\e[1;36m</code> is the code for "light cyan".</p>
+<p><code>\]</code> ends the sequence of non-printing characters.</p>
+<p><code>\w</code> is the current working directory (with a tilde used in place of <code>$HOME</code>).</p>
+<p><code>\n</code> is another newline.</p>
+<p><code>\[\e[1;32m\]</code> is a sequence of non-printing characters containing the code
+for "light green".</p>
+<p><code>&gt;</code> is simply a "&gt;" followed by a space.</p>
+<p><code>\[\e[0m\]</code> puts an end to the colouring, preventing it from "spilling out".</p>
+<hr />
+<h4>Update: 3 April 2011, 9:00pm (America/Los_Angeles)</h4>
+<p>When first this post was published colour codes were not preceded by <code>\[</code>.
+The colour codes themselves were thus considered when calculating the prompt's
+length, meaning that the first several characters of a command would sometimes
+remain visible when arrowing up and down. &gt;.&lt;</p>
+<hr />
+<hr />
+<h4>Update: 20 April 2012, 1:15am (America/Los_Angeles)</h4>
+<p>I've recently taken up Vim. In Vim, one can enter <code>:shell</code> while in command
+mode to open a shell. The first time I did so I noticed that the colour codes
+appeared in the prompt. Feature detection can be used to ensure that colour
+codes are only provided to "smart" terminals:</p>
+<pre><code>:::bash
+[[ "$TERM" == dumb ]] &amp;&amp; PS1="\n\w\n&gt; "
+[[ "$TERM" != dumb ]] &amp;&amp; PS1="\n\[\e[1;36m\]\w\n\[\e[1;32m\]&gt; \[\e[0m\]"
+</code></pre>
+<hr />
+<h4>Note for Mac OS X users</h4>
+<p>Terminal loads your <strong>~/.bash_profile</strong> but not your <strong>~/.bashrc</strong>. As a
+result, your <strong>~/.bash_profile</strong> should contain the following snippet.</p>
+<pre><code>:::bash
+if [ -f ~/.bashrc ]; then
+  source ~/.bashrc
+fi
+</code></pre>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/Mac OS X/">Mac OS X</a></li>
+              <li><a href="/tag/productivity/">productivity</a></li>
+              <li><a href="/tag/Terminal.app/">Terminal.app</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

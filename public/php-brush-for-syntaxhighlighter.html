@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>PHP brush for SyntaxHighlighter</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>PHP brush for SyntaxHighlighter</h1>
+            <time datetime="2009-06-08T17:00:00+12:00" pubdate="pubdate">8 June 2009</time>
+          </header>
+<hr />
+<p>Alex Gorbatchev's <a href="http://alexgorbatchev.com/wiki/SyntaxHighlighter">SyntaxHighlighter</a> is a well-written bundle which
+enables syntax highlighting of code via JavaScript. More than twenty
+languages are supported "out of the box", and brushes (JavaScript files
+containing language-specific regular expressions) can be created to
+support additional languages.</p>
+<p>Unfortunately, however, several of the brushes that come bundled with
+SyntaxHighlighter are far from perfect. Have a look at the bundled PHP
+brush in action below.</p>
+<dl>
+<dt><img alt="Screenshot of PHP code highlighted by SyntaxHighlighter's PHP brush" src="/images/posts/16/bundled-php-brush-in-action.png" /></dt>
+<dd>Screenshot of bundled PHP brush in action</dd>
+</dl>
+<hr />
+<p>I would give this brush 6/10. Here are its deficiencies, as I see them:</p>
+<ul>
+<li>PHP opening and closing tags are not captured</li>
+<li>Variables within double-quoted strings are not captured</li>
+<li>Numerical values are not captured</li>
+<li>Only a fraction of PHP's function names are recognized</li>
+<li>Custom function names are not captured</li>
+</ul>
+<p>I've created an <a href="/downloads/shBrushPhp.js">improved PHP brush</a> which remedies these deficiencies.
+It uses the following class names: <strong>phptag</strong> for opening and closing PHP
+tags, including short tags; <strong>comments</strong> for both single- and multi-line
+comments; <strong>string</strong> for both single- and double-quoted strings; <strong>varinstr</strong>
+for variables within double-quoted strings; <strong>numval</strong> for numerical values;
+<strong>function</strong> for <a href="http://www.php.net/quickref.php">documented PHP functions</a>; <strong>custfunc</strong> for custom
+(user-defined) functions; and <strong>constant</strong>, <strong>keyword</strong>, and <strong>variable</strong>
+for exactly what you'd expect.</p>
+<hr />
+<h4>Update: 16 August 2009, 2:33am (Pacific/Auckland)</h4>
+<p>Until this point I have had a class name added to each div.syntaxhighlighter
+element to allow code to be coloured in a language-specific manner. This
+approach fails, however, when a highlighted block features two languages
+(PHP and HTML, for example). CSS selectors cannot differentiate between two
+code elements with the same class name in the same div.syntaxhighlighter
+element.</p>
+<p>Each language, therefore, needs to use its own class names. It is easy to
+differentiate <code>code.php-comment</code> from <code>code.xml-comment</code>, allowing PHP
+comments to be styled differently from XML comments if desired.</p>
+<p>The updated class names are <strong>php-tag</strong>, <strong>php-comment</strong>, <strong>php-string</strong>,
+<strong>php-varinstr</strong>, <strong>php-numval</strong>, <strong>php-function</strong>, <strong>php-custfunc</strong>,
+<strong>php-constant</strong>, <strong>php-keyword</strong>, and <strong>php-variable</strong>.</p>
+<hr />
+<pre><code>&lt;?php
+
+'single-quoted string';
+
+"double-quoted string";
+
+// single-quoted string with literal dollar sign
+'fruit smoothie: $5.50';
+
+// double-quoted string containing a variable
+"fruit smoothie: $cost";
+
+// numerical value
+$cost = 5.50;
+
+// a few common function calls
+empty($variable);
+isset($variable);
+strlen($variable);
+strrev($variable);
+
+// a call to a custom function
+is_ready_to_order($customer);
+
+?&gt;
+</code></pre>
+<p>Live rendering of improved PHP brush{@class=caption}</p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/JavaScript/">JavaScript</a></li>
+              <li><a href="/tag/PHP/">PHP</a></li>
+              <li><a href="/tag/SyntaxHighlighter/">SyntaxHighlighter</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Ridding markup of textual decoration</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Ridding markup of textual decoration</h1>
+            <time datetime="2010-11-15T01:00:00+11:00" pubdate="pubdate">15 November 2010</time>
+          </header>
+<hr />
+<p>On the Web it's not uncommon to see characters with no inherent meaning used
+for stylistic reasons. A good example is the <a href="#">Read more »</a> link. Perhaps
+the directionality of the "»" is suggestive of travelling to another page, or
+perhaps the letterform is included solely for its aesthetic appeal. Whatever
+the case, one thing is certain: links do not require right-pointing double
+angle quotation marks in order to function.</p>
+<p><strong>The inclusion of such a character is therefore a design decision.</strong> It is
+decoration, not content. It belongs in a style sheet, not in a page's markup.</p>
+<hr />
+<h2>Adding decorative textual content via CSS</h2>
+<p>The <a href="http://reference.sitepoint.com/css/content"><code>content</code></a> property is extremely powerful. It's used in conjunction
+with the <a href="http://reference.sitepoint.com/css/pseudoelement-before"><code>:before</code></a> and <a href="http://reference.sitepoint.com/css/pseudoelement-after"><code>:after</code></a> pseudo-elements.</p>
+<pre><code>&lt;a class="more" href="/meaningful-markup/"&gt;Read more&lt;/a&gt;
+
+.more:after {
+    content: " »";
+}
+</code></pre>
+<p>There are many other situations in which <code>:before</code>/<code>:after</code> and <code>content</code> can
+team up to great effect. Often sites have footer links separated by "pipes".
+These pipes commonly appear in the site's markup. <strong>This is wrong!</strong> Last week
+I was horrified to discover that <a href="http://bitbucket.org/">Bitbucket</a> is guilty of this. I've since
+rectified the situation (although the change is yet to go live).</p>
+<pre><code>:::css
+.footer-nav li {
+    display: inline;
+    list-type: none;
+}
+.footer-nav li+li:before {
+    content: " | ";
+}
+</code></pre>
+<p>The second selector above may look strange unless you're familiar with this
+approach. By using <code>li+li</code> we target every <code>li</code> inside <code>.footer-nav</code> <em>except
+the first</em>.</p>
+<p>Another case in which there's a temptation to mark up content in a certain way
+in order to achieve a certain visual appearance is the comma-separated list.</p>
+<pre><code>:::html
+&lt;p&gt;&lt;strong&gt;Tags:&lt;/strong&gt; Apple, iOS, iPad&lt;/p&gt;
+</code></pre>
+<p>This approach is inflexible. Displaying the tags as Twitter-style hashtags,
+for example, would require fiddling with the markup. Adding a tag icon beside
+each tag would require rewriting the markup completely.</p>
+<p>A better approach would be to let the <em>content</em> dictate the markup used. Since
+we have a <em>list</em> of tags, we should use a list of some sort. Since the list is
+in non-arbitrary order (alphabetical), an ordered list is probably appropriate.
+"Tags" is a heading that relates to the list of tags.</p>
+<pre><code>:::html
+&lt;h4&gt;Tags&lt;/h4&gt;
+&lt;ol&gt;
+    &lt;li&gt;Apple&lt;/li&gt;
+    &lt;li&gt;iOS&lt;/li&gt;
+    &lt;li&gt;iPad&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+<p>It takes a bit of work to display this markup as a simple comma-separated
+list, but it gives us the freedom to dramatically alter the list's appearance
+without touching the markup.</p>
+<pre><code>:::css
+h4, ol, li {
+    display: inline;
+}
+h4:after {
+    content: ":";
+}
+li:after {
+    content: ",";
+}
+li:last-child:after {
+    content: "";
+}
+</code></pre>
+<h2>Summary</h2>
+<p>When marking up content, one should use the elements which best <em>describe</em>
+that content. <em>Styling</em> content is a separate (though not unrelated) issue.
+With <code>:before</code>, <code>:after</code>, and <code>content</code> at our disposal, let us bid farewell
+to <code>&lt;span class="pipe"&gt;|&lt;/span&gt;</code> and friends.</p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/CSS/">CSS</a></li>
+              <li><a href="/tag/HTML/">HTML</a></li>
+              <li><a href="/tag/meaningful markup/">meaningful markup</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Python loops can have else clause?!</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Python loops can have else clause?!</h1>
+            <time datetime="2010-07-25T18:11:00+12:00" pubdate="pubdate">25 July 2010</time>
+          </header>
+<p>I write a lot of Python. I also write a lot of JavaScript. As I switch between
+the two (often several times in a day) I sometimes find myself trying to do
+something in one using the syntax of the other. The most common example is
+joining a list.</p>
+<p>Python:</p>
+<pre><code>:::python
+' '.join(['foo', 'bar'])
+</code></pre>
+<p>JavaScript:</p>
+<pre><code>:::javascript
+['foo', 'bar'].join(' ')
+</code></pre>
+<p>Often — as is the case above — the syntactical differences are minor, but
+there are times when there's no direct translation.</p>
+<p><a href="http://mootools.net/">MooTools</a>, for example, adds the <a href="http://mootools.net/docs/core/Native/Array#Array:every"><code>every</code> method</a> to the <code>Array</code> object.
+This makes it possible to write some rather terse conditional statements.</p>
+<pre><code>:::javascript
+var numbers = [87, 33, 21, 75];
+if (numbers.every(function (n) { return n % 3 == 0; })) {
+    window.alert('The numbers are all divisible by 3.');
+}
+</code></pre>
+<p>Python lists have no comparable method, so how would one write this in Python?</p>
+<pre><code>:::python
+numbers = [87, 33, 21, 75]
+if [n for n in numbers if n % 3 == 0] == numbers:
+    print 'The numbers are all divisible by 3.'
+</code></pre>
+<p>This approach involves using a list comprehension to create a list of numbers
+which are divisible by 3, and comparing this list to <code>numbers</code>. If the lists
+are equal, everything in <code>numbers</code> is divisible by 3.</p>
+<hr />
+<h4>Update: 20 June 2012, 2:15pm (America/Los_Angeles)</h4>
+<p>As <a href="https://twitter.com/rafael_ab/status/215428832872771584">Rafael Almeida pointed out on Twitter</a>, there <em>is</em> an elegant way to
+express this in Python:</p>
+<pre><code>:::python
+if all((n % 3 == 0 for n in numbers)):
+    print 'The numbers are all divisible by 3.'
+</code></pre>
+<hr />
+<h3>Now for something a bit more challenging</h3>
+<p>Assume that we have a list of documents, and we want to know which of the
+documents contain all the terms in a list of search terms.</p>
+<pre><code>:::javascript
+// (MooTools) JavaScript
+
+var terms = ['python', 'list', 'methods'], matches = [];
+documents.each(function (document) {
+    if (terms.every(function (term) {
+        return document.body.indexOf(term) != -1;
+    })) matches.append(document);
+});
+</code></pre>
+<p>Here, we <em>could</em> use the list comprehension approach as before.</p>
+<pre><code>:::python
+# Python
+
+terms = ['python', 'list', 'methods']
+matches = []
+for document in documents:
+    if [t for t in terms if document.body.find(t) != -1] == terms:
+        matches.append(document)
+</code></pre>
+<p>This is reasonably succinct, but not terribly efficient since each document is
+checked for <em>every</em> search term. Given that we're not interested in documents
+that lack even a single search term, it should be possible to rewrite this code
+so that we don't waste time on lost causes.</p>
+<p>It turns out that Python has just the thing for the job: <strong>in Python, a loop
+statements may have an <code>else</code> clause!</strong></p>
+<pre><code>:::python
+terms = ['python', 'list', 'methods']
+matches = []
+for document in documents:
+    for term in terms:
+        if document.body.find(term) == -1:
+            break
+    else: # every term was found
+        matches.append(document)
+</code></pre>
+<p>From <a href="http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops">4. More Control Flow Tools</a>:</p>
+<blockquote>
+<p>Loop statements may have an <code>else</code> clause; it is executed when the
+loop terminates through exhaustion of the list (with <code>for</code>) or when
+the condition becomes false (with <code>while</code>), but not when the loop is
+terminated by a <code>break</code> statement.</p>
+</blockquote>
+<p><strong>I'm looking forward to finding more good spots to make use of <code>else</code>
+clauses with my Python loops.</strong> :D</p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/JavaScript/">JavaScript</a></li>
+              <li><a href="/tag/MooTools/">MooTools</a></li>
+              <li><a href="/tag/programming/">programming</a></li>
+              <li><a href="/tag/Python/">Python</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

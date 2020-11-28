@@ -26,6 +26,8 @@ const {
   elem,
   flip: C,
   is,
+  join,
+  lift2,
   map,
   mapLeft,
   maybe,
@@ -38,7 +40,7 @@ const {
   unfoldr,
   value,
   zip,
-} = S;
+} = S.create ({checkTypes: false, env: []});
 
 const evaluate = module.exports = dirname => env => term => {
   switch (term.type) {
@@ -158,15 +160,28 @@ const evaluate = module.exports = dirname => env => term => {
              return Right (f);
            }
            if (head.type === 'identifier' && head.name === 'import') {
-             if (tail.length !== 1) {
-               return Left (new Error ('Invalid import expression'));
+             switch (tail.length) {
+               case 1: {
+                 const [importPath] = tail;
+                 return chain (importPath => import_ ({})
+                                                     (importPath.includes ('/') && !(importPath.startsWith ('/')) ?
+                                                      path.join (dirname, importPath) :
+                                                      importPath))
+                              (evaluate (dirname) (env) (importPath));
+               }
+               case 2: {
+                 const [env_, importPath] = tail;
+                 return join (lift2 (env => importPath => import_ (env)
+                                                                  (importPath.includes ('/') && !(importPath.startsWith ('/')) ?
+                                                                   path.join (dirname, importPath) :
+                                                                   importPath))
+                                    (evaluate (dirname) (env) (env_))
+                                    (evaluate (dirname) (env) (importPath)));
+               }
+               default: {
+                 return Left (new Error ('Invalid import expression'));
+               }
              }
-             const [importPath] = tail;
-             return chain (importPath => import_ ({})
-                                                 (importPath.includes ('/') && !(importPath.startsWith ('/')) ?
-                                                  path.join (dirname, importPath) :
-                                                  importPath))
-                          (evaluate (dirname) (env) (importPath));
            }
            if (head.type === 'identifier' && head.name === 'import*') {
              if (tail.length !== 2) {

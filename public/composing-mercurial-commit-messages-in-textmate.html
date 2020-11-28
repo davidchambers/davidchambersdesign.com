@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Composing Mercurial commit messages in TextMate</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Composing Mercurial commit messages in TextMate</h1>
+            <time datetime="2011-01-10T01:25:00+11:00" pubdate="pubdate">10 January 2011</time>
+          </header>
+<p><img alt="" src="/images/posts/decorative/right/textmate-icon.png" /></p>
+<p>Using the <code>-m</code> flag can be a timesaver, but for several reasons I prefer to
+write my commit messages in a text editor:</p>
+<ul>
+<li>Spell-checking</li>
+<li>Familiar keyboard navigation</li>
+<li>No need to escape quotation marks</li>
+</ul>
+<p><a href="http://macromates.com/">TextMate</a> is particularly well suited to my needs due to its built-in
+<a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> highlighting and previewing – yes, I write commit messages in
+Markdown!</p>
+<p><strong>To set TextMate as Mercurial's editor, add <code>editor = mate -w</code> to the <code>[ui]</code>
+section of your <code>~/.hgrc</code> file.</strong></p>
+<p><a href="http://vincecima.com/post/578017364/using-textmate-as-mercurials-editor">Vince Cima explains</a>:</p>
+<blockquote>
+<p>Next time you do <code>hg commit</code> TextMate will open a temporary file you write
+your commit message into. Type your message, save the file and then close
+the window to finish the commit. The <code>-w</code> flag on the <code>mate</code> command tells
+TextMate not to return control to the command line until the editor window
+has been closed.</p>
+</blockquote>
+<hr />
+<h4>Update: 22 January 2011, 3:20pm (Australia/Sydney)</h4>
+<p>To use TextMate as your git editor, run the following command:</p>
+<pre><code>git config --global core.editor "mate -w"
+</code></pre>
+<p>This adds <code>editor = mate -w</code> to the <code>[core]</code> section of your <code>~/.gitconfig</code>
+file.</p>
+<hr />
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/hg/">hg</a></li>
+              <li><a href="/tag/Mac OS X/">Mac OS X</a></li>
+              <li><a href="/tag/Markdown/">Markdown</a></li>
+              <li><a href="/tag/Mercurial/">Mercurial</a></li>
+              <li><a href="/tag/TextMate/">TextMate</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

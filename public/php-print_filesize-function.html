@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>PHP print_filesize function</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>PHP print_filesize function</h1>
+            <time datetime="2009-06-10T21:17:00+12:00" pubdate="pubdate">10 June 2009</time>
+          </header>
+<hr />
+<p>Recently I've been on a drive to eliminate dependencies from my code and
+other areas, such as blog posts. For those who create content for the Web,
+a reasonably common task is to provide links to files that can be downloaded.
+It is considered good practice to include an indication of a file's size; for
+example: <a href="/favicon.ico">favicon.ico</a> (3 KB).</p>
+<p>As I was about to hard-code a file's size into a blog post recently, I thought
+to myself: <strong>Will I remember to update this if the file's size changes?</strong>
+More importantly, should I be required to remember such things? The answer, of
+course, is no. I set about writing a function that would allow the file's size
+to be displayed dynamically.</p>
+<hr />
+<pre><code>:::php
+&lt;?php
+
+/**
+ * echoes nicely formatted filesize
+ * @param string $filename
+ * @param string $before
+ * @param string $after
+ */
+function print_filesize($filename, $before = ' &lt;span class="filesize"&gt;(', $after = ')&lt;/span&gt;')
+{
+    if (file_exists($filename))
+    {
+        $size = filesize($filename);
+        $unit = 'B';
+
+        if (intval($size/(1024*1024*1024)))
+        {
+            $size = number_format(($size/(1024*1024*1024)), 1);
+            $unit = 'GB';
+        }
+        elseif (intval($size/(1024*1024)))
+        {
+            $size = number_format(($size/(1024*1024)), 1);
+            $unit = 'MB';
+        }
+        elseif (intval($size/1024))
+        {
+            $size = number_format(($size/1024), 1);
+            $unit = 'KB';
+        }
+
+        $approx = $unit == 'B' ? '' : '≈' ;
+
+        echo "{$before}{$approx}{$size} {$unit}{$after}";
+    }
+}
+
+?&gt;
+</code></pre>
+<p>Example usage:</p>
+<pre><code>:::html+php
+&lt;a href="favicon.ico"&gt;favicon.ico&lt;/a&gt;&lt;?php print_filesize('favicon.ico'); ?&gt;
+</code></pre>
+<p>This gives: <a href="/favicon.ico">favicon.ico</a> <span class="filesize">(≈1.1 kB)</span>.
+By default, the function wraps the file's size in a <code>span</code> element with
+<code>class="filesize"</code>, to provide a hook for styling if required.</p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/best practice/">best practice</a></li>
+              <li><a href="/tag/PHP/">PHP</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

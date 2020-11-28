@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tiny calendar icons sprite</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Tiny calendar icons sprite</h1>
+            <time datetime="2009-08-28T18:04:00+12:00" pubdate="pubdate">28 August 2009</time>
+          </header>
+<hr />
+<p>Recently I've been on a mission to minimize the number of HTTP requests made
+while loading pages on this site. Until yesterday, the <a href="/archives/">archives</a> page was
+making an HTTP request for each of the <a href="/tiny-calendar-icon-set/">tiny calendar icons</a> used on the
+page. Therefore, up to 31 HTTP requests were required just to retrieve the
+calendar icons. Not good.</p>
+<p>The same result can be achieved with a single HTTP request through the use of
+a sprite:</p>
+<dl>
+<dt><img alt="Tiny calendar icons sprite" src="/images/posts/23/calendar.png" /></dt>
+<dd>Tiny calendar icons sprite, which you're welcome to save and use</dd>
+</dl>
+<hr />
+<p>One uses a sprite by applying a background image to an element using CSS. One
+could start with an empty span element:</p>
+<pre><code>:::html
+&lt;span class="day-1"&gt;&lt;/span&gt;
+</code></pre>
+<p>The following CSS sets the width and height of the element and sets the sprite
+as its background image:</p>
+<pre><code>:::css
+span.day-1
+{
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-image: url(/path/to/images/calendar.png);
+    background-repeat: no-repeat;
+}
+</code></pre>
+<p>By default the top left corner of an element's background image is aligned with
+the element's top left corner, so at this stage all that's displayed is a 16px
+by 16px white box:</p>
+<dl>
+<dt><img alt="Calendar sprite applied as background image using default positioning" src="/images/posts/23/calendar-span-default-bg-pos.png" /></dt>
+<dd>Calendar sprite applied as background image using <strong>default</strong> positioning</dd>
+</dl>
+<p>To have the "1" icon displayed, the element's background position is specified:</p>
+<pre><code>:::css
+span.day-1
+{
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-image: url(/path/to/images/calendar.png);
+    background-repeat: no-repeat;
+    background-position: -60px -20px;
+}
+</code></pre>
+<p>This drags the background image 60px to the left, and lifts it 20px:</p>
+<dl>
+<dt><img alt="Calendar sprite applied as background image using correct positioning" src="/images/posts/23/calendar-span-specified-bg-pos.png" /></dt>
+<dd>Calendar sprite applied as background image using correct positioning</dd>
+</dl>
+<p>Here's the final CSS:</p>
+<pre><code>:::css
+span.day
+{
+    display: block;
+    float: left;
+    margin: 0.167em 0.5em 0 0;
+    width: 16px;
+    height: 16px;
+    background-image: url(/path/to/images/calendar.png);
+    background-repeat: no-repeat;
+}
+
+span.day-1  { background-position:  -60px  -20px; }
+span.day-2  { background-position:  -80px  -20px; }
+span.day-3  { background-position: -100px  -20px; }
+span.day-4  { background-position: -120px  -20px; }
+span.day-5  { background-position: -140px  -20px; }
+
+span.day-6  { background-position:  -20px  -40px; }
+span.day-7  { background-position:  -40px  -40px; }
+span.day-8  { background-position:  -60px  -40px; }
+span.day-9  { background-position:  -80px  -40px; }
+span.day-10 { background-position: -100px  -40px; }
+span.day-11 { background-position: -120px  -40px; }
+span.day-12 { background-position: -140px  -40px; }
+
+span.day-13 { background-position:  -20px  -60px; }
+span.day-14 { background-position:  -40px  -60px; }
+span.day-15 { background-position:  -60px  -60px; }
+span.day-16 { background-position:  -80px  -60px; }
+span.day-17 { background-position: -100px  -60px; }
+span.day-18 { background-position: -120px  -60px; }
+span.day-19 { background-position: -140px  -60px; }
+
+span.day-20 { background-position:  -20px  -80px; }
+span.day-21 { background-position:  -40px  -80px; }
+span.day-22 { background-position:  -60px  -80px; }
+span.day-23 { background-position:  -80px  -80px; }
+span.day-24 { background-position: -100px  -80px; }
+span.day-25 { background-position: -120px  -80px; }
+span.day-26 { background-position: -140px  -80px; }
+
+span.day-27 { background-position:  -20px -100px; }
+span.day-28 { background-position:  -40px -100px; }
+span.day-29 { background-position:  -60px -100px; }
+span.day-30 { background-position:  -80px -100px; }
+span.day-31 { background-position: -100px -100px; }
+</code></pre>
+<p>Note that I introduced the class name <strong>day</strong> to streamline the CSS. This must
+appear in the HTML, as in this example:</p>
+<pre><code>:::html
+&lt;span class="day day-31"&gt;&lt;/span&gt;
+</code></pre>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/CSS/">CSS</a></li>
+              <li><a href="/tag/design/">design</a></li>
+              <li><a href="/tag/HTML/">HTML</a></li>
+              <li><a href="/tag/icons/">icons</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

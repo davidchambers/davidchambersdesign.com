@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Getting started with Socket.IO</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Getting started with Socket.IO</h1>
+            <time datetime="2011-08-07T00:15:00-07:00" pubdate="pubdate">7 August 2011</time>
+          </header>
+<hr />
+<p>There's no shortage of blog posts which — like this one — provide an
+introduction to <a href="http://socket.io/">Socket.IO</a>. Many, though, were written prior to the
+release of 0.7, which ushered in <a href="https://github.com/LearnBoost/Socket.IO/wiki/Migrating-0.6-to-0.7">significant API changes</a>. Here I'll
+provide examples of server- and client-side code using APIs provided by
+the <em>current</em> version (0.7.4 at time of writing).</p>
+<hr />
+<p>The code snippets are in <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a> and as such are largely free of
+the parentheses, squiggly brackets, and semicolons that riddle the equivalent
+JavaScript code. For those unfamiliar with CoffeeScript's syntax, here's the
+fifteen second rundown:</p>
+<pre><code>:::coffeescript
+qux = foo 'bar', (baz) -&gt; 'Hello, world!'
+</code></pre>
+<p>The above is equivalent to:</p>
+<pre><code>:::javascript
+var qux = foo('bar', function (baz) {
+  return 'Hello, world!';
+});
+</code></pre>
+<p>CoffeeScript uses <code>-&gt;</code> rather than the <code>function</code> keyword, and parentheses
+are optional for most function invocations. Now, let's get started.</p>
+<h3>Step 1: Create a server</h3>
+<p>This is Node 101 stuff:</p>
+<pre><code>:::coffeescript
+fs   = require 'fs'
+http = require 'http'
+
+server = http.createServer (req, res) -&gt;
+  fs.readFile "#{__dirname}/socket.io.demo.html", (err, data) -&gt;
+    res.writeHead 200, 'Content-Type': 'text/html'
+    res.end data, 'utf8'
+
+server.listen 1337
+</code></pre>
+<p>The server we've created simply responds to any request on port 1337 with the
+contents of "socket.io.demo.html", which must reside in the same directory as
+the script we're creating.</p>
+<h3>Step 2: Add server-side event handlers</h3>
+<pre><code>:::coffeescript
+io = require('socket.io').listen server
+
+io.sockets.on 'connection', (socket) -&gt;
+
+  socket.on 'publish', (message) -&gt;
+    io.sockets.send message
+
+  socket.on 'broadcast', (message) -&gt;
+    socket.broadcast.send message
+
+  socket.on 'whisper', (message) -&gt;
+    socket.broadcast.emit 'secret', message
+</code></pre>
+<p>Here we've instructed our server to listen for three custom events: "publish",
+"broadcast", and "whisper". Note that these particular names are not special
+in any way.</p>
+<p>When the server receives one of these events, it invokes the appropriate
+handler with the event's data as the sole argument. Since we're expecting a
+string argument in each of these cases, we've named the parameter <code>message</code>.</p>
+<p>The "publish" handler passes <code>message</code> to <code>io.sockets.send</code>, which forwards it
+to all the clients. The "broadcast" handler invokes <code>socket.broadcast.send</code>,
+which forwards <code>message</code> to all the clients <em>except the one that emitted the
+"broadcast" event</em>. The "whisper" handler is very different in that it doesn't
+send a message at all. Rather, it emits yet another event. Again, the name of
+this event — "secret" — is not special in any way.</p>
+<p>Having completed these two steps our server-side code is done, so we could
+now run <code>coffee -c -b socket.io.demo.coffee</code> to produce the actual JavaScript
+file we'll run in Node. We're now ready to tackle the client-side component.</p>
+<h3>Step 3: Create the HTML file</h3>
+<pre><code>:::html
+&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Socket.IO demo&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Socket.IO demo&lt;/h1&gt;
+    &lt;input type="text" autofocus="autofocus" /&gt;
+    &lt;button type="button"&gt;publish&lt;/button&gt;
+    &lt;button type="button"&gt;broadcast&lt;/button&gt;
+    &lt;button type="button"&gt;whisper&lt;/button&gt;
+    &lt;p&gt;Status: &lt;span id="status"&gt;Undefined&lt;/span&gt;&lt;/p&gt;
+    &lt;ol id="messages"&gt;&lt;/ol&gt;
+    &lt;script src="/socket.io/socket.io.js"&gt;&lt;/script&gt;
+    &lt;script src="http://code.jquery.com/jquery-latest.js"&gt;&lt;/script&gt;
+    &lt;script src="http://jashkenas.github.com/coffee-script/extras/coffee-script.js"&gt;&lt;/script&gt;
+    &lt;script type="text/coffeescript"&gt;
+
+      jQuery ($) -&gt;
+
+        // TODO: add client-side logic
+
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><code>&lt;script src="/socket.io/socket.io.js"&gt;&lt;/script&gt;</code> was the line that most
+confused me in the tutorials I read. I assumed that I'd need to serve this
+file myself, which turned out not to be the case. Somehow, it just works.</p>
+<p>Note the inclusion of "coffee-script.js", which enables us to write our
+client-side logic in CoffeeScript, too. :)</p>
+<h3>Step 4: Add client-side Socket.IO event handlers</h3>
+<pre><code>:::coffeescript
+$status = $ '#status'
+socket = io.connect()
+
+socket.on 'connect', -&gt;
+  $status.text 'Connected'
+
+socket.on 'disconnect', -&gt;
+  $status.text 'Disconnected'
+
+socket.on 'reconnecting', (seconds) -&gt;
+  $status.text "Reconnecting in #{seconds} seconds"
+
+socket.on 'reconnect', -&gt;
+  $status.text 'Reconnected'
+
+socket.on 'reconnect_failed', -&gt;
+  $status.text 'Failed to reconnect'
+
+socket.on 'message', (message) -&gt;
+  $('&lt;li&gt;').text(message).appendTo $('#messages')
+
+socket.on 'secret', (message) -&gt;
+  console.log message
+</code></pre>
+<p>The first five events — "connect", "disconnect", "reconnecting", "reconnect",
+and "reconnect_failed" — are emitted by Socket.IO in response to changes in
+the connection status. We've registered a handler for each in order to expose
+this information to users.</p>
+<p>We've also added handlers for "message" and "secret" events. Our "message"
+handler will be called whenever the server receives a "publish" or "broadcast"
+event (<code>io.sockets.send</code> and <code>socket.broadcast.send</code> emit "message" events).
+Our "secret" handler will be called whenever the server receives a "whisper"
+event.</p>
+<p>All that remains is to have the client emit appropriate custom events in
+response to input from users.</p>
+<h3>Step 5: Add DOM event handlers which emit custom events</h3>
+<pre><code>:::coffeescript
+$input = $ 'input'
+
+$('button').click -&gt;
+  socket.emit $(this).text(), $input.val()
+  $input.val('').focus()
+</code></pre>
+<p>Here, we've bound a "click" handler to the three buttons. Whenever one
+of these buttons is clicked the appropriate event is emitted ("publish",
+"broadcast", or "whisper" depending on the button clicked). The current
+value of the text input is used as the event's data.</p>
+<p>That's it. We can now run <code>node socket.io.demo.js</code> to start our server and
+confirm that things behave as expected.</p>
+<h3>How it all fits together</h3>
+<p>Let's look at exactly what happens when a user types "the password is 1234"
+into the text field and clicks "whisper".</p>
+<p>First, our "click" handler captures the DOM event and in turn emits our custom
+"whisper" event with "the password is 1234" as its data.</p>
+<p>Next, the server — which is listening for our custom events — captures the
+"whisper" event. It then emits a "secret" event to all clients except the one
+that sent the "whisper", passing along the event data.</p>
+<p>Finally, each client — bar the originator of this chain of events — captures
+the "secret" event and logs "the password is 1234" to the console.</p>
+<h3>Code</h3>
+<p>The <a href="https://bitbucket.org/davidchambers/socket.io.demo">code used in this tutorial</a> is available on Bitbucket.</p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/CoffeeScript/">CoffeeScript</a></li>
+              <li><a href="/tag/HTML5/">HTML5</a></li>
+              <li><a href="/tag/Node.js/">Node.js</a></li>
+              <li><a href="/tag/Socket.IO/">Socket.IO</a></li>
+              <li><a href="/tag/WebSockets/">WebSockets</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

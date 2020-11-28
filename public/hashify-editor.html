@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Hashify Editor</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Hashify Editor</h1>
+            <time datetime="2011-04-24T06:15:00-07:00" pubdate="pubdate">24 April 2011</time>
+          </header>
+<p>On 19 April 2011, at around noon Pacific time, I published a short tweet.</p>
+<blockquote>
+<p>Hashify is officially live as of now! <a href="http://bit.ly/dXYxGU">bit.ly/dXYxGU</a></p>
+</blockquote>
+<p>Quite to my surprise word of the release spread incredibly quickly, thanks in
+large part to the <a href="http://news.ycombinator.com/item?id=2464213">Hacker News thread</a> that sprang up and received a great
+deal of attention.</p>
+<p>The vast majority of the ensuing discussion focused on the implications of
+stuffing documents into URLs, and of using bit.ly as a document store. While
+there was much debate as to whether this "cool hack" will turn out to have
+practical application, the one undoubtedly useful component was overlooked.</p>
+<h3>Markdown editing for the masses</h3>
+<p>Before dropping off the face of the earth, John Fraser created <a href="https://bitbucket.org/davidchambers/showdown.js">Showdown</a>
+and <a href="http://code.google.com/p/wmd/">wmd</a>. The latter is a WYSIWYM Markdown editor, popularized by <a href="http://stackoverflow.com/">Stack
+Overflow</a>. I've long been supportive of wmd's goals, but I've never liked
+its implementation.</p>
+<p>Several drawbacks of wmd encouraged me to write my own Markdown editor:</p>
+<ul>
+<li>Its use of inline styles makes it difficult to customize the toolbar's
+    appearance.</li>
+<li>Many HTTP requests are required to retrieve the toolbar icons.</li>
+<li>Lack of modularity: Showdown is a dependency.</li>
+<li>Unnatural keyboard shortcuts.</li>
+</ul>
+<p><a href="https://bitbucket.org/davidchambers/hashify-editor">Hashify Editor</a> addresses these concerns. Styles are applied via a style
+sheet, and selector specificity has been kept low to make overriding default
+styling simple. Selectors are prefixed with <code>hashify-editor</code> to prevent
+erroneous matches. Additionally, the images have been sprited, optimized,
+Base64 encoded, and included in the style sheet as a data URI.</p>
+<p>Hashify Editor does not require Showdown, as its focus is on turning the
+humble <code>textarea</code> into a useful Markdown editor. TextMate-style keyboard
+shortcuts make it a joy to work with metacharacters and text selections.</p>
+<p>Best of all is the preview option: one is able to view — and of course,
+edit — the text at <a href="http://hashify.me/">hashify.me</a> with a single click.</p>
+<dl>
+<dt><img alt="Hashify Editor at David Chambers Design" src="/images/posts/85/hashify-editor-at-david-chambers-design.png" /></dt>
+<dd>Hashify Editor at David Chambers Design</dd>
+<dt><img alt="Comment preview at hashify.me" src="/images/posts/85/comment-preview-at-hashify.me.png" /></dt>
+<dd>Comment preview at hashify.me</dd>
+</dl>
+<h3>Adoption</h3>
+<p>I love sites which support Markdown commenting. Unfortunately many of those
+that do — even <a href="http://forrst.com/">Forrst</a> — don't provide previews. As a result, each time
+I'm about to submit a lengthy comment I select all, copy, open a new tab, go
+to hashify.me, tab into the editor, and paste in my comment. Were Forrst to
+integrate Hashify Editor, six of these steps could be replaced by a single
+mouse click. :D</p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/Hashify/">Hashify</a></li>
+              <li><a href="/tag/Markdown/">Markdown</a></li>
+              <li><a href="/tag/Showdown/">Showdown</a></li>
+              <li><a href="/tag/UX/">UX</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

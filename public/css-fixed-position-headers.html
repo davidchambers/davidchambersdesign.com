@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>CSS fixed-position headers</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>CSS fixed-position headers</h1>
+            <time datetime="2009-10-30T18:25:00+13:00" pubdate="pubdate">30 October 2009</time>
+          </header>
+<hr />
+<p>I began this post three months ago, got stuck, and put it in the too hard
+basket. I wanted to devise a workable solution to my stumbling block before
+publishing this information. I'm getting ahead of myself, though. First, the
+background.</p>
+<p>As I began writing this post, I had just completed a redesign of this site.
+The new design removed unnecessary distractions to allow readers to focus on
+the clearly presented content. I moved site navigation from the sidebar (which
+I axed altogether) to the header. I decided to fix the header in place so that
+the navigation and search form would always be visible. This required very
+little effort, but overcoming the <a href="http://css-tricks.com/forums/viewtopic.php?t=3496">problem posed by fixed-position headers</a>
+took a great deal of trial and error. To save others from going through this
+tortuous process I'll describe my various approaches, and list the benefits
+and drawbacks of each.</p>
+<hr />
+<h3>Requirements</h3>
+<ul>
+<li>An additional vertical scrollbar must not be introduced.</li>
+<li>Appending <strong>#example</strong> to a URL should result in the element whose id is
+  "example" being displayed at the top of the content area (not hidden behind
+  the header).</li>
+<li>Additional markup may be used only if the requirements above cannot be met
+  without extra markup.</li>
+</ul>
+<p>The CSS for the header initially looked like this:</p>
+<pre><code>:::css
+#header
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 160px;
+}
+</code></pre>
+<h3>Approach 1: positive top padding + negative bottom margins</h3>
+<p>Here's the CSS:</p>
+<pre><code>:::css
+h1, h2, h3, h4, h5, h6, p
+{
+    padding-top: 160px;
+    margin-bottom: -160px;
+}
+</code></pre>
+<p>This approach adds top padding (equal to the height of the header) to each of the block-level elements in the content area. This ensures that elements are in the correct position when jumped to using #id. An equal and opposite bottom margin is also applied to prevent the padding from adding unwanted white space between elements.</p>
+<ul>
+<li>{@class=pro}No additional markup is required.</li>
+<li>{@class=pro}Straightforward CSS.</li></li>
+<li>{@class=con}The CSS selector needs to contain all block-level elements that
+  may have ids in some instances. This is likely to include elements such as
+  divs and forms. Since it is hard to foresee all the situations in which a
+  link may direct a user to a uniquely identified element, it is difficult
+  to ensure that this approach will work in all cases.</li>
+<li>{@class=con}<strong>The negative bottom margin causes each block-level element to
+  overlap the preceding element, making "overlapped" links unclickable!</strong></li>
+</ul>
+<h3>Approach 2: preceding divs</h3>
+<p>Again, the CSS:</p>
+<pre><code>:::css
+div.id
+{
+    position: relative;
+    top: -160px;
+}
+</code></pre>
+<p>This approach introduces meaningless markup. Where previously we may have had
+something like this:</p>
+<pre><code>:::html
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus volutpat risus nec mollis. Integer dapibus dictum ultrices. Aenean vel lectus odio. Nam a mi ligula. Nam in dolor quis metus pretium imperdiet sit amet sed elit.&lt;/p&gt;
+&lt;h3 id="example"&gt;Example&lt;/h3&gt;
+&lt;p&gt;Suspendisse potenti. Proin convallis lacinia nibh, nec auctor ligula mattis consectetur. Mauris vel elit sit amet nibh volutpat varius id vel sem. Pellentesque id purus ligula. Vivamus vel nulla vel justo tempor ultricies.&lt;/p&gt;
+</code></pre>
+<p>We now have the following:</p>
+<pre><code>:::html
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus volutpat risus nec mollis. Integer dapibus dictum ultrices. Aenean vel lectus odio. Nam a mi ligula. Nam in dolor quis metus pretium imperdiet sit amet sed elit.&lt;/p&gt;
+&lt;div id="example" class="id"&gt;&lt;/div&gt;
+&lt;h3&gt;Example&lt;/h3&gt;
+&lt;p&gt;Suspendisse potenti. Proin convallis lacinia nibh, nec auctor ligula mattis consectetur. Mauris vel elit sit amet nibh volutpat varius id vel sem. Pellentesque id purus ligula. Vivamus vel nulla vel justo tempor ultricies.&lt;/p&gt;
+</code></pre>
+<p>With this approach, each uniquely identified block-level element within the
+content area gives its id to a div which appears immediately before it in the
+HTML. Each of these divs is offset by the height of the header, ensuring that
+the element of interest is not obscured by the header.</p>
+<ul>
+<li>{@class=pro}Straightforward CSS.</li>
+<li>{@class=pro}Links are always clickable!</li>
+<li>{@class=con}Additional markup is required, necessitating that existing
+  content be updated (or JavaScript used to insert the additional elements
+  dynamically).</li>
+<li>{@class=con}Not only is this extra markup meaningless, but it actually
+  removes ids from the elements to which they were additionally assigned.
+  Any existing CSS selectors that refer to one of these elements will need
+  to be updated. (For example, <code>h3#comments</code> would need to change to
+  <code>div#comments + h3</code>.</li>
+</ul>
+<p>This approach does not have any fatal flaws, but it may require template
+files, static HTML files, style sheets, and database records to be updated.
+Additionally, it is inelegant. In other words, it <em>is</em> as option, but not a
+good one.</p>
+<h3>Approach 3: JavaScript trickery</h3>
+<p>The previous approach got the job done, but introduced meaningless elements.
+This task is best performed with JavaScript.</p>
+<pre><code>:::javascript
+// accommodate fixed-position header
+document.observe('dom:loaded', function () {
+    $$('h2[id]', 'h3[id]', 'h4[id]', 'h5[id]', 'h6[id]').each(function (e) {
+        var div = new Element('div', { id: e.id });
+        e.writeAttribute({ id: null });
+        e.addClassName('unidentified');
+        e.insert({ 'top': div });
+    })
+});
+</code></pre>
+<p>The above snippet locates all the h2, h3, h4, h5, and h6 elements on the
+page that have an id attribute. It then loops through this collection of
+elements and inserts an empty div element into each one. This div "steals"
+its parent's id.</p>
+<p>CSS can be used to position these empty divs in such a way that headings are
+visible when jumped to:</p>
+<pre><code>:::css
+h2.unidentified div, h3.unidentified div
+{
+    float: left;
+    margin: -160px 0 0 0;
+}
+</code></pre>
+<ul>
+<li>{@class=pro}No additional markup is required.</li>
+<li>{@class=pro}Straightforward CSS.</li>
+<li>{@class=pro}Links are always clickable.</li>
+<li>{@class=con}JavaScript (and in this case <a href="http://prototypejs.org/">Prototype</a>) required.</li>
+<li>{@class=con}Association between an id and the element it identifies is
+  broken.</li>
+</ul>
+<h3>Summary</h3>
+<p>I have implemented the JavaScript approach, and it works nicely. I am still
+hopeful that there exists a simpler and/or more universal solution to the
+problem posed by fixed-position headers. Please let me know if you have any
+ideas or suggestions.</p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/CSS/">CSS</a></li>
+              <li><a href="/tag/HTML/">HTML</a></li>
+              <li><a href="/tag/JavaScript/">JavaScript</a></li>
+              <li><a href="/tag/Prototype/">Prototype</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

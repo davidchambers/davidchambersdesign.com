@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Auto-populating input fields with Prototype</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Auto-populating input fields with Prototype</h1>
+            <time datetime="2010-01-07T22:03:00+13:00" pubdate="pubdate">7 January 2010</time>
+          </header>
+<hr />
+<p>Yesterday I wrote a simple class which auto-populates input fields, and
+thought it worth sharing. I was originally inspired to write this code
+by Roger Johansson's post titled <a href="http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/">Autopopulating text input fields with
+JavaScript</a>. While I approached the problem from a slightly different
+angle, I made sure to avoid the pitfalls Roger mentions.</p>
+<hr />
+<hr />
+<h4>Update: 9 June 2010, 11:31pm (Pacific/Auckland)</h4>
+<p>I've written an update to this article for those interested in
+<a href="/autopopulating-input-fields-with-mootools/">auto-populating input fields with MooTools</a>.</p>
+<hr />
+<h3>Contents</h3>
+<ul>
+<li><a href="#behaviour">Behaviour</a></li>
+<li><a href="#html5-placeholder-text">HTML5 placeholder text</a></li>
+<li><a href="#markup">Markup</a></li>
+<li><a href="#styling">Styling</a></li>
+<li><a href="#placeholder-class">Placeholder class</a></li>
+<li><a href="#usage">Usage</a></li>
+</ul>
+<h3>Behaviour {@id=behaviour}</h3>
+<ul>
+<li>Placeholder text should be inserted into input field upon page load.</li>
+<li>Placeholder text should be targetable via CSS.</li>
+<li>Clicking or tabbing into input field should remove placeholder text.</li>
+<li>Placeholder text should be reinserted if input field is empty when it loses
+  focus.</li>
+</ul>
+<h3>HTML5 placeholder text {@id=html5-placeholder-text}</h3>
+<p>HTML5 allows placeholder text to be specified in the markup through the
+<code>placeholder</code> attribute. In supporting browsers (currently Chrome and Safari)
+this produces the behaviour described above with no reliance on JavaScript.</p>
+<h3>Markup {@id=markup}</h3>
+<pre><code>:::html
+&lt;input type="search" id="s" name="s" placeholder="search..." /&gt;
+</code></pre>
+<h3>Styling {@id=styling}</h3>
+<pre><code>:::css
+input.placeholder { color: #a9a9a9 !important; }
+</code></pre>
+<p>I decided to use <code>#a9a9a9</code> as Safari uses this colour for placeholder text.</p>
+<h3>Placeholder class {@id=placeholder-class}</h3>
+<pre><code>:::javascript
+var Placeholder = Class.create({
+    initialize: function (element) {
+        this.element = element;
+        this.placeholder = element.readAttribute('placeholder');
+        this.blur();
+        Event.observe(this.element, 'focus', this.focus.bindAsEventListener(this));
+        Event.observe(this.element, 'blur', this.blur.bindAsEventListener(this));
+    },
+    focus: function () {
+        if (this.element.hasClassName('placeholder'))
+            this.element.clear().removeClassName('placeholder');
+    },
+    blur: function () {
+        if (this.element.value === '')
+            this.element.addClassName('placeholder').value = this.placeholder;
+    }
+});
+</code></pre>
+<p>The Placeholder class requires <a href="http://prototypejs.org/">Prototype</a>.</p>
+<h3>Usage {@id=usage}</h3>
+<p>To create a new instance of the Placeholder class, simply pass the constructor
+a Prototype extended element:</p>
+<pre><code>:::javascript
+new Placeholder($('s'));
+</code></pre>
+<p>Ensure that the DOM is ready by wrapping everything in Prototype's <code>dom:loaded</code>
+event listener. This also avoids polluting the global namespace.</p>
+<pre><code>:::javascript
+document.observe('dom:loaded', function () {
+    var Placeholder = Class.create({
+        ...
+    });
+    $$('input[placeholder]').each(function (input) {
+        new Placeholder(input);
+    });
+});
+</code></pre>
+<hr />
+<h4>Update: 30 March 2010, 5:17pm (Pacific/Auckland)</h4>
+<p>I've updated the selector used in the above example. Selecting all inputs with
+placeholder attributes is far more elegant than listing each input explicitly.
+It also means that an input added anywhere on the site will automatically
+receive this special treatment (provided that it has a placeholder attribute).</p>
+<hr />
+<p><strong>This site's search field shows the code in action.</strong></p>
+<hr />
+<h4>Update: 16 April 2010, 12:59am (Pacific/Auckland)</h4>
+<p>For those that would like placeholder text in <em>password</em> input fields not to
+appear as dots or asterisks in older browsers, I've written an alternative
+snippet. I drew inspiration from a post on <a href="http://blog.decaf.de/2009/07/iphone-like-password-fields-using-jquery/">iPhone-like password fields using
+jQuery</a>.</p>
+<pre><code>:::javascript
+// provide input hints
+document.observe('dom:loaded', function () {
+    var PLACEHOLDER_SUFFIX = '_placeholder'; // used for password inputs
+
+    $$('input[placeholder]').each(function (input) {
+        var label, placeholder,
+            placeholder_text = input.readAttribute('placeholder');
+
+        if (input.readAttribute('type') == 'password') {
+            placeholder = input.clone();
+            placeholder.type = 'text'; // not "password"
+            placeholder.value = placeholder_text;
+            placeholder.addClassName('placeholder');
+
+            if (input.id) {
+                // update input id and label
+                placeholder.id += PLACEHOLDER_SUFFIX;
+                label = $$('label[for="' + input.id + '"]')
+                label.invoke('writeAttribute', 'for', input.id +
+                        PLACEHOLDER_SUFFIX);
+            }
+
+            input.writeAttribute({ 'accesskey': '', 'tabindex': '' });
+            input.hide().insert({ 'before': placeholder });
+
+            // when placeholder input gains focus,
+            // hide it and show "real" password input
+            Event.observe(placeholder, 'focus', function () {
+                this.hide();
+                input.show();
+                Form.Element.focus(input);
+            });
+
+            // when "real" password input loses focus,
+            // if it's empty, hide it and show placeholder input
+            Event.observe(input, 'blur', function () {
+                if (this.value === '') {
+                    this.hide();
+                    placeholder.show();
+                }
+            });
+        } else {
+            // insert placeholder text
+            input.addClassName('placeholder').value = placeholder_text;
+
+            Event.observe(input, 'focus', function () {
+                if (this.hasClassName('placeholder')) {
+                    this.clear().removeClassName('placeholder');
+                }
+            });
+            Event.observe(input, 'blur', function () {
+                if (this.value === '') {
+                    this.addClassName('placeholder').value = placeholder_text;
+                }
+            });
+        }
+    });
+});
+</code></pre>
+<hr />
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/HTML5/">HTML5</a></li>
+              <li><a href="/tag/JavaScript/">JavaScript</a></li>
+              <li><a href="/tag/Prototype/">Prototype</a></li>
+              <li><a href="/tag/UX/">UX</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

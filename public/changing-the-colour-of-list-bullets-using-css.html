@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Changing the colour of list bullets using CSS</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Changing the colour of list bullets using CSS</h1>
+            <time datetime="2011-04-13T17:30:00-07:00" pubdate="pubdate">13 April 2011</time>
+          </header>
+<p>So, you're about to style an unordered list of some sort...</p>
+<pre><code>:::html
+&lt;h1&gt;TXJS 2011 Speakers&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Brendan Eich&lt;/li&gt;
+  &lt;li&gt;Alex Russell&lt;/li&gt;
+  &lt;li&gt;Douglas Crockford&lt;/li&gt;
+  &lt;li&gt;Paul Irish&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>You've decided upon hanging square bullets in a light grey – nothing too
+distracting...</p>
+<pre><code>:::css
+ul {
+  list-style: square outside;
+  color: #ccc;
+}
+li {
+  color: #000;
+}
+</code></pre>
+<p>This should do the trick, but doesn't for some reason! How the heck does one
+target the bullets and only the bullets? As far as I know it's not possible.</p>
+<h3>Conventional hack {@id=conventional-hack}</h3>
+<pre><code>:::html
+&lt;h1&gt;TXJS 2011 Speakers&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;span&gt;Brendan Eich&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span&gt;Alex Russell&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span&gt;Douglas Crockford&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span&gt;Paul Irish&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;style&gt;
+  ul {
+    list-style: square outside;
+    color: #ccc;
+  }
+  li &gt; span {
+    color: #000;
+  }
+&lt;/style&gt;
+</code></pre>
+<p>This gets the job done, but those <code>span</code>s are ugly – there are ways to achieve
+the desired visual effect without hacking the markup.</p>
+<h3>Background image technique {@id=background-image-technique}</h3>
+<pre><code>:::css
+ul {
+  list-style: none;
+}
+li {
+  margin-left: -12px;
+  background: url(bullet.png) no-repeat 0;
+  text-indent: 12px;
+}
+</code></pre>
+<p>This requires very little CSS. To avoid incurring the overhead of an extra
+HTTP request, one could Base64-encode the image in a <a href="http://en.wikipedia.org/wiki/Data_URI_scheme#CSS">data URI</a>.</p>
+<h3>Pseudo-element technique {@id=pseudo-element-technique}</h3>
+<pre><code>:::css
+ul {
+  list-style: none;
+}
+li {
+  position: relative;
+}
+li:before {
+  position: absolute;
+  top: 8px;
+  margin: 8px 0 0 -12px;
+    /* accommodate Camino */
+    vertical-align: middle;
+    display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: #ccc;
+  content: "";
+}
+</code></pre>
+<p>So it's possible to fashion square bullets of any colour with just a handful
+of straightforward declarations. Nice!</p>
+<p>Prefer round bullets? No problem. :)</p>
+<pre><code>:::css
+  ...
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  ...
+</code></pre>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/CSS/">CSS</a></li>
+              <li><a href="/tag/meaningful markup/">meaningful markup</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

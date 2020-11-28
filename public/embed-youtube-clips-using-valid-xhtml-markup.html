@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Embed YouTube clips using valid XHTML markup</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/reset.css" media="all" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/print.css" media="print" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/davidchambers/davidchambersdesign.com@e76370b258761898ea0b63d1e14aa4caa4e7c359/src/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>Embed YouTube clips using valid XHTML markup</h1>
+            <time datetime="2009-09-14T14:17:00+12:00" pubdate="pubdate">14 September 2009</time>
+          </header>
+<p>There are blog posts all over the Web explaining how to write valid XHTML
+markup to embed YouTube videos. There are also a number of online converters
+that generate this markup automatically.</p>
+<p>I've always found it easier to write the markup myself, as there's really
+nothing to it. Simply replace both instances of <code>video_id</code> in the following
+code with — you guessed it — the video's ID.</p>
+<pre><code>:::html
+&lt;object class="youtube"
+        type="application/x-shockwave-flash"
+        data="http://www.youtube.com/v/video_id&amp;hl=en&amp;fs=1&amp;rel=0"&gt;
+    &lt;param name="movie" value="http://www.youtube.com/v/video_id&amp;hl=en&amp;fs=1&amp;rel=0" /&gt;
+    &lt;param name="allowFullScreen" value="true" /&gt;
+&lt;/object&gt;
+</code></pre>
+<p><code>rel=0</code> is often useful to include (as I've done in the example above) as it
+prevents thumbnails for related videos from being displayed at the end of the
+clip.</p>
+<p>One important point to remember when you're "rolling your own" markup is that
+the character entity <code>&amp;amp;</code> must be used for all ampersands.</p>
+<p>Finally, be aware of the fact that it's possible to change the size of the
+YouTube object using CSS. There's no need to include the <code>width</code> and <code>height</code>
+attributes in the markup.</p>
+<pre><code>:::css
+object.youtube
+{
+    width: 100%;
+    height: 385px;
+}
+</code></pre>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/CSS/">CSS</a></li>
+              <li><a href="/tag/HTML/">HTML</a></li>
+              <li><a href="/tag/video/">video</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
+            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
+            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
+            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
+            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>

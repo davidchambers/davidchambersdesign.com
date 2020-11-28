@@ -21,6 +21,7 @@ module.exports = {
   [Symbol.for ('RegExp')]: RegExp,
   [Symbol.for ('String')]: String,
   [Symbol.for ('Symbol')]: Symbol,
+  [Symbol.for ('Error')]: Error,
   [Symbol.for ('SyntaxError')]: SyntaxError,
 
   [Symbol.for ('JSON')]: JSON,
