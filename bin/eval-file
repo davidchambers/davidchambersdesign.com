@@ -2,11 +2,12 @@
 
 'use strict';
 
+const baseEnv = require ('../src/base.js');
 const import_ = require ('../src/import.js');
 
 process.argv
 .slice (2, 3)
 .forEach (filename => {
-  const e = import_ (filename);
+  const e = import_ (baseEnv) (filename);
   if (e.isLeft) throw e.value;
 });
