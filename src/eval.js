@@ -40,7 +40,7 @@ const {
   unfoldr,
   value,
   zip,
-} = S.create ({checkTypes: false, env: []});
+} = S.unchecked;
 
 const evaluate = module.exports = dirname => env => term => {
   switch (term.type) {

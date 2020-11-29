@@ -10,11 +10,12 @@
       reject ("reject" Future)
       resolve ("resolve" Future)]
 
-   (compose (fork ("error" console) >&1)
+   (compose (K "")
             (lambda [filename]
-               (chain (lambda [text]
-                         (maybe (reject (new Error ["Failed to parse post"]))
-                                (lambda [post] (resolve (concat (print post) "\n")))
-                                (parse-post filename text)))
-                      (read-file filename)))
-            (3 ("argv" process)))))
+               (fork ("error" console)
+                     ("log" console)
+                     (chain (compose (maybe (reject (new Error ["Failed to parse post"]))
+                                            (compose resolve print))
+                                     (parse-post filename))
+                            (read-file filename))))
+            $2)))

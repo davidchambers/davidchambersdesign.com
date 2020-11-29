@@ -25,7 +25,7 @@ const {
   prop,
   stripPrefix,
   unless,
-} = S.create ({checkTypes: false, env: []});
+} = S.unchecked;
 
 const matchIdentifier = match (/^[^()[\]{}"\s]+/);
 

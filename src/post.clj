@@ -4,4 +4,4 @@
       render-document (import "./render-document.clj")
       post (import "./templates/post.clj")]
 
-   (>&1 (render-document "  " [(post (import base (3 ("argv" process))))]))))
+   (render-document "  " [(post (import base $2))])))

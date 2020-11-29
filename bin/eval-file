@@ -2,8 +2,12 @@
 
 'use strict';
 
+const {unchecked: {either}} = require ('sanctuary');
+
 const baseEnv = require ('../src/base.js');
 const import_ = require ('../src/import.js');
 
-const e = import_ (baseEnv) (process.argv[2]);
-if (e.isLeft) throw e.value;
+
+either (e => { throw e; })
+       (s => { process.stdout.write (s); })
+       (import_ (baseEnv) (process.argv[2]));
