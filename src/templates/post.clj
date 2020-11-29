@@ -22,7 +22,7 @@
                                []
                                [(h4 {} [(text "This post has the following tags:")])
                                 (ol {}
-                                   (map (lambda [tag] (li {} [(a {:href (join-with "" ["/tag/" tag "/"])} [(text tag)])]))
+                                   (map (lambda [tag] (li {} [(a {:href (++ ["/tag/" tag "/"])} [(text tag)])]))
                                         (:tags post)))])]))
                  (h3 {:id "related"} [(text "Possibly related posts")])
                  (ul {}

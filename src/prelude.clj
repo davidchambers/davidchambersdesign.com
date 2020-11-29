@@ -11,5 +11,7 @@
     :curry-4 (lambda [f a b c d] (apply f [a b c d]))
     :curry-5 (lambda [f a b c d e] (apply f [a b c d e]))
 
+    :++ (join-with "")
+
     :concat (lambda [m1 m2] (if (is $.Object m1) (invoke "assign" [{} m1 m2] Object) (concat m1 m2)))
     :insert (lambda [key val obj] (invoke "assign" [{} obj (invoke "fromEntries" [[[key val]]] Object)] Object))}))
