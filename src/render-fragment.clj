@@ -3,13 +3,10 @@
 (function render [indent level inline nodes]
    (++ (map (lambda [node]
                (if (=== :text (:type node))
-                   (invoke "replace"
-                           [(regex "g" ">") "&gt;"]
-                           (invoke "replace"
-                                   [(regex "g" "<") "&lt;"]
-                                   (invoke "replace"
-                                           [(regex "g" "&") "&amp;"]
-                                           (:value node))))
+                   (pipe [(invoke "replace" [(regex "g" "&") "&amp;"])
+                          (invoke "replace" [(regex "g" "<") "&lt;"])
+                          (invoke "replace" [(regex "g" ">") "&gt;"])]
+                         (:value node))
                    (if (=== :html (:type node))
                        (:value node)
                        (let [indentation (invoke "repeat" [level] indent)
