@@ -1,0 +1,72 @@
+{:datetime (datetime "2011-04-24" "06:15:00" :America/Los_Angeles)
+ :tags ["Hashify" "Markdown" "Showdown" "UX"]}
+
+
+# Hashify Editor
+
+On 19 April 2011, at around noon Pacific time, I published a short tweet.
+
+> Hashify is officially live as of now! [bit.ly/dXYxGU](http://bit.ly/dXYxGU)
+
+Quite to my surprise word of the release spread incredibly quickly, thanks in
+large part to the [Hacker News thread][1] that sprang up and received a great
+deal of attention.
+
+The vast majority of the ensuing discussion focused on the implications of
+stuffing documents into URLs, and of using bit.ly as a document store. While
+there was much debate as to whether this "cool hack" will turn out to have
+practical application, the one undoubtedly useful component was overlooked.
+
+### Markdown editing for the masses
+
+Before dropping off the face of the earth, John Fraser created [Showdown][2]
+and [wmd][3]. The latter is a WYSIWYM Markdown editor, popularized by [Stack
+Overflow][4]. I've long been supportive of wmd's goals, but I've never liked
+its implementation.
+
+Several drawbacks of wmd encouraged me to write my own Markdown editor:
+
+  * Its use of inline styles makes it difficult to customize the toolbar's
+    appearance.
+  * Many HTTP requests are required to retrieve the toolbar icons.
+  * Lack of modularity: Showdown is a dependency.
+  * Unnatural keyboard shortcuts.
+
+[Hashify Editor][5] addresses these concerns. Styles are applied via a style
+sheet, and selector specificity has been kept low to make overriding default
+styling simple. Selectors are prefixed with `hashify-editor` to prevent
+erroneous matches. Additionally, the images have been sprited, optimized,
+Base64 encoded, and included in the style sheet as a data URI.
+
+Hashify Editor does not require Showdown, as its focus is on turning the
+humble `textarea` into a useful Markdown editor. TextMate-style keyboard
+shortcuts make it a joy to work with metacharacters and text selections.
+
+Best of all is the preview option: one is able to view -- and of course,
+edit -- the text at [hashify.me][6] with a single click.
+
+![Hashify Editor at David Chambers Design][7]
+: Hashify Editor at David Chambers Design
+
+![Comment preview at hashify.me][8]
+: Comment preview at hashify.me
+
+### Adoption
+
+I love sites which support Markdown commenting. Unfortunately many of those
+that do -- even [Forrst][9] -- don't provide previews. As a result, each time
+I'm about to submit a lengthy comment I select all, copy, open a new tab, go
+to hashify.me, tab into the editor, and paste in my comment. Were Forrst to
+integrate Hashify Editor, six of these steps could be replaced by a single
+mouse click. :D
+
+
+[1]: http://news.ycombinator.com/item?id=2464213
+[2]: https://bitbucket.org/davidchambers/showdown.js
+[3]: http://code.google.com/p/wmd/
+[4]: http://stackoverflow.com/
+[5]: https://bitbucket.org/davidchambers/hashify-editor
+[6]: http://hashify.me/
+[7]: /images/posts/85/hashify-editor-at-david-chambers-design.png
+[8]: /images/posts/85/comment-preview-at-hashify.me.png
+[9]: http://forrst.com/

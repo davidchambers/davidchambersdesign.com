@@ -1,0 +1,93 @@
+{:datetime (datetime "2011-02-13" "01:30:00" :America/Los_Angeles)
+ :tags ["Mac OS X" "productivity" "Terminal.app"]}
+
+
+# Customizing your bash prompt for pleasure and profit
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+Mac OS X's default bash prompt is dull and uninformative.
+
+![Mac OS X's default bash prompt][1]
+: Mac OS X's default bash prompt
+
+Since only the current directory name is visible, I find myself running `pwd`
+more often than is healthy. Also, I find the uneven prompt length jarring.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+My solution to both of these problems is to include the full path _on its own
+line_ (with a preceding `\n` providing much-needed breathing room).
+
+![Custom bash prompt which displays the full path][2]
+: Custom bash prompt which displays the full path
+
+### Configuring the bash prompt
+
+Add something like the following to your **~/.bashrc**.
+
+    PS1="\n\[\e[1;36m\]\w\n\[\e[1;32m\]> \[\e[0m\]"
+
+#### What the heck does all this mean?
+
+`PS1` refers to the bash prompt. `PS2`, `PS3`, and `PS4` relate to similar
+things.
+
+`\n` is a newline.
+
+`\[` begins a sequence of non-printing characters.
+
+`\e[1;36m` is the code for "light cyan".
+
+`\]` ends the sequence of non-printing characters.
+
+`\w` is the current working directory (with a tilde used in place of `$HOME`).
+
+`\n` is another newline.
+
+`\[\e[1;32m\]` is a sequence of non-printing characters containing the code
+for "light green".
+
+`> ` is simply a ">" followed by a space.
+
+`\[\e[0m\]` puts an end to the colouring, preventing it from "spilling out".
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 3 April 2011, 9:00pm (America/Los_Angeles)
+
+When first this post was published colour codes were not preceded by `\[`.
+The colour codes themselves were thus considered when calculating the prompt's
+length, meaning that the first several characters of a command would sometimes
+remain visible when arrowing up and down. >.<
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 20 April 2012, 1:15am (America/Los_Angeles)
+
+I've recently taken up Vim. In Vim, one can enter `:shell` while in command
+mode to open a shell. The first time I did so I noticed that the colour codes
+appeared in the prompt. Feature detection can be used to ensure that colour
+codes are only provided to "smart" terminals:
+
+    :::bash
+    [[ "$TERM" == dumb ]] && PS1="\n\w\n> "
+    [[ "$TERM" != dumb ]] && PS1="\n\[\e[1;36m\]\w\n\[\e[1;32m\]> \[\e[0m\]"
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Note for Mac OS X users
+
+Terminal loads your **~/.bash_profile** but not your **~/.bashrc**. As a
+result, your **~/.bash_profile** should contain the following snippet.
+
+    :::bash
+    if [ -f ~/.bashrc ]; then
+      source ~/.bashrc
+    fi
+
+
+[1]: /images/posts/80/windows/default-os-x-bash-prompt.png
+[2]: /images/posts/80/windows/custom-bash-prompt.png

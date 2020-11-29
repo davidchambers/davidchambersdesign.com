@@ -1,6 +1,5 @@
 SRC = $(shell find src -type f | sort)
-POSTDIR = /Users/dc/github.com/davidchambers/davidchambersdesign.com
-SLUGS = $(shell find '$(POSTDIR)' -name '*=*.text' -print0 | xargs -0 basename -s .text | sort -n | cut -d = -f 2)
+SLUGS = $(shell find posts -name '*=*.text' -print0 | xargs -0 basename -s .text | sort -n | cut -d = -f 2)
 REPRS = $(patsubst %,cache/%.clj,$(SLUGS))
 ICONS = $(patsubst src/%.clj,public/%.svg,$(shell find src/icons/nav -name '*.clj'))
 
@@ -11,8 +10,11 @@ all: \
 		$(SLUGS:%=public/%.html) \
 		$(ICONS)
 
-cache/%.clj: $(POSTDIR)/*\=%.text
-	bin/eval-file '$(CURDIR)/src/extract-post.clj' '$<' >'$@'
+cache:
+	mkdir -p -- '$@'
+
+cache/%.clj: posts/*\=%.text cache
+	bin/eval-file '$(CURDIR)/src/parse-post.clj' '$<' >'$@'
 
 public:
 	mkdir -p -- '$@'

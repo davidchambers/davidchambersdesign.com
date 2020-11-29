@@ -1,0 +1,47 @@
+{:datetime (datetime "2010-03-25" "22:06:00" :Pacific/Auckland)
+ :tags ["Google" "search"]}
+
+
+# Using Google for site search
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+WordPress is a great piece of software, although I've never been satisfied
+with its search functionality. Last night I decided to switch to a very simple
+solution:
+
+    :::html
+    <form action="http://www.google.com/search" method="get">
+        <div>
+            <label for="q">Search davidchambersdesign.com</label>
+            <input type="search" name="q" id="q" maxlength="256" placeholder="search..." />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="hidden" name="hl" value="en" />
+            <input type="hidden" name="as_sitesearch" value="davidchambersdesign.com" />
+            <input type="submit" value="Search" />
+        </div>
+    </form>
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+Search queries on this site are now submitted to Google with the specification
+that only results from this domain are to be returned. Here's a breakdown of
+the various query parameters I included:
+
+q{@class=textual}
+: Search query as entered by the user.
+
+ie
+: Sets the character encoding that is used to interpret the query string.
+
+hl
+: Specifies the interface language (host language) of your user interface.
+
+as_sitesearch
+: Limits search results to documents in the specified domain.
+
+If you decide to implement this yourself you may find the documentation on
+[Google custom search request parameters][1] useful.
+
+
+[1]: http://www.google.com/cse/docs/resultsxml.html#wsRequestParameters

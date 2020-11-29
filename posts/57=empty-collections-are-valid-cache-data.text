@@ -1,0 +1,29 @@
+{:datetime (datetime "2010-07-06" "09:34:00" :Pacific/Auckland)
+ :tags ["Django"]}
+
+
+# Empty collections are valid cache data
+
+When using Django's cache, ensure that empty collections (`[]`, `()`, `{}`) are
+treated as valid cache data.
+
+    :::python
+    cached = cache.get(cache_key)
+    if cached:
+        return cached
+    
+    # perform expensive operation
+
+In the above snippet, if the call to `get` returns an empty collection the
+cached result is ignored and the value is recalculated unnecessarily.
+
+Avoid this by explicitly comparing the return value to `None`:
+
+    :::python
+    cached = cache.get(cache_key)
+    if cached is not None: # much better!
+        return cached
+
+Django's documentation wisely advises against caching the literal value `None`,
+and the above snippet makes it clear why this is good advice – the `get` method
+returns `None` when the cache does not contain an entry for the supplied key.

@@ -1,0 +1,37 @@
+{:datetime (datetime "2009-07-28" "03:27:00" :Pacific/Auckland)
+ :tags ["JavaScript" "Mac OS X" "Photoshop"]}
+
+
+# Photoshop "save for web" JavaScript
+
+This is a JavaScript function for Photoshop which saves the active document
+as a 24-bit PNG file. It is equivalent to manually selecting **File > Save for
+Web & Devices...** which means that the file size of the resulting PNG will be
+smaller than would be the case using `PNGSaveOptions()`.
+
+    :::javascript
+    function saveForWebPNG(outputFolderStr, filename)
+    {
+        var opts, file;
+        opts = new ExportOptionsSaveForWeb();
+        opts.format = SaveDocumentType.PNG;
+        opts.PNG8 = false;
+        opts.quality = 100;
+        if (filename.length > 27) {
+            file = new File(outputFolderStr + "/temp.png");
+            activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);
+            file.rename(filename + ".png");
+        }
+        else {
+            file = new File(outputFolderStr + "/" + filename + ".png");
+            activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);
+        }
+    }
+
+Photoshop on Mac limits the length of a `File` object's file name to
+31 characters. Credit for the rename workaround should go to Mark Walsh
+who posted the solution on the Adobe forums in a thread titled
+[Save for web filename problems][1].
+
+
+[1]: http://forums.adobe.com/thread/290409

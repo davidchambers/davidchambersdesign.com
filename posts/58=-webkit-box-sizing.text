@@ -1,0 +1,39 @@
+{:datetime (datetime "2010-07-18" "21:30:00" :Pacific/Auckland)
+ :tags ["CSS" "WebKit"]}
+
+
+# -webkit-box-sizing
+
+This site's search field has been virtually unusable in Chrome and Safari on
+Windows for several months. Fixing it was not high on my priority list, but I
+finally got to it this evening.
+
+![-webkit-box-sizing: border-box][before]
+: Before
+
+I did my best to get these browsers to respect the padding values that I'd
+assigned in my style sheet, getting aggressive in the Web Inspector. No joy.
+
+I then noticed a curious property, `-webkit-box-sizing`. Sure enough, this was
+the culprit. Safari and Chrome both use `border-box` as the default value,
+which means that padding does not add to an element's dimensions the way it
+does in the standard box model.
+
+Specifying `content-box` fixed the problem.
+
+![-webkit-box-sizing: content-box][after]
+: After
+
+This is an extremely satisfying solution as it neatly targets the source of
+the problem.
+
+The question remains as to why these browsers default to `border-box` as the
+`box-sizing` for `input` elements with `type="search"`. I don't know whether
+default styles are specified at the rendering engine level or at the browser
+level, but either way I would say that it's the result of Apple fiddling with
+the controls to make search inputs look sexy on Mac OS X (where they're
+rendered very differently).
+
+
+[before]: /images/posts/58/-webkit-box-sizing=border-box.png
+[after]: /images/posts/58/-webkit-box-sizing=content-box.png

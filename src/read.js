@@ -400,4 +400,14 @@ if (__filename === process.argv[1]) {
                                {type: 'array-literal',
                                 elements: [{type: 'identifier', name: 'x'}]},
                                {type: 'identifier', name: 'x'}]})));
+
+  eq (read ('{:date (datetime "1970-01-01" "00:00:00" :Etc/UTC)}\n\n# Title\n\nText.\n'))
+     (Right (Pair ('\n\n# Title\n\nText.\n')
+                  ({type: 'map-literal',
+                    elements: [{type: 'symbol', value: Symbol.for ('date')},
+                               {type: 'parenthesized',
+                                elements: [{type: 'identifier', name: 'datetime'},
+                                           {type: 'string-literal', value: '1970-01-01'},
+                                           {type: 'string-literal', value: '00:00:00'},
+                                           {type: 'symbol', value: Symbol.for ('Etc/UTC')}]}]})));
 }

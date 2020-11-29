@@ -1,0 +1,93 @@
+{:datetime (datetime "2009-09-16" "23:43:00" :Pacific/Auckland)
+ :tags ["CSS" "HTML" "JavaScript" "meaningful markup" "Prototype"]}
+
+
+# Prototype image slider
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+In my post titled [Captions over images][1] I advocate the use of definition
+lists for captioning images. Earlier today I was asked whether this meaningful
+markup could be used in conjunction with an "image slider" such as
+[Easy Slider 1.5][2].
+
+I had a look at the Easy Slider source code and decided to write my own image
+slider using Prototype rather than hacking someone else's code to pieces. It's
+a proof of concept rather than a full-blown "plugin", but it demonstrates that
+such functionality is achievable using elegant, meaningful markup.
+
+Check out the [Prototype image slider demo][3] to see the code in action.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 17 September 2009, 1:17am (Pacific/Auckland)
+
+I noticed that the script was failing miserably in Safari, which didn't like
+the following line:
+
+    :::javascript
+    li: new Element('li', { class: 'prev' }),
+
+Wrapping the word "class" in quotes as per this [recommendation by Tobie
+Langel][4] did the trick!
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+### Usage {@id=usage}
+
+First, you'll need to save a copy of [prototype-image-slider.js][5].
+
+To create a new `Slider` simply call the constructor. The constructor requires
+one argument, either a DOM node or a string that references a node's ID.
+
+    :::javascript
+    new Slider('slider');
+
+There's nothing to prevent multiple image sliders from appearing on a page. The
+following code turns each div with class of 'slider' into a `Slider` object.
+
+    :::javascript
+    $$('div.slider').each(function (e) {
+        new Slider(e);
+    })
+
+Of course, it's a good idea to wait until the page is ready to be manipulated
+before... er... manipulating the page.
+
+    :::javascript
+    document.observe('dom:loaded', function () {
+        $$('div.slider').each(function (e) {
+            new Slider(e);
+        });
+    });
+
+To provide a small degree of flexibility, the constructor accepts two optional
+arguments: a float specifying the duration of each transition, and an integer
+specifying the number of the slide to be displayed first. The default values
+are 1.0 and 0 (slides are numbered from zero).
+
+    :::javascript
+    new Slider('slider', 0.5);     // faster transitions
+    new Slider('slider', 1.0, 3);  // fourth slide displayed first
+    new Slider('slider', 1.0, -1); // last slide displayed first
+    new Slider('slider', 1.5, -1); // slower transitions; last slide displayed first
+
+If you find this code useful and would like me to flesh it out, let me know.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 21 September 2009, 11:53am (Pacific/Auckland)
+
+I neglected to mention that this code also requires [script.aculo.us][6].
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+[1]: /captions-over-images/
+[2]: http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding
+[3]: /examples/prototype-image-slider/
+[4]: http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777
+[5]: /examples/prototype-image-slider/prototype-image-slider.js
+[6]: http://script.aculo.us/

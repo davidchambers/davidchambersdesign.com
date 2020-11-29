@@ -9,5 +9,5 @@ const import_ = require ('../src/import.js');
 
 
 either (e => { throw e; })
-       (s => { process.stdout.write (s); })
+       (x => { if (typeof x === 'string') process.stdout.write (x); })
        (import_ (baseEnv) (process.argv[2]));

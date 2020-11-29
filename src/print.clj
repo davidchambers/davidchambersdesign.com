@@ -14,12 +14,10 @@
                             (flip concat suffix)]))
             paren (group I "(" ")")]
          (if (instance-of DateTime x)
-             (let [format "yyyy-MM-dd HH:mm:ss (z)"]
-                (paren ["invoke"
-                        (print "fromFormat")
-                        (print [(invoke "toFormat" [format] x) format {"setZone" true}])
-                        (paren [(print "DateTime")
-                                (paren ["import" (print "luxon")])])]))
+             (paren ["datetime"
+                     (print (invoke "toFormat" ["yyyy-MM-dd"] x))
+                     (print (invoke "toFormat" ["HH:mm:ss"] x))
+                     (print (string->symbol ("zoneName" x)))])
              (if (is $.Object x)
                  (group print "{" "}" (chain (lambda [k] [k (k x)]) (concat (property-names x) (property-symbols x))))
                  (if (is-array x)

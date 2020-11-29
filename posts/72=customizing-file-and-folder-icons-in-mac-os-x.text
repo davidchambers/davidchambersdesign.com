@@ -1,0 +1,103 @@
+{:datetime (datetime "2010-09-29" "00:00:00" :Pacific/Auckland)
+ :tags ["icons" "Mac OS X" "Terminal.app"]}
+
+
+# Customizing file and folder icons in Mac OS X
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+Customizing the appearance of files and folders in OS X is a cinch. ⌘C, ⌘I,
+⌘V, punctuated by a few mouse clicks.
+
+**Actually, that's total bullshit.**
+
+Sure, in the simplest of cases the copy and paste approach gets the job done,
+assuming one knows to copy from Preview.app if copying from the original
+source fails. As soon as one decides to do something a bit more advanced, such
+as providing versions for display at different sizes, one's shit outta luck.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+### Creating .icns and applying them to files, folders, or bundles
+
+1.  ![](/images/posts/decorative/right/photoshop-icon.png)
+    
+    Create icon versions at one or more of the following sizes: 16, 32, 128,
+    256, and 512. (I've created two very different images for this tutorial.)
+    
+    ![16x16 icon](/images/posts/72/16x16-icon.png)
+    
+    ![32x32 icon](/images/posts/72/32x32-icon.png)
+    
+    Save the images in a lossless format such as PNG. (If saving from
+    Photoshop, make sure to use **Save for Web & Devices**. Icon Composer
+    doesn't like PNG files generated via Photoshop's **Save** / **Save As**.)
+    
+    ![Save for Web & Devices](/images/posts/72/save-for-web-and-devices.png)
+
+2.  ![](/images/posts/decorative/right/icon-composer-icon.png)
+    
+    Open [Icon Composer][1], located in **/Developer/Applications/Utilities**.
+    This is part of the [Apple Developer Tools][2], which are free to
+    [download from Apple][3]. If you're bandwidth-conscious you can dig
+    out your Mac OS X installation DVD to save yourself a few GBs.
+    
+    ![Icon Composer interface](/images/posts/72/icon-composer-interface.png)
+    : Icon Composer interface
+    
+    Copy and paste the various versions into their respective slots. (The
+    foolproof way to copy an icon is to open it in Preview, ⌘A to select,
+    then ⌘C to copy.)
+    
+    Save the Icon Composer file. This'll create a single **.icns** file
+    containing all the different versions you included.
+
+3.  ![](/images/posts/decorative/right/terminal-icon.png)
+    
+    The final step is to apply attach the .icns file as metadata to the file,
+    folder, or bundle of interest. There are a plethora of apps which provide
+    this functionality via attractive GUIs, but one shouldn't need third-party
+    software to change the appearance of a folder!
+    
+    I scoured the Web for a way to edit this metadata directly. I failed to
+    find one, but came across [the next best thing][4]: a shell script written
+    and kindly shared by Damien Bobillot. [Download setfileicon.gz][5] then
+    crack open Terminal.app, located in **/Applications/Utilities**.
+    
+    In Terminal, navigate to your **Downloads** folder (or wherever you saved
+    the script).
+    
+        $ cd ~/Downloads
+        $ ls
+    
+    Run the `ls` command to inspect the contents of the directory. If you used
+    Safari to download the script, you should see a file named `setfileicon`.
+    If you used another browser you'll likely see `setfileicon.gz`; unzip it
+    by double-clicking the file in Finder.
+    
+    Make the script executable and move it to your **/bin** directory so that
+    it can be run from any directory (you'll be asked to enter your password).
+    
+        $ chmod 555 setfileicon
+        $ sudo mv setfileicon /bin/setfileicon
+    
+    Finally, run the script passing in two arguments: the path to the .icns
+    file; and the path to the file, folder, or bundle to which you'd like to
+    attach the icons.
+    
+        $ setfileicon ~/icons.icns ~/example
+
+### TL;DR
+
+I agree. It shouldn't be this difficult. At least I've now documented the
+convoluted process. :s
+
+![Icons in situ](/images/posts/72/icons-in-situ.png)
+: Icons in situ (note the 16x16 icon in the sidebar)
+
+
+[1]: http://en.wikipedia.org/wiki/Apple_Developer_Tools#Icon_Composer
+[2]: http://developer.apple.com/technologies/tools/
+[3]: http://developer.apple.com/technologies/xcode.html
+[4]: http://www.cocoabuilder.com/archive/xcode/250445-custom-icon-for-bundle.html#250519
+[5]: http://maxao.free.fr/telechargements/setfileicon.gz

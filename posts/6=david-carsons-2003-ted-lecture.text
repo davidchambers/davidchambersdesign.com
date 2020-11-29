@@ -1,0 +1,15 @@
+{:datetime (datetime "2009-02-10" "11:21:00" :Pacific/Auckland)
+ :tags ["design" "typography" "video"]}
+
+
+# David Carson's 2003 TED lecture
+
+One of my flatmates linked me to this clip recently. It's titled
+[Design, discovery and humor][1] and certainly delivers the entertainment
+it promises. It's well worth a look.
+
+<object type="application/x-shockwave-flash" width="446" height="326" data="http://video.ted.com/assets/player/swf/EmbedPlayer.swf"><param name="movie" value="http://video.ted.com/assets/player/swf/EmbedPlayer.swf"></param><param name="wmode" value="transparent"></param><param name="allowFullScreen" value="true"></param><param name="flashvars" value="vu=http://video.ted.com/talks/embed/DavidCarson_2003-embed_high.flv&amp;su=http://images.ted.com/images/ted/tedindex/embed-posters/DavidCarson-2003.embed_thumbnail.jpg&amp;vw=432&amp;vh=240&amp;ap=0&amp;ti=436"></param></object>
+: David Carson presents **Design, discovery and humor** at TED, February 2003
+
+
+[1]: http://www.ted.com/index.php/talks/david_carson_on_design.html

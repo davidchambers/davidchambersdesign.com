@@ -1,0 +1,116 @@
+{:datetime (datetime "2010-07-25" "18:11:00" :Pacific/Auckland)
+ :tags ["JavaScript" "MooTools" "programming" "Python"]}
+
+
+# Python loops can have else clause?!
+
+I write a lot of Python. I also write a lot of JavaScript. As I switch between
+the two (often several times in a day) I sometimes find myself trying to do
+something in one using the syntax of the other. The most common example is
+joining a list.
+
+Python:
+
+    :::python
+    ' '.join(['foo', 'bar'])
+
+JavaScript:
+
+    :::javascript
+    ['foo', 'bar'].join(' ')
+
+Often -- as is the case above -- the syntactical differences are minor, but
+there are times when there's no direct translation.
+
+[MooTools][1], for example, adds the [`every` method][2] to the `Array` object.
+This makes it possible to write some rather terse conditional statements.
+
+    :::javascript
+    var numbers = [87, 33, 21, 75];
+    if (numbers.every(function (n) { return n % 3 == 0; })) {
+        window.alert('The numbers are all divisible by 3.');
+    }
+
+Python lists have no comparable method, so how would one write this in Python?
+
+    :::python
+    numbers = [87, 33, 21, 75]
+    if [n for n in numbers if n % 3 == 0] == numbers:
+        print 'The numbers are all divisible by 3.'
+
+This approach involves using a list comprehension to create a list of numbers
+which are divisible by 3, and comparing this list to `numbers`. If the lists
+are equal, everything in `numbers` is divisible by 3.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 20 June 2012, 2:15pm (America/Los_Angeles)
+
+As [Rafael Almeida pointed out on Twitter][3], there *is* an elegant way to
+express this in Python:
+
+    :::python
+    if all((n % 3 == 0 for n in numbers)):
+        print 'The numbers are all divisible by 3.'
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+### Now for something a bit more challenging
+
+Assume that we have a list of documents, and we want to know which of the
+documents contain all the terms in a list of search terms.
+
+    :::javascript
+    // (MooTools) JavaScript
+    
+    var terms = ['python', 'list', 'methods'], matches = [];
+    documents.each(function (document) {
+        if (terms.every(function (term) {
+            return document.body.indexOf(term) != -1;
+        })) matches.append(document);
+    });
+
+Here, we _could_ use the list comprehension approach as before.
+
+    :::python
+    # Python
+    
+    terms = ['python', 'list', 'methods']
+    matches = []
+    for document in documents:
+        if [t for t in terms if document.body.find(t) != -1] == terms:
+            matches.append(document)
+
+This is reasonably succinct, but not terribly efficient since each document is
+checked for _every_ search term. Given that we're not interested in documents
+that lack even a single search term, it should be possible to rewrite this code
+so that we don't waste time on lost causes.
+
+It turns out that Python has just the thing for the job: **in Python, a loop
+statements may have an `else` clause!**
+
+    :::python
+    terms = ['python', 'list', 'methods']
+    matches = []
+    for document in documents:
+        for term in terms:
+            if document.body.find(term) == -1:
+                break
+        else: # every term was found
+            matches.append(document)
+
+From [4. More Control Flow Tools][4]:
+
+> Loop statements may have an `else` clause; it is executed when the
+> loop terminates through exhaustion of the list (with `for`) or when
+> the condition becomes false (with `while`), but not when the loop is
+> terminated by a `break` statement.
+
+**I'm looking forward to finding more good spots to make use of `else`
+clauses with my Python loops.** :D
+
+
+[1]: http://mootools.net/
+[2]: http://mootools.net/docs/core/Native/Array#Array:every
+[3]: https://twitter.com/rafael_ab/status/215428832872771584
+[4]: http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops

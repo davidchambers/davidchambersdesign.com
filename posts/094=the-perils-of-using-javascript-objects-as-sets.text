@@ -1,0 +1,139 @@
+{:datetime (datetime "2012-09-03" "20:00:00" :America/Los_Angeles)
+ :tags ["best practice" "data structures" "JavaScript" "programming" "Python"]}
+
+
+# The perils of using JavaScript objects as sets
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+One question I'm fond of asking in interviews is how to create a set of
+strings to which values may be added in an efficient manner. Furthermore,
+membership checks must be reliable and as fast as possible. This post can
+be considered the model answer. ;)
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+-------------------------------------------------------------------------------
+
+JavaScript is a small language. So small, in fact, that several useful
+constructs are entirely absent. Just two types of collection are provided:
+arrays and objects (and even these are less different than they appear).
+Sets (collections of unique values) and dictionaries (collections which
+map unique values to other values) are the most glaring omissions.
+
+### How does Python do it?
+
+Python has literal syntax for sets, and supports membership checks via the
+`in` keyword:
+
+    >>> usernames = {'brodie', 'jespern', 'nvenegas'}
+    >>> 'brodie' in usernames
+    True
+    >>> 'davidchambers' in usernames
+    False
+
+Incidentally, since sets are essentially dictionaries without values, it's
+unsurprising that the same form can be used to determine whether a value is
+among a dictionary's keys:
+
+    >>> settings = {'lines': 50, 'number': False, 'spell': True}
+    >>> 'number' in settings
+    True
+    >>> 'wrap' in settings
+    False
+
+### Fashioning a poor man’s set from the limited materials JavaScript provides
+
+How might one create a set of strings in JavaScript given the limited, ahem,
+*set* of data structures at our disposal? One could use a string:
+
+    > usernames = ',brodie,jespern,nvenegas,'
+    > /,brodie,/.test(usernames)
+    true
+    > /,davidchambers,/.test(username)
+    false
+
+This approach is problematic for several reasons: it assumes that "," won't
+appear in a username, membership checks are inefficient, inserting an existing
+member will cause the string to grow unless an expensive membership check is
+performed, and the separators make things awkward.
+
+An array is clearly a better choice:
+
+    > usernames = ['brodie', 'jespern', 'nvenegas']
+    > usernames.indexOf('brodie') >= 0
+    true
+    > usernames.indexOf('davidchambers') >= 0
+    false
+
+Though this is an improvement, membership checks are still inefficient, and
+each insert still requires a member check if we're to avoid having the array
+grow needlessly. If we kept the array ordered we could use binary search, but
+inserts would be even slower as each member would need to be inserted in the
+correct position.
+
+An object, then, is the *best* choice:
+
+    > usernames = {'brodie': 1, 'jespern': 1, 'nvenegas': 1}
+    > 'brodie' in usernames
+    true
+    > 'davidchambers' in usernames
+    false
+
+This addresses the outstanding problems, and the `in` keyword makes the intent
+of these expressions clear.
+
+But it also introduces a subtle bug:
+
+    > 'constructor' in usernames
+    true
+    > 'toString' in usernames
+    true
+    > 'valueOf' in usernames
+    true
+
+The `in` check tells us whether the property exists on the object *or anywhere
+in its prototype chain*. Ugh.
+
+`in` is out, then, but there is a way to ask whether a property exists on the
+object itself:
+
+    > usernames.hasOwnProperty('brodie')
+    true
+    > usernames.hasOwnProperty('davidchambers')
+    false
+
+This fixes the unwanted inheritance problem, but introduces another subtle
+error:
+
+    > usernames['davidchambers'] = 1 // add "davidchambers" to set
+    1
+    > usernames['hasOwnProperty'] = 1 // add "hasOwnProperty" to set
+    1
+    > usernames.hasOwnProperty('davidchambers')
+    TypeError: Property 'hasOwnProperty' of object #<Object> is not a function
+
+If we rely on `usernames.hasOwnProperty` we lose the ability to perform
+membership checks as soon as we add "hasOwnProperty" as a member. The solution
+is to grab the function from a reliable source (`Object.prototype`):
+
+    > Object.prototype.hasOwnProperty.call(usernames, 'davidchambers')
+    true
+
+What a mouthful! This is, though, the correct way to maintain a collection of
+unique strings in JavaScript. It's efficient, and avoids the pitfalls of the
+aforementioned approaches.
+
+### Bonus section
+
+In working through this question with a candidate I realized there's another
+solution, thought I can't think of a compelling reason to favour it:
+
+    > sentinel = {}
+    > usernames = {'brodie': sentinel, 'jespern': sentinel, 'nvenegas': sentinel}
+    > usernames['brodie'] === sentinel
+    true
+    > usernames['davidchambers'] === sentinel
+    false
+    > usernames['constructor'] === sentinel
+    false

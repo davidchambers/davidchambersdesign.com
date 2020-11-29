@@ -1,0 +1,150 @@
+{:datetime (datetime "2010-06-18" "03:12:00" :Pacific/Auckland)
+ :tags ["CSS3" "JavaScript"]}
+
+
+# setTimeout fix for -webkit-transition
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+Here's a simple animation which utilizes `webkitTransition`:
+
+<p id="transition-example-1"
+   style="position:relative;left:0;top:0;width:200px;line-height:5.25em;
+          background-color:#ccc;text-align:center;">Click to animate</p>
+
+<script>
+    (function () {
+        var element = document.getElementById('transition-example-1');
+        element.style.webkitTransitionProperty = 'left';
+        element.style.webkitTransitionDuration = '2s';
+        element.addEventListener('click', function () {
+            this.style.left = '100px';
+            this.addEventListener('webkitTransitionEnd', function () {
+                this.style.left = 0;
+            });
+        });
+    })();
+</script>
+
+The code behind this example is not complicated:
+
+    :::javascript
+    element.style.webkitTransitionProperty = 'left';
+    element.style.webkitTransitionDuration = '2s';
+    element.addEventListener('click', function () {
+        this.style.left = '100px';
+        this.addEventListener('webkitTransitionEnd', function () {
+            this.style.left = 0;
+        });
+    });
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+The following example, though, does not act as one might expect!
+
+<p id="transition-example-2"
+   style="position:relative;left:0;top:0;width:200px;line-height:5.25em;
+          background-color:#ccc;text-align:center;">Click to reposition</p>
+
+<script>
+    (function () {
+        var element = document.getElementById('transition-example-2');
+        element.addEventListener('click', function () {
+            this.style.left = '100px';
+            this.style.webkitTransitionProperty = 'left';
+            this.style.webkitTransitionDuration = '2s';
+            this.addEventListener('webkitTransitionEnd', function () {
+                this.innerHTML = "D'oh!";
+                this.style.left = 0;
+            });
+        });
+    })();
+</script>
+
+The code:
+
+    :::javascript
+    element.style.left = '100px';
+    element.style.webkitTransitionProperty = 'left';
+    element.style.webkitTransitionDuration = '2s';
+
+Here are the instructions this code attempts to provide:
+
+1. Set the element's `left` value to '100px' (the page should immediately be
+   redrawn).
+2. Set `webkitTransitionProperty` and `webkitTransitionDuration`, to apply a
+   transition to _future_ changes in the value of `left`.
+
+What actually happens -- as you'll have seen if you're viewing this page in a
+recent version of Safari or Chrome -- is that the transition is applied to the
+preceding update. This behaviour strikes me as strange, but I have very little
+understanding of how these transitions are meant to be effected by the browser.
+
+I did manage to get the element to behave as I had intended:
+
+<p id="transition-example-3"
+   style="position:relative;left:0;top:0;width:200px;line-height:5.25em;
+          background-color:#ccc;text-align:center;">Click to reposition</p>
+
+<script>
+    (function () {
+        var element = document.getElementById('transition-example-3');
+        element.addEventListener('click', function () {
+            this.style.left = '100px';
+            setTimeout(function () {
+                element.style.webkitTransitionProperty = 'left';
+                element.style.webkitTransitionDuration = '2s';
+            }, 0);
+            setTimeout(function () {
+                element.style.webkitTransitionProperty = 'none';
+                element.style.left = 0;
+            }, 2000);
+        });
+    })();
+</script>
+
+The working code:
+
+    :::javascript
+    element.style.left = '100px';
+    setTimeout(function () {
+        element.style.webkitTransitionProperty = 'left';
+        element.style.webkitTransitionDuration = '2s';
+    }, 0);
+
+For some reason wrapping the `webkitTransition*` declarations in an anonymous
+function passed to `setTimeout` with no delay prevents the transition from
+being applied retroactively. I wondered whether closure would be sufficient,
+but no, `setTimeout` seems to be the remedy for this "quirk".
+
+I'd love to know whether the behaviour described here is correct behaviour.
+If I manage to find the answer to this I'll post an update. If you are able to
+enlighten me, please do so by leaving a comment!
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+#### Update: 2 July 2010, 12:15am (Pacific/Auckland)
+
+I've just been watching one of the [WWDC 2010 session videos][1], and it
+turns out the the fix I stumbled upon is actually the "correct" solution.
+
+From <i>Session 504 – CSS Effects, Part 2: Galleries and 3D Effects</i>:
+
+### Aside: How Browsers Apply CSS Styles
+
+* Browsers optimize away redundant style changes
+* This matters with transitions, because they are temporal
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+var box = document.getElementById('box');
+box.style.backgroundColor = 'red';
+box.style.webkitTransition = 'background-color 2s';
+window.setTimeout(function() {
+  box.style.backgroundColor = 'blue';
+}, 0);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+[1]: http://developer.apple.com/videos/wwdc/2010/

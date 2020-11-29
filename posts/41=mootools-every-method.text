@@ -1,0 +1,84 @@
+{:datetime (datetime "2010-03-18" "00:40:00" :Pacific/Auckland)
+ :tags ["JavaScript" "MooTools"]}
+
+
+# MooTools every method
+
+A reasonably common task is to determine whether a particular statement
+evaluates as true for every item in a collection. Take <var>list</var>,
+for example, an Array containing several numbers:
+
+    :::javascript
+    var list = [4, -1, 3, 2, 5];
+
+One might wish to determine whether all the numbers in <var>list</var> are
+positive. The required logic is as follows:
+
+1. assume that all the numbers in <var>list</var> are positive, then...
+2. loop through <var>list</var> until the assumption is proven to be false,
+   or until all items in <var>list</var> have been tested
+
+In plain JavaScript, this can be achieved using a `for` loop...
+
+    :::javascript
+    var allPositive = true;
+    for (var i = 0; i < list.length; i++) {
+        if (list[i] <= 0) {
+            allPositive = false;
+            break;
+        }
+    }
+
+... or a `while` loop (which is slightly more efficient).
+
+    :::javascript
+    var allPositive = true, i = list.length;
+    while (i--) {
+        if (list[i] <= 0) {
+            allPositive = false;
+            break;
+        }
+    }
+
+**Seriously, though, who is writing _vanilla_ JavaScript in 2010?** Everyone
+and their grandmothers are using JavaScript frameworks these days, and there
+are plenty of good ones out there. I recently made the switch to [MooTools][1]
+from [Prototype][2], after deciding that while [jQuery][3] is fantastic, the
+[MooTools philosophy][4] is more to my liking.
+
+With MooTools, one might consider using the [Array object's each method][5]
+instead of a `for` or `while` loop.
+
+    :::javascript
+    var allPositive = true;
+    list.each(function (item) {
+        if (item <= 0) {
+            allPositive = false;
+        }
+    });
+
+While this gets the job done, it's suboptimal for two reasons: the positiveness
+of _every_ item is evaluated, which will often not be necessary; and, well,
+**it ain't pretty**. ;)
+
+### Enter `every` ###
+
+As is so often the case in programming, if something seems fiddly and difficult
+there's probably a better tool for the job. In this case the [Array object's
+every method][6] is the perfect tool for the job.
+
+    :::javascript
+    var allPositive = list.every(function (item) {
+        return item > 0;
+    });
+
+This is terser than is possible with vanilla JavaScript. It reads better too,
+in my opinion!
+
+
+[1]: http://mootools.net/
+[2]: http://prototypejs.org/
+[3]: http://jquery.com/
+[4]: http://jqueryvsmootools.com/#jsfun
+[5]: http://mootools.net/docs/core/Native/Array#Array:each
+[6]: http://mootools.net/docs/core/Native/Array#Array:every

@@ -1,0 +1,69 @@
+{:datetime (datetime "2012-01-29" "19:20:00" :America/Los_Angeles)
+ :tags ["iTunes" "language" "Mac OS X"]}
+
+
+# iTunes: Surprisingly useful when learning a foreign language
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+I recently began learning Danish. I'm taking a weekly class, and the
+first week's homework involved listening to the conversations we covered
+during the lesson. I began by playing the audio files, following along in
+the Danish transcripts. I found myself wanting to listen to the difficult
+parts over and over, but scrubbing through a timeline is rather awkward.
+
+It occurred to me that I could use iTunes to solve this problem. Normally,
+iTunes will play a track from beginning to end. It's possible, though, to
+specify a certain portion of the track to be played instead. By adding an
+audio file to a playlist many times and specifying consecutive portions
+(e.g. 0:00–0:02, 0:02–0:04.8, ...), a track can be broken into manageable
+clips for more convenient navigation.
+
+Here's the end result:
+
+![iTunes playlist for Danish dialogue][1]
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+### Creating an iTunes playlist from a single audio file
+
+1.  Open iTunes and create a playlist. I named mine "danske".
+
+2.  Locate the audio file in Finder.
+
+3.  Drag the file from the Finder window, and drop it onto the iTunes icon in
+    the dock. This will make a copy of the file in your "iTunes Music" folder.
+
+4.  Drag the file from the Finder window, and drop it onto the newly created
+    playlist in the iTunes sidebar.
+
+5.  Select the track in iTunes, then hit **⌘I** (or select **Get Info** from
+    the **File** menu).
+
+6.  Click the **Options** tab and enter a **Stop Time**. Click **OK**.
+    
+    ![Setting the clip's stop time][2]
+
+7.  Play the clip, and adjust the stop time until the clip contains just the
+    desired portion of the dialogue.
+
+8.  Hit **⌘I** again, and this time click the **Info** tab. Type the clip's
+    transcription into the **Name** field.
+    
+    ![Setting the clip's name][3]
+
+9.  Repeat steps 4 through 8 as necessary. Ensure that each clip's start time
+    is the same as the previous clip's stop time.
+
+10. Select all of the newly added clips. Hit **⌘I**. In the **Album** field,
+    type the name of the audio file. Click **OK**.
+
+Having a dialog comprised of many short clips is very useful. It enables one
+to listen to a clip repeatedly to practise a difficult word or phrase, or to
+say each sentence aloud before listening to the "answer". And since the clips
+are contiguous one can still listen to the dialog from beginning to end.
+
+
+[1]: /images/posts/93/windows/lion/itunes-playlist-for-danish-dialogue.png
+[2]: /images/posts/93/windows/lion/setting-the-stop-time.png
+[3]: /images/posts/93/windows/lion/setting-the-name.png

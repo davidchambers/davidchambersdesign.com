@@ -1,0 +1,46 @@
+{:datetime (datetime "2010-12-11" "15:00:00" :Australia/Sydney)
+ :tags ["JavaScript" "programming"]}
+
+
+# Bitwise NOT operator proves useful in JavaScript
+
+JavaScript is a wonderful language. Its syntax, though, leaves a lot to be
+desired at times. String pattern matching, for example, is rather ugly.
+
+    :::javascript
+    // ugly option 1
+    if (text.indexOf('✈') != -1)
+
+    // ugly option 2
+    if (text.indexOf('✈') >= 0)
+
+    // ugly option 3
+    if (text.indexOf('✈') > -1)
+
+It'd be nice to be able to write `text.contains('✈')`, which is both intuitive
+and self-documenting. The language does provide a way to make such expressions
+terser, but it's far from obvious.
+
+    :::javascript
+    // bitwise NOT
+    if (~text.indexOf('✈'))
+
+[Bitwise operators][1] make my head spin, but the Perl programmer in me thinks
+they're awesome. I don't profess to understand _why_ exactly the bitwise NOT
+operator does what it does, but I've played with it enough to know how it
+behaves. It's equivalent to the following function, at least for the values
+that can be returned by [`indexOf`][2].
+
+    :::javascript
+    function bitwiseNot(n) {
+        return -n - 1;
+    }
+
+`indexOf` returns -1, 0, 1, 2, 3, or some other positive integer. When these
+values are used as operands for the bitwise NOT operator, the results are 0,
+-1, -2, -3, -4, and so on. Therefore, `~text.indexOf('✈')` is equivalent to
+`text.contains('✈')` in Boolean contexts.
+
+
+[1]: https://developer.mozilla.org/en/JavaScript/Reference/Operators/Bitwise_Operators
+[2]: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/indexOf
