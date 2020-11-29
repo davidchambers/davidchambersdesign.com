@@ -39,9 +39,9 @@
            [(reduce concat
                     [[:text text] [:html! html!]]
                     [(map (lambda [tag-name] [tag-name (block-element tag-name)])
-                          [:article :body :div :footer :head :header :html :nav :ol :ul])
+                          [:article :body :div :footer :head :header :html :linearGradient :nav :ol :svg :ul])
                      (map (lambda [tag-name] [tag-name (inline-element tag-name)])
                           [:a :h1 :h2 :h3 :h4 :h5 :h6 :li :p :script :span :strong :time :title])
                      (map (lambda [tag-name] [tag-name (self-closing-element tag-name)])
-                          [:hr :link :meta])])]
+                          [:hr :link :meta :path :stop])])]
            Object)))
