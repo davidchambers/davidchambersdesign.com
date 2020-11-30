@@ -8,8 +8,8 @@
             [(article {}
                 [(header {}
                     [(h1 {} [(text (:title post))])
-                     (time {:datetime (invoke "toFormat" ["yyyy-MM-dd'T'HH:mm:ssZZ"] (:datetime post)) :pubdate "pubdate"}
-                        [(text (invoke "toFormat" ["d MMMM yyyy"] (:datetime post)))])])
+                     (time {:datetime (.toFormat "yyyy-MM-dd'T'HH:mm:ssZZ" (:datetime post)) :pubdate "pubdate"}
+                        [(text (.toFormat "d MMMM yyyy" (:datetime post)))])])
                  (html! (exec-sync "python -m markdown -x def_list"
                                    {"input" (:body post)
                                     "encoding" "utf8"}))

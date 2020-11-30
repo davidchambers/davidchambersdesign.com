@@ -25,6 +25,7 @@ const {
   either,
   elem,
   flip: C,
+  fromMaybe_,
   is,
   join,
   lift2,
@@ -32,9 +33,10 @@ const {
   mapLeft,
   maybe,
   pair,
-  prepend,
   reduce,
+  reverse,
   snd,
+  stripPrefix,
   tagBy,
   traverse,
   unfoldr,
@@ -200,14 +202,25 @@ const evaluate = module.exports = dirname => env => term => {
                                                      (tagBy (is ($.String)))))
                                         (evaluate (dirname) (env) (importPaths))));
            }
-           return map (([f, ...args]) => args.length === 0 ?
-                                         f () :
-                                         reduce (f => x => (elem (typeof f) (['number', 'string', 'symbol']) ? o => o[f] : f) (x))
-                                                (f)
-                                                (args))
-                      (traverse (Either)
-                                (evaluate (dirname) (env))
-                                (prepend (head) (tail)));
+           return fromMaybe_
+             (() => lift2 (head => args => args.length === 0 ?
+                                           head () :
+                                           reduce (I)
+                                                  (elem (typeof head) (['number', 'string', 'symbol']) ? o => o[head] : head)
+                                                  (args))
+                          (evaluate (dirname) (env) (head))
+                          (traverse (Either)
+                                    (evaluate (dirname) (env))
+                                    (tail)))
+             (lift2 (name => pair (self => args => lift2 (args => self => self[name] (...args))
+                                                         (traverse (Either)
+                                                                   (evaluate (dirname) (env))
+                                                                   (args))
+                                                         (evaluate (dirname) (env) (self))))
+                    (head.type === 'identifier' ? stripPrefix ('.') (head.name) : Nothing)
+                    (array (Nothing)
+                           (B (B (B (Just) (map (reverse)))) (Pair))
+                           (reverse (tail))));
          })
         (term.elements);
     }
@@ -322,13 +335,13 @@ if (__filename === process.argv[1]) {
   eq (eval_ ({}) ("(let' {:x 8 :y x} y)"))
      (Left (new ReferenceError ('x is not defined')));
 
-  eq (eval_ (baseEnv) (`(let' (invoke "fromEntries" [[[:x 1] [:y 2]]] Object) x)`))
+  eq (eval_ (baseEnv) (`(let' (.fromEntries [[:x 1] [:y 2]] Object) x)`))
      (Right (1));
 
-  eq (eval_ (baseEnv) (`(let' (invoke "fromEntries" [[[:x 1] [:y 2]]] Object) y)`))
+  eq (eval_ (baseEnv) (`(let' (.fromEntries [[:x 1] [:y 2]] Object) y)`))
      (Right (2));
 
-  eq (eval_ (baseEnv) (`(let' (invoke "fromEntries" [[[:x 1] [:y 2]]] Object) z)`))
+  eq (eval_ (baseEnv) (`(let' (.fromEntries [[:x 1] [:y 2]] Object) z)`))
      (Left (new ReferenceError ('z is not defined')));
 
   eq (eval_ ({}) ('true'))
@@ -352,13 +365,13 @@ if (__filename === process.argv[1]) {
   eq (eval_ ({}) ('(if "xxx" x x)'))
      (Left (new TypeError ('Predicate evaluated to non-Boolean value')));
 
-  eq (eval_ (baseEnv) ('(invoke "toUpperCase" [] "foo")'))
+  eq (eval_ (baseEnv) ('(.toUpperCase "foo")'))
      (Right ('FOO'));
 
-  eq (eval_ (baseEnv) ('(invoke "toFixed" [2] 123.456)'))
+  eq (eval_ (baseEnv) ('(.toFixed 2 123.456)'))
      (Right ('123.46'));
 
-  eq (eval_ (baseEnv) ('(invoke "abs" [-1] Math)'))
+  eq (eval_ (baseEnv) ('(.abs -1 Math)'))
      (Right (1));
 
   eq (eval_ ({[Symbol.for ('=')]: y => x => x === y,

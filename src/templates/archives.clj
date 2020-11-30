@@ -17,8 +17,8 @@
                                               [(html! (parse-inline (:title post)))])
                                            (text " ")
                                            (let [datetime (:datetime post)]
-                                              (time {:datetime (invoke "toISO" [] datetime)}
-                                                 [(text (concat (invoke "toFormat" ["d MMMM y | h:mm"] datetime)
-                                                                (to-lower (invoke "toFormat" ["a"] datetime))))]))]))
+                                              (time {:datetime (.toISO datetime)}
+                                                 [(text (concat (.toFormat "d MMMM y | h:mm" datetime)
+                                                                (to-lower (.toFormat "a" datetime))))]))]))
                                     (:posts section)))]))
                      sections))]))))

@@ -410,4 +410,25 @@ if (__filename === process.argv[1]) {
                                            {type: 'string-literal', value: '1970-01-01'},
                                            {type: 'string-literal', value: '00:00:00'},
                                            {type: 'symbol', value: Symbol.for ('Etc/UTC')}]}]})));
+
+  eq (read ('(.toUpperCase "foo")'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'identifier', name: '.toUpperCase'},
+                               {type: 'string-literal', value: 'foo'}]})));
+
+  eq (read ('(.concat "bar" "foo")'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'identifier', name: '.concat'},
+                               {type: 'string-literal', value: 'bar'},
+                               {type: 'string-literal', value: 'foo'}]})));
+
+  eq (read ('(.slice 1 -1 "foo")'))
+     (Right (Pair ('')
+                  ({type: 'parenthesized',
+                    elements: [{type: 'identifier', name: '.slice'},
+                               {type: 'number-literal', value: 1},
+                               {type: 'number-literal', value: -1},
+                               {type: 'string-literal', value: 'foo'}]})));
 }

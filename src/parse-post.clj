@@ -15,10 +15,8 @@
       resolve ("resolve" Future)
 
       filename $2
-      dirname (invoke "dirname" [filename] path)
-      slug (invoke "replace"
-                   [(regex "" "^[^=]+=") ""]
-                   (invoke "basename" [filename ".text"] path))]
+      dirname (.dirname filename path)
+      slug (.replace (regex "" "^[^=]+=") "" (.basename filename ".text" path))]
 
    (fork ("error" console)
          (compose ("log" console) print)
@@ -32,9 +30,9 @@
                                                             (lambda [title]
                                                                (resolve {:slug slug
                                                                          :title title
-                                                                         :body (invoke "replace"
-                                                                                       [(regex "g" " -- ") "\u2009\u2014\u2009"]
-                                                                                       (unlines (drop-while (equals "") lines)))}))
+                                                                         :body (.replace (regex "g" " -- ")
+                                                                                         "\u2009\u2014\u2009"
+                                                                                         (unlines (drop-while (equals "") lines)))}))
                                                             (strip-prefix "# " line)))
                                                   (drop-while (equals "") (lines rest))))))
                           (read text)))

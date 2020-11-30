@@ -4,7 +4,7 @@
       $.Object ("Object" $)]
 
    {:string->symbol ("for" Symbol)
-    :symbol->string (lambda [sym] (invoke "slice" [("length" "Symbol(") (- ("length" ")") 0)] (String sym)))
+    :symbol->string (lambda [sym] (.slice ("length" "Symbol(") (- ("length" ")") 0) (String sym)))
 
     :curry-2 (lambda [f a b] (apply f [a b]))
     :curry-3 (lambda [f a b c] (apply f [a b c]))
@@ -13,5 +13,5 @@
 
     :++ (join-with "")
 
-    :concat (lambda [m1 m2] (if (is $.Object m1) (invoke "assign" [{} m1 m2] Object) (concat m1 m2)))
-    :insert (lambda [key val obj] (invoke "assign" [{} obj (invoke "fromEntries" [[[key val]]] Object)] Object))}))
+    :concat (lambda [m1 m2] (if (is $.Object m1) (.assign {} m1 m2 Object) (concat m1 m2)))
+    :insert (lambda [key val obj] (.assign {} obj (.fromEntries [[key val]] Object) Object))}))

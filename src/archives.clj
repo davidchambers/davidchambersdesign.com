@@ -6,7 +6,7 @@
 
    (pipe [(map (lambda [filename] (import base filename)))
           (sort-by (lambda [post] (Number (:datetime post))))
-          (group-by (on equals (lambda [post] (invoke "toFormat" ["y-MM"] (:datetime post)))))
-          (map (lambda [posts] {:heading (invoke "toFormat" ["MMMM y"] (:datetime (0 posts))) :posts posts}))
+          (group-by (on equals (lambda [post] (.toFormat "y-MM" (:datetime post)))))
+          (map (lambda [posts] {:heading (.toFormat "MMMM y" (:datetime (0 posts))) :posts posts}))
           (lambda [sections] (render-document "  " [(archives sections)]))]
-         (invoke "slice" [3] ("argv" process)))))
+         (.slice 3 ("argv" process)))))

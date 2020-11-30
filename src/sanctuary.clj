@@ -10,20 +10,14 @@
 
 (import* ["./base.js"]
 
-(invoke "fromEntries"
-        [(invoke "map"
-                 [(lambda [entry]
-                     [(invoke "for"
-                              [(invoke "replace"
-                                       [(new RegExp ["_" "g"])
-                                        "'"]
-                                       (invoke "replace"
-                                               [(new RegExp ["(?!\\b)[A-Z0-9]" "g"])
-                                                (lambda [c] (invoke "concat" [(invoke "toLowerCase" [] c)] "-"))]
-                                               (0 entry)))]
+(.fromEntries (.map (lambda [entry]
+                       [(.for (.replace (new RegExp ["_" "g"])
+                                        "'"
+                                        (.replace (new RegExp ["(?!\\b)[A-Z0-9]" "g"])
+                                                  (lambda [c] (.concat (.toLowerCase c) "-"))
+                                                  (0 entry)))
                               Symbol)
-                      (1 entry)])]
-                 (invoke "filter"
-                         [(lambda [entry] (!== "unchecked" (0 entry)))]
-                         (invoke "entries" [("unchecked" (import "sanctuary"))] Object)))]
-        Object))
+                        (1 entry)])
+                    (.filter (lambda [entry] (!== "unchecked" (0 entry)))
+                             (.entries ("unchecked" (import "sanctuary")) Object)))
+              Object))
