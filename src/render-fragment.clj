@@ -2,7 +2,7 @@
 
 (let [replace (lambda [this that text] (.replace this that text))]
 
-   (function render [indent level inline nodes]
+   (function render-fragment [indent level inline nodes]
       (++ (map (lambda [node]
                   (if (=== :text (:type node))
                       (pipe [(replace (regex "g" "&") "&amp;")
@@ -20,9 +20,9 @@
                                      [indentation "<" tag-name attrs " />\n"]
                                      (if (equals "inline" (:format node))
                                          [indentation "<" tag-name attrs ">"
-                                          (render indent 0 true (:children node))
+                                          (render-fragment indent 0 true (:children node))
                                           "</" tag-name ">" (if inline "" "\n")]
                                          [indentation "<" tag-name attrs ">\n"
-                                          (render indent (add 1 level) false (:children node))
+                                          (render-fragment indent (add 1 level) false (:children node))
                                           indentation "</" tag-name ">\n"])))))))
                nodes)))))
