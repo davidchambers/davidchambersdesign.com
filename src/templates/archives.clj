@@ -5,20 +5,20 @@
 
    (lambda [sections]
       (base "Archives"
-            [(h1 {} [(text "Archives")])
-             (ol {:class "archives"}
+            [(h1 "Archives")
+             (ol' {:class "archives"}
                 (map (lambda [section]
-                        (li {}
-                           [(h2 {} [(text (:heading section))])
-                            (ol {}
+                        (li
+                           [(h2 (:heading section))
+                            (ol
                                (map (lambda [post]
-                                       (li {}
+                                       (li
                                           [(a {:href (concat "/TK/" (:slug post))}
                                               [(html! (parse-inline (:title post)))])
-                                           (text " ")
+                                           " "
                                            (let [datetime (:datetime post)]
                                               (time {:datetime (.toISO datetime)}
-                                                 [(text (concat (.toFormat "d MMMM y | h:mm" datetime)
-                                                                (to-lower (.toFormat "a" datetime))))]))]))
+                                                 (concat (.toFormat "d MMMM y | h:mm" datetime)
+                                                         (to-lower (.toFormat "a" datetime)))))]))
                                     (:posts section)))]))
                      sections))]))))

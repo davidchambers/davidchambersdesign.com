@@ -48,6 +48,28 @@ const readGroup = closing => type => elements => (
     (trimLeft)
 );
 
+const readString = rest => {
+  let value = '';
+  let idx = 0;
+  outer:
+  while (true) {
+    let c;
+    switch (c = rest[idx++]) {
+      case undefined: return Left (new SyntaxError ('Unterminated string literal'));
+      case '"':       return Right (Pair (rest.slice (idx)) ({type: 'string-literal', value}));
+      case '\\':
+        switch (c = rest[idx++]) {
+          case '"':   value += '"'; continue outer;
+          case 'n':   value += '\n'; continue outer;
+          case 't':   value += '\t'; continue outer;
+          case '\\':  value += '\\'; continue outer;
+          default:    return Left (new SyntaxError ('Invalid escape sequence'));
+        }
+      default:        value += c;
+    }
+  }
+};
+
 const read = module.exports = pipe ([
   trimLeft,
   Right,
@@ -58,15 +80,7 @@ const read = module.exports = pipe ([
     s => s.startsWith (']') ? Left (Left (new SyntaxError ('Unmatched ]'))) : Right (s),
     s => s.startsWith ('{') ? Left (readGroup ('}') ('map-literal') ([]) (s.slice (1))) : Right (s),
     s => s.startsWith ('}') ? Left (Left (new SyntaxError ('Unmatched }'))) : Right (s),
-    s => s.startsWith ('"') ?
-         Left (maybe (Left (new SyntaxError ('Unterminated string literal')))
-                     (B (raw => bimap (K (new SyntaxError ('Invalid string literal')))
-                                      (value => Pair (s.slice (raw.length))
-                                                     ({type: 'string-literal', value}))
-                                      (encase (JSON.parse) (raw)))
-                        (prop ('match')))
-                     (match (/"(\\"|[^"])*"/) (s))) :
-         Right (s),
+    s => s.startsWith ('"') ? Left (readString (s.slice (1))) : Right (s),
     s => maybe (Right (s))
                (s => Left (maybe (Left (new SyntaxError ('Empty symbol')))
                                  (B (name => Right (Pair (s.slice (name.length))
@@ -196,6 +210,8 @@ if (__filename === process.argv[1]) {
                   ({type: 'symbol', value: Symbol.for ('<*>')})));
 
   eq (read ('"')) (Left (new SyntaxError ('Unterminated string literal')));
+  eq (read ('"\\"')) (Left (new SyntaxError ('Unterminated string literal')));
+  eq (read ('"\\z"')) (Left (new SyntaxError ('Invalid escape sequence')));
 
   eq (read ('""'))
      (Right (Pair ('')
@@ -228,8 +244,6 @@ if (__filename === process.argv[1]) {
   eq (read ('"\\t"'))
      (Right (Pair ('')
                   ({type: 'string-literal', value: '\t'})));
-
-  eq (read ('"\\"')) (Left (new SyntaxError ('Invalid string literal')));
 
   eq (read ('0')) (Right (Pair ('') ({type: 'number-literal', value: 0})));
   eq (read ('1')) (Right (Pair ('') ({type: 'number-literal', value: 1})));

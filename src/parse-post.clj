@@ -16,24 +16,14 @@
 
       filename $2
       dirname (.dirname filename path)
-      slug (.replace (regex "" "^[^=]+=") "" (.basename filename ".text" path))]
+      slug (.replace (regex "" "^[^=]+=") "" (.basename filename ".clj" path))]
 
-   (fork ("error" console)
-         (compose ("log" console) print)
-         (chain (lambda [text]
-                   (chain (pair (lambda [rest expr]
-                                   (lift-2 concat
-                                           (either reject resolve (eval dirname base expr))
-                                           (array (reject (new Error ["Failed to find post title"]))
-                                                  (lambda [line lines]
-                                                     (maybe (reject (new Error ["Failed to find post title"]))
-                                                            (lambda [title]
-                                                               (resolve {:slug slug
-                                                                         :title title
-                                                                         :body (.replace (regex "g" " -- ")
-                                                                                         "\u2009\u2014\u2009"
-                                                                                         (unlines (drop-while (equals "") lines)))}))
-                                                            (strip-prefix "# " line)))
-                                                  (drop-while (equals "") (lines rest))))))
-                          (read text)))
-                (read-file filename)))))
+   (pipe [read-file
+          (chain (pipe [read
+                        (map snd)
+                        (chain (eval dirname base))
+                        (either reject resolve)]))
+          (map (insert :slug slug))
+          (map print)
+          (fork ("error" console) ("log" console))]
+         filename)))

@@ -11,6 +11,9 @@
     :curry-4 (lambda [f a b c d] (apply f [a b c d]))
     :curry-5 (lambda [f a b c d e] (apply f [a b c d e]))
 
+    :array? ("isArray" Array)
+    :string? (compose (=== "string") type-of)
+
     :++ (join-with "")
 
     :concat (lambda [m1 m2] (if (is $.Object m1) (.assign {} m1 m2 Object) (concat m1 m2)))

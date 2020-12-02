@@ -1,46 +1,117 @@
-(import* ["./base.js" "./sanctuary.clj"]
+(import* ["./base.js" "./sanctuary.clj" "./prelude.clj"]
 
 (let
-   [block-element
-      (lambda [tag-name attrs children]
-         {:type :element
-          :tag-name tag-name
-          :format "block"
-          :self-closing false
-          :attrs attrs
-          :children children})
-    inline-element
-      (lambda [tag-name attrs children]
-         {:type :element
-          :tag-name tag-name
-          :format (if (any (lambda [node] (equals "block" (:format node))) children)
-                      "block"
-                      "inline")
-          :self-closing false
-          :attrs attrs
-          :children children})
-    self-closing-element
-      (lambda [tag-name attrs]
-         {:type :element
-          :tag-name tag-name
-          :format "inline"
-          :self-closing true
-          :attrs attrs})
-    text
+   [text
       (lambda [value]
          {:type :text
           :value value})
     html!
       (lambda [value]
          {:type :html
-          :value value})]
+          :value value})
+    canonicalize-children
+      (compose (map (when string?
+                          (pipe [lines
+                                 (map (lambda [line] (.replace (regex "" "^[ ]+") " " line)))
+                                 (join-with "")
+                                 text])))
+               (unless array? (of Array)))
+    block-element
+      (lambda [tag-name attrs children]
+         {:type :element
+          :tag-name tag-name
+          :format "block"
+          :self-closing false
+          :attrs attrs
+          :children (canonicalize-children children)})
+    inline-element
+      (lambda [tag-name attrs children]
+         (let [children (canonicalize-children children)]
+            {:type :element
+             :tag-name tag-name
+             :format (if (any (lambda [node] (equals "block" (:format node))) children)
+                         "block"
+                         "inline")
+             :self-closing false
+             :attrs attrs
+             :children children}))
+    self-closing-element
+      (lambda [tag-name attrs]
+         {:type :element
+          :tag-name tag-name
+          :format "inline"
+          :self-closing true
+          :attrs attrs})]
 
-   (.fromEntries (reduce concat
-                         [[:text text] [:html! html!]]
-                         [(map (lambda [tag-name] [tag-name (block-element tag-name)])
-                               [:article :body :div :footer :head :header :html :linearGradient :nav :ol :svg :ul])
-                          (map (lambda [tag-name] [tag-name (inline-element tag-name)])
-                               [:a :h1 :h2 :h3 :h4 :h5 :h6 :li :p :script :span :strong :time :title])
-                          (map (lambda [tag-name] [tag-name (self-closing-element tag-name)])
-                               [:hr :link :meta :path :stop])])
-                 Object)))
+   {:text text
+    :html! html!
+    ; The opening and closing tags of each of the following elements
+    ; are always rendered on their own lines.
+    :article'               (block-element :article)
+    :article                (block-element :article {})
+    :blockquote'            (block-element :blockquote)
+    :blockquote             (block-element :blockquote {})
+    :body'                  (block-element :body)
+    :body                   (block-element :body {})
+    :div                    (block-element :div)
+    :dl'                    (block-element :dl)
+    :dl                     (block-element :dl {})
+    :footer'                (block-element :footer)
+    :footer                 (block-element :footer {})
+    :head'                  (block-element :head)
+    :head                   (block-element :head {})
+    :header'                (block-element :header)
+    :header                 (block-element :header {})
+    :html'                  (block-element :html)
+    :html                   (block-element :html {})
+    :linearGradient         (block-element :linearGradient)
+    :nav'                   (block-element :nav)
+    :nav                    (block-element :nav {})
+    :ol'                    (block-element :ol)
+    :ol                     (block-element :ol {})
+    :svg                    (block-element :svg)
+    :ul'                    (block-element :ul)
+    :ul                     (block-element :ul {})
+    ; The opening and closing tags of each of the following elements
+    ; are rendered inline unless the element contains an element
+    ; whose opening and closing tags are rendered on their own lines.
+    :a                     (inline-element :a)
+    :code'                 (inline-element :code)
+    :code                  (inline-element :code {})
+    :dd'                   (inline-element :dd)
+    :dd                    (inline-element :dd {})
+    :dt'                   (inline-element :dt)
+    :dt                    (inline-element :dt {})
+    :h1'                   (inline-element :h1)
+    :h1                    (inline-element :h1 {})
+    :h2'                   (inline-element :h2)
+    :h2                    (inline-element :h2 {})
+    :h3'                   (inline-element :h3)
+    :h3                    (inline-element :h3 {})
+    :h4'                   (inline-element :h4)
+    :h4                    (inline-element :h4 {})
+    :h5'                   (inline-element :h5)
+    :h5                    (inline-element :h5 {})
+    :h6'                   (inline-element :h6)
+    :h6                    (inline-element :h6 {})
+    :li'                   (inline-element :li)
+    :li                    (inline-element :li {})
+    :p'                    (inline-element :p)
+    :p                     (inline-element :p {})
+    :pre'                  (inline-element :pre)
+    :pre                   (inline-element :pre {})
+    :script                (inline-element :script)
+    :span                  (inline-element :span)
+    :strong'               (inline-element :strong)
+    :strong                (inline-element :strong {})
+    :time                  (inline-element :time)
+    :title'                (inline-element :title)
+    :title                 (inline-element :title {})
+    ; The following self-closing elements are always rendered inline.
+    :hr'                   (self-closing-element :hr)
+    :hr                    (self-closing-element :hr {})
+    :img                   (self-closing-element :img)
+    :link                  (self-closing-element :link)
+    :meta                  (self-closing-element :meta)
+    :path                  (self-closing-element :path)
+    :stop                  (self-closing-element :stop)}))
