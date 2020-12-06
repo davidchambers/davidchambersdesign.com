@@ -5,21 +5,22 @@ const S = require ('sanctuary');
 
 const {
   I,
+  Just,
   K,
   Left,
   Pair,
   Right,
   append,
-  bimap,
   chain,
   compose: B,
   either,
-  encase,
   equals,
+  filter,
   match,
   maybe,
   maybe_,
   pair,
+  parseInt: parseInt_,
   pipe,
   pipeK,
   prop,
@@ -54,15 +55,24 @@ const readString = rest => {
   outer:
   while (true) {
     let c;
-    switch (c = rest[idx++]) {
+    switch (c = rest[idx++]) {  // eslint-disable-line no-plusplus
       case undefined: return Left (new SyntaxError ('Unterminated string literal'));
       case '"':       return Right (Pair (rest.slice (idx)) ({type: 'string-literal', value}));
       case '\\':
-        switch (c = rest[idx++]) {
+        switch (c = rest[idx++]) {  // eslint-disable-line no-plusplus
           case '"':   value += '"'; continue outer;
           case 'n':   value += '\n'; continue outer;
           case 't':   value += '\t'; continue outer;
           case '\\':  value += '\\'; continue outer;
+          case 'u': {
+            const code = chain (parseInt_ (16))
+                               (filter (B (equals (4)) (prop ('length')))
+                                       (Just (rest.slice (idx, idx += 4))));
+            if (code.isJust) {
+              value += String.fromCharCode (code.value);
+              continue outer;
+            }
+          }
           default:    return Left (new SyntaxError ('Invalid escape sequence'));
         }
       default:        value += c;
@@ -212,6 +222,7 @@ if (__filename === process.argv[1]) {
   eq (read ('"')) (Left (new SyntaxError ('Unterminated string literal')));
   eq (read ('"\\"')) (Left (new SyntaxError ('Unterminated string literal')));
   eq (read ('"\\z"')) (Left (new SyntaxError ('Invalid escape sequence')));
+  eq (read ('"\\uXXXX"')) (Left (new SyntaxError ('Invalid escape sequence')));
 
   eq (read ('""'))
      (Right (Pair ('')

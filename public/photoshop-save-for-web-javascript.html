@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Photoshop "save for web" JavaScript</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,12 +39,8 @@
             <h1>Photoshop "save for web" JavaScript</h1>
             <time datetime="2009-07-28T03:27:00+12:00" pubdate="pubdate">28 July 2009</time>
           </header>
-<p>This is a JavaScript function for Photoshop which saves the active document
-as a 24-bit PNG file. It is equivalent to manually selecting <strong>File &gt; Save for
-Web &amp; Devices...</strong> which means that the file size of the resulting PNG will be
-smaller than would be the case using <code>PNGSaveOptions()</code>.</p>
-<pre><code>:::javascript
-function saveForWebPNG(outputFolderStr, filename)
+          <p>This is a JavaScript function for Photoshop which saves the active document as a 24-bit PNG file. It is equivalent to manually selecting <strong>File &gt; Save for Web &amp; Devices...</strong> which means that the file size of the resulting PNG will be smaller than would be the case using <code>PNGSaveOptions()</code>.</p>
+          <pre><code>function saveForWebPNG(outputFolderStr, filename)
 {
     var opts, file;
     opts = new ExportOptionsSaveForWeb();
@@ -60,12 +56,8 @@ function saveForWebPNG(outputFolderStr, filename)
         file = new File(outputFolderStr + "/" + filename + ".png");
         activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);
     }
-}
-</code></pre>
-<p>Photoshop on Mac limits the length of a <code>File</code> object's file name to
-31 characters. Credit for the rename workaround should go to Mark Walsh
-who posted the solution on the Adobe forums in a thread titled
-<a href="http://forums.adobe.com/thread/290409">Save for web filename problems</a>.</p>
+}</code></pre>
+          <p>Photoshop on Mac limits the length of a <code>File</code> object's file name to 31 characters. Credit for the rename workaround should go to Mark Walsh who posted the solution on the Adobe forums in a thread titled <a href="http://forums.adobe.com/thread/290409">Save for web filename problems</a>.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>

@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Coda theme for SyntaxHighlighter</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,48 +39,29 @@
             <h1>Coda theme for SyntaxHighlighter</h1>
             <time datetime="2009-08-16T08:53:00+12:00" pubdate="pubdate">16 August 2009</time>
           </header>
-<p><a href="#setup">Skip to setup instructions</a></p>
-<hr />
-<p>It's no secret – I love <a href="http://www.panic.com/coda/">Coda</a>! It's a pleasure to use. <strong>It looks so damn
-good.</strong> When I started using <a href="http://alexgorbatchev.com/wiki/SyntaxHighlighter">SyntaxHighlighter</a> I set out to create a Coda
-theme. Thankfully, the good folks at Panic had done the ground work for me.
-All I had to do was create a style sheet that would make my code snippets look
-as sexy online as they do in my text editor.</p>
-<p>Or so I thought.</p>
-<hr />
-<p>As I delved deeper, it became apparent that realising my goal would require
-plenty of effort. In order for SyntaxHighlighter to work its magic it requires
-at least one brush and at least one theme. A brush is a JavaScript file that
-contains regular expressions to match the syntactical features of a particular
-language. A theme, as you might expect, is a CSS file which controls the way
-SyntaxHighlighter's output is displayed. At first glance, brushes and themes
-appear to be loosely coupled, allowing programmers to create language-specific
-brushes, and designers to create themes that can work with any number of
-brushes.</p>
-<p>It soon became apparent that brushes and themes are not so loosely coupled
-after all. For example, the bundled HTML brush does not include the angled
-brackets when highlighting a tag. Coda does. <strong>So, the theme itself is
-accompanied by a number of customized brushes.</strong></p>
-<h3>Supported languages</h3>
-<p>The theme currently supports a handful of languages: CSS, HTML/XML, JavaScript,
-PHP, and Python. These are the languages with which I'm familiar. <strong>If you'd
-like to see another language supported, please let me know.</strong></p>
-<h4>CSS</h4>
-<pre><code>p.error.message   { border: 1px solid #c00; background-color: #fcc; }
+          <p><a href="#setup">Skip to setup instructions</a></p>
+          <hr />
+          <p>It's no secret – I love <a href="http://www.panic.com/coda/">Coda</a>! It's a pleasure to use. <strong>It looks so damn good.</strong> When I started using <a href="http://alexgorbatchev.com/wiki/SyntaxHighlighter">SyntaxHighlighter</a> I set out to create a Coda theme. Thankfully, the good folks at Panic had done the ground work for me. All I had to do was create a style sheet that would make my code snippets look as sexy online as they do in my text editor.</p>
+          <p>Or so I thought.</p>
+          <hr />
+          <p>As I delved deeper, it became apparent that realising my goal would require plenty of effort. In order for SyntaxHighlighter to work its magic it requires at least one brush and at least one theme. A brush is a JavaScript file that contains regular expressions to match the syntactical features of a particular language. A theme, as you might expect, is a CSS file which controls the way SyntaxHighlighter's output is displayed. At first glance, brushes and themes appear to be loosely coupled, allowing programmers to create language-specific brushes, and designers to create themes that can work with any number of brushes.</p>
+          <p>It soon became apparent that brushes and themes are not so loosely coupled after all. For example, the bundled HTML brush does not include the angled brackets when highlighting a tag. Coda does. <strong>So, the theme itself is accompanied by a number of customized brushes.</strong></p>
+          <h3>Supported languages</h3>
+          <p>The theme currently supports a handful of languages: CSS, HTML/XML, JavaScript, PHP, and Python. These are the languages with which I'm familiar. <strong>If you'd like to see another language supported, please let me know.</strong></p>
+          <h4>CSS</h4>
+          <pre><code>p.error.message   { border: 1px solid #c00; background-color: #fcc; }
 p.info.message    { border: 1px solid #fc3; background-color: #ffc; }
-p.success.message { border: 1px solid #0b0; background-color: #cfc; }
-</code></pre>
-<h4>HTML</h4>
-<pre><code>&lt;form id="searchform" action="http://davidchambersdesign.com/" method="get"&gt;
+p.success.message { border: 1px solid #0b0; background-color: #cfc; }</code></pre>
+          <h4>HTML</h4>
+          <pre><code>&lt;form id="searchform" action="http://davidchambersdesign.com/" method="get"&gt;
     &lt;div&gt;
         &lt;label for="s" class="structural"&gt;search davidchambersdesign.com&lt;/label&gt;
         &lt;input type="text" id="s" name="s" value="" class="text" /&gt;
         &lt;input type="submit" id="searchsubmit" value="Search" /&gt;
     &lt;/div&gt;
-&lt;/form&gt;&lt;!--/searchform--&gt;
-</code></pre>
-<h4>JavaScript</h4>
-<pre><code>// simulate textarea:focus
+&lt;/form&gt;&lt;!--/searchform--&gt;</code></pre>
+          <h4>JavaScript</h4>
+          <pre><code>// simulate textarea:focus
 document.observe('dom:loaded', function () {
     $$('textarea').each(function (e) {
         Event.observe(e, 'focus', function (event) {
@@ -90,10 +71,9 @@ document.observe('dom:loaded', function () {
             $(e.parentNode).removeClassName('focus')
         });
     });
-});
-</code></pre>
-<h4>PHP</h4>
-<pre><code>/**
+});</code></pre>
+          <h4>PHP</h4>
+          <pre><code>/**
  * echoes nicely formatted filesize
  * @param string $filename
  * @param string $before
@@ -126,25 +106,20 @@ function print_filesize($filename, $before = ' &lt;span class="filesize"&gt;(', 
 
         echo "{$before}{$approx}{$size} {$unit}{$after}";
     }
-}
-</code></pre>
-<p>Note that the variable names in the double-quoted string above are a different
-colour from the rest of the string. Nice!</p>
-<h4>Python</h4>
-<pre><code># function accepts any number of arguments since *all_sales is a tuple
+}</code></pre>
+          <p>Note that the variable names in the double-quoted string above are a different colour from the rest of the string. Nice!</p>
+          <h4>Python</h4>
+          <pre><code># function accepts any number of arguments since *all_sales is a tuple
 def daily_sales_total(*all_sales):
     total = 0.0
     for each_sale in all_sales:
         total += float(each_sale)
-    return total
-</code></pre>
-<h3>Including non-HTML code in HTML snippets</h3>
-<p>The Coda theme, like Coda itself, can handle non-HTML code inside HTML
-snippets.</p>
-<h4>CSS inside HTML {@id=css-inside-html}</h4>
-<p>For HTML snippets that contain some CSS, use
-<code>&lt;pre class="brush: css; html-script: true;"&gt;&lt;/pre&gt;</code>.</p>
-<pre><code>&lt;head&gt;
+    return total</code></pre>
+          <h3>Including non-HTML code in HTML snippets</h3>
+          <p>The Coda theme, like Coda itself, can handle non-HTML code inside HTML snippets.</p>
+          <h4 id="css-inside-html">CSS inside HTML</h4>
+          <p>For HTML snippets that contain some CSS, use <code>&lt;pre class="brush: css; html-script: true;"&gt;&lt;/pre&gt;</code>.</p>
+          <pre><code>&lt;head&gt;
     &lt;title&gt;Coda theme for SyntaxHighlighter&lt;/title&gt;
     &lt;style type="text/css"&gt;
         p {
@@ -161,12 +136,10 @@ snippets.</p>
             background-color: #cfc;
         }
     &lt;/style&gt;
-&lt;/head&gt;
-</code></pre>
-<h4>JavaScript inside HTML {@id=javascript-inside-html}</h4>
-<p>For HTML snippets that contain some JavaScript, use
-<code>&lt;pre class="brush: javascript; html-script: true;"&gt;&lt;/pre&gt;</code>.</p>
-<pre><code>&lt;body&gt;
+&lt;/head&gt;</code></pre>
+          <h4 id="javascript-inside-html">JavaScript inside HTML</h4>
+          <p>For HTML snippets that contain some JavaScript, use <code>&lt;pre class="brush: javascript; html-script: true;"&gt;&lt;/pre&gt;</code>.</p>
+          <pre><code>&lt;body&gt;
     &lt;p class="js-off"&gt;
         JavaScript is currently &lt;strong&gt;disabled&lt;/strong&gt;.
     &lt;/p&gt;
@@ -182,68 +155,38 @@ snippets.</p>
             $$('.js-on').invoke('show');
         });
     &lt;/script&gt;
-&lt;/body&gt;
-</code></pre>
-<h4>PHP inside HTML {@id=php-inside-html}</h4>
-<p>For HTML snippets that contain some PHP, use
-<code>&lt;pre class="brush: php; html-script: true;"&gt;&lt;/pre&gt;</code>.</p>
-<pre><code>&lt;ul&gt;
+&lt;/body&gt;</code></pre>
+          <h4 id="php-inside-html">PHP inside HTML</h4>
+          <p>For HTML snippets that contain some PHP, use <code>&lt;pre class="brush: php; html-script: true;"&gt;&lt;/pre&gt;</code>.</p>
+          <pre><code>&lt;ul&gt;
 &lt;?php foreach ($names as $name): ?&gt;
     &lt;li&gt;&lt;?php echo $name; ?&gt;&lt;/li&gt;
 &lt;?php endforeach; ?&gt;
-&lt;/ul&gt;
-</code></pre>
-<h3>Limitations and known issues</h3>
-<p>Unfortunately, the Coda brush does not perform quite as well as the text editor
-from which it gets its name. The failings are as follows:</p>
-<ul>
-<li>
-<p>It is not possible to mix more than one additional language with HTML. While
-  it <em>is</em> possible to mix CSS with HTML, or JavaScript with HTML, it is not
-  possible to mix both CSS <em>and</em> JavaScript with HTML. This is a limitation of
-  SyntaxHighlighter itself.</p>
-</li>
-<li>
-<p>When mixing CSS or JavaScript with HTML, the style/script opening tags are
-  given the class 'script' rather than being processed in the same manner as
-  the rest of the HTML code. As a result these tags appear in red, the colour
-  used for PHP tags. (If no workaround exists I'm going to suggest that Alex
-  make the necessary changes to ensure that style/script opening tags are
-  treated normally.)</p>
-</li>
-<li>
-<p>In order to correctly colour all HTML tags, each <code>&lt;</code> that is not part of a
-  string is considered to be part of a tag. This causes incorrect highlighting,
-  as can be seen in this example:</p>
-<pre><code>&lt;script type="text/javascript"&gt;
+&lt;/ul&gt;</code></pre>
+          <h3>Limitations and known issues</h3>
+          <p>Unfortunately, the Coda brush does not perform quite as well as the text editor from which it gets its name. The failings are as follows:</p>
+          <ul>
+            <li><p>It is not possible to mix more than one additional language with HTML. While it <em>is</em> possible to mix CSS with HTML, or JavaScript with HTML, it is not possible to mix both CSS <em>and</em> JavaScript with HTML. This is a limitation of SyntaxHighlighter itself.</p></li>
+            <li><p>When mixing CSS or JavaScript with HTML, the style/script opening tags are given the class 'script' rather than being processed in the same manner as the rest of the HTML code. As a result these tags appear in red, the colour used for PHP tags. (If no workaround exists I'm going to suggest that Alex make the necessary changes to ensure that style/script opening tags are treated normally.)</p></li>
+            <li><p>In order to correctly colour all HTML tags, each <code>&lt;</code> that is not part of a string is considered to be part of a tag. This causes incorrect highlighting, as can be seen in this example:</p><pre><code>&lt;script type="text/javascript"&gt;
     function isLarger(x, y) {
         return (x &gt; y);
     }
-&lt;/script&gt;
-</code></pre>
-</li>
-</ul>
-<h3>Setup {@id=setup}</h3>
-<ol>
-<li>Download and unzip <a href="/downloads/coda-theme-for-syntaxhighlighter.zip">coda-theme-for-syntaxhighlighter.zip</a>.</li>
-<li>Open <strong>example.html</strong> to confirm that everything is working correctly.</li>
-<li>Upload <strong>styles/shThemeCoda.css</strong> to your SyntaxHighlighter <strong>styles</strong>
-   directory.</li>
-<li>Upload <strong>styles/bg.png</strong> to your SyntaxHighlighter <strong>styles</strong> directory.</li>
-<li>Upload the brushes in <strong>scripts/</strong> to your SyntaxHighlighter <strong>scripts</strong>
-   directory, replacing the existing CSS, JavaScript, PHP, Python, and XML
-   brushes. Three versions of each brush are included: <strong>.js</strong>, <strong>.min.js</strong>
-   (minified), and <strong>.min.js.gz</strong> (minified and gzipped). Use whichever version
-   suits you best.</li>
-<li>Add a link to the Coda theme wherever you link to shCore.css. If you're
-   using the standard setup, this will be in the head section of the document.</li>
-</ol>
-<hr />
-<h4>Update: 24 August 2009, 10:51pm (Pacific/Auckland)</h4>
-<p>Coda theme has been updated so that comments are now italicized (as they
-are in Coda). XML brush for Coda theme now applies the correct class name
-("xml-comment") to HTML comments.</p>
-<hr />
+&lt;/script&gt;</code></pre></li>
+          </ul>
+          <h3 id="setup">Setup</h3>
+          <ol>
+            <li>Download and unzip <a href="/downloads/coda-theme-for-syntaxhighlighter.zip">coda-theme-for-syntaxhighlighter.zip</a>.</li>
+            <li>Open <strong>example.html</strong> to confirm that everything is working correctly.</li>
+            <li>Upload <strong>styles/shThemeCoda.css</strong> to your SyntaxHighlighter <strong>styles</strong> directory.</li>
+            <li>Upload <strong>styles/bg.png</strong> to your SyntaxHighlighter <strong>styles</strong> directory.</li>
+            <li>Upload the brushes in <strong>scripts/</strong> to your SyntaxHighlighter <strong>scripts</strong> directory, replacing the existing CSS, JavaScript, PHP, Python, and XML brushes. Three versions of each brush are included: <strong>.js</strong>, <strong>.min.js</strong> (minified), and <strong>.min.js.gz</strong> (minified and gzipped). Use whichever version suits you best.</li>
+            <li>Add a link to the Coda theme wherever you link to shCore.css. If you're using the standard setup, this will be in the head section of the document.</li>
+          </ol>
+          <div class="update">
+            <h4>Update — <time datetime="2009-08-24T22:51:00.000+12:00">24 August 2009</time></h4>
+            <p>Coda theme has been updated so that comments are now italicized (as they are in Coda). XML brush for Coda theme now applies the correct class name ("xml-comment") to HTML comments.</p>
+          </div>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>

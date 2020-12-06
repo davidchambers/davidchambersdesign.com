@@ -1,10 +1,23 @@
-(import* ["./elements.clj" "./sanctuary.clj"] {
+(import* ["./sanctuary.clj" "./elements.clj"] {
+
+  :caption
+    (lambda [caption]
+       (p' {:class "caption"} caption))
 
   :captioned-image
     (lambda [src alt caption]
        (dl
           [(dt (img {:alt alt :src src}))
            (dd caption)]))
+
+  :captioned-images
+    (compose dl
+             (chain (lambda [triple]
+                       (let [src (0 triple)
+                             alt (1 triple)
+                             cap (2 triple)]
+                          [(dt (img {:alt alt :src src}))
+                           (dd cap)]))))
 
   :code-block
     (lambda [source-code]
@@ -21,5 +34,13 @@
                                                (map (lambda [line]
                                                        (.slice min-indent line))
                                                     tail))))))))
+
+  :update
+    (lambda [datetime body]
+       (div {:class "update"}
+          (prepend (h4 ["Update \u2014 "
+                        (time {:datetime (.toISO datetime)}
+                           (.toFormat "d MMMM y" datetime))])
+                   (canonicalize-children body))))
 
 })

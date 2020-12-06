@@ -5,15 +5,12 @@
       (lambda [value]
          {:type :text
           :value value})
-    html!
-      (lambda [value]
-         {:type :html
-          :value value})
+    replace (lambda [this that text] (.replace this that text))
     canonicalize-children
       (compose (map (when string?
                           (pipe [lines
-                                 (map (lambda [line] (.replace (regex "" "^[ ]+") " " line)))
-                                 (join-with "")
+                                 (fold-map String (replace (regex "" "^[ ]+") " "))
+                                 (replace (regex "g" " -- ") "\u2009\u2014\u2009")
                                  text])))
                (unless array? (of Array)))
     block-element
@@ -43,8 +40,9 @@
           :self-closing true
           :attrs attrs})]
 
-   {:text text
-    :html! html!
+   {:canonicalize-children canonicalize-children
+
+    :text text
     ; The opening and closing tags of each of the following elements
     ; are always rendered on their own lines.
     :article'               (block-element :article)
@@ -67,6 +65,7 @@
     :linearGradient         (block-element :linearGradient)
     :nav'                   (block-element :nav)
     :nav                    (block-element :nav {})
+    :object                 (block-element :object)
     :ol'                    (block-element :ol)
     :ol                     (block-element :ol {})
     :svg                    (block-element :svg)
@@ -75,13 +74,18 @@
     ; The opening and closing tags of each of the following elements
     ; are rendered inline unless the element contains an element
     ; whose opening and closing tags are rendered on their own lines.
-    :a                     (inline-element :a)
+    :a'                    (inline-element :a)
+    :a      (lambda [href] (inline-element :a {:href href}))
     :code'                 (inline-element :code)
     :code                  (inline-element :code {})
     :dd'                   (inline-element :dd)
     :dd                    (inline-element :dd {})
+    :del'                  (inline-element :del)
+    :del                   (inline-element :del {})
     :dt'                   (inline-element :dt)
     :dt                    (inline-element :dt {})
+    :em'                   (inline-element :em)
+    :em                    (inline-element :em {})
     :h1'                   (inline-element :h1)
     :h1                    (inline-element :h1 {})
     :h2'                   (inline-element :h2)
@@ -94,6 +98,10 @@
     :h5                    (inline-element :h5 {})
     :h6'                   (inline-element :h6)
     :h6                    (inline-element :h6 {})
+    :i'                    (inline-element :i)
+    :i                     (inline-element :i {})
+    :ins'                  (inline-element :ins)
+    :ins                   (inline-element :ins {})
     :li'                   (inline-element :li)
     :li                    (inline-element :li {})
     :p'                    (inline-element :p)
@@ -113,5 +121,6 @@
     :img                   (self-closing-element :img)
     :link                  (self-closing-element :link)
     :meta                  (self-closing-element :meta)
+    :param                 (self-closing-element :param)
     :path                  (self-closing-element :path)
     :stop                  (self-closing-element :stop)}))

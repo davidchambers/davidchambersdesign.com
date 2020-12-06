@@ -17,7 +17,7 @@
          is one I've double-checked many times), you'll understand how
          pleased I was to discover that there is a command which can be
          entered in Terminal to "
-        (a {:href "http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/"}
+        (a "http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/"
            "show full directory paths in Finder window title bars")
         "."])
 

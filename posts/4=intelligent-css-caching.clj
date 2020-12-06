@@ -46,9 +46,9 @@
          the lens of an out-of-date style sheet. Yikes!"])
 
     (p
-       ["I decided that it was time to find a reliable solution to the
-         above problems. I came across an article on "
-        (a {:href "http://css-tricks.com/can-we-prevent-css-caching/"}
+       ["I decided that it was time to find a reliable solution
+         to the above problems. I came across an article on "
+        (a "http://css-tricks.com/can-we-prevent-css-caching/"
            "timestamping CSS") "
          which suggests appending a unique string to a style sheet's
          href when linking to it in a page's " (code "<head>") "."])
@@ -68,7 +68,7 @@
 
     (p
        ["The nice thing about using "
-        (a {:href "http://php.net/manual/en/function.filectime.php"}
+        (a "http://php.net/manual/en/function.filectime.php"
            "PHP's filectime function") "
          is that the timestamp is dependent on the time at which the CSS file
          was last modified. This means that the cached style sheet is used when

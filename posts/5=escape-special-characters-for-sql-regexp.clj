@@ -9,10 +9,9 @@
   :body [
 
     (p
-       ["While using the "
-        (a {:href "http://search.mtg-apps.com/"} "MTG card search") "
-         that I've been developing recently, I encountered an error that
-         MySQL reported as follows:"])
+       ["While using the " (a "http://search.mtg-apps.com/" "MTG card search") "
+         that I've been developing recently, I encountered an error that MySQL
+         reported as follows:"])
 
     (code-block
        "Got error 'repetition-operator operand invalid' from regexp")
@@ -28,7 +27,7 @@
 
     (p
        ["Developers will be familiar with using PHP's "
-        (a {:href "http://php.net/manual/en/function.mysql-real-escape-string.php"}
+        (a "http://php.net/manual/en/function.mysql-real-escape-string.php"
            "mysql_real_escape_string") "
          to escape problematic characters before submitting a query. When the
          query in question involves MySQL's REGEXP function, however, we need

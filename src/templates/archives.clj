@@ -1,7 +1,6 @@
 (import* ["../base.js" "../sanctuary.clj" "../elements.clj"]
 
-(let [base (import "./base.clj")
-      parse-inline ("parseInline" (import "marked"))]
+(let [base (import "./base.clj")]
 
    (lambda [sections]
       (base "Archives"
@@ -13,8 +12,7 @@
                             (ol
                                (map (lambda [post]
                                        (li
-                                          [(a {:href (concat "/TK/" (:slug post))}
-                                              [(html! (parse-inline (:title post)))])
+                                          [(a' {:href (concat "/" (:slug post))} (:title post))
                                            " "
                                            (let [datetime (:datetime post)]
                                               (time {:datetime (.toISO datetime)}
