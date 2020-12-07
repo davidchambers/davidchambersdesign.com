@@ -5,6 +5,7 @@
       (lambda [value]
          {:type :text
           :value value})
+
     replace (lambda [this that text] (.replace this that text))
     canonicalize-children
       (compose (map (when string?
@@ -13,6 +14,7 @@
                                  (replace (regex "g" " -- ") "\u2009\u2014\u2009")
                                  text])))
                (unless array? (of Array)))
+
     block-element
       (lambda [tag-name attrs children]
          {:type :element
@@ -21,6 +23,7 @@
           :self-closing false
           :attrs attrs
           :children (canonicalize-children children)})
+
     inline-element
       (lambda [tag-name attrs children]
          (let [children (canonicalize-children children)]
@@ -32,17 +35,24 @@
              :self-closing false
              :attrs attrs
              :children children}))
+
     self-closing-element
       (lambda [tag-name attrs]
          {:type :element
           :tag-name tag-name
           :format "inline"
           :self-closing true
-          :attrs attrs})]
+          :attrs attrs})
+
+    excerpt
+      (lambda [children]
+         {:type :excerpt
+          :children (canonicalize-children children)})]
 
    {:canonicalize-children canonicalize-children
 
     :text text
+    :excerpt excerpt
     ; The opening and closing tags of each of the following elements
     ; are always rendered on their own lines.
     :article'               (block-element :article)
@@ -76,6 +86,8 @@
     ; whose opening and closing tags are rendered on their own lines.
     :a'                    (inline-element :a)
     :a      (lambda [href] (inline-element :a {:href href}))
+    :aside'                (inline-element :aside)
+    :aside                 (inline-element :aside {})
     :code'                 (inline-element :code)
     :code                  (inline-element :code {})
     :dd'                   (inline-element :dd)

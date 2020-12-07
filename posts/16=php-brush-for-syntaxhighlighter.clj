@@ -8,29 +8,26 @@
 
   :body [
 
-    hr
+    (excerpt
+       [(p
+           ["Alex Gorbatchev's "
+            (a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
+               "SyntaxHighlighter") "
+             is a well-written bundle which enables syntax highlighting of
+             code via JavaScript. More than twenty languages are supported
+             \"out of the box\", and brushes (JavaScript files containing
+             language-specific regular expressions) can be created to
+             support additional languages."])
 
-    (p
-       ["Alex Gorbatchev's "
-        (a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
-           "SyntaxHighlighter") "
-         is a well-written bundle which enables syntax highlighting of
-         code via JavaScript. More than twenty languages are supported
-         \"out of the box\", and brushes (JavaScript files containing
-         language-specific regular expressions) can be created to
-         support additional languages."])
+        (p
+           ["Unfortunately, however, several of the brushes that come bundled
+             with SyntaxHighlighter are far from perfect. Have a look at the
+             bundled PHP brush in action below."])
 
-    (p
-       ["Unfortunately, however, several of the brushes that come bundled
-         with SyntaxHighlighter are far from perfect. Have a look at the
-         bundled PHP brush in action below."])
-
-    (captioned-image
-       "/images/posts/16/bundled-php-brush-in-action.png"
-       "Screenshot of PHP code highlighted by SyntaxHighlighter's PHP brush"
-       "Screenshot of bundled PHP brush in action")
-
-    hr
+        (captioned-image
+           "/images/posts/16/bundled-php-brush-in-action.png"
+           "Screenshot of PHP code highlighted by SyntaxHighlighter's PHP brush"
+           "Screenshot of bundled PHP brush in action")])
 
     (p
        ["I would give this brush 6/10. Here are its deficiencies,

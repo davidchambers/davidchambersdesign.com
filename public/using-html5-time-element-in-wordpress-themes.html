@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Using HTML5 time element in WordPress themes</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,18 +39,11 @@
             <h1>Using HTML5 time element in WordPress themes</h1>
             <time datetime="2009-11-02T02:04:00+13:00" pubdate="pubdate">2 November 2009</time>
           </header>
-<p>I've begun retrofitting this site with HTML5 elements. I'm thoroughly enjoying
-the process (I love meaningful markup).</p>
-<p>One of the first HTML5 elements I've introduced is the <strong>time</strong> element which,
-through its <strong>datetime</strong> attribute, provides a machine-readable version of
-dates and times.</p>
-<pre><code>:::html
-&lt;time datetime="2009-11-01T16:41:53+13:00"&gt;1 November 2009&lt;/time&gt;
-</code></pre>
-<p>I wrote a function to generate the machine-readable dates and times for blog
-comments.</p>
-<pre><code>:::php
-&lt;?php
+          <p>I've begun retrofitting this site with HTML5 elements. I'm thoroughly enjoying the process (I love meaningful markup).</p>
+          <p>One of the first HTML5 elements I've introduced is the <strong>time</strong> element which, through its <strong>datetime</strong> attribute, provides a machine-readable version of dates and times.</p>
+          <pre><code>&lt;time datetime="2009-11-01T16:41:53+13:00"&gt;1 November 2009&lt;/time&gt;</code></pre>
+          <p>I wrote a function to generate the machine-readable dates and times for blog comments.</p>
+          <pre><code>&lt;?php
 
 /**
  * echoes comment's date and time in format 2009-11-01T03:41:53+13:00
@@ -75,13 +68,9 @@ function comment_datetime()
     echo $output;
 }
 
-?&gt;
-</code></pre>
-<p>While looping through comments in your WordPress theme, call the above function
-to print a valid datetime string.</p>
-<pre><code>:::html+php
-&lt;time datetime="&lt;?php comment_datetime(); ?&gt;"&gt;
-</code></pre>
+?&gt;</code></pre>
+          <p>While looping through comments in your WordPress theme, call the above function to print a valid datetime string.</p>
+          <pre><code>&lt;time datetime="&lt;?php comment_datetime(); ?&gt;"&gt;</code></pre>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>

@@ -11,25 +11,22 @@
     (p
        ["Skip to " (a "#setup" "setup") " or " (a "#usage" "usage")])
 
-    hr
+    (excerpt
+       [(p
+           [(a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
+               "SyntaxHighlighter") " is a fully functional self-contained
+             code syntax highlighter developed in JavaScript (as stated on
+             its wiki). One of its deficiencies is that it retrieves all
+             its brushes each time a page is loaded, despite the fact that
+             in many cases only one or two (or none) are required."])
 
-    (p
-       [(a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
-           "SyntaxHighlighter") " is a fully functional self-contained code
-         syntax highlighter developed in JavaScript (as stated on its wiki).
-         One of its deficiencies is that it retrieves all its brushes each
-         time a page is loaded, despite the fact that in many cases only
-         one or two (or none) are required."])
-
-    (p
-       ["Currently, " (a "http://prototypejs.org/" "Prototype") " is
-         my JavaScript framework of choice (although I'm really looking
-         forward to trying " (a "http://jquery.com/" "jQuery") ").
-         I have used Prototype to create a " (strong "brush loader for
-         SyntaxHighlighter") ", which retrieves brushes on demand to
-         reduce page loading times (in certain circumstances)."])
-
-    hr
+        (p
+           ["Currently, " (a "http://prototypejs.org/" "Prototype") " is
+             my JavaScript framework of choice (although I'm really looking
+             forward to trying " (a "http://jquery.com/" "jQuery") ").
+             I have used Prototype to create a " (strong "brush loader for
+             SyntaxHighlighter") ", which retrieves brushes on demand to
+             reduce page loading times (in certain circumstances)."])])
 
     (update
        (datetime "2009-06-27" "06:21:00" :Pacific/Auckland)

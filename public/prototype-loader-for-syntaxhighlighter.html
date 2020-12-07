@@ -40,10 +40,8 @@
             <time datetime="2009-06-22T01:04:00+12:00" pubdate="pubdate">22 June 2009</time>
           </header>
           <p>Skip to <a href="#setup">setup</a> or <a href="#usage">usage</a></p>
-          <hr />
           <p><a href="http://alexgorbatchev.com/wiki/SyntaxHighlighter">SyntaxHighlighter</a> is a fully functional self-contained code syntax highlighter developed in JavaScript (as stated on its wiki). One of its deficiencies is that it retrieves all its brushes each time a page is loaded, despite the fact that in many cases only one or two (or none) are required.</p>
           <p>Currently, <a href="http://prototypejs.org/">Prototype</a> is my JavaScript framework of choice (although I'm really looking forward to trying <a href="http://jquery.com/">jQuery</a>). I have used Prototype to create a <strong>brush loader for SyntaxHighlighter</strong>, which retrieves brushes on demand to reduce page loading times (in certain circumstances).</p>
-          <hr />
           <div class="update">
             <h4>Update — <time datetime="2009-06-27T06:21:00.000+12:00">27 June 2009</time></h4>
             <p>I have completely rewritten the code so that it no longer requires empty functions inside the brush files to act as indicators of readiness. Instead, the required brushes are retrieved in a daisy chain. This is both more elegant and more reliable. Additionally, style sheets are now also retrieved on demand.</p>

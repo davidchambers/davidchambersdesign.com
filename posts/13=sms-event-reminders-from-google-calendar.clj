@@ -8,21 +8,19 @@
 
   :body [
 
-    hr
+    (excerpt
+       [(p
+           ["I tend to forget things. Until recently, I had no system to
+             keep track of appointments. I began using Google Calendar,
+             but soon realised that I did not want " (em "another") "
+             thing to check each day."])
 
-    (p
-       ["I tend to forget things. Until recently, I had no system to keep track
-         of appointments. I began using Google Calendar, but soon realised that
-         I did not want " (em "another") " thing to check each day."])
-
-    (p
-       [(strong "Enter event reminders.") " With Google Calendar sending event
-         reminders to my inbox, I no longer had to check my calendar each day.
-         Google Calendar can now send event reminders via text message. "
-        (strong "Below is a walk through of the steps involved in setting up
-         SMS event reminders in Google Calendar.")])
-
-    hr
+        (p
+           [(strong "Enter event reminders.") " With Google Calendar sending
+             event reminders to my inbox, I no longer had to check my calendar
+             each day. Google Calendar can now send event reminders via text
+             message. " (strong "Below is a walk through of the steps involved
+             in setting up SMS event reminders in Google Calendar.")])])
 
     (p
        ["The first step is to open "
@@ -38,14 +36,11 @@
     (p
        ["Next, click on the " (strong "Mobile Setup") " tab."])
 
-    hr
-
-    (captioned-image
-       "/images/posts/13/mobile-setup-tab-in-google-calendar.png"
-       "Mobile Setup tab in Google Calendar"
-       [(strong "Mobile Setup") " tab in Google Calendar"])
-
-    hr
+    (excerpt
+       [(captioned-image
+           "/images/posts/13/mobile-setup-tab-in-google-calendar.png"
+           "Mobile Setup tab in Google Calendar"
+           [(strong "Mobile Setup") " tab in Google Calendar"])])
 
     (p
        ["Enter your cell phone number and click "

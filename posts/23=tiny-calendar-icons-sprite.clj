@@ -8,27 +8,24 @@
 
   :body [
 
-    hr
+    (excerpt
+       [(p
+           ["Recently I've been on a mission to minimize the number
+             of HTTP requests made while loading pages on this site.
+             Until yesterday, the " (a "/archives/" "archives") "
+             page was making an HTTP request for each of the "
+            (a "/tiny-calendar-icon-set/" "tiny calendar icons") "
+             used on the page. Therefore, up to 31 HTTP requests were
+             required just to retrieve the calendar icons. Not good."])
 
-    (p
-       ["Recently I've been on a mission to minimize the number
-         of HTTP requests made while loading pages on this site.
-         Until yesterday, the " (a "/archives/" "archives") "
-         page was making an HTTP request for each of the "
-        (a "/tiny-calendar-icon-set/" "tiny calendar icons") "
-         used on the page. Therefore, up to 31 HTTP requests were
-         required just to retrieve the calendar icons. Not good."])
+        (p
+           ["The same result can be achieved with a single HTTP request
+             through the use of a sprite:"])
 
-    (p
-       ["The same result can be achieved with a single HTTP request
-         through the use of a sprite:"])
-
-    (captioned-image
-       "/images/posts/23/calendar.png"
-       "Tiny calendar icons sprite"
-       "Tiny calendar icons sprite, which you're welcome to save and use")
-
-    hr
+        (captioned-image
+           "/images/posts/23/calendar.png"
+           "Tiny calendar icons sprite"
+           "Tiny calendar icons sprite, which you're welcome to save and use")])
 
     (p
        ["One uses a sprite by applying a background image to an element

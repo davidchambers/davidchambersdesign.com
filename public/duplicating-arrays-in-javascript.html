@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Duplicating arrays in JavaScript</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,32 +39,19 @@
             <h1>Duplicating arrays in JavaScript</h1>
             <time datetime="2010-01-09T19:26:00+13:00" pubdate="pubdate">9 January 2010</time>
           </header>
-<p>Many of those who write JavaScript do not come from programming backgrounds
-(while I've written plenty of PHP, Python, and JavaScript, I don't have much
-experience with "real" programming languages<a href="#footnote">*</a>). As a result, a
-significant portion of JavaScript coders do not think of variables as pointers
-to memory addresses. This leads to confusion in cases such as this:</p>
-<pre><code>:::javascript
-var fruits = ['orange', 'lime'];
+          <p>Many of those who write JavaScript do not come from programming backgrounds (while I've written plenty of PHP, Python, and JavaScript, I don't have much experience with "real" programming languages<a href="#footnote">*</a>). As a result, a significant portion of JavaScript coders do not think of variables as pointers to memory addresses. This leads to confusion in cases such as this:</p>
+          <pre><code>var fruits = ['orange', 'lime'];
 var colours = fruits; // naïve attempt to duplicate array
-colours.push('yellow');
-</code></pre>
-<p>One might be surprised to learn that <code>fruits</code> now contains not just "orange"
-and "lime" but also "yellow". Oops! Here's how it went wrong:</p>
-<pre><code>:::javascript
-var fruits = ['orange', 'lime'];
+colours.push('yellow');</code></pre>
+          <p>One might be surprised to learn that <code>fruits</code> now contains not just "orange" and "lime" but also "yellow". Oops! Here's how it went wrong:</p>
+          <pre><code>var fruits = ['orange', 'lime'];
 // fruits points to array containing "orange" and "lime"
 
 var colours = fruits;
-// colours now points to that same array!
-</code></pre>
-<p>How, then, does one create a copy of the original array? <em>Slice!</em></p>
-<pre><code>:::javascript
-var colours = fruits.slice();
-</code></pre>
-<aside id="footnote">* Languages such as C. Like
-<a href="http://www.quirksmode.org/about/">ppk</a>,
-I take care to include quotation marks. ;)</aside>
+// colours now points to that same array!</code></pre>
+          <p>How, then, does one create a copy of the original array? <em>Slice!</em></p>
+          <pre><code>var colours = fruits.slice();</code></pre>
+          <aside id="footnote">* Languages such as C. Like <a href="http://www.quirksmode.org/about/">ppk</a>, I take care to include quotation marks. ;)</aside>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>

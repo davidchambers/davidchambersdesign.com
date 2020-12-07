@@ -8,41 +8,40 @@
 
   :body [
 
-    hr
+    (excerpt
+       [(p
+           (img {:alt "" :src "/images/posts/decorative/left/adobe-illustrator-cs3-icon.png"}))
 
-    (p
-       (img {:alt "" :src "/images/posts/decorative/left/adobe-illustrator-cs3-icon.png"}))
+        (p
+           ["Not so long ago I was talking to my brother online as he
+             worked on a poster for a presentation. He is an engineer;
+             using Illustrator was a new experience for him. He generally
+             picks up new things easily, but as you may appreciate,
+             Illustrator is often far from logical. We reached a point
+             where he asked me about scaling rounded rectangles – this
+             is where things started to get hairy."])
 
-    (p
-       ["Not so long ago I was talking to my brother online as he worked on a
-         poster for a presentation. He is an engineer; using Illustrator was
-         a new experience for him. He generally picks up new things easily,
-         but as you may appreciate, Illustrator is often far from logical.
-         We reached a point where he asked me about scaling rounded rectangles
-         – this is where things started to get hairy."])
-
-    (ol
-       [(li' {:class "interviewer"}
-           [(strong "him:") " if I have a rounded rectangle and resize it,
-             it there a way to stop it from changing the rounding of the
-             corners (which I want constant for all my rectangles)?"])
-        (li
-           [(strong "me:") " you can work out how large you want it to be
-             and then double-click with the rectangle tool and you'll be able
-             to enter all the correct values"])
-        (li
-           [(strong "him:") " is there a way to change how curved they are
-             after placing them?"])
-        (li
-           [(strong "me:") " InDesign has a much better was of dealing with
-             this issue than does Illustrator... in InDesign, the rectangle
-             is treated as an object, and its corner radius is treated as a
-             property in just the same way as its width, height, and position...
-             this means that you can change the corner radius at any time..."])
-        (li
-           [(strong "him:") " that's how it should be"])])
-
-    hr
+        (ol
+           [(li' {:class "interviewer"}
+               [(strong "him:") " if I have a rounded rectangle and resize it,
+                 it there a way to stop it from changing the rounding of the
+                 corners (which I want constant for all my rectangles)?"])
+            (li
+               [(strong "me:") " you can work out how large you want it to
+                 be and then double-click with the rectangle tool and you'll
+                 be able to enter all the correct values"])
+            (li
+               [(strong "him:") " is there a way to change how curved they
+                 are after placing them?"])
+            (li
+               [(strong "me:") " InDesign has a much better was of dealing
+                 with this issue than does Illustrator... in InDesign, the
+                 rectangle is treated as an object, and its corner radius
+                 is treated as a property in just the same way as its width,
+                 height, and position... this means that you can change the
+                 corner radius at any time..."])
+            (li
+               [(strong "him:") " that's how it should be"])])])
 
     (p
        ["Hmm. Since InDesign deals with rounded rectangles effortlessly,

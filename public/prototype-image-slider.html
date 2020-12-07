@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Prototype image slider</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,65 +39,39 @@
             <h1>Prototype image slider</h1>
             <time datetime="2009-09-16T23:43:00+12:00" pubdate="pubdate">16 September 2009</time>
           </header>
-<hr />
-<p>In my post titled <a href="/captions-over-images/">Captions over images</a> I advocate the use of definition
-lists for captioning images. Earlier today I was asked whether this meaningful
-markup could be used in conjunction with an "image slider" such as
-<a href="http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding">Easy Slider 1.5</a>.</p>
-<p>I had a look at the Easy Slider source code and decided to write my own image
-slider using Prototype rather than hacking someone else's code to pieces. It's
-a proof of concept rather than a full-blown "plugin", but it demonstrates that
-such functionality is achievable using elegant, meaningful markup.</p>
-<p>Check out the <a href="/examples/prototype-image-slider/">Prototype image slider demo</a> to see the code in action.</p>
-<hr />
-<hr />
-<h4>Update: 17 September 2009, 1:17am (Pacific/Auckland)</h4>
-<p>I noticed that the script was failing miserably in Safari, which didn't like
-the following line:</p>
-<pre><code>:::javascript
-li: new Element('li', { class: 'prev' }),
-</code></pre>
-<p>Wrapping the word "class" in quotes as per this <a href="http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777">recommendation by Tobie
-Langel</a> did the trick!</p>
-<hr />
-<h3>Usage {@id=usage}</h3>
-<p>First, you'll need to save a copy of <a href="/examples/prototype-image-slider/prototype-image-slider.js">prototype-image-slider.js</a>.</p>
-<p>To create a new <code>Slider</code> simply call the constructor. The constructor requires
-one argument, either a DOM node or a string that references a node's ID.</p>
-<pre><code>:::javascript
-new Slider('slider');
-</code></pre>
-<p>There's nothing to prevent multiple image sliders from appearing on a page. The
-following code turns each div with class of 'slider' into a <code>Slider</code> object.</p>
-<pre><code>:::javascript
-$$('div.slider').each(function (e) {
+          <p>In my post titled <a href="/captions-over-images/">Captions over images</a> I advocate the use of definition lists for captioning images. Earlier today I was asked whether this meaningful markup could be used in conjunction with an "image slider" such as <a href="http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding">Easy Slider 1.5</a>.</p>
+          <p>I had a look at the Easy Slider source code and decided to write my own image slider using Prototype rather than hacking someone else's code to pieces. It's a proof of concept rather than a full-blown "plugin", but it demonstrates that such functionality is achievable using elegant, meaningful markup.</p>
+          <p>Check out the <a href="/examples/prototype-image-slider/">Prototype image slider demo</a> to see the code in action.</p>
+          <div class="update">
+            <h4>Update — <time datetime="2009-09-17T01:17:00.000+12:00">17 September 2009</time></h4>
+            <p>I noticed that the script was failing miserably in Safari, which didn't like the following line:</p>
+            <pre><code>li: new Element('li', { class: 'prev' }),</code></pre>
+            <p>Wrapping the word "class" in quotes as per this <a href="http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777">recommendation by Tobie Langel</a> did the trick!</p>
+          </div>
+          <h3 id="usage">Usage</h3>
+          <p>First, you'll need to save a copy of <a href="/examples/prototype-image-slider/prototype-image-slider.js">prototype-image-slider.js</a>.</p>
+          <p>To create a new <code>Slider</code> simply call the constructor. The constructor requires one argument, either a DOM node or a string that references a node's ID.</p>
+          <pre><code>new Slider('slider');</code></pre>
+          <p>There's nothing to prevent multiple image sliders from appearing on a page. The following code turns each div with class of 'slider' into a <code>Slider</code> object.</p>
+          <pre><code>$$('div.slider').each(function (e) {
     new Slider(e);
-})
-</code></pre>
-<p>Of course, it's a good idea to wait until the page is ready to be manipulated
-before... er... manipulating the page.</p>
-<pre><code>:::javascript
-document.observe('dom:loaded', function () {
+})</code></pre>
+          <p>Of course, it's a good idea to wait until the page is ready to be manipulated before... er... manipulating the page.</p>
+          <pre><code>document.observe('dom:loaded', function () {
     $$('div.slider').each(function (e) {
         new Slider(e);
     });
-});
-</code></pre>
-<p>To provide a small degree of flexibility, the constructor accepts two optional
-arguments: a float specifying the duration of each transition, and an integer
-specifying the number of the slide to be displayed first. The default values
-are 1.0 and 0 (slides are numbered from zero).</p>
-<pre><code>:::javascript
-new Slider('slider', 0.5);     // faster transitions
+});</code></pre>
+          <p>To provide a small degree of flexibility, the constructor accepts two optional arguments: a float specifying the duration of each transition, and an integer specifying the number of the slide to be displayed first. The default values are 1.0 and 0 (slides are numbered from zero).</p>
+          <pre><code>new Slider('slider', 0.5);     // faster transitions
 new Slider('slider', 1.0, 3);  // fourth slide displayed first
 new Slider('slider', 1.0, -1); // last slide displayed first
-new Slider('slider', 1.5, -1); // slower transitions; last slide displayed first
-</code></pre>
-<p>If you find this code useful and would like me to flesh it out, let me know.</p>
-<hr />
-<h4>Update: 21 September 2009, 11:53am (Pacific/Auckland)</h4>
-<p>I neglected to mention that this code also requires <a href="http://script.aculo.us/">script.aculo.us</a>.</p>
-<hr />
+new Slider('slider', 1.5, -1); // slower transitions; last slide displayed first</code></pre>
+          <p>If you find this code useful and would like me to flesh it out, let me know.</p>
+          <div class="update">
+            <h4>Update — <time datetime="2009-09-21T11:53:00.000+12:00">21 September 2009</time></h4>
+            <p>I neglected to mention that this code also requires <a href="http://script.aculo.us/">script.aculo.us</a>.</p>
+          </div>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>

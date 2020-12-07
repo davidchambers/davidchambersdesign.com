@@ -23,17 +23,15 @@
          used literally within a string. This is done by preceding it
          with a backslash (" (strong "\\") ")."])
 
-    hr
-
-    (p
-       ["Developers will be familiar with using PHP's "
-        (a "http://php.net/manual/en/function.mysql-real-escape-string.php"
-           "mysql_real_escape_string") "
-         to escape problematic characters before submitting a query. When the
-         query in question involves MySQL's REGEXP function, however, we need
-         to go one step further and escape regex's special characters."])
-
-    hr
+    (excerpt
+       [(p
+           ["Developers will be familiar with using PHP's "
+            (a "http://php.net/manual/en/function.mysql-real-escape-string.php"
+               "mysql_real_escape_string") "
+             to escape problematic characters before submitting a query.
+             When the query in question involves MySQL's REGEXP function,
+             however, we need to go one step further and escape regex's
+             special characters."])])
 
     (p
        ["I had a look on php.net to see whether such a function exists.

@@ -8,21 +8,18 @@
 
   :body [
 
-    hr
-
-    (p
-       ["I've been using OS X almost exclusively for the last three or four
-         years, but it was only recently that I discovered the system-wide
-         method for changing keyboard shortcuts. I think the reason that this
-         feature eluded me for so long is that so many of the hours I've spent
-         on OS X have involved the use of the Adobe applications Photoshop,
-         Illustrator, and InDesign, which provide their own means of changing
-         keyboard shortcuts. I assumed that since application developers
-         sometimes provide their own interfaces for changing keyboard
-         shortcuts, the operating system must lack this functionality.
-         I was wrong."])
-
-    hr
+    (excerpt
+       [(p
+           ["I've been using OS X almost exclusively for the last three
+             or four years, but it was only recently that I discovered the
+             system-wide method for changing keyboard shortcuts. I think
+             the reason that this feature eluded me for so long is that so
+             many of the hours I've spent on OS X have involved the use of
+             the Adobe applications Photoshop, Illustrator, and InDesign,
+             which provide their own means of changing keyboard shortcuts.
+             I assumed that since application developers sometimes provide
+             their own interfaces for changing keyboard shortcuts, the
+             operating system must lack this functionality. I was wrong."])])
 
     (p
        ["I stumbled upon this useful information while reading "

@@ -39,10 +39,8 @@
             <h1>Captions over images</h1>
             <time datetime="2009-08-31T03:36:00+12:00" pubdate="pubdate">31 August 2009</time>
           </header>
-          <hr />
           <p>This is my response to Chris Coyier's screencast titled <a href="http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/">jQuery Part 3 – Image Title Plugin</a> which I watched a couple of days ago. Something didn't sit right with me at the time, and I've now worked out what it was: <strong>JavaScript is not required!</strong></p>
           <p>I'll present a JavaScript-free approach for displaying captions over images that uses <em>truly</em> meaningful markup.</p>
-          <hr />
           <p>So what <em>is</em> meaningful markup for images and image captions? This is a debated issue, but I believe the definition list to be the most appropriate element at our disposal. While an image is clearly not a "term", a caption does <em>describe</em> an image, just as a definition <em>describes</em> a term. Meaningful markup for an image and its caption should look something like the following:</p>
           <pre><code>&lt;dl&gt;
     &lt;dt&gt;&lt;img src="images/paris.jpg" alt="View from Notre Dame de Paris" /&gt;&lt;/dt&gt;

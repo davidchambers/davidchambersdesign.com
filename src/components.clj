@@ -35,6 +35,11 @@
                                                        (.slice min-indent line))
                                                     tail))))))))
 
+  :pros-and-cons-list
+    (lambda [f]
+       (ul (f (li' {:class "pro"})
+              (li' {:class "con"}))))
+
   :update
     (lambda [datetime body]
        (div {:class "update"}

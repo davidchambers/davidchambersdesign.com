@@ -8,20 +8,18 @@
 
   :body [
 
-    hr
+    (excerpt
+       [(p
+           ["This is my response to Chris Coyier's screencast titled "
+            (a "http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/"
+               "jQuery Part 3 – Image Title Plugin") " which I watched
+             a couple of days ago. Something didn't sit right with me
+             at the time, and I've now worked out what it was: "
+            (strong "JavaScript is not required!")])
 
-    (p
-       ["This is my response to Chris Coyier's screencast titled "
-        (a "http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/"
-           "jQuery Part 3 – Image Title Plugin") " which I watched a couple
-         of days ago. Something didn't sit right with me at the time, and I've
-         now worked out what it was: " (strong "JavaScript is not required!")])
-
-    (p
-       ["I'll present a JavaScript-free approach for displaying captions over
-         images that uses " (em "truly") " meaningful markup."])
-
-    hr
+        (p
+           ["I'll present a JavaScript-free approach for displaying captions
+             over images that uses " (em "truly") " meaningful markup."])])
 
     (p
        ["So what " (em "is") " meaningful markup for images and image captions?

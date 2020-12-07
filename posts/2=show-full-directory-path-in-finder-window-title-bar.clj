@@ -8,20 +8,17 @@
 
   :body [
 
-    hr
-
-    (p
-       ["If you have ever found yourself command-clicking the
-         title of a Finder window to find out where you are ("
-        (strong "/Library/Fonts") " or " (strong "~/Library/Fonts") "
-         is one I've double-checked many times), you'll understand how
-         pleased I was to discover that there is a command which can be
-         entered in Terminal to "
-        (a "http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/"
-           "show full directory paths in Finder window title bars")
-        "."])
-
-    hr
+    (excerpt
+       [(p
+           ["If you have ever found yourself command-clicking the
+             title of a Finder window to find out where you are ("
+            (strong "/Library/Fonts") " or " (strong "~/Library/Fonts") "
+             is one I've double-checked many times), you'll understand how
+             pleased I was to discover that there is a command which can be
+             entered in Terminal to "
+            (a "http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/"
+               "show full directory paths in Finder window title bars")
+            "."])])
 
     (captioned-image
        "/images/posts/2/finder-windows-without-paths.png"
