@@ -108,14 +108,6 @@ const evaluate = module.exports = dirname => env => term => {
                                                                  (Pair))))
                                            (bindings.elements)));
            }
-           if (head.type === 'identifier' && head.name === "let'") {
-             if (tail.length !== 2) {
-               return Left (new Error ("Invalid let' expression"));
-             }
-             const [bindings, body] = tail;
-             return chain (bindings => evaluate (dirname) ({...env, ...bindings}) (body))
-                          (evaluate (dirname) (env) (bindings));
-           }
            if (head.type === 'identifier' && head.name === 'lambda') {
              if (tail.length !== 2) {
                return Left (new Error ('Invalid lambda expression'));
@@ -166,16 +158,16 @@ const evaluate = module.exports = dirname => env => term => {
                case 1: {
                  const [importPath] = tail;
                  return chain (importPath => import_ ({})
-                                                     (importPath.includes ('/') && !(importPath.startsWith ('/')) ?
-                                                      path.join (dirname, importPath) :
+                                                     (importPath.includes ('/') ?
+                                                      path.resolve (dirname, importPath) :
                                                       importPath))
                               (evaluate (dirname) (env) (importPath));
                }
                case 2: {
                  const [env_, importPath] = tail;
                  return join (lift2 (env => importPath => import_ (env)
-                                                                  (importPath.includes ('/') && !(importPath.startsWith ('/')) ?
-                                                                   path.join (dirname, importPath) :
+                                                                  (importPath.includes ('/') ?
+                                                                   path.resolve (dirname, importPath) :
                                                                    importPath))
                                     (evaluate (dirname) (env) (env_))
                                     (evaluate (dirname) (env) (importPath)));
@@ -193,8 +185,8 @@ const evaluate = module.exports = dirname => env => term => {
              return chain (C (evaluate (dirname)) (body))
                           (chain (reduce (C (importPath => chain (env_ => map (bindings => ({...env_, ...bindings}))
                                                                               (import_ ({})
-                                                                                       (importPath.includes ('/') && !(importPath.startsWith ('/')) ?
-                                                                                        path.join (dirname, importPath) :
+                                                                                       (importPath.includes ('/') ?
+                                                                                        path.resolve (dirname, importPath) :
                                                                                         importPath)))))
                                          (Right (env)))
                                  (chain (traverse (Either)
@@ -328,21 +320,6 @@ if (__filename === process.argv[1]) {
 
   eq (eval_ ({}) ('(let [x 8 y x] y)'))
      (Right (8));
-
-  eq (eval_ ({}) ("(let' {:x 8} x)"))
-     (Right (8));
-
-  eq (eval_ ({}) ("(let' {:x 8 :y x} y)"))
-     (Left (new ReferenceError ('x is not defined')));
-
-  eq (eval_ (baseEnv) (`(let' (.fromEntries [[:x 1] [:y 2]] Object) x)`))
-     (Right (1));
-
-  eq (eval_ (baseEnv) (`(let' (.fromEntries [[:x 1] [:y 2]] Object) y)`))
-     (Right (2));
-
-  eq (eval_ (baseEnv) (`(let' (.fromEntries [[:x 1] [:y 2]] Object) z)`))
-     (Left (new ReferenceError ('z is not defined')));
 
   eq (eval_ ({}) ('true'))
      (Left (new ReferenceError ('true is not defined')));

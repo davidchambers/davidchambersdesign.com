@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Resize browser window to match iPhone viewport dimensions</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,39 +39,26 @@
             <h1>Resize browser window to match iPhone viewport dimensions</h1>
             <time datetime="2010-02-16T03:20:00+13:00" pubdate="pubdate">16 February 2010</time>
           </header>
-<hr />
-<p>I've recently become interested in optimizing sites for the iPhone and iPod
-touch. While nothing beats testing on the device itself, I often find it
-quicker to test changes on my Mac. Changing the user agent string is a piece
-of cake in Safari (Develop &gt; User Agent &gt; Mobile Safari) but what about
-adjusting the browser window's dimensions to match those of the iPhone?</p>
-<p>I've created two bookmarklets to allow the current page to be loaded in an
-iPhone-sized window with a single click:</p>
-<ul>
-<li>
-<p><strong>Portrait</strong> (labelled "⁑")</p>
-<pre><code>javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
-</code></pre>
-</li>
-<li>
-<p><strong>Landscape</strong> (labelled "**")</p>
-<pre><code>javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
-</code></pre>
-</li>
-</ul>
-<dl>
-<dt><img alt="iPhone testing bookmarklets" src="/images/posts/37/iphone-testing-bookmarklets.png" /></dt>
-<dd>iPhone testing bookmarklets: portrait and landscape</dd>
-</dl>
-<hr />
-<dl>
-<dt><img alt="Safari window resized to iPhone portrait dimensions" src="/images/posts/windows/safari-window-iphone-dimensions-portrait.png" /></dt>
-<dd>320x480: iPhone portrait dimensions</dd>
-<dt><img alt="Safari window resized to iPhone landscape dimensions" src="/images/posts/windows/safari-window-iphone-dimensions-landscape.png" /></dt>
-<dd>480x320: iPhone landscape dimensions</dd>
-</dl>
-<p>It appears that I need to rework this site's style sheet to better present
-content in these smaller viewports!</p>
+          <p>I've recently become interested in optimizing sites for the iPhone and iPod touch. While nothing beats testing on the device itself, I often find it quicker to test changes on my Mac. Changing the user agent string is a piece of cake in Safari (Develop &gt; User Agent &gt; Mobile Safari) but what about adjusting the browser window's dimensions to match those of the iPhone?</p>
+          <p>I've created two bookmarklets to allow the current page to be loaded in an iPhone-sized window with a single click:</p>
+          <ul>
+            <li><p><strong>Portrait</strong> (labelled "⁑")</p><pre><code>javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');</code></pre></li>
+            <li><p><strong>Landscape</strong> (labelled "**")</p><pre><code>javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');</code></pre></li>
+          </ul>
+          <dl>
+            <dt><img alt="iPhone testing bookmarklets" src="/images/posts/37/iphone-testing-bookmarklets.png" />
+</dt>
+            <dd>iPhone testing bookmarklets: portrait and landscape</dd>
+          </dl>
+          <dl>
+            <dt><img alt="Safari window resized to iPhone portrait dimensions" src="/images/posts/windows/safari-window-iphone-dimensions-portrait.png" />
+</dt>
+            <dd>320x480: iPhone portrait dimensions</dd>
+            <dt><img alt="Safari window resized to iPhone landscape dimensions" src="/images/posts/windows/safari-window-iphone-dimensions-landscape.png" />
+</dt>
+            <dd>480x320: iPhone landscape dimensions</dd>
+          </dl>
+          <p>It appears that I need to rework this site's style sheet to better present content in these smaller viewports!</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -85,11 +72,8 @@ content in these smaller viewports!</p>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/duplicating-arrays-in-javascript/">Duplicating arrays in JavaScript</a></li>
+            <li><a href="/associative-arrays-in-javascript/">Associative arrays in JavaScript</a></li>
           </ul>
         </article>
       </div>

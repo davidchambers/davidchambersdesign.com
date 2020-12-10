@@ -13,5 +13,5 @@
          (r 0) (d 2) (R 4) (D 2) (L 4) (U 2))}
     {:fill-rule "evenodd"
      :fill "#fff"
-     :opacity 0.25
+     :opacity "0.25"
      :d ((r 7) (d 0) (R 2) (D 3) (L 2) (U 3))}])

@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Gorgeous CSS3 buttons inspired by Aqua</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,91 +39,72 @@
             <h1>Gorgeous CSS3 buttons inspired by Aqua</h1>
             <time datetime="2010-03-08T12:39:00+13:00" pubdate="pubdate">8 March 2010</time>
           </header>
-<p>The two cornerstones of the Web as an interactive medium are the <a href="http://en.wikipedia.org/wiki/Form_(web)">form</a>,
-which facilitates the submission and retrieval of data, and the <a href="http://en.wikipedia.org/wiki/Hyperlink">hyperlink</a>,
-which facilitates navigation.</p>
-<p>Since form submission buttons and hyperlinks <em>do</em> different things, it makes
-sense that browsers display them differently (by default).</p>
-<dl>
-<dt><img alt="Unstyled button and hyperlink" src="/images/posts/39/unstyled-button-and-hyperlink.png" /></dt>
-<dd>Default appearance of buttons and hyperlinks in Safari on Mac OS X</dd>
-</dl>
-<p>Web applications, however, sometimes blur the line between doing things and
-going places; visually distinguishing links from buttons, therefore, is not
-always appropriate. As Stephen Anderson explains in his article <a href="http://www.alistapart.com/articles/indefenseofeyecandy">In Defense
-of Eye Candy</a> on <a href="http://www.alistapart.com/">A List Apart</a>, an element's appearance should suggest
-appropriate modes of interaction.</p>
-<dl>
-<dt><img alt="WordPress Publish pane" src="/images/posts/39/wordpress-publish-pane.png" /></dt>
-<dd>In WordPress's <strong>Publish</strong> pane "Save Draft" is a submit input, "Preview" is
-  a link; both are styled as buttons</dd>
-</dl>
-<h3>Styling links to look like buttons</h3>
-<p><em><strong>Beware!</strong> There's quite a bit involved in styling form elements – be sure
-that there's a compelling reason to override default browser styling before
-doing so.</em></p>
-<p>An unstyled submit input and an unstyled hyperlink are displayed below. One
-must declare a number of rules in order to have the two elements rendered in
-the same way.</p>
-<dl>
-<dt><img alt="Unstyled button and hyperlink" src="/images/posts/39/start-game-button-and-hyperlink-unstyled.png" /></dt>
-<dd>Unstyled submit input and hyperlink</dd>
-<dt><img alt="Button and hyperlink with border" src="/images/posts/39/start-game-button-and-hyperlink-border.png" /></dt>
-<dd><code>border: 1px solid #850; color: #850;</code></dd>
-<dt><img alt="Button and hyperlink with background colour" src="/images/posts/39/start-game-button-and-hyperlink-background-color.png" /></dt>
-<dd><code>background: #fc6; text-decoration: none;</code></dd>
-<dt><img alt="Button and hyperlink with consistent padding and font properties" src="/images/posts/39/start-game-button-and-hyperlink-padding-font.png" /></dt>
-<dd><code>padding: 0.25em 0.5em; font: bold 12px/15px "Lucida Grande", "Lucida Sans Unicode", sans-serif;</code></dd>
-</dl>
-<h4>Progressive enhancement</h4>
-<p>The submit input and the link now look the same, and <em>somewhat</em> button-like.
-Even antiquated browsers such as Internet Explorer 6 understand the rules
-defined thus far. The next step is to make the elements more appealing and
-more button-like in modern browsers.</p>
-<pre><code>-webkit-border-radius: 1em;
+          <p>The two cornerstones of the Web as an interactive medium are the <a href="http://en.wikipedia.org/wiki/Form_(web)">form</a>, which facilitates the submission and retrieval of data, and the <a href="http://en.wikipedia.org/wiki/Hyperlink">hyperlink</a>, which facilitates navigation.</p>
+          <p>Since form submission buttons and hyperlinks <em>do</em> different things, it makes sense that browsers display them differently (by default).</p>
+          <dl>
+            <dt><img alt="Unstyled button and hyperlink" src="/images/posts/39/unstyled-button-and-hyperlink.png" />
+</dt>
+            <dd>Default appearance of buttons and hyperlinks in Safari on Mac OS X</dd>
+          </dl>
+          <p>Web applications, however, sometimes blur the line between doing things and going places; visually distinguishing links from buttons, therefore, is not always appropriate. As Stephen Anderson explains in his article <a href="http://www.alistapart.com/articles/indefenseofeyecandy">In Defense of Eye Candy</a> on <a href="http://www.alistapart.com/">A List Apart</a>, an element's appearance should suggest appropriate modes of interaction.</p>
+          <dl>
+            <dt><img alt="WordPress Publish pane" src="/images/posts/39/wordpress-publish-pane.png" />
+</dt>
+            <dd>In WordPress's <strong>Publish</strong> pane "Save Draft" is a submit input, "Preview" is a link; both are styled as buttons</dd>
+          </dl>
+          <h3>Styling links to look like buttons</h3>
+          <p><em><strong>Beware!</strong> There's quite a bit involved in styling form elements – be sure that there's a compelling reason to override default browser styling before doing so.</em></p>
+          <p>An unstyled submit input and an unstyled hyperlink are displayed below. One must declare a number of rules in order to have the two elements rendered in the same way.</p>
+          <dl>
+            <dt><img alt="Unstyled button and hyperlink" src="/images/posts/39/start-game-button-and-hyperlink-unstyled.png" />
+</dt>
+            <dd>Unstyled submit input and hyperlink</dd>
+            <dt><img alt="Button and hyperlink with border" src="/images/posts/39/start-game-button-and-hyperlink-border.png" />
+</dt>
+            <dd><code>border: 1px solid #850; color: #850;</code></dd>
+            <dt><img alt="Button and hyperlink with background colour" src="/images/posts/39/start-game-button-and-hyperlink-background-color.png" />
+</dt>
+            <dd><code>background: #fc6; text-decoration: none;</code></dd>
+            <dt><img alt="Button and hyperlink with consistent padding and font properties" src="/images/posts/39/start-game-button-and-hyperlink-padding-font.png" />
+</dt>
+            <dd><code>padding: 0.25em 0.5em; font: bold 12px/15px "Lucida Grande", "Lucida Sans Unicode", sans-serif;</code></dd>
+          </dl>
+          <h4>Progressive enhancement</h4>
+          <p>The submit input and the link now look the same, and <em>somewhat</em> button-like. Even antiquated browsers such as Internet Explorer 6 understand the rules defined thus far. The next step is to make the elements more appealing and more button-like in modern browsers.</p>
+          <pre><code>-webkit-border-radius: 1em;
 -moz-border-radius: 1em;
-border-radius: 1em;
-</code></pre>
-<dl>
-<dt><img alt="Button and hyperlink with rounded corners" src="/images/posts/39/start-game-button-and-hyperlink-border-radius.png" /></dt>
-<dd>Rounded corners</dd>
-</dl>
-<p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-background: -webkit-gradient(linear, left top, left bottom,
+border-radius: 1em;</code></pre>
+          <dl>
+            <dt><img alt="Button and hyperlink with rounded corners" src="/images/posts/39/start-game-button-and-hyperlink-border-radius.png" />
+</dt>
+            <dd>Rounded corners</dd>
+          </dl>
+          <pre><code>background: -webkit-gradient(linear, left top, left bottom,
     from(#fc6), to(#fc6),
     color-stop(0.1, #fff), color-stop(0.2, #fc6),
     color-stop(0.5, #fc6), color-stop(0.5, #fa2));
 background: -moz-linear-gradient(-90deg,
-    #fc6 5%, #fff 15%, #fc6 25%, #fc6 50%, #fa2 50%, #fc6);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
-<dl>
-<dt><img alt="Button and hyperlink with background gradient" src="/images/posts/39/start-game-button-and-hyperlink-background-gradient.png" /></dt>
-<dd>Linear gradient with colour stops creates a sense of depth</dd>
-</dl>
-<h3>Styling different states</h3>
-<p>It is important to consider the different states a button may have. Apple's
-<a href="http://en.wikipedia.org/wiki/Aqua_(user_interface)">Aqua</a> GUI provides three different effects, any or all of which may be
-applied to a button: a pulsating blue background indicates that <strong>return</strong>
-activates the button; a button with an outer glow can be activated via the
-space bar; and a static blue background is used for a button's "active" state
-(which occurs while the button is being clicked).</p>
-<dl>
-<dt><img alt="TextEdit dialog featuring two different button states" src="/images/posts/39/textedit-save-dialog.png" /></dt>
-<dd>In Aqua, <strong>return</strong> activates the blue button; <strong>space bar</strong> activates the
-button with the outer glow</dd>
-</dl>
-<p>On the web, submit inputs and hyperlinks have several possible states, the
-most important of which are hover, focus, and active. When creating style
-rules for each of these states it's important to bear in mind that more
-than one state may apply at one time.</p>
-<dl>
-<dt><img alt="Transmission dialog featuring a button with two states" src="/images/posts/windows/transmission-up-to-date.png" /></dt>
-<dd>Here the OK button exhibits both a pulsating blue background and an outer
-  glow</dd>
-</dl>
-<h4>Hover</h4>
-<pre><code>:::css
-.aqua:hover {
+    #fc6 5%, #fff 15%, #fc6 25%, #fc6 50%, #fa2 50%, #fc6);</code></pre>
+          <dl>
+            <dt><img alt="Button and hyperlink with background gradient" src="/images/posts/39/start-game-button-and-hyperlink-background-gradient.png" />
+</dt>
+            <dd>Linear gradient with colour stops creates a sense of depth</dd>
+          </dl>
+          <h3>Styling different states</h3>
+          <p>It is important to consider the different states a button may have. Apple's <a href="http://en.wikipedia.org/wiki/Aqua_(user_interface)">Aqua</a> GUI provides three different effects, any or all of which may be applied to a button: a pulsating blue background indicates that <strong>return</strong> activates the button; a button with an outer glow can be activated via the space bar; and a static blue background is used for a button's "active" state (which occurs while the button is being clicked).</p>
+          <dl>
+            <dt><img alt="TextEdit dialog featuring two different button states" src="/images/posts/39/textedit-save-dialog.png" />
+</dt>
+            <dd>In Aqua, <strong>return</strong> activates the blue button; <strong>space bar</strong> activates the button with the outer glow</dd>
+          </dl>
+          <p>On the web, submit inputs and hyperlinks have several possible states, the most important of which are hover, focus, and active. When creating style rules for each of these states it's important to bear in mind that more than one state may apply at one time.</p>
+          <dl>
+            <dt><img alt="Transmission dialog featuring a button with two states" src="/images/posts/windows/transmission-up-to-date.png" />
+</dt>
+            <dd>Here the OK button exhibits both a pulsating blue background and an outer glow</dd>
+          </dl>
+          <h4>Hover</h4>
+          <pre><code>.aqua:hover {
     border-color: #740;
     background: #fb4;
     background: -webkit-gradient(linear, left top, left bottom,
@@ -134,30 +115,29 @@ than one state may apply at one time.</p>
         #fb4 5%, #fea 15%, #fb4 25%, #fb4 50%, #f90 50%, #fb4);
     color: #740;
     cursor: pointer;
-}
-</code></pre>
-<dl>
-<dt><img alt="Hover state" src="/images/posts/39/start-game-button-and-hyperlink-hover.png" /></dt>
-<dd>Hover state (right) alongside default state</dd>
-</dl>
-<h4>Focus</h4>
-<pre><code>:::css
-.aqua:focus {
+}</code></pre>
+          <dl>
+            <dt><img alt="Hover state" src="/images/posts/39/start-game-button-and-hyperlink-hover.png" />
+</dt>
+            <dd>Hover state (right) alongside default state</dd>
+          </dl>
+          <h4>Focus</h4>
+          <pre><code>.aqua:focus {
     -webkit-box-shadow: #740 0 1px 0.75em;
     -moz-box-shadow: #740 0 1px 0.75em;
     color: #740;
     outline: none;
-}
-</code></pre>
-<dl>
-<dt><img alt="Focus state" src="/images/posts/39/start-game-button-and-hyperlink-focus.png" /></dt>
-<dd>Focus state (right) alongside default state</dd>
-<dt><img alt="Focus+hover state" src="/images/posts/39/start-game-button-and-hyperlink-focus-hover.png" /></dt>
-<dd>The focus and hover states play nicely together</dd>
-</dl>
-<h4>Active</h4>
-<pre><code>:::css
-.aqua:active {
+}</code></pre>
+          <dl>
+            <dt><img alt="Focus state" src="/images/posts/39/start-game-button-and-hyperlink-focus.png" />
+</dt>
+            <dd>Focus state (right) alongside default state</dd>
+            <dt><img alt="Focus+hover state" src="/images/posts/39/start-game-button-and-hyperlink-focus-hover.png" />
+</dt>
+            <dd>The focus and hover states play nicely together</dd>
+          </dl>
+          <h4>Active</h4>
+          <pre><code>.aqua:active {
     border-color: #630;
     background: #f90;
     background: -webkit-gradient(linear, left top, left bottom,
@@ -167,15 +147,14 @@ than one state may apply at one time.</p>
     background: -moz-linear-gradient(-90deg,
         #f90 5%, #fd8 15%, #fb4 35%, #fb4 50%, #f90 50%, #f90);
     color: #630;
-}
-</code></pre>
-<dl>
-<dt><img alt="Active state" src="/images/posts/39/start-game-button-and-hyperlink-active.png" /></dt>
-<dd>Active state (right) alongside default state</dd>
-</dl>
-<h3>Demo</h3>
-<p>Interact with the finished styled button on the <a href="/examples/hyperlinks-as-buttons/">Hyperlinks as buttons</a>
-demo page.</p>
+}</code></pre>
+          <dl>
+            <dt><img alt="Active state" src="/images/posts/39/start-game-button-and-hyperlink-active.png" />
+</dt>
+            <dd>Active state (right) alongside default state</dd>
+          </dl>
+          <h3>Demo</h3>
+          <p>Interact with the finished styled button on the <a href="/examples/hyperlinks-as-buttons/">Hyperlinks as buttons</a> demo page.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -190,11 +169,11 @@ demo page.</p>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/sticky-footers/">Sticky footers</a></li>
+            <li><a href="/valid-xhtml-alternative-to-strike/">Valid XHTML alternative to <code>&lt;strike&gt;</code></a></li>
+            <li><a href="/embed-youtube-clips-using-valid-xhtml-markup/">Embed YouTube clips using valid XHTML markup</a></li>
+            <li><a href="/css-fixed-position-headers/">CSS fixed-position headers</a></li>
+            <li><a href="/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
           </ul>
         </article>
       </div>

@@ -15,11 +15,22 @@ const {
   snd,
 } = S;
 
-module.exports = env => filename => (
-  path.extname (filename) === '.clj' ?
-  chain (B (require ('./eval.js') (path.dirname (filename)) (env)) (snd))
-        (chain (read)
-               (encase (filename => fs.readFileSync (filename, 'utf8'))
-                       (filename))) :
-  encase (require) (filename)
-);
+const cache = new Map ([]);
+
+module.exports = env => filename => {
+  if (path.extname (filename) === '.clj') {
+    const abspath = path.resolve (filename);
+    if (cache.has (abspath)) {
+      return cache.get (abspath);
+    } else {
+      const x = chain (B (require ('./eval.js') (path.dirname (abspath)) (env)) (snd))
+                      (chain (read)
+                             (encase (abspath => fs.readFileSync (abspath, 'utf8'))
+                                     (abspath)));
+      cache.set (abspath, x);
+      return x;
+    }
+  } else {
+    return encase (require) (filename);
+  }
+};

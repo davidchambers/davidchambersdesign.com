@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Get attributes of Django model or instance</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,40 +39,30 @@
             <h1>Get attributes of Django model or instance</h1>
             <time datetime="2010-02-22T20:24:00+13:00" pubdate="pubdate">22 February 2010</time>
           </header>
-<p>What is the best way to get the attributes of a Django model or instance?</p>
-<pre><code>:::python
-from django.db import models
+          <p>What is the best way to get the attributes of a Django model or instance?</p>
+          <pre><code>from django.db import models
 
 class Musician(models.Model):
     first_name = models.CharField()
     last_name  = models.CharField()
-    instrument = models.CharField()
-</code></pre>
-<p>One option is to use <code>__dict__.keys()</code>:</p>
-<pre><code>:::pycon
-&gt;&gt;&gt; m = Musician(first_name='Norah', last_name='Jones', instrument='piano')
+    instrument = models.CharField()</code></pre>
+          <p>One option is to use <code>__dict__.keys()</code>:</p>
+          <pre><code>&gt;&gt;&gt; m = Musician(first_name='Norah', last_name='Jones', instrument='piano')
 &gt;&gt;&gt; print m.__dict__.keys()
-['last_name', 'instrument', 'first_name', 'id']
-</code></pre>
-<p>Another options is to use <code>_meta.fields</code>:</p>
-<pre><code>:::pycon
-&gt;&gt;&gt; print [f.name for f in m._meta.fields]
-['id', 'first_name', 'last_name', 'instrument']
-</code></pre>
-<p>This approach also works on models directly:</p>
-<pre><code>:::pycon
-&gt;&gt;&gt; print [f.name for f in Musician._meta.fields]
-['id', 'first_name', 'last_name', 'instrument']
-</code></pre>
-<h3>Advantages of using <code>_meta.fields</code></h3>
-<ul>
-<li>items in returned list are correctly ordered</li>
-<li>applicable to both models and instances</li>
-<li>only <em>fields</em> are returned</li>
-</ul>
-<p>The fact that only fields are returned is extremely useful. Django appears
-to add its own attributes to instances in certain circumstances; using
-<code>_meta.fields</code> prevents these from interfering with one's own code.</p>
+['last_name', 'instrument', 'first_name', 'id']</code></pre>
+          <p>Another options is to use <code>_meta.fields</code>:</p>
+          <pre><code>&gt;&gt;&gt; print [f.name for f in m._meta.fields]
+['id', 'first_name', 'last_name', 'instrument']</code></pre>
+          <p>This approach also works on models directly:</p>
+          <pre><code>&gt;&gt;&gt; print [f.name for f in Musician._meta.fields]
+['id', 'first_name', 'last_name', 'instrument']</code></pre>
+          <h3>Advantages of using <code>_meta.fields</code></h3>
+          <ul>
+            <li>items in returned list are correctly ordered</li>
+            <li>applicable to both models and instances</li>
+            <li>only <em>fields</em> are returned</li>
+          </ul>
+          <p>The fact that only fields are returned is extremely useful. Django appears to add its own attributes to instances in certain circumstances; using <code>_meta.fields</code> prevents these from interfering with one's own code.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -85,11 +75,7 @@ to add its own attributes to instances in certain circumstances; using
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/django-syntax-highlighting-for-coda/">Django syntax highlighting for Coda</a></li>
           </ul>
         </article>
       </div>

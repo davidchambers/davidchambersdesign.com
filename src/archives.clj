@@ -3,12 +3,12 @@
 (let [path (import "path")
 
       base-env (import "./base.js")
-      render-document (import "./render-document.clj")
-      base-template (import "./templates/base.clj")]
+      base-template (import "./base-template.clj")
+      render-document (import "./render-document.clj")]
 
    (pipe [(map (lift-2 (insert :slug)
                        (lambda [filename] (.replace (regex "" "^[^=]+=") "" (.basename filename ".clj" path)))
-                       (lambda [filename] (import base-env filename))))
+                       (lambda [filename] (import base-env (.resolve filename path)))))
           (map (join Pair))
           (map (map-left (prop :datetime)))
           (sort-by (compose (compose negate Number) fst))
