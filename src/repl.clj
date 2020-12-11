@@ -1,7 +1,6 @@
-(import* ["./base.js" "./node.js" "./sanctuary.clj"]
+(import* ["./base.js" "./node.js" "./path.clj" "./sanctuary.clj"]
 
-(let [path (import "path")
-      repl (import "repl")
+(let [repl (import "repl")
 
       base-env (import "./base.js")
       read (import "./read.js")
@@ -17,7 +16,7 @@
                                                 (callback error)))
                                          (lambda [value]
                                             (apply callback [null value]))
-                                         (chain (eval ("dirname" path filename) base-env)
+                                         (chain (eval (dirname filename) base-env)
                                                 (map snd (read input))))))
             "writer" print}
            repl)))

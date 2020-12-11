@@ -44,7 +44,8 @@ const {
   zip,
 } = S.unchecked;
 
-const evaluate = module.exports = dirname => env => term => {
+const evaluate = module.exports = dirname => _env => term => {
+  const env = {..._env, [Symbol.for ('__dirname')]: dirname};
   switch (term.type) {
     case 'symbol':
     case 'string-literal':
