@@ -1,4 +1,4 @@
-(import* ["./sanctuary.clj" "./elements.clj"] {
+(import* ["./base.js" "./sanctuary.clj" "./elements.clj"] {
 
   :caption
     (lambda [caption]
@@ -34,6 +34,16 @@
                                                (map (lambda [line]
                                                        (.slice min-indent line))
                                                     tail))))))))
+
+  :interview-list
+    (lambda [interviewer interviewee exchange]
+       (ol (.map (uncurry-2 (lambda [quotation index]
+                               (if (even index)
+                                   (li' (if (equals 0 index) {:class "interviewer"} {})
+                                      (concat [(strong (concat interviewer ":")) " "] quotation))
+                                   (li' {}
+                                      (concat [(strong (concat interviewee ":")) " "] quotation)))))
+                 (map canonicalize-children exchange))))
 
   :pros-and-cons-list
     (lambda [f]

@@ -21,27 +21,25 @@
              where he asked me about scaling rounded rectangles – this
              is where things started to get hairy."])
 
-        (ol
-           [(li' {:class "interviewer"}
-               [(strong "him:") " if I have a rounded rectangle and resize it,
-                 it there a way to stop it from changing the rounding of the
-                 corners (which I want constant for all my rectangles)?"])
-            (li
-               [(strong "me:") " you can work out how large you want it to
-                 be and then double-click with the rectangle tool and you'll
-                 be able to enter all the correct values"])
-            (li
-               [(strong "him:") " is there a way to change how curved they
-                 are after placing them?"])
-            (li
-               [(strong "me:") " InDesign has a much better was of dealing
-                 with this issue than does Illustrator... in InDesign, the
-                 rectangle is treated as an object, and its corner radius
-                 is treated as a property in just the same way as its width,
-                 height, and position... this means that you can change the
-                 corner radius at any time..."])
-            (li
-               [(strong "him:") " that's how it should be"])])])
+        (interview-list "him" "me"
+
+           ["if I have a rounded rectangle and resize it, it there a
+             way to stop it from changing the rounding of the corners
+             (which I want constant for all my rectangles)?"
+
+            "you can work out how large you want it to be and then
+             double-click with the rectangle tool and you'll be able
+             to enter all the correct values"
+
+            "is there a way to change how curved they are after placing them?"
+
+            "InDesign has a much better was of dealing with this issue than
+             does Illustrator... in InDesign, the rectangle is treated as an
+             object, and its corner radius is treated as a property in just
+             the same way as its width, height, and position... this means
+             that you can change the corner radius at any time..."
+
+            "that's how it should be"])])
 
     (p
        ["Hmm. Since InDesign deals with rounded rectangles effortlessly,

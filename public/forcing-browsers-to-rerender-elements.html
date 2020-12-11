@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Forcing browsers to rerender elements</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,13 +39,9 @@
             <h1>Forcing browsers to rerender elements</h1>
             <time datetime="2010-03-22T19:40:00+13:00" pubdate="pubdate">22 March 2010</time>
           </header>
-<p>Generally speaking browsers rerender elements as required – in response to DOM
-changes effected via JavaScript, for instance. There are times, though, when
-the browser <em>(Internet Explorer, I'm looking at you!)</em> needs a gentle nudge.</p>
-<p><a href="http://ajaxian.com/archives/forcing-a-ui-redraw-from-javascript">Forcing a UI redraw from JavaScript</a> highlights the solution employed by
-Thomas Fuchs, creator of the popular JavaScript library <a href="http://script.aculo.us/">script.aculo.us</a>:</p>
-<pre><code>:::javascript
-Element.addMethods({
+          <p>Generally speaking browsers rerender elements as required – in response to DOM changes effected via JavaScript, for instance. There are times, though, when the browser <em>Internet Explorer, I'm looking at you!</em> needs a gentle nudge.</p>
+          <p><a href="http://ajaxian.com/archives/forcing-a-ui-redraw-from-javascript">Forcing a UI redraw from JavaScript</a> highlights the solution employed by Thomas Fuchs, creator of the popular JavaScript library <a href="http://script.aculo.us/">script.aculo.us</a>:</p>
+          <pre><code>Element.addMethods({
     redraw: function (element) {
         element = $(element);
         var n = document.createTextNode(' ');
@@ -53,15 +49,10 @@ Element.addMethods({
         (function () { n.parentNode.removeChild(n); }).defer();
         return element;
     }
-});
-</code></pre>
-<p>The post's first comment includes an alternative approach:</p>
-<pre><code>:::javascript
-element.className = element.className;
-</code></pre>
-<p>I gather that there are situations in which this simple solution fails — it's
-no silver bullet — but it fixed a problem I encountered in IE8 earlier this
-evening so I'm pleased to have discovered it!</p>
+});</code></pre>
+          <p>The post's first comment includes an alternative approach:</p>
+          <pre><code>element.className = element.className;</code></pre>
+          <p>I gather that there are situations in which this simple solution fails — it's no silver bullet — but it fixed a problem I encountered in IE8 earlier this evening so I'm pleased to have discovered it!</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -75,11 +66,10 @@ evening so I'm pleased to have discovered it!</p>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/duplicating-arrays-in-javascript/">Duplicating arrays in JavaScript</a></li>
+            <li><a href="/extra-comma-considered-harmful/">Extra comma considered harmful</a></li>
+            <li><a href="/mootools-every-method/">MooTools every method</a></li>
+            <li><a href="/associative-arrays-in-javascript/">Associative arrays in JavaScript</a></li>
           </ul>
         </article>
       </div>

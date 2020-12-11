@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>CSS image switcher (done the right way)</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,96 +39,53 @@
             <h1>CSS image switcher (done the right way)</h1>
             <time datetime="2010-03-24T12:47:00+13:00" pubdate="pubdate">24 March 2010</time>
           </header>
-<hr />
-<p><strong>Chris Coyier has done it again.</strong> Compelled me to stay up all night,
-that is (it's 7am as I type this). In Chris's latest screencast, <a href="http://css-tricks.com/video-screencasts/82-css-image-switcher/">CSS Image
-Switcher</a>, he demonstrates how to create an "image switcher" using CSS.
-The problem, though, is that <strong>his process is wrong</strong>.</p>
-<h4>Incorrect process</h4>
-<ol>
-<li>What effect or experience do I want to create?</li>
-<li>How can I achieve this using CSS (and JavaScript if necessary)?</li>
-<li>What can my markup do to help me?</li>
-</ol>
-<h4>Correct process</h4>
-<ol>
-<li>What effect or experience do I want to create?</li>
-<li>What is the most correct and meaningful way to describe the content?</li>
-<li>How can I achieve the desired effect or experience (or something close to it)
-   <em>without</em> altering my markup?</li>
-</ol>
-<hr />
-<p>Chris simply isn't in the right mindset. He's thinking about <em>how</em>
-he's going to present the content on the page, but he's forgetting to
-consider the content itself. This is a crucial error. If one views Chris's
-<a href="http://css-tricks.com/examples/CSSImageSwitcher/">CSS image switcher demo</a> with styles disabled, one sees something most
-unhelpful:</p>
-<dl>
-<dt><img alt="Chris Coyier's CSS image switcher demo displays nothing but four unhelpful links when styles are disabled" src="/images/posts/43/css-tricks-image-switcher-demo-sans-styles.png" /></dt>
-<dd>CSS image switcher demo as seen at CSS-Tricks (with styles disabled;
-  note the lack of images)</dd>
-</dl>
-<p>Well, at least one could click on these links to view the images, right?
-Wrong! The hrefs contain nothing but the hash sign. Chris does mention in
-the screencast that these links <em>could</em> go somewhere, but it's as if to say
-<strong>hey, here're some links if you need 'em</strong> rather than <strong>yikes! this page'll
-be worthless when styles are disabled, you'd sure as hell better link to the
-images as backup</strong>.</p>
-<p>I assume that Chris opted to use anchor elements to allow him to employ the
-<strong>:hover</strong> pseudo-class and have it work in IE6. It's well and truly time,
-however, to stop bending over backwards to accommodate IE6's shortcomings,
-and Google agrees: <a href="http://www.sitepoint.com/blogs/2009/07/20/youtube-drop-ie6/">YouTube to drop support for IE6</a>.</p>
-<h3>Why meaningful markup matters</h3>
-<p>Meaningful HTML is not just important to markup geeks who like to use the word
-"semantic". <strong>It's vitally important to search engines.</strong> While in most cases
-discussion of the relationship between structured content and search engines
-centres on whether Google favours sites with clean, descriptive markup, in the
-case of Chris's CSS image switcher it's a matter of whether the content is
-indexable at all! Consider the consequences of a site such as <a href="http://www.flickr.com/">Flickr</a>
-adopting this approach: any new photo uploaded to the site would be invisible
-to web crawlers.</p>
-<p>One should not rely on either CSS or JavaScript to deliver <em>content</em>
-– HTML exists to contain and describe content. This is a pragmatic
-consideration as well as an idealogical one: HTML is the one component
-of the HTML+CSS+JavaScript stack to which all users have access (certain
-devices, for example, eschew CSS support in favour of faster page loads).</p>
-<h3>Meaningful markup for image–caption pairs</h3>
-<p>As I state in <a href="/captions-over-images/">Captions over images</a>, my response to an earlier CSS-Tricks
-screencast, the <strong>definition list</strong> is the most appropriate tool in our
-toolbox.</p>
-<dl>
-<dt><img alt="Definition list markup" src="/images/posts/43/definition-list-markup.png" /></dt>
-<dd>The screenshot above is marked up within a <strong>dt</strong> and this caption is a
-  <strong>dd</strong> (how meta!)</dd>
-</dl>
-<p>Each term in a definition list should have <em>at least</em> one definition. This
-enables more than one description — a title and a caption, for instance — to
-be tied to an image:</p>
-<pre><code>:::html
-&lt;dl&gt;
+          <p><strong>Chris Coyier has done it again.</strong> Compelled me to stay up all night, that is (it's 7am as I type this). In Chris's latest screencast, <a href="http://css-tricks.com/video-screencasts/82-css-image-switcher/">CSS Image Switcher</a>, he demonstrates how to create an "image switcher" using CSS. The problem, though, is that <strong>his process is wrong</strong>.</p>
+          <h4>Incorrect process</h4>
+          <ol>
+            <li>What effect or experience do I want to create?</li>
+            <li>How can I achieve this using CSS (and JavaScript if necessary)?</li>
+            <li>What can my markup do to help me?</li>
+          </ol>
+          <h4>Correct process</h4>
+          <ol>
+            <li>What effect or experience do I want to create?</li>
+            <li>What is the most correct and meaningful way to describe the content?</li>
+            <li>How can I achieve the desired effect or experience (or something close to it) <em>without</em> altering my markup?</li>
+          </ol>
+          <p>Chris simply isn't in the right mindset. He's thinking about <em>how</em> he's going to present the content on the page, but he's forgetting to consider the content itself. This is a crucial error. If one views Chris's <a href="http://css-tricks.com/examples/CSSImageSwitcher/">CSS image switcher demo</a> with styles disabled, one sees something most unhelpful:</p>
+          <dl>
+            <dt><img alt="Chris Coyier's CSS image switcher demo displays nothing but four unhelpful links when styles are disabled" src="/images/posts/43/css-tricks-image-switcher-demo-sans-styles.png" />
+</dt>
+            <dd>CSS image switcher demo as seen at CSS-Tricks (with styles disabled; note the lack of images)</dd>
+          </dl>
+          <p>Well, at least one could click on these links to view the images, right? Wrong! The hrefs contain nothing but the hash sign. Chris does mention in the screencast that these links <em>could</em> go somewhere, but it's as if to say <strong>hey, here're some links if you need 'em</strong> rather than <strong>yikes! this page'll be worthless when styles are disabled, you'd sure as hell better link to the images as backup</strong>.</p>
+          <p>I assume that Chris opted to use anchor elements to allow him to employ the <strong>:hover</strong> pseudo-class and have it work in IE6. It's well and truly time, however, to stop bending over backwards to accommodate IE6's shortcomings, and Google agrees: <a href="http://www.sitepoint.com/blogs/2009/07/20/youtube-drop-ie6/">YouTube to drop support for IE6</a>.</p>
+          <h3>Why meaningful markup matters</h3>
+          <p>Meaningful HTML is not just important to markup geeks who like to use the word "semantic". <strong>It's vitally important to search engines.</strong> While in most cases discussion of the relationship between structured content and search engines centres on whether Google favours sites with clean, descriptive markup, in the case of Chris's CSS image switcher it's a matter of whether the content is indexable at all! Consider the consequences of a site such as <a href="http://www.flickr.com/">Flickr</a> adopting this approach: any new photo uploaded to the site would be invisible to web crawlers.</p>
+          <p>One should not rely on either CSS or JavaScript to deliver <em>content</em> – HTML exists to contain and describe content. This is a pragmatic consideration as well as an idealogical one: HTML is the one component of the HTML+CSS+JavaScript stack to which all users have access (certain devices, for example, eschew CSS support in favour of faster page loads).</p>
+          <h3>Meaningful markup for image–caption pairs</h3>
+          <p>As I state in <a href="/captions-over-images/">Captions over images</a>, my response to an earlier CSS-Tricks screencast, the <strong>definition list</strong> is the most appropriate tool in our toolbox.</p>
+          <dl>
+            <dt><img alt="Definition list markup" src="/images/posts/43/definition-list-markup.png" />
+</dt>
+            <dd>The screenshot above is marked up within a <strong>dt</strong> and this caption is a <strong>dd</strong> (how meta!)</dd>
+          </dl>
+          <p>Each term in a definition list should have <em>at least</em> one definition. This enables more than one description — a title and a caption, for instance — to be tied to an image:</p>
+          <pre><code>&lt;dl&gt;
     &lt;dt&gt;&lt;img src="images/ds81.jpg" alt="Vancouver architecture" /&gt;&lt;/dt&gt;
     &lt;dd&gt;This is not like that&lt;/dd&gt;
     &lt;dd&gt;Contrasting ideas engage the mind. Make a photo today that tells
     a story with contrasting elements. — &lt;i&gt;Daily Shoot 81&lt;/i&gt;&lt;/dd&gt;
     ...
-&lt;/dl&gt;
-</code></pre>
-<p>Beautiful, isn't it? No pointless (literally) anchors, no meaningless ids, no
-class names, just content wrapped in descriptive HyperText Markup Language.
-This ensures that the page's content is accessible to all: those viewing the
-page on mobile phones; those using screen readers or feed readers; and, of
-course, web crawlers.</p>
-<dl>
-<dt><img alt="Meaningful markup degrades gracefully" src="/images/posts/43/meaningful-markup-degrades-gracefully.jpg" /></dt>
-<dd>The page's content is accessible even with styles disabled</dd>
-</dl>
-<h3>Demo</h3>
-<p>Check out the <a href="/examples/css-image-switcher/">CSS image switcher demo</a> to see what's possible with
-straightforward, structured markup (and some rather less straightforward CSS).
-The demo works in the latest versions of Firefox, Internet Explorer, Opera,
-and Camino. Unfortunately the core feature does <em>not</em> work in Safari or Google
-Chrome, as these WebKit-based browsers fail to handle the <code>dt+dd:hover~dt</code>
-selector.</p>
+&lt;/dl&gt;</code></pre>
+          <p>Beautiful, isn't it? No pointless (literally) anchors, no meaningless ids, no class names, just content wrapped in descriptive HyperText Markup Language. This ensures that the page's content is accessible to all: those viewing the page on mobile phones; those using screen readers or feed readers; and, of course, web crawlers.</p>
+          <dl>
+            <dt><img alt="Meaningful markup degrades gracefully" src="/images/posts/43/meaningful-markup-degrades-gracefully.jpg" />
+</dt>
+            <dd>The page's content is accessible even with styles disabled</dd>
+          </dl>
+          <h3>Demo</h3>
+          <p>Check out the <a href="/examples/css-image-switcher/">CSS image switcher demo</a> to see what's possible with straightforward, structured markup (and some rather less straightforward CSS). The demo works in the latest versions of Firefox, Internet Explorer, Opera, and Camino. Unfortunately the core feature does <em>not</em> work in Safari or Google Chrome, as these WebKit-based browsers fail to handle the <code>dt+dd:hover~dt</code> selector.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -145,11 +102,8 @@ selector.</p>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/captions-over-images/">Captions over images</a></li>
+            <li><a href="/prototype-image-slider/">Prototype image slider</a></li>
           </ul>
         </article>
       </div>

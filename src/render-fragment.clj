@@ -14,7 +14,11 @@
                           (let [indentation (.repeat level indent)
                                 tag-name (symbol->string (:tag-name node))
                                 attrs (++ (chain (lambda [sym]
-                                                    [" " (symbol->string sym) "=\"" (escape (sym (:attrs node))) "\""])
+                                                    [" "
+                                                     (symbol->string sym)
+                                                     "=\""
+                                                     (escape (unwords (map trim (lines (sym (:attrs node))))))
+                                                     "\""])
                                                  (.getOwnPropertySymbols (:attrs node) Object)))]
                              (++ (if (:self-closing node)
                                      [indentation "<" tag-name attrs " />\n"]

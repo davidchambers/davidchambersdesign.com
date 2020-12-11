@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Using Google for site search</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,12 +39,8 @@
             <h1>Using Google for site search</h1>
             <time datetime="2010-03-25T22:06:00+13:00" pubdate="pubdate">25 March 2010</time>
           </header>
-<hr />
-<p>WordPress is a great piece of software, although I've never been satisfied
-with its search functionality. Last night I decided to switch to a very simple
-solution:</p>
-<pre><code>:::html
-&lt;form action="http://www.google.com/search" method="get"&gt;
+          <p>WordPress is a great piece of software, although I've never been satisfied with its search functionality. Last night I decided to switch to a very simple solution:</p>
+          <pre><code>&lt;form action="http://www.google.com/search" method="get"&gt;
     &lt;div&gt;
         &lt;label for="q"&gt;Search davidchambersdesign.com&lt;/label&gt;
         &lt;input type="search" name="q" id="q" maxlength="256" placeholder="search..." /&gt;
@@ -53,24 +49,19 @@ solution:</p>
         &lt;input type="hidden" name="as_sitesearch" value="davidchambersdesign.com" /&gt;
         &lt;input type="submit" value="Search" /&gt;
     &lt;/div&gt;
-&lt;/form&gt;
-</code></pre>
-<hr />
-<p>Search queries on this site are now submitted to Google with the specification
-that only results from this domain are to be returned. Here's a breakdown of
-the various query parameters I included:</p>
-<dl>
-<dt>q{@class=textual}</dt>
-<dd>Search query as entered by the user.</dd>
-<dt>ie</dt>
-<dd>Sets the character encoding that is used to interpret the query string.</dd>
-<dt>hl</dt>
-<dd>Specifies the interface language (host language) of your user interface.</dd>
-<dt>as_sitesearch</dt>
-<dd>Limits search results to documents in the specified domain.</dd>
-</dl>
-<p>If you decide to implement this yourself you may find the documentation on
-<a href="http://www.google.com/cse/docs/resultsxml.html#wsRequestParameters">Google custom search request parameters</a> useful.</p>
+&lt;/form&gt;</code></pre>
+          <p>Search queries on this site are now submitted to Google with the specification that only results from this domain are to be returned. Here's a breakdown of the various query parameters I included:</p>
+          <dl>
+            <dt class="textual">q</dt>
+            <dd>Search query as entered by the user.</dd>
+            <dt>ie</dt>
+            <dd>Sets the character encoding that is used to interpret the query string.</dd>
+            <dt>hl</dt>
+            <dd>Specifies the interface language (host language) of your user interface.</dd>
+            <dt>as_sitesearch</dt>
+            <dd>Limits search results to documents in the specified domain.</dd>
+          </dl>
+          <p>If you decide to implement this yourself you may find the documentation on <a href="http://www.google.com/cse/docs/resultsxml.html#wsRequestParameters">Google custom search request parameters</a> useful.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -81,14 +72,6 @@ the various query parameters I included:</p>
               <li><a href="/tag/search/">search</a></li>
             </ol>
           </footer>
-          <h3 id="related">Possibly related posts</h3>
-          <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
-          </ul>
         </article>
       </div>
     </div>
