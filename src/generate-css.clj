@@ -18,6 +18,15 @@
    (join-with "\n"
               (map (pair (lambda [selector declarations]
                             (pipe [(unfoldr (lift-2 (lift-2 Pair) (take 2) (drop 2)))
+                                   (chain (lambda [declaration]
+                                             (if (=== :border-radius (0 declaration))
+                                                 (map (flip prepend [(1 declaration)])
+                                                      [:-webkit-border-radius
+                                                       :-moz-border-radius
+                                                       :-ms-border-radius
+                                                       :-o-border-radius
+                                                       :border-radius])
+                                                 [declaration])))
                                    (map (lambda [declaration]
                                            (++ ["  "
                                                 (coerce (0 declaration))

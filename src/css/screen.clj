@@ -136,10 +136,6 @@
     :display :block
     :width (px 28)
     :height (px 28)
-    :-webkit-border-radius (px 4)
-    :-moz-border-radius (px 4)
-    :-ms-border-radius (px 4)
-    :-o-border-radius (px 4)
     :border-radius (px 4)
     :border [(px 1) :solid "#999999"]
     :background [:no-repeat (% 50)]
@@ -824,10 +820,6 @@
   ]
   "footer.metadata ul a" [
     :margin-left (em -0.833)
-    :-webkit-border-radius (em 0.875)
-    :-moz-border-radius (em 0.875)
-    :-ms-border-radius (em 0.875)
-    :-o-border-radius (em 0.875)
     :border-radius (em 0.875)
     :background "#268bd2"
     :padding [0 (em 0.667) 0 (em 0.833)]
@@ -941,10 +933,6 @@
   "input[type='submit']" [
     :margin [(px 20) 0 0]
     :height (px 30)
-    :-webkit-border-radius (px 4)
-    :-moz-border-radius (px 4)
-    :-ms-border-radius (px 4)
-    :-o-border-radius (px 4)
     :border-radius (px 4)
     :border [(px 1) :solid "#999999"]
     :background "#dddddd"
