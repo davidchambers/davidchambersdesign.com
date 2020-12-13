@@ -13,6 +13,7 @@
 
     :array? ("isArray" Array)
     :string? (compose (=== "string") type-of)
+    :symbol? (compose (=== "symbol") type-of)
 
     :++ (join-with "")
 

@@ -9,6 +9,9 @@ public:
 public/css:
 	mkdir -p -- '$@'
 
+public/css/screen.css: public/css
+	bin/eval-file src/generate-css.clj >'$@'
+
 public/css/%.css: public/css
 	curl --silent 'https://raw.githubusercontent.com/davidchambers/davidchambersdesign.com/static/src/css/$*.css' >'$@'
 
