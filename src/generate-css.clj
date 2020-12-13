@@ -27,6 +27,14 @@
                                                        :-o-border-radius
                                                        :border-radius])
                                                  [declaration])))
+                                   (chain (lambda [declaration]
+                                             (if (=== :transition-duration (0 declaration))
+                                                 (map (flip prepend [(1 declaration)])
+                                                      [:-webkit-transition-duration
+                                                       :-moz-transition-duration
+                                                       :-o-transition-duration
+                                                       :transition-duration])
+                                                 [declaration])))
                                    (map (lambda [declaration]
                                            (++ ["  "
                                                 (coerce (0 declaration))

@@ -607,10 +607,7 @@
     :-moz-transition-property    (, [:top :left         :box-shadow :padding :font-size :z-index])
     :-o-transition-property      (, [:top :left         :box-shadow :padding :font-size :z-index])
     :transition-property         (, [:top :left         :box-shadow :padding :font-size :z-index])
-    :-webkit-transition-duration (, [(s 0.2) (s 0.2) (s 0.2) (s 0.2) (s 0.167) (s 0.2)])
-    :-moz-transition-duration    (, [(s 0.2) (s 0.2) (s 0.2) (s 0.2) (s 0.167) (s 0.2)])
-    :-o-transition-duration      (, [(s 0.2) (s 0.2) (s 0.2) (s 0.2) (s 0.167) (s 0.2)])
-    :transition-duration         (, [(s 0.2) (s 0.2) (s 0.2) (s 0.2) (s 0.167) (s 0.2)])
+    :transition-duration (, [(s 0.2) (s 0.2) (s 0.2) (s 0.2) (s 0.167) (s 0.2)])
     :-webkit-transition-timing-function :ease
     :-moz-transition-timing-function :ease
     :-o-transition-timing-function :ease
