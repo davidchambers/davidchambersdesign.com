@@ -608,9 +608,6 @@
     :-o-transition-property      (, [:top :left         :box-shadow :padding :font-size :z-index])
     :transition-property         (, [:top :left         :box-shadow :padding :font-size :z-index])
     :transition-duration (, [(s 0.2) (s 0.2) (s 0.2) (s 0.2) (s 0.167) (s 0.2)])
-    :-webkit-transition-timing-function :ease
-    :-moz-transition-timing-function :ease
-    :-o-transition-timing-function :ease
     :transition-timing-function :ease
     :background "#e1e1e1"
     :color (rgba 0 0 0 0.732)

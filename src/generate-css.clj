@@ -35,6 +35,14 @@
                                                        :-o-transition-duration
                                                        :transition-duration])
                                                  [declaration])))
+                                   (chain (lambda [declaration]
+                                             (if (=== :transition-timing-function (0 declaration))
+                                                 (map (flip prepend [(1 declaration)])
+                                                      [:-webkit-transition-timing-function
+                                                       :-moz-transition-timing-function
+                                                       :-o-transition-timing-function
+                                                       :transition-timing-function])
+                                                 [declaration])))
                                    (map (lambda [declaration]
                                            (++ ["  "
                                                 (coerce (0 declaration))
