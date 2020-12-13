@@ -24,7 +24,7 @@
     :height (% 100)
     :background-color "#fdf6e3"
     :font-size (% 75)
-    :font-family (, ["\"Lucida Grande\"" "\"Lucida Sans Unicode\"" "Helvetica" "Arial" :sans-serif])
+    :font-family (, ["'Lucida Grande'" "'Lucida Sans Unicode'" "Helvetica" "Arial" :sans-serif])
     :color "#657b83"
     :cursor :default
   ]
@@ -85,7 +85,7 @@
     :position :absolute
     :left (px -9999)
   ]
-  "#header header form div input[type=\"search\"]" [
+  "#header header form div input[type='search']" [
     :position :absolute
     :right (px 27)
     :top 0
@@ -96,7 +96,7 @@
     :height (px 16)
     :font-size (em 1.083)
   ]
-  "#header header form div input[type=\"submit\"]" [
+  "#header header form div input[type='submit']" [
     :position :absolute
     :right 0
     :top 0
@@ -170,46 +170,46 @@
     :overflow :hidden
     :visibility :hidden
   ]
-  "#nav a[href=\"/about/\"]" [
+  "#nav a[href='/about/']" [
     :background-image "url(../images/nav/icon/about.svg)"
   ]
-  "#nav a[href=\"/about/\"] > span" [
+  "#nav a[href='/about/'] > span" [
     :background-image "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAABNUlEQVRo3u2YQRKDIAxFSac38k4eyjN5p3TjwlIJITEC0/822qJJDBA+0LIs6YCPK6VvSv/fyaWPfd9/Hty2LX+29fftcU7IaDmp2WjxYYpnXdcEQC9eSAEAAPTlfVIRdFy5oCb4dE9CW96uVaxJ8B2tBKX4LfZrebCodqvt0vvaHLXEyo7x4el/dvQLAFMpYhKKp9SusdsyQTQFvVQkIuK/ypFkJ4+DlX4ttqVvjFjkSCh8pOgrTxEmxeLg7V8AQhXxP/CECmJDHBRo25qn8wJxtVOiRt8ofABUFDELCmoGeLA4IlTnE4o2Kr89YwdgqqMJGmyisGKbnjLVlm+PgX/38A/5rY01AIY6mpDO9djRPkLRuSM+CpzUXtuRsfX2XbM/+vgDIBEzxAAAAIxwNAEAAKATH+FfdBZqw1WQAAAAAElFTkSuQmCC')"
   ]
-  "#nav a[href=\"/archives/\"]" [
+  "#nav a[href='/archives/']" [
     :background-image "url(../images/nav/icon/archives.svg)"
   ]
-  "#nav a[href=\"/archives/\"] > span" [
+  "#nav a[href='/archives/'] > span" [
     :background-image "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAACHElEQVRo3u1aWa7DIAxkqnejcCYOxZlyJ7+fRkKIzQbCUixVagIEPHaHiQuu61JfI6WUuu8bqtK01slnpdqttepFI+8agTZkxkK9a6Pm3d23VnOTIJdWxM2fM7WGoTlrjJk+8f9GTNqC7DslEm1KcMeOHVuAiB8CIq01uUTpqtdYW4pgQ+rXv+dfW2vpu5PBUcrk7XLwlDTF2joqaE4/MNS4347APYqorhLl4W5Cqedw1136hkGZsZRRVrPjWuKDBNeY+kRgbml8lbBvrXrn5A46r/F1+3DLDSEyTZUgfLKVmEvMD8m6xBtq76ygS+dA4sfObVeJ75K1hZJYuq6SsSGCogLfVsI15wMJ110SRzSIbwxnyZpUB/9r/VmfiFOEG1PDpSWIEFnHCDWklmOqeQOjzv1TBFNS15OMxQ/gysUrh51046qNLzmfkf638mdqIiY/yDXqtadZaymkelMljEUNTBJAY9IggbpuMXZ3XGfBrmQe6VvWCP9nzjmWIkatI7Xk7daHY2qYUzN++ixMzGjQX6pmSgmIKsb+Iq41uCNThui5Ic26UebGkVqkVCE+NfH8eZc7qtbCjDHwSTVGyowaMQKBArM/55UWjLmJSRxUQTQcTPx2VODZqrSwAq6tchGVxMKJEV4kMmnuvJlzfQFwzhE/BDu6/LBBZWGqetVOR/J+GdflyWaUrXCO+HPCtLWdc9H74XriuaH9AyA2SpOz0ppaAAAAAElFTkSuQmCC')"
   ]
-  "#nav a[href=\"https://bitbucket.org/davidchambers\"]" [
+  "#nav a[href='https://bitbucket.org/davidchambers']" [
     :background-image "url(../images/nav/icon/bitbucket.svg)"
   ]
-  "#nav a[href=\"https://bitbucket.org/davidchambers\"] > span" [
+  "#nav a[href='https://bitbucket.org/davidchambers'] > span" [
     :background-image "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAABvklEQVRo3u2awZaAIAhF+6e+1q91VnNOZyaDBw/UYuHCLELFK4LHeZ79Wnrvx7XcPdc+YxWGbERGa6231vqoPruspk+Grr9ydul3lf3XRaa9/QOUBlgF4gJxpq4F4CpvX2ciiEd16bkE6qd3tO9qvpXarCC+emijNgTqT/LQ/2plMPW7a4vo00gO2id0s/XqaLUX60lB+z+pbpGLjqU0HtZ+oXartd2I09kRFZpg1DVtKORR436aJKn+d3FpQYGA1CKDrZ8WkN5NDwESc8y942G1F6vHxtRHei9yPLPG/a4/HltM8YizQDySLW0WyIZihUNkHYGOF8RRIJkJYqtcj47e+fWCyePxWk5F6ImEMVcZ446sMzaMtwKxBNkn0O4AYu3krgZiBApfBrF1PtDQxEwQWzz5aBCzTmspoYnVQDxqQ/RBwxcreMSjY9LqIGZ5HZkgjpKNzq83OTwLxFYbnuERa8fdcgJghCzoMWKt54p4tp5EXwSImckQNNHBTPix++sFXSYstZtedrLOEiP2JlctAGImnK3/ZyfrPKEJN4jrmkqVr19Pqut177gWtvM8lGFUKSB8GABvAfHuc/ADvtWjgc0r3tgAAAAASUVORK5CYII=')"
   ]
-  "#nav a[href=\"/contact/\"]" [
+  "#nav a[href='/contact/']" [
     :background-image "url(../images/nav/icon/contact.svg)"
   ]
-  "#nav a[href=\"/contact/\"] > span" [
+  "#nav a[href='/contact/'] > span" [
     :background-image "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAACHUlEQVRo3u1aS67DIAy0n3qjciYOlTPlTtNNIyFkYhtISvs8qzYE8AeGwQo/n08iIlCBfd+ZJiGlBM+Y27Zp7SAiyjmfjpdzLsc6/JvhlzbWzLkCc/AtObvazrv9NM2Xc/73C/QhBAuxb4cQBByItRVwEzGdqeFD0UrtpdqVlG/ZN6WEo+1szFL1Ficm18+3bYOmih0ntXRyQ9gAqNq5NbZgMxsVAk42H5SNic5+PTFptbGihrT3RubV+kKJGTriRoqA4Y7coiNHVjXt9XM0P3FTNODPWlZokegZyZYEW/9ujVmWHmqiLf8PkLCXqLmxwNT5qzILDLeO1rxUPW8dDFJf6TkmxeSu2xMb5m3FV8sZGwioN2+e8Vxry+j7bD971qzVvlDEo/DWlCUyP6kfffIExcgJXtWpuZOALKrLajMUQkLV/4rY1/NY5kVHrFbGbHW4ku/85blZTxFfAUllLwh2ksDdm5c7bIaiWj7t14ji+ibgh3wJXEXEHrV6B+p6sdQuvaP1u1plaF9/TCIpj82Ww4Vn3AQcdkK4Ev86Qa14yN95sNbvRqniTcTlJoBU100pwfsZmlbGKMeUShEHwfaWJt790LgGsrAQuLFAeucfJSgYbCaDzXU/jezYaJs3pjNI+85N6/HHYqM3D6v46W0Ppd+ThPd3xCVRfloBR1bWUDOxocbjGDG8TrT8FB6xDALOEkfAdiWPGAbMeAE9OSswkuIpmQAAAABJRU5ErkJggg==')"
   ]
-  "#nav a[href=\"/flushcache/\"]" [
+  "#nav a[href='/flushcache/']" [
     :background-image "url(../images/nav/icon/flushcache.svg)"
   ]
-  "#nav a[href=\"/flushcache/\"] > span" [
+  "#nav a[href='/flushcache/'] > span" [
     :background-image "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAAAu0lEQVRo3u3a0QrCMAwF0PxT///b4rOyma7tsOp5OKAUQh3hNnRGay1PxMvnGavqfHwPmQmwVBVQglgQA5sFcfU9DqbqGJiy86ROtfZuvWcPVW1NA9waxDkQvD3BHBevPI5qxsRB0buHrt+iaYDdJ+Jqio2BIK6m1tG6Q1O7pgF+4WpiJohX1u09RAQx8HVBfEdgzkzos4fK07qmAXb410Tvi7TRq4m4+DJu5R7KupoGWB7EHgKAIAb4aw9tcYNEXXm9DwAAAABJRU5ErkJggg==')"
   ]
-  "#nav a[href=\"/tags/\"]" [
+  "#nav a[href='/tags/']" [
     :background-image "url(../images/nav/icon/tags.svg)"
   ]
-  "#nav a[href=\"/tags/\"] > span" [
+  "#nav a[href='/tags/'] > span" [
     :background-image "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAAB/klEQVRo3u1aWxKFIAiVO+1I19SiWpN74n410zipPLOH/JUWcIATVBBjxHAiOWcIA2Tbtt2eXX953BPu/vI66rUtPbU1rg5LwUF6a36PtOeJGN4dB0tsPHC+xT3XdT09v5SFMYqAX1ZgMIt4ktfHBKbPcll6G1JK2OqUy/Vy33HdkOSRAQh2AMQKaWg689q1lG4ZCF1HIHQk5TF0fAUjfDnYBqbuls3UeFP8a3XwPZtBgRMQ84waHy0WZ3jXcODkq6S2NHmhzTdqzXFrh07ER/JMKWFKCUuSpR4rybZFOEhwuLYfgn/XZqFD6nctAWs4c/WUSUjBFojjLRIKixtvZK5zbdbE7kh2Usw5WFDvhYJcbjUj2u6TmxfafKPWgthndkcskSN5C4DHj4y9UCEy7zEKlPiiEx4t3VfEG5l60MAu7ncQj+nSawSHh9g55NXFj0LCOWeQdLVlN+1UKPPdoy8RUYkaXhJbUBQ/XhQXK8y94ndnn28pP28FZwS+v+K4uGCe0hVbdVfhwfiOji047//qg/3LPmMLg6VHoi3S7K07faiDE6eACQo46rHyj2uPlb2c+0AvwS6KLSfePR0eeWXplwRzDhbBKZaaXPWyk2qH1E5yjCHG6DVCiKT2n91ImwY9QWeX9f54Tyw+hl/rP2LrkWMG/frReMqUKQ+WP8nkIlo7OqsfAAAAAElFTkSuQmCC')"
   ]
-  "#nav a[href=\"/twitter/\"]" [
+  "#nav a[href='/twitter/']" [
     :background-image "url(../images/nav/icon/twitter.svg)"
   ]
-  "#nav a[href=\"/twitter/\"] > span" [
+  "#nav a[href='/twitter/'] > span" [
     :background-image "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAAByklEQVRo3u1a7a2DMAzMVWzETgzFTOzk/o14IdjGdsxrLFVqUxLOd/4IEVjXlUrbUORGjbncMbUdx/FnbN/3IVgYfESbFsPdvAy+ZbXJXQ7Oh+iwbZt4zlKBsAA1A+t3bGo9uZs6GNki7DLa3+fv9Rg611x1N3qwwzvfFx2ceMgHp/tqfSajoOKsw9ltXGHljN/FjkfiWMRaFHdv4UCby5wc4qxXOlg1OnBwmOjyCew4qD534uCmeFtgaQnXwmAV8L3mJPWZO0/yOAchdm5yW+iGh2sUJX+UhLu3cSBZu/5fmydgNEOpDlwcJs3xwyxevd1K9NmqdZGEMCE0fMDRZ8tzLi12DlaU9z2SSzB7cpedAzKKt6d5YnUEEa6BdEdMAZhoYEBC6CsN9pnKOwvctP9h+KHaMLwQ44IEciJEIi45BAAG8KENaOtEoBfFLjUeG8k5NrJxl4GDyKKI5LGq5ntJ5AQajmAAkZH31vpsxdV5HSTU20MTC/4iucvKQe+c1jKXM9SGKxwmtlTv4ELQ9SDojpKzMwkG6+sl4mr5sPDhKdZihB1Omnrhi+QWQVhHc2AVu3DKXTjo4vHmUqod8bRp06ZlN7PiW9sX2+LFydcChv0AAAAASUVORK5CYII=')"
   ]
 
@@ -290,7 +290,7 @@
     :border [(px 1) :solid "#eee8d5"]
     :background "#fef9ec"
     :padding [(px 1) (px 4)]
-    :font [:normal "120%/1" (, ["Courier" "\"Courier New\"" :monospace])]
+    :font [:normal "120%/1" (, ["Courier" "'Courier New'" :monospace])]
     :color "#586e75"
   ]
 
@@ -323,7 +323,7 @@
     :padding [(em 1.75) (em 0.5) 0 0]
   ]
   "dl dt.textual:after, dl dt.textual ~ dt:after" [
-    :content "\":\""
+    :content "':'"
   ]
   "dl dt.textual ~ dd" [
     :font-style :normal
@@ -347,7 +347,7 @@
   ]
 
   "h1, h2, h3, h4" [
-    :font [:bold "1.667em/1.05" (, ["\"proxima-nova-1\"" "\"proxima-nova-2\"" "Helvetica" "Arial" :sans-serif])]
+    :font [:bold "1.667em/1.05" (, ["'proxima-nova-1'" "'proxima-nova-2'" "Helvetica" "Arial" :sans-serif])]
     :color "#586e75"
     :text-shadow [0 (px 1) 0 :white]
   ]
@@ -395,41 +395,41 @@
     :display :block
     :vertical-align :text-bottom
   ]
-  "img[src*=\"/decorative/left/\"]" [
+  "img[src*='/decorative/left/']" [
     :float :left
     :margin [0 (em 1) 0 0]
     :border (!important :none)
   ]
-  "img[src*=\"/decorative/right/\"]" [
+  "img[src*='/decorative/right/']" [
     :float :right
     :margin [0 0 0 (em 1)]
     :border (!important :none)
   ]
-  "img[src*=\"/elam/\"], img[src*=\"/lightbox/\"]" [
+  "img[src*='/elam/'], img[src*='/lightbox/']" [
     :margin [(em 1.75) 0 (px -1)]
     :border [(px 1) :solid "#cccccc"]
   ]
-  "img[src*=\"/lightbox/large/\"]" [
+  "img[src*='/lightbox/large/']" [
     :margin 0
   ]
-  "img[src*=\"/windows/\"]" [
+  "img[src*='/windows/']" [
     :margin [(px 3) (px -40) (px -29)]
     :max-width (!important :none)
     :border (!important :none)
   ]
-  "img[src*=\"/windows/lion/\"]" [
+  "img[src*='/windows/lion/']" [
     :margin [(px -6) (px -56) (px -52)]
   ]
-  "dt > img[src*=\"/windows/\"]" [
+  "dt > img[src*='/windows/']" [
     :margin [(px -24) (px -40) (px -35)]
   ]
-  "dt > img[src*=\"/windows/lion/\"]" [
+  "dt > img[src*='/windows/lion/']" [
     :margin [(px -33) (px -56) (px -58)]
   ]
-  "p > img[src*=\"/windows/\"]" [
+  "p > img[src*='/windows/']" [
     :margin [(px -18) (px -40) (px -29)]
   ]
-  "p > img[src*=\"/windows/lion/\"]" [
+  "p > img[src*='/windows/lion/']" [
     :margin [(px -27) (px -56) (px -52)]
   ]
   "p > img:only-child" [
@@ -439,7 +439,7 @@
     :margin-top (em 1.75)
   ]
 
-  "input[type=\"url\"], input[type=\"text\"], input[type=\"email\"], input[type=\"search\"]" [
+  "input[type='url'], input[type='text'], input[type='email'], input[type='search']" [
     :-webkit-box-sizing :content-box
     :height (px 15)
     :border [(px 1) :solid "#cccccc"]
@@ -447,7 +447,7 @@
     :padding [(px 3) (em 0.5)]
     :font-size (em 1)
   ]
-  "input[type=\"url\"]:focus, input[type=\"text\"]:focus, input[type=\"email\"]:focus, input[type=\"search\"]:focus" [
+  "input[type='url']:focus, input[type='text']:focus, input[type='email']:focus, input[type='search']:focus" [
     :border-color "#268bd2"
     :outline :none
   ]
@@ -468,7 +468,7 @@
     :color "#93a1a1"
   ]
   "label.required:after" [
-    :content "\"*\""
+    :content "'*'"
     :color "#999999"
   ]
 
@@ -496,7 +496,7 @@
     :border [(px 1) :solid "#eee8d5"]
     :background-color "#fef9ec"
     :padding [(em 0.143) (em 0.714)]
-    :font ["1.167em/1.5" (, ["Courier" "\"Courier New\"" :monospace])]
+    :font ["1.167em/1.5" (, ["Courier" "'Courier New'" :monospace])]
     :overflow :auto
   ]
   "li pre" [
@@ -558,7 +558,7 @@
 
   "article > header > dl" [
     :margin [(em 1.571) 0 (em -0.071)]
-    :font ["1.167em/1.5" (, ["Courier" "\"Courier New\"" :monospace])]
+    :font ["1.167em/1.5" (, ["Courier" "'Courier New'" :monospace])]
     :color "#93a1a1"
     :overflow :auto
   ]
@@ -570,7 +570,7 @@
     :font-weight :normal
   ]
   "article > header > dl > dt:after" [
-    :content "\":\""
+    :content "':'"
   ]
   "article > header > dl > dd" [
     :font-style :normal
@@ -632,79 +632,79 @@
     :font-size (em 1.167)
     :z-index 99
   ]
-  "#tags li[data-count=\"1\"] a" [
+  "#tags li[data-count='1'] a" [
     :background "#f7f7f7"
     :color (rgba 0 0 0 0.3)
   ]
-  "#tags li[data-count=\"2\"] a" [
+  "#tags li[data-count='2'] a" [
     :background "#f2f2f2"
     :color (rgba 0 0 0 0.4)
   ]
-  "#tags li[data-count=\"3\"] a" [
+  "#tags li[data-count='3'] a" [
     :background "#efefef"
     :color (rgba 0 0 0 0.458)
   ]
-  "#tags li[data-count=\"4\"] a" [
+  "#tags li[data-count='4'] a" [
     :background "#ededed"
     :color (rgba 0 0 0 0.5)
   ]
-  "#tags li[data-count=\"5\"] a" [
+  "#tags li[data-count='5'] a" [
     :background "#ebebeb"
     :color (rgba 0 0 0 0.532)
   ]
-  "#tags li[data-count=\"6\"] a" [
+  "#tags li[data-count='6'] a" [
     :background "#eaeaea"
     :color (rgba 0 0 0 0.558)
   ]
-  "#tags li[data-count=\"7\"] a" [
+  "#tags li[data-count='7'] a" [
     :background "#e8e8e8"
     :color (rgba 0 0 0 0.581)
   ]
-  "#tags li[data-count=\"8\"] a" [
+  "#tags li[data-count='8'] a" [
     :background "#e8e8e8"
     :color (rgba 0 0 0 0.6)
   ]
-  "#tags li[data-count=\"9\"] a" [
+  "#tags li[data-count='9'] a" [
     :background "#e7e7e7"
     :color (rgba 0 0 0 0.617)
   ]
-  "#tags li[data-count=\"10\"] a" [
+  "#tags li[data-count='10'] a" [
     :background "#e6e6e6"
     :color (rgba 0 0 0 0.632)
   ]
-  "#tags li[data-count=\"11\"] a" [
+  "#tags li[data-count='11'] a" [
     :background "#e5e5e5"
     :color (rgba 0 0 0 0.646)
   ]
-  "#tags li[data-count=\"12\"] a" [
+  "#tags li[data-count='12'] a" [
     :background "#e5e5e5"
     :color (rgba 0 0 0 0.658)
   ]
-  "#tags li[data-count=\"13\"] a" [
+  "#tags li[data-count='13'] a" [
     :background "#e4e4e4"
     :color (rgba 0 0 0 0.67)
   ]
-  "#tags li[data-count=\"14\"] a" [
+  "#tags li[data-count='14'] a" [
     :background "#e3e3e3"
     :color (rgba 0 0 0 0.681)
   ]
-  "#tags li[data-count=\"15\"] a" [
+  "#tags li[data-count='15'] a" [
     :background "#e3e3e3"
     :color (rgba 0 0 0 0.691)
   ]
-  "#tags li[data-count=\"16\"] a" [
+  "#tags li[data-count='16'] a" [
     :background "#e3e3e3"
     :color (rgba 0 0 0 0.7)
   ]
-  "#tags li[data-count=\"17\"] a" [
+  "#tags li[data-count='17'] a" [
     :background "#e2e2e2"
     :color (rgba 0 0 0 0.709)
   ]
-  "#tags li[data-count=\"18\"] a" [
+  "#tags li[data-count='18'] a" [
     :background "#e2e2e2"
     :color (rgba 0 0 0 0.717)
   ]
-  "#tags li[data-count=\"19\"] a" [
+  "#tags li[data-count='19'] a" [
     :background "#e1e1e1"
     :color (rgba 0 0 0 0.725)
   ]
@@ -781,13 +781,13 @@
   "#main article header h1, #main article header h2" [
     :display :inline
     :margin [0 (em 0.25) 0 0]
-    :font [:bold "1.667em/1.05" (, ["\"proxima-nova-1\"" "\"proxima-nova-2\"" "Helvetica" "Arial" :sans-serif])]
+    :font [:bold "1.667em/1.05" (, ["'proxima-nova-1'" "'proxima-nova-2'" "Helvetica" "Arial" :sans-serif])]
     :color "#586e75"
     :text-shadow [0 (px 1) 0 :white]
   ]
   "#main article header time" [
     :display :inline
-    :font [:bold "1.667em/1.05" (, ["\"proxima-nova-1\"" "\"proxima-nova-2\"" "Helvetica" "Arial" :sans-serif])]
+    :font [:bold "1.667em/1.05" (, ["'proxima-nova-1'" "'proxima-nova-2'" "Helvetica" "Arial" :sans-serif])]
     :color "#586e75"
     :text-shadow [0 (px 1) 0 :white]
     :font-weight :normal
@@ -887,7 +887,7 @@
     :border-top [(px 1) :solid "#cccccc"]
   ]
 
-  "form[action=\"comment/\"] fieldset" [
+  "form[action='comment/'] fieldset" [
     :margin [(em 1) 0 0]
   ]
   "fieldset#author-details" [
@@ -916,9 +916,9 @@
   "form > fieldset > div > label" [
     :text-transform :lowercase
   ]
-  "form > fieldset > div > input[type=\"url\"],
-   form > fieldset > div > input[type=\"text\"],
-   form > fieldset > div > input[type=\"email\"]" [
+  "form > fieldset > div > input[type='url'],
+   form > fieldset > div > input[type='text'],
+   form > fieldset > div > input[type='email']" [
     :position :absolute
     :left 0
     :top 0
@@ -933,11 +933,11 @@
   "form > fieldset + div + div > label" [
     :left (em 1.75)
   ]
-  "form > fieldset + div + div > input[type=\"checkbox\"]" [
+  "form > fieldset + div + div > input[type='checkbox']" [
     :margin 0
   ]
 
-  "input[type=\"submit\"]" [
+  "input[type='submit']" [
     :margin [(px 20) 0 0]
     :height (px 30)
     :-webkit-border-radius (px 4)
@@ -953,14 +953,14 @@
     :background-image "-o-linear-gradient(#eeeeee, #cccccc)"
     :background-image "linear-gradient(#eeeeee, #cccccc)"
     :padding [0 (px 10)]
-    :font ["1.167em/30px" (, ["\"proxima-nova-1\"" "\"proxima-nova-2\"" "\"Lucida Grande\"" "\"Lucida Sans Unicode\"" :sans-serif])]
+    :font ["1.167em/30px" (, ["'proxima-nova-1'" "'proxima-nova-2'" "'Lucida Grande'" "'Lucida Sans Unicode'" :sans-serif])]
     :text-shadow [0 (px 1) 0 :white]
   ]
-  "input[type=\"submit\"]:focus" [
+  "input[type='submit']:focus" [
     :border-color "#268bd2"
     :outline :none
   ]
-  "input[type=\"submit\"]:hover" [
+  "input[type='submit']:hover" [
     :background "#cccccc"
     :background-image "-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #dddddd), color-stop(100%, #bbbbbb))"
     :background-image "-webkit-linear-gradient(#dddddd, #bbbbbb)"
@@ -969,7 +969,7 @@
     :background-image "linear-gradient(#dddddd, #bbbbbb)"
     :cursor :pointer
   ]
-  "input[type=\"submit\"]:active" [
+  "input[type='submit']:active" [
     :background-image "-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #bbbbbb), color-stop(100%, #dddddd))"
     :background-image "-webkit-linear-gradient(#bbbbbb, #dddddd)"
     :background-image "-moz-linear-gradient(#bbbbbb, #dddddd)"
@@ -977,8 +977,8 @@
     :background-image "linear-gradient(#bbbbbb, #dddddd)"
   ]
 
-  "label[for=\"cc_sender\"],
-   label[for=\"subscribe\"]" [
+  "label[for='cc_sender'],
+   label[for='subscribe']" [
     :position :relative
     :top (px 5)
     :margin 0
@@ -1008,7 +1008,7 @@
   "ol.archives li h2" [
     :margin [(em 1.75) 0 0 (px 21)]
     :padding 0
-    :font [:bold "1em/1.75" (, ["\"Lucida Grande\"" "\"Lucida Sans Unicode\"" "Helvetica" "Arial" :sans-serif])]
+    :font [:bold "1em/1.75" (, ["'Lucida Grande'" "'Lucida Sans Unicode'" "Helvetica" "Arial" :sans-serif])]
     :color "#93a1a1"
   ]
   "ol.archives li ol" [
@@ -1025,97 +1025,97 @@
     :line-height 10
     :overflow :hidden
   ]
-  "ol.archives time[datetime*=\"01T\"]" [
+  "ol.archives time[datetime*='01T']" [
     :background-position [(px -60) (px -20)]
   ]
-  "ol.archives time[datetime*=\"02T\"]" [
+  "ol.archives time[datetime*='02T']" [
     :background-position [(px -80) (px -20)]
   ]
-  "ol.archives time[datetime*=\"03T\"]" [
+  "ol.archives time[datetime*='03T']" [
     :background-position [(px -100) (px -20)]
   ]
-  "ol.archives time[datetime*=\"04T\"]" [
+  "ol.archives time[datetime*='04T']" [
     :background-position [(px -120) (px -20)]
   ]
-  "ol.archives time[datetime*=\"05T\"]" [
+  "ol.archives time[datetime*='05T']" [
     :background-position [(px -140) (px -20)]
   ]
-  "ol.archives time[datetime*=\"06T\"]" [
+  "ol.archives time[datetime*='06T']" [
     :background-position [(px -20) (px -40)]
   ]
-  "ol.archives time[datetime*=\"07T\"]" [
+  "ol.archives time[datetime*='07T']" [
     :background-position [(px -40) (px -40)]
   ]
-  "ol.archives time[datetime*=\"08T\"]" [
+  "ol.archives time[datetime*='08T']" [
     :background-position [(px -60) (px -40)]
   ]
-  "ol.archives time[datetime*=\"09T\"]" [
+  "ol.archives time[datetime*='09T']" [
     :background-position [(px -80) (px -40)]
   ]
-  "ol.archives time[datetime*=\"10T\"]" [
+  "ol.archives time[datetime*='10T']" [
     :background-position [(px -100) (px -40)]
   ]
-  "ol.archives time[datetime*=\"11T\"]" [
+  "ol.archives time[datetime*='11T']" [
     :background-position [(px -120) (px -40)]
   ]
-  "ol.archives time[datetime*=\"12T\"]" [
+  "ol.archives time[datetime*='12T']" [
     :background-position [(px -140) (px -40)]
   ]
-  "ol.archives time[datetime*=\"13T\"]" [
+  "ol.archives time[datetime*='13T']" [
     :background-position [(px -20) (px -60)]
   ]
-  "ol.archives time[datetime*=\"14T\"]" [
+  "ol.archives time[datetime*='14T']" [
     :background-position [(px -40) (px -60)]
   ]
-  "ol.archives time[datetime*=\"15T\"]" [
+  "ol.archives time[datetime*='15T']" [
     :background-position [(px -60) (px -60)]
   ]
-  "ol.archives time[datetime*=\"16T\"]" [
+  "ol.archives time[datetime*='16T']" [
     :background-position [(px -80) (px -60)]
   ]
-  "ol.archives time[datetime*=\"17T\"]" [
+  "ol.archives time[datetime*='17T']" [
     :background-position [(px -100) (px -60)]
   ]
-  "ol.archives time[datetime*=\"18T\"]" [
+  "ol.archives time[datetime*='18T']" [
     :background-position [(px -120) (px -60)]
   ]
-  "ol.archives time[datetime*=\"19T\"]" [
+  "ol.archives time[datetime*='19T']" [
     :background-position [(px -140) (px -60)]
   ]
-  "ol.archives time[datetime*=\"20T\"]" [
+  "ol.archives time[datetime*='20T']" [
     :background-position [(px -20) (px -80)]
   ]
-  "ol.archives time[datetime*=\"21T\"]" [
+  "ol.archives time[datetime*='21T']" [
     :background-position [(px -40) (px -80)]
   ]
-  "ol.archives time[datetime*=\"22T\"]" [
+  "ol.archives time[datetime*='22T']" [
     :background-position [(px -60) (px -80)]
   ]
-  "ol.archives time[datetime*=\"23T\"]" [
+  "ol.archives time[datetime*='23T']" [
     :background-position [(px -80) (px -80)]
   ]
-  "ol.archives time[datetime*=\"24T\"]" [
+  "ol.archives time[datetime*='24T']" [
     :background-position [(px -100) (px -80)]
   ]
-  "ol.archives time[datetime*=\"25T\"]" [
+  "ol.archives time[datetime*='25T']" [
     :background-position [(px -120) (px -80)]
   ]
-  "ol.archives time[datetime*=\"26T\"]" [
+  "ol.archives time[datetime*='26T']" [
     :background-position [(px -140) (px -80)]
   ]
-  "ol.archives time[datetime*=\"27T\"]" [
+  "ol.archives time[datetime*='27T']" [
     :background-position [(px -20) (px -100)]
   ]
-  "ol.archives time[datetime*=\"28T\"]" [
+  "ol.archives time[datetime*='28T']" [
     :background-position [(px -40) (px -100)]
   ]
-  "ol.archives time[datetime*=\"29T\"]" [
+  "ol.archives time[datetime*='29T']" [
     :background-position [(px -60) (px -100)]
   ]
-  "ol.archives time[datetime*=\"30T\"]" [
+  "ol.archives time[datetime*='30T']" [
     :background-position [(px -80) (px -100)]
   ]
-  "ol.archives time[datetime*=\"31T\"]" [
+  "ol.archives time[datetime*='31T']" [
     :background-position [(px -100) (px -100)]
   ]
 
