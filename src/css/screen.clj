@@ -617,8 +617,6 @@
     :top (px -6)
     :width (% 100)
     :padding [(px 16) (px 21)]
-    :-webkit-box-shadow [0 (px 1) (px 3) (rgba 0 0 0 0.2)]
-    :-moz-box-shadow [0 (px 1) (px 3) (rgba 0 0 0 0.2)]
     :box-shadow [0 (px 1) (px 3) (rgba 0 0 0 0.2)]
     :font-size (em 1.167)
     :z-index 99

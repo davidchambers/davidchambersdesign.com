@@ -28,6 +28,13 @@
                                                        :border-radius])
                                                  [declaration])))
                                    (chain (lambda [declaration]
+                                             (if (=== :box-shadow (0 declaration))
+                                                 (map (flip prepend [(1 declaration)])
+                                                      [:-webkit-box-shadow
+                                                       :-moz-box-shadow
+                                                       :box-shadow])
+                                                 [declaration])))
+                                   (chain (lambda [declaration]
                                              (if (=== :transition-duration (0 declaration))
                                                  (map (flip prepend [(1 declaration)])
                                                       [:-webkit-transition-duration
