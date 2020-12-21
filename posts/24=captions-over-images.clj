@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            ["This is my response to Chris Coyier's screencast titled "
             (a "http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/"
@@ -29,7 +30,7 @@
          a definition " (em "describes") " a term. Meaningful markup for an
          image and its caption should look something like the following:"])
 
-    (code-block
+    (code-block :html
        "<dl>
             <dt><img src=\"images/paris.jpg\" alt=\"View from Notre Dame de Paris\" /></dt>
             <dd>View from Notre Dame de Paris</dd>
@@ -49,7 +50,7 @@
          of CSS positioning dictates that each image–caption pair reside in
          its own element. The final markup, however, is still quite clean:"])
 
-    (code-block
+    (code-block :html
        "<dl class=\"captioned-image\">
             <dt><img src=\"images/paris.jpg\" alt=\"View from Notre Dame de Paris\" /></dt>
             <dd><span>View from Notre Dame de Paris</span></dd>
@@ -72,7 +73,7 @@
          to see the approach in action. The CSS responsible for the
          appearance of the captions is as follows:"])
 
-    (code-block
+    (code-block :css
        "dl.captioned-image         { position: relative; margin: 1em 0; }
         dl.captioned-image dt img  { display: block; }
         dl.captioned-image dd      { position: absolute; left: 0; bottom: 1.25em;

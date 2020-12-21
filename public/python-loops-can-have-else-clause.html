@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Python loops can have else clause?!</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,94 +39,61 @@
             <h1>Python loops can have else clause?!</h1>
             <time datetime="2010-07-25T18:11:00+12:00" pubdate="pubdate">25 July 2010</time>
           </header>
-<p>I write a lot of Python. I also write a lot of JavaScript. As I switch between
-the two (often several times in a day) I sometimes find myself trying to do
-something in one using the syntax of the other. The most common example is
-joining a list.</p>
-<p>Python:</p>
-<pre><code>:::python
-' '.join(['foo', 'bar'])
-</code></pre>
-<p>JavaScript:</p>
-<pre><code>:::javascript
-['foo', 'bar'].join(' ')
-</code></pre>
-<p>Often — as is the case above — the syntactical differences are minor, but
-there are times when there's no direct translation.</p>
-<p><a href="http://mootools.net/">MooTools</a>, for example, adds the <a href="http://mootools.net/docs/core/Native/Array#Array:every"><code>every</code> method</a> to the <code>Array</code> object.
-This makes it possible to write some rather terse conditional statements.</p>
-<pre><code>:::javascript
-var numbers = [87, 33, 21, 75];
+          <p>I write a lot of Python. I also write a lot of JavaScript. As I switch between the two (often several times in a day) I sometimes find myself trying to do something in one using the syntax of the other. The most common example is joining a list.</p>
+          <p>Python:</p>
+          <pre><code>' '.join(['foo', 'bar'])</code></pre>
+          <p>JavaScript:</p>
+          <pre><code>['foo', 'bar'].join(' ')</code></pre>
+          <p>Often — as is the case above — the syntactical differences are minor, but there are times when there's no direct translation.</p>
+          <p><a href="http://mootools.net/">MooTools</a>, for example, adds the <a href="http://mootools.net/docs/core/Native/Array#Array:every"><code>every</code> method</a> to the <code>Array</code> object. This makes it possible to write some rather terse conditional statements.</p>
+          <pre><code>var numbers = [87, 33, 21, 75];
 if (numbers.every(function (n) { return n % 3 == 0; })) {
     window.alert('The numbers are all divisible by 3.');
-}
-</code></pre>
-<p>Python lists have no comparable method, so how would one write this in Python?</p>
-<pre><code>:::python
-numbers = [87, 33, 21, 75]
+}</code></pre>
+          <p>Python lists have no comparable method, so how would one write this in Python?</p>
+          <pre><code>numbers = [87, 33, 21, 75]
 if [n for n in numbers if n % 3 == 0] == numbers:
-    print 'The numbers are all divisible by 3.'
-</code></pre>
-<p>This approach involves using a list comprehension to create a list of numbers
-which are divisible by 3, and comparing this list to <code>numbers</code>. If the lists
-are equal, everything in <code>numbers</code> is divisible by 3.</p>
-<hr />
-<h4>Update: 20 June 2012, 2:15pm (America/Los_Angeles)</h4>
-<p>As <a href="https://twitter.com/rafael_ab/status/215428832872771584">Rafael Almeida pointed out on Twitter</a>, there <em>is</em> an elegant way to
-express this in Python:</p>
-<pre><code>:::python
-if all((n % 3 == 0 for n in numbers)):
-    print 'The numbers are all divisible by 3.'
-</code></pre>
-<hr />
-<h3>Now for something a bit more challenging</h3>
-<p>Assume that we have a list of documents, and we want to know which of the
-documents contain all the terms in a list of search terms.</p>
-<pre><code>:::javascript
-// (MooTools) JavaScript
+    print 'The numbers are all divisible by 3.'</code></pre>
+          <p>This approach involves using a list comprehension to create a list of numbers which are divisible by 3, and comparing this list to <code>numbers</code>. If the lists are equal, everything in <code>numbers</code> is divisible by 3.</p>
+          <div class="update">
+            <h4>Update — <time datetime="2012-06-20T14:15:00.000-07:00">20 June 2012</time></h4>
+            <p>As <a href="https://twitter.com/rafael_ab/status/215428832872771584">Rafael Almeida pointed out on Twitter</a>, there <em>is</em> an elegant way to express this in Python:</p>
+            <pre><code>if all((n % 3 == 0 for n in numbers)):
+print 'The numbers are all divisible by 3.'</code></pre>
+          </div>
+          <h3>Now for something a bit more challenging</h3>
+          <p>Assume that we have a list of documents, and we want to know which of the documents contain all the terms in a list of search terms.</p>
+          <pre><code>// (MooTools) JavaScript
 
 var terms = ['python', 'list', 'methods'], matches = [];
 documents.each(function (document) {
     if (terms.every(function (term) {
         return document.body.indexOf(term) != -1;
     })) matches.append(document);
-});
-</code></pre>
-<p>Here, we <em>could</em> use the list comprehension approach as before.</p>
-<pre><code>:::python
-# Python
+});</code></pre>
+          <p>Here, we <em>could</em> use the list comprehension approach as before.</p>
+          <pre><code># Python
 
 terms = ['python', 'list', 'methods']
 matches = []
 for document in documents:
     if [t for t in terms if document.body.find(t) != -1] == terms:
-        matches.append(document)
-</code></pre>
-<p>This is reasonably succinct, but not terribly efficient since each document is
-checked for <em>every</em> search term. Given that we're not interested in documents
-that lack even a single search term, it should be possible to rewrite this code
-so that we don't waste time on lost causes.</p>
-<p>It turns out that Python has just the thing for the job: <strong>in Python, a loop
-statements may have an <code>else</code> clause!</strong></p>
-<pre><code>:::python
-terms = ['python', 'list', 'methods']
+        matches.append(document)</code></pre>
+          <p>This is reasonably succinct, but not terribly efficient since each document is checked for <em>every</em> search term. Given that we're not interested in documents that lack even a single search term, it should be possible to rewrite this code so that we don't waste time on lost causes.</p>
+          <p>It turns out that Python has just the thing for the job: <strong>in Python, a loop statements may have an <code>else</code> clause!</strong></p>
+          <pre><code>terms = ['python', 'list', 'methods']
 matches = []
 for document in documents:
     for term in terms:
         if document.body.find(term) == -1:
             break
     else: # every term was found
-        matches.append(document)
-</code></pre>
-<p>From <a href="http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops">4. More Control Flow Tools</a>:</p>
-<blockquote>
-<p>Loop statements may have an <code>else</code> clause; it is executed when the
-loop terminates through exhaustion of the list (with <code>for</code>) or when
-the condition becomes false (with <code>while</code>), but not when the loop is
-terminated by a <code>break</code> statement.</p>
-</blockquote>
-<p><strong>I'm looking forward to finding more good spots to make use of <code>else</code>
-clauses with my Python loops.</strong> :D</p>
+        matches.append(document)</code></pre>
+          <p>From <a href="http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops">4. More Control Flow Tools</a>:</p>
+          <blockquote>
+            <p>Loop statements may have an <code>else</code> clause; it is executed when the loop terminates through exhaustion of the list (with <code>for</code>) or when the condition becomes false (with <code>while</code>), but not when the loop is terminated by a <code>break</code> statement.</p>
+          </blockquote>
+          <p><strong>I'm looking forward to finding more good spots to make use of <code>else</code> clauses with my Python loops.</strong> :D</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -141,11 +108,11 @@ clauses with my Python loops.</strong> :D</p>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/converting-integers-to-ordinals/">Converting integers to ordinals</a></li>
+            <li><a href="/self-caching-functions-in-javascript-and-python/">Self-caching functions in JavaScript and Python</a></li>
+            <li><a href="/filtering-lists-in-python-ruby-and-javascript/">Filtering lists in Python, Ruby, and JavaScript</a></li>
+            <li><a href="/positioning-elements-using-mootools/">Positioning elements using MooTools</a></li>
+            <li><a href="/mootools-every-method/">MooTools every method</a></li>
           </ul>
         </article>
       </div>

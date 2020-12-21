@@ -12,7 +12,7 @@
        ["What is the best way to get the attributes of a Django model
          or instance?"])
 
-    (code-block
+    (code-block :python
        "from django.db import models
 
         class Musician(models.Model):
@@ -23,7 +23,7 @@
     (p
        ["One option is to use " (code "__dict__.keys()") ":"])
 
-    (code-block
+    (code-block :python
        ">>> m = Musician(first_name='Norah', last_name='Jones', instrument='piano')
         >>> print m.__dict__.keys()
         ['last_name', 'instrument', 'first_name', 'id']")
@@ -31,14 +31,14 @@
     (p
        ["Another options is to use " (code "_meta.fields") ":"])
 
-    (code-block
+    (code-block :python
        ">>> print [f.name for f in m._meta.fields]
         ['id', 'first_name', 'last_name', 'instrument']")
 
     (p
        ["This approach also works on models directly:"])
 
-    (code-block
+    (code-block :python
        ">>> print [f.name for f in Musician._meta.fields]
         ['id', 'first_name', 'last_name', 'instrument']")
 

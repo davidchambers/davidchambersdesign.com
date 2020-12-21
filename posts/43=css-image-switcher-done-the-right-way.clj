@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            [(strong "Chris Coyier has done it again.") "
              Compelled me to stay up all night, that is
@@ -116,7 +117,7 @@
          definition. This enables more than one description -- a title and a
          caption, for instance -- to be tied to an image:"])
 
-    (code-block
+    (code-block :html
        "<dl>
             <dt><img src=\"images/ds81.jpg\" alt=\"Vancouver architecture\" /></dt>
             <dd>This is not like that</dd>

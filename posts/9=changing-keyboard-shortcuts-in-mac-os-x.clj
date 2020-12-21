@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            ["I've been using OS X almost exclusively for the last three
              or four years, but it was only recently that I discovered the

@@ -17,14 +17,14 @@
         (strong "time") " element which, through its " (strong "datetime") "
          attribute, provides a machine-readable version of dates and times."])
 
-    (code-block
+    (code-block :html
        "<time datetime=\"2009-11-01T16:41:53+13:00\">1 November 2009</time>")
 
     (p
        ["I wrote a function to generate the machine-readable dates and times
          for blog comments."])
 
-    (code-block
+    (code-block :php
        "<?php
 
         /**
@@ -56,7 +56,7 @@
        ["While looping through comments in your WordPress theme,
          call the above function to print a valid datetime string."])
 
-    (code-block
+    (code-block :php
        "<time datetime=\"<?php comment_datetime(); ?>\">")
 
   ]

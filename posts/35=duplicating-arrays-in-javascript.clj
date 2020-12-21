@@ -16,7 +16,7 @@
          portion of JavaScript coders do not think of variables as pointers
          to memory addresses. This leads to confusion in cases such as this:"])
 
-    (code-block
+    (code-block :javascript
        "var fruits = ['orange', 'lime'];
         var colours = fruits; // naïve attempt to duplicate array
         colours.push('yellow');")
@@ -26,7 +26,7 @@
          not just \"orange\" and \"lime\" but also \"yellow\". Oops! Here's how
          it went wrong:"])
 
-    (code-block
+    (code-block :javascript
        "var fruits = ['orange', 'lime'];
         // fruits points to array containing \"orange\" and \"lime\"
 
@@ -37,7 +37,7 @@
        ["How, then, does one create a copy of the original array? "
         (em "Slice!")])
 
-    (code-block
+    (code-block :javascript
        "var colours = fruits.slice();")
 
     (aside' {:id "footnote"}

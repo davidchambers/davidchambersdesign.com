@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            ["If you have ever found yourself command-clicking the
              title of a Finder window to find out where you are ("
@@ -33,13 +34,13 @@
        ["To display the full path, copy and paste the following into Terminal
          and hit " (strong "return") "."])
 
-    (code-block
+    (code-block :console
        "defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES")
 
     (p
        ["For the changes to take effect, you will need to restart Finder:"])
 
-    (code-block
+    (code-block :console
        "killall Finder")
 
     (captioned-image
@@ -54,13 +55,13 @@
     (p
        ["To revert to the default title bar treatment, simply enter:"])
 
-    (code-block
+    (code-block :console
        "defaults write com.apple.finder _FXShowPosixPathInTitle -bool NO")
 
     (p
        ["Then, restart Finder once again:"])
 
-    (code-block
+    (code-block :console
        "killall Finder")
 
   ]

@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Optimization via stringification</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,27 +39,17 @@
             <h1>Optimization via stringification</h1>
             <time datetime="2010-06-03T14:28:00+12:00" pubdate="pubdate">3 June 2010</time>
           </header>
-<hr />
-<p>One way to reduce the number of HTTP requests a page requires is to group
-(non-content) images into sprites. An even better way is to remove these
-images from the server altogether; instead include them as encoded strings
-in your style sheet.</p>
-<hr />
-<p>Instead of...</p>
-<pre><code>:::css
-a[href="/contact/"] {
+          <p>One way to reduce the number of HTTP requests a page requires is to group (non-content) images into sprites. An even better way is to remove these images from the server altogether; instead include them as encoded strings in your style sheet.</p>
+          <p>Instead of...</p>
+          <pre><code>a[href="/contact/"] {
     background: url(/images/sprite.png) no-repeat 0 -30px;
-}
-</code></pre>
-<p>use something like...</p>
-<pre><code>:::css
-a[href="/contact/"] {
+}</code></pre>
+          <p>use something like...</p>
+          <pre><code>a[href="/contact/"] {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALJJREFUeNrs1eEJgzAQBWATHKkjZAZHiCtkhKxgRnAGR+gMWSVypflRQfOeSgvlDgTxjvuSC0RTSul+EUZhhRX+bziNj0ur8tPT7OV6qEGMFJhCaNZYBA3DAKNSiyzUIs3iPEO41EgtEhbdSQtnUAo+wlmUhiWccx+4vMs3NnqmeEmpc96/norXndbc7fC28Xa0kmNwewbdPYY3fgvMjhDFm6POOUM3kf6dFFZY4a/FKsAADsZ+Lb8VFH4AAAAASUVORK5CYII=) no-repeat;
-}
-</code></pre>
-<p>I threw together a Python script which converts images to encoded strings.</p>
-<pre><code>:::python
-#stringify.py
+}</code></pre>
+          <p>I threw together a Python script which converts images to encoded strings.</p>
+          <pre><code>#stringify.py
 import base64
 import sys
 
@@ -72,12 +62,9 @@ try:
 except IndexError:
     altchars = None
 
-print base64.b64encode(s, altchars)
-</code></pre>
-<h4>Usage</h4>
-<pre><code>:::console
-$ python stringify.py /path/to/image.png
-</code></pre>
+print base64.b64encode(s, altchars)</code></pre>
+          <h4>Usage</h4>
+          <pre><code>$ python stringify.py /path/to/image.png</code></pre>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -91,11 +78,11 @@ $ python stringify.py /path/to/image.png
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/remove-textarea-scrollbars-in-internet-explorer/">Remove textarea scrollbars in Internet Explorer</a></li>
+            <li><a href="/valid-xhtml-alternative-to-strike/">Valid XHTML alternative to <code>&lt;strike&gt;</code></a></li>
+            <li><a href="/-webkit-box-sizing/">-webkit-box-sizing</a></li>
+            <li><a href="/intelligent-css-caching/">Intelligent CSS caching</a></li>
+            <li><a href="/serializing-django-model-instances/">Serializing Django model instances</a></li>
           </ul>
         </article>
       </div>

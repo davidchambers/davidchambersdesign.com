@@ -33,7 +33,7 @@
        ["I suggest including the Prototype and script.aculo.us version
          numbers in the " (code "src") ":"])
 
-    (code-block
+    (code-block :html
        "<script src=\"/scripts/prototype+scriptaculous.min.js?p=1.6.1&amp;s=1.8.3\"></script>")
 
     (p

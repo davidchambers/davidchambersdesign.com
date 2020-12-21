@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>setTimeout fix for -webkit-transition</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,131 +39,58 @@
             <h1>setTimeout fix for -webkit-transition</h1>
             <time datetime="2010-06-18T03:12:00+12:00" pubdate="pubdate">18 June 2010</time>
           </header>
-<hr />
-<p>Here's a simple animation which utilizes <code>webkitTransition</code>:</p>
-<p id="transition-example-1"
-   style="position:relative;left:0;top:0;width:200px;line-height:5.25em;
-          background-color:#ccc;text-align:center;">Click to animate</p>
-
-<script>
-    (function () {
-        var element = document.getElementById('transition-example-1');
-        element.style.webkitTransitionProperty = 'left';
-        element.style.webkitTransitionDuration = '2s';
-        element.addEventListener('click', function () {
-            this.style.left = '100px';
-            this.addEventListener('webkitTransitionEnd', function () {
-                this.style.left = 0;
-            });
-        });
-    })();
-</script>
-
-<p>The code behind this example is not complicated:</p>
-<pre><code>:::javascript
-element.style.webkitTransitionProperty = 'left';
+          <p>Here's a simple animation which utilizes <code>webkitTransition</code>:</p>
+          <p id="transition-example-1" style="position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;">Click to animate</p>
+          <script>(function () { var element = document.getElementById('transition-example-1'); element.style.webkitTransitionProperty = 'left'; element.style.webkitTransitionDuration = '2s'; element.addEventListener('click', function () { this.style.left = '100px'; this.addEventListener('webkitTransitionEnd', function () { this.style.left = 0; }); }); })();</script>
+          <p>The code behind this example is not complicated:</p>
+          <pre><code>element.style.webkitTransitionProperty = 'left';
 element.style.webkitTransitionDuration = '2s';
 element.addEventListener('click', function () {
     this.style.left = '100px';
     this.addEventListener('webkitTransitionEnd', function () {
         this.style.left = 0;
     });
-});
-</code></pre>
-<hr />
-<p>The following example, though, does not act as one might expect!</p>
-<p id="transition-example-2"
-   style="position:relative;left:0;top:0;width:200px;line-height:5.25em;
-          background-color:#ccc;text-align:center;">Click to reposition</p>
-
-<script>
-    (function () {
-        var element = document.getElementById('transition-example-2');
-        element.addEventListener('click', function () {
-            this.style.left = '100px';
-            this.style.webkitTransitionProperty = 'left';
-            this.style.webkitTransitionDuration = '2s';
-            this.addEventListener('webkitTransitionEnd', function () {
-                this.innerHTML = "D'oh!";
-                this.style.left = 0;
-            });
-        });
-    })();
-</script>
-
-<p>The code:</p>
-<pre><code>:::javascript
-element.style.left = '100px';
+});</code></pre>
+          <p>The following example, though, does not act as one might expect!</p>
+          <p id="transition-example-2" style="position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;">Click to reposition</p>
+          <script>(function () { var element = document.getElementById('transition-example-2'); element.addEventListener('click', function () { this.style.left = '100px'; this.style.webkitTransitionProperty = 'left'; this.style.webkitTransitionDuration = '2s'; this.addEventListener('webkitTransitionEnd', function () { this.innerHTML = "D'oh!"; this.style.left = 0; }); }); })();</script>
+          <p>The code:</p>
+          <pre><code>element.style.left = '100px';
 element.style.webkitTransitionProperty = 'left';
-element.style.webkitTransitionDuration = '2s';
-</code></pre>
-<p>Here are the instructions this code attempts to provide:</p>
-<ol>
-<li>Set the element's <code>left</code> value to '100px' (the page should immediately be
-   redrawn).</li>
-<li>Set <code>webkitTransitionProperty</code> and <code>webkitTransitionDuration</code>, to apply a
-   transition to <em>future</em> changes in the value of <code>left</code>.</li>
-</ol>
-<p>What actually happens — as you'll have seen if you're viewing this page in a
-recent version of Safari or Chrome — is that the transition is applied to the
-preceding update. This behaviour strikes me as strange, but I have very little
-understanding of how these transitions are meant to be effected by the browser.</p>
-<p>I did manage to get the element to behave as I had intended:</p>
-<p id="transition-example-3"
-   style="position:relative;left:0;top:0;width:200px;line-height:5.25em;
-          background-color:#ccc;text-align:center;">Click to reposition</p>
-
-<script>
-    (function () {
-        var element = document.getElementById('transition-example-3');
-        element.addEventListener('click', function () {
-            this.style.left = '100px';
-            setTimeout(function () {
-                element.style.webkitTransitionProperty = 'left';
-                element.style.webkitTransitionDuration = '2s';
-            }, 0);
-            setTimeout(function () {
-                element.style.webkitTransitionProperty = 'none';
-                element.style.left = 0;
-            }, 2000);
-        });
-    })();
-</script>
-
-<p>The working code:</p>
-<pre><code>:::javascript
-element.style.left = '100px';
+element.style.webkitTransitionDuration = '2s';</code></pre>
+          <p>Here are the instructions this code attempts to provide:</p>
+          <ol>
+            <li>Set the element's <code>left</code> value to '100px' (the page should immediately be redrawn).</li>
+            <li>Set <code>webkitTransitionProperty</code> and <code>webkitTransitionDuration</code>, to apply a transition to <em>future</em> changes in the value of <code>left</code>.</li>
+          </ol>
+          <p>What actually happens — as you'll have seen if you're viewing this page in a recent version of Safari or Chrome — is that the transition is applied to the preceding update. This behaviour strikes me as strange, but I have very little understanding of how these transitions are meant to be effected by the browser.</p>
+          <p>I did manage to get the element to behave as I had intended:</p>
+          <p id="transition-example-3" style="position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;">Click to reposition</p>
+          <script>(function () { var element = document.getElementById('transition-example-3'); element.addEventListener('click', function () { this.style.left = '100px'; setTimeout(function () { element.style.webkitTransitionProperty = 'left'; element.style.webkitTransitionDuration = '2s'; }, 0); setTimeout(function () { element.style.webkitTransitionProperty = 'none'; element.style.left = 0; }, 2000); }); })();</script>
+          <p>The working code:</p>
+          <pre><code>element.style.left = '100px';
 setTimeout(function () {
     element.style.webkitTransitionProperty = 'left';
     element.style.webkitTransitionDuration = '2s';
-}, 0);
-</code></pre>
-<p>For some reason wrapping the <code>webkitTransition*</code> declarations in an anonymous
-function passed to <code>setTimeout</code> with no delay prevents the transition from
-being applied retroactively. I wondered whether closure would be sufficient,
-but no, <code>setTimeout</code> seems to be the remedy for this "quirk".</p>
-<p>I'd love to know whether the behaviour described here is correct behaviour.
-If I manage to find the answer to this I'll post an update. If you are able to
-enlighten me, please do so by leaving a comment!</p>
-<hr />
-<h4>Update: 2 July 2010, 12:15am (Pacific/Auckland)</h4>
-<p>I've just been watching one of the <a href="http://developer.apple.com/videos/wwdc/2010/">WWDC 2010 session videos</a>, and it
-turns out the the fix I stumbled upon is actually the "correct" solution.</p>
-<p>From <i>Session 504 – CSS Effects, Part 2: Galleries and 3D Effects</i>:</p>
-<h3>Aside: How Browsers Apply CSS Styles</h3>
-<ul>
-<li>Browsers optimize away redundant style changes</li>
-<li>This matters with transitions, because they are temporal</li>
-</ul>
-<p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-var box = document.getElementById('box');
+}, 0);</code></pre>
+          <p>For some reason wrapping the <code>webkitTransition*</code> declarations in an anonymous function passed to <code>setTimeout</code> with no delay prevents the transition from being applied retroactively. I wondered whether closure would be sufficient, but no, <code>setTimeout</code> seems to be the remedy for this "quirk".</p>
+          <p>I'd love to know whether the behaviour described here is correct behaviour. If I manage to find the answer to this I'll post an update. If you are able to enlighten me, please do so by leaving a comment!</p>
+          <div class="update">
+            <h4>Update — <time datetime="2010-06-02T00:15:00.000+12:00">2 June 2010</time></h4>
+            <p>I've just been watching one of the <a href="http://developer.apple.com/videos/wwdc/2010/">WWDC 2010 session videos</a>, and it turns out the fix I stumbled upon is actually the "correct" solution.</p>
+            <p>From <i>Session 504 – CSS Effects, Part 2: Galleries and 3D Effects</i>:</p>
+            <h3>Aside: How Browsers Apply CSS Styles</h3>
+            <ul>
+              <li>Browsers optimize away redundant style changes</li>
+              <li>This matters with transitions, because they are temporal</li>
+            </ul>
+            <pre><code>var box = document.getElementById('box');
 box.style.backgroundColor = 'red';
 box.style.webkitTransition = 'background-color 2s';
 window.setTimeout(function() {
   box.style.backgroundColor = 'blue';
-}, 0);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
-<hr />
+}, 0);</code></pre>
+          </div>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -176,11 +103,11 @@ window.setTimeout(function() {
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/duplicating-arrays-in-javascript/">Duplicating arrays in JavaScript</a></li>
+            <li><a href="/positioning-elements-using-mootools/">Positioning elements using MooTools</a></li>
+            <li><a href="/extra-comma-considered-harmful/">Extra comma considered harmful</a></li>
+            <li><a href="/mootools-every-method/">MooTools every method</a></li>
+            <li><a href="/associative-arrays-in-javascript/">Associative arrays in JavaScript</a></li>
           </ul>
         </article>
       </div>

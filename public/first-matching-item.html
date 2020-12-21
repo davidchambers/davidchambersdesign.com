@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>First matching item</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,38 +39,23 @@
             <h1>First matching item</h1>
             <time datetime="2010-06-17T23:17:00+12:00" pubdate="pubdate">17 June 2010</time>
           </header>
-<p>When writing code one often needs to grab the first item in a collection that
-has certain characteristics. For example, one may have a list of <code>Student</code>
-objects and need to fetch the one with a certain id.</p>
-<p>The task is trivial: loop through the list and compare each student's id until
-a match is found or all the students in the list have been inspected, whichever
-comes first.</p>
-<p>In the past, I've tended to take advantage of return statements to exit the
-loop as soon as a match is found. The examples here are in Python, but the same
-patterns apply to other languages.</p>
-<pre><code>:::python
-def student_by_id(students, id):
-    for student in students:
-        if student.id == id:
-            return student
-    return None
-</code></pre>
-<p>This appoach strikes me as inelegant when the function is called in one place
-only. Today a different approached occurred to me.</p>
-<pre><code>:::python
-student = None
+          <p>When writing code one often needs to grab the first item in a collection that has certain characteristics. For example, one may have a list of <code>Student</code> objects and need to fetch the one with a certain id.</p>
+          <p>The task is trivial: loop through the list and compare each student's id until a match is found or all the students in the list have been inspected, whichever comes first.</p>
+          <p>In the past, I've tended to take advantage of return statements to exit the loop as soon as a match is found. The examples here are in Python, but the same patterns apply to other languages.</p>
+          <pre><code>def student_by_id(students, id):
+for student in students:
+    if student.id == id:
+        return student
+return None</code></pre>
+          <p>This appoach strikes me as inelegant when the function is called in one place only. Today a different approached occurred to me.</p>
+          <pre><code>student = None
 for student in students:
     if student.id == id:
         break
-    student = None
-</code></pre>
-<p>Here, we break out of the loop as soon as a match is found, preserving the
-student of interest in the variable <code>student</code>. Each time through the loop
-<code>student</code> is cleared to ensure that <code>student</code> is empty once we've finished
-looping if there are no matches.</p>
-<p>The first line is required to handle empty lists.</p>
-<p>I think I'll use this approach from time to time. Let me know if you're aware
-of another option.</p>
+    student = None</code></pre>
+          <p>Here, we break out of the loop as soon as a match is found, preserving the student of interest in the variable <code>student</code>. Each time through the loop <code>student</code> is cleared to ensure that <code>student</code> is empty once we've finished looping if there are no matches.</p>
+          <p>The first line is required to handle empty lists.</p>
+          <p>I think I'll use this approach from time to time. Let me know if you're aware of another option.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -82,11 +67,10 @@ of another option.</p>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/converting-integers-to-ordinals/">Converting integers to ordinals</a></li>
+            <li><a href="/self-caching-functions-in-javascript-and-python/">Self-caching functions in JavaScript and Python</a></li>
+            <li><a href="/filtering-lists-in-python-ruby-and-javascript/">Filtering lists in Python, Ruby, and JavaScript</a></li>
+            <li><a href="/python-loops-can-have-else-clause/">Python loops can have else clause?!</a></li>
           </ul>
         </article>
       </div>

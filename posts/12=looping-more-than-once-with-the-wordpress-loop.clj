@@ -15,7 +15,7 @@
          The loop in the index.php file, however, remains unchanged.
          The loop looks like this:"])
 
-    (code-block
+    (code-block :php
        "if (have_posts()) :
             while (have_posts()) : the_post();
                 // code
@@ -30,7 +30,7 @@
            "using two different WordPress loops") " which suggests
          adding the following line of code just before the loop:"])
 
-    (code-block
+    (code-block :php
        "query_posts('showposts=5&offset=3');")
 
     (p

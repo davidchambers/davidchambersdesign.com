@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Efficient rounding in JavaScript</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,25 +39,14 @@
             <h1>Efficient rounding in JavaScript</h1>
             <time datetime="2010-08-31T22:20:00+12:00" pubdate="pubdate">31 August 2010</time>
           </header>
-<p>So you have some number, <code>x</code>, which you want to round to the nearest integer.
-Easy, right?</p>
-<pre><code>:::javascript
-x = Math.round(x);
-</code></pre>
-<p>Sure, but is this the fastest option? I think not.</p>
-<pre><code>:::javascript
-x = x &lt; 0 ? x - 0.5 &gt;&gt; 0 : x + 0.5 &gt;&gt; 0;
-</code></pre>
-<p>What the heck's going on here? <code>&gt;&gt;</code> is JavaScript's right shift operator.
-It shifts a number's binary representation <code>n</code> bits to the right, where <code>n</code>
-is the value to the right of the operator. Since <code>n</code> is <code>0</code> in this case, no
-shifting will occur, although <strong>the resulting value will be an integer</strong>.</p>
-<p>Note that this approach results in <code>-82.5</code> being rounded to <code>-83</code>.</p>
-<p>If, for some reason, your code calls <code>Math.round()</code> millions of times, it may
-be worth investigating the bitwise approach to avoid the overhead of all those
-function calls.</p>
-<p>Stick to <code>Math.round()</code> the rest of the time, though, as it makes for much
-clearer code. <strong>Never optimize prematurely.</strong></p>
+          <p>So you have some number, <code>x</code>, which you want to round to the nearest integer. Easy, right?</p>
+          <pre><code>x = Math.round(x);</code></pre>
+          <p>Sure, but is this the fastest option? I think not.</p>
+          <pre><code>x = x &lt; 0 ? x - 0.5 &gt;&gt; 0 : x + 0.5 &gt;&gt; 0;</code></pre>
+          <p>What the heck's going on here? <code>&gt;&gt;</code> is JavaScript's right shift operator. It shifts a number's binary representation <code>n</code> bits to the right, where <code>n</code> is the value to the right of the operator. Since <code>n</code> is <code>0</code> in this case, no shifting will occur, although <strong>the resulting value will be an integer</strong>.</p>
+          <p>Note that this approach results in <code>-82.5</code> being rounded to <code>-83</code>.</p>
+          <p>If, for some reason, your code calls <code>Math.round()</code> millions of times, it may be worth investigating the bitwise approach to avoid the overhead of all those function calls.</p>
+          <p>Stick to <code>Math.round()</code> the rest of the time, though, as it makes for much clearer code. <strong>Never optimize prematurely.</strong></p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -71,11 +60,11 @@ clearer code. <strong>Never optimize prematurely.</strong></p>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/prototype-and-scriptaculous-combined-and-compressed/">Prototype and script.aculo.us, combined and compressed</a></li>
+            <li><a href="/prototype-loader-for-syntaxhighlighter/">Prototype loader for SyntaxHighlighter</a></li>
+            <li><a href="/duplicating-arrays-in-javascript/">Duplicating arrays in JavaScript</a></li>
+            <li><a href="/positioning-elements-using-mootools/">Positioning elements using MooTools</a></li>
+            <li><a href="/settimeout-fix-for-webkit-transition/">setTimeout fix for -webkit-transition</a></li>
           </ul>
         </article>
       </div>

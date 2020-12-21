@@ -8,12 +8,12 @@
 
   :body [
 
-    (update
-       (datetime "2009-08-28" "18:12:00" :Pacific/Auckland)
-       (p
-          ["An update to this post has been published: "
-           (a "/tiny-calendar-icons-sprite/"
-              "Tiny calendar icons sprite") "."]))
+    (update (datetime "2009-08-28" "18:12:00" :Pacific/Auckland)
+
+       [(p
+           ["An update to this post has been published: "
+            (a "/tiny-calendar-icons-sprite/"
+               "Tiny calendar icons sprite") "."])])
 
     (p
        ["I've always enjoyed creating icons in Photoshop. Not the gorgeous,

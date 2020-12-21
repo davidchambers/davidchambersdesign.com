@@ -22,7 +22,7 @@
              forward. I have one question, though, concerning the acceptability
              of extra commas. Consider the following code snippet:"])
 
-        (code-block
+        (code-block :javascript
            "var ninja = {
                 name: 'Hattori Hanzou Masashige',
                 shuriken: 5,

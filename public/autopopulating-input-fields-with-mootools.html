@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Auto-populating input fields with MooTools</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,12 +39,8 @@
             <h1>Auto-populating input fields with MooTools</h1>
             <time datetime="2010-06-09T23:23:00+12:00" pubdate="pubdate">9 June 2010</time>
           </header>
-<p>Early this year I wrote a post titled
-<a href="/autopopulating-input-fields-with-prototype/">Auto-populating input fields with Prototype</a>. Looking at the code now,
-I realize that it's not very pretty. I'm rewriting this site's JavaScript
-in MooTools, and the new code is quite a bit more elegant.</p>
-<pre><code>:::javascript
-// provide input hints
+          <p>Early this year I wrote a post titled <a href="/autopopulating-input-fields-with-prototype/">Auto-populating input fields with Prototype</a>. Looking at the code now, I realize that it's not very pretty. I'm rewriting this site's JavaScript in MooTools, and the new code is quite a bit more elegant.</p>
+          <pre><code>// provide input hints
 window.addEvent('domready', function () {
     $$('input[placeholder]').addEvents({
         focus: function () {
@@ -58,11 +54,8 @@ window.addEvent('domready', function () {
             }
         }
     }).fireEvent('blur');
-});
-</code></pre>
-<p>I really appreciate the fact that MooTools provides <code>addEvents</code> in addition
-to <code>addEvent</code>. As a result, the code above is clearer than a well-written
-Prototype equivalent.</p>
+});</code></pre>
+          <p>I really appreciate the fact that MooTools provides <code>addEvents</code> in addition to <code>addEvent</code>. As a result, the code above is clearer than a well-written Prototype equivalent.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -77,11 +70,11 @@ Prototype equivalent.</p>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/autopopulating-input-fields-with-prototype/">Auto-populating input fields with Prototype</a></li>
+            <li><a href="/positioning-elements-using-mootools/">Positioning elements using MooTools</a></li>
+            <li><a href="/mootools-every-method/">MooTools every method</a></li>
+            <li><a href="/python-loops-can-have-else-clause/">Python loops can have else clause?!</a></li>
+            <li><a href="/wmd-ftw/">wmd ftw!</a></li>
           </ul>
         </article>
       </div>

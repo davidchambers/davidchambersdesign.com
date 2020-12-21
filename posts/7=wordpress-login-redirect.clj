@@ -13,7 +13,7 @@
          to access " (em "front-end") " functionality hidden from guests.
          In such instances, we can simply provide a standard login link:"])
 
-    (code-block
+    (code-block :php
        "<a href=\"<?php bloginfo('url'); ?>/wp-login.php\">log in</a>")
 
     (p
@@ -26,7 +26,7 @@
         (strong "/") " and finally back to " (strong "origin") " by including
          a value for " (code "redirect_to") " in the href:"])
 
-    (code-block
+    (code-block :php
        "<a href=\"<?php bloginfo('url'); ?>/wp-login.php?redirect_to=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>\">log in</a>")
 
     (p

@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            (img {:alt "" :src "/images/posts/decorative/left/adobe-illustrator-cs3-icon.png"}))
 

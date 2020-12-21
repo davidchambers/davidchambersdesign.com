@@ -12,6 +12,7 @@
        [(a "#setup" "Skip to setup instructions")])
 
     (excerpt
+
        [(p
            ["It's no secret – I love " (a "http://www.panic.com/coda/" "Coda") "!
              It's a pleasure to use. " (strong "It looks so damn good.") " When I
@@ -53,14 +54,14 @@
 
     (h4 "CSS")
 
-    (code-block
+    (code-block :css
        "p.error.message   { border: 1px solid #c00; background-color: #fcc; }
         p.info.message    { border: 1px solid #fc3; background-color: #ffc; }
         p.success.message { border: 1px solid #0b0; background-color: #cfc; }")
 
     (h4 "HTML")
 
-    (code-block
+    (code-block :html
        "<form id=\"searchform\" action=\"http://davidchambersdesign.com/\" method=\"get\">
             <div>
                 <label for=\"s\" class=\"structural\">search davidchambersdesign.com</label>
@@ -71,7 +72,7 @@
 
     (h4 "JavaScript")
 
-    (code-block
+    (code-block :javascript
        "// simulate textarea:focus
         document.observe('dom:loaded', function () {
             $$('textarea').each(function (e) {
@@ -86,7 +87,7 @@
 
     (h4 "PHP")
 
-    (code-block
+    (code-block :php
        "/**
          * echoes nicely formatted filesize
          * @param string $filename
@@ -128,7 +129,7 @@
 
     (h4 "Python")
 
-    (code-block
+    (code-block :python
        "# function accepts any number of arguments since *all_sales is a tuple
         def daily_sales_total(*all_sales):
             total = 0.0
@@ -148,7 +149,7 @@
        ["For HTML snippets that contain some CSS, use "
         (code "<pre class=\"brush: css; html-script: true;\"></pre>") "."])
 
-    (code-block
+    (code-block :html
        "<head>
             <title>Coda theme for SyntaxHighlighter</title>
             <style type=\"text/css\">
@@ -174,7 +175,7 @@
        ["For HTML snippets that contain some JavaScript, use "
         (code "<pre class=\"brush: javascript; html-script: true;\"></pre>") "."])
 
-    (code-block
+    (code-block :html
        "<body>
             <p class=\"js-off\">
                 JavaScript is currently <strong>disabled</strong>.
@@ -199,7 +200,7 @@
        ["For HTML snippets that contain some PHP, use "
         (code "<pre class=\"brush: php; html-script: true;\"></pre>") "."])
 
-    (code-block
+    (code-block :php
        "<ul>
         <?php foreach ($names as $name): ?>
             <li><?php echo $name; ?></li>
@@ -235,7 +236,7 @@
                  that is not part of a string is considered to be part of a tag.
                  This causes incorrect highlighting, as can be seen in this
                  example:"])
-            (code-block
+            (code-block :html
                "<script type=\"text/javascript\">
                     function isLarger(x, y) {
                         return (x > y);
@@ -270,12 +271,12 @@
              If you're using the standard setup, this will be in the head
              section of the document."])])
 
-    (update
-       (datetime "2009-08-24" "22:51:00" :Pacific/Auckland)
-       (p
-          ["Coda theme has been updated so that comments are now italicized
-            (as they are in Coda). XML brush for Coda theme now applies the
-            correct class name (\"xml-comment\") to HTML comments."]))
+    (update (datetime "2009-08-24" "22:51:00" :Pacific/Auckland)
+
+       [(p
+           ["Coda theme has been updated so that comments are now italicized
+             (as they are in Coda). XML brush for Coda theme now applies the
+             correct class name (\"xml-comment\") to HTML comments."])])
 
   ]
 

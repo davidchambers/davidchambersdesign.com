@@ -13,7 +13,7 @@
          that I've been developing recently, I encountered an error that MySQL
          reported as follows:"])
 
-    (code-block
+    (code-block :plain-text
        "Got error 'repetition-operator operand invalid' from regexp")
 
     (p
@@ -24,6 +24,7 @@
          with a backslash (" (strong "\\") ")."])
 
     (excerpt
+
        [(p
            ["Developers will be familiar with using PHP's "
             (a "http://php.net/manual/en/function.mysql-real-escape-string.php"
@@ -39,7 +40,7 @@
          came away empty-handed. I wrote my own function for the job, and
          thought I'd share it in case others encounter the same problem:"])
 
-    (code-block
+    (code-block :php
        "<?php
 
         function mysql_regexp_escape_string($string)

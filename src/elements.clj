@@ -6,6 +6,11 @@
          {:type :text
           :value value})
 
+    canonicalize-attrs
+      (reduce-object
+         (lambda [k v] (insert k (if-else symbol? symbol->string String v)))
+         {})
+
     replace (lambda [this that text] (.replace this that text))
     canonicalize-children
       (compose (map (when string?
@@ -21,7 +26,7 @@
           :tag-name tag-name
           :format "block"
           :self-closing false
-          :attrs attrs
+          :attrs (canonicalize-attrs attrs)
           :children (canonicalize-children children)})
 
     inline-element
@@ -33,7 +38,7 @@
                          "block"
                          "inline")
              :self-closing false
-             :attrs attrs
+             :attrs (canonicalize-attrs attrs)
              :children children}))
 
     self-closing-element
@@ -42,7 +47,7 @@
           :tag-name tag-name
           :format "inline"
           :self-closing true
-          :attrs attrs})
+          :attrs (canonicalize-attrs attrs)})
 
     excerpt
       (lambda [children]
@@ -174,7 +179,9 @@
     :title                 (title' {})
     :var'                  (inline-element :var)
     :var                   (inline-element :var {})
+    :video                 (inline-element :video)
     ; The following self-closing elements are always rendered inline.
+    :embed                 (self-closing-element :embed)
     :hr'                   hr'
     :hr                    (hr' {})
     :img                   (self-closing-element :img)

@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            ["Recently I've been on a drive to eliminate dependencies from my
              code and other areas, such as blog posts. For those who create
@@ -25,7 +26,7 @@
              of course, is no. I set about writing a function that would
              allow the file's size to be displayed dynamically."])])
 
-    (code-block
+    (code-block :php
        "<?php
 
         /**
@@ -68,7 +69,7 @@
     (p
        ["Example usage:"])
 
-    (code-block
+    (code-block :php
        "<a href=\"favicon.ico\">favicon.ico</a><?php print_filesize('favicon.ico'); ?>")
 
     (p

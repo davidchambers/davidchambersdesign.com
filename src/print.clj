@@ -2,7 +2,6 @@
 
 (let [DateTime ("DateTime" (import "luxon"))
       $.Object ("Object" (import "sanctuary-def"))
-      is-array ("isArray" Array)
       property-names ("getOwnPropertyNames" Object)
       property-symbols ("getOwnPropertySymbols" Object)]
 
@@ -20,7 +19,7 @@
                      (print (string->symbol ("zoneName" x)))])
              (if (is $.Object x)
                  (group print "{" "}" (chain (lambda [k] [k (k x)]) (concat (property-names x) (property-symbols x))))
-                 (if (is-array x)
+                 (if (array? x)
                      (group print "[" "]" x)
                      (if (=== "Pair" ("name" (type x)))
                          (pair (lambda [fst snd] (paren ["Pair" (print fst) (print snd)])) x)

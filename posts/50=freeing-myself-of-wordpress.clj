@@ -33,6 +33,7 @@
          while writing."])
 
     (excerpt
+
        [(p
            [(strong "I wanted to simplify everything.") "
              I wanted to write posts in "
@@ -112,7 +113,7 @@
          which is incredibly simple. One provides Django with an ordered
          list of places to look for templates."])
 
-    (code-block
+    (code-block :python
        "TEMPLATE_DIRS = (
             '/webapps/dcd/blog/templates',
             '/webapps/dcd/blog/mango/templates',

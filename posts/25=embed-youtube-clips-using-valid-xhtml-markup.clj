@@ -20,7 +20,7 @@
          of " (code "video_id") " in the following code with -- you
          guessed it -- the video's ID."])
 
-    (code-block
+    (code-block :html
        "<object class=\"youtube\"
                 type=\"application/x-shockwave-flash\"
                 data=\"http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0\">
@@ -43,7 +43,7 @@
          of the YouTube object using CSS. There's no need to include the "
         (code "width") " and " (code "height") " attributes in the markup."])
 
-    (code-block
+    (code-block :css
        "object.youtube
         {
             width: 100%;

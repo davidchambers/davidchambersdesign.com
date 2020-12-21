@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            ["I tend to forget things. Until recently, I had no system to
              keep track of appointments. I began using Google Calendar,
@@ -37,6 +38,7 @@
        ["Next, click on the " (strong "Mobile Setup") " tab."])
 
     (excerpt
+
        [(captioned-image
            "/images/posts/13/mobile-setup-tab-in-google-calendar.png"
            "Mobile Setup tab in Google Calendar"

@@ -14,7 +14,7 @@
          Take " (var "list") ", for example, an Array containing
          several numbers:"])
 
-    (code-block
+    (code-block :javascript
        "var list = [4, -1, 3, 2, 5];")
 
     (p
@@ -34,7 +34,7 @@
        ["In plain JavaScript, this can be achieved using a " (code "for") "
          loop..."])
 
-    (code-block
+    (code-block :javascript
        "var allPositive = true;
         for (var i = 0; i < list.length; i++) {
             if (list[i] <= 0) {
@@ -46,7 +46,7 @@
     (p
        ["... or a " (code "while") " loop (which is slightly more efficient)."])
 
-    (code-block
+    (code-block :javascript
        "var allPositive = true, i = list.length;
         while (i--) {
             if (list[i] <= 0) {
@@ -72,7 +72,7 @@
            "Array object's each method") "
          instead of a " (code "for") " or " (code "while") " loop."])
 
-    (code-block
+    (code-block :javascript
        "var allPositive = true;
         list.each(function (item) {
             if (item <= 0) {
@@ -93,7 +93,7 @@
         (a "http://mootools.net/docs/core/Native/Array#Array:every"
            "Array object's every method") " is the perfect tool for the job."])
 
-    (code-block
+    (code-block :javascript
        "var allPositive = list.every(function (item) {
             return item > 0;
         });")

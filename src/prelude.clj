@@ -17,5 +17,12 @@
 
     :++ (join-with "")
 
+    :reduce-object
+      (lambda [reducer initial object]
+         (reduce (lambda [accum key] (reducer key (key object) accum))
+                 initial
+                 (concat (.getOwnPropertyNames object Object)
+                         (.getOwnPropertySymbols object Object))))
+
     :concat (lambda [m1 m2] (if (is $.Object m1) (.assign {} m1 m2 Object) (concat m1 m2)))
     :insert (lambda [key val obj] (.assign {} obj (.fromEntries [[key val]] Object) Object))}))

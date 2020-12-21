@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Converting integers to ordinals</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,22 +39,16 @@
             <h1>Converting integers to ordinals</h1>
             <time datetime="2010-09-16T13:00:00+12:00" pubdate="pubdate">16 September 2010</time>
           </header>
-<p>When dealing with dates, it's not uncommon to need to convert an integer
-into an ordinal number (1st, 2nd, 3rd, etc.). While making improvements to
-<a href="http://mango.io/wtf?">Mango</a> recently I wrote a function to do this, first in Python, later in
-JavaScript.</p>
-<h3>Python</h3>
-<pre><code>:::python
-def ordinal(n):
-    if 10 &lt; n &lt; 14: return u'%sth' % n
-    if n % 10 == 1: return u'%sst' % n
-    if n % 10 == 2: return u'%snd' % n
-    if n % 10 == 3: return u'%srd' % n
-    return u'%sth' % n
-</code></pre>
-<h3>JavaScript</h3>
-<pre><code>:::javascript
-function ordinal(n) {
+          <p>When dealing with dates, it's not uncommon to need to convert an integer into an ordinal number (1st, 2nd, 3rd, etc.). While making improvements to <a href="http://mango.io/wtf?">Mango</a> recently I wrote a function to do this, first in Python, later in JavaScript.</p>
+          <h3>Python</h3>
+          <pre><code>def ordinal(n):
+if 10 &lt; n &lt; 14: return u'%sth' % n
+if n % 10 == 1: return u'%sst' % n
+if n % 10 == 2: return u'%snd' % n
+if n % 10 == 3: return u'%srd' % n
+return u'%sth' % n</code></pre>
+          <h3>JavaScript</h3>
+          <pre><code>function ordinal(n) {
     if (10 &lt; n &amp;&amp; n &lt; 14) return n + 'th';
     switch (n % 10) {
         case 1: return n + 'st';
@@ -62,14 +56,9 @@ function ordinal(n) {
         case 3: return n + 'rd';
         default: return n + 'th';
     }
-}
-</code></pre>
-<p>By special-casing 11, 12, and 13, the function becomes incredibly simple.</p>
-<p>I'm pleased to have found a context in which JavaScript's <code>switch</code> statement
-is almost <em>elegant</em>. The problem, usually, is the need to <code>break</code> to prevent
-fall-through. When used within a function, though, the <code>return</code> statement is
-able to perform this role, making the JavaScript code almost as readable as
-the Python equivalent.</p>
+}</code></pre>
+          <p>By special-casing 11, 12, and 13, the function becomes incredibly simple.</p>
+          <p>I'm pleased to have found a context in which JavaScript's <code>switch</code> statement is almost <em>elegant</em>. The problem, usually, is the need to <code>break</code> to prevent fall-through. When used within a function, though, the <code>return</code> statement is able to perform this role, making the JavaScript code almost as readable as the Python equivalent.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -83,11 +72,11 @@ the Python equivalent.</p>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/self-caching-functions-in-javascript-and-python/">Self-caching functions in JavaScript and Python</a></li>
+            <li><a href="/filtering-lists-in-python-ruby-and-javascript/">Filtering lists in Python, Ruby, and JavaScript</a></li>
+            <li><a href="/python-loops-can-have-else-clause/">Python loops can have else clause?!</a></li>
+            <li><a href="/linkify-tweets-with-regex/">Linkify tweets with regex</a></li>
+            <li><a href="/first-matching-item/">First matching item</a></li>
           </ul>
         </article>
       </div>

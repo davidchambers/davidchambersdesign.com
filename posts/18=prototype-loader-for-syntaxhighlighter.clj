@@ -12,6 +12,7 @@
        ["Skip to " (a "#setup" "setup") " or " (a "#usage" "usage")])
 
     (excerpt
+
        [(p
            [(a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
                "SyntaxHighlighter") " is a fully functional self-contained
@@ -28,15 +29,15 @@
              SyntaxHighlighter") ", which retrieves brushes on demand to
              reduce page loading times (in certain circumstances)."])])
 
-    (update
-       (datetime "2009-06-27" "06:21:00" :Pacific/Auckland)
-       (p
-          ["I have completely rewritten the code so that it no longer
-            requires empty functions inside the brush files to act as
-            indicators of readiness. Instead, the required brushes are
-            retrieved in a daisy chain. This is both more elegant and
-            more reliable. Additionally, style sheets are now also
-            retrieved on demand."]))
+    (update (datetime "2009-06-27" "06:21:00" :Pacific/Auckland)
+
+       [(p
+           ["I have completely rewritten the code so that it no longer
+             requires empty functions inside the brush files to act as
+             indicators of readiness. Instead, the required brushes are
+             retrieved in a daisy chain. This is both more elegant and
+             more reliable. Additionally, style sheets are now also
+             retrieved on demand."])])
 
     (h3' {:id "setup"} "Setup")
 
@@ -63,7 +64,7 @@
         (li
            [(p
                ["Replace:"])
-            (code-block
+            (code-block :html
                "<script src=\"/path/to/scripts/shCore.js\"></script>
                 <script src=\"/path/to/scripts/shBrushAS3.js\"></script>
                 <script src=\"/path/to/scripts/shBrushBash.js\"></script>
@@ -76,7 +77,7 @@
                 <script>SyntaxHighlighter.all()</script>")
             (p
                ["with:"])
-            (code-block
+            (code-block :html
                "<script>
                     function Brush(name, filename, aliases)
                     {
@@ -117,7 +118,7 @@
          is an array containing just the default style sheet. This can easily be
          modified:"])
 
-    (code-block
+    (code-block :javascript
        "stylesheets: ['shThemeCoda', 'shThemeAppleScript'],")
 
     (p
@@ -125,7 +126,7 @@
          is an empty array. All the bundled brushes are handled automatically,
          but additional brushes can be included by adding them to this array:"])
 
-    (code-block
+    (code-block :javascript
        "brushes: [
             new Brush('AppleScript', 'shBrushAppleScript', ['applescript'])
         ],")
@@ -145,7 +146,7 @@
        [(strong "Defaults.") " SyntaxHighlighter defaults can be set by
          modifying " (code "settings.defaults") ":"])
 
-    (code-block
+    (code-block :javascript
        "defaults: {
             'auto-links': false,
             'html-script': true
@@ -158,17 +159,17 @@
         (a "http://www.outofwhatbox.com/blog/2009/06/syntaxhighlighter-revised-again-works-on-its-own-once-again/"
            "SyntaxHighlighter improvements") " are well worth a look!"])
 
-    (update
-       (datetime "2009-06-27" "06:21:00" :Pacific/Auckland)
-       (p
-          ["Thanks also to Bob Matsuoka for sharing his "
-           (a "http://ajaxian.com/archives/a-technique-for-lazy-script-loading"
-              "technique for lazy script loading") " which provides
-            workarounds for browsers that do not support the onload
-            event when applied to script elements."]))
+    (update (datetime "2009-06-27" "06:21:00" :Pacific/Auckland)
 
-    (update
-       (datetime "2009-08-16" "01:24:00" :Pacific/Auckland)
+       [(p
+           ["Thanks also to Bob Matsuoka for sharing his "
+            (a "http://ajaxian.com/archives/a-technique-for-lazy-script-loading"
+               "technique for lazy script loading") " which provides
+             workarounds for browsers that do not support the onload
+             event when applied to script elements."])])
+
+    (update (datetime "2009-08-16" "01:24:00" :Pacific/Auckland)
+
        [(p
            ["I've updated the script to ensure that the XML brush is always
              loaded when at least one of the following conditions is true:"])

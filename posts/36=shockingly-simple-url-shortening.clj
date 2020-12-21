@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            ["URL shortening is something that's been
              at the back of my mind since listening to "
@@ -71,7 +72,7 @@
          upon a " (strong "simple, elegant solution") " which took all
          of ten minutes to implement."])
 
-    (code-block
+    (code-block :TK
        "RewriteEngine On
         RewriteRule ^(.*)$ http://davidchambersdesign.com/$1 [R=301,L]")
 

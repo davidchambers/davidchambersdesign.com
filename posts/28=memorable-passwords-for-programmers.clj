@@ -20,7 +20,7 @@
          strings of characters. Here's a \"JavaScript\" password,
          for example:"])
 
-    (code-block
+    (code-block :javascript
        "var favourites = { book: 'Collapse', game: 'Agricola', site: 'ted.com' };")
 
     (p

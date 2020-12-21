@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            ["Alex Gorbatchev's "
             (a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
@@ -53,8 +54,8 @@
         (strong "constant") ", " (strong "keyword") ", and "
         (strong "variable") " for exactly what you'd expect."])
 
-    (update
-       (datetime "2009-08-16" "02:33:00" :Pacific/Auckland)
+    (update (datetime "2009-08-16" "02:33:00" :Pacific/Auckland)
+
        [(p
            ["Until this point I have had a class name added to each
              div.syntaxhighlighter element to allow code to be coloured
@@ -63,11 +64,13 @@
              for example). CSS selectors cannot differentiate between
              two code elements with the same class name in the same
              div.syntaxhighlighter element."])
+
         (p
            ["Each language, therefore, needs to use its own class names.
              It is easy to differentiate " (code "code.php-comment") " from "
             (code "code.xml-comment") ", allowing PHP comments to be styled
              differently from XML comments if desired."])
+
         (p
            ["The updated class names are " (strong "php-tag") ", "
             (strong "php-comment") ", " (strong "php-string") ", "
@@ -76,7 +79,7 @@
             (strong "php-constant") ", " (strong "php-keyword") ", and "
             (strong "php-variable") "."])])
 
-    (code-block
+    (code-block :php
        "<?php
 
         'single-quoted string';

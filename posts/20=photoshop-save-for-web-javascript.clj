@@ -15,7 +15,7 @@
          which means that the file size of the resulting PNG will be smaller
          than would be the case using " (code "PNGSaveOptions()") "."])
 
-    (code-block
+    (code-block :javascript
        "function saveForWebPNG(outputFolderStr, filename)
         {
             var opts, file;

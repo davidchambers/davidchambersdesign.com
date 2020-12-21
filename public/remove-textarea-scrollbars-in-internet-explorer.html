@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Remove textarea scrollbars in Internet Explorer</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,22 +39,12 @@
             <h1>Remove textarea scrollbars in Internet Explorer</h1>
             <time datetime="2010-07-18T22:00:00+12:00" pubdate="pubdate">18 July 2010</time>
           </header>
-<p>I was delighted to discover this "trick" over on CSS-Tricks in a post titled
-<a href="http://css-tricks.com/textarea-tricks/">Textarea Tricks</a>. (See, Chris, I <em>do</em> like you!)</p>
-<p>Internet Explorer displays a (completely pointless) inactive scrollbar in empty
-<code>textarea</code> elements, unlike other browsers which wait until a scrollbar is
-actually <em>required</em> before displaying it.</p>
-<p>As it turns out, there's a dead simple way to prevent this, and once again its
-everybody's friend <code>overflow</code> to the rescue.</p>
-<pre><code>:::css
-textarea { overflow: auto; }
-</code></pre>
-<p>The <code>overflow</code> property seems to be a magical remedy for a variety of different
-ailments, most significant of which is the collapsing of an element whose
-children are all floated. Applying <code>overflow: auto</code> makes the element wrap its
-children rather than letting them "hang".</p>
-<p>One thing that I sometimes ponder, though, is why <code>visible</code> was selected as the
-default <code>overflow</code> value – it seems inferior to <code>auto</code> in most use cases.</p>
+          <p>I was delighted to discover this "trick" over on CSS-Tricks in a post titled <a href="http://css-tricks.com/textarea-tricks/">Textarea Tricks</a>. (See, Chris, I <em>do</em> like you!)</p>
+          <p>Internet Explorer displays a (completely pointless) inactive scrollbar in empty <code>textarea</code> elements, unlike other browsers which wait until a scrollbar is actually <em>required</em> before displaying it.</p>
+          <p>As it turns out, there's a dead simple way to prevent this, and once again its everybody's friend <code>overflow</code> to the rescue.</p>
+          <pre><code>textarea { overflow: auto; }</code></pre>
+          <p>The <code>overflow</code> property seems to be a magical remedy for a variety of different ailments, most significant of which is the collapsing of an element whose children are all floated. Applying <code>overflow: auto</code> makes the element wrap its children rather than letting them "hang".</p>
+          <p>One thing that I sometimes ponder, though, is why <code>visible</code> was selected as the default <code>overflow</code> value – it seems inferior to <code>auto</code> in most use cases.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -66,11 +56,11 @@ default <code>overflow</code> value – it seems inferior to <code>auto</code> i
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/valid-xhtml-alternative-to-strike/">Valid XHTML alternative to <code>&lt;strike&gt;</code></a></li>
+            <li><a href="/-webkit-box-sizing/">-webkit-box-sizing</a></li>
+            <li><a href="/intelligent-css-caching/">Intelligent CSS caching</a></li>
+            <li><a href="/sticky-footers/">Sticky footers</a></li>
+            <li><a href="/optimization-via-stringification/">Optimization via stringification</a></li>
           </ul>
         </article>
       </div>

@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            ["Recently I've been on a mission to minimize the number
              of HTTP requests made while loading pages on this site.
@@ -31,14 +32,14 @@
        ["One uses a sprite by applying a background image to an element
          using CSS. One could start with an empty span element:"])
 
-    (code-block
+    (code-block :html
        "<span class=\"day-1\"></span>")
 
     (p
        ["The following CSS sets the width and height of the element and
          sets the sprite as its background image:"])
 
-    (code-block
+    (code-block :css
        "span.day-1
         {
             display: block;
@@ -63,7 +64,7 @@
        ["To have the \"1\" icon displayed, the element's background position
          is specified:"])
 
-    (code-block
+    (code-block :css
        "span.day-1
         {
             display: block;
@@ -85,7 +86,7 @@
     (p
        ["Here's the final CSS:"])
 
-    (code-block
+    (code-block :css
        "span.day
         {
             display: block;
@@ -137,7 +138,7 @@
        ["Note that I introduced the class name " (strong "day") " to streamline
          the CSS. This must appear in the HTML, as in this example:"])
 
-    (code-block
+    (code-block :html
        "<span class=\"day day-31\"></span>")
 
   ]

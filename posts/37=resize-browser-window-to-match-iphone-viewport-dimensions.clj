@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            ["I've recently become interested in optimizing sites for
              the iPhone and iPod touch. While nothing beats testing on
@@ -26,12 +27,12 @@
            [(li
                [(p
                    [(strong "Portrait") " (labelled \"⁑\")"])
-                (code-block
+                (code-block :plain-text
                    "javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');")])
             (li
                [(p
                    [(strong "Landscape") " (labelled \"**\")"])
-                (code-block
+                (code-block :plain-text
                    "javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');")])])
 
         (captioned-image

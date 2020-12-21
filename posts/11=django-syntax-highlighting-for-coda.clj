@@ -26,13 +26,13 @@
        "Django syntax highlighting in Coda"
        "Django syntax highlighting in Coda")
 
-    (update
-       (datetime "2010-11-14" "14:00:00" :Australia/Sydney)
-       (p
-          ["I've since discovered an alternative mode which
-            is actively maintained over on GitHub. I now use "
-           (a "https://github.com/jbergantine/Django-Template"
-              "jbergantine's Django-Template") "."]))
+    (update (datetime "2010-11-14" "14:00:00" :Australia/Sydney)
+
+       [(p
+           ["I've since discovered an alternative mode which
+             is actively maintained over on GitHub. I now use "
+            (a "https://github.com/jbergantine/Django-Template"
+               "jbergantine's Django-Template") "."])])
 
   ]
 

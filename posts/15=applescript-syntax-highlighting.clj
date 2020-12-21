@@ -12,6 +12,7 @@
        [(a "#setup" "Skip to setup instructions")])
 
     (excerpt
+
        [(p
            ["I've been using Alex Gorbatchev's "
             (a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
@@ -51,7 +52,7 @@
          ""
          "Screenshot of snippet styled by AppleScript theme for SyntaxHighlighter"]])
 
-    (code-block
+    (code-block :applescript
        "#!/usr/bin/osascript
 
         (*
@@ -121,7 +122,7 @@
         (li
            [(p
                ["Include the brush like so:"])
-            (code-block
+            (code-block :html
                "<script src=\"/path/to/scripts/shCore.js\"></script>
                 <script src=\"/path/to/scripts/shBrushAppleScript.js\"></script>
                 <script>SyntaxHighlighter.all()</script>")])])
@@ -132,7 +133,7 @@
        ["To have SyntaxHighlighter parse a block of AppleScript,
          wrap the code in " (code "pre") " tags like so:"])
 
-    (code-block
+    (code-block :html
        "<pre class=\"brush: applescript; class-name: applescript;\"></pre>")
 
     (p
@@ -145,13 +146,14 @@
          class name automatically, which would remove the need to
          include " (code "class-name: applescript;") " each time.)"])
 
-    (update
-       (datetime "2012-02-22" "23:11:00" :America/Los_Angeles)
+    (update (datetime "2012-02-22" "23:11:00" :America/Los_Angeles)
+
        [(p
            ["Providing a " (code "class-name") " in the, ahem, class name is
              no longer necessary (apparently I made a convincing argument).
              This is now sufficient:"])
-        (code-block
+
+        (code-block :html
            "<pre class=\"brush:applescript\"></pre>")])
 
     (p

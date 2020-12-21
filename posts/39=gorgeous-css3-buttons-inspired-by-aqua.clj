@@ -94,7 +94,7 @@
          thus far. The next step is to make the elements more
          appealing and more button-like in modern browsers."])
 
-    (code-block
+    (code-block :css
        "-webkit-border-radius: 1em;
         -moz-border-radius: 1em;
         border-radius: 1em;")
@@ -104,7 +104,7 @@
        "Button and hyperlink with rounded corners"
        "Rounded corners")
 
-    (code-block
+    (code-block :css
        "background: -webkit-gradient(linear, left top, left bottom,
             from(#fc6), to(#fc6),
             color-stop(0.1, #fff), color-stop(0.2, #fc6),
@@ -148,7 +148,7 @@
 
     (h4 "Hover")
 
-    (code-block
+    (code-block :css
        ".aqua:hover {
             border-color: #740;
             background: #fb4;
@@ -169,7 +169,7 @@
 
     (h4 "Focus")
 
-    (code-block
+    (code-block :css
        ".aqua:focus {
             -webkit-box-shadow: #740 0 1px 0.75em;
             -moz-box-shadow: #740 0 1px 0.75em;
@@ -187,7 +187,7 @@
 
     (h4 "Active")
 
-    (code-block
+    (code-block :css
        ".aqua:active {
             border-color: #630;
             background: #f90;

@@ -12,7 +12,7 @@
        ["One might expect the following code to serialize a Django model
          instance:"])
 
-    (code-block
+    (code-block :python
        "import simplejson
         simplejson.dumps(instance)")
 
@@ -22,7 +22,7 @@
          not serializable, but I do have a solution: define a serialization
          method on the instance's model."])
 
-    (code-block
+    (code-block :python
        "def toJSON(self):
             import simplejson
             return simplejson.dumps(dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]]))")
@@ -30,7 +30,7 @@
     (p
        ["Here's the verbose equivalent for those averse to one-liners:"])
 
-    (code-block
+    (code-block :python
        "def toJSON(self):
             fields = []
             for field in self._meta.fields:

@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Self-caching functions in JavaScript and Python</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,36 +39,24 @@
             <h1>Self-caching functions in JavaScript and Python</h1>
             <time datetime="2010-08-29T01:10:00+12:00" pubdate="pubdate">29 August 2010</time>
           </header>
-<hr />
-<p>Earlier I wrote some code which repeatedly calls a function which performs
-a database query – often <strong>the same</strong> query. This encouraged me to explore
-various ways to cache the results of function calls in both Python (to solve
-my immediate problem) and JavaScript (because I find that language endlessly
-fascinating).</p>
-<p>I played around with <a href="http://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci</a>, which is a well suited to the task: it
-can be described in just a couple of lines of code yet benefits enormously
-from caching due to its recursive nature.</p>
-<h3>JavaScript Fibonacci without caching</h3>
-<pre><code>:::javascript
-function fibonacci(n) {
+          <p>Earlier I wrote some code which repeatedly calls a function which performs a database query – often <strong>the same</strong> query. This encouraged me to explore various ways to cache the results of function calls in both Python (to solve my immediate problem) and JavaScript (because I find that language endlessly fascinating).</p>
+          <p>I played around with <a href="http://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci</a>, which is a well suited to the task: it can be described in just a couple of lines of code yet benefits enormously from caching due to its recursive nature.</p>
+          <h3>JavaScript Fibonacci without caching</h3>
+          <pre><code>function fibonacci(n) {
     if (n &lt;= 1) return n;
     return fibonacci(n - 2) + fibonacci(n - 1);
-}
-</code></pre>
-<hr />
-<p>I created a simple timer:</p>
-<pre><code>:::javascript
-function timer(func) {
+}</code></pre>
+          <p>I created a simple timer:</p>
+          <pre><code>function timer(func) {
     var i = 10, start;
     while (i--) {
         start = new Date;
         func.apply(this, [].slice.call(arguments, 1));
         console.log(func.name, 'executed in', new Date - start, 'ms');
     }
-}
-</code></pre>
-<p>How does the vanilla function perform?</p>
-<pre><code>&gt;&gt;&gt; timer(fibonacci, 35);
+}</code></pre>
+          <p>How does the vanilla function perform?</p>
+          <pre><code>&gt;&gt;&gt; timer(fibonacci, 35);
 fibonacci executed in 559 ms
 fibonacci executed in 559 ms
 fibonacci executed in 559 ms
@@ -78,19 +66,12 @@ fibonacci executed in 559 ms
 fibonacci executed in 558 ms
 fibonacci executed in 558 ms
 fibonacci executed in 559 ms
-fibonacci executed in 559 ms
-</code></pre>
-<p>Values of <code>n</code> much larger than 35 locked up my browser. That's not good.
-Fortunately, it's easy to improve the performance significantly.</p>
-<h3>JavaScript Fibonacci with caching via closure</h3>
-<p>JavaScript has closure, which means that each function has access to the
-variables and parameters or its outer function (and the variables and
-parameters of its outer function's outer function, and so on).</p>
-<p>This is incredibly powerful. It makes it possible to create a variable,
-<code>cache</code>, which can <em>only</em> be accessed by our <code>fibonacci</code> function. This
-ensures that our cache cannot be overwritten, accidentally or otherwise.</p>
-<pre><code>:::javascript
-fibonacci = (function () {
+fibonacci executed in 559 ms</code></pre>
+          <p>Values of <code>n</code> much larger than 35 locked up my browser. That's not good. Fortunately, it's easy to improve the performance significantly.</p>
+          <h3>JavaScript Fibonacci with caching via closure</h3>
+          <p>JavaScript has closure, which means that each function has access to the variables and parameters or its outer function (and the variables and parameters of its outer function's outer function, and so on).</p>
+          <p>This is incredibly powerful. It makes it possible to create a variable, <code>cache</code>, which can <em>only</em> be accessed by our <code>fibonacci</code> function. This ensures that our cache cannot be overwritten, accidentally or otherwise.</p>
+          <pre><code>fibonacci = (function () {
 
     var cache = {};
 
@@ -103,29 +84,22 @@ fibonacci = (function () {
 
         return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
     };
-}());
-</code></pre>
-<p>Does caching make a difference?</p>
-<pre><code>&gt;&gt;&gt; timer(fibonacci, 35);
- executed in 1 ms
- executed in 0 ms
- executed in 0 ms
- executed in 0 ms
- executed in 0 ms
- executed in 0 ms
- executed in 0 ms
- executed in 0 ms
- executed in 0 ms
- executed in 0 ms
-</code></pre>
-<p>Undeniably, yes. Not only is the new version of the function much faster, but
-its less recursive nature makes it possible to find Fibonacci numbers for much
-larger values of <code>n</code>.</p>
-<p>A slightly different approach is to initialize the cache with values for 0 and
-1, making the <code>if (n &lt;= 1)</code> logic unnecessary. Since one of the cached values
-is now 0, however, the <code>if (cached)</code> statement is no longer appropriate.</p>
-<pre><code>:::javascript
-fibonacci = (function () {
+}());</code></pre>
+          <p>Does caching make a difference?</p>
+          <pre><code>&gt;&gt;&gt; timer(fibonacci, 35);
+executed in 1 ms
+executed in 0 ms
+executed in 0 ms
+executed in 0 ms
+executed in 0 ms
+executed in 0 ms
+executed in 0 ms
+executed in 0 ms
+executed in 0 ms
+executed in 0 ms</code></pre>
+          <p>Undeniably, yes. Not only is the new version of the function much faster, but its less recursive nature makes it possible to find Fibonacci numbers for much larger values of <code>n</code>.</p>
+          <p>A slightly different approach is to initialize the cache with values for 0 and 1, making the <code>if (n &lt;= 1)</code> logic unnecessary. Since one of the cached values is now 0, however, the <code>if (cached)</code> statement is no longer appropriate.</p>
+          <pre><code>fibonacci = (function () {
 
     var cache = { 0:0, 1:1 };
 
@@ -136,13 +110,10 @@ fibonacci = (function () {
 
         return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
     };
-}());
-</code></pre>
-<h3>JavaScript Fibonacci with caching via function property</h3>
-<p>It's also possible to cache results without using closure. This is important
-since Python (which I'll get to shortly) does not have this capability.</p>
-<pre><code>:::javascript
-function fibonacci(n) {
+}());</code></pre>
+          <h3>JavaScript Fibonacci with caching via function property</h3>
+          <p>It's also possible to cache results without using closure. This is important since Python (which I'll get to shortly) does not have this capability.</p>
+          <pre><code>function fibonacci(n) {
 
     if (!fibonacci.cache) fibonacci.cache = {};
 
@@ -152,38 +123,25 @@ function fibonacci(n) {
     if (n &lt;= 1) return n;
 
     return (fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
-}
-</code></pre>
-<p>To avoid the overhead of checking for the existence of the cache on each
-invocation, the cache could be initialized outside of the function definition.</p>
-<pre><code>:::javascript
-function fibonacci(n) {
+}</code></pre>
+          <p>To avoid the overhead of checking for the existence of the cache on each invocation, the cache could be initialized outside of the function definition.</p>
+          <pre><code>function fibonacci(n) {
     // function body
 }
-fibonacci.cache = {};
-</code></pre>
-<p>Caching via function property and caching via closure performed equally well
-for me in Safari on Mac OS X.</p>
-<h3>Python Fibonacci without caching</h3>
-<pre><code>:::python
-def fibonacci(n):
-    if n &lt;= 1:
-        return n
-    else:
-        return fibonacci(n - 2) + fibonacci(n - 1)
-</code></pre>
-<p>Does the vanilla Python function outperform the vanilla JavaScript function?</p>
-<pre><code>:::pycon
-&gt;&gt;&gt; import time
-&gt;&gt;&gt; for i in range(10): t = time.time(); fibonacci(35); print time.time() - t;
-</code></pre>
-<p>Interestingly, Python was more than an order of magnitude slower than
-JavaScript in this worst-case scenario. The point of this exercise is not to
-compare apples to oranges, however, it's to see how much of a difference
-caching makes in each case.</p>
-<h3>Python Fibonacci with caching via function property</h3>
-<pre><code>:::python
-def fibonacci(n):
+fibonacci.cache = {};</code></pre>
+          <p>Caching via function property and caching via closure performed equally well for me in Safari on Mac OS X.</p>
+          <h3>Python Fibonacci without caching</h3>
+          <pre><code>def fibonacci(n):
+if n &lt;= 1:
+    return n
+else:
+    return fibonacci(n - 2) + fibonacci(n - 1)</code></pre>
+          <p>Does the vanilla Python function outperform the vanilla JavaScript function?</p>
+          <pre><code>&gt;&gt;&gt; import time
+&gt;&gt;&gt; for i in range(10): t = time.time(); fibonacci(35); print time.time() - t;</code></pre>
+          <p>Interestingly, Python was more than an order of magnitude slower than JavaScript in this worst-case scenario. The point of this exercise is not to compare apples to oranges, however, it's to see how much of a difference caching makes in each case.</p>
+          <h3>Python Fibonacci with caching via function property</h3>
+          <pre><code>def fibonacci(n):
     if n in fibonacci.cache:
         return fibonacci.cache[n]
     elif n &lt;= 1:
@@ -192,34 +150,21 @@ def fibonacci(n):
         f = fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
         return f
 
-fibonacci.cache = {}
-</code></pre>
-<p>This resulted in <code>fibonacci(35)</code> being executed roughly 75,000 times as fast
-on an empty cache as the vanilla function.</p>
-<h3>Python Fibonacci with caching via mutable default argument</h3>
-<p>For the sake of completion I'll include this unappealing approach.</p>
-<pre><code>:::python
-def fibonacci(n, _cache={}):
-    if n &lt;= 1:
-        return n
-    elif n in _cache:
-        return _cache[n]
-    else:
-        f = _cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
-        return f
-</code></pre>
-<p>How does this work? In Python, default arguments are brought to life upon
-a function's creation, not its execution. Thus when <code>fibonacci</code> is called
-with just one argument (<code>n</code>) the value of <code>_cache</code> is the dictionary that
-was created at the time that <code>fibonacci</code> was created. Python's dictionaries
-are mutable, meaning that they can be changed in place. Together, these two
-features make it possible to use a mutable default argument — in this case
-a dictionary — as a cache.</p>
-<h3>Final thoughts</h3>
-<p>I had fun experimenting with these various approaches, furthering my
-understanding of both JavaScript and Python in the process. I've been writing
-JavaScript casually for several years; now that I'm making an effort to
-actually <em>learn</em> the language I'm starting to appreciate its brilliance.</p>
+fibonacci.cache = {}</code></pre>
+          <p>This resulted in <code>fibonacci(35)</code> being executed roughly 75,000 times as fast on an empty cache as the vanilla function.</p>
+          <h3>Python Fibonacci with caching via mutable default argument</h3>
+          <p>For the sake of completion I'll include this unappealing approach.</p>
+          <pre><code>def fibonacci(n, _cache={}):
+if n &lt;= 1:
+    return n
+elif n in _cache:
+    return _cache[n]
+else:
+    f = _cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
+    return f</code></pre>
+          <p>How does this work? In Python, default arguments are brought to life upon a function's creation, not its execution. Thus when <code>fibonacci</code> is called with just one argument (<code>n</code>) the value of <code>_cache</code> is the dictionary that was created at the time that <code>fibonacci</code> was created. Python's dictionaries are mutable, meaning that they can be changed in place. Together, these two features make it possible to use a mutable default argument — in this case a dictionary — as a cache.</p>
+          <h3>Final thoughts</h3>
+          <p>I had fun experimenting with these various approaches, furthering my understanding of both JavaScript and Python in the process. I've been writing JavaScript casually for several years; now that I'm making an effort to actually <em>learn</em> the language I'm starting to appreciate its brilliance.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -233,11 +178,11 @@ actually <em>learn</em> the language I'm starting to appreciate its brilliance.<
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/converting-integers-to-ordinals/">Converting integers to ordinals</a></li>
+            <li><a href="/filtering-lists-in-python-ruby-and-javascript/">Filtering lists in Python, Ruby, and JavaScript</a></li>
+            <li><a href="/python-loops-can-have-else-clause/">Python loops can have else clause?!</a></li>
+            <li><a href="/linkify-tweets-with-regex/">Linkify tweets with regex</a></li>
+            <li><a href="/first-matching-item/">First matching item</a></li>
           </ul>
         </article>
       </div>

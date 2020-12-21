@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            (img {:alt "" :src "/images/posts/decorative/right/at-sign-in-speech-bubble.png"}))
 
@@ -31,13 +32,13 @@
 
     (h4 "JavaScript implementation")
 
-    (code-block
+    (code-block :javascript
        "tweet.replace(/(^|\\s)(@\\w+)/gm, '$1<a href=\"http://twitter.com/$2\">$2</a>');")
 
     (p
        ["It would of course be nicer to write:"])
 
-    (code-block
+    (code-block :javascript
        "tweet.replace(/(?<=(?:^|\\s))(@\\w+)/gm, '<a href=\"http://twitter.com/$1\">$1</a>');")
 
     (p
@@ -48,7 +49,7 @@
 
     (h4 "PHP implementation")
 
-    (code-block
+    (code-block :php
        "preg_replace('/(^|\\s)(@\\w+)/m', '$1<a href=\"http://twitter.com/$2\">$2</a>', $tweet);")
 
     (h4 "Python implementation")
@@ -58,7 +59,7 @@
         (em "fixed-width") " lookbehinds, so it won't allow "
         (code "(?<=^|\\s)") ". No matter."])
 
-    (code-block
+    (code-block :python
        "import re
         re.sub(r'(?m)(^|\\s)(@\\w+)',
                 lambda m: m.group(1) + '<a href=\"http://twitter.com/' + m.group(2) + '\">' + m.group(2) + '</a>',

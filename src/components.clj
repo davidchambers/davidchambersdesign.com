@@ -20,7 +20,7 @@
                            (dd cap)]))))
 
   :code-block
-    (lambda [source-code]
+    (lambda [language source-code]
        (let [lines (lines source-code)
              head (0 lines)
              tail (.slice 1 lines)

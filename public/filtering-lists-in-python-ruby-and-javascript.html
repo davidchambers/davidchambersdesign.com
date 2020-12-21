@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Filtering lists in Python, Ruby, and JavaScript</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,58 +39,36 @@
             <h1>Filtering lists in Python, Ruby, and JavaScript</h1>
             <time datetime="2010-09-09T04:21:00+12:00" pubdate="pubdate">9 September 2010</time>
           </header>
-<p>Recently I listened to <a href="http://blog.extracheese.org/2010/02/python-vs-ruby-a-battle-to-the-death.html">Gary Bernhardt comparing Python and Ruby</a>. In
-the talk Gary states that he finds Ruby code ugly and Python code beautiful.
-He then goes on to say that the things which reduce Ruby's aesthetic appeal
-are the very things which allow Ruby to do beautiful things impossible in
-Python.</p>
-<p>Gary provides several examples of equivalent code in Python and Ruby to
-highlight situations in which one language reads better than the other, such
-as the following.</p>
-<p>Python:</p>
-<pre><code>:::python
-'\n'.join(obj.name
-    for obj in (
-        repository.retrieve(id)
-        for id in ids)
-    if obj)
-</code></pre>
-<p>Ruby:</p>
-<pre><code>:::ruby
-ids.map do |id|
+          <p>Recently I listened to <a href="http://blog.extracheese.org/2010/02/python-vs-ruby-a-battle-to-the-death.html">Gary Bernhardt comparing Python and Ruby</a>. In the talk Gary states that he finds Ruby code ugly and Python code beautiful. He then goes on to say that the things which reduce Ruby's aesthetic appeal are the very things which allow Ruby to do beautiful things impossible in Python.</p>
+          <p>Gary provides several examples of equivalent code in Python and Ruby to highlight situations in which one language reads better than the other, such as the following.</p>
+          <p>Python:</p>
+          <pre><code>'\n'.join(obj.name
+for obj in (
+    repository.retrieve(id)
+    for id in ids)
+if obj)</code></pre>
+          <p>Ruby:</p>
+          <pre><code>ids.map do |id|
   repository.retrieve(id)
 end.compact.map do |obj|
   obj.name
-end.join('\n')
-</code></pre>
-<p>The Ruby code (the one beginning with <code>ids.map</code>) reads top to bottom and is
-easy to follow. The Python code is equally succinct but takes a bit of effort
-to decipher.</p>
-<p>I've been greatly enjoying the act of writing JavaScript lately, so simply for
-pleasure I worked out the JavaScript equivalent.</p>
-<p>My first attempt used the <code>filter</code> array method.</p>
-<pre><code>:::javascript
-ids.filter(function (id) {
+end.join('\n')</code></pre>
+          <p>The Ruby code (the one beginning with <code>ids.map</code>) reads top to bottom and is easy to follow. The Python code is equally succinct but takes a bit of effort to decipher.</p>
+          <p>I've been greatly enjoying the act of writing JavaScript lately, so simply for pleasure I worked out the JavaScript equivalent.</p>
+          <p>My first attempt used the <code>filter</code> array method.</p>
+          <pre><code>ids.filter(function (id) {
     var obj = repository.retrieve(id);
     return obj &amp;&amp; obj.name;
-}).join('\n');
-</code></pre>
-<p><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Filter"><code>filter</code></a>, though, just removes from an array the items which fail
-the provided "test". So the code above is on the right track, but fails
-to produce a list of names.</p>
-<p><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Reduce"><code>reduce</code></a> is the correct method for the job. <code>reduce</code> "reduces" an
-array to a single value, which could be a string, an object, another
-array — whatever!</p>
-<p>Note the empty array (<code>[]</code>) on line 5 – that's our "accumulator".</p>
-<pre><code>:::javascript
-ids.reduce(function (ids, id) {
+}).join('\n');</code></pre>
+          <p><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Filter"><code>filter</code></a>, though, just removes from an array the items which fail the provided "test". So the code above is on the right track, but fails to produce a list of names.</p>
+          <p><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Reduce"><code>reduce</code></a> is the correct method for the job. <code>reduce</code> "reduces" an array to a single value, which could be a string, an object, another array — whatever!</p>
+          <p>Note the empty array (<code>[]</code>) on line 5 – that's our "accumulator".</p>
+          <pre><code>ids.reduce(function (ids, id) {
     var obj = repository.retrieve(id);
     if (obj &amp;&amp; obj.name) ids.push(obj.name);
     return ids;
-}, []).join('\n');
-</code></pre>
-<p>Not bad. It's not as elegant as the Ruby code, but it's not "inside out" the
-way the Python code is.</p>
+}, []).join('\n');</code></pre>
+          <p>Not bad. It's not as elegant as the Ruby code, but it's not "inside out" the way the Python code is.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
@@ -105,11 +83,11 @@ way the Python code is.</p>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/converting-integers-to-ordinals/">Converting integers to ordinals</a></li>
+            <li><a href="/self-caching-functions-in-javascript-and-python/">Self-caching functions in JavaScript and Python</a></li>
+            <li><a href="/python-loops-can-have-else-clause/">Python loops can have else clause?!</a></li>
+            <li><a href="/linkify-tweets-with-regex/">Linkify tweets with regex</a></li>
+            <li><a href="/first-matching-item/">First matching item</a></li>
           </ul>
         </article>
       </div>

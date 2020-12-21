@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            ["It's not uncommon to start watching a video online and discover
              that its audio is quite quiet. This is not a problem in and of
@@ -49,8 +50,8 @@
        ["+1 in the comments if you'd like to see this feature implemented.
          :)"])
 
-    (update
-       (datetime "2010-04-15" "14:36:00" :Pacific/Auckland)
+    (update (datetime "2010-04-15" "14:36:00" :Pacific/Auckland)
+
        [(p
            [(a "http://www.joesoft.com/products/hear.php" "Hear") "
              offers this functionality, but isn't cheap. I hope Hear's

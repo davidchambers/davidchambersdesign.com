@@ -2,12 +2,6 @@
 
 (let [screen (import "./css/screen.clj")
 
-      pairs (lambda [object]
-               (let [names (.getOwnPropertyNames object Object)
-                     symbols (.getOwnPropertySymbols object Object)]
-                  (map (lambda [key] (Pair key (key object)))
-                       (concat names symbols))))
-
       coerce (function coerce [x]
                 (if (array? x)
                     (unwords (map coerce x))
@@ -60,4 +54,6 @@
                                    (append "}")
                                    unlines]
                                   declarations)))
-                   (pairs (screen coerce))))))
+                   (reduce-object (lambda [k v o] (append (Pair k v) o))
+                                  []
+                                  (screen coerce))))))

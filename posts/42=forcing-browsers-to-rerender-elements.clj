@@ -20,7 +20,7 @@
          employed by Thomas Fuchs, creator of the popular JavaScript library "
         (a "http://script.aculo.us/" "script.aculo.us") ":"])
 
-    (code-block
+    (code-block :javascript
        "Element.addMethods({
             redraw: function (element) {
                 element = $(element);
@@ -34,7 +34,7 @@
     (p
        ["The post's first comment includes an alternative approach:"])
 
-    (code-block
+    (code-block :javascript
        "element.className = element.className;")
 
     (p

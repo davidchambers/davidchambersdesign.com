@@ -9,6 +9,7 @@
   :body [
 
     (excerpt
+
        [(p
            ["In my post titled "
             (a "/captions-over-images/" "Captions over images") "
@@ -30,13 +31,15 @@
             (a "/examples/prototype-image-slider/" "Prototype image slider demo") "
              to see the code in action."])])
 
-    (update
-       (datetime "2009-09-17" "01:17:00" :Pacific/Auckland)
+    (update (datetime "2009-09-17" "01:17:00" :Pacific/Auckland)
+
        [(p
            ["I noticed that the script was failing miserably in Safari,
              which didn't like the following line:"])
-        (code-block
+
+        (code-block :javascript
            "li: new Element('li', { class: 'prev' }),")
+
         (p
            ["Wrapping the word \"class\" in quotes as per this "
             (a "http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777"
@@ -54,7 +57,7 @@
          The constructor requires one argument, either a DOM node or a string
          that references a node's ID."])
 
-    (code-block
+    (code-block :javascript
        "new Slider('slider');")
 
     (p
@@ -62,7 +65,7 @@
          on a page. The following code turns each div with class of 'slider'
          into a " (code "Slider") " object."])
 
-    (code-block
+    (code-block :javascript
        "$$('div.slider').each(function (e) {
             new Slider(e);
         })")
@@ -71,7 +74,7 @@
        ["Of course, it's a good idea to wait until the page is ready to be
          manipulated before... er... manipulating the page."])
 
-    (code-block
+    (code-block :javascript
        "document.observe('dom:loaded', function () {
             $$('div.slider').each(function (e) {
                 new Slider(e);
@@ -85,7 +88,7 @@
          be displayed first. The default values are 1.0 and 0 (slides are
          numbered from zero)."])
 
-    (code-block
+    (code-block :javascript
        "new Slider('slider', 0.5);     // faster transitions
         new Slider('slider', 1.0, 3);  // fourth slide displayed first
         new Slider('slider', 1.0, -1); // last slide displayed first
@@ -95,11 +98,11 @@
        ["If you find this code useful and would like me to flesh it out,
          let me know."])
 
-    (update
-       (datetime "2009-09-21" "11:53:00" :Pacific/Auckland)
-       (p
-          ["I neglected to mention that this code also requires "
-           (a "http://script.aculo.us/" "script.aculo.us") "."]))
+    (update (datetime "2009-09-21" "11:53:00" :Pacific/Auckland)
+
+       [(p
+           ["I neglected to mention that this code also requires "
+            (a "http://script.aculo.us/" "script.aculo.us") "."])])
 
   ]
 
