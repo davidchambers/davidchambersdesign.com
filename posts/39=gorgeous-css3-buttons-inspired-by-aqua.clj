@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-03-08" "12:39:00" :Pacific/Auckland)
 
-  :tags ["CSS" "CSS3" "HTML" "Mac OS X"]
+  :tags [:css :css3 :html :mac-os-x]
 
   :excerpt [
 

@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-07-20" "19:05:00" :Pacific/Auckland)
 
-  :tags ["JavaScript" "Node.js" "SproutCore"]
+  :tags [:javascript :node.js :sproutcore]
 
   :body [
 

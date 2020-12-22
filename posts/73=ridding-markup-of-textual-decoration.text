@@ -1,5 +1,5 @@
 {:datetime (datetime "2010-11-15" "01:00:00" :Australia/Sydney)
- :tags ["CSS" "HTML" "meaningful markup"]}
+ :tags [:css :html :meaningful-markup]}
 
 
 # Ridding markup of textual decoration

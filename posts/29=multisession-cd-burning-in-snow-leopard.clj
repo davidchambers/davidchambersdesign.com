@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-10-27" "08:58:00" :Pacific/Auckland)
 
-  :tags ["Mac OS X" "Snow Leopard"]
+  :tags [:mac-os-x :snow-leopard]
 
   :body [
 

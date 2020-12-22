@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-03-25" "16:36:00" :Pacific/Auckland)
 
-  :tags ["keyboard shortcuts" "Mac OS X"]
+  :tags [:keyboard-shortcuts :mac-os-x]
 
   :body [
 

@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-02-22" "20:24:00" :Pacific/Auckland)
 
-  :tags ["Django" "Python"]
+  :tags [:django :python]
 
   :body [
 

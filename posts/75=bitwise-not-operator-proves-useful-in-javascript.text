@@ -1,5 +1,5 @@
 {:datetime (datetime "2010-12-11" "15:00:00" :Australia/Sydney)
- :tags ["JavaScript" "programming"]}
+ :tags [:javascript :programming]}
 
 
 # Bitwise NOT operator proves useful in JavaScript

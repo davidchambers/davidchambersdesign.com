@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-01-07" "22:03:00" :Pacific/Auckland)
 
-  :tags ["HTML5" "JavaScript" "Prototype" "UX"]
+  :tags [:html5 :javascript :prototype :ux]
 
   :body [
 

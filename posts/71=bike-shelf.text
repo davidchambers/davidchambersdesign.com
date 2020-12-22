@@ -1,5 +1,5 @@
 {:datetime (datetime "2010-09-20" "19:53:00" :Pacific/Auckland)
- :tags ["design"]}
+ :tags [:design]}
 
 
 # Bike shelf

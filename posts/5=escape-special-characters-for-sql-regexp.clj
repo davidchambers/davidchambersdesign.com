@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-01-10" "22:21:00" :Pacific/Auckland)
 
-  :tags ["PHP" "SQL"]
+  :tags [:php :sql]
 
   :body [
 

@@ -4,7 +4,7 @@
 
   :datetime (datetime "2008-12-03" "12:49:00" :Pacific/Auckland)
 
-  :tags ["Adobe" "CS3" "Illustrator"]
+  :tags [:adobe :cs3 :illustrator]
 
   :body [
 

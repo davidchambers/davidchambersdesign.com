@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-03-25" "15:06:00" :Pacific/Auckland)
 
-  :tags ["Mac OS X" "Windows"]
+  :tags [:mac-os-x :windows]
 
   :body [
 

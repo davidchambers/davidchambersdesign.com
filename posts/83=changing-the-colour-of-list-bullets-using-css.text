@@ -1,5 +1,5 @@
 {:datetime (datetime "2011-04-13" "17:30:00" :America/Los_Angeles)
- :tags ["CSS" "meaningful markup"]}
+ :tags [:css :meaningful-markup]}
 
 
 # Changing the colour of list bullets using CSS

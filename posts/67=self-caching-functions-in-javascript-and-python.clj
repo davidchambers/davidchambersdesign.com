@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-08-29" "01:10:00" :Pacific/Auckland)
 
-  :tags ["JavaScript" "programming" "Python"]
+  :tags [:javascript :programming :python]
 
   :body [
 

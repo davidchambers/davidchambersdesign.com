@@ -1,5 +1,5 @@
 {:datetime (datetime "2010-09-29" "00:00:00" :Pacific/Auckland)
- :tags ["icons" "Mac OS X" "Terminal.app"]}
+ :tags [:icons :mac-os-x :terminal.app]}
 
 
 # Customizing file and folder icons in Mac OS X

@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-04-16" "22:15:00" :Pacific/Auckland)
 
-  :tags ["Coda" "Django" "Mac OS X"]
+  :tags [:coda :django :mac-os-x]
 
   :body [
 

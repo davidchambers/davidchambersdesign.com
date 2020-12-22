@@ -4,7 +4,7 @@
 
   :datetime (datetime "2008-12-18" "14:50:00" :Pacific/Auckland)
 
-  :tags ["CSS" "PHP"]
+  :tags [:css :php]
 
   :body [
 

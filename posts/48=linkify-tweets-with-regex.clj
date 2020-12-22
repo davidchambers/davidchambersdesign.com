@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-04-10" "03:22:00" :Pacific/Auckland)
 
-  :tags ["JavaScript" "PHP" "Python" "regex" "regular expressions"]
+  :tags [:javascript :php :python :regex :regular-expressions]
 
   :body [
 

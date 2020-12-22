@@ -23,7 +23,7 @@
                   (map (join Pair))
                   (map (map-left (lambda [post']
                                     (let [sqrt (** (/ 2 1))
-                                          intersection (filter (flip elem (:tags post))
+                                          intersection (filter (lambda [tag] (.includes tag (:tags post)))
                                                                (:tags post'))]
                                        (/ (sqrt (- (size intersection)
                                                    (+ (size (:tags post))

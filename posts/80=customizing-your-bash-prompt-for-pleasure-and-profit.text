@@ -1,5 +1,5 @@
 {:datetime (datetime "2011-02-13" "01:30:00" :America/Los_Angeles)
- :tags ["Mac OS X" "productivity" "Terminal.app"]}
+ :tags [:mac-os-x :productivity :terminal.app]}
 
 
 # Customizing your bash prompt for pleasure and profit

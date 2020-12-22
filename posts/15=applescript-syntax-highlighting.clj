@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-06-04" "03:12:00" :Pacific/Auckland)
 
-  :tags ["AppleScript" "JavaScript" "Mac OS X" "SyntaxHighlighter"]
+  :tags [:applescript :javascript :mac-os-x :syntaxhighlighter]
 
   :body [
 

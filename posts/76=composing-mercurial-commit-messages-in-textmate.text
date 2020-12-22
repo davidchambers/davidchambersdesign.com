@@ -1,5 +1,5 @@
 {:datetime (datetime "2011-01-10" "01:25:00" :Australia/Sydney)
- :tags ["hg" "Mac OS X" "Markdown" "Mercurial" "TextMate"]}
+ :tags [:hg :mac-os-x :markdown :mercurial :textmate]}
 
 
 # Composing Mercurial commit messages in TextMate

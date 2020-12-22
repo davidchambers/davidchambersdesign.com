@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-06-09" "23:23:00" :Pacific/Auckland)
 
-  :tags ["HTML5" "JavaScript" "MooTools" "UX"]
+  :tags [:html5 :javascript :mootools :ux]
 
   :body [
 

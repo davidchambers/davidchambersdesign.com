@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-08-28" "18:04:00" :Pacific/Auckland)
 
-  :tags ["CSS" "design" "HTML" "icons"]
+  :tags [:css :design :html :icons]
 
   :body [
 

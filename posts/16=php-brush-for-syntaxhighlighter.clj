@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-06-08" "17:00:00" :Pacific/Auckland)
 
-  :tags ["JavaScript" "PHP" "SyntaxHighlighter"]
+  :tags [:javascript :php :syntaxhighlighter]
 
   :body [
 

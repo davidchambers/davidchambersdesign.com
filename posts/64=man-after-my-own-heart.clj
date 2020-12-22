@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-07-23" "00:07:00" :Pacific/Auckland)
 
-  :tags ["architecture" "design"]
+  :tags [:architecture :design]
 
   :body [
 

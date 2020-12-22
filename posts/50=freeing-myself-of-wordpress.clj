@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-06-03" "02:56:00" :Pacific/Auckland)
 
-  :tags ["Django" "Mango" "WordPress"]
+  :tags [:django :mango :wordpress]
 
   :body [
 

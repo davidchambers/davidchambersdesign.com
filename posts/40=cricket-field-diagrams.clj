@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-03-15" "00:58:00" :Pacific/Auckland)
 
-  :tags ["design" "icons"]
+  :tags [:design :icons]
 
   :article-id "cricket-field-diagrams"
 

@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-06-13" "11:25:00" :Pacific/Auckland)
 
-  :tags ["JavaScript" "Markdown" "UX" "wmd"]
+  :tags [:javascript :markdown :ux :wmd]
 
   :body [
 

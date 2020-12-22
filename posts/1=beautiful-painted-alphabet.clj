@@ -4,7 +4,7 @@
 
   :datetime (datetime "2008-08-22" "01:56:00" :Pacific/Auckland)
 
-  :tags ["design" "typography" "video"]
+  :tags [:design :typography :video]
 
   :body [
 

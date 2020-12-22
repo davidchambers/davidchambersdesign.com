@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-10-21" "00:42:00" :Pacific/Auckland)
 
-  :tags ["security"]
+  :tags [:security]
 
   :body [
 

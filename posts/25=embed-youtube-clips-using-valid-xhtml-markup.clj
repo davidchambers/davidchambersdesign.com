@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-09-14" "14:17:00" :Pacific/Auckland)
 
-  :tags ["CSS" "HTML" "video"]
+  :tags [:css :html :video]
 
   :body [
 

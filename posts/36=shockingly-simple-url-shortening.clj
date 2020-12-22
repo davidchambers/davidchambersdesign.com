@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-01-26" "03:34:00" :Pacific/Auckland)
 
-  :tags [".htaccess" "Twitter"]
+  :tags [:.htaccess :twitter]
 
   :body [
 

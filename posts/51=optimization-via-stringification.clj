@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-06-03" "14:28:00" :Pacific/Auckland)
 
-  :tags ["CSS" "optimization" "Python"]
+  :tags [:css :optimization :python]
 
   :body [
 

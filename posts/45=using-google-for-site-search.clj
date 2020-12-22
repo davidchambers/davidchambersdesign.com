@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-03-25" "22:06:00" :Pacific/Auckland)
 
-  :tags ["Google" "search"]
+  :tags [:google :search]
 
   :body [
 

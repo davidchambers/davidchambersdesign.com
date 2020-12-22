@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-11-09" "23:14:00" :Pacific/Auckland)
 
-  :tags ["JavaScript" "optimization" "Prototype" "script.aculo.us"]
+  :tags [:javascript :optimization :prototype :script.aculo.us]
 
   :body [
 

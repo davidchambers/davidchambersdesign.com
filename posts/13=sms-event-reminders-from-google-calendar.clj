@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-04-18" "21:44:00" :Pacific/Auckland)
 
-  :tags ["Gmail" "Google Calendar" "SMS"]
+  :tags [:gmail :google-calendar :sms]
 
   :body [
 

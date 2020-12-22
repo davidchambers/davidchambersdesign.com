@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-03-01" "03:01:00" :Pacific/Auckland)
 
-  :tags ["PHP" "WordPress"]
+  :tags [:php :wordpress]
 
   :body [
 

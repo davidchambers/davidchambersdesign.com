@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-08-16" "08:53:00" :Pacific/Auckland)
 
-  :tags ["Coda" "CSS" "JavaScript" "Prototype" "SyntaxHighlighter"]
+  :tags [:coda :css :javascript :prototype :syntaxhighlighter]
 
   :body [
 

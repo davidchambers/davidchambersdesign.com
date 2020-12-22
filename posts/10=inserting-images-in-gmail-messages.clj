@@ -4,7 +4,7 @@
 
   :datetime (datetime "2009-04-15" "20:27:00" :Pacific/Auckland)
 
-  :tags ["Gmail" "HTML"]
+  :tags [:gmail :html]
 
   :body [
 

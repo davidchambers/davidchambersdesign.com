@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-02-16" "03:20:00" :Pacific/Auckland)
 
-  :tags ["bookmarklets" "iPhone" "JavaScript"]
+  :tags [:bookmarklets :iphone :javascript]
 
   :body [
 

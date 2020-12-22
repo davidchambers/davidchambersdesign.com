@@ -4,7 +4,7 @@
 
   :datetime (datetime "2010-03-29" "15:30:00" :Pacific/Auckland)
 
-  :tags ["best practice" "JavaScript"]
+  :tags [:best-practice :javascript]
 
   :body [
 
