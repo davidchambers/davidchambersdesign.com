@@ -25,10 +25,10 @@
 
         (h3 "System Preferences > Sound > Application Volumes")
 
-        (p
-           (img {:alt "Possible interface for application-specific volume
-                       settings in Mac OS X"
-                 :src "/images/posts/windows/application-volumes.png"}))
+        (uncaptioned-image
+           "/images/posts/windows/application-volumes.png"
+           "Possible interface for application-specific volume settings
+            in Mac OS X")
 
         (p
            ["Wouldn't this be nice? Many months ago I did some Googling
@@ -59,9 +59,9 @@
              the functionality of Hear's mixer pane and nothing more
              (I'm about to make this request)."])
 
-        (p
-           (img {:alt "Hear's mixer pane"
-                 :src "/images/posts/windows/hear-mixer-pane.png"}))])
+        (uncaptioned-image
+           "/images/posts/windows/hear-mixer-pane.png"
+           "Hear's mixer pane")])
 
     (h4 "Bonus titbit")
 
@@ -70,9 +70,9 @@
          a combination of drop shadow values which pretty much perfectly match
          those of an active window in OS X:"])
 
-    (p
-       (img {:alt "Photoshop's drop shadow dialog"
-             :src "/images/posts/47/drop-shadow-settings.png"}))
+    (uncaptioned-image
+       "/images/posts/47/drop-shadow-settings.png"
+       "Photoshop's drop shadow dialog")
 
     (dl
        [(dt' {:class "textual"} "shadow color")

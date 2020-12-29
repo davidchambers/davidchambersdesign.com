@@ -8,8 +8,7 @@
 
   :body [
 
-    (p
-       [(img {:alt "" :src "/images/posts/decorative/right/disk-utility-icon.png"})])
+    (decorative-image "/images/posts/decorative/right/disk-utility-icon.png")
 
     (p
        ["The days of the compact disc are surely numbered. The "

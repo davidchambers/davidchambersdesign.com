@@ -61,9 +61,9 @@
                ["At this point I expected everything to work as advertised.
                  Instead, I got this:"])
 
-            (p
-               (img {:alt "It works!"
-                     :src "/images/posts/windows/it-works!.png"}))
+            (uncaptioned-image
+               "/images/posts/windows/it-works!.png"
+               "It works!")
 
             (p
                ["That would depend on one's definition of \"works\".

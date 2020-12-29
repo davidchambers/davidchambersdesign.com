@@ -10,8 +10,8 @@
 
     (excerpt
 
-       [(p
-           (img {:alt "" :src "/images/posts/decorative/right/at-sign-in-speech-bubble.png"}))
+       [(decorative-image
+           "/images/posts/decorative/right/at-sign-in-speech-bubble.png")
 
         (p
            ["Regular expressions are powerful, useful, and -- in my opinion

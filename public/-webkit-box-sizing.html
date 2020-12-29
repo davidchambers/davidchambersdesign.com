@@ -41,16 +41,14 @@
           </header>
           <p>This site's search field has been virtually unusable in Chrome and Safari on Windows for several months. Fixing it was not high on my priority list, but I finally got to it this evening.</p>
           <dl>
-            <dt><img alt="-webkit-box-sizing: border-box" src="/images/posts/58/-webkit-box-sizing=border-box.png" />
-</dt>
+            <dt><img alt="-webkit-box-sizing: border-box" src="/images/posts/58/-webkit-box-sizing=border-box.png" /></dt>
             <dd>Before</dd>
           </dl>
           <p>I did my best to get these browsers to respect the padding values that I'd assigned in my style sheet, getting aggressive in the Web Inspector. No joy.</p>
           <p>I then noticed a curious property, <code>-webkit-box-sizing</code>. Sure enough, this was the culprit. Safari and Chrome both use <code>border-box</code> as the default value, which means that padding does not add to an element's dimensions the way it does in the standard box model.</p>
           <p>Specifying <code>content-box</code> fixed the problem.</p>
           <dl>
-            <dt><img alt="-webkit-box-sizing: content-box" src="/images/posts/58/-webkit-box-sizing=content-box.png" />
-</dt>
+            <dt><img alt="-webkit-box-sizing: content-box" src="/images/posts/58/-webkit-box-sizing=content-box.png" /></dt>
             <dd>After</dd>
           </dl>
           <p>This is an extremely satisfying solution as it neatly targets the source of the problem.</p>
@@ -69,9 +67,9 @@
           <ul>
             <li><a href="/remove-textarea-scrollbars-in-internet-explorer/">Remove textarea scrollbars in Internet Explorer</a></li>
             <li><a href="/valid-xhtml-alternative-to-strike/">Valid XHTML alternative to <code>&lt;strike&gt;</code></a></li>
+            <li><a href="/changing-the-colour-of-list-bullets-using-css/">Changing the colour of list bullets using CSS</a></li>
             <li><a href="/intelligent-css-caching/">Intelligent CSS caching</a></li>
             <li><a href="/sticky-footers/">Sticky footers</a></li>
-            <li><a href="/optimization-via-stringification/">Optimization via stringification</a></li>
           </ul>
         </article>
       </div>

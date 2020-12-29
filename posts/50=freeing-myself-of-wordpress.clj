@@ -165,9 +165,9 @@
          preview locally, and hit the upload arrow when I'm ready
          to share my thoughts with the world."])
 
-    (p
-       (img {:alt "Publish a post from Coda"
-             :src "/images/posts/50/publish.png"}))
+    (uncaptioned-image
+       "/images/posts/50/publish.png"
+       "Publish a post from Coda")
 
   ]
 

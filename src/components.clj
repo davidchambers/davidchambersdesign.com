@@ -11,13 +11,15 @@
            (dd caption)]))
 
   :captioned-images
-    (compose dl
-             (chain (lambda [triple]
-                       (let [src (0 triple)
-                             alt (1 triple)
-                             cap (2 triple)]
-                          [(dt (img {:alt alt :src src}))
-                           (dd cap)]))))
+    (compose dl (chain (prop :children)))
+
+  :uncaptioned-image
+    (lambda [src alt]
+       (p (img {:alt alt :src src})))
+
+  :decorative-image
+    (lambda [src]
+       (p (img {:alt "" :src src})))
 
   :code-block
     (lambda [language source-code]

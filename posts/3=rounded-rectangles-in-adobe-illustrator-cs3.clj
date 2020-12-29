@@ -10,8 +10,8 @@
 
     (excerpt
 
-       [(p
-           (img {:alt "" :src "/images/posts/decorative/left/adobe-illustrator-cs3-icon.png"}))
+       [(decorative-image
+           "/images/posts/decorative/left/adobe-illustrator-cs3-icon.png")
 
         (p
            ["Not so long ago I was talking to my brother online as he

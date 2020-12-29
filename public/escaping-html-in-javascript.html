@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Escaping HTML in JavaScript</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,58 +39,41 @@
             <h1>Escaping HTML in JavaScript</h1>
             <time datetime="2011-05-30T15:00:00-07:00" pubdate="pubdate">30 May 2011</time>
           </header>
-<p>I recently came across an interesting article at <a href="http://wonko.com/">wonko.com</a> on
-<a href="http://wonko.com/post/html-escaping">HTML escaping</a>, which provoked me to rewrite Bitbucket's escape
-function (invoked from within Underscore templates):</p>
-<pre><code>:::javascript
-function makeSafe(text) {
+          <p>I recently came across an interesting article at <a href="http://wonko.com/">wonko.com</a> on <a href="http://wonko.com/post/html-escaping">HTML escaping</a>, which provoked me to rewrite Bitbucket's escape function (invoked from within Underscore templates):</p>
+          <pre><code>function makeSafe(text) {
   return text.replace(/[&amp;&lt;&gt;"'`]/g, function (chr) {
     return '&amp;#' + chr.charCodeAt(0) + ';';
   });
-};
-</code></pre>
-<p>This ensures that inserted content cannot escape the confines of a quoted
-attribute value. Unquoted attributes are more problematic:</p>
-<blockquote>
-<p>Unquoted attribute values are one of the single biggest XSS vectors there
-is. If you don’t quote your attribute values, you’re essentially leaving the
-door wide open for naughty people to inject naughty things into your HTML.
-Very few escaper implementations cover all the edge cases necessary to
-prevent unquoted attribute values from becoming XSS vectors.</p>
-</blockquote>
-<p>To accommodate unquoted attribute values, the following function could be
-used instead:</p>
-<pre><code>:::javascript
-function makeSafe(text) {
+};</code></pre>
+          <p>This ensures that inserted content cannot escape the confines of a quoted attribute value. Unquoted attributes are more problematic:</p>
+          <blockquote>
+            <p>Unquoted attribute values are one of the single biggest XSS vectors there is. If you don’t quote your attribute values, you’re essentially leaving the door wide open for naughty people to inject naughty things into your HTML. Very few escaper implementations cover all the edge cases necessary to prevent unquoted attribute values from becoming XSS vectors.</p>
+          </blockquote>
+          <p>To accommodate unquoted attribute values, the following function could be used instead:</p>
+          <pre><code>function makeSafe(text) {
   return text.replace(/\W/g, function (chr) {
     return '&amp;#' + chr.charCodeAt(0) + ';';
   });
-};
-</code></pre>
-<p>I created a <a href="http://jsperf.com/html-escaping-perf">jsPerf test case</a> which confirms that there's a performance
-hit associated with using this more liberal regular expression. Keep in mind,
-though, that if “A” takes 1ms to execute and “B” takes ten times as long,
-“B” still only takes 10ms. Quite often a significant <em>comparative</em> speed
-difference is insignificant in absolute terms; I'd argue that this is the
-case here.</p>
+};</code></pre>
+          <p>I created a <a href="http://jsperf.com/html-escaping-perf">jsPerf test case</a> which confirms that there's a performance hit associated with using this more liberal regular expression. Keep in mind, though, that if “A” takes 1ms to execute and “B” takes ten times as long, “B” still only takes 10ms. Quite often a significant <em>comparative</em> speed difference is insignificant in absolute terms; I'd argue that this is the case here.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
             </ul>
             <h4>This post has the following tags:</h4>
             <ol>
-              <li><a href="/tag/best practice/">best practice</a></li>
-              <li><a href="/tag/JavaScript/">JavaScript</a></li>
+              <li><a href="/tag/best-practice/">best practice</a></li>
+              <li><a href="/tag/javascript/">JavaScript</a></li>
               <li><a href="/tag/security/">security</a></li>
             </ol>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/extra-comma-considered-harmful/">Extra comma considered harmful</a></li>
+            <li><a href="/associative-arrays-in-javascript/">Associative arrays in JavaScript</a></li>
+            <li><a href="/getting-truth-out-of-the-dom/">Getting truth out of the DOM – Yehuda Katz</a></li>
+            <li><a href="/the-perils-of-using-javascript-objects-as-sets/">The perils of using JavaScript objects as sets</a></li>
+            <li><a href="/captions-over-images/">Captions over images</a></li>
           </ul>
         </article>
       </div>

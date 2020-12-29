@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Higher-level style sheets</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,23 +39,15 @@
             <h1>Higher-level style sheets</h1>
             <time datetime="2011-10-02T23:00:00-07:00" pubdate="pubdate">2 October 2011</time>
           </header>
-<hr />
-<p>Yesterday I used three things for the first time: <a href="http://sass-lang.com/">Sass</a>, <a href="http://compass-style.org/">Compass</a>,
-and Ruby. To summarize:</p>
-<ul>
-<li>I ♥ Sass</li>
-<li>I ♥ Compass</li>
-<li>I ♥ Ruby</li>
-</ul>
-<p>One's own site is a great place to play with new (or in this case, not so
-new) web technologies. I decided to get stuck in and manually convert the
-<a href="https://bitbucket.org/davidchambers/dcd-static/src/872e932b4941/styles/screen.css">1200 line style sheet</a> from CSS to something a bit more awesome. This
-post documents the most interesting portion of that transformation, which
-involved this site's <a href="/archives/">archives</a> styles.</p>
-<hr />
-<h3>Original CSS</h3>
-<pre><code>:::css
-ol.archives {
+          <p>Yesterday I used three things for the first time: <a href="http://sass-lang.com/">Sass</a>, <a href="http://compass-style.org/">Compass</a>, and Ruby. To summarize:</p>
+          <ul>
+            <li>I ♥ Sass</li>
+            <li>I ♥ Compass</li>
+            <li>I ♥ Ruby</li>
+          </ul>
+          <p>One's own site is a great place to play with new (or in this case, not so new) web technologies. I decided to get stuck in and manually convert the <a href="https://bitbucket.org/davidchambers/dcd-static/src/872e932b4941/styles/screen.css">1200 line style sheet</a> from CSS to something a bit more awesome. This post documents the most interesting portion of that transformation, which involved this site's <a href="/archives/">archives</a> styles.</p>
+          <h3>Original CSS</h3>
+          <pre><code>ol.archives {
   margin: 0 0 0 -21px;
   list-style: none;
 }
@@ -139,102 +131,72 @@ ol.archives time[datetime*="27T"] { background-position:  -20px -100px; }
 ol.archives time[datetime*="28T"] { background-position:  -40px -100px; }
 ol.archives time[datetime*="29T"] { background-position:  -60px -100px; }
 ol.archives time[datetime*="30T"] { background-position:  -80px -100px; }
-ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
-</code></pre>
-<p>That's a lot of text, most of which relates to the calendar sprite. To start,
-though...</p>
-<h3>Significant whitespace and nesting</h3>
-<p>As in Python and CoffeeScript, whitespace is significant in Sass. As a result,
-squiggly brackets are not required to delimit blocks, and semicolons are not
-required to separate one rule from the next.</p>
-<p>Sass allows selectors to be nested. The main advantage of this approach is
-that selectors needn't include their "context" (ancestors). It also means
-that a style sheet's structure resembles that of the corresponding markup.</p>
-<pre><code>:::sass
-ol.archives
-  margin: 0 0 0 -21px
-  list-style: none
-  li
-    h2
-      margin: 1.75em 0 0 21px
-      padding: 0
-      font: bold 1em/1.75 "Lucida Grande", ..., sans-serif
-      color: #93a1a1
-    ol
-      margin: 0
-      list-style: none
-  time
-    display: block
-    float: left
-    margin: 0.167em 0.5em 0 0
-    width: 16px
-    height: 16px
-    background: url(data:image/png;base64,...) no-repeat
-    line-height: 10
-    overflow: hidden
-</code></pre>
-<h3>Compass's <code>inline-image</code> function</h3>
-<p>For an image that's <em>design</em> rather than content, it's better to link to it
-from a style sheet than to include it as an <code>img</code>. Better still, it can be
-Base64 encoded and embedded in the style sheet as a data URI, saving an HTTP
-request.</p>
-<p>Until yesterday, I'd always done this by hand. It's a bit of a pain, but I'm
-pretty familiar with the routine:</p>
-<ol>
-<li>Export image file as PNG</li>
-<li><a href="http://www.smushit.com/ysmush.it/">Smush.it</a></li>
-<li>Save smushed image</li>
-<li>Drop smushed image into Hashify (e.g. <a href="http://bit.ly/pbovZI">calendar.png</a>)</li>
-<li>Copy data URI from Hashify and paste it into style sheet</li>
-</ol>
-<p>Having to perform these steps each time the source image is changed is a real
-nuisance. Compass offers an extremely elegant solution: a Sass function named
-<a href="http://compass-style.org/reference/compass/helpers/inline-data/#inline-image"><code>inline-image</code></a>. When compiled, <code>inline-image("calendar.png")</code> becomes a
-data URI – the Base64-encoded representation of calendar.png. If calendar.png
-is changed, <code>compass compile</code> is all that's required to update the data URI.</p>
-<pre><code>:::sass
-ol.archives
+ol.archives time[datetime*="31T"] { background-position: -100px -100px; }</code></pre>
+          <p>That's a lot of text, most of which relates to the calendar sprite. To start, though...</p>
+          <h3>Significant whitespace and nesting</h3>
+          <p>As in Python and CoffeeScript, whitespace is significant in Sass. As a result, squiggly brackets are not required to delimit blocks, and semicolons are not required to separate one rule from the next.</p>
+          <p>Sass allows selectors to be nested. The main advantage of this approach is that selectors needn't include their "context" (ancestors). It also means that a style sheet's structure resembles that of the corresponding markup.</p>
+          <pre><code>ol.archives
+margin: 0 0 0 -21px
+list-style: none
+li
+  h2
+    margin: 1.75em 0 0 21px
+    padding: 0
+    font: bold 1em/1.75 "Lucida Grande", ..., sans-serif
+    color: #93a1a1
+  ol
+    margin: 0
+    list-style: none
+time
+  display: block
+  float: left
+  margin: 0.167em 0.5em 0 0
+  width: 16px
+  height: 16px
+  background: url(data:image/png;base64,...) no-repeat
+  line-height: 10
+  overflow: hidden</code></pre>
+          <h3>Compass's <code>inline-image</code> function</h3>
+          <p>For an image that's <em>design</em> rather than content, it's better to link to it from a style sheet than to include it as an <code>img</code>. Better still, it can be Base64 encoded and embedded in the style sheet as a data URI, saving an HTTP request.</p>
+          <p>Until yesterday, I'd always done this by hand. It's a bit of a pain, but I'm pretty familiar with the routine:</p>
+          <ol>
+            <li>Export image file as PNG</li>
+            <li><a href="http://www.smushit.com/ysmush.it/">Smush.it</a></li>
+            <li>Save smushed image</li>
+            <li>Drop smushed image into Hashify (e.g. <a href="http://bit.ly/pbovZI">calendar.png</a>)</li>
+            <li>Copy data URI from Hashify and paste it into style sheet</li>
+          </ol>
+          <p>Having to perform these steps each time the source image is changed is a real nuisance. Compass offers an extremely elegant solution: a Sass function named <a href="http://compass-style.org/reference/compass/helpers/inline-data/#inline-image"><code>inline-image</code></a>. When compiled, <code>inline-image("calendar.png")</code> becomes a data URI – the Base64-encoded representation of calendar.png. If calendar.png is changed, <code>compass compile</code> is all that's required to update the data URI.</p>
+          <pre><code>ol.archives
+...
+time
   ...
-  time
-    ...
-    background: inline-image("calendar.png") no-repeat
-    ...
-    &amp;[datetime*="01T"]
-      background-position: -60px -20px
-    &amp;[datetime*="02T"]
-      background-position: -80px -20px
-    &amp;[datetime*="03T"]
-      background-position: -100px -20px
-    ...
-    &amp;[datetime*="31T"]
-      background-position: -100px -100px
-</code></pre>
-<h3>Generating repetitive CSS programmatically</h3>
-<p>Having a placeholder for the data URI is great; 31 <code>background-position</code>
-declarations not so much. Compass provides helpers for generating and working
-with sprites, but in this case all that's required is to generate background
-positions for an existing sprite. The first step is to add a loop:</p>
-<pre><code>:::sass
-@for $date from 1 through 31
-  // do stuff
-</code></pre>
-<p>The loop variable, <code>$date</code>, can be interpolated to generate the selectors:</p>
-<pre><code>:::sass
-@for $date from 1 through 31
-  &amp;[datetime*="#{$date}T"]
-</code></pre>
-<p>Almost. This gives <code>datetime*="1T"</code>, <code>datetime*="2T"</code>, etc. rather than their
-zero-padded equivalents. Adding a leading zero when required is not difficult:</p>
-<pre><code>:::sass
-@for $date from 1 through 31
-  @if $date &lt; 10
-    $date: "0#{$date}"
-  &amp;[datetime*="#{$date}T"]
-</code></pre>
-<p>Finally, variables can be used to calculate the <code>background-position</code> of each
-element:</p>
-<pre><code>:::sass
-$offset: -20px
+  background: inline-image("calendar.png") no-repeat
+  ...
+  &amp;[datetime*="01T"]
+    background-position: -60px -20px
+  &amp;[datetime*="02T"]
+    background-position: -80px -20px
+  &amp;[datetime*="03T"]
+    background-position: -100px -20px
+  ...
+  &amp;[datetime*="31T"]
+    background-position: -100px -100px</code></pre>
+          <h3>Generating repetitive CSS programmatically</h3>
+          <p>Having a placeholder for the data URI is great; 31 <code>background-position</code> declarations not so much. Compass provides helpers for generating and working with sprites, but in this case all that's required is to generate background positions for an existing sprite. The first step is to add a loop:</p>
+          <pre><code>@for $date from 1 through 31
+// do stuff</code></pre>
+          <p>The loop variable, <code>$date</code>, can be interpolated to generate the selectors:</p>
+          <pre><code>@for $date from 1 through 31
+&amp;[datetime*="#{$date}T"]</code></pre>
+          <p>Almost. This gives <code>datetime*="1T"</code>, <code>datetime*="2T"</code>, etc. rather than their zero-padded equivalents. Adding a leading zero when required is not difficult:</p>
+          <pre><code>@for $date from 1 through 31
+@if $date &lt; 10
+  $date: "0#{$date}"
+&amp;[datetime*="#{$date}T"]</code></pre>
+          <p>Finally, variables can be used to calculate the <code>background-position</code> of each element:</p>
+          <pre><code>$offset: -20px
 $x: 3
 $y: 1
   @for $date from 1 through 31
@@ -246,47 +208,29 @@ $y: 1
       $x: 1
       $y: $y + 1
     @else
-      $x: $x + 1
-</code></pre>
-<p>These 13 lines of relatively straightforward logic produce the same output as
-the 62 lines they replace.</p>
-<h3>The right level of abstraction</h3>
-<p>In <a href="http://5by5.tv/hypercritical/14">A Dark Age of Objective-C</a> and in <a href="http://5by5.tv/hypercritical/15">The Bridges of Siracusa County</a>,
-John Siracusa made the claim that software developers have an insatiable
-desire for ever higher-level programming languages and frameworks. In and of
-itself, though, abstraction is not a virtue. Most abstractions fail for one
-reason or another: they aren't sufficiently flexible, or they are so generic
-that they provide very little utility, or they don't fit well with people's
-mental models.</p>
-<p><em>Good</em> abstractions are wonderful. jQuery, for example, makes it possible
-to act on collections of elements as one would individual elements. Before
-jQuery, binding an event handler to several elements required more than a
-superficial understanding of JavaScript (advanced knowledge if it were
-necessary to close over variables). Good abstractions allow us to write
-succinct, self-documenting code.</p>
-<p>I'm hopeful that Sass and its kin will do for CSS what jQuery has done for
-the DOM (and what CoffeeScript is doing for JavaScript). My first taste of
-higher-level CSS tasted very good indeed.</p>
+      $x: $x + 1</code></pre>
+          <p>These 13 lines of relatively straightforward logic produce the same output as the 62 lines they replace.</p>
+          <h3>The right level of abstraction</h3>
+          <p>In <a href="http://5by5.tv/hypercritical/14">A Dark Age of Objective-C</a> and in <a href="http://5by5.tv/hypercritical/15">The Bridges of Siracusa County</a>, John Siracusa made the claim that software developers have an insatiable desire for ever higher-level programming languages and frameworks. In and of itself, though, abstraction is not a virtue. Most abstractions fail for one reason or another: they aren't sufficiently flexible, or they are so generic that they provide very little utility, or they don't fit well with people's mental models.</p>
+          <p><em>Good</em> abstractions are wonderful. jQuery, for example, makes it possible to act on collections of elements as one would individual elements. Before jQuery, binding an event handler to several elements required more than a superficial understanding of JavaScript (advanced knowledge if it were necessary to close over variables). Good abstractions allow us to write succinct, self-documenting code.</p>
+          <p>I'm hopeful that Sass and its kin will do for CSS what jQuery has done for the DOM (and what CoffeeScript is doing for JavaScript). My first taste of higher-level CSS tasted very good indeed.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
             </ul>
             <h4>This post has the following tags:</h4>
             <ol>
-              <li><a href="/tag/best practice/">best practice</a></li>
-              <li><a href="/tag/Compass/">Compass</a></li>
-              <li><a href="/tag/CSS/">CSS</a></li>
-              <li><a href="/tag/Ruby/">Ruby</a></li>
-              <li><a href="/tag/Sass/">Sass</a></li>
+              <li><a href="/tag/best-practice/">best practice</a></li>
+              <li><a href="/tag/compass/">Compass</a></li>
+              <li><a href="/tag/css/">CSS</a></li>
+              <li><a href="/tag/ruby/">Ruby</a></li>
+              <li><a href="/tag/sass/">Sass</a></li>
             </ol>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/css-image-switcher-done-the-right-way/">CSS image switcher (done the right way)</a></li>
+            <li><a href="/captions-over-images/">Captions over images</a></li>
           </ul>
         </article>
       </div>

@@ -8,7 +8,7 @@
 
   :body [
 
-    (img {:alt "" :src "/images/posts/decorative/right/no-apple.png"})
+    (decorative-image "/images/posts/decorative/right/no-apple.png")
 
     (p
        ["The following conversation took place a couple of days ago in

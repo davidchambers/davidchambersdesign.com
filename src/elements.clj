@@ -24,7 +24,7 @@
       (lambda [tag-name attrs children]
          {:type :element
           :tag-name tag-name
-          :format "block"
+          :format :block
           :self-closing false
           :attrs (canonicalize-attrs attrs)
           :children (canonicalize-children children)})
@@ -34,9 +34,9 @@
          (let [children (canonicalize-children children)]
             {:type :element
              :tag-name tag-name
-             :format (if (any (lambda [node] (equals "block" (:format node))) children)
-                         "block"
-                         "inline")
+             :format (if (any (lambda [node] (=== :block (:format node))) children)
+                         :block
+                         :inline)
              :self-closing false
              :attrs (canonicalize-attrs attrs)
              :children children}))
@@ -45,7 +45,7 @@
       (lambda [tag-name attrs]
          {:type :element
           :tag-name tag-name
-          :format "inline"
+          :format :inline
           :self-closing true
           :attrs (canonicalize-attrs attrs)})
 

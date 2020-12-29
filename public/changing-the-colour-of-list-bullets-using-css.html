@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Changing the colour of list bullets using CSS</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,32 +39,25 @@
             <h1>Changing the colour of list bullets using CSS</h1>
             <time datetime="2011-04-13T17:30:00-07:00" pubdate="pubdate">13 April 2011</time>
           </header>
-<p>So, you're about to style an unordered list of some sort...</p>
-<pre><code>:::html
-&lt;h1&gt;TXJS 2011 Speakers&lt;/h1&gt;
+          <p>So, you're about to style an unordered list of some sort...</p>
+          <pre><code>&lt;h1&gt;TXJS 2011 Speakers&lt;/h1&gt;
 &lt;ul&gt;
   &lt;li&gt;Brendan Eich&lt;/li&gt;
   &lt;li&gt;Alex Russell&lt;/li&gt;
   &lt;li&gt;Douglas Crockford&lt;/li&gt;
   &lt;li&gt;Paul Irish&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-<p>You've decided upon hanging square bullets in a light grey – nothing too
-distracting...</p>
-<pre><code>:::css
-ul {
+&lt;/ul&gt;</code></pre>
+          <p>You've decided upon hanging square bullets in a light grey – nothing too distracting...</p>
+          <pre><code>ul {
   list-style: square outside;
   color: #ccc;
 }
 li {
   color: #000;
-}
-</code></pre>
-<p>This should do the trick, but doesn't for some reason! How the heck does one
-target the bullets and only the bullets? As far as I know it's not possible.</p>
-<h3>Conventional hack {@id=conventional-hack}</h3>
-<pre><code>:::html
-&lt;h1&gt;TXJS 2011 Speakers&lt;/h1&gt;
+}</code></pre>
+          <p>This should do the trick, but doesn't for some reason! How the heck does one target the bullets and only the bullets? As far as I know it's not possible.</p>
+          <h3 id="conventional-hack">Conventional hack</h3>
+          <pre><code>&lt;h1&gt;TXJS 2011 Speakers&lt;/h1&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;span&gt;Brendan Eich&lt;/span&gt;&lt;/li&gt;
   &lt;li&gt;&lt;span&gt;Alex Russell&lt;/span&gt;&lt;/li&gt;
@@ -80,26 +73,20 @@ target the bullets and only the bullets? As far as I know it's not possible.</p>
   li &gt; span {
     color: #000;
   }
-&lt;/style&gt;
-</code></pre>
-<p>This gets the job done, but those <code>span</code>s are ugly – there are ways to achieve
-the desired visual effect without hacking the markup.</p>
-<h3>Background image technique {@id=background-image-technique}</h3>
-<pre><code>:::css
-ul {
+&lt;/style&gt;</code></pre>
+          <p>This gets the job done, but those <code>span</code>s are ugly – there are ways to achieve the desired visual effect without hacking the markup.</p>
+          <h3 id="background-image-technique">Background image technique</h3>
+          <pre><code>ul {
   list-style: none;
 }
 li {
   margin-left: -12px;
   background: url(bullet.png) no-repeat 0;
   text-indent: 12px;
-}
-</code></pre>
-<p>This requires very little CSS. To avoid incurring the overhead of an extra
-HTTP request, one could Base64-encode the image in a <a href="http://en.wikipedia.org/wiki/Data_URI_scheme#CSS">data URI</a>.</p>
-<h3>Pseudo-element technique {@id=pseudo-element-technique}</h3>
-<pre><code>:::css
-ul {
+}</code></pre>
+          <p>This requires very little CSS. To avoid incurring the overhead of an extra HTTP request, one could Base64-encode the image in a <a href="http://en.wikipedia.org/wiki/Data_URI_scheme#CSS">data URI</a>.</p>
+          <h3 id="pseudo-element-technique">Pseudo-element technique</h3>
+          <pre><code>ul {
   list-style: none;
 }
 li {
@@ -116,35 +103,31 @@ li:before {
   height: 4px;
   background: #ccc;
   content: "";
-}
-</code></pre>
-<p>So it's possible to fashion square bullets of any colour with just a handful
-of straightforward declarations. Nice!</p>
-<p>Prefer round bullets? No problem. :)</p>
-<pre><code>:::css
-  ...
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  ...
-</code></pre>
+}</code></pre>
+          <p>So it's possible to fashion square bullets of any colour with just a handful of straightforward declarations. Nice!</p>
+          <p>Prefer round bullets? No problem. :)</p>
+          <pre><code>...
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+...</code></pre>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
             </ul>
             <h4>This post has the following tags:</h4>
             <ol>
-              <li><a href="/tag/CSS/">CSS</a></li>
-              <li><a href="/tag/meaningful markup/">meaningful markup</a></li>
+              <li><a href="/tag/css/">CSS</a></li>
+              <li><a href="/tag/meaningful-markup/">meaningful markup</a></li>
             </ol>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/ridding-markup-of-textual-decoration/">Ridding markup of textual decoration</a></li>
+            <li><a href="/prototype-image-slider/">Prototype image slider</a></li>
+            <li><a href="/css-image-switcher-done-the-right-way/">CSS image switcher (done the right way)</a></li>
+            <li><a href="/captions-over-images/">Captions over images</a></li>
+            <li><a href="/remove-textarea-scrollbars-in-internet-explorer/">Remove textarea scrollbars in Internet Explorer</a></li>
           </ul>
         </article>
       </div>

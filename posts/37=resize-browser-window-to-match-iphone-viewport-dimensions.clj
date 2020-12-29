@@ -41,12 +41,16 @@
            "iPhone testing bookmarklets: portrait and landscape")])
 
     (captioned-images
-       [["/images/posts/windows/safari-window-iphone-dimensions-portrait.png"
-         "Safari window resized to iPhone portrait dimensions"
-         "320x480: iPhone portrait dimensions"]
-        ["/images/posts/windows/safari-window-iphone-dimensions-landscape.png"
-         "Safari window resized to iPhone landscape dimensions"
-         "480x320: iPhone landscape dimensions"]])
+
+       [(captioned-image
+           "/images/posts/windows/safari-window-iphone-dimensions-portrait.png"
+           "Safari window resized to iPhone portrait dimensions"
+           "320x480: iPhone portrait dimensions")
+
+        (captioned-image
+           "/images/posts/windows/safari-window-iphone-dimensions-landscape.png"
+           "Safari window resized to iPhone landscape dimensions"
+           "480x320: iPhone landscape dimensions")])
 
     (p
        ["It appears that I need to rework this site's style sheet

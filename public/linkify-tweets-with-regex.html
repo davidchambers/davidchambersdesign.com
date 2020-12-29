@@ -39,8 +39,7 @@
             <h1>Linkify tweets with regex</h1>
             <time datetime="2010-04-10T03:22:00+12:00" pubdate="pubdate">10 April 2010</time>
           </header>
-          <p><img alt="" src="/images/posts/decorative/right/at-sign-in-speech-bubble.png" />
-</p>
+          <p><img alt="" src="/images/posts/decorative/right/at-sign-in-speech-bubble.png" /></p>
           <p>Regular expressions are powerful, useful, and — in my opinion — lots of fun! Thanks to the prevalence of Twitter, every web developer will be exposed to regex sooner or later: before outputting tweets in HTML, Twitter names and hyperlinks must be wrapped in anchor tags.</p>
           <h3>Matching @names</h3>
           <p>Here's the gist: a match will begin with "@" and the at sign must be followed by one or more word (letter / number / underscore) characters. The @name must either appear at the beginning of the tweet or be preceded by a space. This prevents the regular expression from matching "@example" in "me@example.com".</p>
@@ -76,11 +75,11 @@ re.sub(r'(?m)(^|\s)(@\w+)',
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
+            <li><a href="/end-of-string-anchor-in-javascript-regular-expressions/">End of string anchor in JavaScript regular expressions</a></li>
             <li><a href="/converting-integers-to-ordinals/">Converting integers to ordinals</a></li>
             <li><a href="/self-caching-functions-in-javascript-and-python/">Self-caching functions in JavaScript and Python</a></li>
             <li><a href="/php-brush-for-syntaxhighlighter/">PHP brush for SyntaxHighlighter</a></li>
             <li><a href="/filtering-lists-in-python-ruby-and-javascript/">Filtering lists in Python, Ruby, and JavaScript</a></li>
-            <li><a href="/python-loops-can-have-else-clause/">Python loops can have else clause?!</a></li>
           </ul>
         </article>
       </div>

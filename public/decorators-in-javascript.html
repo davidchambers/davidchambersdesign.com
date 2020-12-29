@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Decorators in JavaScript</title>
     <link rel="alternate" type="application/atom+xml" href="/feed/" />
-    <link rel="stylesheet" href="/public/css/reset.css" media="all" />
-    <link rel="stylesheet" href="/public/css/print.css" media="print" />
-    <link rel="stylesheet" href="/public/css/screen.css" media="screen" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
     <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
     <script src="http://use.typekit.com/jhk0ogh.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -39,28 +39,19 @@
             <h1>Decorators in JavaScript</h1>
             <time datetime="2011-07-26T22:00:00-07:00" pubdate="pubdate">26 July 2011</time>
           </header>
-<p>A decorator is a function which takes a function and returns a function:</p>
-<pre><code>:::coffeescript
-decorator = (fn) -&gt; fn
-</code></pre>
-<p>Obviously, this doesn't do anything useful. It's the fact that a decorator
-can return a function which behaves <em>similarly</em> to the function passed to it
-that makes the pattern interesting. Commonly a decorator will simply wrap a
-function invocation in a check of some sort:</p>
-<pre><code>:::javascript
-var loginRequired = function (fn) {
+          <p>A decorator is a function which takes a function and returns a function:</p>
+          <pre><code>decorator = (fn) -&gt; fn</code></pre>
+          <p>Obviously, this doesn't do anything useful. It's the fact that a decorator can return a function which behaves <em>similarly</em> to the function passed to it that makes the pattern interesting. Commonly a decorator will simply wrap a function invocation in a check of some sort:</p>
+          <pre><code>var loginRequired = function (fn) {
   return function () {
     if (!user.authenticated) {
       return window.location.replace('/login');
     }
     fn.apply(null, [].slice.apply(arguments));
   };
-};
-</code></pre>
-<p>The above decorator could be used to "guard" actions that only authenticated
-users are permitted to perform:</p>
-<pre><code>:::javascript
-var changeUsername = loginRequired(function (username) {
+};</code></pre>
+          <p>The above decorator could be used to "guard" actions that only authenticated users are permitted to perform:</p>
+          <pre><code>var changeUsername = loginRequired(function (username) {
   $.ajax({
     type: 'PUT',
     url: '/api/1.0/users/' + user.id,
@@ -78,11 +69,9 @@ var deleteAccount = loginRequired(function () {
   $.ajax({
     type: 'DELETE',
     url: '/api/1.0/users/' + user.id
-  })});
-</code></pre>
-<p>The CoffeeScript equivalent is quite a bit clearer:</p>
-<pre><code>:::coffeescript
-changeUsername = loginRequired (username) -&gt;
+  })});</code></pre>
+          <p>The CoffeeScript equivalent is quite a bit clearer:</p>
+          <pre><code>changeUsername = loginRequired (username) -&gt;
   $.ajax
     type: 'PUT'
     url: "/api/1.0/users/#{user.id}"
@@ -97,31 +86,26 @@ changePassword = loginRequired (password) -&gt;
 deleteAccount = loginRequired -&gt;
   $.ajax
     type: 'DELETE'
-    url: "/api/1.0/users/#{user.id}"
-</code></pre>
-<p>Decorators are commonly used in Python — which provides special syntax for
-"decorating" functions — but are rarely seen in JavaScript code. This despite
-the fact that JavaScript's first-class functions are ideally suited to the
-task. Perhaps CoffeeScript's lighter-weight function syntax will result in
-decorators making more frequent appearances in JavaScript code.</p>
+    url: "/api/1.0/users/#{user.id}"</code></pre>
+          <p>Decorators are commonly used in Python — which provides special syntax for "decorating" functions — but are rarely seen in JavaScript code. This despite the fact that JavaScript's first-class functions are ideally suited to the task. Perhaps CoffeeScript's lighter-weight function syntax will result in decorators making more frequent appearances in JavaScript code.</p>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>
             </ul>
             <h4>This post has the following tags:</h4>
             <ol>
-              <li><a href="/tag/CoffeeScript/">CoffeeScript</a></li>
-              <li><a href="/tag/JavaScript/">JavaScript</a></li>
+              <li><a href="/tag/coffeescript/">CoffeeScript</a></li>
+              <li><a href="/tag/javascript/">JavaScript</a></li>
               <li><a href="/tag/programming/">programming</a></li>
             </ol>
           </footer>
           <h3 id="related">Possibly related posts</h3>
           <ul>
-            <li><a href="http://davidchambersdesign.com/cricket-field-diagrams/">Cricket field diagrams</a></li>
-            <li><a href="http://davidchambersdesign.com/tiny-calendar-icons-sprite/">Tiny calendar icons sprite</a></li>
-            <li><a href="http://davidchambersdesign.com/bike-shelf/">Bike shelf</a></li>
-            <li><a href="http://davidchambersdesign.com/man-after-my-own-heart/">Man after my own heart</a></li>
-            <li><a href="http://davidchambersdesign.com/dieter-rams-video-interview/">Dieter Rams video interview</a></li>
+            <li><a href="/repeating-strings-in-javascript/">Repeating strings in JavaScript</a></li>
+            <li><a href="/bitwise-not-operator-proves-useful-in-javascript/">Bitwise NOT operator proves useful in JavaScript</a></li>
+            <li><a href="/converting-integers-to-ordinals/">Converting integers to ordinals</a></li>
+            <li><a href="/self-caching-functions-in-javascript-and-python/">Self-caching functions in JavaScript and Python</a></li>
+            <li><a href="/filtering-lists-in-python-ruby-and-javascript/">Filtering lists in Python, Ruby, and JavaScript</a></li>
           </ul>
         </article>
       </div>

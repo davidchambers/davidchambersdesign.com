@@ -21,8 +21,8 @@
                                                      "\""])
                                                  (.getOwnPropertySymbols (:attrs node) Object)))]
                              (++ (if (:self-closing node)
-                                     [indentation "<" tag-name attrs " />\n"]
-                                     (if (equals "inline" (:format node))
+                                     [indentation "<" tag-name attrs " />" (if inline "" "\n")]
+                                     (if (=== :inline (:format node))
                                          [indentation "<" tag-name attrs ">"
                                           (render-fragment indent 0 true (:children node))
                                           "</" tag-name ">" (if inline "" "\n")]

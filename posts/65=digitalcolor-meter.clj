@@ -8,9 +8,9 @@
 
   :body [
 
-    (p
-       (img {:alt "DigitalColor Meter"
-             :src "/images/posts/windows/digitalcolor-meter.png"}))
+    (uncaptioned-image
+       "/images/posts/windows/digitalcolor-meter.png"
+       "DigitalColor Meter")
 
     (p
        ["I thought this recent "

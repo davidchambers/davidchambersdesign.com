@@ -54,8 +54,7 @@
           </ol>
           <p>Chris simply isn't in the right mindset. He's thinking about <em>how</em> he's going to present the content on the page, but he's forgetting to consider the content itself. This is a crucial error. If one views Chris's <a href="http://css-tricks.com/examples/CSSImageSwitcher/">CSS image switcher demo</a> with styles disabled, one sees something most unhelpful:</p>
           <dl>
-            <dt><img alt="Chris Coyier's CSS image switcher demo displays nothing but four unhelpful links when styles are disabled" src="/images/posts/43/css-tricks-image-switcher-demo-sans-styles.png" />
-</dt>
+            <dt><img alt="Chris Coyier's CSS image switcher demo displays nothing but four unhelpful links when styles are disabled" src="/images/posts/43/css-tricks-image-switcher-demo-sans-styles.png" /></dt>
             <dd>CSS image switcher demo as seen at CSS-Tricks (with styles disabled; note the lack of images)</dd>
           </dl>
           <p>Well, at least one could click on these links to view the images, right? Wrong! The hrefs contain nothing but the hash sign. Chris does mention in the screencast that these links <em>could</em> go somewhere, but it's as if to say <strong>hey, here're some links if you need 'em</strong> rather than <strong>yikes! this page'll be worthless when styles are disabled, you'd sure as hell better link to the images as backup</strong>.</p>
@@ -66,8 +65,7 @@
           <h3>Meaningful markup for image–caption pairs</h3>
           <p>As I state in <a href="/captions-over-images/">Captions over images</a>, my response to an earlier CSS-Tricks screencast, the <strong>definition list</strong> is the most appropriate tool in our toolbox.</p>
           <dl>
-            <dt><img alt="Definition list markup" src="/images/posts/43/definition-list-markup.png" />
-</dt>
+            <dt><img alt="Definition list markup" src="/images/posts/43/definition-list-markup.png" /></dt>
             <dd>The screenshot above is marked up within a <strong>dt</strong> and this caption is a <strong>dd</strong> (how meta!)</dd>
           </dl>
           <p>Each term in a definition list should have <em>at least</em> one definition. This enables more than one description — a title and a caption, for instance — to be tied to an image:</p>
@@ -80,8 +78,7 @@
 &lt;/dl&gt;</code></pre>
           <p>Beautiful, isn't it? No pointless (literally) anchors, no meaningless ids, no class names, just content wrapped in descriptive HyperText Markup Language. This ensures that the page's content is accessible to all: those viewing the page on mobile phones; those using screen readers or feed readers; and, of course, web crawlers.</p>
           <dl>
-            <dt><img alt="Meaningful markup degrades gracefully" src="/images/posts/43/meaningful-markup-degrades-gracefully.jpg" />
-</dt>
+            <dt><img alt="Meaningful markup degrades gracefully" src="/images/posts/43/meaningful-markup-degrades-gracefully.jpg" /></dt>
             <dd>The page's content is accessible even with styles disabled</dd>
           </dl>
           <h3>Demo</h3>
@@ -103,6 +100,9 @@
           <h3 id="related">Possibly related posts</h3>
           <ul>
             <li><a href="/captions-over-images/">Captions over images</a></li>
+            <li><a href="/changing-the-colour-of-list-bullets-using-css/">Changing the colour of list bullets using CSS</a></li>
+            <li><a href="/ridding-markup-of-textual-decoration/">Ridding markup of textual decoration</a></li>
+            <li><a href="/higher-level-style-sheets/">Higher-level style sheets</a></li>
             <li><a href="/prototype-image-slider/">Prototype image slider</a></li>
           </ul>
         </article>
