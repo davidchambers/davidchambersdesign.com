@@ -16,23 +16,26 @@
          than would be the case using " (code "PNGSaveOptions()") "."])
 
     (code-block :javascript
-       "function saveForWebPNG(outputFolderStr, filename)
-        {
-            var opts, file;
-            opts = new ExportOptionsSaveForWeb();
-            opts.format = SaveDocumentType.PNG;
-            opts.PNG8 = false;
-            opts.quality = 100;
-            if (filename.length > 27) {
-                file = new File(outputFolderStr + \"/temp.png\");
-                activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);
-                file.rename(filename + \".png\");
-            }
-            else {
-                file = new File(outputFolderStr + \"/\" + filename + \".png\");
-                activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);
-            }
-        }")
+
+       """
+       function saveForWebPNG(outputFolderStr, filename)
+       {
+           var opts, file;
+           opts = new ExportOptionsSaveForWeb();
+           opts.format = SaveDocumentType.PNG;
+           opts.PNG8 = false;
+           opts.quality = 100;
+           if (filename.length > 27) {
+               file = new File(outputFolderStr + "/temp.png");
+               activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);
+               file.rename(filename + ".png");
+           }
+           else {
+               file = new File(outputFolderStr + "/" + filename + ".png");
+               activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);
+           }
+       }
+       """)
 
     (p
        ["Photoshop on Mac limits the length of a " (code "File") "

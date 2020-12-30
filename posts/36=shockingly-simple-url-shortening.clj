@@ -73,8 +73,11 @@
          of ten minutes to implement."])
 
     (code-block :TK
-       "RewriteEngine On
-        RewriteRule ^(.*)$ http://davidchambersdesign.com/$1 [R=301,L]")
+
+       """
+       RewriteEngine On
+       RewriteRule ^(.*)$ http://davidchambersdesign.com/$1 [R=301,L]
+       """)
 
     (p
        ["The code above forms the entirety of the " (strong ".htaccess") "

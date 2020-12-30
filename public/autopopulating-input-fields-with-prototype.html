@@ -63,9 +63,11 @@ I've written an update to this article for those interested in             <a hr
           <h3 id="html5-placeholder-text">HTML5 placeholder text</h3>
           <p>HTML5 allows placeholder text to be specified in the markup through the <code>placeholder</code> attribute. In supporting browsers (currently Chrome and Safari) this produces the behaviour described above with no reliance on JavaScript.</p>
           <h3 id="markup">Markup</h3>
-          <pre><code>&lt;input type="search" id="s" name="s" placeholder="search..." /&gt;</code></pre>
+          <pre><code>&lt;input type="search" id="s" name="s" placeholder="search..." /&gt;
+</code></pre>
           <h3 id="styling">Styling</h3>
-          <pre><code>input.placeholder { color: #a9a9a9 !important; }</code></pre>
+          <pre><code>input.placeholder { color: #a9a9a9 !important; }
+</code></pre>
           <p>I decided to use <code>#a9a9a9</code> as Safari uses this colour for placeholder text.</p>
           <h3 id="placeholder-class">Placeholder class</h3>
           <pre><code>var Placeholder = Class.create({
@@ -84,11 +86,13 @@ I've written an update to this article for those interested in             <a hr
         if (this.element.value === '')
             this.element.addClassName('placeholder').value = this.placeholder;
     }
-});</code></pre>
+});
+</code></pre>
           <p>The Placeholder class requires <a href="http://prototypejs.org/">Prototype</a>.</p>
           <h3 id="usage">Usage</h3>
           <p>To create a new instance of the Placeholder class, simply pass the constructor a Prototype extended element:</p>
-          <pre><code>new Placeholder($('s'));</code></pre>
+          <pre><code>new Placeholder($('s'));
+</code></pre>
           <p>Ensure that the DOM is ready by wrapping everything in Prototype's <code>dom:loaded</code> event listener. This also avoids polluting the global namespace.</p>
           <pre><code>document.observe('dom:loaded', function () {
     var Placeholder = Class.create({
@@ -97,7 +101,8 @@ I've written an update to this article for those interested in             <a hr
     $$('input[placeholder]').each(function (input) {
         new Placeholder(input);
     });
-});</code></pre>
+});
+</code></pre>
           <div class="update">
             <h4>Update — <time datetime="2010-03-30T17:17:00.000+13:00">30 March 2010</time></h4>
             <p>I've updated the selector used in the above example. Selecting all inputs with placeholder attributes is far more elegant than listing each input explicitly. It also means that an input added anywhere on the site will automatically receive this special treatment (provided that it has a placeholder attribute).</p>
@@ -163,7 +168,8 @@ document.observe('dom:loaded', function () {
             });
         }
     });
-});</code></pre>
+});
+</code></pre>
           </div>
           <footer class="metadata">
             <ul>

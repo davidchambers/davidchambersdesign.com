@@ -28,39 +28,48 @@
         (h3 "JavaScript Fibonacci without caching")
 
         (code-block :javascript
-           "function fibonacci(n) {
-                if (n <= 1) return n;
-                return fibonacci(n - 2) + fibonacci(n - 1);
-            }")])
+
+           """
+           function fibonacci(n) {
+               if (n <= 1) return n;
+               return fibonacci(n - 2) + fibonacci(n - 1);
+           }
+           """)])
 
     (p
        ["I created a simple timer:"])
 
     (code-block :javascript
-       "function timer(func) {
-            var i = 10, start;
-            while (i--) {
-                start = new Date;
-                func.apply(this, [].slice.call(arguments, 1));
-                console.log(func.name, 'executed in', new Date - start, 'ms');
-            }
-        }")
+
+       """
+       function timer(func) {
+           var i = 10, start;
+           while (i--) {
+               start = new Date;
+               func.apply(this, [].slice.call(arguments, 1));
+               console.log(func.name, 'executed in', new Date - start, 'ms');
+           }
+       }
+       """)
 
     (p
        ["How does the vanilla function perform?"])
 
     (code-block :TK
-       ">>> timer(fibonacci, 35);
-        fibonacci executed in 559 ms
-        fibonacci executed in 559 ms
-        fibonacci executed in 559 ms
-        fibonacci executed in 557 ms
-        fibonacci executed in 557 ms
-        fibonacci executed in 559 ms
-        fibonacci executed in 558 ms
-        fibonacci executed in 558 ms
-        fibonacci executed in 559 ms
-        fibonacci executed in 559 ms")
+
+       """
+       >>> timer(fibonacci, 35);
+       fibonacci executed in 559 ms
+       fibonacci executed in 559 ms
+       fibonacci executed in 559 ms
+       fibonacci executed in 557 ms
+       fibonacci executed in 557 ms
+       fibonacci executed in 559 ms
+       fibonacci executed in 558 ms
+       fibonacci executed in 558 ms
+       fibonacci executed in 559 ms
+       fibonacci executed in 559 ms
+       """)
 
     (p
        ["Values of " (code "n") " much larger than 35 locked up my browser.
@@ -81,36 +90,42 @@
          cannot be overwritten, accidentally or otherwise."])
 
     (code-block :javascript
-       "fibonacci = (function () {
 
-            var cache = {};
+       """
+       fibonacci = (function () {
 
-            return function (n) {
+           var cache = {};
 
-                var cached = cache[n];
-                if (cached) return cached;
+           return function (n) {
 
-                if (n <= 1) return n;
+               var cached = cache[n];
+               if (cached) return cached;
 
-                return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
-            };
-        }());")
+               if (n <= 1) return n;
+
+               return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
+           };
+       }());
+       """)
 
     (p
        ["Does caching make a difference?"])
 
     (code-block :TK
-       ">>> timer(fibonacci, 35);
-         executed in 1 ms
-         executed in 0 ms
-         executed in 0 ms
-         executed in 0 ms
-         executed in 0 ms
-         executed in 0 ms
-         executed in 0 ms
-         executed in 0 ms
-         executed in 0 ms
-         executed in 0 ms")
+
+       """
+       >>> timer(fibonacci, 35);
+        executed in 1 ms
+        executed in 0 ms
+        executed in 0 ms
+        executed in 0 ms
+        executed in 0 ms
+        executed in 0 ms
+        executed in 0 ms
+        executed in 0 ms
+        executed in 0 ms
+        executed in 0 ms
+       """)
 
     (p
        ["Undeniably, yes. Not only is the new version of the function much
@@ -124,18 +139,21 @@
          the " (code "if (cached)") " statement is no longer appropriate."])
 
     (code-block :javascript
-       "fibonacci = (function () {
 
-            var cache = { 0:0, 1:1 };
+       """
+       fibonacci = (function () {
 
-            return function (n) {
+           var cache = { 0:0, 1:1 };
 
-                var cached = cache[n];
-                if (typeof cached !== 'undefined') return cached;
+           return function (n) {
 
-                return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
-            };
-        }());")
+               var cached = cache[n];
+               if (typeof cached !== 'undefined') return cached;
+
+               return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
+           };
+       }());
+       """)
 
     (h3 "JavaScript Fibonacci with caching via function property")
 
@@ -145,17 +163,20 @@
          does not have this capability."])
 
     (code-block :javascript
-       "function fibonacci(n) {
 
-            if (!fibonacci.cache) fibonacci.cache = {};
+       """
+       function fibonacci(n) {
 
-            var cached = fibonacci.cache[n];
-            if (cached) return cached;
+           if (!fibonacci.cache) fibonacci.cache = {};
 
-            if (n <= 1) return n;
+           var cached = fibonacci.cache[n];
+           if (cached) return cached;
 
-            return (fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
-        }")
+           if (n <= 1) return n;
+
+           return (fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
+       }
+       """)
 
     (p
        ["To avoid the overhead of checking for the existence of the cache
@@ -163,10 +184,13 @@
          function definition."])
 
     (code-block :javascript
-       "function fibonacci(n) {
-            // function body
-        }
-        fibonacci.cache = {};")
+
+       """
+       function fibonacci(n) {
+           // function body
+       }
+       fibonacci.cache = {};
+       """)
 
     (p
        ["Caching via function property and caching via closure performed
@@ -175,19 +199,25 @@
     (h3 "Python Fibonacci without caching")
 
     (code-block :python
-       "def fibonacci(n):
-            if n <= 1:
-                return n
-            else:
-                return fibonacci(n - 2) + fibonacci(n - 1)")
+
+       """
+       def fibonacci(n):
+           if n <= 1:
+               return n
+           else:
+               return fibonacci(n - 2) + fibonacci(n - 1)
+       """)
 
     (p
        ["Does the vanilla Python function outperform the vanilla JavaScript
          function?"])
 
     (code-block :TK
-       ">>> import time
-        >>> for i in range(10): t = time.time(); fibonacci(35); print time.time() - t;")
+
+       """
+       >>> import time
+       >>> for i in range(10): t = time.time(); fibonacci(35); print time.time() - t;
+       """)
 
     (p
        ["Interestingly, Python was more than an order of magnitude slower than
@@ -198,16 +228,19 @@
     (h3 "Python Fibonacci with caching via function property")
 
     (code-block :python
-       "def fibonacci(n):
-            if n in fibonacci.cache:
-                return fibonacci.cache[n]
-            elif n <= 1:
-                return n
-            else:
-                f = fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
-                return f
 
-        fibonacci.cache = {}")
+       """
+       def fibonacci(n):
+           if n in fibonacci.cache:
+               return fibonacci.cache[n]
+           elif n <= 1:
+               return n
+           else:
+               f = fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
+               return f
+
+       fibonacci.cache = {}
+       """)
 
     (p
        ["This resulted in " (code "fibonacci(35)") " being executed roughly
@@ -219,14 +252,17 @@
        ["For the sake of completion I'll include this unappealing approach."])
 
     (code-block :python
-       "def fibonacci(n, _cache={}):
-            if n <= 1:
-                return n
-            elif n in _cache:
-                return _cache[n]
-            else:
-                f = _cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
-                return f")
+
+       """
+       def fibonacci(n, _cache={}):
+           if n <= 1:
+               return n
+           elif n in _cache:
+               return _cache[n]
+           else:
+               f = _cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
+               return f
+       """)
 
     (p
        ["How does this work? In Python, default arguments are brought to

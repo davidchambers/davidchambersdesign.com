@@ -41,11 +41,13 @@
           </header>
           <p>There's no shortage of blog posts which — like this one — provide an introduction to <a href="http://socket.io/">Socket.IO</a>. Many, though, were written prior to the release of 0.7, which ushered in <a href="https://github.com/LearnBoost/Socket.IO/wiki/Migrating-0.6-to-0.7">significant API changes</a>. Here I'll provide examples of server- and client-side code using APIs provided by the <em>current</em> version (0.7.4 at time of writing).</p>
           <p>The code snippets are in <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a> and as such are largely free of the parentheses, squiggly brackets, and semicolons that riddle the equivalent JavaScript code. For those unfamiliar with CoffeeScript's syntax, here's the fifteen second rundown:</p>
-          <pre><code>qux = foo 'bar', (baz) -&gt; 'Hello, world!'</code></pre>
+          <pre><code>qux = foo 'bar', (baz) -&gt; 'Hello, world!'
+</code></pre>
           <p>The above is equivalent to:</p>
           <pre><code>var qux = foo('bar', function (baz) {
   return 'Hello, world!';
-});</code></pre>
+});
+</code></pre>
           <p>CoffeeScript uses <code>-&gt;</code> rather than the <code>function</code> keyword, and parentheses are optional for most function invocations. Now, let's get started.</p>
           <h3>Step 1: Create a server</h3>
           <p>This is Node 101 stuff:</p>
@@ -57,7 +59,8 @@ server = http.createServer (req, res) -&gt;
     res.writeHead 200, 'Content-Type': 'text/html'
     res.end data, 'utf8'
 
-server.listen 1337</code></pre>
+server.listen 1337
+</code></pre>
           <p>The server we've created simply responds to any request on port 1337 with the contents of "socket.io.demo.html", which must reside in the same directory as the script we're creating.</p>
           <h3>Step 2: Add server-side event handlers</h3>
           <pre><code>io = require('socket.io').listen server
@@ -71,7 +74,8 @@ io.sockets.on 'connection', (socket) -&gt;
     socket.broadcast.send message
 
   socket.on 'whisper', (message) -&gt;
-    socket.broadcast.emit 'secret', message</code></pre>
+    socket.broadcast.emit 'secret', message
+</code></pre>
           <p>Here we've instructed our server to listen for three custom events: "publish", "broadcast", and "whisper". Note that these particular names are not special in any way.</p>
           <p>When the server receives one of these events, it invokes the appropriate handler with the event's data as the sole argument. Since we're expecting a string argument in each of these cases, we've named the parameter <code>message</code>.</p>
           <p>The "publish" handler passes <code>message</code> to <code>io.sockets.send</code>, which forwards it to all the clients. The "broadcast" handler invokes <code>socket.broadcast.send</code>, which forwards <code>message</code> to all the clients <em>except the one that emitted the "broadcast" event</em>. The "whisper" handler is very different in that it doesn't send a message at all. Rather, it emits yet another event. Again, the name of this event — "secret" — is not special in any way.</p>
@@ -101,7 +105,8 @@ io.sockets.on 'connection', (socket) -&gt;
 
     &lt;/script&gt;
   &lt;/body&gt;
-&lt;/html&gt;</code></pre>
+&lt;/html&gt;
+</code></pre>
           <p><code>&lt;script src="/socket.io/socket.io.js"&gt;&lt;/script&gt;</code> was the line that most confused me in the tutorials I read. I assumed that I'd need to serve this file myself, which turned out not to be the case. Somehow, it just works.</p>
           <p>Note the inclusion of "coffee-script.js", which enables us to write our client-side logic in CoffeeScript, too. :)</p>
           <h3>Step 4: Add client-side Socket.IO event handlers</h3>
@@ -127,7 +132,8 @@ socket.on 'message', (message) -&gt;
   $('&lt;li&gt;').text(message).appendTo $('#messages')
 
 socket.on 'secret', (message) -&gt;
-  console.log message</code></pre>
+  console.log message
+</code></pre>
           <p>The first five events — "connect", "disconnect", "reconnecting", "reconnect", and "reconnect_failed" — are emitted by Socket.IO in response to changes in the connection status. We've registered a handler for each in order to expose this information to users.</p>
           <p>We've also added handlers for "message" and "secret" events. Our "message" handler will be called whenever the server receives a "publish" or "broadcast" event (<code>io.sockets.send</code> and <code>socket.broadcast.send</code> emit "message" events). Our "secret" handler will be called whenever the server receives a "whisper" event.</p>
           <p>All that remains is to have the client emit appropriate custom events in response to input from users.</p>
@@ -136,7 +142,8 @@ socket.on 'secret', (message) -&gt;
 
 $('button').click -&gt;
   socket.emit $(this).text(), $input.val()
-  $input.val('').focus()</code></pre>
+  $input.val('').focus()
+</code></pre>
           <p>Here, we've bound a "click" handler to the three buttons. Whenever one of these buttons is clicked the appropriate event is emitted ("publish", "broadcast", or "whisper" depending on the button clicked). The current value of the text input is used as the event's data.</p>
           <p>That's it. We can now run <code>node socket.io.demo.js</code> to start our server and confirm that things behave as expected.</p>
           <h3>How it all fits together</h3>

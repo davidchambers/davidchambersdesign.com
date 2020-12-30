@@ -13,13 +13,19 @@
          to the nearest integer. Easy, right?"])
 
     (code-block :javascript
-       "x = Math.round(x);")
+
+       """
+       x = Math.round(x);
+       """)
 
     (p
        ["Sure, but is this the fastest option? I think not."])
 
     (code-block :javascript
-       "x = x < 0 ? x - 0.5 >> 0 : x + 0.5 >> 0;")
+
+       """
+       x = x < 0 ? x - 0.5 >> 0 : x + 0.5 >> 0;
+       """)
 
     (p
        ["What the heck's going on here? " (code ">>") " is JavaScript's

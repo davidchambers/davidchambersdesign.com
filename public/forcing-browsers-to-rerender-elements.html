@@ -49,9 +49,11 @@
         (function () { n.parentNode.removeChild(n); }).defer();
         return element;
     }
-});</code></pre>
+});
+</code></pre>
           <p>The post's first comment includes an alternative approach:</p>
-          <pre><code>element.className = element.className;</code></pre>
+          <pre><code>element.className = element.className;
+</code></pre>
           <p>I gather that there are situations in which this simple solution fails — it's no silver bullet — but it fixed a problem I encountered in IE8 earlier this evening so I'm pleased to have discovered it!</p>
           <footer class="metadata">
             <ul>

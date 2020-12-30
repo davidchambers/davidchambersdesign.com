@@ -57,12 +57,12 @@ const evaluate = module.exports = dirname => _env => term => {
                    (Right)
                    (value (Symbol.for (term.name)) (env));
     }
-    case 'array-literal': {
+    case '[]': {
       return traverse (Either)
                       (evaluate (dirname) (env))
                       (term.elements);
     }
-    case 'map-literal': {
+    case '{}': {
       return map (values => reduce (m => ([k, v]) => ({...m, [k]: v}))
                                    ({})
                                    (unfoldr (array (Nothing)
@@ -75,7 +75,7 @@ const evaluate = module.exports = dirname => _env => term => {
                            (evaluate (dirname) (env))
                            (term.elements));
     }
-    case 'parenthesized': {
+    case '()': {
       return array
         (Left (new Error ('Empty parentheses')))
         (head => tail => {
@@ -94,7 +94,7 @@ const evaluate = module.exports = dirname => _env => term => {
                return Left (new Error ('Invalid let expression'));
              }
              const [bindings, body] = tail;
-             if (!(bindings.type === 'array-literal' &&
+             if (!(bindings.type === '[]' &&
                    bindings.elements.every ((e, idx) => idx % 2 === 1 || e.type === 'identifier'))) {
                return Left (new Error ('Invalid let expression'));
              }
@@ -114,7 +114,7 @@ const evaluate = module.exports = dirname => _env => term => {
                return Left (new Error ('Invalid lambda expression'));
              }
              const [params, body] = tail;
-             if (!(params.type === 'array-literal' &&
+             if (!(params.type === '[]' &&
                    params.elements.every (e => e.type === 'identifier'))) {
                return Left (new Error ('Invalid lambda expression'));
              }
@@ -137,7 +137,7 @@ const evaluate = module.exports = dirname => _env => term => {
              }
              const [ident, params, body] = tail;
              if (!(ident.type === 'identifier' &&
-                   params.type === 'array-literal' &&
+                   params.type === '[]' &&
                    params.elements.every (e => e.type === 'identifier'))) {
                return Left (new Error ('Invalid function expression'));
              }

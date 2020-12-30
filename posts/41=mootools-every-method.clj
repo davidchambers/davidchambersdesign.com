@@ -15,7 +15,10 @@
          several numbers:"])
 
     (code-block :javascript
-       "var list = [4, -1, 3, 2, 5];")
+
+       """
+       var list = [4, -1, 3, 2, 5];
+       """)
 
     (p
        ["One might wish to determine whether all the numbers in "
@@ -35,25 +38,31 @@
          loop..."])
 
     (code-block :javascript
-       "var allPositive = true;
-        for (var i = 0; i < list.length; i++) {
-            if (list[i] <= 0) {
-                allPositive = false;
-                break;
-            }
-        }")
+
+       """
+       var allPositive = true;
+       for (var i = 0; i < list.length; i++) {
+           if (list[i] <= 0) {
+               allPositive = false;
+               break;
+           }
+       }
+       """)
 
     (p
        ["... or a " (code "while") " loop (which is slightly more efficient)."])
 
     (code-block :javascript
-       "var allPositive = true, i = list.length;
-        while (i--) {
-            if (list[i] <= 0) {
-                allPositive = false;
-                break;
-            }
-        }")
+
+       """
+       var allPositive = true, i = list.length;
+       while (i--) {
+           if (list[i] <= 0) {
+               allPositive = false;
+               break;
+           }
+       }
+       """)
 
     (p
        [(strong ["Seriously, though, who is writing " (em "vanilla") "
@@ -73,12 +82,15 @@
          instead of a " (code "for") " or " (code "while") " loop."])
 
     (code-block :javascript
-       "var allPositive = true;
-        list.each(function (item) {
-            if (item <= 0) {
-                allPositive = false;
-            }
-        });")
+
+       """
+       var allPositive = true;
+       list.each(function (item) {
+           if (item <= 0) {
+               allPositive = false;
+           }
+       });
+       """)
 
     (p
        ["While this gets the job done, it's suboptimal for two reasons: the
@@ -94,9 +106,12 @@
            "Array object's every method") " is the perfect tool for the job."])
 
     (code-block :javascript
-       "var allPositive = list.every(function (item) {
-            return item > 0;
-        });")
+
+       """
+       var allPositive = list.every(function (item) {
+           return item > 0;
+       });
+       """)
 
     (p
        ["This is terser than is possible with vanilla JavaScript.

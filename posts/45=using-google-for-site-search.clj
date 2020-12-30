@@ -16,16 +16,19 @@
              switch to a very simple solution:"])
 
         (code-block :html
-           "<form action=\"http://www.google.com/search\" method=\"get\">
-                <div>
-                    <label for=\"q\">Search davidchambersdesign.com</label>
-                    <input type=\"search\" name=\"q\" id=\"q\" maxlength=\"256\" placeholder=\"search...\" />
-                    <input type=\"hidden\" name=\"ie\" value=\"UTF-8\" />
-                    <input type=\"hidden\" name=\"hl\" value=\"en\" />
-                    <input type=\"hidden\" name=\"as_sitesearch\" value=\"davidchambersdesign.com\" />
-                    <input type=\"submit\" value=\"Search\" />
-                </div>
-            </form>")])
+
+           """
+           <form action="http://www.google.com/search" method="get">
+               <div>
+                   <label for="q">Search davidchambersdesign.com</label>
+                   <input type="search" name="q" id="q" maxlength="256" placeholder="search..." />
+                   <input type="hidden" name="ie" value="UTF-8" />
+                   <input type="hidden" name="hl" value="en" />
+                   <input type="hidden" name="as_sitesearch" value="davidchambersdesign.com" />
+                   <input type="submit" value="Search" />
+               </div>
+           </form>
+           """)])
 
     (p
        ["Search queries on this site are now submitted to Google with the

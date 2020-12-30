@@ -44,9 +44,11 @@
     while (have_posts()) : the_post();
         // code
     endwhile;
-endif;</code></pre>
+endif;
+</code></pre>
           <p>As well as displaying the three most recent posts on the home page, I wanted to display links to slightly older posts on the sidebar. I discovered a WpRecipes post on <a href="http://www.wprecipes.com/avinash-asked-how-to-use-two-different-wordpress-loops">using two different WordPress loops</a> which suggests adding the following line of code just before the loop:</p>
-          <pre><code>query_posts('showposts=5&amp;offset=3');</code></pre>
+          <pre><code>query_posts('showposts=5&amp;offset=3');
+</code></pre>
           <p>The <code>offset</code> ensures that posts do not appear in both places.</p>
           <footer class="metadata">
             <ul>

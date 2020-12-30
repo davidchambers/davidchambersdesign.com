@@ -80,31 +80,34 @@
             (strong "php-variable") "."])])
 
     (code-block :php
-       "<?php
 
-        'single-quoted string';
+       """
+       <?php
 
-        \"double-quoted string\";
+       'single-quoted string';
 
-        // single-quoted string with literal dollar sign
-        'fruit smoothie: $5.50';
+       "double-quoted string";
 
-        // double-quoted string containing a variable
-        \"fruit smoothie: $cost\";
+       // single-quoted string with literal dollar sign
+       'fruit smoothie: $5.50';
 
-        // numerical value
-        $cost = 5.50;
+       // double-quoted string containing a variable
+       "fruit smoothie: $cost";
 
-        // a few common function calls
-        empty($variable);
-        isset($variable);
-        strlen($variable);
-        strrev($variable);
+       // numerical value
+       $cost = 5.50;
 
-        // a call to a custom function
-        is_ready_to_order($customer);
+       // a few common function calls
+       empty($variable);
+       isset($variable);
+       strlen($variable);
+       strrev($variable);
 
-        ?>")
+       // a call to a custom function
+       is_ready_to_order($customer);
+
+       ?>
+       """)
 
     (caption
        ["Live rendering of improved PHP brush"])

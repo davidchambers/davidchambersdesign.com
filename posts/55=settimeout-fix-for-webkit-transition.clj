@@ -35,14 +35,17 @@
            ["The code behind this example is not complicated:"])
 
         (code-block :javascript
-           "element.style.webkitTransitionProperty = 'left';
-            element.style.webkitTransitionDuration = '2s';
-            element.addEventListener('click', function () {
-                this.style.left = '100px';
-                this.addEventListener('webkitTransitionEnd', function () {
-                    this.style.left = 0;
-                });
-            });")])
+
+           """
+           element.style.webkitTransitionProperty = 'left';
+           element.style.webkitTransitionDuration = '2s';
+           element.addEventListener('click', function () {
+               this.style.left = '100px';
+               this.addEventListener('webkitTransitionEnd', function () {
+                   this.style.left = 0;
+               });
+           });
+           """)])
 
     (p
        ["The following example, though, does not act as one might expect!"])
@@ -69,9 +72,12 @@
        ["The code:"])
 
     (code-block :javascript
-       "element.style.left = '100px';
-        element.style.webkitTransitionProperty = 'left';
-        element.style.webkitTransitionDuration = '2s';")
+
+       """
+       element.style.left = '100px';
+       element.style.webkitTransitionProperty = 'left';
+       element.style.webkitTransitionDuration = '2s';
+       """)
 
     (p
        ["Here are the instructions this code attempts to provide:"])
@@ -119,11 +125,14 @@
        ["The working code:"])
 
     (code-block :javascript
-       "element.style.left = '100px';
-        setTimeout(function () {
-            element.style.webkitTransitionProperty = 'left';
-            element.style.webkitTransitionDuration = '2s';
-        }, 0);")
+
+       """
+       element.style.left = '100px';
+       setTimeout(function () {
+           element.style.webkitTransitionProperty = 'left';
+           element.style.webkitTransitionDuration = '2s';
+       }, 0);
+       """)
 
     (p
        ["For some reason wrapping the " (code "webkitTransition*") "
@@ -158,12 +167,15 @@
             (li "This matters with transitions, because they are temporal")])
 
         (code-block :javascript
-           "var box = document.getElementById('box');
-            box.style.backgroundColor = 'red';
-            box.style.webkitTransition = 'background-color 2s';
-            window.setTimeout(function() {
-              box.style.backgroundColor = 'blue';
-            }, 0);")])
+
+           """
+           var box = document.getElementById('box');
+           box.style.backgroundColor = 'red';
+           box.style.webkitTransition = 'background-color 2s';
+           window.setTimeout(function() {
+             box.style.backgroundColor = 'blue';
+           }, 0);
+           """)])
 
   ]
 

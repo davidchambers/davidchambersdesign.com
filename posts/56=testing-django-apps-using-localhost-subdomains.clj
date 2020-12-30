@@ -21,14 +21,17 @@
                  as " (code "middleware.py") " in my project directory:"])
 
             (code-block :python
-               "class SubdomainMiddleware:
-                    def process_request(self, request):
-                        '''Parse out the subdomain from the request'''
-                        request.subdomain = None
-                        host = request.META.get('HTTP_HOST', '')
-                        host_s = host.replace('www.', '').split('.')
-                        if len(host_s) > 2:
-                            request.subdomain = ''.join(host_s[:-2])")])
+
+               """
+               class SubdomainMiddleware:
+                   def process_request(self, request):
+                       '''Parse out the subdomain from the request'''
+                       request.subdomain = None
+                       host = request.META.get('HTTP_HOST', '')
+                       host_s = host.replace('www.', '').split('.')
+                       if len(host_s) > 2:
+                           request.subdomain = ''.join(host_s[:-2])
+               """)])
 
         (li
            [(p
@@ -36,10 +39,13 @@
                 (code "MIDDLEWARE_CLASSES") ":"])
 
             (code-block :python
-               "MIDDLEWARE_CLASSES = (
-                    ...,
-                    'middleware.SubdomainMiddleware',
-                )")])
+
+               """
+               MIDDLEWARE_CLASSES = (
+                   ...,
+                   'middleware.SubdomainMiddleware',
+               )
+               """)])
 
         (li
            [(p
@@ -47,9 +53,12 @@
                  file as per Dave's suggestion:"])
 
             (code-block :plain-text
-               "127.0.0.1 test.com
-                127.0.0.1 blog.test.com
-                127.0.0.1 search.test.com")
+
+               """
+               127.0.0.1 test.com
+               127.0.0.1 blog.test.com
+               127.0.0.1 search.test.com
+               """)
 
             (p
                ["Initially I replaced " (code "test.com") " with the
@@ -75,10 +84,13 @@
                ["I added the port number to the address:"])
 
             (code-block :plain-text
-               "http://test.com:8000/")
+
+               """
+               http://test.com:8000/
+               """)
 
             (p
-               ["This _actually_ worked. :)"])])])
+               ["This " (em "actually") " worked. :)"])])])
 
   ]
 

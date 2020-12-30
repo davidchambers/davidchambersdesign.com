@@ -18,46 +18,55 @@
          attribute, provides a machine-readable version of dates and times."])
 
     (code-block :html
-       "<time datetime=\"2009-11-01T16:41:53+13:00\">1 November 2009</time>")
+
+       """
+       <time datetime="2009-11-01T16:41:53+13:00">1 November 2009</time>
+       """)
 
     (p
        ["I wrote a function to generate the machine-readable dates and times
          for blog comments."])
 
     (code-block :php
-       "<?php
 
-        /**
-         * echoes comment's date and time in format 2009-11-01T03:41:53+13:00
-         */
-        function comment_datetime()
-        {
-            $comment = get_comment($comment);
-            $local = strtotime($comment->comment_date);
-            $gmt = strtotime($comment->comment_date_gmt);
-            $seconds = abs($local - $gmt);
-            $hours = (int) ($seconds / 3600);
-            $minutes = (int) (($seconds - $hours * 3600) / 60);
-            $output = get_comment_time('Y-m-d\\TH:i:s');
+       """
+       <?php
 
-            if ($local == $gmt)
-                $output .= 'Z';
-            else
-                $output .= ($local > $gmt ? '+' : '-')
-                        . str_pad($hours, 2, '0', STR_PAD_LEFT) . ':'
-                        . str_pad($minutes, 2, '0', STR_PAD_LEFT);
+       /**
+        * echoes comment's date and time in format 2009-11-01T03:41:53+13:00
+        */
+       function comment_datetime()
+       {
+           $comment = get_comment($comment);
+           $local = strtotime($comment->comment_date);
+           $gmt = strtotime($comment->comment_date_gmt);
+           $seconds = abs($local - $gmt);
+           $hours = (int) ($seconds / 3600);
+           $minutes = (int) (($seconds - $hours * 3600) / 60);
+           $output = get_comment_time('Y-m-d\TH:i:s');
 
-            echo $output;
-        }
+           if ($local == $gmt)
+               $output .= 'Z';
+           else
+               $output .= ($local > $gmt ? '+' : '-')
+                       . str_pad($hours, 2, '0', STR_PAD_LEFT) . ':'
+                       . str_pad($minutes, 2, '0', STR_PAD_LEFT);
 
-        ?>")
+           echo $output;
+       }
+
+       ?>
+       """)
 
     (p
        ["While looping through comments in your WordPress theme,
          call the above function to print a valid datetime string."])
 
     (code-block :php
-       "<time datetime=\"<?php comment_datetime(); ?>\">")
+
+       """
+       <time datetime="<?php comment_datetime(); ?>">
+       """)
 
   ]
 

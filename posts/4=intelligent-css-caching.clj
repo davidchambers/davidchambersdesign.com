@@ -58,13 +58,19 @@
          several good suggestions, here is the PHP code I have decided upon:"])
 
     (code-block :php
-       "href=\"path/to/style.css?<?php echo date('Y-m-d-H-i-s', filectime('path/to/style.css')); ?>\"")
+
+       """
+       href="path/to/style.css?<?php echo date('Y-m-d-H-i-s', filectime('path/to/style.css')); ?>"
+       """)
 
     (p
        ["The above generates something like this:"])
 
     (code-block :html
-       "href=\"path/to/style.css?2008-12-16-20-02-53\"")
+
+       """
+       href="path/to/style.css?2008-12-16-20-02-53"
+       """)
 
     (p
        ["The nice thing about using "

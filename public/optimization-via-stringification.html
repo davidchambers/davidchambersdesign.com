@@ -43,11 +43,13 @@
           <p>Instead of...</p>
           <pre><code>a[href="/contact/"] {
     background: url(/images/sprite.png) no-repeat 0 -30px;
-}</code></pre>
+}
+</code></pre>
           <p>use something like...</p>
           <pre><code>a[href="/contact/"] {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALJJREFUeNrs1eEJgzAQBWATHKkjZAZHiCtkhKxgRnAGR+gMWSVypflRQfOeSgvlDgTxjvuSC0RTSul+EUZhhRX+bziNj0ur8tPT7OV6qEGMFJhCaNZYBA3DAKNSiyzUIs3iPEO41EgtEhbdSQtnUAo+wlmUhiWccx+4vMs3NnqmeEmpc96/norXndbc7fC28Xa0kmNwewbdPYY3fgvMjhDFm6POOUM3kf6dFFZY4a/FKsAADsZ+Lb8VFH4AAAAASUVORK5CYII=) no-repeat;
-}</code></pre>
+}
+</code></pre>
           <p>I threw together a Python script which converts images to encoded strings.</p>
           <pre><code>#stringify.py
 import base64
@@ -62,9 +64,11 @@ try:
 except IndexError:
     altchars = None
 
-print base64.b64encode(s, altchars)</code></pre>
+print base64.b64encode(s, altchars)
+</code></pre>
           <h4>Usage</h4>
-          <pre><code>$ python stringify.py /path/to/image.png</code></pre>
+          <pre><code>$ python stringify.py /path/to/image.png
+</code></pre>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>

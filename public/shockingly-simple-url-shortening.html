@@ -52,7 +52,8 @@
           <p>I noticed one day that <a href="http://daringfireball.net/">Daring Fireball</a> now has its own <a href="http://sites.google.com/a/snaplog.com/wiki/short_url">shorturl</a>s, using the incredibly cool domain name ✪df.ws. This got me thinking that perhaps I should procure a short domain name and do something similar. Well, last week I did.</p>
           <p>With dċd.ws safely registered in my name I began looking for an open source URL shortener to run on that domain. I then struck upon a <strong>simple, elegant solution</strong> which took all of ten minutes to implement.</p>
           <pre><code>RewriteEngine On
-RewriteRule ^(.*)$ http://davidchambersdesign.com/$1 [R=301,L]</code></pre>
+RewriteRule ^(.*)$ http://davidchambersdesign.com/$1 [R=301,L]
+</code></pre>
           <p>The code above forms the entirety of the <strong>.htaccess</strong> file on the dċd.ws server. All it does is redirect every request to the corresponding davidchambersdesign.com URL. The key word being <em>every</em>. As a result, existing pages on this site gained short<em>er</em> (though not necessarily short) URLs automatically, and new pages gain a short URL the instant they are published. <strong>No maintenance, no fuss. Nice!</strong></p>
           <p>So, for example, <strong>http://dċd.ws/twitter/</strong> → <strong>http://davidchambersdesign.com/twitter/</strong> (a 17 character saving).</p>
           <p>If you're interested in acquiring your own short domain name, I suggest trying .ws as it's one of the few top level domains to allow virtually any Unicode character in its domain names. As a result, there are plenty of short .ws domain names available. I don't suggest this approach for normal use, however, as browsers will display something like <strong>http://xn--dd-7la.ws/</strong> in their address bars.</p>

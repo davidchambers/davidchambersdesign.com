@@ -114,10 +114,13 @@
          list of places to look for templates."])
 
     (code-block :python
-       "TEMPLATE_DIRS = (
-            '/webapps/dcd/blog/templates',
-            '/webapps/dcd/blog/mango/templates',
-        )")
+
+       """
+       TEMPLATE_DIRS = (
+           '/webapps/dcd/blog/templates',
+           '/webapps/dcd/blog/mango/templates',
+       )
+       """)
 
     (p
        ["If Mango needs " (code "archives.dhtml") " it'll first look in

@@ -49,22 +49,28 @@
     &lt;/div&gt;
     &lt;div id="footer"&gt;
     &lt;/div&gt;
-&lt;/body&gt;</code></pre>
+&lt;/body&gt;
+</code></pre>
           <p>The required CSS is also straightforward. First, set the heights of the html and body elements to the height of the viewport:</p>
           <pre><code>html    { height: 100%; }
-body    { height: 100%; }</code></pre>
+body    { height: 100%; }
+</code></pre>
           <p>This makes it possible to set the <em>minimum</em> height of the wrapper div to the height of the viewport:</p>
-          <pre><code>#wrap   { min-height: 100%; }</code></pre>
+          <pre><code>#wrap   { min-height: 100%; }
+</code></pre>
           <p>Next, pull up the footer so that it's visible without scrolling on pages without a lot of content:</p>
-          <pre><code>#footer { margin-top: -5em; height: 5em; }</code></pre>
+          <pre><code>#footer { margin-top: -5em; height: 5em; }
+</code></pre>
           <p>Finally, apply bottom padding to the main content div to ensure that nothing is covered by the footer:</p>
-          <pre><code>#main   { padding-bottom: 5em; }</code></pre>
+          <pre><code>#main   { padding-bottom: 5em; }
+</code></pre>
           <p>Putting it all together gives the following:</p>
           <pre><code>html    { height: 100%; }
 body    { height: 100%; }
 #wrap   { min-height: 100%; }
 #main   { padding-bottom: 5em; }
-#footer { margin-top: -5em; height: 5em; }</code></pre>
+#footer { margin-top: -5em; height: 5em; }
+</code></pre>
           <p>This CSS works in all modern browsers. If you need to support antiquated browsers, you should have a look at the hacks suggested at <a href="http://www.cssstickyfooter.com/">CSS Sticky Footer</a>.</p>
           <p><strong>Check out the <a href="/examples/sticky-footers/">sticky footer demo</a> to see all this theory in action.</strong></p>
           <footer class="metadata">

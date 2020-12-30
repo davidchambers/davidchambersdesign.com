@@ -54,14 +54,16 @@
     top: 0;
     left: 0;
     height: 160px;
-}</code></pre>
+}
+</code></pre>
           <h3>Approach 1: positive top padding + negative bottom margins</h3>
           <p>Here's the CSS:</p>
           <pre><code>h1, h2, h3, h4, h5, h6, p
 {
     padding-top: 160px;
     margin-bottom: -160px;
-}</code></pre>
+}
+</code></pre>
           <p>This approach adds top padding (equal to the height of the header) to each of the block-level elements in the content area. This ensures that elements are in the correct position when jumped to using #id. An equal and opposite bottom margin is also applied to prevent the padding from adding unwanted white space between elements.</p>
           <ul>
             <li class="pro">No additional markup is required.</li>
@@ -75,16 +77,19 @@
 {
     position: relative;
     top: -160px;
-}</code></pre>
+}
+</code></pre>
           <p>This approach introduces meaningless markup. Where previously we may have had something like this:</p>
           <pre><code>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus volutpat risus nec mollis. Integer dapibus dictum ultrices. Aenean vel lectus odio. Nam a mi ligula. Nam in dolor quis metus pretium imperdiet sit amet sed elit.&lt;/p&gt;
 &lt;h3 id="example"&gt;Example&lt;/h3&gt;
-&lt;p&gt;Suspendisse potenti. Proin convallis lacinia nibh, nec auctor ligula mattis consectetur. Mauris vel elit sit amet nibh volutpat varius id vel sem. Pellentesque id purus ligula. Vivamus vel nulla vel justo tempor ultricies.&lt;/p&gt;</code></pre>
+&lt;p&gt;Suspendisse potenti. Proin convallis lacinia nibh, nec auctor ligula mattis consectetur. Mauris vel elit sit amet nibh volutpat varius id vel sem. Pellentesque id purus ligula. Vivamus vel nulla vel justo tempor ultricies.&lt;/p&gt;
+</code></pre>
           <p>We now have the following:</p>
           <pre><code>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus volutpat risus nec mollis. Integer dapibus dictum ultrices. Aenean vel lectus odio. Nam a mi ligula. Nam in dolor quis metus pretium imperdiet sit amet sed elit.&lt;/p&gt;
 &lt;div id="example" class="id"&gt;&lt;/div&gt;
 &lt;h3&gt;Example&lt;/h3&gt;
-&lt;p&gt;Suspendisse potenti. Proin convallis lacinia nibh, nec auctor ligula mattis consectetur. Mauris vel elit sit amet nibh volutpat varius id vel sem. Pellentesque id purus ligula. Vivamus vel nulla vel justo tempor ultricies.&lt;/p&gt;</code></pre>
+&lt;p&gt;Suspendisse potenti. Proin convallis lacinia nibh, nec auctor ligula mattis consectetur. Mauris vel elit sit amet nibh volutpat varius id vel sem. Pellentesque id purus ligula. Vivamus vel nulla vel justo tempor ultricies.&lt;/p&gt;
+</code></pre>
           <p>With this approach, each uniquely identified block-level element within the content area gives its id to a div which appears immediately before it in the HTML. Each of these divs is offset by the height of the header, ensuring that the element of interest is not obscured by the header.</p>
           <ul>
             <li class="pro">Straightforward CSS.</li>
@@ -103,14 +108,16 @@ document.observe('dom:loaded', function () {
         e.addClassName('unidentified');
         e.insert({ 'top': div });
     })
-});</code></pre>
+});
+</code></pre>
           <p>The above snippet locates all the h2, h3, h4, h5, and h6 elements on the page that have an id attribute. It then loops through this collection of elements and inserts an empty div element into each one. This div "steals" its parent's id.</p>
           <p>CSS can be used to position these empty divs in such a way that headings are visible when jumped to:</p>
           <pre><code>h2.unidentified div, h3.unidentified div
 {
     float: left;
     margin: -160px 0 0 0;
-}</code></pre>
+}
+</code></pre>
           <ul>
             <li class="pro">No additional markup is required.</li>
             <li class="pro">Straightforward CSS.</li>

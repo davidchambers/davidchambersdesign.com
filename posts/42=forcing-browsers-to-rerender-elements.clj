@@ -21,21 +21,27 @@
         (a "http://script.aculo.us/" "script.aculo.us") ":"])
 
     (code-block :javascript
-       "Element.addMethods({
-            redraw: function (element) {
-                element = $(element);
-                var n = document.createTextNode(' ');
-                element.appendChild(n);
-                (function () { n.parentNode.removeChild(n); }).defer();
-                return element;
-            }
-        });")
+
+       """
+       Element.addMethods({
+           redraw: function (element) {
+               element = $(element);
+               var n = document.createTextNode(' ');
+               element.appendChild(n);
+               (function () { n.parentNode.removeChild(n); }).defer();
+               return element;
+           }
+       });
+       """)
 
     (p
        ["The post's first comment includes an alternative approach:"])
 
     (code-block :javascript
-       "element.className = element.className;")
+
+       """
+       element.className = element.className;
+       """)
 
     (p
        ["I gather that there are situations in which this simple solution

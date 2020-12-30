@@ -39,7 +39,9 @@
 
     (code-block :bash
 
-       "PS1=\"\\n\\[\\e[1;36m\\]\\w\\n\\[\\e[1;32m\\]> \\[\\e[0m\\]\"")
+       """
+       PS1="\n\[\e[1;36m\]\w\n\[\e[1;32m\]> \[\e[0m\]"
+       """)
 
     (h4 "What the heck does all this mean?")
 
@@ -99,8 +101,10 @@
 
         (code-block :bash
 
-           "[[ \"$TERM\" == dumb ]] && PS1=\"\\n\\w\\n> \"
-            [[ \"$TERM\" != dumb ]] && PS1=\"\\n\\[\\e[1;36m\\]\\w\\n\\[\\e[1;32m\\]> \\[\\e[0m\\]\"")])
+           """
+           [[ "$TERM" == dumb ]] && PS1="\n\w\n> "
+           [[ "$TERM" != dumb ]] && PS1="\n\[\e[1;36m\]\w\n\[\e[1;32m\]> \[\e[0m\]"
+           """)])
 
     (h4 "Note for Mac OS X users")
 
@@ -112,9 +116,11 @@
 
     (code-block :bash
 
-       "if [ -f ~/.bashrc ]; then
-          source ~/.bashrc
-        fi")
+       """
+       if [ -f ~/.bashrc ]; then
+         source ~/.bashrc
+       fi
+       """)
 
   ]
 

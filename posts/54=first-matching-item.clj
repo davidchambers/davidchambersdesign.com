@@ -25,22 +25,28 @@
          are in Python, but the same patterns apply to other languages."])
 
     (code-block :python
-       "def student_by_id(students, id):
-            for student in students:
-                if student.id == id:
-                    return student
-            return None")
+
+       """
+       def student_by_id(students, id):
+           for student in students:
+               if student.id == id:
+                   return student
+           return None
+       """)
 
     (p
        ["This appoach strikes me as inelegant when the function is called
          in one place only. Today a different approached occurred to me."])
 
     (code-block :python
-       "student = None
-        for student in students:
-            if student.id == id:
-                break
-            student = None")
+
+       """
+       student = None
+       for student in students:
+           if student.id == id:
+               break
+           student = None
+       """)
 
     (p
        ["Here, we break out of the loop as soon as a match

@@ -61,7 +61,8 @@
           <pre><code>TEMPLATE_DIRS = (
     '/webapps/dcd/blog/templates',
     '/webapps/dcd/blog/mango/templates',
-)</code></pre>
+)
+</code></pre>
           <p>If Mango needs <code>archives.dhtml</code> it'll first look in the custom templates directory. If it finds that file there, it'll use it. If not, it'll use Mango's "archives" template. Whereas with WordPress it's all or nothing, with Mango you can create one or more of your own templates and have Mango fall back to the defaults for the rest.</p>
           <p>Not that writing templates is an unpleasant task – <a href="http://docs.djangoproject.com/en/dev/topics/templates/">Django's template language</a> is extremely elegant.</p>
           <h3>Extensibility</h3>

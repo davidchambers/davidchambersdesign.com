@@ -59,42 +59,45 @@
             SyntaxHighlighter")])
 
     (code-block :applescript
-       "#!/usr/bin/osascript
 
-        (*
-            This handler determines whether someone is happy.
-            It's actually just a good way to showcase AppleScript syntax highlighting using Alex Gorbatchev's SyntaxHighlighter.
-            (* Hey, nested comments. Woot! *)
-        *)
+       """
+       #!/usr/bin/osascript
 
-        on user_is_happy()
-            -- determine which application is currently frontmost
-            tell application \"System Events\" to set app_list to the name of application processes whose frontmost is true
-            set front_app to the first item of app_list
-            tell application \"Finder\"
-                activate
-                display dialog ¬
-                    \"Enter your name\" default answer \"\" buttons {\"Cancel\", \"OK\"} ¬
-                    default button 2 with icon note
-                set user_name to the text returned of the result
-                (* The word \"return\" in the line below should not be in bold. The regex does its best to determine whether the word is being used in a return statement or as a line return. *)
-                display dialog \"Hello, \" & user_name & \"!\" & return & return & ¬
-                    \"Are you happy?\" buttons {\"Yes\", \"No\"} with icon note
-                set is_happy to the button returned of the result
-            end tell
-            -- activate the application that was frontmost initially
-            tell application front_app to activate
-            return is_happy = \"Yes\" -- this time the word \"return\" should be in bold
-        end user_is_happy
+       (*
+           This handler determines whether someone is happy.
+           It's actually just a good way to showcase AppleScript syntax highlighting using Alex Gorbatchev's SyntaxHighlighter.
+           (* Hey, nested comments. Woot! *)
+       *)
 
-        if user_is_happy() then
-            say \"Woohoo!\" using \"Alex\"
-        else
-            repeat 3 times
-                beep
-                delay 0.5
-            end repeat
-        end if")
+       on user_is_happy()
+           -- determine which application is currently frontmost
+           tell application "System Events" to set app_list to the name of application processes whose frontmost is true
+           set front_app to the first item of app_list
+           tell application "Finder"
+               activate
+               display dialog ¬
+                   "Enter your name" default answer "" buttons {"Cancel", "OK"} ¬
+                   default button 2 with icon note
+               set user_name to the text returned of the result
+               (* The word "return" in the line below should not be in bold. The regex does its best to determine whether the word is being used in a return statement or as a line return. *)
+               display dialog "Hello, " & user_name & "!" & return & return & ¬
+                   "Are you happy?" buttons {"Yes", "No"} with icon note
+               set is_happy to the button returned of the result
+           end tell
+           -- activate the application that was frontmost initially
+           tell application front_app to activate
+           return is_happy = "Yes" -- this time the word "return" should be in bold
+       end user_is_happy
+
+       if user_is_happy() then
+           say "Woohoo!" using "Alex"
+       else
+           repeat 3 times
+               beep
+               delay 0.5
+           end repeat
+       end if
+       """)
 
     (caption
        ["Live rendering of AppleScript snippet"])
@@ -129,9 +132,11 @@
            [(p
                ["Include the brush like so:"])
             (code-block :html
-               "<script src=\"/path/to/scripts/shCore.js\"></script>
-                <script src=\"/path/to/scripts/shBrushAppleScript.js\"></script>
-                <script>SyntaxHighlighter.all()</script>")])])
+               """
+               <script src="/path/to/scripts/shCore.js"></script>
+               <script src="/path/to/scripts/shBrushAppleScript.js"></script>
+               <script>SyntaxHighlighter.all()</script>
+               """)])])
 
     (h3' {:id "usage"} "Usage")
 
@@ -140,7 +145,10 @@
          wrap the code in " (code "pre") " tags like so:"])
 
     (code-block :html
-       "<pre class=\"brush: applescript; class-name: applescript;\"></pre>")
+
+       """
+       <pre class="brush: applescript; class-name: applescript;"></pre>
+       """)
 
     (p
        [(code "brush: applescript;") " tells SyntaxHighlighter to
@@ -160,7 +168,10 @@
              This is now sufficient:"])
 
         (code-block :html
-           "<pre class=\"brush:applescript\"></pre>")])
+
+           """
+           <pre class="brush:applescript"></pre>
+           """)])
 
     (p
        ["Note that including " (code "ruler: true;") " will have no effect.

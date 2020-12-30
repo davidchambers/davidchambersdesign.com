@@ -45,28 +45,33 @@
           <div class="update">
             <h4>Update — <time datetime="2009-09-17T01:17:00.000+12:00">17 September 2009</time></h4>
             <p>I noticed that the script was failing miserably in Safari, which didn't like the following line:</p>
-            <pre><code>li: new Element('li', { class: 'prev' }),</code></pre>
+            <pre><code>li: new Element('li', { class: 'prev' }),
+</code></pre>
             <p>Wrapping the word "class" in quotes as per this <a href="http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777">recommendation by Tobie Langel</a> did the trick!</p>
           </div>
           <h3 id="usage">Usage</h3>
           <p>First, you'll need to save a copy of <a href="/examples/prototype-image-slider/prototype-image-slider.js">prototype-image-slider.js</a>.</p>
           <p>To create a new <code>Slider</code> simply call the constructor. The constructor requires one argument, either a DOM node or a string that references a node's ID.</p>
-          <pre><code>new Slider('slider');</code></pre>
+          <pre><code>new Slider('slider');
+</code></pre>
           <p>There's nothing to prevent multiple image sliders from appearing on a page. The following code turns each div with class of 'slider' into a <code>Slider</code> object.</p>
           <pre><code>$$('div.slider').each(function (e) {
     new Slider(e);
-})</code></pre>
+})
+</code></pre>
           <p>Of course, it's a good idea to wait until the page is ready to be manipulated before... er... manipulating the page.</p>
           <pre><code>document.observe('dom:loaded', function () {
     $$('div.slider').each(function (e) {
         new Slider(e);
     });
-});</code></pre>
+});
+</code></pre>
           <p>To provide a small degree of flexibility, the constructor accepts two optional arguments: a float specifying the duration of each transition, and an integer specifying the number of the slide to be displayed first. The default values are 1.0 and 0 (slides are numbered from zero).</p>
           <pre><code>new Slider('slider', 0.5);     // faster transitions
 new Slider('slider', 1.0, 3);  // fourth slide displayed first
 new Slider('slider', 1.0, -1); // last slide displayed first
-new Slider('slider', 1.5, -1); // slower transitions; last slide displayed first</code></pre>
+new Slider('slider', 1.5, -1); // slower transitions; last slide displayed first
+</code></pre>
           <p>If you find this code useful and would like me to flesh it out, let me know.</p>
           <div class="update">
             <h4>Update — <time datetime="2009-09-21T11:53:00.000+12:00">21 September 2009</time></h4>

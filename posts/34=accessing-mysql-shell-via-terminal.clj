@@ -26,7 +26,10 @@
            "error 1044 and 1045") ":"])
 
     (code-block :console
-       "mysql -u root -p mysql")
+
+       """
+       mysql -u root -p mysql
+       """)
 
   ]
 

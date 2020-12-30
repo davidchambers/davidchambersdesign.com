@@ -13,13 +13,15 @@
 
     (code-block :html
 
-       "<h1>TXJS 2011 Speakers</h1>
-        <ul>
-          <li>Brendan Eich</li>
-          <li>Alex Russell</li>
-          <li>Douglas Crockford</li>
-          <li>Paul Irish</li>
-        </ul>")
+       """
+       <h1>TXJS 2011 Speakers</h1>
+       <ul>
+         <li>Brendan Eich</li>
+         <li>Alex Russell</li>
+         <li>Douglas Crockford</li>
+         <li>Paul Irish</li>
+       </ul>
+       """)
 
     (p
        ["You've decided upon hanging square bullets in a light grey –
@@ -27,13 +29,15 @@
 
     (code-block :css
 
-       "ul {
-          list-style: square outside;
-          color: #ccc;
-        }
-        li {
-          color: #000;
-        }")
+       """
+       ul {
+         list-style: square outside;
+         color: #ccc;
+       }
+       li {
+         color: #000;
+       }
+       """)
 
     (p
        ["This should do the trick, but doesn't for some reason! How the heck
@@ -44,23 +48,25 @@
 
     (code-block :html
 
-       "<h1>TXJS 2011 Speakers</h1>
-        <ul>
-          <li><span>Brendan Eich</span></li>
-          <li><span>Alex Russell</span></li>
-          <li><span>Douglas Crockford</span></li>
-          <li><span>Paul Irish</span></li>
-        </ul>
+       """
+       <h1>TXJS 2011 Speakers</h1>
+       <ul>
+         <li><span>Brendan Eich</span></li>
+         <li><span>Alex Russell</span></li>
+         <li><span>Douglas Crockford</span></li>
+         <li><span>Paul Irish</span></li>
+       </ul>
 
-        <style>
-          ul {
-            list-style: square outside;
-            color: #ccc;
-          }
-          li > span {
-            color: #000;
-          }
-        </style>")
+       <style>
+         ul {
+           list-style: square outside;
+           color: #ccc;
+         }
+         li > span {
+           color: #000;
+         }
+       </style>
+       """)
 
     (p
        ["This gets the job done, but those " (code "span") "s are ugly –
@@ -71,14 +77,16 @@
 
     (code-block :css
 
-       "ul {
-          list-style: none;
-        }
-        li {
-          margin-left: -12px;
-          background: url(bullet.png) no-repeat 0;
-          text-indent: 12px;
-        }")
+       """
+       ul {
+         list-style: none;
+       }
+       li {
+         margin-left: -12px;
+         background: url(bullet.png) no-repeat 0;
+         text-indent: 12px;
+       }
+       """)
 
     (p
        ["This requires very little CSS. To avoid incurring the overhead
@@ -89,24 +97,26 @@
 
     (code-block :css
 
-       "ul {
-          list-style: none;
-        }
-        li {
-          position: relative;
-        }
-        li:before {
-          position: absolute;
-          top: 8px;
-          margin: 8px 0 0 -12px;
-            /* accommodate Camino */
-            vertical-align: middle;
-            display: inline-block;
-          width: 4px;
-          height: 4px;
-          background: #ccc;
-          content: \"\";
-        }")
+       """
+       ul {
+         list-style: none;
+       }
+       li {
+         position: relative;
+       }
+       li:before {
+         position: absolute;
+         top: 8px;
+         margin: 8px 0 0 -12px;
+           /* accommodate Camino */
+           vertical-align: middle;
+           display: inline-block;
+         width: 4px;
+         height: 4px;
+         background: #ccc;
+         content: "";
+       }
+       """)
 
     (p
        ["So it's possible to fashion square bullets of any colour
@@ -117,11 +127,13 @@
 
     (code-block :css
 
-       "...
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        border-radius: 2px;
-        ...")
+       """
+       ...
+       -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+       border-radius: 2px;
+       ...
+       """)
 
   ]
 

@@ -23,19 +23,7 @@
 
   :code-block
     (lambda [language source-code]
-       (let [lines (lines source-code)
-             head (0 lines)
-             tail (.slice 1 lines)
-             min-indent (array 0
-                               (reduce min)
-                               (map (props ["match" "length"])
-                                    (justs (map (match (regex "" "^[ ]*(?=\\S)"))
-                                                tail))))]
-          (pre (code (text (join-with "\n"
-                                      (prepend head
-                                               (map (lambda [line]
-                                                       (.slice min-indent line))
-                                                    tail))))))))
+       (pre (code (text source-code))))
 
   :interview-list
     (lambda [interviewer interviewee exchange]

@@ -19,13 +19,19 @@
        ["Python:"])
 
     (code-block :python
-       "' '.join(['foo', 'bar'])")
+
+       """
+       ' '.join(['foo', 'bar'])
+       """)
 
     (p
        ["JavaScript:"])
 
     (code-block :javascript
-       "['foo', 'bar'].join(' ')")
+
+       """
+       ['foo', 'bar'].join(' ')
+       """)
 
     (p
        ["Often -- as is the case above -- the syntactical differences are
@@ -39,19 +45,25 @@
          statements."])
 
     (code-block :javascript
-       "var numbers = [87, 33, 21, 75];
-        if (numbers.every(function (n) { return n % 3 == 0; })) {
-            window.alert('The numbers are all divisible by 3.');
-        }")
+
+       """
+       var numbers = [87, 33, 21, 75];
+       if (numbers.every(function (n) { return n % 3 == 0; })) {
+           window.alert('The numbers are all divisible by 3.');
+       }
+       """)
 
     (p
        ["Python lists have no comparable method, so how would one write
          this in Python?"])
 
     (code-block :python
-       "numbers = [87, 33, 21, 75]
-        if [n for n in numbers if n % 3 == 0] == numbers:
-            print 'The numbers are all divisible by 3.'")
+
+       """
+       numbers = [87, 33, 21, 75]
+       if [n for n in numbers if n % 3 == 0] == numbers:
+           print 'The numbers are all divisible by 3.'
+       """)
 
     (p
        ["This approach involves using a list comprehension to create a
@@ -67,8 +79,11 @@
              elegant way to express this in Python:"])
 
         (code-block :python
-           "if all((n % 3 == 0 for n in numbers)):
-                print 'The numbers are all divisible by 3.'")])
+
+           """
+           if all((n % 3 == 0 for n in numbers)):
+                print 'The numbers are all divisible by 3.'
+           """)])
 
     (h3 "Now for something a bit more challenging")
 
@@ -77,27 +92,33 @@
          of the documents contain all the terms in a list of search terms."])
 
     (code-block :javascript
-       "// (MooTools) JavaScript
 
-        var terms = ['python', 'list', 'methods'], matches = [];
-        documents.each(function (document) {
-            if (terms.every(function (term) {
-                return document.body.indexOf(term) != -1;
-            })) matches.append(document);
-        });")
+       """
+       // (MooTools) JavaScript
+
+       var terms = ['python', 'list', 'methods'], matches = [];
+       documents.each(function (document) {
+           if (terms.every(function (term) {
+               return document.body.indexOf(term) != -1;
+           })) matches.append(document);
+       });
+       """)
 
     (p
        ["Here, we " (em "could") " use the list comprehension approach
          as before."])
 
     (code-block :python
-       "# Python
 
-        terms = ['python', 'list', 'methods']
-        matches = []
-        for document in documents:
-            if [t for t in terms if document.body.find(t) != -1] == terms:
-                matches.append(document)")
+       """
+       # Python
+
+       terms = ['python', 'list', 'methods']
+       matches = []
+       for document in documents:
+           if [t for t in terms if document.body.find(t) != -1] == terms:
+               matches.append(document)
+       """)
 
     (p
        ["This is reasonably succinct, but not terribly efficient since
@@ -112,14 +133,17 @@
          clause!"])])
 
     (code-block :python
-       "terms = ['python', 'list', 'methods']
-        matches = []
-        for document in documents:
-            for term in terms:
-                if document.body.find(term) == -1:
-                    break
-            else: # every term was found
-                matches.append(document)")
+
+       """
+       terms = ['python', 'list', 'methods']
+       matches = []
+       for document in documents:
+           for term in terms:
+               if document.body.find(term) == -1:
+                   break
+           else: # every term was found
+               matches.append(document)
+       """)
 
     (p
        ["From "

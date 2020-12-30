@@ -16,19 +16,25 @@
 
     (code-block :python
 
-       "'=' * 5")
+       """
+       '=' * 5
+       """)
 
     (h3' {:id "ruby"} "Ruby")
 
     (code-block :ruby
 
-       "'=' * 5")
+       """
+       '=' * 5
+       """)
 
     (h3' {:id "php"} "PHP")
 
     (code-block :php
 
-       "str_repeat('=', 5)")
+       """
+       str_repeat('=', 5)
+       """)
 
     (h3' {:id "javascript"} "JavaScript?")
 
@@ -38,7 +44,9 @@
 
     (code-block :javascript
 
-       "new Array(5 + 1).join('=')")
+       """
+       new Array(5 + 1).join('=')
+       """)
 
   ]
 

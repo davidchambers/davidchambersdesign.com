@@ -65,36 +65,40 @@
            [(p
                ["Replace:"])
             (code-block :html
-               "<script src=\"/path/to/scripts/shCore.js\"></script>
-                <script src=\"/path/to/scripts/shBrushAS3.js\"></script>
-                <script src=\"/path/to/scripts/shBrushBash.js\"></script>
-                .
-                .
-                .
-                <script src=\"/path/to/scripts/shBrushVb.js\"></script>
-                <script src=\"/path/to/scripts/shBrushXml.js\"></script>
+               """
+               <script src="/path/to/scripts/shCore.js"></script>
+               <script src="/path/to/scripts/shBrushAS3.js"></script>
+               <script src="/path/to/scripts/shBrushBash.js"></script>
+               .
+               .
+               .
+               <script src="/path/to/scripts/shBrushVb.js"></script>
+               <script src="/path/to/scripts/shBrushXml.js"></script>
 
-                <script>SyntaxHighlighter.all()</script>")
+               <script>SyntaxHighlighter.all()</script>
+               """)
             (p
                ["with:"])
             (code-block :html
-               "<script>
-                    function Brush(name, filename, aliases)
-                    {
-                        this.name = name;
-                        this.filename = filename;
-                        this.aliases = aliases;
-                    }
-                    var settings = {
-                        selector: 'head',
-                        path: 'http://example.com/sh/',
-                        stylesheets: ['shThemeDefault'],
-                        brushes: [],
-                        extensions: { stylesheet: 'css', brush: 'js' },
-                        defaults: {}
-                    };
-                </script>
-                <script src=\"/path/to/scripts/loader.js\"></script>")])
+               """
+               <script>
+                   function Brush(name, filename, aliases)
+                   {
+                       this.name = name;
+                       this.filename = filename;
+                       this.aliases = aliases;
+                   }
+                   var settings = {
+                       selector: 'head',
+                       path: 'http://example.com/sh/',
+                       stylesheets: ['shThemeDefault'],
+                       brushes: [],
+                       extensions: { stylesheet: 'css', brush: 'js' },
+                       defaults: {}
+                   };
+               </script>
+               <script src="/path/to/scripts/loader.js"></script>
+               """)])
         (li
            [(p
                ["Replace both instances of " (code "http://example.com/sh/") "
@@ -119,7 +123,10 @@
          modified:"])
 
     (code-block :javascript
-       "stylesheets: ['shThemeCoda', 'shThemeAppleScript'],")
+
+       """
+       stylesheets: ['shThemeCoda', 'shThemeAppleScript'],
+       """)
 
     (p
        [(strong "Brushes.") " By default, " (code "settings.brushes") "
@@ -127,9 +134,12 @@
          but additional brushes can be included by adding them to this array:"])
 
     (code-block :javascript
-       "brushes: [
-            new Brush('AppleScript', 'shBrushAppleScript', ['applescript'])
-        ],")
+
+       """
+       brushes: [
+           new Brush('AppleScript', 'shBrushAppleScript', ['applescript'])
+       ],
+       """)
 
     (p
        ["When creating a " (code "Brush") " object, provide the constructor
@@ -147,10 +157,13 @@
          modifying " (code "settings.defaults") ":"])
 
     (code-block :javascript
-       "defaults: {
-            'auto-links': false,
-            'html-script': true
-        }")
+
+       """
+       defaults: {
+           'auto-links': false,
+           'html-script': true
+       }
+       """)
 
     (p
        ["Many thanks to Dan Breslau for letting me know about "

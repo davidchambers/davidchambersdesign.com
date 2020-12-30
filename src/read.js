@@ -8,6 +8,7 @@ const {
   Just,
   K,
   Left,
+  Maybe,
   Pair,
   Right,
   append,
@@ -16,6 +17,10 @@ const {
   either,
   equals,
   filter,
+  fromMaybe,
+  ifElse,
+  lines,
+  map,
   match,
   maybe,
   maybe_,
@@ -25,7 +30,9 @@ const {
   pipeK,
   prop,
   stripPrefix,
+  traverse,
   unless,
+  unlines,
 } = S.unchecked;
 
 const matchIdentifier = match (/^[^()[\]{}"\s]+/);
@@ -84,12 +91,30 @@ const read = module.exports = pipe ([
   trimLeft,
   Right,
   pipeK ([
-    s => s.startsWith ('(') ? Left (readGroup (')') ('parenthesized') ([]) (s.slice (1))) : Right (s),
+    s => s.startsWith ('(') ? Left (readGroup (')') ('()') ([]) (s.slice (1))) : Right (s),
     s => s.startsWith (')') ? Left (Left (new SyntaxError ('Unmatched )'))) : Right (s),
-    s => s.startsWith ('[') ? Left (readGroup (']') ('array-literal') ([]) (s.slice (1))) : Right (s),
+    s => s.startsWith ('[') ? Left (readGroup (']') ('[]') ([]) (s.slice (1))) : Right (s),
     s => s.startsWith (']') ? Left (Left (new SyntaxError ('Unmatched ]'))) : Right (s),
-    s => s.startsWith ('{') ? Left (readGroup ('}') ('map-literal') ([]) (s.slice (1))) : Right (s),
+    s => s.startsWith ('{') ? Left (readGroup ('}') ('{}') ([]) (s.slice (1))) : Right (s),
     s => s.startsWith ('}') ? Left (Left (new SyntaxError ('Unmatched }'))) : Right (s),
+    s => s.startsWith ('"""') ?
+         Left (maybe (Left (new SyntaxError ('Unterminated """')))
+                     (({groups: [{value}, {value: rest}]}) =>
+                        maybe (Left (new SyntaxError ('Inconsistent indentation within """')))
+                              (value => Right (Pair (rest) ({type: 'string-literal', value})))
+                              (maybe (Just (value))
+                                     (({groups: [{value}, {value: prefix}]}) =>
+                                        map (unlines)
+                                            (traverse (Maybe)
+                                                      (ifElse (equals (''))
+                                                              (Just)
+                                                              (stripPrefix (prefix)))
+                                                      (lines (fromMaybe (value)
+                                                                        (stripPrefix ('\n')
+                                                                                     (value))))))
+                                     (match (/^([^]*)\n([ ]*)$/) (value))))
+                     (match (/^"""([^]*?)"""([^]*)$/) (s))) :
+         Right (s),
     s => s.startsWith ('"') ? Left (readString (s.slice (1))) : Right (s),
     s => maybe (Right (s))
                (s => Left (maybe (Left (new SyntaxError ('Empty symbol')))
@@ -145,70 +170,70 @@ if (__filename === process.argv[1]) {
 
   eq (read ('(foo)'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
+                  ({type: '()',
                     elements: [{type: 'identifier', name: 'foo'}]})));
 
   eq (read ('(foo bar)'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
+                  ({type: '()',
                     elements: [{type: 'identifier', name: 'foo'},
                                {type: 'identifier', name: 'bar'}]})));
 
   eq (read ('(foo bar baz)'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
+                  ({type: '()',
                     elements: [{type: 'identifier', name: 'foo'},
                                {type: 'identifier', name: 'bar'},
                                {type: 'identifier', name: 'baz'}]})));
 
   eq (read ('((foo))'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
-                    elements: [{type: 'parenthesized',
+                  ({type: '()',
+                    elements: [{type: '()',
                                 elements: [{type: 'identifier', name: 'foo'}]}]})));
 
   eq (read ('(((foo)))'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
-                    elements: [{type: 'parenthesized',
-                                elements: [{type: 'parenthesized',
+                  ({type: '()',
+                    elements: [{type: '()',
+                                elements: [{type: '()',
                                             elements: [{type: 'identifier', name: 'foo'}]}]}]})));
 
   eq (read ('((foo) bar)'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
-                    elements: [{type: 'parenthesized',
+                  ({type: '()',
+                    elements: [{type: '()',
                                 elements: [{type: 'identifier', name: 'foo'}]},
                                {type: 'identifier', name: 'bar'}]})));
 
   eq (read ('(foo (bar))'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
+                  ({type: '()',
                     elements: [{type: 'identifier', name: 'foo'},
-                               {type: 'parenthesized',
+                               {type: '()',
                                 elements: [{type: 'identifier', name: 'bar'}]}]})));
 
   eq (read ('((foo) (bar))'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
-                    elements: [{type: 'parenthesized',
+                  ({type: '()',
+                    elements: [{type: '()',
                                 elements: [{type: 'identifier', name: 'foo'}]},
-                               {type: 'parenthesized',
+                               {type: '()',
                                 elements: [{type: 'identifier', name: 'bar'}]}]})));
 
   eq (read ('(foo )'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
+                  ({type: '()',
                     elements: [{type: 'identifier', name: 'foo'}]})));
 
   eq (read ('( foo)'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
+                  ({type: '()',
                     elements: [{type: 'identifier', name: 'foo'}]})));
 
   eq (read ('( foo )'))
      (Right (Pair ('')
-            ({type: 'parenthesized',
+            ({type: '()',
               elements: [{type: 'identifier', name: 'foo'}]})));
 
   eq (read (':foo'))
@@ -256,6 +281,38 @@ if (__filename === process.argv[1]) {
      (Right (Pair ('')
                   ({type: 'string-literal', value: '\t'})));
 
+  eq (read ('"""foo"""'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: 'foo'})));
+
+  eq (read ('"""foo "bar" baz"""'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: 'foo "bar" baz'})));
+
+  eq (read ('"""\\"""'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: '\\'})));
+
+  eq (read ('"""\\n"""'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: '\\n'})));
+
+  eq (read ('"""\\t"""'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: '\\t'})));
+
+  eq (read ('"""\nfoo\n"""'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: 'foo\n'})));
+
+  eq (read ('"""\n  foo\n  bar\n  baz\n  """'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: 'foo\nbar\nbaz\n'})));
+
+  eq (read ('"""\n  <h1>\n    Hello\n  </h1>\n  """'))
+     (Right (Pair ('')
+                  ({type: 'string-literal', value: '<h1>\n  Hello\n</h1>\n'})));
+
   eq (read ('0')) (Right (Pair ('') ({type: 'number-literal', value: 0})));
   eq (read ('1')) (Right (Pair ('') ({type: 'number-literal', value: 1})));
   eq (read ('12')) (Right (Pair ('') ({type: 'number-literal', value: 12})));
@@ -280,7 +337,7 @@ if (__filename === process.argv[1]) {
 
   eq (read ('(foo ; comment\nbar ; comment\nbaz) ; comment'))
      (Right (Pair (' ; comment')
-                  ({type: 'parenthesized',
+                  ({type: '()',
                     elements: [{type: 'identifier', name: 'foo'},
                                {type: 'identifier', name: 'bar'},
                                {type: 'identifier', name: 'baz'}]})));
@@ -291,7 +348,7 @@ if (__filename === process.argv[1]) {
 
   eq (read ('(foo\n;(\n;)\n bar)'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
+                  ({type: '()',
                     elements: [{type: 'identifier', name: 'foo'},
                                {type: 'identifier', name: 'bar'}]})));
 
@@ -301,116 +358,116 @@ if (__filename === process.argv[1]) {
 
   eq (read ('[]'))
      (Right (Pair ('')
-                  ({type: 'array-literal',
+                  ({type: '[]',
                     elements: []})));
 
   eq (read ('[foo]'))
      (Right (Pair ('')
-                  ({type: 'array-literal',
+                  ({type: '[]',
                     elements: [{type: 'identifier', name: 'foo'}]})));
 
   eq (read ('[foo bar]'))
      (Right (Pair ('')
-                  ({type: 'array-literal',
+                  ({type: '[]',
                     elements: [{type: 'identifier', name: 'foo'},
                                {type: 'identifier', name: 'bar'}]})));
 
   eq (read ('[foo bar baz]'))
      (Right (Pair ('')
-                  ({type: 'array-literal',
+                  ({type: '[]',
                     elements: [{type: 'identifier', name: 'foo'},
                                {type: 'identifier', name: 'bar'},
                                {type: 'identifier', name: 'baz'}]})));
 
   eq (read ('[foo ]'))
      (Right (Pair ('')
-                  ({type: 'array-literal',
+                  ({type: '[]',
                     elements: [{type: 'identifier', name: 'foo'}]})));
 
   eq (read ('[ foo]'))
      (Right (Pair ('')
-                  ({type: 'array-literal',
+                  ({type: '[]',
                     elements: [{type: 'identifier', name: 'foo'}]})));
 
   eq (read ('[ foo ]'))
      (Right (Pair ('')
-            ({type: 'array-literal',
+            ({type: '[]',
               elements: [{type: 'identifier', name: 'foo'}]})));
 
   eq (read ('[:foo]'))
      (Right (Pair ('')
-                  ({type: 'array-literal',
+                  ({type: '[]',
                     elements: [{type: 'symbol', value: Symbol.for ('foo')}]})));
 
   eq (read ('[:foo :bar]'))
      (Right (Pair ('')
-                  ({type: 'array-literal',
+                  ({type: '[]',
                     elements: [{type: 'symbol', value: Symbol.for ('foo')},
                                {type: 'symbol', value: Symbol.for ('bar')}]})));
 
   eq (read ('[:foo :bar :baz]'))
      (Right (Pair ('')
-                  ({type: 'array-literal',
+                  ({type: '[]',
                     elements: [{type: 'symbol', value: Symbol.for ('foo')},
                                {type: 'symbol', value: Symbol.for ('bar')},
                                {type: 'symbol', value: Symbol.for ('baz')}]})));
 
   eq (read ('[:foo ]'))
      (Right (Pair ('')
-                  ({type: 'array-literal',
+                  ({type: '[]',
                     elements: [{type: 'symbol', value: Symbol.for ('foo')}]})));
 
   eq (read ('[ :foo]'))
      (Right (Pair ('')
-                  ({type: 'array-literal',
+                  ({type: '[]',
                     elements: [{type: 'symbol', value: Symbol.for ('foo')}]})));
 
   eq (read ('[ :foo ]'))
      (Right (Pair ('')
-                  ({type: 'array-literal',
+                  ({type: '[]',
                     elements: [{type: 'symbol', value: Symbol.for ('foo')}]})));
 
   eq (read ('{}'))
      (Right (Pair ('')
-                  ({type: 'map-literal',
+                  ({type: '{}',
                     elements: []})));
 
   eq (read ('{foo}'))
      (Right (Pair ('')
-                  ({type: 'map-literal',
+                  ({type: '{}',
                     elements: [{type: 'identifier', name: 'foo'}]})));
 
   eq (read ('{foo bar}'))
      (Right (Pair ('')
-                  ({type: 'map-literal',
+                  ({type: '{}',
                     elements: [{type: 'identifier', name: 'foo'},
                                {type: 'identifier', name: 'bar'}]})));
 
   eq (read ('{foo bar baz}'))
      (Right (Pair ('')
-                  ({type: 'map-literal',
+                  ({type: '{}',
                     elements: [{type: 'identifier', name: 'foo'},
                                {type: 'identifier', name: 'bar'},
                                {type: 'identifier', name: 'baz'}]})));
 
   eq (read ('{foo }'))
      (Right (Pair ('')
-                  ({type: 'map-literal',
+                  ({type: '{}',
                     elements: [{type: 'identifier', name: 'foo'}]})));
 
   eq (read ('{ foo}'))
      (Right (Pair ('')
-                  ({type: 'map-literal',
+                  ({type: '{}',
                     elements: [{type: 'identifier', name: 'foo'}]})));
 
   eq (read ('{ foo }'))
      (Right (Pair ('')
-                  ({type: 'map-literal',
+                  ({type: '{}',
                     elements: [{type: 'identifier', name: 'foo'}]})));
 
   eq (read ('{"x" 1 "y" 2 "z" 3}'))
      (Right (Pair ('')
-                  ({type: 'map-literal',
+                  ({type: '{}',
                     elements: [{type: 'string-literal', value: 'x'},
                                {type: 'number-literal', value: 1},
                                {type: 'string-literal', value: 'y'},
@@ -420,17 +477,17 @@ if (__filename === process.argv[1]) {
 
   eq (read ('(lambda [x] x)'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
+                  ({type: '()',
                     elements: [{type: 'identifier', name: 'lambda'},
-                               {type: 'array-literal',
+                               {type: '[]',
                                 elements: [{type: 'identifier', name: 'x'}]},
                                {type: 'identifier', name: 'x'}]})));
 
   eq (read ('{:date (datetime "1970-01-01" "00:00:00" :Etc/UTC)}\n\n# Title\n\nText.\n'))
      (Right (Pair ('\n\n# Title\n\nText.\n')
-                  ({type: 'map-literal',
+                  ({type: '{}',
                     elements: [{type: 'symbol', value: Symbol.for ('date')},
-                               {type: 'parenthesized',
+                               {type: '()',
                                 elements: [{type: 'identifier', name: 'datetime'},
                                            {type: 'string-literal', value: '1970-01-01'},
                                            {type: 'string-literal', value: '00:00:00'},
@@ -438,20 +495,20 @@ if (__filename === process.argv[1]) {
 
   eq (read ('(.toUpperCase "foo")'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
+                  ({type: '()',
                     elements: [{type: 'identifier', name: '.toUpperCase'},
                                {type: 'string-literal', value: 'foo'}]})));
 
   eq (read ('(.concat "bar" "foo")'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
+                  ({type: '()',
                     elements: [{type: 'identifier', name: '.concat'},
                                {type: 'string-literal', value: 'bar'},
                                {type: 'string-literal', value: 'foo'}]})));
 
   eq (read ('(.slice 1 -1 "foo")'))
      (Right (Pair ('')
-                  ({type: 'parenthesized',
+                  ({type: '()',
                     elements: [{type: 'identifier', name: '.slice'},
                                {type: 'number-literal', value: 1},
                                {type: 'number-literal', value: -1},

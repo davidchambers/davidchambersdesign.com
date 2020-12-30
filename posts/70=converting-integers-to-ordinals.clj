@@ -17,25 +17,31 @@
     (h3 "Python")
 
     (code-block :python
-       "def ordinal(n):
-            if 10 < n < 14: return u'%sth' % n
-            if n % 10 == 1: return u'%sst' % n
-            if n % 10 == 2: return u'%snd' % n
-            if n % 10 == 3: return u'%srd' % n
-            return u'%sth' % n")
+
+       """
+       def ordinal(n):
+           if 10 < n < 14: return u'%sth' % n
+           if n % 10 == 1: return u'%sst' % n
+           if n % 10 == 2: return u'%snd' % n
+           if n % 10 == 3: return u'%srd' % n
+           return u'%sth' % n
+       """)
 
     (h3 "JavaScript")
 
     (code-block :javascript
-       "function ordinal(n) {
-            if (10 < n && n < 14) return n + 'th';
-            switch (n % 10) {
-                case 1: return n + 'st';
-                case 2: return n + 'nd';
-                case 3: return n + 'rd';
-                default: return n + 'th';
-            }
-        }")
+
+       """
+       function ordinal(n) {
+           if (10 < n && n < 14) return n + 'th';
+           switch (n % 10) {
+               case 1: return n + 'st';
+               case 2: return n + 'nd';
+               case 3: return n + 'rd';
+               default: return n + 'th';
+           }
+       }
+       """)
 
     (p
        ["By special-casing 11, 12, and 13, the function becomes incredibly

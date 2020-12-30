@@ -25,7 +25,10 @@
          to the rescue."])
 
     (code-block :css
-       "textarea { overflow: auto; }")
+
+       """
+       textarea { overflow: auto; }
+       """)
 
     (p
        ["The " (code "overflow") " property seems to be a magical remedy

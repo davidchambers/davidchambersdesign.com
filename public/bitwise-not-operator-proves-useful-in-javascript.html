@@ -47,14 +47,17 @@ if (text.indexOf('✈') != -1)
 if (text.indexOf('✈') &gt;= 0)
 
 // ugly option 3
-if (text.indexOf('✈') &gt; -1)</code></pre>
+if (text.indexOf('✈') &gt; -1)
+</code></pre>
           <p>It'd be nice to be able to write <code>text.contains('✈')</code>, which is both intuitive and self-documenting. The language does provide a way to make such expressions terser, but it's far from obvious.</p>
           <pre><code>// bitwise NOT
-if (~text.indexOf('✈'))</code></pre>
+if (~text.indexOf('✈'))
+</code></pre>
           <p><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Bitwise_Operators">Bitwise operators</a> make my head spin, but the Perl programmer in me thinks they're awesome. I don't profess to understand <em>why</em> exactly the bitwise NOT operator does what it does, but I've played with it enough to know how it behaves. It's equivalent to the following function, at least for the values that can be returned by <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/indexOf"><code>indexOf</code></a>.</p>
           <pre><code>function bitwiseNot(n) {
     return -n - 1;
-}</code></pre>
+}
+</code></pre>
           <p><code>indexOf</code> returns -1, 0, 1, 2, 3, or some other positive integer. When these values are used as operands for the bitwise NOT operator, the results are 0, -1, -2, -3, -4, and so on. Therefore, <code>~text.indexOf('✈')</code> is equivalent to <code>text.contains('✈')</code> in Boolean contexts.</p>
           <footer class="metadata">
             <ul>

@@ -17,21 +17,24 @@
          code is quite a bit more elegant."])
 
     (code-block :javascript
-       "// provide input hints
-        window.addEvent('domready', function () {
-            $$('input[placeholder]').addEvents({
-                focus: function () {
-                    if (this.hasClass('placeholder')) {
-                        this.removeClass('placeholder').set('value', '');
-                    }
-                },
-                blur: function () {
-                    if (this.get('value') === '') {
-                        this.addClass('placeholder').set('value', this.get('placeholder'));
-                    }
-                }
-            }).fireEvent('blur');
-        });")
+
+       """
+       // provide input hints
+       window.addEvent('domready', function () {
+           $$('input[placeholder]').addEvents({
+               focus: function () {
+                   if (this.hasClass('placeholder')) {
+                       this.removeClass('placeholder').set('value', '');
+                   }
+               },
+               blur: function () {
+                   if (this.get('value') === '') {
+                       this.addClass('placeholder').set('value', this.get('placeholder'));
+                   }
+               }
+           }).fireEvent('blur');
+       });
+       """)
 
     (p
        ["I really appreciate the fact that MooTools provides "

@@ -16,11 +16,14 @@
          The loop looks like this:"])
 
     (code-block :php
-       "if (have_posts()) :
-            while (have_posts()) : the_post();
-                // code
-            endwhile;
-        endif;")
+
+       """
+       if (have_posts()) :
+           while (have_posts()) : the_post();
+               // code
+           endwhile;
+       endif;
+       """)
 
     (p
        ["As well as displaying the three most recent posts on the
@@ -31,7 +34,10 @@
          adding the following line of code just before the loop:"])
 
     (code-block :php
-       "query_posts('showposts=5&offset=3');")
+
+       """
+       query_posts('showposts=5&offset=3');
+       """)
 
     (p
        ["The " (code "offset") " ensures that posts do not appear

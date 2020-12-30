@@ -40,9 +40,11 @@
             <time datetime="2009-03-01T03:01:00+13:00" pubdate="pubdate">1 March 2009</time>
           </header>
           <p>Sometimes we require users to log in to a WordPress site in order to access <em>front-end</em> functionality hidden from guests. In such instances, we can simply provide a standard login link:</p>
-          <pre><code>&lt;a href="&lt;?php bloginfo('url'); ?&gt;/wp-login.php"&gt;log in&lt;/a&gt;</code></pre>
+          <pre><code>&lt;a href="&lt;?php bloginfo('url'); ?&gt;/wp-login.php"&gt;log in&lt;/a&gt;
+</code></pre>
           <p>While this gets the job done, it takes users to the dashboard after they have logged in: they must then click on a link to return to the front-end, at which point an additional click may be required to get them back to the page they were viewing. Since WordPress 2.6.2 it has been possible to circumvent this round trip from <strong>origin</strong> to <strong>wp-login.php</strong> to <strong>wp-admin/</strong> to <strong>/</strong> and finally back to <strong>origin</strong> by including a value for <code>redirect_to</code> in the href:</p>
-          <pre><code>&lt;a href="&lt;?php bloginfo('url'); ?&gt;/wp-login.php?redirect_to=&lt;?php echo urlencode($_SERVER['REQUEST_URI']); ?&gt;"&gt;log in&lt;/a&gt;</code></pre>
+          <pre><code>&lt;a href="&lt;?php bloginfo('url'); ?&gt;/wp-login.php?redirect_to=&lt;?php echo urlencode($_SERVER['REQUEST_URI']); ?&gt;"&gt;log in&lt;/a&gt;
+</code></pre>
           <p>The above returns users to their starting point after they've logged in.</p>
           <footer class="metadata">
             <ul>

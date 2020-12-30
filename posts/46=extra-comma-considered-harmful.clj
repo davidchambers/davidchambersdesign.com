@@ -23,16 +23,19 @@
              of extra commas. Consider the following code snippet:"])
 
         (code-block :javascript
-           "var ninja = {
-                name: 'Hattori Hanzou Masashige',
-                shuriken: 5,
-                attack: function () {
-                    if (ninja.shuriken) {
-                        ninja.shuriken -= 1;
-                        window.alert('Hai-Ya!');
-                    }
-                },
-            };")
+
+           """
+           var ninja = {
+               name: 'Hattori Hanzou Masashige',
+               shuriken: 5,
+               attack: function () {
+                   if (ninja.shuriken) {
+                       ninja.shuriken -= 1;
+                       window.alert('Hai-Ya!');
+                   }
+               },
+           };
+           """)
 
         (p
            ["JSLint returns an " (em "extra comma") " error for the

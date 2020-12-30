@@ -19,14 +19,16 @@
 
         (code-block :python
 
-           "def cache(saved=None):
-                def _(thing=None):
-                    nonlocal saved
-                    if thing is not None:
-                        saved = thing
-                    return saved
-                return _
-            cache = cache()")
+           """
+           def cache(saved=None):
+               def _(thing=None):
+                   nonlocal saved
+                   if thing is not None:
+                       saved = thing
+                   return saved
+               return _
+           cache = cache()
+           """)
 
         (p
            ["If (the rebound) " (code "cache") " is passed no arguments
@@ -36,10 +38,12 @@
 
         (code-block :TK
 
-           ">>> cache(2**3)
-            8
-            >>> cache()
-            8")
+           """
+           >>> cache(2**3)
+           8
+           >>> cache()
+           8
+           """)
 
         (p
            ["This works thanks to the " (code "nonlocal") " keyword
@@ -51,14 +55,16 @@
 
     (code-block :python
 
-       "def cache(saved=None):
-            def _(thing=None):
-                # nonlocal saved
-                if thing is not None:
-                    saved = thing
-                return saved
-            return _
-        cache = cache()")
+       """
+       def cache(saved=None):
+           def _(thing=None):
+               # nonlocal saved
+               if thing is not None:
+                   saved = thing
+               return saved
+           return _
+       cache = cache()
+       """)
 
     (p
        ["The " (code "nonlocal") " line is commented out as it's a syntax
@@ -66,11 +72,13 @@
 
     (code-block :TK
 
-       ">>> cache(2**3)
-        8
-        >>> cache()
-        ...
-        UnboundLocalError: local variable 'saved' referenced before assignment")
+       """
+       >>> cache(2**3)
+       8
+       >>> cache()
+       ...
+       UnboundLocalError: local variable 'saved' referenced before assignment
+       """)
 
     (p
        ["When " (code "cache") " is passed a (non-" (code "None") ") "
@@ -91,28 +99,32 @@
 
     (code-block :python
 
-       "def cache():
-            ns = {'saved': None}
-            def _(thing=None):
-                if thing is not None:
-                    ns['saved'] = thing
-                return ns['saved']
-            return _
-        cache = cache()")
+       """
+       def cache():
+           ns = {'saved': None}
+           def _(thing=None):
+               if thing is not None:
+                   ns['saved'] = thing
+               return ns['saved']
+           return _
+       cache = cache()
+       """)
 
     (h4 "Function object")
 
     (code-block :python
 
-       "def cache():
-            def ns(): pass
-            ns.saved = None
-            def _(thing=None):
-                if thing is not None:
-                    ns.saved = thing
-                return ns.saved
-            return _
-        cache = cache()")
+       """
+       def cache():
+           def ns(): pass
+           ns.saved = None
+           def _(thing=None):
+               if thing is not None:
+                   ns.saved = thing
+               return ns.saved
+           return _
+       cache = cache()
+       """)
 
     (p
        ["The dictionary approach is arguably more correct, but subscript

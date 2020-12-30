@@ -45,7 +45,8 @@
           <pre><code>function fibonacci(n) {
     if (n &lt;= 1) return n;
     return fibonacci(n - 2) + fibonacci(n - 1);
-}</code></pre>
+}
+</code></pre>
           <p>I created a simple timer:</p>
           <pre><code>function timer(func) {
     var i = 10, start;
@@ -54,7 +55,8 @@
         func.apply(this, [].slice.call(arguments, 1));
         console.log(func.name, 'executed in', new Date - start, 'ms');
     }
-}</code></pre>
+}
+</code></pre>
           <p>How does the vanilla function perform?</p>
           <pre><code>&gt;&gt;&gt; timer(fibonacci, 35);
 fibonacci executed in 559 ms
@@ -66,7 +68,8 @@ fibonacci executed in 559 ms
 fibonacci executed in 558 ms
 fibonacci executed in 558 ms
 fibonacci executed in 559 ms
-fibonacci executed in 559 ms</code></pre>
+fibonacci executed in 559 ms
+</code></pre>
           <p>Values of <code>n</code> much larger than 35 locked up my browser. That's not good. Fortunately, it's easy to improve the performance significantly.</p>
           <h3>JavaScript Fibonacci with caching via closure</h3>
           <p>JavaScript has closure, which means that each function has access to the variables and parameters or its outer function (and the variables and parameters of its outer function's outer function, and so on).</p>
@@ -84,19 +87,21 @@ fibonacci executed in 559 ms</code></pre>
 
         return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
     };
-}());</code></pre>
+}());
+</code></pre>
           <p>Does caching make a difference?</p>
           <pre><code>&gt;&gt;&gt; timer(fibonacci, 35);
-executed in 1 ms
-executed in 0 ms
-executed in 0 ms
-executed in 0 ms
-executed in 0 ms
-executed in 0 ms
-executed in 0 ms
-executed in 0 ms
-executed in 0 ms
-executed in 0 ms</code></pre>
+ executed in 1 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+</code></pre>
           <p>Undeniably, yes. Not only is the new version of the function much faster, but its less recursive nature makes it possible to find Fibonacci numbers for much larger values of <code>n</code>.</p>
           <p>A slightly different approach is to initialize the cache with values for 0 and 1, making the <code>if (n &lt;= 1)</code> logic unnecessary. Since one of the cached values is now 0, however, the <code>if (cached)</code> statement is no longer appropriate.</p>
           <pre><code>fibonacci = (function () {
@@ -110,7 +115,8 @@ executed in 0 ms</code></pre>
 
         return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
     };
-}());</code></pre>
+}());
+</code></pre>
           <h3>JavaScript Fibonacci with caching via function property</h3>
           <p>It's also possible to cache results without using closure. This is important since Python (which I'll get to shortly) does not have this capability.</p>
           <pre><code>function fibonacci(n) {
@@ -123,22 +129,26 @@ executed in 0 ms</code></pre>
     if (n &lt;= 1) return n;
 
     return (fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
-}</code></pre>
+}
+</code></pre>
           <p>To avoid the overhead of checking for the existence of the cache on each invocation, the cache could be initialized outside of the function definition.</p>
           <pre><code>function fibonacci(n) {
     // function body
 }
-fibonacci.cache = {};</code></pre>
+fibonacci.cache = {};
+</code></pre>
           <p>Caching via function property and caching via closure performed equally well for me in Safari on Mac OS X.</p>
           <h3>Python Fibonacci without caching</h3>
           <pre><code>def fibonacci(n):
-if n &lt;= 1:
-    return n
-else:
-    return fibonacci(n - 2) + fibonacci(n - 1)</code></pre>
+    if n &lt;= 1:
+        return n
+    else:
+        return fibonacci(n - 2) + fibonacci(n - 1)
+</code></pre>
           <p>Does the vanilla Python function outperform the vanilla JavaScript function?</p>
           <pre><code>&gt;&gt;&gt; import time
-&gt;&gt;&gt; for i in range(10): t = time.time(); fibonacci(35); print time.time() - t;</code></pre>
+&gt;&gt;&gt; for i in range(10): t = time.time(); fibonacci(35); print time.time() - t;
+</code></pre>
           <p>Interestingly, Python was more than an order of magnitude slower than JavaScript in this worst-case scenario. The point of this exercise is not to compare apples to oranges, however, it's to see how much of a difference caching makes in each case.</p>
           <h3>Python Fibonacci with caching via function property</h3>
           <pre><code>def fibonacci(n):
@@ -150,18 +160,20 @@ else:
         f = fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
         return f
 
-fibonacci.cache = {}</code></pre>
+fibonacci.cache = {}
+</code></pre>
           <p>This resulted in <code>fibonacci(35)</code> being executed roughly 75,000 times as fast on an empty cache as the vanilla function.</p>
           <h3>Python Fibonacci with caching via mutable default argument</h3>
           <p>For the sake of completion I'll include this unappealing approach.</p>
           <pre><code>def fibonacci(n, _cache={}):
-if n &lt;= 1:
-    return n
-elif n in _cache:
-    return _cache[n]
-else:
-    f = _cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
-    return f</code></pre>
+    if n &lt;= 1:
+        return n
+    elif n in _cache:
+        return _cache[n]
+    else:
+        f = _cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
+        return f
+</code></pre>
           <p>How does this work? In Python, default arguments are brought to life upon a function's creation, not its execution. Thus when <code>fibonacci</code> is called with just one argument (<code>n</code>) the value of <code>_cache</code> is the dictionary that was created at the time that <code>fibonacci</code> was created. Python's dictionaries are mutable, meaning that they can be changed in place. Together, these two features make it possible to use a mutable default argument — in this case a dictionary — as a cache.</p>
           <h3>Final thoughts</h3>
           <p>I had fun experimenting with these various approaches, furthering my understanding of both JavaScript and Python in the process. I've been writing JavaScript casually for several years; now that I'm making an effort to actually <em>learn</em> the language I'm starting to appreciate its brilliance.</p>

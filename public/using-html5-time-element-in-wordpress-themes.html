@@ -41,7 +41,8 @@
           </header>
           <p>I've begun retrofitting this site with HTML5 elements. I'm thoroughly enjoying the process (I love meaningful markup).</p>
           <p>One of the first HTML5 elements I've introduced is the <strong>time</strong> element which, through its <strong>datetime</strong> attribute, provides a machine-readable version of dates and times.</p>
-          <pre><code>&lt;time datetime="2009-11-01T16:41:53+13:00"&gt;1 November 2009&lt;/time&gt;</code></pre>
+          <pre><code>&lt;time datetime="2009-11-01T16:41:53+13:00"&gt;1 November 2009&lt;/time&gt;
+</code></pre>
           <p>I wrote a function to generate the machine-readable dates and times for blog comments.</p>
           <pre><code>&lt;?php
 
@@ -68,9 +69,11 @@ function comment_datetime()
     echo $output;
 }
 
-?&gt;</code></pre>
+?&gt;
+</code></pre>
           <p>While looping through comments in your WordPress theme, call the above function to print a valid datetime string.</p>
-          <pre><code>&lt;time datetime="&lt;?php comment_datetime(); ?&gt;"&gt;</code></pre>
+          <pre><code>&lt;time datetime="&lt;?php comment_datetime(); ?&gt;"&gt;
+</code></pre>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/14/">Short URL</a></li>

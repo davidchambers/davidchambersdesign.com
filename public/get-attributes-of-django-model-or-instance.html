@@ -45,17 +45,21 @@
 class Musician(models.Model):
     first_name = models.CharField()
     last_name  = models.CharField()
-    instrument = models.CharField()</code></pre>
+    instrument = models.CharField()
+</code></pre>
           <p>One option is to use <code>__dict__.keys()</code>:</p>
           <pre><code>&gt;&gt;&gt; m = Musician(first_name='Norah', last_name='Jones', instrument='piano')
 &gt;&gt;&gt; print m.__dict__.keys()
-['last_name', 'instrument', 'first_name', 'id']</code></pre>
+['last_name', 'instrument', 'first_name', 'id']
+</code></pre>
           <p>Another options is to use <code>_meta.fields</code>:</p>
           <pre><code>&gt;&gt;&gt; print [f.name for f in m._meta.fields]
-['id', 'first_name', 'last_name', 'instrument']</code></pre>
+['id', 'first_name', 'last_name', 'instrument']
+</code></pre>
           <p>This approach also works on models directly:</p>
           <pre><code>&gt;&gt;&gt; print [f.name for f in Musician._meta.fields]
-['id', 'first_name', 'last_name', 'instrument']</code></pre>
+['id', 'first_name', 'last_name', 'instrument']
+</code></pre>
           <h3>Advantages of using <code>_meta.fields</code></h3>
           <ul>
             <li>items in returned list are correctly ordered</li>

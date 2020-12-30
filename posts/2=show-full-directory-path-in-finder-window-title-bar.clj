@@ -35,13 +35,19 @@
          and hit " (strong "return") "."])
 
     (code-block :console
-       "defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES")
+
+       """
+       defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES
+       """)
 
     (p
        ["For the changes to take effect, you will need to restart Finder:"])
 
     (code-block :console
-       "killall Finder")
+
+       """
+       killall Finder
+       """)
 
     (captioned-image
        "/images/posts/2/finder-windows-with-paths.png"
@@ -56,13 +62,19 @@
        ["To revert to the default title bar treatment, simply enter:"])
 
     (code-block :console
-       "defaults write com.apple.finder _FXShowPosixPathInTitle -bool NO")
+
+       """
+       defaults write com.apple.finder _FXShowPosixPathInTitle -bool NO
+       """)
 
     (p
        ["Then, restart Finder once again:"])
 
     (code-block :console
-       "killall Finder")
+
+       """
+       killall Finder
+       """)
 
   ]
 
