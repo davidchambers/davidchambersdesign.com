@@ -6,6 +6,7 @@
       base-template (import "./base-template.clj")
       render-document (import "./render-document.clj")
       render-archives (import "./render-archives.clj")
+      render-tags (import "./render-tags.clj")
       render-icon (import "./render-icon.clj")
       render-post (import "./render-post.clj")
 
@@ -43,6 +44,10 @@
         (chain (save-file "archives" "Archives")
                (map render-archives posts))
 
+      save-tags
+        (chain (save-file "tags" "Tags")
+               (map render-tags posts))
+
       save-posts
         (chain (lambda [posts]
                   (traverse Future
@@ -64,9 +69,11 @@
 
       save-all (lift-2 prepend
                        save-archives
-                       (lift-2 concat
-                               save-posts
-                               save-icons))]
+                       (lift-2 prepend
+                               save-tags
+                               (lift-2 concat
+                                       save-posts
+                                       save-icons)))]
 
    (fork (lambda [error] (.error error console))
          (lambda [array] (.log "Saved" (size array) "files" console))
