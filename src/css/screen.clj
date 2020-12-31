@@ -9,11 +9,44 @@
       , (compose (join-with ", ") (map coerce))
       rgba (lambda [r g b a] (++ ["rgba(" (, [r g b a]) ")"]))
       url (lambda [url] (++ ["url(" url ")"]))
-      !important (compose (flip concat " !important") coerce)] {
+      !important (compose (flip concat " !important") coerce)
+
+      base03  "#002b36"
+      base02  "#073642"
+      base01  "#586e75"
+      base00  "#657b83"
+      base0   "#839496"
+      base1   "#93a1a1"
+      base2   "#eee8d5"
+      base3   "#fdf6e3"
+      yellow  "#b58900"
+      orange  "#cb4b16"
+      red     "#dc322f"
+      magenta "#d33682"
+      violet  "#6c71c4"
+      blue    "#268bd2"
+      cyan    "#2aa198"
+      green   "#859900"
+
+      mid-gray "#a9a9a9"
+      pink "#ff5e99"
+      recycled-paper "#fef9ec"
+
+      floor ("floor" Math)
+      log-2 ("log2" Math)
+      tag-background
+        (lambda [count]
+           (let [value (.toString 16 (floor (- (* 5 (log-2 count)) 247)))]
+              (++ ["#" value value value])))
+      tag-color
+        (lambda [count]
+           (rgba 0 0 0 (.replace (regex "" "[.]$") "" (.replace (regex "" "0*$") "" (.toFixed 3 (+ 0.3 (* 0.1 (log-2 count))))))))]
+
+(reduce concat {} [{
 
   "html" [
     :height (% 100)
-    :background-color "#fdf6e3"
+    :background-color base3
   ]
   "html > body" [
     :font-size (px 12)
@@ -23,10 +56,10 @@
     :position :relative
     :min-width (px 675)
     :height (% 100)
-    :background-color "#fdf6e3"
+    :background-color base3
     :font-size (% 75)
     :font-family (, ["'Lucida Grande'" "'Lucida Sans Unicode'" "Helvetica" "Arial" :sans-serif])
-    :color "#657b83"
+    :color base00
     :cursor :default
   ]
 
@@ -141,14 +174,14 @@
     :background [:no-repeat (% 50)]
   ]
   "#nav a:focus" [
-    :border-color "#cb4b16"
+    :border-color orange
     :background-color "#eecc66"
   ]
   "#nav a:focus > span" [
     :visibility :visible
   ]
   "#nav a:hover, #nav a.hover" [
-    :border-color "#cb4b16"
+    :border-color orange
     :background-color :white
   ]
   "#nav a:hover > span, #nav a.hover > span" [
@@ -162,7 +195,7 @@
     :display :block
     :width (px 354)
     :height (px 10)
-    :background "#fdf6e3"
+    :background base3
     :line-height 10
     :overflow :hidden
     :visibility :hidden
@@ -231,17 +264,17 @@
   ]
   "#wrap + footer > :first-child" [
     :margin [(px -1) 0 0]
-    :color "#93a1a1"
+    :color base1
   ]
 
   "::-moz-selection" [
-    :background "#ff5e99"
+    :background pink
     :color :white
     :text-shadow :none
   ]
 
   "::selection" [
-    :background "#ff5e99"
+    :background pink
     :color :white
     :text-shadow :none
   ]
@@ -249,14 +282,14 @@
   "a" [
     :font-weight :bold
     :text-decoration :none
-    :color "#268bd2"
+    :color blue
   ]
   "a:focus" [
-    :color "#cb4b16"
+    :color orange
     :outline :none
   ]
   "a:hover" [
-    :color "#cb4b16"
+    :color orange
   ]
   "a code, a var" [
     :color :inherit
@@ -265,14 +298,14 @@
   "aside" [
     :margin [(em 1.75) 0 0]
     :font-style :italic
-    :color "#93a1a1"
+    :color base1
   ]
 
   "blockquote" [
-    :border-left [(em 0.5) :solid "#eee8d5"]
+    :border-left [(em 0.5) :solid base2]
     :padding [0 (em 2.25) 0 (em 1.75)]
     :font-style :italic
-    :color "#93a1a1"
+    :color base1
   ]
   "blockquote em" [
     :font-style :normal
@@ -284,11 +317,11 @@
   ]
 
   "code, var" [
-    :border [(px 1) :solid "#eee8d5"]
-    :background "#fef9ec"
+    :border [(px 1) :solid base2]
+    :background recycled-paper
     :padding [(px 1) (px 4)]
     :font [:normal "120%/1" (, ["Courier" "'Courier New'" :monospace])]
-    :color "#586e75"
+    :color base01
   ]
 
   "pre code" [
@@ -336,7 +369,7 @@
   ]
   "dl dd" [
     :font-style :italic
-    :color "#93a1a1"
+    :color base1
   ]
 
   "em" [
@@ -345,7 +378,7 @@
 
   "h1, h2, h3, h4" [
     :font [:bold "1.667em/1.05" (, ["'proxima-nova-1'" "'proxima-nova-2'" "Helvetica" "Arial" :sans-serif])]
-    :color "#586e75"
+    :color base01
     :text-shadow [0 (px 1) 0 :white]
   ]
 
@@ -440,16 +473,16 @@
     :-webkit-box-sizing :content-box
     :height (px 15)
     :border [(px 1) :solid "#cccccc"]
-    :background "#fef9ec"
+    :background recycled-paper
     :padding [(px 3) (em 0.5)]
     :font-size (em 1)
   ]
   "input[type='url']:focus, input[type='text']:focus, input[type='email']:focus, input[type='search']:focus" [
-    :border-color "#268bd2"
+    :border-color blue
     :outline :none
   ]
   "input.placeholder" [
-    :color (!important :darkgrey)
+    :color (!important mid-gray)
   ]
 
   "ins" [
@@ -462,7 +495,7 @@
     :left [(em 19.833)]
     :top 0
     :margin [(px 1) 0 0]
-    :color "#93a1a1"
+    :color base1
   ]
   "label.required:after" [
     :content "'*'"
@@ -485,13 +518,13 @@
   "p.caption" [
     :margin [(em 0.5) 0 0]
     :font-style :italic
-    :color "#93a1a1"
+    :color base1
   ]
 
   "pre" [
     :margin [(em 1.286) 0 (em -0.214)]
-    :border [(px 1) :solid "#eee8d5"]
-    :background-color "#fef9ec"
+    :border [(px 1) :solid base2]
+    :background-color recycled-paper
     :padding [(em 0.143) (em 0.714)]
     :font ["1.167em/1.5" (, ["Courier" "'Courier New'" :monospace])]
     :overflow :auto
@@ -513,19 +546,19 @@
     :width (% 98)
     :height (em 15)
     :border [(px 1) :solid "#cccccc"]
-    :background "#fef9ec"
+    :background recycled-paper
     :padding [(em 0.333) (em 0.5)]
     :font ["1em/1.25" (, ["Monaco" :monospace])]
     :outline :none
     :overflow :auto
   ]
   "textarea:focus" [
-    :border-color "#268bd2"
+    :border-color blue
   ]
 
   "time span" [
     :display :block
-    :color "#93a1a1"
+    :color base1
   ]
   "time span + span" [
     :color :darkgrey
@@ -556,7 +589,7 @@
   "article > header > dl" [
     :margin [(em 1.571) 0 (em -0.071)]
     :font ["1.167em/1.5" (, ["Courier" "'Courier New'" :monospace])]
-    :color "#93a1a1"
+    :color base1
     :overflow :auto
   ]
   "article > header > dl > dt" [
@@ -609,8 +642,8 @@
     :transition-property         (, [:top :left         :box-shadow :padding :font-size :z-index])
     :transition-duration (, [(s 0.2) (s 0.2) (s 0.2) (s 0.2) (s 0.167) (s 0.2)])
     :transition-timing-function :ease
-    :background "#e1e1e1"
-    :color (rgba 0 0 0 0.732)
+    :background (tag-background 20)
+    :color (tag-color 20)
   ]
   "#tags li a:focus, #tags li a:hover, #tags li a.hover" [
     :left (px -21)
@@ -621,82 +654,18 @@
     :font-size (em 1.167)
     :z-index 99
   ]
-  "#tags li[data-count='1'] a" [
-    :background "#f7f7f7"
-    :color (rgba 0 0 0 0.3)
-  ]
-  "#tags li[data-count='2'] a" [
-    :background "#f2f2f2"
-    :color (rgba 0 0 0 0.4)
-  ]
-  "#tags li[data-count='3'] a" [
-    :background "#efefef"
-    :color (rgba 0 0 0 0.458)
-  ]
-  "#tags li[data-count='4'] a" [
-    :background "#ededed"
-    :color (rgba 0 0 0 0.5)
-  ]
-  "#tags li[data-count='5'] a" [
-    :background "#ebebeb"
-    :color (rgba 0 0 0 0.532)
-  ]
-  "#tags li[data-count='6'] a" [
-    :background "#eaeaea"
-    :color (rgba 0 0 0 0.558)
-  ]
-  "#tags li[data-count='7'] a" [
-    :background "#e8e8e8"
-    :color (rgba 0 0 0 0.581)
-  ]
-  "#tags li[data-count='8'] a" [
-    :background "#e8e8e8"
-    :color (rgba 0 0 0 0.6)
-  ]
-  "#tags li[data-count='9'] a" [
-    :background "#e7e7e7"
-    :color (rgba 0 0 0 0.617)
-  ]
-  "#tags li[data-count='10'] a" [
-    :background "#e6e6e6"
-    :color (rgba 0 0 0 0.632)
-  ]
-  "#tags li[data-count='11'] a" [
-    :background "#e5e5e5"
-    :color (rgba 0 0 0 0.646)
-  ]
-  "#tags li[data-count='12'] a" [
-    :background "#e5e5e5"
-    :color (rgba 0 0 0 0.658)
-  ]
-  "#tags li[data-count='13'] a" [
-    :background "#e4e4e4"
-    :color (rgba 0 0 0 0.67)
-  ]
-  "#tags li[data-count='14'] a" [
-    :background "#e3e3e3"
-    :color (rgba 0 0 0 0.681)
-  ]
-  "#tags li[data-count='15'] a" [
-    :background "#e3e3e3"
-    :color (rgba 0 0 0 0.691)
-  ]
-  "#tags li[data-count='16'] a" [
-    :background "#e3e3e3"
-    :color (rgba 0 0 0 0.7)
-  ]
-  "#tags li[data-count='17'] a" [
-    :background "#e2e2e2"
-    :color (rgba 0 0 0 0.709)
-  ]
-  "#tags li[data-count='18'] a" [
-    :background "#e2e2e2"
-    :color (rgba 0 0 0 0.717)
-  ]
-  "#tags li[data-count='19'] a" [
-    :background "#e1e1e1"
-    :color (rgba 0 0 0 0.725)
-  ]
+
+}
+
+(reduce (lambda [accum count]
+           (insert (++ ["#tags li[data-count='" count "'] a"])
+                   [:background (tag-background count)
+                    :color (tag-color count)]
+                   accum))
+        {}
+        (range 1 20))
+
+{
 
   ".hashify-editor" [
     :margin-top (px 2)
@@ -717,7 +686,7 @@
   ]
 
   ".filesize" [
-    :color "#93a1a1"
+    :color base1
   ]
 
   ".structural" [
@@ -734,7 +703,7 @@
   ]
   "ol li.interviewer:nth-child(1),
    ol li.interviewer ~ li:nth-child(odd)" [
-    :color "#93a1a1"
+    :color base1
   ]
 
   "#comments, #related, #respond" [
@@ -771,16 +740,16 @@
     :display :inline
     :margin [0 (em 0.25) 0 0]
     :font [:bold "1.667em/1.05" (, ["'proxima-nova-1'" "'proxima-nova-2'" "Helvetica" "Arial" :sans-serif])]
-    :color "#586e75"
+    :color base01
     :text-shadow [0 (px 1) 0 :white]
   ]
   "#main article header time" [
     :display :inline
     :font [:bold "1.667em/1.05" (, ["'proxima-nova-1'" "'proxima-nova-2'" "Helvetica" "Arial" :sans-serif])]
-    :color "#586e75"
+    :color base01
     :text-shadow [0 (px 1) 0 :white]
     :font-weight :normal
-    :color "#93a1a1"
+    :color base1
     :white-space :nowrap
   ]
 
@@ -788,7 +757,7 @@
     :margin [(em 1.75) 0 (px -1)]
     :border-width [(px 1) 0]
     :border-style :solid
-    :border-color "#93a1a1"
+    :border-color base1
     :padding [(em 1.667) 0 (em 1.75)]
   ]
   ".update + .update" [
@@ -813,12 +782,12 @@
   "footer.metadata ul a" [
     :margin-left (em -0.833)
     :border-radius (em 0.875)
-    :background "#268bd2"
+    :background blue
     :padding [0 (em 0.667) 0 (em 0.833)]
     :color :white
   ]
   "footer.metadata ul a:focus, footer.metadata ul a:hover" [
-    :background "#cb4b16"
+    :background orange
   ]
   "footer.metadata h4" [
     :position :absolute
@@ -938,7 +907,7 @@
     :text-shadow [0 (px 1) 0 :white]
   ]
   "input[type='submit']:focus" [
-    :border-color "#268bd2"
+    :border-color blue
     :outline :none
   ]
   "input[type='submit']:hover" [
@@ -978,7 +947,7 @@
 
   "ol.posts" [
     :list-style :none
-    :color "#93a1a1"
+    :color base1
   ]
 
   "ol.archives" [
@@ -990,7 +959,7 @@
     :margin [(em 1.75) 0 0 (px 21)]
     :padding 0
     :font [:bold "1em/1.75" (, ["'Lucida Grande'" "'Lucida Sans Unicode'" "Helvetica" "Arial" :sans-serif])]
-    :color "#93a1a1"
+    :color base1
   ]
   "ol.archives li ol" [
     :margin 0
@@ -1160,168 +1129,219 @@
   ]
 
   ".codehilite .hll" [
-    :background-color "#eee8d5"
+    :background-color base2
   ]
+  ; Comment
   ".codehilite .c" [
     :font-style :italic
-    :color "#93a1a1"
+    :color base1
   ]
+  ; Keyword
   ".codehilite .k" [
     :font-weight :bold
   ]
+  ; Operator
   ".codehilite .o" [
     :font-weight :bold
   ]
+  ; Comment.Multiline
   ".codehilite .cm" [
     :font-style :italic
-    :color "#93a1a1"
+    :color base1
   ]
+  ; Comment.Preproc
   ".codehilite .cp" [
     :font-weight :bold
-    :color "#93a1a1"
+    :color base1
   ]
+  ; Comment.Single
   ".codehilite .c1" [
     :font-style :italic
-    :color "#93a1a1"
+    :color base1
   ]
+  ; Comment.Special
   ".codehilite .cs" [
     :font-style :italic
     :font-weight :bold
-    :color "#93a1a1"
+    :color base1
   ]
+  ; Generic.Emph
   ".codehilite .ge" [
     :font-style :italic
   ]
+  ; Generic.Error
   ".codehilite .gr" [
-    :color "#dc322f"
+    :color red
   ]
+  ; Generic.Heading
   ".codehilite .gh" [
-    :color "#93a1a1"
+    :color base1
   ]
+  ; Generic.Output
   ".codehilite .go" [
-    :color "#93a1a1"
+    :color base1
   ]
+  ; Generic.Prompt
   ".codehilite .gp" [
-    :color "#93a1a1"
+    :color base1
   ]
+  ; Generic.Strong
   ".codehilite .gs" [
     :font-weight :bold
   ]
+  ; Generic.Subheading
   ".codehilite .gu" [
-    :color "#93a1a1"
+    :color base1
   ]
+  ; Generic.Traceback
   ".codehilite .gt" [
-    :color "#dc322f"
+    :color red
   ]
+  ; Keyword.Constant
   ".codehilite .kc" [
     :font-weight :bold
   ]
+  ; Keyword.Declaration
   ".codehilite .kd" [
     :font-weight :bold
   ]
+  ; Keyword.Namespace
   ".codehilite .kn" [
     :font-weight :bold
   ]
+  ; Keyword.Pseudo
   ".codehilite .kp" [
     :font-weight :bold
   ]
+  ; Keyword.Reserved
   ".codehilite .kr" [
     :font-weight :bold
   ]
+  ; Keyword.Type
   ".codehilite .kt" [
     :font-weight :bold
   ]
+  ; Literal.Number
   ".codehilite .m" [
-    :color "#2aa198"
+    :color cyan
   ]
+  ; Literal.String
   ".codehilite .s" [
-    :color "#b58900"
+    :color yellow
   ]
+  ; Name.Attribute
   ".codehilite .na" [
-    :color "#2aa198"
+    :color cyan
   ]
+  ; Name.Class
   ".codehilite .nc" [
     :font-weight :bold
   ]
+  ; Name.Constant
   ".codehilite .no" [
-    :color "#2aa198"
+    :color cyan
   ]
+  ; Name.Entity
   ".codehilite .ni" [
-    :color "#d33682"
+    :color magenta
   ]
+  ; Name.Exception
   ".codehilite .ne" [
     :font-weight :bold
-    :color "#cb4b16"
+    :color orange
   ]
+  ; Name.Function
   ".codehilite .nf" [
     :font-weight :bold
-    :color "#cb4b16"
+    :color orange
   ]
+  ; Name.Tag
   ".codehilite .nt" [
-    :color "#268bd2"
+    :color blue
   ]
+  ; Operator.Word
   ".codehilite .ow" [
     :font-weight :bold
   ]
+  ; Literal.Number.Float
   ".codehilite .mf" [
-    :color "#2aa198"
+    :color cyan
   ]
+  ; Literal.Number.Hex
   ".codehilite .mh" [
-    :color "#2aa198"
+    :color cyan
   ]
+  ; Literal.Number.Integer
   ".codehilite .mi" [
-    :color "#2aa198"
+    :color cyan
   ]
+  ; Literal.Number.Oct
   ".codehilite .mo" [
-    :color "#2aa198"
+    :color cyan
   ]
+  ; Literal.String.Backtick
   ".codehilite .sb" [
-    :color "#b58900"
+    :color yellow
   ]
+  ; Literal.String.Char
   ".codehilite .sc" [
-    :color "#b58900"
+    :color yellow
   ]
+  ; Literal.String.Doc
   ".codehilite .sd" [
-    :color "#b58900"
+    :color yellow
   ]
+  ; Literal.String.Double
   ".codehilite .s2" [
-    :color "#b58900"
+    :color yellow
   ]
+  ; Literal.String.Escape
   ".codehilite .se" [
-    :color "#b58900"
+    :color yellow
   ]
+  ; Literal.String.Heredoc
   ".codehilite .sh" [
-    :color "#b58900"
+    :color yellow
   ]
+  ; Literal.String.Interpol
   ".codehilite .si" [
-    :color "#b58900"
+    :color yellow
   ]
+  ; Literal.String.Other
   ".codehilite .sx" [
-    :color "#b58900"
+    :color yellow
   ]
+  ; Literal.String.Regex
   ".codehilite .sr" [
-    :color "#dc322f"
+    :color red
   ]
+  ; Literal.String.Single
   ".codehilite .s1" [
-    :color "#b58900"
+    :color yellow
   ]
+  ; Literal.String.Symbol
   ".codehilite .ss" [
-    :color "#b58900"
+    :color yellow
   ]
+  ; Name.Builtin.Pseudo
   ".codehilite .bp" [
-    :color "#93a1a1"
+    :color base1
   ]
+  ; Name.Variable.Class
   ".codehilite .vc" [
-    :color "#2aa198"
+    :color cyan
   ]
+  ; Name.Variable.Global
   ".codehilite .vg" [
-    :color "#2aa198"
+    :color cyan
   ]
+  ; Name.Variable.Instance
   ".codehilite .vi" [
-    :color "#2aa198"
+    :color cyan
   ]
+  ; Literal.Number.Integer.Long
   ".codehilite .il" [
-    :color "#2aa198"
+    :color cyan
   ]
 
-})))
+}]))))
