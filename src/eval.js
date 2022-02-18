@@ -2,7 +2,7 @@
 
 const path = require ('path');
 
-const S = require ('sanctuary');
+const sanctuary = require ('sanctuary');
 const $ = require ('sanctuary-def');
 
 const import_ = require ('./import.js');
@@ -35,6 +35,7 @@ const {
   pair,
   reduce,
   reverse,
+  show,
   snd,
   stripPrefix,
   tagBy,
@@ -42,25 +43,27 @@ const {
   unfoldr,
   value,
   zip,
-} = S.unchecked;
+} = sanctuary.unchecked;
 
 const evaluate = module.exports = dirname => _env => term => {
   const env = {..._env, [Symbol.for ('__dirname')]: dirname};
-  switch (term.type) {
-    case 'symbol':
-    case 'string-literal':
-    case 'number-literal': {
-      return Right (term.value);
+  switch (term.__type) {
+    case 'symbol': {
+      return Right (Symbol.for (term.__name));
+    }
+    case 'string':
+    case 'number': {
+      return Right (term.__value);
     }
     case 'identifier': {
-      return maybe (Left (new ReferenceError (`${term.name} is not defined`)))
+      return maybe (Left (new ReferenceError (`${term.__name} is not defined`)))
                    (Right)
-                   (value (Symbol.for (term.name)) (env));
+                   (value (Symbol.for (term.__name)) (env));
     }
     case '[]': {
       return traverse (Either)
                       (evaluate (dirname) (env))
-                      (term.elements);
+                      (term.__elements);
     }
     case '{}': {
       return map (values => reduce (m => ([k, v]) => ({...m, [k]: v}))
@@ -73,13 +76,13 @@ const evaluate = module.exports = dirname => _env => term => {
                                             (values)))
                  (traverse (Either)
                            (evaluate (dirname) (env))
-                           (term.elements));
+                           (term.__elements));
     }
     case '()': {
       return array
         (Left (new Error ('Empty parentheses')))
         (head => tail => {
-           if (head.type === 'identifier' && head.name === 'if') {
+           if (head.__type === 'identifier' && head.__name === 'if') {
              if (tail.length !== 3) {
                return Left (new Error ('Invalid if expression'));
              }
@@ -89,13 +92,13 @@ const evaluate = module.exports = dirname => _env => term => {
                                     (tagBy (is ($.Boolean))))
                                  (evaluate (dirname) (env) (predicate)));
            }
-           if (head.type === 'identifier' && head.name === 'let') {
+           if (head.__type === 'identifier' && head.__name === 'let') {
              if (tail.length !== 2) {
                return Left (new Error ('Invalid let expression'));
              }
              const [bindings, body] = tail;
-             if (!(bindings.type === '[]' &&
-                   bindings.elements.every ((e, idx) => idx % 2 === 1 || e.type === 'identifier'))) {
+             if (!(bindings.__type === '[]' &&
+                   bindings.__elements.every ((e, idx) => idx % 2 === 1 || e.__type === 'identifier'))) {
                return Left (new Error ('Invalid let expression'));
              }
              return chain (env => evaluate (dirname) (env) (body))
@@ -104,18 +107,18 @@ const evaluate = module.exports = dirname => _env => term => {
                                   (Right (env))
                                   (unfoldr (array (Nothing)
                                                   (k => B (pair (v => B (Just)
-                                                                        (Pair (Pair (k.name) (v)))))
+                                                                        (Pair (Pair (k.__name) (v)))))
                                                           (array (Pair (undefined) ([]))
                                                                  (Pair))))
-                                           (bindings.elements)));
+                                           (bindings.__elements)));
            }
-           if (head.type === 'identifier' && head.name === 'lambda') {
+           if (head.__type === 'identifier' && head.__name === 'lambda') {
              if (tail.length !== 2) {
                return Left (new Error ('Invalid lambda expression'));
              }
              const [params, body] = tail;
-             if (!(params.type === '[]' &&
-                   params.elements.every (e => e.type === 'identifier'))) {
+             if (!(params.__type === '[]' &&
+                   params.__elements.every (e => e.__type === 'identifier'))) {
                return Left (new Error ('Invalid lambda expression'));
              }
              return Right (
@@ -125,20 +128,20 @@ const evaluate = module.exports = dirname => _env => term => {
                                       (evaluate (dirname)
                                                 (reduce (env => ([{name}, value]) => ({...env, [Symbol.for (name)]: value}))
                                                         (env)
-                                                        (zip (params.elements) (args)))
+                                                        (zip (params.__elements) (args)))
                                                 (body)))
-                      (params.elements)
+                      (params.__elements)
                       ([]),
              );
            }
-           if (head.type === 'identifier' && head.name === 'function') {
+           if (head.__type === 'identifier' && head.__name === 'function') {
              if (tail.length !== 3) {
                return Left (new Error ('Invalid function expression'));
              }
              const [ident, params, body] = tail;
-             if (!(ident.type === 'identifier' &&
-                   params.type === '[]' &&
-                   params.elements.every (e => e.type === 'identifier'))) {
+             if (!(ident.__type === 'identifier' &&
+                   params.__type === '[]' &&
+                   params.__elements.every (e => e.__type === 'identifier'))) {
                return Left (new Error ('Invalid function expression'));
              }
              const f = reduce
@@ -147,14 +150,14 @@ const evaluate = module.exports = dirname => _env => term => {
                                (I)
                                (evaluate (dirname)
                                          (reduce (env => ([{name}, value]) => ({...env, [Symbol.for (name)]: value}))
-                                                         ({...env, [Symbol.for (ident.name)]: f})
-                                                         (zip (params.elements) (args)))
+                                                         ({...env, [Symbol.for (ident.__name)]: f})
+                                                         (zip (params.__elements) (args)))
                                          (body)))
-               (params.elements)
+               (params.__elements)
                ([]);
              return Right (f);
            }
-           if (head.type === 'identifier' && head.name === 'import') {
+           if (head.__type === 'identifier' && head.__name === 'import') {
              switch (tail.length) {
                case 1: {
                  const [importPath] = tail;
@@ -178,7 +181,7 @@ const evaluate = module.exports = dirname => _env => term => {
                }
              }
            }
-           if (head.type === 'identifier' && head.name === 'import*') {
+           if (head.__type === 'identifier' && head.__name === 'import*') {
              if (tail.length !== 2) {
                return Left (new Error ('Invalid import* expression'));
              }
@@ -210,24 +213,24 @@ const evaluate = module.exports = dirname => _env => term => {
                                                                    (evaluate (dirname) (env))
                                                                    (args))
                                                          (evaluate (dirname) (env) (self))))
-                    (head.type === 'identifier' ? stripPrefix ('.') (head.name) : Nothing)
+                    (head.__type === 'identifier' ? stripPrefix ('.') (head.__name) : Nothing)
                     (array (Nothing)
                            (B (B (B (Just) (map (reverse)))) (Pair))
                            (reverse (tail))));
          })
-        (term.elements);
+        (term.__elements);
     }
   }
 };
 
 
-if (__filename === process.argv[1]) {
+if (process.argv[1] === __filename) {
   const assert = require ('assert');
 
   const baseEnv = require ('./base.js');
 
   const eq = actual => expected => {
-    assert.deepStrictEqual (S.show (actual), S.show (expected));
+    assert.deepStrictEqual (show (actual), show (expected));
     assert.deepStrictEqual (actual, expected);
   };
 

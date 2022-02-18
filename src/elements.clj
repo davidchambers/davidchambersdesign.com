@@ -1,4 +1,4 @@
-(import* ["./base.js" "./sanctuary.clj" "./prelude.clj"]
+(import* ["./base.js" "./sanctuary.js" "./prelude.clj"]
 
 (let
    [text

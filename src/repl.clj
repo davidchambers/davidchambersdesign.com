@@ -1,4 +1,4 @@
-(import* ["./base.js" "./node.js" "./path.clj" "./sanctuary.clj"]
+(import* ["./base.js" "./node.js" "./path.clj" "./sanctuary.js"]
 
 (let [repl (import "repl")
 

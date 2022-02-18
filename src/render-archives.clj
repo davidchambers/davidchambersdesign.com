@@ -1,4 +1,4 @@
-(import* ["./base.js" "./sanctuary.clj" "./prelude.clj" "./elements.clj"]
+(import* ["./base.js" "./sanctuary.js" "./prelude.clj" "./elements.clj"]
 
 (pipe [(map (join Pair))
        (map (map-left (prop :datetime)))

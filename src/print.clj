@@ -1,4 +1,4 @@
-(import* ["./base.js" "./sanctuary.clj" "./prelude.clj"]
+(import* ["./base.js" "./sanctuary.js" "./prelude.clj"]
 
 (let [DateTime ("DateTime" (import "luxon"))
       $.Object ("Object" (import "sanctuary-def"))

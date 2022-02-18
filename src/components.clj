@@ -1,4 +1,4 @@
-(import* ["./base.js" "./sanctuary.clj" "./elements.clj"] {
+(import* ["./base.js" "./sanctuary.js" "./elements.clj"] {
 
   :caption
     (lambda [caption]

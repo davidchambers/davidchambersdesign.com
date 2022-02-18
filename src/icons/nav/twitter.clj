@@ -1,4 +1,4 @@
-(import* ["../../base.js" "../../elements.clj" "../../sanctuary.clj" "../../prelude.clj"]
+(import* ["../../base.js" "../../elements.clj" "../../sanctuary.js" "../../prelude.clj"]
 
 (let [render-fragment (import "../../render-fragment.clj")]
 

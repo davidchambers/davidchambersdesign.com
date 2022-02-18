@@ -1,9 +1,9 @@
-(import* ["./node.js" "./fs.clj" "./path.clj" "./sanctuary.clj" "./prelude.clj"]
+(import* ["./node.js" "./fs.clj" "./path.clj" "./sanctuary.js" "./prelude.clj"]
 
 (let [Future (import "fluture")
       fork ("fork" Future)
       base-env (import "./base.js")
-      base-template (import "./base-template.clj")
+      base-template (import "./base-template.js")
       render-document (import "./render-document.clj")
       render-archives (import "./render-archives.clj")
       render-tags (import "./render-tags.clj")

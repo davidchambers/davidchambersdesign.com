@@ -1,6 +1,6 @@
 ; Import order matters due to conflicts: ‘sanctuary’ and ‘elements’
 ; both export ‘div’ and ‘head’.
-(import* ["./base.js" "./sanctuary.clj" "./elements.clj"]
+(import* ["./base.js" "./sanctuary.js" "./elements.clj"]
 
 (lambda [document-title main]
    (html

@@ -1,4 +1,4 @@
-(import* ["./base.js" "./sanctuary.clj"]
+(import* ["./base.js" "./sanctuary.js"]
 
 (let [$ (import "sanctuary-def")
       $.Object ("Object" $)]

@@ -1,4 +1,4 @@
-(import* ["./base.js" "./prelude.clj" "./sanctuary.clj"]
+(import* ["./base.js" "./prelude.clj" "./sanctuary.js"]
 
 (let [replace (lambda [this that text] (.replace this that text))
       escape (pipe [(replace (regex "g" "&") "&amp;")

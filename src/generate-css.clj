@@ -1,4 +1,4 @@
-(import* ["./sanctuary.clj" "./prelude.clj"]
+(import* ["./sanctuary.js" "./prelude.clj"]
 
 (let [screen (import "./css/screen.clj")
 
