@@ -3,6 +3,15 @@
 const sanctuary = require ('sanctuary');
 
 
+// This module exposes the full Sanctuary API.
+//
+// Type checking is disabled, primarily to permit the use of symbols as keys.
+//
+// The names of the exported values differ from their Sanctuary counterparts
+// in the following ways:
+//
+//   - they use kebab case rather than camel case (e.g. `from-maybe`); and
+//   - they use ' as the suffix for variants rather than _ (e.g. `maybe'`).
 module.exports = (
   Object.fromEntries (
     Object.entries (sanctuary.unchecked)
