@@ -1,4 +1,4 @@
-(import* ["../../lang/modules/base" "../../lang/modules/prelude" "../../lang/modules/sanctuary" "../elements" "../components"] {
+(import* [:base :prelude :sanctuary "../elements" "../components"] {
 
   :title "Prototype and script.aculo.us, combined and compressed"
 

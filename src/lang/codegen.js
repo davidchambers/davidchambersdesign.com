@@ -241,8 +241,8 @@ if (process.argv[1] === __filename) {
     return pipe ([
       read,
       chain (pair (rest => trim (rest) === '' ? Right : K (Left ('Unread source text')))),
-      chain (rewrite),
-      chain (rewrite),
+      chain (rewrite ('TK')),
+      chain (rewrite ('TK')),
       chain (toJs ('TK')),
       map (toCommonJsModule),
       map (escodegen.generate),
@@ -253,12 +253,13 @@ if (process.argv[1] === __filename) {
 
   if (process.argv.length > 2) {
     const filename = process.argv[2];
+    const dirname = path.dirname (path.resolve (filename));
     const transpile = pipe ([
       read,
       chain (pair (rest => trim (rest) === '' ? Right : K (Left ('Unread source text')))),
-      chain (rewrite),
-      chain (rewrite),
-      chain (toJs (path.dirname (path.resolve (filename)))),
+      chain (rewrite (dirname)),
+      chain (rewrite (dirname)),
+      chain (toJs (dirname)),
       map (toCommonJsModule),
       map (escodegen.generate),
     ]);

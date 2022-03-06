@@ -1,4 +1,4 @@
-(import* ["../../lang/modules/base" "../elements" "../components"] {
+(import* [:base "../elements" "../components"] {
 
   :title "Application-specific volume control in Mac OS X?"
 

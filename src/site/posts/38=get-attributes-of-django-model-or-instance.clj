@@ -1,4 +1,4 @@
-(import* ["../../lang/modules/base" "../elements" "../components"] {
+(import* [:base "../elements" "../components"] {
 
   :title "Get attributes of Django model or instance"
 

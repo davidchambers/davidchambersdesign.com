@@ -1,4 +1,4 @@
-(import* ["../../lang/modules/base" "../elements" "../components"] {
+(import* [:base "../elements" "../components"] {
 
   :title "Looping more than once with the WordPress loop"
 

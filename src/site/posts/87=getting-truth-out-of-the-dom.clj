@@ -1,4 +1,4 @@
-(import* ["../../lang/modules/base" "../elements" "../components"] {
+(import* [:base "../elements" "../components"] {
 
   :title "Getting truth out of the DOM – Yehuda Katz"
 

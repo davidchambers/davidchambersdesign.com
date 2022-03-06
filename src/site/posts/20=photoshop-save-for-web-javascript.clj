@@ -1,4 +1,4 @@
-(import* ["../../lang/modules/base" "../elements" "../components"] {
+(import* [:base "../elements" "../components"] {
 
   :title "Photoshop \"save for web\" JavaScript"
 

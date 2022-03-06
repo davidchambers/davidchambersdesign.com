@@ -1,8 +1,8 @@
-(import* ["../lang/modules/base" "../lang/modules/node" "../lang/modules/fs" "../lang/modules/path" "../lang/modules/sanctuary" "../lang/modules/prelude"]
+(import* [:base :node :fs :path :sanctuary :prelude]
 
 (let [Future (import "fluture")
       fork (#fork Future)
-      base-env (import "../lang/modules/base")
+      base-env (import :base)
       base-template (import "./base-template")
       render-document (import "./render-document")
       render-archives (import "./render-archives")

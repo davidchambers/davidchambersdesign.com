@@ -1,4 +1,4 @@
-(import* ["../lang/modules/base" "../lang/modules/sanctuary"]
+(import* [:base :sanctuary]
 
 (let [render-fragment (import "./render-fragment")]
    (lambda [indent nodes]

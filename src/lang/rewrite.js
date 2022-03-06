@@ -1,9 +1,11 @@
 'use strict';
 
+const path = require ('path');
+
 const sanctuary = require ('sanctuary');
 
 const Expr = require ('./Expr.js');
-const {B, C, onArray2, onArray3, pairs, traverseE} = require ('./util.js');
+const {B, C, onArray1, onArray2, onArray3, pairs, traverseE} = require ('./util.js');
 
 
 const {
@@ -31,10 +33,16 @@ const {
   number,
   onBracketed,
   onIdentifier,
+  onSymbol,
   parenthesized,
   string,
   symbol,
 } = Expr;
+
+//    toModulePath :: String -> String -> Expr
+const toModulePath = dirname => name => (
+  string (path.relative (dirname, path.join (__dirname, 'modules', name)))
+);
 
 //    lambda :: Expr -> Expr -> Expr
 const lambda = body => ident => (
@@ -43,7 +51,7 @@ const lambda = body => ident => (
                   body])
 );
 
-module.exports = Expr.fold ({
+module.exports = dirname => Expr.fold ({
   symbol: B (Right) (symbol),
   number: B (Right) (number),
   string: B (Right) (string),
@@ -101,9 +109,20 @@ module.exports = Expr.fold ({
                                                                                                       (body)])),
                                                                                    chain (rewrite)]))
                                                                            (bindings)) :
+                                 name === 'import' ?
+                                 onArray1 (Left ('Invalid import expression: incorrect arity'))
+                                          (B (map (expr => parenthesized ([identifier ('import'), expr])))
+                                             (onSymbol (rewrite)
+                                                       (B (rewrite) (toModulePath (dirname))))) :
                                  name === 'import*' ?
-                                 B (map (tail => parenthesized ([identifier (name), ...tail])))
-                                   (traverseE (rewrite)) :
+                                 onArray2 (Left ('Invalid import* expression: incorrect arity'))
+                                          (paths => body => lift2 (paths => body => parenthesized ([identifier ('import*'), paths, body]))
+                                                                  (onBracketed (rewrite)
+                                                                               (B (map (bracketed))
+                                                                                  (traverseE (onSymbol (rewrite)
+                                                                                                       (B (rewrite) (toModulePath (dirname))))))
+                                                                               (paths))
+                                                                  (rewrite (body))) :
                                  name.startsWith ('#') || name.startsWith ('.') ?
                                  B (map (parenthesized))
                                    (B (lift2 (prepend) (rewrite (identifier (name))))

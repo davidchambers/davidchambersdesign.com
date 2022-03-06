@@ -1,4 +1,4 @@
-(import* ["../lang/modules/base" "../lang/modules/sanctuary" "./elements"] {
+(import* [:base :sanctuary "./elements"] {
 
   :caption
     (lambda [caption]

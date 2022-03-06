@@ -1,6 +1,6 @@
 ; Import order matters due to conflicts: ‘sanctuary’ and ‘elements’
 ; both export ‘div’ and ‘head’.
-(import* ["../lang/modules/base" "../lang/modules/sanctuary" "./elements"]
+(import* [:base :sanctuary "./elements"]
 
 (lambda [document-title main]
    (html

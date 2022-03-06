@@ -1,4 +1,4 @@
-(import* ["../lang/modules/base" "../lang/modules/prelude" "../lang/modules/sanctuary"]
+(import* [:base :prelude :sanctuary]
 
 (let [replace (lambda [this that text] (.replace this that text))
       escape (pipe [(replace (regex "g" "&") "&amp;")

@@ -1,4 +1,4 @@
-(import* ["../../../lang/modules/base" "../../elements" "../../../lang/modules/sanctuary" "../../../lang/modules/prelude"]
+(import* [:base "../../elements" :sanctuary :prelude]
 
 (let [render-fragment (import "../../render-fragment")]
 

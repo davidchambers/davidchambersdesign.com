@@ -1,4 +1,4 @@
-(import* ["../../lang/modules/base" "../../lang/modules/sanctuary" "../../lang/modules/prelude"]
+(import* [:base :sanctuary :prelude]
 
 (lambda [coerce]
 
