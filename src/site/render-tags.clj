@@ -6,7 +6,7 @@
                            (reduce (lambda [counts tag]
                                       (insert tag (+ 1 (prop tag counts)) counts))
                                    counts
-                                   (prop :tags post)))
+                                   (:tags post)))
                         (reduce-object (flip (K (flip insert 0))) {} names)
                         posts)]
       [(h1 "Tags")

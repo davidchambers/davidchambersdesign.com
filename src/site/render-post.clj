@@ -1,4 +1,4 @@
-(import* [:base :sanctuary :prelude "./elements"]
+(import* [:base :path :sanctuary :prelude "./elements"]
 
 (let [tags (import "./tags")]
 
@@ -19,8 +19,10 @@
                                                 (prepend head tail)))])
                                    (:tags post))]))]
                  (array []
-                        (lambda [head tail]
+                        (lambda [_ _]
                            [(h3' {:id "related"} "Possibly related posts")
-                            (ul (map (lambda [post] (li (a (++ ["/" (:slug post) "/"]) (:title post))))
-                                     (.slice 0 5 (prepend head tail))))])
+                            (ul (map (lambda [slug]
+                                        (let [related-post (import (resolve [__dirname "posts" slug]))]
+                                           (li (a (++ ["/" slug "/"]) (:title related-post)))))
+                                     related-posts))])
                         related-posts)]))])))

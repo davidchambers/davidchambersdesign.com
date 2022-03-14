@@ -3,6 +3,11 @@
 const sanctuary = require ('sanctuary');
 
 
+// Symbol#fantasy-land/equals :: Symbol ~> Symbol -> Boolean
+Symbol.prototype['fantasy-land/equals'] = function(other) {
+  return this[Symbol.toPrimitive] () === other[Symbol.toPrimitive] ();
+};
+
 // This module exposes the full Sanctuary API.
 //
 // Type checking is disabled, primarily to permit the use of symbols as keys.

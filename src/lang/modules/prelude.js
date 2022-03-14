@@ -7,7 +7,6 @@ const base = require ('./base.js');
 
 
 const {
-  compose,
   concat,
   is,
   joinWith,
@@ -16,29 +15,11 @@ const {
 
 module.exports = {
   [Symbol.for ('string->symbol')]: Symbol.for,
-  [Symbol.for ('symbol->string')]:
-    sym => (String (sym)).slice ('Symbol('.length, -')'.length),
-
-  [Symbol.for ('curry-2')]: f => a => b => (
-    base[Symbol.for ('apply')] (f) ([a, b])
-  ),
-  [Symbol.for ('curry-3')]: f => a => b => c => (
-    base[Symbol.for ('apply')] (f) ([a, b, c])
-  ),
-  [Symbol.for ('curry-4')]: f => a => b => c => d => (
-    base[Symbol.for ('apply')] (f) ([a, b, c, d])
-  ),
-  [Symbol.for ('curry-5')]: f => a => b => c => d => e => (
-    base[Symbol.for ('apply')] (f) ([a, b, c, d, e])
-  ),
+  [Symbol.for ('symbol->string')]: Symbol.keyFor,
 
   [Symbol.for ('array?')]: Array.isArray,
-  [Symbol.for ('string?')]:
-    compose (base[Symbol.for ('===')] ('string'))
-            (base[Symbol.for ('type-of')]),
-  [Symbol.for ('symbol?')]:
-    compose (base[Symbol.for ('===')] ('symbol'))
-            (base[Symbol.for ('type-of')]),
+  [Symbol.for ('string?')]: x => typeof x === 'string',
+  [Symbol.for ('symbol?')]: x => typeof x === 'symbol',
 
   [Symbol.for ('++')]: joinWith (''),
 
@@ -56,5 +37,12 @@ module.exports = {
   ),
   [Symbol.for ('insert')]: key => val => obj => (
     Object.assign ({}, obj, Object.fromEntries ([[key, val]]))
+  ),
+
+  [Symbol.for ('union')]: s1 => s2 => (
+    new Set ([...s1, ...s2])
+  ),
+  [Symbol.for ('intersection')]: s1 => s2 => (
+    new Set ([...s1].filter (x => s2.has (x)))
   ),
 };

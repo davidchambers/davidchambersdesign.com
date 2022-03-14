@@ -11,7 +11,7 @@
            (dd caption)]))
 
   :captioned-images
-    (compose dl (chain (prop :children)))
+    (compose dl (chain (lambda [element] (:children element))))
 
   :uncaptioned-image
     (lambda [src alt]
@@ -27,13 +27,18 @@
 
   :interview-list
     (lambda [interviewer interviewee exchange]
-       (ol (.map (uncurry-2 (lambda [quotation index]
-                               (if (even index)
-                                   (li' (if (equals 0 index) {:class "interviewer"} {})
-                                      (concat [(strong (concat interviewer ":")) " "] quotation))
-                                   (li' {}
-                                      (concat [(strong (concat interviewee ":")) " "] quotation)))))
-                 (map canonicalize-children exchange))))
+       (ol (snd (reduce (pair (lambda [name items quotation]
+                                 (if (equals interviewer name)
+                                     (Pair interviewee
+                                           (append (li' {:class "interviewer"}
+                                                      (concat [(strong (concat interviewer ":")) " "] quotation))
+                                                   items))
+                                     (Pair interviewer
+                                           (append (li' {}
+                                                      (concat [(strong (concat interviewee ":")) " "] quotation))
+                                                   items)))))
+                        (Pair interviewer [])
+                        (map canonicalize-children exchange)))))
 
   :pros-and-cons-list
     (lambda [f]

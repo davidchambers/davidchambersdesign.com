@@ -40,9 +40,10 @@ const {
 } = Expr;
 
 //    toModulePath :: String -> String -> Expr
-const toModulePath = dirname => name => (
-  string (path.relative (dirname, path.join (__dirname, 'modules', name)))
-);
+const toModulePath = dirname => name => {
+  const comps = (path.relative (dirname, path.join (__dirname, 'modules', name))).split (path.sep);
+  return string ((comps[0] === '.' || comps[0] === '..' ? comps : ['.', ...comps]).join ('/'));
+};
 
 //    lambda :: Expr -> Expr -> Expr
 const lambda = body => ident => (

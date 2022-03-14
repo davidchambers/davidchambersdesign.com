@@ -18,7 +18,6 @@ const {
   Right,
   array,
   chain,
-  either,
   encase,
   equals,
   lift2,
@@ -73,12 +72,6 @@ const ownPropertySymbols = obj => (
       (Object.getOwnPropertySymbols (obj))
 );
 
-//    symbolToString :: Symbol -> String
-const symbolToString = sym => (
-  String (sym)
-  .slice ('Symbol('.length, -')'.length)
-);
-
 const escapeIdentifier = name => (
   '_' +
   name.replace (/[^A-Za-z0-9_]/g,
@@ -90,7 +83,7 @@ const escapeIdentifier = name => (
                      .padStart (4, '0'))
 );
 
-const toJs = dirname => Expr.fold ({
+const toJs = exports.toJs = dirname => Expr.fold ({
   symbol: name => Right (CallExpr1 (MemberExpr (Identifier ('Symbol'))
                                                (Identifier ('for'))
                                                (false))
@@ -182,7 +175,7 @@ const toJs = dirname => Expr.fold ({
                                                                                                                                                                     (Identifier ('create'))
                                                                                                                                                                     (false))
                                                                                                                                                         ([Literal (null)])])])]))
-                                                                                  (traverseE (B (toJs) (B (identifier) (symbolToString)))
+                                                                                  (traverseE (B (toJs) (B (identifier) (Symbol.keyFor)))
                                                                                              (Object.getOwnPropertySymbols (reduce (env => path_ => Object.assign (env, require (path.join (dirname, path_))))
                                                                                                                                    (Object.create (null))
                                                                                                                                    (paths))))
@@ -206,7 +199,7 @@ const toJs = dirname => Expr.fold ({
                                        (stripPrefix ('.') (name)))),
 });
 
-const toCommonJsModule = jsExpr => (
+const toCommonJsModule = exports.toCommonJsModule = jsExpr => (
   Program ('script')
           ([ExprStatement (Literal ('use strict')),
             ExprStatement (AssignmentExpr ('=')
@@ -219,15 +212,12 @@ const toCommonJsModule = jsExpr => (
 
 if (process.argv[1] === __filename) {
   const assert = require ('assert');
-  const fs = require ('fs');
-  const path = require ('path');
   const vm = require ('vm');
 
   const baseEnv = require ('./modules/base.js');
 
-  Symbol.prototype['fantasy-land/equals'] = function(other) {
-    return this === other;
-  };
+  // Define Symbol#fantasy-land/equals:
+  require ('./modules/sanctuary.js');
 
   const eq = actual => expected => {
     assert.deepStrictEqual (show (actual), show (expected));
@@ -235,7 +225,7 @@ if (process.argv[1] === __filename) {
   };
 
   const eval_ = _env => {
-    const env = reduce (env => pair (sym => val => Object.assign (env, singleton (escapeIdentifier (symbolToString (sym))) (val))))
+    const env = reduce (env => pair (sym => val => Object.assign (env, singleton (escapeIdentifier (Symbol.keyFor (sym))) (val))))
                        (Object.create (null))
                        (ownPropertySymbols (_env));
     return pipe ([
@@ -250,24 +240,6 @@ if (process.argv[1] === __filename) {
                (encase (code => vm.runInNewContext (code, {...env, module: {}}, {})))),
     ]);
   };
-
-  if (process.argv.length > 2) {
-    const filename = process.argv[2];
-    const dirname = path.dirname (path.resolve (filename));
-    const transpile = pipe ([
-      read,
-      chain (pair (rest => trim (rest) === '' ? Right : K (Left ('Unread source text')))),
-      chain (rewrite (dirname)),
-      chain (rewrite (dirname)),
-      chain (toJs (dirname)),
-      map (toCommonJsModule),
-      map (escodegen.generate),
-    ]);
-    either (err => { console.error (err); process.exit (1); })
-           (src => { console.log (src); process.exit (0); })
-           (transpile (fs.readFileSync (filename, 'utf8')));
-    return;
-  }
 
   eq (eval_ ({}) (':foo'))
      (Right (Symbol.for ('foo')));
@@ -352,10 +324,10 @@ if (process.argv[1] === __filename) {
   eq (eval_ ({}) ('(if "" "yes" "no")'))
      (Right ('no'));
 
-  eq (eval_ (baseEnv) ('(.toUpperCase "foo")'))
+  eq (eval_ ({}) ('(.toUpperCase "foo")'))
      (Right ('FOO'));
 
-  eq (eval_ (baseEnv) ('(.toFixed 2 123.456)'))
+  eq (eval_ ({}) ('(.toFixed 2 123.456)'))
      (Right ('123.46'));
 
   eq (eval_ (baseEnv) ('(.abs -1 Math)'))

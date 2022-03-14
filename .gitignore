@@ -1,2 +1,5 @@
 /node_modules/
+/src/site/posts/related/*.json
 /src/site/**/*.js
+!/src/site/public/**/*.js
+!/src/site/scripts/**/*.js

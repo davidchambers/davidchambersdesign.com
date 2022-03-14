@@ -6,6 +6,7 @@ const {DateTime} = require ('luxon');
 module.exports = {
   [Symbol.for ('===')]: y => x => x === y,
   [Symbol.for ('!==')]: y => x => x !== y,
+  [Symbol.for ('<=')]: y => x => x <= y,
   [Symbol.for ('>=')]: y => x => x >= y,
   [Symbol.for ('*')]: y => x => x * y,
   [Symbol.for ('/')]: y => x => x / y,
@@ -38,14 +39,10 @@ module.exports = {
 
   [Symbol.for ('throw')]: x => { throw x; },
   [Symbol.for ('apply')]: f => args => f (...args),
-  [Symbol.for ('uncurry-2')]: f => (a, b) => f (a) (b),
-  [Symbol.for ('uncurry-3')]: f => (a, b, c) => f (a) (b) (c),
-  [Symbol.for ('uncurry-4')]: f => (a, b, c, d) => f (a) (b) (c) (d),
-  [Symbol.for ('uncurry-5')]: f => (a, b, c, d, e) => f (a) (b) (c) (d) (e),
 
   [Symbol.for ('datetime')]: date => time => zone => {
     const datetime = DateTime.fromFormat (
-      `${date} ${time} (${(String (zone)).slice ('Symbol('.length, -')'.length)})`,
+      `${date} ${time} (${Symbol.keyFor (zone)})`,
       'yyyy-MM-dd HH:mm:ss (z)',
       {setZone: true},
     );
