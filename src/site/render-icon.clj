@@ -11,7 +11,7 @@
                0
                false
                [(svg {:xmlns "http://www.w3.org/2000/svg" :version "1.1"}
-                   (map (lambda [p] (path (insert :d (.svg (:d p) 1 (#formatters orthogonal)) p)))
+                   (map (lambda [p] (path (insert :d (apply orthogonal/formatters/svg [(:d p) 1]) p)))
                         (icon (#u orthogonal)
                               (#d orthogonal)
                               (#l orthogonal)

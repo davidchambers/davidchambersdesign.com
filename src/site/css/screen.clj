@@ -34,11 +34,21 @@
 
       tag-background
         (lambda [count]
-           (let [value (.toString 16 (Math/floor (- (* 5 (Math/log2 count)) 247)))]
+           (let [value (invoke-1 "toString"
+                                 16
+                                 (Math/floor (- (* 5 (Math/log2 count)) 247)))]
               (++ ["#" value value value])))
       tag-color
         (lambda [count]
-           (rgba 0 0 0 (.replace (regex "" "[.]$") "" (.replace (regex "" "0*$") "" (.toFixed 3 (+ 0.3 (* 0.1 (Math/log2 count))))))))]
+           (rgba 0 0 0 (invoke-2 "replace"
+                                 (regex "" "[.]$")
+                                 ""
+                                 (invoke-2 "replace"
+                                           (regex "" "0*$")
+                                           ""
+                                           (invoke-1 "toFixed"
+                                                     3
+                                                     (+ 0.3 (* 0.1 (Math/log2 count))))))))]
 
 (reduce concat {} [{
 

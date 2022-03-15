@@ -9,7 +9,7 @@
 
       seconds-between
         (lambda [from to]
-           (#seconds (.diff from "seconds" to)))
+           (#seconds (invoke-2 "diff" from "seconds" to)))
 
       with-scores
         (lambda [that this]
@@ -28,7 +28,7 @@
              (map-maybe (with-scores (import-post filename)))
              sort
              (map snd)
-             (lambda [posts] (.slice 0 5 posts))
+             (invoke-2 "slice" 0 5)
              (map (lambda [post] (:slug post)))
-             (lambda [posts] (.stringify posts null 2 JSON))]
+             (lambda [posts] (apply JSON/stringify [posts null 2]))]
             filenames))))

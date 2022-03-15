@@ -1,9 +1,8 @@
 (import* [:base :prelude :sanctuary]
 
-(let [replace (lambda [this that text] (.replace this that text))
-      escape (pipe [(replace (regex "g" "&") "&amp;")
-                    (replace (regex "g" "<") "&lt;")
-                    (replace (regex "g" ">") "&gt;")])]
+(let [escape (pipe [(invoke-2 "replace" (regex "g" "&") "&amp;")
+                    (invoke-2 "replace" (regex "g" "<") "&lt;")
+                    (invoke-2 "replace" (regex "g" ">") "&gt;")])]
 
    (function render-fragment [indent level inline nodes]
       (++ (map (lambda [node]
@@ -11,7 +10,7 @@
                       (escape (:value node))
                       (if (=== :excerpt (:type node))
                           (render-fragment indent level inline (:children node))
-                          (let [indentation (.repeat level indent)
+                          (let [indentation (invoke-1 "repeat" level indent)
                                 tag-name (symbol->string (:tag-name node))
                                 attrs (++ (chain (lambda [sym]
                                                     [" "

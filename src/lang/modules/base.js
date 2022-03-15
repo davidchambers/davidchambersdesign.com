@@ -40,6 +40,17 @@ module.exports = {
   [Symbol.for ('throw')]: x => { throw x; },
   [Symbol.for ('apply')]: f => args => f (...args),
 
+  [Symbol.for ('invoke-0')]: name => target => target[name] (),
+  [Symbol.for ('invoke-1')]: name => $1 => target => target[name] ($1),
+  [Symbol.for ('invoke-2')]: name => $1 => $2 => target => target[name] ($1, $2),
+  [Symbol.for ('invoke-3')]: name => $1 => $2 => $3 => target => target[name] ($1, $2, $3),
+  [Symbol.for ('invoke-4')]: name => $1 => $2 => $3 => $4 => target => target[name] ($1, $2, $3, $4),
+  [Symbol.for ('invoke-5')]: name => $1 => $2 => $3 => $4 => $5 => target => target[name] ($1, $2, $3, $4, $5),
+  [Symbol.for ('invoke-6')]: name => $1 => $2 => $3 => $4 => $5 => $6 => target => target[name] ($1, $2, $3, $4, $5, $6),
+  [Symbol.for ('invoke-7')]: name => $1 => $2 => $3 => $4 => $5 => $6 => $7 => target => target[name] ($1, $2, $3, $4, $5, $6, $7),
+  [Symbol.for ('invoke-8')]: name => $1 => $2 => $3 => $4 => $5 => $6 => $7 => $8 => target => target[name] ($1, $2, $3, $4, $5, $6, $7, $8),
+  [Symbol.for ('invoke-9')]: name => $1 => $2 => $3 => $4 => $5 => $6 => $7 => $8 => $9 => target => target[name] ($1, $2, $3, $4, $5, $6, $7, $8, $9),
+
   [Symbol.for ('datetime')]: date => time => zone => {
     const datetime = DateTime.fromFormat (
       `${date} ${time} (${Symbol.keyFor (zone)})`,

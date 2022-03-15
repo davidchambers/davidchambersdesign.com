@@ -197,16 +197,8 @@ const toJs = exports.toJs = dirname => Expr.fold ({
                                                                                       (Right)
                                                                                       (paths)))) :
                                  // else
-                                 maybe (onArray1 (Left ('Invalid call expression'))
-                                                 (on (lift2 (CallExpr1)) (toJs) (identifier (name))))
-                                       (name => B (array (Left ('Invalid call expression'))
-                                                         (target => args => lift2 (target => CallExpr (MemberExpr (false)
-                                                                                                                  (target)
-                                                                                                                  (Identifier (name))))
-                                                                                  (toJs (target))
-                                                                                  (traverseE (toJs) (reverse (args)))))
-                                                  (reverse))
-                                       (stripPrefix ('.') (name)))),
+                                 onArray1 (Left ('Invalid call expression'))
+                                          (on (lift2 (CallExpr1)) (toJs) (identifier (name))))),
 });
 
 const toCommonJsModule = exports.toCommonJsModule = jsExpr => (

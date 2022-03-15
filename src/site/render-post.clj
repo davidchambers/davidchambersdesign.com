@@ -7,8 +7,8 @@
           (maybe {} (singleton :id) (value :article-id post))
           (join [[(header
                      [(h1 (:title post))
-                      (time {:datetime (.toFormat "yyyy-MM-dd'T'HH:mm:ssZZ" (:datetime post)) :pubdate "pubdate"}
-                         (.toFormat "d MMMM y" (:datetime post)))])]
+                      (time {:datetime (invoke-1 "toFormat" "yyyy-MM-dd'T'HH:mm:ssZZ" (:datetime post)) :pubdate "pubdate"}
+                         (invoke-1 "toFormat" "d MMMM y" (:datetime post)))])]
                  (:body post)
                  [(footer' {:class "metadata"}
                      (join [[(ul (li' {:class "shorturl"} (a "http://dċd.ws/14/" "Short URL")))]

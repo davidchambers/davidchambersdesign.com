@@ -124,7 +124,7 @@ module.exports = dirname => Expr.fold ({
                                                                                                        (B (rewrite) (toModulePath (dirname))))))
                                                                                (paths))
                                                                   (rewrite (body))) :
-                                 name.startsWith ('#') || name.startsWith ('.') ?
+                                 name.startsWith ('#') ?
                                  B (map (parenthesized))
                                    (B (lift2 (prepend) (rewrite (identifier (name))))
                                       (traverseE (rewrite))) :

@@ -11,12 +11,11 @@
          (lambda [k v] (insert k (if-else symbol? symbol->string String v)))
          {})
 
-    replace (lambda [this that text] (.replace this that text))
     canonicalize-children
       (compose (map (when string?
                           (pipe [lines
-                                 (fold-map String (replace (regex "" "^[ ]+") " "))
-                                 (replace (regex "g" " -- ") "\u2009\u2014\u2009")
+                                 (fold-map String (invoke-2 "replace" (regex "" "^[ ]+") " "))
+                                 (invoke-2 "replace" (regex "g" " -- ") "\u2009\u2014\u2009")
                                  text])))
                (unless array? (of Array)))
 
