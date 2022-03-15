@@ -14,5 +14,5 @@
           (map (lambda [tag]
                   (li' {:data-count (prop tag counts)}
                      (a (++ ["/tag/" (symbol->string tag) "/"]) (prop tag names))))
-               (.getOwnPropertySymbols names Object)))
+               (Object/getOwnPropertySymbols names)))
        (div {:class "clearfix"} [])])))

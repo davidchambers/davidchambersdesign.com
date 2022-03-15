@@ -32,15 +32,13 @@
       pink "#ff5e99"
       recycled-paper "#fef9ec"
 
-      floor (#floor Math)
-      log-2 (#log2 Math)
       tag-background
         (lambda [count]
-           (let [value (.toString 16 (floor (- (* 5 (log-2 count)) 247)))]
+           (let [value (.toString 16 (Math/floor (- (* 5 (Math/log2 count)) 247)))]
               (++ ["#" value value value])))
       tag-color
         (lambda [count]
-           (rgba 0 0 0 (.replace (regex "" "[.]$") "" (.replace (regex "" "0*$") "" (.toFixed 3 (+ 0.3 (* 0.1 (log-2 count))))))))]
+           (rgba 0 0 0 (.replace (regex "" "[.]$") "" (.replace (regex "" "0*$") "" (.toFixed 3 (+ 0.3 (* 0.1 (Math/log2 count))))))))]
 
 (reduce concat {} [{
 

@@ -4,7 +4,7 @@
 
       similarity
         (lambda [set-1 set-2]
-           (/ ((#sqrt Math) (#size (union set-1 set-2)))
+           (/ (Math/sqrt (#size (union set-1 set-2)))
               (#size (intersection set-1 set-2))))
 
       seconds-between
@@ -16,8 +16,8 @@
            (let [score (similarity (new Set [(:tags that)])
                                    (new Set [(:tags this)]))
                  primary (negate (score))
-                 secondary ((#abs Math) (seconds-between (:datetime that)
-                                                         (:datetime this)))]
+                 secondary (Math/abs (seconds-between (:datetime that)
+                                                      (:datetime this)))]
               (if (>= 0.5 score)
                   (Just (Pair (Pair primary secondary) this))
                   Nothing)))]

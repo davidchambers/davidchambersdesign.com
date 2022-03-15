@@ -19,7 +19,7 @@
                                                      "=\""
                                                      (escape (unwords (map trim (lines (prop sym (:attrs node))))))
                                                      "\""])
-                                                 (.getOwnPropertySymbols (:attrs node) Object)))]
+                                                 (Object/getOwnPropertySymbols (:attrs node))))]
                              (++ (if (:self-closing node)
                                      [indentation "<" tag-name attrs " />" (if inline "" "\n")]
                                      (if (=== :inline (:format node))

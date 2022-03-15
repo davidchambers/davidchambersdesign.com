@@ -32,6 +32,7 @@ const {
   reverse,
   show,
   singleton,
+  splitOn,
   stripPrefix,
   trim,
   zipWith,
@@ -49,7 +50,7 @@ const {
 const Program = sourceType => body => ({type: 'Program', sourceType, body});
 const ExprStatement = expression => ({type: 'ExpressionStatement', expression});
 const AssignmentExpr = operator => left => right => ({type: 'AssignmentExpression', operator, left, right});
-const MemberExpr = object => property => computed => ({type: 'MemberExpression', object, property, computed, optional: false});
+const MemberExpr = computed => object => property => ({type: 'MemberExpression', object, property, computed, optional: false});
 const CondExpr = test => consequent => alternative => ({type: 'ConditionalExpression', test, consequent, alternate: alternative});
 const UnaryExpr = prefix => operator => argument => ({type: 'UnaryExpression', prefix, operator, argument});
 const FuncExpr = id => params => body => ({type: 'FunctionExpression', id, params, body, expression: false, generator: false, async: false});
@@ -84,18 +85,27 @@ const escapeIdentifier = name => (
 );
 
 const toJs = exports.toJs = dirname => Expr.fold ({
-  symbol: name => Right (CallExpr1 (MemberExpr (Identifier ('Symbol'))
-                                               (Identifier ('for'))
-                                               (false))
+  symbol: name => Right (CallExpr1 (MemberExpr (false)
+                                               (Identifier ('Symbol'))
+                                               (Identifier ('for')))
                                    (Literal (name))),
   number: value => Right (value < 0 ? UnaryExpr (true) ('-') (Literal (-value)) : Literal (value)),
   string: B (Right) (Literal),
-  identifier: name => Right (maybe (Identifier (escapeIdentifier (name)))
-                                   (name => ArrowFuncExpr1 (Identifier ('obj'))
-                                                           (MemberExpr (Identifier ('obj'))
-                                                                       (Literal (name))
-                                                                       (true)))
-                                   (stripPrefix ('#') (name))),
+  identifier: name => {
+    if (name.startsWith ('#')) {
+      return Right (ArrowFuncExpr1 (Identifier ('obj'))
+                                   (MemberExpr (true)
+                                               (Identifier ('obj'))
+                                               (Literal (name.slice ('#'.length)))));
+    } else if (name === '/') {
+      return Right (Identifier (escapeIdentifier (name)));
+    } else {
+      const [head, ...tail] = splitOn ('/') (name);
+      return Right (reduce (MemberExpr (false))
+                           (Identifier (escapeIdentifier (head)))
+                           (map (Identifier) (tail)));
+    }
+  },
   bracketed: toJs => elements => map (ArrayExpr) (traverseE (toJs) (elements)),
   braced: toJs => elements => map (ObjectExpr)
                                   (map (pair (zipWith (Property)))
@@ -107,12 +117,12 @@ const toJs = exports.toJs = dirname => Expr.fold ({
                                                     (on (lift2 (CallExpr1)) (toJs) (head)))
                                   (name => onArray1 (Left ('Invalid call expression'))
                                                     (B (map (CallExpr1 (ArrowFuncExpr1 (Identifier ('obj'))
-                                                                                       (MemberExpr (Identifier ('obj'))
-                                                                                                   (CallExpr1 (MemberExpr (Identifier ('Symbol'))
-                                                                                                                          (Identifier ('for'))
-                                                                                                                          (false))
-                                                                                                              (Literal (name)))
-                                                                                                   (true)))))
+                                                                                       (MemberExpr (true)
+                                                                                                   (Identifier ('obj'))
+                                                                                                   (CallExpr1 (MemberExpr (false)
+                                                                                                                          (Identifier ('Symbol'))
+                                                                                                                          (Identifier ('for')))
+                                                                                                              (Literal (name)))))))
                                                        (toJs))))
                         (name => name === 'if' ?
                                  onArray3 (Left ('XXX'))
@@ -151,29 +161,29 @@ const toJs = exports.toJs = dirname => Expr.fold ({
                                           (paths => body => chain (paths => lift3 (params => paths => body => CallExpr (ArrowFuncExpr ([Identifier (escapeIdentifier ('__dirname')), ArrayPattern (params)]) (body))
                                                                                                                        ([Literal (dirname),
                                                                                                                          CallExpr (ArrowFuncExpr ([Identifier ('env')])
-                                                                                                                                                 (CallExpr (MemberExpr (CallExpr (MemberExpr (Identifier ('Object'))
-                                                                                                                                                                                             (Identifier ('getOwnPropertySymbols'))
-                                                                                                                                                                                             (false))
+                                                                                                                                                 (CallExpr (MemberExpr (false)
+                                                                                                                                                                       (CallExpr (MemberExpr (false)
+                                                                                                                                                                                             (Identifier ('Object'))
+                                                                                                                                                                                             (Identifier ('getOwnPropertySymbols')))
                                                                                                                                                                                  ([Identifier ('env')]))
-                                                                                                                                                                       (Identifier ('map'))
-                                                                                                                                                                       (false))
+                                                                                                                                                                       (Identifier ('map')))
                                                                                                                                                            ([ArrowFuncExpr ([Identifier ('sym')])
-                                                                                                                                                                           (MemberExpr (Identifier ('env'))
-                                                                                                                                                                                       (Identifier ('sym'))
-                                                                                                                                                                                       (true))])))
-                                                                                                                                  ([CallExpr (MemberExpr (ArrayExpr (paths))
-                                                                                                                                                         (Identifier ('reduce'))
-                                                                                                                                                         (false))
+                                                                                                                                                                           (MemberExpr (true)
+                                                                                                                                                                                       (Identifier ('env'))
+                                                                                                                                                                                       (Identifier ('sym')))])))
+                                                                                                                                  ([CallExpr (MemberExpr (false)
+                                                                                                                                                         (ArrayExpr (paths))
+                                                                                                                                                         (Identifier ('reduce')))
                                                                                                                                              ([ArrowFuncExpr ([Identifier ('env'), Identifier ('path')])
-                                                                                                                                                             (CallExpr (MemberExpr (Identifier ('Object'))
-                                                                                                                                                                                   (Identifier ('assign'))
-                                                                                                                                                                                   (false))
+                                                                                                                                                             (CallExpr (MemberExpr (false)
+                                                                                                                                                                                   (Identifier ('Object'))
+                                                                                                                                                                                   (Identifier ('assign')))
                                                                                                                                                                        ([Identifier ('env'),
                                                                                                                                                                          CallExpr (Identifier ('require'))
                                                                                                                                                                                   ([Identifier ('path')])])),
-                                                                                                                                               CallExpr (MemberExpr (Identifier ('Object'))
-                                                                                                                                                                    (Identifier ('create'))
-                                                                                                                                                                    (false))
+                                                                                                                                               CallExpr (MemberExpr (false)
+                                                                                                                                                                    (Identifier ('Object'))
+                                                                                                                                                                    (Identifier ('create')))
                                                                                                                                                         ([Literal (null)])])])]))
                                                                                   (traverseE (B (toJs) (B (identifier) (Symbol.keyFor)))
                                                                                              (Object.getOwnPropertySymbols (reduce (env => path_ => Object.assign (env, require (path.join (dirname, path_))))
@@ -190,9 +200,9 @@ const toJs = exports.toJs = dirname => Expr.fold ({
                                  maybe (onArray1 (Left ('Invalid call expression'))
                                                  (on (lift2 (CallExpr1)) (toJs) (identifier (name))))
                                        (name => B (array (Left ('Invalid call expression'))
-                                                         (target => args => lift2 (target => CallExpr (MemberExpr (target)
-                                                                                                                  (Identifier (name))
-                                                                                                                  (false)))
+                                                         (target => args => lift2 (target => CallExpr (MemberExpr (false)
+                                                                                                                  (target)
+                                                                                                                  (Identifier (name))))
                                                                                   (toJs (target))
                                                                                   (traverseE (toJs) (reverse (args)))))
                                                   (reverse))
@@ -203,9 +213,9 @@ const toCommonJsModule = exports.toCommonJsModule = jsExpr => (
   Program ('script')
           ([ExprStatement (Literal ('use strict')),
             ExprStatement (AssignmentExpr ('=')
-                                          (MemberExpr (Identifier ('module'))
-                                                      (Identifier ('exports'))
-                                                      (false))
+                                          (MemberExpr (false)
+                                                      (Identifier ('module'))
+                                                      (Identifier ('exports')))
                                           (jsExpr))])
 );
 
