@@ -8,8 +8,6 @@
   },
   "dependencies": {
     "escodegen": "2.0.0",
-    "fluture": "13.0.1",
-    "fluture-sanctuary-types": "7.0.0",
     "luxon": "1.24.1",
     "orthogonal": "0.1.0",
     "sanctuary": "3.0.0",
