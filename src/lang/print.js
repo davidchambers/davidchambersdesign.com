@@ -1,6 +1,6 @@
 'use strict';
 
-const Expr = require ('./Expr.js');
+const expression = require ('./expression.js');
 
 
 const {
@@ -11,14 +11,14 @@ const {
   parenthesized,
   string,
   symbol,
-} = Expr;
+} = expression;
 
 const wrap = pre => post => f => elements => (
   pre + (elements.map (f)).join (' ') + post
 );
 
-//    print :: Expr -> String
-const print = module.exports = Expr.fold ({
+//    print :: Expression -> String
+const print = module.exports = expression.fold ({
   /* eslint-disable key-spacing */
   number:         value => String (value),
   string:         value => '"' +

@@ -40,13 +40,13 @@
 
     (code-block :plain-text
 
-       """
-       <a class="more" href="/meaningful-markup/">Read more</a>
+       "
+       <a class=\"more\" href=\"/meaningful-markup/\">Read more</a>
 
        .more:after {
-           content: " »";
+           content: \" »\";
        }
-       """)
+       ")
 
     (p
        ["There are many other situations in which " (code ":before") "/"
@@ -60,15 +60,15 @@
 
     (code-block :css
 
-       """
+       "
        .footer-nav li {
            display: inline;
            list-type: none;
        }
        .footer-nav li+li:before {
-           content: " | ";
+           content: \" | \";
        }
-       """)
+       ")
 
     (p
        ["The second selector above may look strange unless you're
@@ -83,9 +83,9 @@
 
     (code-block :html
 
-       """
+       "
        <p><strong>Tags:</strong> Apple, iOS, iPad</p>
-       """)
+       ")
 
     (p
        ["This approach is inflexible. Displaying the tags as Twitter-style
@@ -102,14 +102,14 @@
 
     (code-block :html
 
-       """
+       "
        <h4>Tags</h4>
        <ol>
            <li>Apple</li>
            <li>iOS</li>
            <li>iPad</li>
        </ol>
-       """)
+       ")
 
     (p
        ["It takes a bit of work to display this markup as a simple
@@ -118,20 +118,20 @@
 
     (code-block :css
 
-       """
+       "
        h4, ol, li {
            display: inline;
        }
        h4:after {
-           content: ":";
+           content: \":\";
        }
        li:after {
-           content: ",";
+           content: \",\";
        }
        li:last-child:after {
-           content: "";
+           content: \"\";
        }
-       """)
+       ")
 
     (h2 "Summary")
 

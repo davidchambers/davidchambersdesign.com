@@ -20,7 +20,7 @@
 
     (code-block :javascript
 
-       """
+       "
        // provide input hints
        window.addEvent('domready', function () {
            $$('input[placeholder]').addEvents({
@@ -36,7 +36,7 @@
                }
            }).fireEvent('blur');
        });
-       """)
+       ")
 
     (p
        ["I really appreciate the fact that MooTools provides "

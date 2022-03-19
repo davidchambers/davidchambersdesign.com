@@ -26,7 +26,7 @@
 
         (code-block :javascript
 
-           """
+           "
            var ninja = {
                name: 'Hattori Hanzou Masashige',
                shuriken: 5,
@@ -37,7 +37,7 @@
                    }
                },
            };
-           """)
+           ")
 
         (p
            ["JSLint returns an " (em "extra comma") " error for the

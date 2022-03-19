@@ -21,12 +21,13 @@ module.exports = (
   Object.fromEntries (
     Object.entries (sanctuary.unchecked)
     .filter (([k]) => k !== 'unchecked')
-    .map (([k, v]) => [
-      Symbol.for (
-        k.replace (/(?!\b)[A-Z0-9]/g, c => '-' + c.toLowerCase ())
-         .replace (/_/g, "'")
-      ),
-      v,
-    ])
+    .flatMap (([k, v]) => {
+      const name = (
+        k
+        .replace (/(?!\b)[A-Z0-9]/g, c => '-' + c.toLowerCase ())
+        .replace (/_/g, "'")
+      );
+      return [[name, v], [Symbol.for (name), v]];
+    })
   )
 );

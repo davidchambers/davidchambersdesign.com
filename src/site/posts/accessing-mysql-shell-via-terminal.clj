@@ -29,9 +29,9 @@
 
     (code-block :console
 
-       """
+       "
        mysql -u root -p mysql
-       """)
+       ")
 
   ]
 

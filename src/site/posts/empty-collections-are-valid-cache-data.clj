@@ -17,13 +17,13 @@
 
     (code-block :python
 
-       """
+       "
        cached = cache.get(cache_key)
        if cached:
            return cached
 
        # perform expensive operation
-       """)
+       ")
 
     (p
        ["In the above snippet, if the call to " (code "get") "
@@ -36,11 +36,11 @@
 
     (code-block :python
 
-       """
+       "
        cached = cache.get(cache_key)
        if cached is not None: # much better!
            return cached
-       """)
+       ")
 
     (p
        ["Django's documentation wisely advises against caching the

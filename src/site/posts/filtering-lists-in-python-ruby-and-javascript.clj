@@ -29,26 +29,26 @@
 
     (code-block :python
 
-       """
-       '\n'.join(obj.name
+       "
+       '\\n'.join(obj.name
            for obj in (
                repository.retrieve(id)
                for id in ids)
            if obj)
-       """)
+       ")
 
     (p
        ["Ruby:"])
 
     (code-block :ruby
 
-       """
+       "
        ids.map do |id|
          repository.retrieve(id)
        end.compact.map do |obj|
          obj.name
-       end.join('\n')
-       """)
+       end.join('\\n')
+       ")
 
     (p
        ["The Ruby code (the one beginning with " (code "ids.map") ") reads top
@@ -64,12 +64,12 @@
 
     (code-block :javascript
 
-       """
+       "
        ids.filter(function (id) {
            var obj = repository.retrieve(id);
            return obj && obj.name;
-       }).join('\n');
-       """)
+       }).join('\\n');
+       ")
 
     (p
        [(a "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Filter"
@@ -89,13 +89,13 @@
 
     (code-block :javascript
 
-       """
+       "
        ids.reduce(function (ids, id) {
            var obj = repository.retrieve(id);
            if (obj && obj.name) ids.push(obj.name);
            return ids;
-       }, []).join('\n');
-       """)
+       }, []).join('\\n');
+       ")
 
     (p
        ["Not bad. It's not as elegant as the Ruby code, but it's not

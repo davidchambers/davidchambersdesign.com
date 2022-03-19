@@ -19,13 +19,13 @@
 
     (code-block :javascript
 
-       """
+       "
        function makeSafe(text) {
-         return text.replace(/[&<>"'`]/g, function (chr) {
+         return text.replace(/[&<>\"'`]/g, function (chr) {
            return '&#' + chr.charCodeAt(0) + ';';
          });
        };
-       """)
+       ")
 
     (p
        ["This ensures that inserted content cannot escape the confines of a
@@ -47,13 +47,13 @@
 
     (code-block :javascript
 
-       """
+       "
        function makeSafe(text) {
-         return text.replace(/\W/g, function (chr) {
+         return text.replace(/\\W/g, function (chr) {
            return '&#' + chr.charCodeAt(0) + ';';
          });
        };
-       """)
+       ")
 
     (p
        ["I created a "

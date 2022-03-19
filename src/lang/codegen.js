@@ -5,8 +5,8 @@ const path = require ('path');
 const escodegen = require ('escodegen');
 const sanctuary = require ('sanctuary');
 
-const Expr = require ('./Expr.js');
-const read = require ('./read.js');
+const expression = require ('./expression.js');
+const grammar = require ('./grammar.js');
 const rewrite = require ('./rewrite.js');
 const {B, onArray1, onArray2, onArray3, pairs, traverseE} = require ('./util.js');
 
@@ -24,17 +24,13 @@ const {
   lift3,
   map,
   mapLeft,
-  maybe,
   on,
   pair,
   pipe,
   reduce,
-  reverse,
   show,
   singleton,
   splitOn,
-  stripPrefix,
-  trim,
   zipWith,
 } = sanctuary.unchecked;
 
@@ -45,7 +41,7 @@ const {
   onString,
   onSymbol,
   string,
-} = Expr;
+} = expression;
 
 const Program = sourceType => body => ({type: 'Program', sourceType, body});
 const ExprStatement = expression => ({type: 'ExpressionStatement', expression});
@@ -84,7 +80,7 @@ const escapeIdentifier = name => (
                      .padStart (4, '0'))
 );
 
-const toJs = exports.toJs = dirname => Expr.fold ({
+const toJs = exports.toJs = dirname => expression.fold ({
   symbol: name => Right (CallExpr1 (MemberExpr (false)
                                                (Identifier ('Symbol'))
                                                (Identifier ('for')))
@@ -101,9 +97,9 @@ const toJs = exports.toJs = dirname => Expr.fold ({
       return Right (Identifier (escapeIdentifier (name)));
     } else {
       const [head, ...tail] = splitOn ('/') (name);
-      return Right (reduce (MemberExpr (false))
+      return Right (reduce (MemberExpr (true))
                            (Identifier (escapeIdentifier (head)))
-                           (map (Identifier) (tail)));
+                           (map (Literal) (tail)));
     }
   },
   bracketed: toJs => elements => map (ArrayExpr) (traverseE (toJs) (elements)),
@@ -231,8 +227,7 @@ if (process.argv[1] === __filename) {
                        (Object.create (null))
                        (ownPropertySymbols (_env));
     return pipe ([
-      read,
-      chain (pair (rest => trim (rest) === '' ? Right : K (Left ('Unread source text')))),
+      encase (grammar.parse),
       chain (rewrite ('TK')),
       chain (rewrite ('TK')),
       chain (toJs ('TK')),

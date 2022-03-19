@@ -24,14 +24,14 @@
 
     (code-block :html
 
-       """
-       <object class="youtube"
-               type="application/x-shockwave-flash"
-               data="http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0">
-           <param name="movie" value="http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0" />
-           <param name="allowFullScreen" value="true" />
+       "
+       <object class=\"youtube\"
+               type=\"application/x-shockwave-flash\"
+               data=\"http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0\">
+           <param name=\"movie\" value=\"http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0\" />
+           <param name=\"allowFullScreen\" value=\"true\" />
        </object>
-       """)
+       ")
 
     (p
        [(code "rel=0") " is often useful to include (as I've done
@@ -50,13 +50,13 @@
 
     (code-block :css
 
-       """
+       "
        object.youtube
        {
            width: 100%;
            height: 385px;
        }
-       """)
+       ")
 
   ]
 

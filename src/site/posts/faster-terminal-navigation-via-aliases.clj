@@ -43,9 +43,9 @@
 
     (code-block :bash
 
-       """
-       alias site-packages="cd /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages"
-       """)
+       "
+       alias site-packages=\"cd /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages\"
+       ")
 
     (p
        ["Thanks to this alias I can enter " (code "site-packages") "
@@ -55,14 +55,14 @@
 
     (code-block :console
 
-       """
+       "
        $ cd ~/Desktop
        $ site-packages
        $ pwd
        /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages
        $ cd -
        /Users/dc/Desktop
-       """)
+       ")
 
     (p
        [(a "https://github.com/r00k/dotfiles/blob/master/bash/aliases"

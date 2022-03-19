@@ -30,16 +30,16 @@
                [(p
                    [(strong "Portrait") " (labelled \"⁑\")"])
                 (code-block :plain-text
-                   """
+                   "
                    javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
-                   """)])
+                   ")])
             (li
                [(p
                    [(strong "Landscape") " (labelled \"**\")"])
                 (code-block :plain-text
-                   """
+                   "
                    javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
-                   """)])])
+                   ")])])
 
         (captioned-image
            "/images/posts/37/iphone-testing-bookmarklets.png"

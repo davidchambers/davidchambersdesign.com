@@ -1,28 +1,34 @@
-(import* [:base :path :sanctuary :prelude "./elements"]
+(import* [:base "./elements"]
 
-(let [tags (import "./tags")]
+(let [path (import "path")
+
+      s (import :sanctuary)
+
+      tags (import "./tags")
+
+      ++ (s/join-with "")]
 
    (lambda [post related-posts]
       [(article'
-          (maybe {} (singleton :id) (value :article-id post))
-          (join [[(header
-                     [(h1 (:title post))
-                      (time {:datetime (invoke-1 "toFormat" "yyyy-MM-dd'T'HH:mm:ssZZ" (:datetime post)) :pubdate "pubdate"}
-                         (invoke-1 "toFormat" "d MMMM y" (:datetime post)))])]
-                 (:body post)
-                 [(footer' {:class "metadata"}
-                     (join [[(ul (li' {:class "shorturl"} (a "http://dċd.ws/14/" "Short URL")))]
-                            (array []
-                                   (lambda [head tail]
-                                      [(h4 "This post has the following tags:")
-                                       (ol (map (lambda [tag] (li (a (++ ["/tag/" (symbol->string tag) "/"]) (prop tag tags))))
-                                                (prepend head tail)))])
-                                   (:tags post))]))]
-                 (array []
-                        (lambda [_ _]
-                           [(h3' {:id "related"} "Possibly related posts")
-                            (ul (map (lambda [slug]
-                                        (let [related-post (import (resolve [__dirname "posts" slug]))]
-                                           (li (a (++ ["/" slug "/"]) (:title related-post)))))
-                                     related-posts))])
-                        related-posts)]))])))
+          (s/maybe {} (s/singleton :id) (s/value :article-id post))
+          (s/join [[(header
+                       [(h1 (:title post))
+                        (time {:datetime (invoke-1 "toFormat" "yyyy-MM-dd'T'HH:mm:ssZZ" (:datetime post)) :pubdate "pubdate"}
+                           (invoke-1 "toFormat" "d MMMM y" (:datetime post)))])]
+                   (:body post)
+                   [(footer' {:class "metadata"}
+                       (s/join [[(ul (li' {:class "shorturl"} (a "http://dċd.ws/14/" "Short URL")))]
+                                (s/array []
+                                         (lambda [head tail]
+                                            [(h4 "This post has the following tags:")
+                                             (ol (s/map (lambda [tag] (li (a (++ ["/tag/" (Symbol/keyFor tag) "/"]) (s/prop tag tags))))
+                                                        (s/prepend head tail)))])
+                                         (:tags post))]))]
+                   (s/array []
+                            (lambda [_ _]
+                               [(h3' {:id "related"} "Possibly related posts")
+                                (ul (s/map (lambda [slug]
+                                              (let [related-post (import (apply path/resolve [__dirname "posts" slug]))]
+                                                 (li (a (++ ["/" slug "/"]) (:title related-post)))))
+                                           related-posts))])
+                            related-posts)]))])))

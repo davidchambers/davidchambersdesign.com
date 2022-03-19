@@ -121,10 +121,10 @@
 
             (code-block :console
 
-               """
+               "
                $ cd ~/Downloads
                $ ls
-               """)
+               ")
 
             (p
                ["Run the " (code "ls") " command to inspect the contents of
@@ -140,10 +140,10 @@
 
             (code-block :console
 
-               """
+               "
                $ chmod 555 setfileicon
                $ sudo mv setfileicon /bin/setfileicon
-               """)
+               ")
 
             (p
                ["Finally, run the script passing in two arguments: the
@@ -152,9 +152,9 @@
 
             (code-block :console
 
-               """
+               "
                $ setfileicon ~/icons.icns ~/example
-               """)])])
+               ")])])
 
     (h3 "TL;DR")
 

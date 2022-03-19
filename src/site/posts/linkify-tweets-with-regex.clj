@@ -36,18 +36,18 @@
 
     (code-block :javascript
 
-       """
-       tweet.replace(/(^|\s)(@\w+)/gm, '$1<a href="http://twitter.com/$2">$2</a>');
-       """)
+       "
+       tweet.replace(/(^|\\s)(@\\w+)/gm, '$1<a href=\"http://twitter.com/$2\">$2</a>');
+       ")
 
     (p
        ["It would of course be nicer to write:"])
 
     (code-block :javascript
 
-       """
-       tweet.replace(/(?<=(?:^|\s))(@\w+)/gm, '<a href="http://twitter.com/$1">$1</a>');
-       """)
+       "
+       tweet.replace(/(?<=(?:^|\\s))(@\\w+)/gm, '<a href=\"http://twitter.com/$1\">$1</a>');
+       ")
 
     (p
        ["Unfortunately, JavaScript does not support lookbehinds in
@@ -59,9 +59,9 @@
 
     (code-block :php
 
-       """
-       preg_replace('/(^|\s)(@\w+)/m', '$1<a href="http://twitter.com/$2">$2</a>', $tweet);
-       """)
+       "
+       preg_replace('/(^|\\s)(@\\w+)/m', '$1<a href=\"http://twitter.com/$2\">$2</a>', $tweet);
+       ")
 
     (h4 "Python implementation")
 
@@ -72,12 +72,12 @@
 
     (code-block :python
 
-       """
+       "
        import re
-       re.sub(r'(?m)(^|\s)(@\w+)',
-               lambda m: m.group(1) + '<a href="http://twitter.com/' + m.group(2) + '">' + m.group(2) + '</a>',
+       re.sub(r'(?m)(^|\\s)(@\\w+)',
+               lambda m: m.group(1) + '<a href=\"http://twitter.com/' + m.group(2) + '\">' + m.group(2) + '</a>',
                tweet)
-       """)
+       ")
 
     (p
        ["For once, Python's syntax is the least elegant!"])

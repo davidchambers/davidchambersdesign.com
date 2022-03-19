@@ -4,7 +4,7 @@ const path = require ('path');
 
 const sanctuary = require ('sanctuary');
 
-const Expr = require ('./Expr.js');
+const expression = require ('./expression.js');
 const {B, C, onArray1, onArray2, onArray3, pairs, traverseE} = require ('./util.js');
 
 
@@ -37,22 +37,22 @@ const {
   parenthesized,
   string,
   symbol,
-} = Expr;
+} = expression;
 
-//    toModulePath :: String -> String -> Expr
+//    toModulePath :: String -> String -> Expression
 const toModulePath = dirname => name => {
   const comps = (path.relative (dirname, path.join (__dirname, 'modules', name))).split (path.sep);
   return string ((comps[0] === '.' || comps[0] === '..' ? comps : ['.', ...comps]).join ('/'));
 };
 
-//    lambda :: Expr -> Expr -> Expr
+//    lambda :: Expression -> Expression -> Expression
 const lambda = body => ident => (
   parenthesized ([identifier ('lambda'),
                   bracketed ([ident]),
                   body])
 );
 
-module.exports = dirname => Expr.fold ({
+module.exports = dirname => expression.fold ({
   symbol: B (Right) (symbol),
   number: B (Right) (number),
   string: B (Right) (string),

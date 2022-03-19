@@ -17,9 +17,9 @@
 
     (code-block :plain-text
 
-       """
+       "
        Got error 'repetition-operator operand invalid' from regexp
-       """)
+       ")
 
     (p
        ["The problem resulted from an unescaped " (strong "{") " being
@@ -47,24 +47,24 @@
 
     (code-block :php
 
-       """
+       "
        <?php
 
        function mysql_regexp_escape_string($string)
        {
-           $special_chars = array('*', '.', '?', '+', '[', ']', '(', ')', '{', '}', '^', '$', '|', '\\');
+           $special_chars = array('*', '.', '?', '+', '[', ']', '(', ')', '{', '}', '^', '$', '|', '\\\\');
            $replacements = array();
 
            foreach ($special_chars as $special_char)
            {
-               $replacements[] = '\\' . $special_char;
+               $replacements[] = '\\\\' . $special_char;
            }
 
            return str_replace($special_chars, $replacements, $string);
        }
 
        ?>
-       """)
+       ")
 
     (p
        ["It is quite possible that a solution to this problem already exists.

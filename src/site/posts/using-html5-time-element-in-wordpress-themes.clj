@@ -21,9 +21,9 @@
 
     (code-block :html
 
-       """
-       <time datetime="2009-11-01T16:41:53+13:00">1 November 2009</time>
-       """)
+       "
+       <time datetime=\"2009-11-01T16:41:53+13:00\">1 November 2009</time>
+       ")
 
     (p
        ["I wrote a function to generate the machine-readable dates and times
@@ -31,7 +31,7 @@
 
     (code-block :php
 
-       """
+       "
        <?php
 
        /**
@@ -45,7 +45,7 @@
            $seconds = abs($local - $gmt);
            $hours = (int) ($seconds / 3600);
            $minutes = (int) (($seconds - $hours * 3600) / 60);
-           $output = get_comment_time('Y-m-d\TH:i:s');
+           $output = get_comment_time('Y-m-d\\TH:i:s');
 
            if ($local == $gmt)
                $output .= 'Z';
@@ -58,7 +58,7 @@
        }
 
        ?>
-       """)
+       ")
 
     (p
        ["While looping through comments in your WordPress theme,
@@ -66,9 +66,9 @@
 
     (code-block :php
 
-       """
-       <time datetime="<?php comment_datetime(); ?>">
-       """)
+       "
+       <time datetime=\"<?php comment_datetime(); ?>\">
+       ")
 
   ]
 

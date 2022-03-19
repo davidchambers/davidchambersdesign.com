@@ -26,18 +26,18 @@
 
     (code-block :javascript
 
-       """
+       "
        element.setStyle('left', offset);
-       """)
+       ")
 
     (p
        ["rather than..."])
 
     (code-block :javascript
 
-       """
+       "
        element.setPosition({ x: offset });
-       """)
+       ")
 
     (p
        ["Frustratingly, " (code "setStyle('left', offset)") " "

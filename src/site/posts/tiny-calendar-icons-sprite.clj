@@ -36,9 +36,9 @@
 
     (code-block :html
 
-       """
-       <span class="day-1"></span>
-       """)
+       "
+       <span class=\"day-1\"></span>
+       ")
 
     (p
        ["The following CSS sets the width and height of the element and
@@ -46,7 +46,7 @@
 
     (code-block :css
 
-       """
+       "
        span.day-1
        {
            display: block;
@@ -55,7 +55,7 @@
            background-image: url(/path/to/images/calendar.png);
            background-repeat: no-repeat;
        }
-       """)
+       ")
 
     (p
        ["By default the top left corner of an element's background image
@@ -74,7 +74,7 @@
 
     (code-block :css
 
-       """
+       "
        span.day-1
        {
            display: block;
@@ -84,7 +84,7 @@
            background-repeat: no-repeat;
            background-position: -60px -20px;
        }
-       """)
+       ")
 
     (p
        ["This drags the background image 60px to the left, and lifts it 20px:"])
@@ -99,7 +99,7 @@
 
     (code-block :css
 
-       """
+       "
        span.day
        {
            display: block;
@@ -146,7 +146,7 @@
        span.day-29 { background-position:  -60px -100px; }
        span.day-30 { background-position:  -80px -100px; }
        span.day-31 { background-position: -100px -100px; }
-       """)
+       ")
 
     (p
        ["Note that I introduced the class name " (strong "day") " to streamline
@@ -154,9 +154,9 @@
 
     (code-block :html
 
-       """
-       <span class="day day-31"></span>
-       """)
+       "
+       <span class=\"day day-31\"></span>
+       ")
 
   ]
 

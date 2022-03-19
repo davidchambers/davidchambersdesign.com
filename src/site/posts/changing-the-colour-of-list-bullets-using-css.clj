@@ -15,7 +15,7 @@
 
     (code-block :html
 
-       """
+       "
        <h1>TXJS 2011 Speakers</h1>
        <ul>
          <li>Brendan Eich</li>
@@ -23,7 +23,7 @@
          <li>Douglas Crockford</li>
          <li>Paul Irish</li>
        </ul>
-       """)
+       ")
 
     (p
        ["You've decided upon hanging square bullets in a light grey –
@@ -31,7 +31,7 @@
 
     (code-block :css
 
-       """
+       "
        ul {
          list-style: square outside;
          color: #ccc;
@@ -39,7 +39,7 @@
        li {
          color: #000;
        }
-       """)
+       ")
 
     (p
        ["This should do the trick, but doesn't for some reason! How the heck
@@ -50,7 +50,7 @@
 
     (code-block :html
 
-       """
+       "
        <h1>TXJS 2011 Speakers</h1>
        <ul>
          <li><span>Brendan Eich</span></li>
@@ -68,7 +68,7 @@
            color: #000;
          }
        </style>
-       """)
+       ")
 
     (p
        ["This gets the job done, but those " (code "span") "s are ugly –
@@ -79,7 +79,7 @@
 
     (code-block :css
 
-       """
+       "
        ul {
          list-style: none;
        }
@@ -88,7 +88,7 @@
          background: url(bullet.png) no-repeat 0;
          text-indent: 12px;
        }
-       """)
+       ")
 
     (p
        ["This requires very little CSS. To avoid incurring the overhead
@@ -99,7 +99,7 @@
 
     (code-block :css
 
-       """
+       "
        ul {
          list-style: none;
        }
@@ -116,9 +116,9 @@
          width: 4px;
          height: 4px;
          background: #ccc;
-         content: "";
+         content: \"\";
        }
-       """)
+       ")
 
     (p
        ["So it's possible to fashion square bullets of any colour
@@ -129,13 +129,13 @@
 
     (code-block :css
 
-       """
+       "
        ...
        -webkit-border-radius: 2px;
        -moz-border-radius: 2px;
        border-radius: 2px;
        ...
-       """)
+       ")
 
   ]
 

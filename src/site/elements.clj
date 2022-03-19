@@ -1,23 +1,36 @@
-(import* [:base :sanctuary :prelude]
+(import* [:base]
 
 (let
-   [text
+   [s (import :sanctuary)
+
+    text
       (lambda [value]
          {:type :text
           :value value})
 
     canonicalize-attrs
-      (reduce-object
-         (lambda [k v] (insert k (if-else symbol? symbol->string String v)))
-         {})
+      (lambda [attrs]
+         (Object/fromEntries (s/map (lambda [name]
+                                       (let [value (s/prop name attrs)]
+                                          [name
+                                           (if (== "symbol" (type-of value))
+                                               (Symbol/keyFor value)
+                                               (String value))]))
+                                    (Object/getOwnPropertySymbols attrs))))
 
     canonicalize-children
-      (compose (map (when string?
-                          (pipe [lines
-                                 (fold-map String (invoke-2 "replace" (regex "" "^[ ]+") " "))
-                                 (invoke-2 "replace" (regex "g" " -- ") "\u2009\u2014\u2009")
-                                 text])))
-               (unless array? (of Array)))
+      (s/compose (s/map (lambda [child]
+                           (if (== "string" (type-of child))
+                               (text (invoke-2 "replace"
+                                               (s/regex "g" " -- ")
+                                               "\u2009\u2014\u2009"
+                                               (s/fold-map String
+                                                           (invoke-2 "replace"
+                                                                     (s/regex "" "^[ ]+")
+                                                                     " ")
+                                                           (s/lines child))))
+                               child)))
+                 (s/unless Array/isArray Array/of))
 
     block-element
       (lambda [tag-name attrs children]
@@ -33,7 +46,7 @@
          (let [children (canonicalize-children children)]
             {:type :element
              :tag-name tag-name
-             :format (if (any (lambda [node] (=== :block (:format node))) children)
+             :format (if (s/any (lambda [node] (=== :block (:format node))) children)
                          :block
                          :inline)
              :self-closing false

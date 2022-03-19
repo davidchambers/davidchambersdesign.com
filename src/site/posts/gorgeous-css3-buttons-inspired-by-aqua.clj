@@ -106,11 +106,11 @@
 
     (code-block :css
 
-       """
+       "
        -webkit-border-radius: 1em;
        -moz-border-radius: 1em;
        border-radius: 1em;
-       """)
+       ")
 
     (captioned-image
        "/images/posts/39/start-game-button-and-hyperlink-border-radius.png"
@@ -119,14 +119,14 @@
 
     (code-block :css
 
-       """
+       "
        background: -webkit-gradient(linear, left top, left bottom,
            from(#fc6), to(#fc6),
            color-stop(0.1, #fff), color-stop(0.2, #fc6),
            color-stop(0.5, #fc6), color-stop(0.5, #fa2));
        background: -moz-linear-gradient(-90deg,
            #fc6 5%, #fff 15%, #fc6 25%, #fc6 50%, #fa2 50%, #fc6);
-       """)
+       ")
 
     (captioned-image
        "/images/posts/39/start-game-button-and-hyperlink-background-gradient.png"
@@ -166,7 +166,7 @@
 
     (code-block :css
 
-       """
+       "
        .aqua:hover {
            border-color: #740;
            background: #fb4;
@@ -179,7 +179,7 @@
            color: #740;
            cursor: pointer;
        }
-       """)
+       ")
 
     (captioned-image
        "/images/posts/39/start-game-button-and-hyperlink-hover.png"
@@ -190,14 +190,14 @@
 
     (code-block :css
 
-       """
+       "
        .aqua:focus {
            -webkit-box-shadow: #740 0 1px 0.75em;
            -moz-box-shadow: #740 0 1px 0.75em;
            color: #740;
            outline: none;
        }
-       """)
+       ")
 
     (captioned-images
 
@@ -215,7 +215,7 @@
 
     (code-block :css
 
-       """
+       "
        .aqua:active {
            border-color: #630;
            background: #f90;
@@ -227,7 +227,7 @@
                #f90 5%, #fd8 15%, #fb4 35%, #fb4 50%, #f90 50%, #f90);
            color: #630;
        }
-       """)
+       ")
 
     (captioned-image
        "/images/posts/39/start-game-button-and-hyperlink-active.png"

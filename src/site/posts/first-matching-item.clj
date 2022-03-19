@@ -28,13 +28,13 @@
 
     (code-block :python
 
-       """
+       "
        def student_by_id(students, id):
            for student in students:
                if student.id == id:
                    return student
            return None
-       """)
+       ")
 
     (p
        ["This appoach strikes me as inelegant when the function is called
@@ -42,13 +42,13 @@
 
     (code-block :python
 
-       """
+       "
        student = None
        for student in students:
            if student.id == id:
                break
            student = None
-       """)
+       ")
 
     (p
        ["Here, we break out of the loop as soon as a match

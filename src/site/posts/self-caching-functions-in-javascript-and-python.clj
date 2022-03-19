@@ -31,19 +31,19 @@
 
         (code-block :javascript
 
-           """
+           "
            function fibonacci(n) {
                if (n <= 1) return n;
                return fibonacci(n - 2) + fibonacci(n - 1);
            }
-           """)])
+           ")])
 
     (p
        ["I created a simple timer:"])
 
     (code-block :javascript
 
-       """
+       "
        function timer(func) {
            var i = 10, start;
            while (i--) {
@@ -52,14 +52,14 @@
                console.log(func.name, 'executed in', new Date - start, 'ms');
            }
        }
-       """)
+       ")
 
     (p
        ["How does the vanilla function perform?"])
 
     (code-block :TK
 
-       """
+       "
        >>> timer(fibonacci, 35);
        fibonacci executed in 559 ms
        fibonacci executed in 559 ms
@@ -71,7 +71,7 @@
        fibonacci executed in 558 ms
        fibonacci executed in 559 ms
        fibonacci executed in 559 ms
-       """)
+       ")
 
     (p
        ["Values of " (code "n") " much larger than 35 locked up my browser.
@@ -93,7 +93,7 @@
 
     (code-block :javascript
 
-       """
+       "
        fibonacci = (function () {
 
            var cache = {};
@@ -108,14 +108,14 @@
                return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
            };
        }());
-       """)
+       ")
 
     (p
        ["Does caching make a difference?"])
 
     (code-block :TK
 
-       """
+       "
        >>> timer(fibonacci, 35);
         executed in 1 ms
         executed in 0 ms
@@ -127,7 +127,7 @@
         executed in 0 ms
         executed in 0 ms
         executed in 0 ms
-       """)
+       ")
 
     (p
        ["Undeniably, yes. Not only is the new version of the function much
@@ -142,7 +142,7 @@
 
     (code-block :javascript
 
-       """
+       "
        fibonacci = (function () {
 
            var cache = { 0:0, 1:1 };
@@ -155,7 +155,7 @@
                return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
            };
        }());
-       """)
+       ")
 
     (h3 "JavaScript Fibonacci with caching via function property")
 
@@ -166,7 +166,7 @@
 
     (code-block :javascript
 
-       """
+       "
        function fibonacci(n) {
 
            if (!fibonacci.cache) fibonacci.cache = {};
@@ -178,7 +178,7 @@
 
            return (fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
        }
-       """)
+       ")
 
     (p
        ["To avoid the overhead of checking for the existence of the cache
@@ -187,12 +187,12 @@
 
     (code-block :javascript
 
-       """
+       "
        function fibonacci(n) {
            // function body
        }
        fibonacci.cache = {};
-       """)
+       ")
 
     (p
        ["Caching via function property and caching via closure performed
@@ -202,13 +202,13 @@
 
     (code-block :python
 
-       """
+       "
        def fibonacci(n):
            if n <= 1:
                return n
            else:
                return fibonacci(n - 2) + fibonacci(n - 1)
-       """)
+       ")
 
     (p
        ["Does the vanilla Python function outperform the vanilla JavaScript
@@ -216,10 +216,10 @@
 
     (code-block :TK
 
-       """
+       "
        >>> import time
        >>> for i in range(10): t = time.time(); fibonacci(35); print time.time() - t;
-       """)
+       ")
 
     (p
        ["Interestingly, Python was more than an order of magnitude slower than
@@ -231,7 +231,7 @@
 
     (code-block :python
 
-       """
+       "
        def fibonacci(n):
            if n in fibonacci.cache:
                return fibonacci.cache[n]
@@ -242,7 +242,7 @@
                return f
 
        fibonacci.cache = {}
-       """)
+       ")
 
     (p
        ["This resulted in " (code "fibonacci(35)") " being executed roughly
@@ -255,7 +255,7 @@
 
     (code-block :python
 
-       """
+       "
        def fibonacci(n, _cache={}):
            if n <= 1:
                return n
@@ -264,7 +264,7 @@
            else:
                f = _cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
                return f
-       """)
+       ")
 
     (p
        ["How does this work? In Python, default arguments are brought to

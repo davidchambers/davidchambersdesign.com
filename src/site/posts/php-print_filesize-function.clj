@@ -30,7 +30,7 @@
 
     (code-block :php
 
-       """
+       "
        <?php
 
        /**
@@ -39,7 +39,7 @@
         * @param string $before
         * @param string $after
         */
-       function print_filesize($filename, $before = ' <span class="filesize">(', $after = ')</span>')
+       function print_filesize($filename, $before = ' <span class=\"filesize\">(', $after = ')</span>')
        {
            if (file_exists($filename))
            {
@@ -64,21 +64,21 @@
 
                $approx = $unit == 'B' ? '' : '≈' ;
 
-               echo "{$before}{$approx}{$size} {$unit}{$after}";
+               echo \"{$before}{$approx}{$size} {$unit}{$after}\";
            }
        }
 
        ?>
-       """)
+       ")
 
     (p
        ["Example usage:"])
 
     (code-block :php
 
-       """
-       <a href="favicon.ico">favicon.ico</a><?php print_filesize('favicon.ico'); ?>
-       """)
+       "
+       <a href=\"favicon.ico\">favicon.ico</a><?php print_filesize('favicon.ico'); ?>
+       ")
 
     (p
        ["This gives: " (a "/favicon.ico" "favicon.ico") " "

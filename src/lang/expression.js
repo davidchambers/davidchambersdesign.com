@@ -8,44 +8,35 @@ const {
   join,
 } = sanctuary.unchecked;
 
-//    number :: Number -> Node
-const number = value => ({__type: 'number', __value: value});
+//    number :: Number -> Expression
+const number = value => number => _ => _ => _ => _ => _ => _ => number (value);
 
-//    string :: String -> Node
-const string = value => ({__type: 'string', __value: value});
+//    string :: String -> Expression
+const string = value => _ => string => _ => _ => _ => _ => _ => string (value);
 
-//    symbol :: String -> Node
-const symbol = name => ({__type: 'symbol', __name: name});
+//    symbol :: String -> Expression
+const symbol = name => _ => _ => symbol => _ => _ => _ => _ => symbol (name);
 
-//    identifier :: String -> Node
-const identifier = name => ({__type: 'identifier', __name: name});
+//    identifier :: String -> Expression
+const identifier = name => _ => _ => _ => identifier => _ => _ => _ => identifier (name);
 
-//    bracketed :: Array Node -> Node
-const bracketed = elements => ({__type: '[]', __elements: elements});
+//    bracketed :: Array Expression -> Expression
+const bracketed = elements => _ => _ => _ => _ => bracketed => _ => _ => bracketed (elements);
 
-//    braced :: Array Node -> Node
-const braced = elements => ({__type: '{}', __elements: elements});
+//    braced :: Array Expression -> Expression
+const braced = elements => _ => _ => _ => _ => _ => braced => _ => braced (elements);
 
-//    parenthesized :: Array Node -> Node
-const parenthesized = elements => ({__type: '()', __elements: elements});
+//    parenthesized :: Array Expression -> Expression
+const parenthesized = elements => _ => _ => _ => _ => _ => _ => parenthesized => parenthesized (elements);
 
 const fold = cases => function recur(expr) {
-  switch (expr.__type) {
-    case 'number':
-      return cases.number (expr.__value);
-    case 'string':
-      return cases.string (expr.__value);
-    case 'symbol':
-      return cases.symbol (expr.__name);
-    case 'identifier':
-      return cases.identifier (expr.__name);
-    case '[]':
-      return cases.bracketed (recur) (expr.__elements);
-    case '{}':
-      return cases.braced (recur) (expr.__elements);
-    case '()':
-      return cases.parenthesized (recur) (expr.__elements);
-  }
+  return expr (cases.number)
+              (cases.string)
+              (cases.symbol)
+              (cases.identifier)
+              (cases.bracketed (recur))
+              (cases.braced (recur))
+              (cases.parenthesized (recur));
 };
 
 const onString = other => string => (

@@ -83,18 +83,18 @@
 
     (code-block :php
 
-       """
+       "
        <?php
 
        'single-quoted string';
 
-       "double-quoted string";
+       \"double-quoted string\";
 
        // single-quoted string with literal dollar sign
        'fruit smoothie: $5.50';
 
        // double-quoted string containing a variable
-       "fruit smoothie: $cost";
+       \"fruit smoothie: $cost\";
 
        // numerical value
        $cost = 5.50;
@@ -109,7 +109,7 @@
        is_ready_to_order($customer);
 
        ?>
-       """)
+       ")
 
     (caption
        ["Live rendering of improved PHP brush"])

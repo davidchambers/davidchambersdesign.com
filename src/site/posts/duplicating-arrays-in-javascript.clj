@@ -20,11 +20,11 @@
 
     (code-block :javascript
 
-       """
+       "
        var fruits = ['orange', 'lime'];
        var colours = fruits; // naïve attempt to duplicate array
        colours.push('yellow');
-       """)
+       ")
 
     (p
        ["One might be surprised to learn that " (code "fruits") " now contains
@@ -33,13 +33,13 @@
 
     (code-block :javascript
 
-       """
+       "
        var fruits = ['orange', 'lime'];
-       // fruits points to array containing "orange" and "lime"
+       // fruits points to array containing \"orange\" and \"lime\"
 
        var colours = fruits;
        // colours now points to that same array!
-       """)
+       ")
 
     (p
        ["How, then, does one create a copy of the original array? "
@@ -47,9 +47,9 @@
 
     (code-block :javascript
 
-       """
+       "
        var colours = fruits.slice();
-       """)
+       ")
 
     (aside' {:id "footnote"}
        ["* Languages such as C.

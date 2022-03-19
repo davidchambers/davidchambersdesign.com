@@ -1,6 +1,10 @@
-(import* [:base "../../elements" :sanctuary :prelude]
+(import* [:base "../../elements"]
 
-(let [render-fragment (import "../../render-fragment")]
+(let [s (import :sanctuary)
+
+      render-fragment (import "../../render-fragment")
+
+      ++ (s/join-with "")]
 
    (++ ["<?xml version=\"1.0\" standalone=\"no\"?>\n"
         "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
@@ -15,8 +19,7 @@
                  (path {:stroke "#fff"
                         :stroke-width "1"
                         :fill "url(#gradient)"
-                        :d (join-with " "
-                                      ["M 3,3"
+                        :d (s/unwords ["M 3,3"
                                        "a 2,2 0 0 1 4,0"
                                        "l 0,1"
                                        "l 4,0"

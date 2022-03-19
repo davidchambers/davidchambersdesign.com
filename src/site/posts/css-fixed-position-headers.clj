@@ -50,7 +50,7 @@
 
     (code-block :css
 
-       """
+       "
        #header
        {
            position: fixed;
@@ -58,7 +58,7 @@
            left: 0;
            height: 160px;
        }
-       """)
+       ")
 
     (h3 "Approach 1: positive top padding + negative bottom margins")
 
@@ -67,13 +67,13 @@
 
     (code-block :css
 
-       """
+       "
        h1, h2, h3, h4, h5, h6, p
        {
            padding-top: 160px;
            margin-bottom: -160px;
        }
-       """)
+       ")
 
     (p
        ["This approach adds top padding (equal to the height of the header)
@@ -103,13 +103,13 @@
 
     (code-block :css
 
-       """
+       "
        div.id
        {
            position: relative;
            top: -160px;
        }
-       """)
+       ")
 
     (p
        ["This approach introduces meaningless markup. Where previously we may
@@ -117,23 +117,23 @@
 
     (code-block :html
 
-       """
+       "
        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus volutpat risus nec mollis. Integer dapibus dictum ultrices. Aenean vel lectus odio. Nam a mi ligula. Nam in dolor quis metus pretium imperdiet sit amet sed elit.</p>
-       <h3 id="example">Example</h3>
+       <h3 id=\"example\">Example</h3>
        <p>Suspendisse potenti. Proin convallis lacinia nibh, nec auctor ligula mattis consectetur. Mauris vel elit sit amet nibh volutpat varius id vel sem. Pellentesque id purus ligula. Vivamus vel nulla vel justo tempor ultricies.</p>
-       """)
+       ")
 
     (p
        ["We now have the following:"])
 
     (code-block :html
 
-       """
+       "
        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus volutpat risus nec mollis. Integer dapibus dictum ultrices. Aenean vel lectus odio. Nam a mi ligula. Nam in dolor quis metus pretium imperdiet sit amet sed elit.</p>
-       <div id="example" class="id"></div>
+       <div id=\"example\" class=\"id\"></div>
        <h3>Example</h3>
        <p>Suspendisse potenti. Proin convallis lacinia nibh, nec auctor ligula mattis consectetur. Mauris vel elit sit amet nibh volutpat varius id vel sem. Pellentesque id purus ligula. Vivamus vel nulla vel justo tempor ultricies.</p>
-       """)
+       ")
 
     (p
        ["With this approach, each uniquely identified block-level
@@ -171,7 +171,7 @@
 
     (code-block :javascript
 
-       """
+       "
        // accommodate fixed-position header
        document.observe('dom:loaded', function () {
            $$('h2[id]', 'h3[id]', 'h4[id]', 'h5[id]', 'h6[id]').each(function (e) {
@@ -181,7 +181,7 @@
                e.insert({ 'top': div });
            })
        });
-       """)
+       ")
 
     (p
        ["The above snippet locates all the h2, h3, h4, h5, and h6 elements
@@ -195,13 +195,13 @@
 
     (code-block :css
 
-       """
+       "
        h2.unidentified div, h3.unidentified div
        {
            float: left;
            margin: -160px 0 0 0;
        }
-       """)
+       ")
 
     (pros-and-cons-list
        (lambda [+ -]

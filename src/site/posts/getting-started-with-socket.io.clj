@@ -31,20 +31,20 @@
 
     (code-block :coffeescript
 
-       """
+       "
        qux = foo 'bar', (baz) -> 'Hello, world!'
-       """)
+       ")
 
     (p
        ["The above is equivalent to:"])
 
     (code-block :javascript
 
-       """
+       "
        var qux = foo('bar', function (baz) {
          return 'Hello, world!';
        });
-       """)
+       ")
 
     (p
        ["CoffeeScript uses " (code "->") " rather than the "
@@ -58,17 +58,17 @@
 
     (code-block :coffeescript
 
-       """
+       "
        fs   = require 'fs'
        http = require 'http'
 
        server = http.createServer (req, res) ->
-         fs.readFile "#{__dirname}/socket.io.demo.html", (err, data) ->
+         fs.readFile \"#{__dirname}/socket.io.demo.html\", (err, data) ->
            res.writeHead 200, 'Content-Type': 'text/html'
            res.end data, 'utf8'
 
        server.listen 1337
-       """)
+       ")
 
     (p
        ["The server we've created simply responds to any request on
@@ -79,7 +79,7 @@
 
     (code-block :coffeescript
 
-       """
+       "
        io = require('socket.io').listen server
 
        io.sockets.on 'connection', (socket) ->
@@ -92,7 +92,7 @@
 
          socket.on 'whisper', (message) ->
            socket.broadcast.emit 'secret', message
-       """)
+       ")
 
     (p
        ["Here we've instructed our server to listen for three custom
@@ -125,7 +125,7 @@
 
     (code-block :html
 
-       """
+       "
        <!doctype html>
        <html>
          <head>
@@ -133,16 +133,16 @@
          </head>
          <body>
            <h1>Socket.IO demo</h1>
-           <input type="text" autofocus="autofocus" />
-           <button type="button">publish</button>
-           <button type="button">broadcast</button>
-           <button type="button">whisper</button>
-           <p>Status: <span id="status">Undefined</span></p>
-           <ol id="messages"></ol>
-           <script src="/socket.io/socket.io.js"></script>
-           <script src="http://code.jquery.com/jquery-latest.js"></script>
-           <script src="http://jashkenas.github.com/coffee-script/extras/coffee-script.js"></script>
-           <script type="text/coffeescript">
+           <input type=\"text\" autofocus=\"autofocus\" />
+           <button type=\"button\">publish</button>
+           <button type=\"button\">broadcast</button>
+           <button type=\"button\">whisper</button>
+           <p>Status: <span id=\"status\">Undefined</span></p>
+           <ol id=\"messages\"></ol>
+           <script src=\"/socket.io/socket.io.js\"></script>
+           <script src=\"http://code.jquery.com/jquery-latest.js\"></script>
+           <script src=\"http://jashkenas.github.com/coffee-script/extras/coffee-script.js\"></script>
+           <script type=\"text/coffeescript\">
 
              jQuery ($) ->
 
@@ -151,7 +151,7 @@
            </script>
          </body>
        </html>
-       """)
+       ")
 
     (p
        [(code "<script src=\"/socket.io/socket.io.js\"></script>") " was
@@ -167,7 +167,7 @@
 
     (code-block :coffeescript
 
-       """
+       "
        $status = $ '#status'
        socket = io.connect()
 
@@ -178,7 +178,7 @@
          $status.text 'Disconnected'
 
        socket.on 'reconnecting', (seconds) ->
-         $status.text "Reconnecting in #{seconds} seconds"
+         $status.text \"Reconnecting in #{seconds} seconds\"
 
        socket.on 'reconnect', ->
          $status.text 'Reconnected'
@@ -191,7 +191,7 @@
 
        socket.on 'secret', (message) ->
          console.log message
-       """)
+       ")
 
     (p
        ["The first five events -- \"connect\", \"disconnect\",
@@ -216,13 +216,13 @@
 
     (code-block :coffeescript
 
-       """
+       "
        $input = $ 'input'
 
        $('button').click ->
          socket.emit $(this).text(), $input.val()
          $input.val('').focus()
-       """)
+       ")
 
     (p
        ["Here, we've bound a \"click\" handler to the three buttons.

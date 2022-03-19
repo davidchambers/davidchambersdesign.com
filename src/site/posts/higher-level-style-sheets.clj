@@ -37,7 +37,7 @@
 
     (code-block :css
 
-       """
+       "
        ol.archives {
          margin: 0 0 0 -21px;
          list-style: none;
@@ -46,7 +46,7 @@
        ol.archives li h2 {
          margin: 1.75em 0 0 21px;
          padding: 0;
-         font: bold 1em/1.75 "Lucida Grande", ..., sans-serif;
+         font: bold 1em/1.75 \"Lucida Grande\", ..., sans-serif;
          color: #93a1a1;
        }
 
@@ -88,42 +88,42 @@
          overflow: hidden;
        }
 
-       ol.archives time[datetime*="01T"] { background-position:  -60px  -20px; }
-       ol.archives time[datetime*="02T"] { background-position:  -80px  -20px; }
-       ol.archives time[datetime*="03T"] { background-position: -100px  -20px; }
-       ol.archives time[datetime*="04T"] { background-position: -120px  -20px; }
-       ol.archives time[datetime*="05T"] { background-position: -140px  -20px; }
+       ol.archives time[datetime*=\"01T\"] { background-position:  -60px  -20px; }
+       ol.archives time[datetime*=\"02T\"] { background-position:  -80px  -20px; }
+       ol.archives time[datetime*=\"03T\"] { background-position: -100px  -20px; }
+       ol.archives time[datetime*=\"04T\"] { background-position: -120px  -20px; }
+       ol.archives time[datetime*=\"05T\"] { background-position: -140px  -20px; }
 
-       ol.archives time[datetime*="06T"] { background-position:  -20px  -40px; }
-       ol.archives time[datetime*="07T"] { background-position:  -40px  -40px; }
-       ol.archives time[datetime*="08T"] { background-position:  -60px  -40px; }
-       ol.archives time[datetime*="09T"] { background-position:  -80px  -40px; }
-       ol.archives time[datetime*="10T"] { background-position: -100px  -40px; }
-       ol.archives time[datetime*="11T"] { background-position: -120px  -40px; }
-       ol.archives time[datetime*="12T"] { background-position: -140px  -40px; }
+       ol.archives time[datetime*=\"06T\"] { background-position:  -20px  -40px; }
+       ol.archives time[datetime*=\"07T\"] { background-position:  -40px  -40px; }
+       ol.archives time[datetime*=\"08T\"] { background-position:  -60px  -40px; }
+       ol.archives time[datetime*=\"09T\"] { background-position:  -80px  -40px; }
+       ol.archives time[datetime*=\"10T\"] { background-position: -100px  -40px; }
+       ol.archives time[datetime*=\"11T\"] { background-position: -120px  -40px; }
+       ol.archives time[datetime*=\"12T\"] { background-position: -140px  -40px; }
 
-       ol.archives time[datetime*="13T"] { background-position:  -20px  -60px; }
-       ol.archives time[datetime*="14T"] { background-position:  -40px  -60px; }
-       ol.archives time[datetime*="15T"] { background-position:  -60px  -60px; }
-       ol.archives time[datetime*="16T"] { background-position:  -80px  -60px; }
-       ol.archives time[datetime*="17T"] { background-position: -100px  -60px; }
-       ol.archives time[datetime*="18T"] { background-position: -120px  -60px; }
-       ol.archives time[datetime*="19T"] { background-position: -140px  -60px; }
+       ol.archives time[datetime*=\"13T\"] { background-position:  -20px  -60px; }
+       ol.archives time[datetime*=\"14T\"] { background-position:  -40px  -60px; }
+       ol.archives time[datetime*=\"15T\"] { background-position:  -60px  -60px; }
+       ol.archives time[datetime*=\"16T\"] { background-position:  -80px  -60px; }
+       ol.archives time[datetime*=\"17T\"] { background-position: -100px  -60px; }
+       ol.archives time[datetime*=\"18T\"] { background-position: -120px  -60px; }
+       ol.archives time[datetime*=\"19T\"] { background-position: -140px  -60px; }
 
-       ol.archives time[datetime*="20T"] { background-position:  -20px  -80px; }
-       ol.archives time[datetime*="21T"] { background-position:  -40px  -80px; }
-       ol.archives time[datetime*="22T"] { background-position:  -60px  -80px; }
-       ol.archives time[datetime*="23T"] { background-position:  -80px  -80px; }
-       ol.archives time[datetime*="24T"] { background-position: -100px  -80px; }
-       ol.archives time[datetime*="25T"] { background-position: -120px  -80px; }
-       ol.archives time[datetime*="26T"] { background-position: -140px  -80px; }
+       ol.archives time[datetime*=\"20T\"] { background-position:  -20px  -80px; }
+       ol.archives time[datetime*=\"21T\"] { background-position:  -40px  -80px; }
+       ol.archives time[datetime*=\"22T\"] { background-position:  -60px  -80px; }
+       ol.archives time[datetime*=\"23T\"] { background-position:  -80px  -80px; }
+       ol.archives time[datetime*=\"24T\"] { background-position: -100px  -80px; }
+       ol.archives time[datetime*=\"25T\"] { background-position: -120px  -80px; }
+       ol.archives time[datetime*=\"26T\"] { background-position: -140px  -80px; }
 
-       ol.archives time[datetime*="27T"] { background-position:  -20px -100px; }
-       ol.archives time[datetime*="28T"] { background-position:  -40px -100px; }
-       ol.archives time[datetime*="29T"] { background-position:  -60px -100px; }
-       ol.archives time[datetime*="30T"] { background-position:  -80px -100px; }
-       ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
-       """)
+       ol.archives time[datetime*=\"27T\"] { background-position:  -20px -100px; }
+       ol.archives time[datetime*=\"28T\"] { background-position:  -40px -100px; }
+       ol.archives time[datetime*=\"29T\"] { background-position:  -60px -100px; }
+       ol.archives time[datetime*=\"30T\"] { background-position:  -80px -100px; }
+       ol.archives time[datetime*=\"31T\"] { background-position: -100px -100px; }
+       ")
 
     (p
        ["That's a lot of text, most of which relates to the calendar sprite.
@@ -144,7 +144,7 @@
 
     (code-block :sass
 
-       """
+       "
        ol.archives
          margin: 0 0 0 -21px
          list-style: none
@@ -152,7 +152,7 @@
            h2
              margin: 1.75em 0 0 21px
              padding: 0
-             font: bold 1em/1.75 "Lucida Grande", ..., sans-serif
+             font: bold 1em/1.75 \"Lucida Grande\", ..., sans-serif
              color: #93a1a1
            ol
              margin: 0
@@ -166,7 +166,7 @@
            background: url(data:image/png;base64,...) no-repeat
            line-height: 10
            overflow: hidden
-       """)
+       ")
 
     (h3 ["Compass's " (code "inline-image") " function"])
 
@@ -201,23 +201,23 @@
 
     (code-block :sass
 
-       """
+       "
        ol.archives
          ...
          time
            ...
-           background: inline-image("calendar.png") no-repeat
+           background: inline-image(\"calendar.png\") no-repeat
            ...
-           &[datetime*="01T"]
+           &[datetime*=\"01T\"]
              background-position: -60px -20px
-           &[datetime*="02T"]
+           &[datetime*=\"02T\"]
              background-position: -80px -20px
-           &[datetime*="03T"]
+           &[datetime*=\"03T\"]
              background-position: -100px -20px
            ...
-           &[datetime*="31T"]
+           &[datetime*=\"31T\"]
              background-position: -100px -100px
-       """)
+       ")
 
     (h3 "Generating repetitive CSS programmatically")
 
@@ -231,10 +231,10 @@
 
     (code-block :sass
 
-       """
+       "
        @for $date from 1 through 31
          // do stuff
-       """)
+       ")
 
     (p
        ["The loop variable, " (code "$date") ", can be
@@ -242,10 +242,10 @@
 
     (code-block :sass
 
-       """
+       "
        @for $date from 1 through 31
-         &[datetime*="#{$date}T"]
-       """)
+         &[datetime*=\"#{$date}T\"]
+       ")
 
     (p
        ["Almost. This gives " (code "datetime*=\"1T\"") ", "
@@ -255,12 +255,12 @@
 
     (code-block :sass
 
-       """
+       "
        @for $date from 1 through 31
          @if $date < 10
-           $date: "0#{$date}"
-         &[datetime*="#{$date}T"]
-       """)
+           $date: \"0#{$date}\"
+         &[datetime*=\"#{$date}T\"]
+       ")
 
     (p
        ["Finally, variables can be used to calculate the "
@@ -268,21 +268,21 @@
 
     (code-block :sass
 
-       """
+       "
        $offset: -20px
        $x: 3
        $y: 1
          @for $date from 1 through 31
            @if $date < 10
-             $date: "0#{$date}"
-           &[datetime*="#{$date}T"]
+             $date: \"0#{$date}\"
+           &[datetime*=\"#{$date}T\"]
              background-position: $x * $offset $y * $offset
            @if $x == 7
              $x: 1
              $y: $y + 1
            @else
              $x: $x + 1
-       """)
+       ")
 
     (p
        ["These 13 lines of relatively straightforward logic

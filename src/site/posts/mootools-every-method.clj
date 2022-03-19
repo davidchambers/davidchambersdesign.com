@@ -18,9 +18,9 @@
 
     (code-block :javascript
 
-       """
+       "
        var list = [4, -1, 3, 2, 5];
-       """)
+       ")
 
     (p
        ["One might wish to determine whether all the numbers in "
@@ -41,7 +41,7 @@
 
     (code-block :javascript
 
-       """
+       "
        var allPositive = true;
        for (var i = 0; i < list.length; i++) {
            if (list[i] <= 0) {
@@ -49,14 +49,14 @@
                break;
            }
        }
-       """)
+       ")
 
     (p
        ["... or a " (code "while") " loop (which is slightly more efficient)."])
 
     (code-block :javascript
 
-       """
+       "
        var allPositive = true, i = list.length;
        while (i--) {
            if (list[i] <= 0) {
@@ -64,7 +64,7 @@
                break;
            }
        }
-       """)
+       ")
 
     (p
        [(strong ["Seriously, though, who is writing " (em "vanilla") "
@@ -85,14 +85,14 @@
 
     (code-block :javascript
 
-       """
+       "
        var allPositive = true;
        list.each(function (item) {
            if (item <= 0) {
                allPositive = false;
            }
        });
-       """)
+       ")
 
     (p
        ["While this gets the job done, it's suboptimal for two reasons: the
@@ -109,11 +109,11 @@
 
     (code-block :javascript
 
-       """
+       "
        var allPositive = list.every(function (item) {
            return item > 0;
        });
-       """)
+       ")
 
     (p
        ["This is terser than is possible with vanilla JavaScript.

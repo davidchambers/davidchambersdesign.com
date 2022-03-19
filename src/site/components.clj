@@ -1,56 +1,65 @@
-(import* [:base :sanctuary "./elements"] {
+(import* [:base "./elements"]
 
-  :caption
-    (lambda [caption]
-       (p' {:class "caption"} caption))
+   (let [s (import :sanctuary)]
 
-  :captioned-image
-    (lambda [src alt caption]
-       (dl
-          [(dt (img {:alt alt :src src}))
-           (dd caption)]))
+      {:caption
+         (lambda [caption]
+            (p' {:class "caption"} caption))
 
-  :captioned-images
-    (compose dl (chain (lambda [element] (:children element))))
+       :captioned-image
+         (lambda [src alt caption]
+            (dl
+               [(dt (img {:alt alt :src src}))
+                (dd caption)]))
 
-  :uncaptioned-image
-    (lambda [src alt]
-       (p (img {:alt alt :src src})))
+       :captioned-images
+         (s/compose dl (s/chain (lambda [element] (:children element))))
 
-  :decorative-image
-    (lambda [src]
-       (p (img {:alt "" :src src})))
+       :uncaptioned-image
+         (lambda [src alt]
+            (p (img {:alt alt :src src})))
 
-  :code-block
-    (lambda [language source-code]
-       (pre (code (text source-code))))
+       :decorative-image
+         (lambda [src]
+            (p (img {:alt "" :src src})))
 
-  :interview-list
-    (lambda [interviewer interviewee exchange]
-       (ol (snd (reduce (pair (lambda [name items quotation]
-                                 (if (equals interviewer name)
-                                     (Pair interviewee
-                                           (append (li' {:class "interviewer"}
-                                                      (concat [(strong (concat interviewer ":")) " "] quotation))
-                                                   items))
-                                     (Pair interviewer
-                                           (append (li' {}
-                                                      (concat [(strong (concat interviewee ":")) " "] quotation))
-                                                   items)))))
-                        (Pair interviewer [])
-                        (map canonicalize-children exchange)))))
+       :code-block
+         (lambda [language source-code]
+            (let [lines
+                    (s/from-maybe [] (s/chain s/init (s/tail (s/lines source-code))))
+                  trim-leading-spaces
+                    (lambda [line]
+                       (s/from-maybe line
+                                     (s/chain (s/flip s/strip-prefix line)
+                                              (s/map (s/prop "match")
+                                                     (s/chain (s/match (s/regex "" "^[ ]*"))
+                                                              (s/head lines))))))]
+               (pre (code (text (s/unlines (s/map trim-leading-spaces lines)))))))
 
-  :pros-and-cons-list
-    (lambda [f]
-       (ul (f (li' {:class "pro"})
-              (li' {:class "con"}))))
+       :interview-list
+         (lambda [interviewer interviewee exchange]
+            (ol (s/snd (s/reduce (s/pair (lambda [name items quotation]
+                                            (if (s/equals interviewer name)
+                                                (s/Pair interviewee
+                                                        (s/append (li' {:class "interviewer"}
+                                                                     (s/concat [(strong (s/concat interviewer ":")) " "] quotation))
+                                                                  items))
+                                                (s/Pair interviewer
+                                                        (s/append (li' {}
+                                                                     (s/concat [(strong (s/concat interviewee ":")) " "] quotation))
+                                                                  items)))))
+                                 (s/Pair interviewer [])
+                                 (s/map canonicalize-children exchange)))))
 
-  :update
-    (lambda [datetime body]
-       (div {:class "update"}
-          (prepend (h4 ["Update \u2014 "
-                        (time {:datetime (invoke-0 "toISO" datetime)}
-                           (invoke-1 "toFormat" "d MMMM y" datetime))])
-                   (canonicalize-children body))))
+       :pros-and-cons-list
+         (lambda [f]
+            (ul (f (li' {:class "pro"})
+                   (li' {:class "con"}))))
 
-})
+       :update
+         (lambda [datetime body]
+            (div {:class "update"}
+               (s/prepend (h4 ["Update \u2014 "
+                               (time {:datetime (invoke-0 "toISO" datetime)}
+                                  (invoke-1 "toFormat" "d MMMM y" datetime))])
+                          (canonicalize-children body))))}))

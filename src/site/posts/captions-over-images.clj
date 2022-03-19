@@ -34,12 +34,12 @@
 
     (code-block :html
 
-       """
+       "
        <dl>
-           <dt><img src="images/paris.jpg" alt="View from Notre Dame de Paris" /></dt>
+           <dt><img src=\"images/paris.jpg\" alt=\"View from Notre Dame de Paris\" /></dt>
            <dd>View from Notre Dame de Paris</dd>
        </dl>
-       """)
+       ")
 
     (p
        ["Ideally, images appearing one after the other should belong to the
@@ -57,12 +57,12 @@
 
     (code-block :html
 
-       """
-       <dl class="captioned-image">
-           <dt><img src="images/paris.jpg" alt="View from Notre Dame de Paris" /></dt>
+       "
+       <dl class=\"captioned-image\">
+           <dt><img src=\"images/paris.jpg\" alt=\"View from Notre Dame de Paris\" /></dt>
            <dd><span>View from Notre Dame de Paris</span></dd>
        </dl>
-       """)
+       ")
 
     (p
        ["Additional markup required:"])
@@ -83,7 +83,7 @@
 
     (code-block :css
 
-       """
+       "
        dl.captioned-image         { position: relative; margin: 1em 0; }
        dl.captioned-image dt img  { display: block; }
        dl.captioned-image dd      { position: absolute; left: 0; bottom: 1.25em;
@@ -92,7 +92,7 @@
        dl.captioned-image dd span { display: block; float: left; clear: both;
                                     background: #000; background: rgba(0, 0, 0, 0.7);
                                     padding: 0.25em 0.5em; color: #fff; }
-       """)
+       ")
 
     (p
        ["I set out to display captions over images without the use

@@ -24,7 +24,7 @@
 
             (code-block :python
 
-               """
+               "
                class SubdomainMiddleware:
                    def process_request(self, request):
                        '''Parse out the subdomain from the request'''
@@ -33,7 +33,7 @@
                        host_s = host.replace('www.', '').split('.')
                        if len(host_s) > 2:
                            request.subdomain = ''.join(host_s[:-2])
-               """)])
+               ")])
 
         (li
            [(p
@@ -42,12 +42,12 @@
 
             (code-block :python
 
-               """
+               "
                MIDDLEWARE_CLASSES = (
                    ...,
                    'middleware.SubdomainMiddleware',
                )
-               """)])
+               ")])
 
         (li
            [(p
@@ -56,11 +56,11 @@
 
             (code-block :plain-text
 
-               """
+               "
                127.0.0.1 test.com
                127.0.0.1 blog.test.com
                127.0.0.1 search.test.com
-               """)
+               ")
 
             (p
                ["Initially I replaced " (code "test.com") " with the
@@ -87,9 +87,9 @@
 
             (code-block :plain-text
 
-               """
+               "
                http://test.com:8000/
-               """)
+               ")
 
             (p
                ["This " (em "actually") " worked. :)"])])])

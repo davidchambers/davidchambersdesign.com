@@ -58,31 +58,31 @@
 
     (code-block :css
 
-       """
+       "
        p.error.message   { border: 1px solid #c00; background-color: #fcc; }
        p.info.message    { border: 1px solid #fc3; background-color: #ffc; }
        p.success.message { border: 1px solid #0b0; background-color: #cfc; }
-       """)
+       ")
 
     (h4 "HTML")
 
     (code-block :html
 
-       """
-       <form id="searchform" action="http://davidchambersdesign.com/" method="get">
+       "
+       <form id=\"searchform\" action=\"http://davidchambersdesign.com/\" method=\"get\">
            <div>
-               <label for="s" class="structural">search davidchambersdesign.com</label>
-               <input type="text" id="s" name="s" value="" class="text" />
-               <input type="submit" id="searchsubmit" value="Search" />
+               <label for=\"s\" class=\"structural\">search davidchambersdesign.com</label>
+               <input type=\"text\" id=\"s\" name=\"s\" value=\"\" class=\"text\" />
+               <input type=\"submit\" id=\"searchsubmit\" value=\"Search\" />
            </div>
        </form><!--/searchform-->
-       """)
+       ")
 
     (h4 "JavaScript")
 
     (code-block :javascript
 
-       """
+       "
        // simulate textarea:focus
        document.observe('dom:loaded', function () {
            $$('textarea').each(function (e) {
@@ -94,20 +94,20 @@
                });
            });
        });
-       """)
+       ")
 
     (h4 "PHP")
 
     (code-block :php
 
-       """
+       "
        /**
         * echoes nicely formatted filesize
         * @param string $filename
         * @param string $before
         * @param string $after
         */
-       function print_filesize($filename, $before = ' <span class="filesize">(', $after = ')</span>')
+       function print_filesize($filename, $before = ' <span class=\"filesize\">(', $after = ')</span>')
        {
            if (file_exists($filename))
            {
@@ -132,10 +132,10 @@
 
                $approx = $unit == 'B' ? '' : '≈' ;
 
-               echo "{$before}{$approx}{$size} {$unit}{$after}";
+               echo \"{$before}{$approx}{$size} {$unit}{$after}\";
            }
        }
-       """)
+       ")
 
     (p
        ["Note that the variable names in the double-quoted string above are
@@ -145,14 +145,14 @@
 
     (code-block :python
 
-       """
+       "
        # function accepts any number of arguments since *all_sales is a tuple
        def daily_sales_total(*all_sales):
            total = 0.0
            for each_sale in all_sales:
                total += float(each_sale)
            return total
-       """)
+       ")
 
     (h3 "Including non-HTML code in HTML snippets")
 
@@ -168,13 +168,13 @@
 
     (code-block :html
 
-       """
+       "
        <head>
            <title>Coda theme for SyntaxHighlighter</title>
-           <style type="text/css">
+           <style type=\"text/css\">
                p {
                    margin: 0.75em 0;
-                   font: 1.0em/1.5em "Lucida Grande", Helvetica, Arial, sans-serif;
+                   font: 1.0em/1.5em \"Lucida Grande\", Helvetica, Arial, sans-serif;
                    padding: 0.75em;
                }
                p.js-off {
@@ -187,7 +187,7 @@
                }
            </style>
        </head>
-       """)
+       ")
 
     (h4' {:id "javascript-inside-html"} "JavaScript inside HTML")
 
@@ -197,25 +197,25 @@
 
     (code-block :html
 
-       """
+       "
        <body>
-           <p class="js-off">
+           <p class=\"js-off\">
                JavaScript is currently <strong>disabled</strong>.
            </p>
-           <p class="js-on" style="display:none">
+           <p class=\"js-on\" style=\"display:none\">
                JavaScript is currently <strong>enabled</strong>.
            </p>
-           <script type="text/javascript">
+           <script type=\"text/javascript\">
                google.load('prototype', '1.6');
            </script>
-           <script type="text/javascript">
+           <script type=\"text/javascript\">
                document.observe('dom:loaded', function () {
                    $$('.js-off').invoke('hide');
                    $$('.js-on').invoke('show');
                });
            </script>
        </body>
-       """)
+       ")
 
     (h4' {:id "php-inside-html"} "PHP inside HTML")
 
@@ -225,13 +225,13 @@
 
     (code-block :php
 
-       """
+       "
        <ul>
        <?php foreach ($names as $name): ?>
            <li><?php echo $name; ?></li>
        <?php endforeach; ?>
        </ul>
-       """)
+       ")
 
     (h3 "Limitations and known issues")
 
@@ -263,13 +263,13 @@
                  This causes incorrect highlighting, as can be seen in this
                  example:"])
             (code-block :html
-               """
-               <script type="text/javascript">
+               "
+               <script type=\"text/javascript\">
                    function isLarger(x, y) {
                        return (x > y);
                    }
                </script>
-               """)])])
+               ")])])
 
     (h3' {:id "setup"} "Setup")
 

@@ -4,6 +4,8 @@ const {DateTime} = require ('luxon');
 
 
 module.exports = {
+  [Symbol.for ('==')]: y => x => x == y,
+  [Symbol.for ('!=')]: y => x => x != y,
   [Symbol.for ('===')]: y => x => x === y,
   [Symbol.for ('!==')]: y => x => x !== y,
   [Symbol.for ('<=')]: y => x => x <= y,

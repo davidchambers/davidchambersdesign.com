@@ -67,22 +67,22 @@
            [(p
                ["Replace:"])
             (code-block :html
-               """
-               <script src="/path/to/scripts/shCore.js"></script>
-               <script src="/path/to/scripts/shBrushAS3.js"></script>
-               <script src="/path/to/scripts/shBrushBash.js"></script>
+               "
+               <script src=\"/path/to/scripts/shCore.js\"></script>
+               <script src=\"/path/to/scripts/shBrushAS3.js\"></script>
+               <script src=\"/path/to/scripts/shBrushBash.js\"></script>
                .
                .
                .
-               <script src="/path/to/scripts/shBrushVb.js"></script>
-               <script src="/path/to/scripts/shBrushXml.js"></script>
+               <script src=\"/path/to/scripts/shBrushVb.js\"></script>
+               <script src=\"/path/to/scripts/shBrushXml.js\"></script>
 
                <script>SyntaxHighlighter.all()</script>
-               """)
+               ")
             (p
                ["with:"])
             (code-block :html
-               """
+               "
                <script>
                    function Brush(name, filename, aliases)
                    {
@@ -99,8 +99,8 @@
                        defaults: {}
                    };
                </script>
-               <script src="/path/to/scripts/loader.js"></script>
-               """)])
+               <script src=\"/path/to/scripts/loader.js\"></script>
+               ")])
         (li
            [(p
                ["Replace both instances of " (code "http://example.com/sh/") "
@@ -126,9 +126,9 @@
 
     (code-block :javascript
 
-       """
+       "
        stylesheets: ['shThemeCoda', 'shThemeAppleScript'],
-       """)
+       ")
 
     (p
        [(strong "Brushes.") " By default, " (code "settings.brushes") "
@@ -137,11 +137,11 @@
 
     (code-block :javascript
 
-       """
+       "
        brushes: [
            new Brush('AppleScript', 'shBrushAppleScript', ['applescript'])
        ],
-       """)
+       ")
 
     (p
        ["When creating a " (code "Brush") " object, provide the constructor
@@ -160,12 +160,12 @@
 
     (code-block :javascript
 
-       """
+       "
        defaults: {
            'auto-links': false,
            'html-script': true
        }
-       """)
+       ")
 
     (p
        ["Many thanks to Dan Breslau for letting me know about "

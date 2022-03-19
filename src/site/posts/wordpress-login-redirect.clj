@@ -17,9 +17,9 @@
 
     (code-block :php
 
-       """
-       <a href="<?php bloginfo('url'); ?>/wp-login.php">log in</a>
-       """)
+       "
+       <a href=\"<?php bloginfo('url'); ?>/wp-login.php\">log in</a>
+       ")
 
     (p
        ["While this gets the job done, it takes users to the dashboard after
@@ -33,9 +33,9 @@
 
     (code-block :php
 
-       """
-       <a href="<?php bloginfo('url'); ?>/wp-login.php?redirect_to=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">log in</a>
-       """)
+       "
+       <a href=\"<?php bloginfo('url'); ?>/wp-login.php?redirect_to=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>\">log in</a>
+       ")
 
     (p
        ["The above returns users to their starting point after they've

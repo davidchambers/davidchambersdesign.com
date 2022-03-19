@@ -1,18 +1,27 @@
-(import* [:base :sanctuary :prelude "./elements"]
+(import* [:base "./elements"]
 
-(lambda [posts]
-   (let [names (import "./tags")
-         counts (reduce (lambda [counts post]
-                           (reduce (lambda [counts tag]
-                                      (insert tag (+ 1 (prop tag counts)) counts))
-                                   counts
-                                   (:tags post)))
-                        (reduce-object (flip (K (flip insert 0))) {} names)
-                        posts)]
-      [(h1 "Tags")
-       (ol' {:id "tags"}
-          (map (lambda [tag]
-                  (li' {:data-count (prop tag counts)}
-                     (a (++ ["/tag/" (symbol->string tag) "/"]) (prop tag names))))
-               (Object/getOwnPropertySymbols names)))
-       (div {:class "clearfix"} [])])))
+(let [s (import :sanctuary)
+
+      tags (import "./tags")
+
+      ++ (s/join-with "")]
+
+   (lambda [posts]
+      (let [counts (s/reduce (lambda [counts post]
+                                (s/reduce (lambda [counts tag]
+                                             (apply Object/assign
+                                                    [{}
+                                                     counts
+                                                     (Object/fromEntries [[tag (+ 1 (s/prop tag counts))]])]))
+                                          counts
+                                          (:tags post)))
+                             (Object/fromEntries (s/map (lambda [name] [name 0])
+                                                        (Object/getOwnPropertySymbols tags)))
+                             posts)]
+         [(h1 "Tags")
+          (ol' {:id "tags"}
+             (s/map (lambda [tag]
+                       (li' {:data-count (s/prop tag counts)}
+                          (a (++ ["/tag/" (Symbol/keyFor tag) "/"]) (s/prop tag tags))))
+                    (Object/getOwnPropertySymbols tags)))
+          (div {:class "clearfix"} [])]))))

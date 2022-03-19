@@ -38,13 +38,13 @@
 
     (code-block :python
 
-       """
+       "
        >>> usernames = {'brodie', 'jespern', 'nvenegas'}
        >>> 'brodie' in usernames
        True
        >>> 'davidchambers' in usernames
        False
-       """)
+       ")
 
     (p
        ["Incidentally, since sets are essentially dictionaries
@@ -54,13 +54,13 @@
 
     (code-block :python
 
-       """
+       "
        >>> settings = {'lines': 50, 'number': False, 'spell': True}
        >>> 'number' in settings
        True
        >>> 'wrap' in settings
        False
-       """)
+       ")
 
     (h3 "Fashioning a poor man’s set from the limited materials
          JavaScript provides")
@@ -72,13 +72,13 @@
 
     (code-block :javascript
 
-       """
+       "
        > usernames = ',brodie,jespern,nvenegas,'
        > /,brodie,/.test(usernames)
        true
        > /,davidchambers,/.test(username)
        false
-       """)
+       ")
 
     (p
        ["This approach is problematic for several reasons: it assumes
@@ -92,13 +92,13 @@
 
     (code-block :javascript
 
-       """
+       "
        > usernames = ['brodie', 'jespern', 'nvenegas']
        > usernames.indexOf('brodie') >= 0
        true
        > usernames.indexOf('davidchambers') >= 0
        false
-       """)
+       ")
 
     (p
        ["Though this is an improvement, membership checks are still
@@ -113,13 +113,13 @@
 
     (code-block :javascript
 
-       """
+       "
        > usernames = {'brodie': 1, 'jespern': 1, 'nvenegas': 1}
        > 'brodie' in usernames
        true
        > 'davidchambers' in usernames
        false
-       """)
+       ")
 
     (p
        ["This addresses the outstanding problems, and the " (code "in") "
@@ -130,14 +130,14 @@
 
     (code-block :javascript
 
-       """
+       "
        > 'constructor' in usernames
        true
        > 'toString' in usernames
        true
        > 'valueOf' in usernames
        true
-       """)
+       ")
 
     (p
        ["The " (code "in") " check tells us whether the property exists on
@@ -149,12 +149,12 @@
 
     (code-block :javascript
 
-       """
+       "
        > usernames.hasOwnProperty('brodie')
        true
        > usernames.hasOwnProperty('davidchambers')
        false
-       """)
+       ")
 
     (p
        ["This fixes the unwanted inheritance problem, but introduces
@@ -162,14 +162,14 @@
 
     (code-block :javascript
 
-       """
-       > usernames['davidchambers'] = 1 // add "davidchambers" to set
+       "
+       > usernames['davidchambers'] = 1 // add \"davidchambers\" to set
        1
-       > usernames['hasOwnProperty'] = 1 // add "hasOwnProperty" to set
+       > usernames['hasOwnProperty'] = 1 // add \"hasOwnProperty\" to set
        1
        > usernames.hasOwnProperty('davidchambers')
        TypeError: Property 'hasOwnProperty' of object #<Object> is not a function
-       """)
+       ")
 
     (p
        ["If we rely on " (code "usernames.hasOwnProperty") " we lose
@@ -179,10 +179,10 @@
 
     (code-block :javascript
 
-       """
+       "
        > Object.prototype.hasOwnProperty.call(usernames, 'davidchambers')
        true
-       """)
+       ")
 
     (p
        ["What a mouthful! This is, though, the correct way to maintain
@@ -198,7 +198,7 @@
 
     (code-block :javascript
 
-       """
+       "
        > sentinel = {}
        > usernames = {'brodie': sentinel, 'jespern': sentinel, 'nvenegas': sentinel}
        > usernames['brodie'] === sentinel
@@ -207,7 +207,7 @@
        false
        > usernames['constructor'] === sentinel
        false
-       """)
+       ")
 
   ]
 

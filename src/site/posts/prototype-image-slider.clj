@@ -41,9 +41,9 @@
 
         (code-block :javascript
 
-           """
+           "
            li: new Element('li', { class: 'prev' }),
-           """)
+           ")
 
         (p
            ["Wrapping the word \"class\" in quotes as per this "
@@ -64,9 +64,9 @@
 
     (code-block :javascript
 
-       """
+       "
        new Slider('slider');
-       """)
+       ")
 
     (p
        ["There's nothing to prevent multiple image sliders from appearing
@@ -75,11 +75,11 @@
 
     (code-block :javascript
 
-       """
+       "
        $$('div.slider').each(function (e) {
            new Slider(e);
        })
-       """)
+       ")
 
     (p
        ["Of course, it's a good idea to wait until the page is ready to be
@@ -87,13 +87,13 @@
 
     (code-block :javascript
 
-       """
+       "
        document.observe('dom:loaded', function () {
            $$('div.slider').each(function (e) {
                new Slider(e);
            });
        });
-       """)
+       ")
 
     (p
        ["To provide a small degree of flexibility, the constructor accepts
@@ -104,12 +104,12 @@
 
     (code-block :javascript
 
-       """
+       "
        new Slider('slider', 0.5);     // faster transitions
        new Slider('slider', 1.0, 3);  // fourth slide displayed first
        new Slider('slider', 1.0, -1); // last slide displayed first
        new Slider('slider', 1.5, -1); // slower transitions; last slide displayed first
-       """)
+       ")
 
     (p
        ["If you find this code useful and would like me to flesh it out,

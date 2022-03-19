@@ -1,6 +1,18 @@
-(import* [:base :path :sanctuary :prelude]
+(import* [:base]
 
-(let [import-post (import "./import-post")
+(let [s (import :sanctuary)
+
+      import-post (import "./import-post")
+
+      intersection
+        (lambda [set-1 set-2]
+           (new Set [(invoke-1 "filter"
+                               (lambda [x] (invoke-1 "has" x set-1))
+                               (Array/from set-2))]))
+
+      union
+        (lambda [set-1 set-2]
+           (new Set [(s/concat (Array/from set-1) (Array/from set-2))]))
 
       similarity
         (lambda [set-1 set-2]
@@ -15,20 +27,20 @@
         (lambda [that this]
            (let [score (similarity (new Set [(:tags that)])
                                    (new Set [(:tags this)]))
-                 primary (negate (score))
+                 primary (s/negate (score))
                  secondary (Math/abs (seconds-between (:datetime that)
                                                       (:datetime this)))]
               (if (>= 0.5 score)
-                  (Just (Pair (Pair primary secondary) this))
-                  Nothing)))]
+                  (s/Just (s/Pair (s/Pair primary secondary) this))
+                  s/Nothing)))]
 
    (lambda [filenames filename]
-      (pipe [(reject (equals filename))
-             (map import-post)
-             (map-maybe (with-scores (import-post filename)))
-             sort
-             (map snd)
-             (invoke-2 "slice" 0 5)
-             (map (lambda [post] (:slug post)))
-             (lambda [posts] (apply JSON/stringify [posts null 2]))]
-            filenames))))
+      (s/pipe [(s/reject (s/equals filename))
+               (s/map import-post)
+               (s/map-maybe (with-scores (import-post filename)))
+               s/sort
+               (s/map s/snd)
+               (invoke-2 "slice" 0 5)
+               (s/map (lambda [post] (:slug post)))
+               (lambda [posts] (apply JSON/stringify [posts null 2]))]
+              filenames))))

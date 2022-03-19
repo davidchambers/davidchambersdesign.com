@@ -26,16 +26,16 @@
 
     (code-block :html
 
-       """
+       "
        <body>
-           <div id="wrap">
-               <div id="main">
+           <div id=\"wrap\">
+               <div id=\"main\">
                </div>
            </div>
-           <div id="footer">
+           <div id=\"footer\">
            </div>
        </body>
-       """)
+       ")
 
     (p
        ["The required CSS is also straightforward. First, set the heights
@@ -43,10 +43,10 @@
 
     (code-block :css
 
-       """
+       "
        html    { height: 100%; }
        body    { height: 100%; }
-       """)
+       ")
 
     (p
        ["This makes it possible to set the " (em "minimum") " height of
@@ -54,9 +54,9 @@
 
     (code-block :css
 
-       """
+       "
        #wrap   { min-height: 100%; }
-       """)
+       ")
 
     (p
        ["Next, pull up the footer so that it's visible without scrolling
@@ -64,9 +64,9 @@
 
     (code-block :css
 
-       """
+       "
        #footer { margin-top: -5em; height: 5em; }
-       """)
+       ")
 
     (p
        ["Finally, apply bottom padding to the main content div to ensure
@@ -74,22 +74,22 @@
 
     (code-block :css
 
-       """
+       "
        #main   { padding-bottom: 5em; }
-       """)
+       ")
 
     (p
        ["Putting it all together gives the following:"])
 
     (code-block :css
 
-       """
+       "
        html    { height: 100%; }
        body    { height: 100%; }
        #wrap   { min-height: 100%; }
        #main   { padding-bottom: 5em; }
        #footer { margin-top: -5em; height: 5em; }
-       """)
+       ")
 
     (p
        ["This CSS works in all modern browsers. If you need to support

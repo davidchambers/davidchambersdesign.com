@@ -24,7 +24,7 @@
 
     (code-block :javascript
 
-       """
+       "
        Element.addMethods({
            redraw: function (element) {
                element = $(element);
@@ -34,16 +34,16 @@
                return element;
            }
        });
-       """)
+       ")
 
     (p
        ["The post's first comment includes an alternative approach:"])
 
     (code-block :javascript
 
-       """
+       "
        element.className = element.className;
-       """)
+       ")
 
     (p
        ["I gather that there are situations in which this simple solution

@@ -22,18 +22,18 @@
 
     (code-block :python
 
-       """
+       "
        ' '.join(['foo', 'bar'])
-       """)
+       ")
 
     (p
        ["JavaScript:"])
 
     (code-block :javascript
 
-       """
+       "
        ['foo', 'bar'].join(' ')
-       """)
+       ")
 
     (p
        ["Often -- as is the case above -- the syntactical differences are
@@ -48,12 +48,12 @@
 
     (code-block :javascript
 
-       """
+       "
        var numbers = [87, 33, 21, 75];
        if (numbers.every(function (n) { return n % 3 == 0; })) {
            window.alert('The numbers are all divisible by 3.');
        }
-       """)
+       ")
 
     (p
        ["Python lists have no comparable method, so how would one write
@@ -61,11 +61,11 @@
 
     (code-block :python
 
-       """
+       "
        numbers = [87, 33, 21, 75]
        if [n for n in numbers if n % 3 == 0] == numbers:
            print 'The numbers are all divisible by 3.'
-       """)
+       ")
 
     (p
        ["This approach involves using a list comprehension to create a
@@ -82,10 +82,10 @@
 
         (code-block :python
 
-           """
+           "
            if all((n % 3 == 0 for n in numbers)):
                 print 'The numbers are all divisible by 3.'
-           """)])
+           ")])
 
     (h3 "Now for something a bit more challenging")
 
@@ -95,7 +95,7 @@
 
     (code-block :javascript
 
-       """
+       "
        // (MooTools) JavaScript
 
        var terms = ['python', 'list', 'methods'], matches = [];
@@ -104,7 +104,7 @@
                return document.body.indexOf(term) != -1;
            })) matches.append(document);
        });
-       """)
+       ")
 
     (p
        ["Here, we " (em "could") " use the list comprehension approach
@@ -112,7 +112,7 @@
 
     (code-block :python
 
-       """
+       "
        # Python
 
        terms = ['python', 'list', 'methods']
@@ -120,7 +120,7 @@
        for document in documents:
            if [t for t in terms if document.body.find(t) != -1] == terms:
                matches.append(document)
-       """)
+       ")
 
     (p
        ["This is reasonably succinct, but not terribly efficient since
@@ -136,7 +136,7 @@
 
     (code-block :python
 
-       """
+       "
        terms = ['python', 'list', 'methods']
        matches = []
        for document in documents:
@@ -145,7 +145,7 @@
                    break
            else: # every term was found
                matches.append(document)
-       """)
+       ")
 
     (p
        ["From "

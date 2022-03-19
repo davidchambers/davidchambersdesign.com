@@ -121,15 +121,15 @@
 
     (code-block :html
 
-       """
+       "
        <dl>
-           <dt><img src="images/ds81.jpg" alt="Vancouver architecture" /></dt>
+           <dt><img src=\"images/ds81.jpg\" alt=\"Vancouver architecture\" /></dt>
            <dd>This is not like that</dd>
            <dd>Contrasting ideas engage the mind. Make a photo today that tells
            a story with contrasting elements. — <i>Daily Shoot 81</i></dd>
            ...
        </dl>
-       """)
+       ")
 
     (p
        ["Beautiful, isn't it? No pointless (literally) anchors, no meaningless

@@ -23,9 +23,9 @@
 
     (code-block :TK
 
-       """
-       (add-to-list 'auto-mode-alist '("[.]dhtml$" . html-mode))
-       """)
+       "
+       (add-to-list 'auto-mode-alist '(\"[.]dhtml$\" . html-mode))
+       ")
 
     (p
        ["Adding the above snippet to my " (strong "~/.emacs") " file did

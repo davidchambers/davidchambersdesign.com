@@ -16,9 +16,9 @@
 
     (code-block :coffeescript
 
-       """
+       "
        decorator = (fn) -> fn
-       """)
+       ")
 
     (p
        ["Obviously, this doesn't do anything useful. It's the fact that a
@@ -29,7 +29,7 @@
 
     (code-block :javascript
 
-       """
+       "
        var loginRequired = function (fn) {
          return function () {
            if (!user.authenticated) {
@@ -38,7 +38,7 @@
            fn.apply(null, [].slice.apply(arguments));
          };
        };
-       """)
+       ")
 
     (p
        ["The above decorator could be used to \"guard\" actions that only
@@ -46,7 +46,7 @@
 
     (code-block :javascript
 
-       """
+       "
        var changeUsername = loginRequired(function (username) {
          $.ajax({
            type: 'PUT',
@@ -66,31 +66,31 @@
            type: 'DELETE',
            url: '/api/1.0/users/' + user.id
          })});
-       """)
+       ")
 
     (p
        ["The CoffeeScript equivalent is quite a bit clearer:"])
 
     (code-block :coffeescript
 
-       """
+       "
        changeUsername = loginRequired (username) ->
          $.ajax
            type: 'PUT'
-           url: "/api/1.0/users/#{user.id}"
+           url: \"/api/1.0/users/#{user.id}\"
            data: {username}
 
        changePassword = loginRequired (password) ->
          $.ajax
            type: 'PUT'
-           url: "/api/1.0/users/#{user.id}"
+           url: \"/api/1.0/users/#{user.id}\"
            data: {password}
 
        deleteAccount = loginRequired ->
          $.ajax
            type: 'DELETE'
-           url: "/api/1.0/users/#{user.id}"
-       """)
+           url: \"/api/1.0/users/#{user.id}\"
+       ")
 
     (p
        ["Decorators are commonly used in Python -- which provides special

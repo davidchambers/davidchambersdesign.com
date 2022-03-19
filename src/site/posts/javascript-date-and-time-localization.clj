@@ -57,9 +57,9 @@
 
     (code-block :html
 
-       """
-       <time datetime="1984-04-26">26 April 1984</time>
-       """)
+       "
+       <time datetime=\"1984-04-26\">26 April 1984</time>
+       ")
 
     (p
        ["Simply by using the " (code "time") " element correctly
@@ -102,9 +102,9 @@
 
     (code-block :html
 
-       """
-       <time datetime="2010-11-27T13:30-00:00">27 November 2010</time>
-       """)
+       "
+       <time datetime=\"2010-11-27T13:30-00:00\">27 November 2010</time>
+       ")
 
     (p
        ["We could localize this element (along with any other " (code "time") "
@@ -112,9 +112,9 @@
 
     (code-block :html
 
-       """
+       "
        $('time').localize();
-       """)
+       ")
 
     (p
        ["This updates both the visible text and the value of the "
@@ -122,9 +122,9 @@
 
     (code-block :html
 
-       """
-       <time datetime="2010-11-28T00:30+11:00">28 November 2010</time>
-       """)
+       "
+       <time datetime=\"2010-11-28T00:30+11:00\">28 November 2010</time>
+       ")
 
     (let [url "http://bitbucket.org/davidchambers/jquery.localize"
           link (lambda [path] (a (+ path url)))]

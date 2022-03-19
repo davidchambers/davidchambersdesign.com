@@ -1,27 +1,31 @@
-(import* [:base :sanctuary :prelude]
+(import* [:base]
 
-(let [screen (import "./css/screen")
+(let [s (import :sanctuary)
+
+      screen (import "./css/screen")
+
+      ++ (s/join-with "")
 
       coerce
         (function coerce [x]
-           (if (array? x)
-               (unwords (map coerce x))
-               (if (symbol? x)
-                   (symbol->string x)
+           (if (Array/isArray x)
+               (s/unwords (s/map coerce x))
+               (if (== "symbol" (type-of x))
+                   (Symbol/keyFor x)
                    (String x))))
 
       split-every-2
         (function split-every-2 [kvs]
-           (array []
-                  (lambda [k] (array [] (lambda [v kvs] (prepend (Pair k v) (split-every-2 kvs)))))
-                  kvs))
+           (s/array []
+                    (lambda [k] (s/array [] (lambda [v kvs] (s/prepend (s/Pair k v) (split-every-2 kvs)))))
+                    kvs))
 
       vendor-prefixes (lambda [unprefixed prefixed]
-                         (chain (pair (lambda [k v]
-                                         (if (=== unprefixed k)
-                                             (map (flip Pair v)
-                                                  (append unprefixed prefixed))
-                                             [(Pair k v)])))))
+                         (s/chain (s/pair (lambda [k v]
+                                             (if (=== unprefixed k)
+                                                 (s/map (s/flip s/Pair v)
+                                                        (s/append unprefixed prefixed))
+                                                 [(s/Pair k v)])))))
 
       vendor-prefixes-border-radius
         (vendor-prefixes :border-radius
@@ -49,19 +53,20 @@
 
       format-block
         (lambda [selector]
-           (pipe [(map (pair (lambda [k v] (++ ["  " (coerce k) ": " (coerce v) ";"]))))
-                  (prepend (concat (join-with "\n" selector) " {"))
-                  (append ("}"))
-                  unlines]))]
+           (s/pipe [(s/map (s/pair (lambda [k v] (++ ["  " (coerce k) ": " (coerce v) ";"]))))
+                    (s/prepend (s/concat (s/join-with "\n" selector) " {"))
+                    (s/append ("}"))
+                    s/unlines]))
 
-   (join-with "\n"
-              (map (pair (lambda [selector]
-                            (pipe [split-every-2
+      style-sheet (screen coerce)]
+
+   (s/join-with "\n"
+                (s/map (lambda [selector]
+                          (s/pipe [split-every-2
                                    vendor-prefixes-border-radius
                                    vendor-prefixes-box-shadow
                                    vendor-prefixes-duration
                                    vendor-prefixes-timing-function
-                                   (format-block selector)])))
-                   (reduce-object (lambda [k v o] (append (Pair (map trim (lines k)) v) o))
-                                  []
-                                  (screen coerce))))))
+                                   (format-block (s/map s/trim (s/lines selector)))]
+                                  (s/prop selector style-sheet)))
+                       (Object/getOwnPropertyNames style-sheet)))))

@@ -24,9 +24,9 @@
 
     (code-block :javascript
 
-       """
+       "
        var favourites = { book: 'Collapse', game: 'Agricola', site: 'ted.com' };
-       """)
+       ")
 
     (p
        ["Carefully written passwords wrapping personal information

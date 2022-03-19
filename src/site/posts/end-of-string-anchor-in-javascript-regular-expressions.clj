@@ -28,14 +28,14 @@
 
     (code-block :javascript
 
-       """
-       > /bar(?![\s\S])/m.test('foo\nbar')
+       "
+       > /bar(?![\\s\\S])/m.test('foo\\nbar')
        true
-       > /bar(?![\s\S])/m.test('foo\nbar\n')
+       > /bar(?![\\s\\S])/m.test('foo\\nbar\\n')
        false
-       > /bar(?![\s\S])/m.test('foo\nbar\nbaz')
+       > /bar(?![\\s\\S])/m.test('foo\\nbar\\nbaz')
        false
-       """)
+       ")
 
     (p
        [(code "(?![\\s\\S])") " at the end of the pattern is equivalent to "

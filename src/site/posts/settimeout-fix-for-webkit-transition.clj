@@ -38,7 +38,7 @@
 
         (code-block :javascript
 
-           """
+           "
            element.style.webkitTransitionProperty = 'left';
            element.style.webkitTransitionDuration = '2s';
            element.addEventListener('click', function () {
@@ -47,7 +47,7 @@
                    this.style.left = 0;
                });
            });
-           """)])
+           ")])
 
     (p
        ["The following example, though, does not act as one might expect!"])
@@ -75,11 +75,11 @@
 
     (code-block :javascript
 
-       """
+       "
        element.style.left = '100px';
        element.style.webkitTransitionProperty = 'left';
        element.style.webkitTransitionDuration = '2s';
-       """)
+       ")
 
     (p
        ["Here are the instructions this code attempts to provide:"])
@@ -128,13 +128,13 @@
 
     (code-block :javascript
 
-       """
+       "
        element.style.left = '100px';
        setTimeout(function () {
            element.style.webkitTransitionProperty = 'left';
            element.style.webkitTransitionDuration = '2s';
        }, 0);
-       """)
+       ")
 
     (p
        ["For some reason wrapping the " (code "webkitTransition*") "
@@ -170,14 +170,14 @@
 
         (code-block :javascript
 
-           """
+           "
            var box = document.getElementById('box');
            box.style.backgroundColor = 'red';
            box.style.webkitTransition = 'background-color 2s';
            window.setTimeout(function() {
              box.style.backgroundColor = 'blue';
            }, 0);
-           """)])
+           ")])
 
   ]
 

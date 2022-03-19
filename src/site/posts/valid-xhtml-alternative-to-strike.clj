@@ -17,9 +17,9 @@
 
     (code-block :plain-text
 
-       """
-       element "strike" undefined
-       """)
+       "
+       element \"strike\" undefined
+       ")
 
     (p
        [(code "<strike>") " is not valid XHTML; I'd forgotten the correct
@@ -27,9 +27,9 @@
 
     (code-block :html
 
-       """
+       "
        my favourite colour is <del>red</del> <ins>white</ins>
-       """)
+       ")
 
     (p
        ["The above gives:
@@ -41,10 +41,10 @@
 
     (code-block :css
 
-       """
+       "
        del { text-decoration: line-through; }
        ins { text-decoration: underline; }
-       """)
+       ")
 
   ]
 

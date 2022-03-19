@@ -1,4 +1,4 @@
-(import* [:base :prelude :sanctuary "../elements" "../components"] {
+(import* [:base "../elements" "../components"] {
 
   :id 32
 
@@ -21,11 +21,12 @@
          All three versions are available for download:"])
 
     (ul
-       (map (lambda [ext]
-               (let [filename (++ ["prototype+scriptaculous" ext])
-                     href (++ ["http://static.davidchambersdesign.com/scripts/" filename "?p=1.6.1&s=1.8.3"])]
-                  (li [(a href filename)])))
-            [".js" ".min.js" ".min.js.gz"]))
+       [(li [(a "http://static.davidchambersdesign.com/scripts/prototype+scriptaculous.js?p=1.6.1&s=1.8.3"
+                "prototype+scriptaculous.js")])
+        (li [(a "http://static.davidchambersdesign.com/scripts/prototype+scriptaculous.min.js?p=1.6.1&s=1.8.3"
+                "prototype+scriptaculous.min.js")])
+        (li [(a "http://static.davidchambersdesign.com/scripts/prototype+scriptaculous.min.js.gz?p=1.6.1&s=1.8.3"
+                "prototype+scriptaculous.min.js.gz")])])
 
     (p
        ["I suggest including the Prototype and script.aculo.us version
@@ -33,9 +34,9 @@
 
     (code-block :html
 
-       """
-       <script src="/scripts/prototype+scriptaculous.min.js?p=1.6.1&amp;s=1.8.3"></script>
-       """)
+       "
+       <script src=\"/scripts/prototype+scriptaculous.min.js?p=1.6.1&amp;s=1.8.3\"></script>
+       ")
 
     (p
        ["This prevents caching issues that might otherwise arise

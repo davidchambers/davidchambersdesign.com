@@ -16,10 +16,10 @@
 
     (code-block :python
 
-       """
+       "
        import simplejson
        simplejson.dumps(instance)
-       """)
+       ")
 
     (p
        ["Unforunately, this raises a TypeError, as the instance is not JSON
@@ -29,18 +29,18 @@
 
     (code-block :python
 
-       """
+       "
        def toJSON(self):
            import simplejson
            return simplejson.dumps(dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]]))
-       """)
+       ")
 
     (p
        ["Here's the verbose equivalent for those averse to one-liners:"])
 
     (code-block :python
 
-       """
+       "
        def toJSON(self):
            fields = []
            for field in self._meta.fields:
@@ -52,7 +52,7 @@
 
            import simplejson
            return simplejson.dumps(d)
-       """)
+       ")
 
     (p
        [(code "_meta.fields") " is an ordered list of model fields

@@ -55,9 +55,9 @@
 
         (code-block :console
 
-           """
-           git config --global core.editor "mate -w"
-           """)
+           "
+           git config --global core.editor \"mate -w\"
+           ")
 
         (p
            ["This adds " (code "editor = mate -w") " to the " (code "[core]") "

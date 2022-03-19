@@ -17,7 +17,7 @@
 
     (code-block :javascript
 
-       """
+       "
        // ugly option 1
        if (text.indexOf('✈') != -1)
 
@@ -26,7 +26,7 @@
 
        // ugly option 3
        if (text.indexOf('✈') > -1)
-       """)
+       ")
 
     (p
        ["It'd be nice to be able to write " (code "text.contains('✈')") ",
@@ -36,10 +36,10 @@
 
     (code-block :javascript
 
-       """
+       "
        // bitwise NOT
        if (~text.indexOf('✈'))
-       """)
+       ")
 
     (p
        [(a "https://developer.mozilla.org/en/JavaScript/Reference/Operators/Bitwise_Operators"
@@ -54,11 +54,11 @@
 
     (code-block :javascript
 
-       """
+       "
        function bitwiseNot(n) {
            return -n - 1;
        }
-       """)
+       ")
 
     (p
        [(code "indexOf") " returns -1, 0, 1, 2, 3, or some other positive

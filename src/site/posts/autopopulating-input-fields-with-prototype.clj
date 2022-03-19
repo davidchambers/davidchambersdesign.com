@@ -64,17 +64,17 @@
 
     (code-block :html
 
-       """
-       <input type="search" id="s" name="s" placeholder="search..." />
-       """)
+       "
+       <input type=\"search\" id=\"s\" name=\"s\" placeholder=\"search...\" />
+       ")
 
     (h3' {:id "styling"} "Styling")
 
     (code-block :css
 
-       """
+       "
        input.placeholder { color: #a9a9a9 !important; }
-       """)
+       ")
 
     (p
        ["I decided to use " (code "#a9a9a9") " as Safari uses this colour
@@ -84,7 +84,7 @@
 
     (code-block :javascript
 
-       """
+       "
        var Placeholder = Class.create({
            initialize: function (element) {
                this.element = element;
@@ -102,7 +102,7 @@
                    this.element.addClassName('placeholder').value = this.placeholder;
            }
        });
-       """)
+       ")
 
     (p
        ["The Placeholder class requires "
@@ -116,9 +116,9 @@
 
     (code-block :javascript
 
-       """
+       "
        new Placeholder($('s'));
-       """)
+       ")
 
     (p
        ["Ensure that the DOM is ready by wrapping everything in Prototype's "
@@ -127,7 +127,7 @@
 
     (code-block :javascript
 
-       """
+       "
        document.observe('dom:loaded', function () {
            var Placeholder = Class.create({
                ...
@@ -136,7 +136,7 @@
                new Placeholder(input);
            });
        });
-       """)
+       ")
 
     (update (datetime "2010-03-30" "17:17:00" :Pacific/Auckland)
 
@@ -161,7 +161,7 @@
 
         (code-block :javascript
 
-           """
+           "
            // provide input hints
            document.observe('dom:loaded', function () {
                var PLACEHOLDER_SUFFIX = '_placeholder'; // used for password inputs
@@ -172,14 +172,14 @@
 
                    if (input.readAttribute('type') == 'password') {
                        placeholder = input.clone();
-                       placeholder.type = 'text'; // not "password"
+                       placeholder.type = 'text'; // not \"password\"
                        placeholder.value = placeholder_text;
                        placeholder.addClassName('placeholder');
 
                        if (input.id) {
                            // update input id and label
                            placeholder.id += PLACEHOLDER_SUFFIX;
-                           label = $$('label[for="' + input.id + '"]')
+                           label = $$('label[for=\"' + input.id + '\"]')
                            label.invoke('writeAttribute', 'for', input.id +
                                    PLACEHOLDER_SUFFIX);
                        }
@@ -188,14 +188,14 @@
                        input.hide().insert({ 'before': placeholder });
 
                        // when placeholder input gains focus,
-                       // hide it and show "real" password input
+                       // hide it and show \"real\" password input
                        Event.observe(placeholder, 'focus', function () {
                            this.hide();
                            input.show();
                            Form.Element.focus(input);
                        });
 
-                       // when "real" password input loses focus,
+                       // when \"real\" password input loses focus,
                        // if it's empty, hide it and show placeholder input
                        Event.observe(input, 'blur', function () {
                            if (this.value === '') {
@@ -220,7 +220,7 @@
                    }
                });
            });
-           """)])
+           ")])
 
   ]
 
