@@ -47,17 +47,16 @@ _
   = (Comment / Whitespace)*
 
 IdentChar "identifier character"
-  = !(
-      Whitespace
-      / '\u0022' // QUOTATION MARK
-      / '\u0028' // LEFT PARENTHESIS
-      / '\u0029' // RIGHT PARENTHESIS
-      / '\u003B' // SEMICOLON
-      / '\u005B' // LEFT SQUARE BRACKET
-      / '\u005D' // RIGHT SQUARE BRACKET
-      / '\u007B' // LEFT CURLY BRACKET
-      / '\u007D' // RIGHT CURLY BRACKET
-    ) .
+  = !Whitespace
+    !'\u0022' // QUOTATION MARK
+    !'\u0028' // LEFT PARENTHESIS
+    !'\u0029' // RIGHT PARENTHESIS
+    !'\u003B' // SEMICOLON
+    !'\u005B' // LEFT SQUARE BRACKET
+    !'\u005D' // RIGHT SQUARE BRACKET
+    !'\u007B' // LEFT CURLY BRACKET
+    !'\u007D' // RIGHT CURLY BRACKET
+    .
 
 dec = [0-9]
 bin = [0-1]
@@ -128,22 +127,21 @@ Nonzero
 // ----- Strings -----
 
 String "string"
-  = QuotationMark chars:(Char*) QuotationMark
+  = '"' chars:(Char*) '"'
   { return expression.string(chars.join('')); }
 
-QuotationMark "quotation mark"
-  = '"'
-
 Char
-  = '\u005C' '\u0022' { return '\u0022'; }
-  / '\u005C' '\u005C' { return '\u005C'; }
-  / '\u005C' '\u0062' { return '\u0008'; }
-  / '\u005C' '\u0066' { return '\u000C'; }
-  / '\u005C' '\u006E' { return '\u000A'; }
-  / '\u005C' '\u0072' { return '\u000D'; }
-  / '\u005C' '\u0074' { return '\u0009'; }
-  / '\u005C' '\u0075' digits:$(hex hex hex hex) { return String.fromCharCode(parseInt(digits, 16)); }
-  / !('\u0022' / '\u005C') char:. { return char; }
+  = '\\' '"'  { return '"'; }
+  / '\\' '\\' { return '\\'; }
+  / '\\' 'b'  { return '\b'; }
+  / '\\' 'f'  { return '\f'; }
+  / '\\' 'n'  { return '\n'; }
+  / '\\' 'r'  { return '\r'; }
+  / '\\' 't'  { return '\t'; }
+  / '\\' 'u' digits:$(hex hex hex hex)
+              { return String.fromCharCode(parseInt(digits, 16)); }
+  / '\\'      { expected('valid escape sequence'); }
+  / [^"]
 
 // ----- Symbols -----
 
