@@ -1,8 +1,11 @@
 (import* [:base]
 
-(let [s (import :sanctuary)
+(let [sanctuary (import "sanctuary")
 
       screen (import "./css/screen")
+      kebab-case-keys (import "./kebab-case-keys")
+
+      s (kebab-case-keys sanctuary)
 
       ++ (s/join-with "")
 

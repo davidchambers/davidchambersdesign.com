@@ -2,7 +2,11 @@
 ; both export ‘div’ and ‘head’.
 (import* [:base "./elements"]
 
-(let [s (import :sanctuary)]
+(let [sanctuary (import "sanctuary")
+
+      kebab-case-keys (import "./kebab-case-keys")
+
+      s (kebab-case-keys sanctuary)]
 
    (lambda [document-title main]
       (html

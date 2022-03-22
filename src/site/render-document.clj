@@ -1,8 +1,11 @@
 (import* [:base]
 
-(let [s (import :sanctuary)
+(let [sanctuary (import "sanctuary")
 
-      render-fragment (import "./render-fragment")]
+      kebab-case-keys (import "./kebab-case-keys")
+      render-fragment (import "./render-fragment")
+
+      s (kebab-case-keys sanctuary)]
 
    (lambda [indent nodes]
       (s/concat "<!DOCTYPE html>\n"

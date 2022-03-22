@@ -2,9 +2,12 @@
 
 (let [path (import "path")
 
-      s (import :sanctuary)
+      sanctuary (import "sanctuary")
 
+      kebab-case-keys (import "./kebab-case-keys")
       tags (import "./tags")
+
+      s (kebab-case-keys sanctuary)
 
       ++ (s/join-with "")]
 

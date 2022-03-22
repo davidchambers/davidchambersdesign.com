@@ -1,6 +1,10 @@
 (import* [:base "./elements"]
 
-   (let [s (import :sanctuary)]
+   (let [sanctuary (import "sanctuary")
+
+         kebab-case-keys (import "./kebab-case-keys")
+
+         s (kebab-case-keys sanctuary)]
 
       {:caption
          (lambda [caption]

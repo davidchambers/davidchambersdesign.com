@@ -1,8 +1,11 @@
 (import* [:base]
 
-(let [s (import :sanctuary)
+(let [sanctuary (import "sanctuary")
 
+      kebab-case-keys (import "./kebab-case-keys")
       import-post (import "./import-post")
+
+      s (kebab-case-keys sanctuary)
 
       intersection
         (lambda [set-1 set-2]

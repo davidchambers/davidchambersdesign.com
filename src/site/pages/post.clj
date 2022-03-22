@@ -2,12 +2,15 @@
 
 (let [path (import "path")
 
-      s (import :sanctuary)
+      sanctuary (import "sanctuary")
 
       base-template (import "../base-template")
+      kebab-case-keys (import "../kebab-case-keys")
       render-document (import "../render-document")
       render-icon (import "../render-icon")
       render-post (import "../render-post")
+
+      s (kebab-case-keys sanctuary)
 
       make-post
         (lambda [filename]

@@ -1,10 +1,12 @@
 (import* [:base "./elements"]
 
-(let [s (import :sanctuary)
+(let [orthogonal (import "orthogonal")
+      sanctuary (import "sanctuary")
 
-      orthogonal (import "orthogonal")
-
+      kebab-case-keys (import "./kebab-case-keys")
       render-fragment (import "./render-fragment")
+
+      s (kebab-case-keys sanctuary)
 
       ++ (s/join-with "")]
 

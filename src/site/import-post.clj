@@ -2,7 +2,11 @@
 
 (let [path (import "path")
 
-      s (import :sanctuary)]
+      sanctuary (import "sanctuary")
+
+      kebab-case-keys (import "./kebab-case-keys")
+
+      s (kebab-case-keys sanctuary)]
 
    (lambda [filename]
       (let [post (import (apply path/resolve [__dirname ".." ".." filename]))]

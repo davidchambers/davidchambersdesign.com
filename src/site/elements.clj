@@ -1,7 +1,11 @@
 (import* [:base]
 
 (let
-   [s (import :sanctuary)
+   [sanctuary (import "sanctuary")
+
+    kebab-case-keys (import "./kebab-case-keys")
+
+    s (kebab-case-keys sanctuary)
 
     text
       (lambda [value]

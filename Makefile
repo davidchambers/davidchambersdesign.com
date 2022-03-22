@@ -17,6 +17,9 @@ all: \
 src/lang/grammar.js: src/lang/grammar.pegjs
 	node_modules/.bin/pegjs <'$<' >'$@'
 
+src/site/kebab-case-keys.js: src/site/kebab-case-keys.clj $(LANG_JS)
+	node src/site/scripts/module.js '$<' >'$@'
+
 src/site/elements.js: src/site/elements.clj src/site/scripts/module.js $(LANG_JS)
 	node src/site/scripts/module.js '$<' >'$@'
 
