@@ -27,7 +27,7 @@
         (lambda [that this]
            (let [score (similarity (new Set [(:tags that)])
                                    (new Set [(:tags this)]))
-                 primary (s/negate (score))
+                 primary (s/negate score)
                  secondary (Math/abs (seconds-between (:datetime that)
                                                       (:datetime this)))]
               (if (>= 0.5 score)

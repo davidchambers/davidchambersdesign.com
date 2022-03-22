@@ -1,14 +1,8 @@
-{
-  const expression = require('./expression.js');
-}
-
 Start
-  = _ expr:Expression _
-  { return expr; }
-
-_Expression
-  = _ expr:Expression
-  { return expr; }
+  = Separator*
+    expr:Expression
+    Separator*
+    { return expr; }
 
 LineTerminator "line terminator"
   = '\u000A' // LINE FEED (LF)
@@ -43,8 +37,9 @@ Whitespace "whitespace"
 Comment "comment"
   = ';' (!LineTerminator .)*
 
-_
-  = (Comment / Whitespace)*
+Separator "separator"
+  = Whitespace
+  / Comment
 
 IdentChar "identifier character"
   = !Whitespace
@@ -68,9 +63,15 @@ Expression
   / String
   / Symbol
   / Identifier
-  / Parenthesized
-  / Bracketed
-  / Braced
+  / Import
+  / ImportStar
+  / Function
+  / Lambda
+  / Let
+  / If
+  / Array
+  / Object
+  / Application
 
 // ----- Numbers -----
 
@@ -82,19 +83,19 @@ Number "number"
 
 BinaryNumber "binary number"
   = Zero 'b' digits:$(bin+)
-  { return expression.number(parseInt(digits, 2)); }
+  { return {type: 'number', value: parseInt(digits, 2)}; }
 
 OctalNumber "octal number"
   = Zero 'o' digits:$(oct+)
-  { return expression.number(parseInt(digits, 8)); }
+  { return {type: 'number', value: parseInt(digits, 8)}; }
 
 HexadecimalNumber "hexadecimal number"
   = Zero 'x' digits:$(hex+)
-  { return expression.number(parseInt(digits, 16)); }
+  { return {type: 'number', value: parseInt(digits, 16)}; }
 
 DecimalNumber "decimal number"
   = Minus? Int Frac? Exp?
-  { return expression.number(parseFloat(text())); }
+  { return {type: 'number', value: parseFloat(text())}; }
 
 Int
   = Zero
@@ -128,7 +129,7 @@ Nonzero
 
 String "string"
   = '"' chars:(Char*) '"'
-  { return expression.string(chars.join('')); }
+  { return {type: 'string', value: chars.join('')}; }
 
 Char
   = '\\' '"'  { return '"'; }
@@ -147,40 +148,112 @@ Char
 
 Symbol "symbol"
   = ':' name:$(IdentChar+)
-  { return expression.symbol(name); }
+  { return {type: 'symbol', name}; }
 
 // ----- Identifier -----
 
 Identifier "identifier"
   = name:$(IdentChar+)
-  { return expression.identifier(name); }
+  { return {type: 'identifier', name}; }
 
-Parenthesized
-  = _ '('
-    elements:(
-      head:_Expression
-      tail:(Whitespace+ expr:_Expression { return expr; })*
+Import "import"
+  = Separator* '('
+    Separator* 'import'
+    Separator* name:Expression
+    Separator* ')'
+    { return {type: 'import', name}; }
+
+ImportStar "import*"
+  = Separator* '('
+    Separator* 'import*'
+    Separator* '['
+    names:(
+      head:(Separator* name:Expression { return name; })
+      tail:(Separator+ name:Expression { return name; })*
       { return [head, ...tail]; }
     )?
-    _ ')'
-    { return expression.parenthesized(elements ?? []); }
+    Separator* ']'
+    Separator* body:Expression
+    Separator* ')'
+    { return {type: 'import*', names, body}; }
 
-Bracketed
-  = _ '['
-    elements:(
-      head:_Expression
-      tail:(Whitespace+ expr:_Expression { return expr; })*
+Function "function"
+  = Separator* '('
+    Separator* 'function'
+    Separator* name:Identifier
+    Separator* '['
+    parameter:(Separator* ident:Identifier { return ident; })
+    parameters:(Separator+ ident:Identifier { return ident; })*
+    Separator* ']'
+    Separator* body:Expression
+    Separator* ')'
+    { return {type: 'function', name, parameter, body: parameters.reduceRight((body, parameter) => ({type: 'lambda', parameter, body}), body)}; }
+
+Lambda "lambda"
+  = Separator* '('
+    Separator* 'lambda'
+    Separator* '['
+    parameters:(
+      head:(Separator* ident:Identifier { return ident; })
+      tail:(Separator+ ident:Identifier { return ident; })*
+      { return [head, ...tail]; }
+    )
+    Separator* ']'
+    Separator* body:Expression
+    Separator* ')'
+    { return parameters.reduceRight((body, parameter) => ({type: 'lambda', parameter, body}), body); }
+
+Let "let"
+  = Separator* '('
+    Separator* 'let'
+    Separator* '['
+    bindings:(
+      head:(Separator* binding:Binding { return binding; })
+      tail:(Separator+ binding:Binding { return binding; })*
       { return [head, ...tail]; }
     )?
-    _ ']'
-    { return expression.bracketed(elements ?? []); }
+    Separator* ']'
+    Separator* body:Expression
+    Separator* ')'
+    { return (bindings ?? []).reduceRight((body, [parameter, expr]) => ({type: 'application', function: {type: 'lambda', parameter, body}, argument: expr}), body); }
 
-Braced
-  = _ '{'
+Binding "binding"
+  = Separator* ident:Identifier
+    Separator+ expr:Expression
+    { return [ident, expr]; }
+
+If "if"
+  = Separator* '('
+    Separator* 'if'
+    Separator+ predicate:Expression
+    Separator+ consequent:Expression
+    Separator+ alternative:Expression
+    Separator* ')'
+    { return {type: 'if', predicate, consequent, alternative}; }
+
+Array
+  = Separator* '['
     elements:(
-      head:_Expression
-      tail:(Whitespace+ expr:_Expression { return expr; })*
+      head:(Separator* expr:Expression { return expr; })
+      tail:(Separator+ expr:Expression { return expr; })*
       { return [head, ...tail]; }
     )?
-    _ '}'
-    { return expression.braced(elements ?? []); }
+    Separator* ']'
+    { return {type: 'array', elements: elements ?? []}; }
+
+Object
+  = Separator* '{'
+    entries:(
+      head:(Separator* key:Expression Separator+ value:Expression { return [key, value]; })
+      tail:(Separator+ key:Expression Separator+ value:Expression { return [key, value]; })*
+      { return [head, ...tail]; }
+    )?
+    Separator* '}'
+    { return {type: 'object', entries: entries ?? []}; }
+
+Application
+  = Separator* '('
+    Separator* func:Expression
+    args:(Separator+ arg:Expression { return arg; })+
+    Separator* ')'
+    { return args.reduce((func, arg) => ({type: 'application', function: func, argument: arg}), func); }

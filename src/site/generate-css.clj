@@ -55,7 +55,7 @@
         (lambda [selector]
            (s/pipe [(s/map (s/pair (lambda [k v] (++ ["  " (coerce k) ": " (coerce v) ";"]))))
                     (s/prepend (s/concat (s/join-with "\n" selector) " {"))
-                    (s/append ("}"))
+                    (s/append "}")
                     s/unlines]))
 
       style-sheet (screen coerce)]

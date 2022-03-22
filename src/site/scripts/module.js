@@ -8,7 +8,6 @@ const sanctuary = require ('sanctuary');
 
 const codegen = require ('../../lang/codegen.js');
 const grammar = require ('../../lang/grammar.js');
-const rewrite = require ('../../lang/rewrite.js');
 
 
 const {
@@ -25,8 +24,7 @@ const dirname = path.dirname (path.resolve (filename));
 const transpile = pipe ([
   encase (filename => fs.readFileSync (filename, 'utf8')),
   chain (encase (grammar.parse)),
-  chain (rewrite (dirname)),
-  chain (codegen.toJs (dirname)),
+  map (codegen.toJs (dirname)),
   map (codegen.toCommonJsModule),
   map (escodegen.generate),
 ]);
