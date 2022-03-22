@@ -1,9 +1,9 @@
 (import* [:base]
 
-(let [sanctuary (import "sanctuary")
+(let [sanctuary (require "sanctuary")
 
-      screen (import "./css/screen")
-      kebab-case-keys (import "./kebab-case-keys")
+      screen (require "./css/screen")
+      kebab-case-keys (require "./kebab-case-keys")
 
       s (kebab-case-keys sanctuary)
 

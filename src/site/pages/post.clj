@@ -1,14 +1,14 @@
 (import* [:base]
 
-(let [path (import "path")
+(let [path (require "path")
 
-      sanctuary (import "sanctuary")
+      sanctuary (require "sanctuary")
 
-      base-template (import "../base-template")
-      kebab-case-keys (import "../kebab-case-keys")
-      render-document (import "../render-document")
-      render-icon (import "../render-icon")
-      render-post (import "../render-post")
+      base-template (require "../base-template")
+      kebab-case-keys (require "../kebab-case-keys")
+      render-document (require "../render-document")
+      render-icon (require "../render-icon")
+      render-post (require "../render-post")
 
       s (kebab-case-keys sanctuary)
 
@@ -16,7 +16,7 @@
         (lambda [filename]
            (apply Object/assign
                   [{}
-                   (import filename)
+                   (require filename)
                    (Object/fromEntries [[:slug (apply path/basename [filename ".js"])]])]))]
 
    (lambda [relative-filenames relative-filename]
@@ -28,7 +28,7 @@
                                  [(path/dirname absolute-filename)
                                   "related"
                                   (s/concat (apply path/basename [absolute-filename ".js"]) ".json")])
-            related-posts (import json-filename)
+            related-posts (require json-filename)
             this-post (make-post absolute-filename)
             main (render-post this-post related-posts)]
          (render-document "  " [(base-template (:title this-post) main)])))))

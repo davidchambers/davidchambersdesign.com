@@ -1,9 +1,9 @@
 (import* [:base]
 
-(let [sanctuary (import "sanctuary")
+(let [sanctuary (require "sanctuary")
 
-      kebab-case-keys (import "./kebab-case-keys")
-      import-post (import "./import-post")
+      kebab-case-keys (require "./kebab-case-keys")
+      import-post (require "./import-post")
 
       s (kebab-case-keys sanctuary)
 

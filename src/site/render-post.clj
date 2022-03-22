@@ -1,11 +1,9 @@
 (import* [:base "./elements"]
 
-(let [path (import "path")
+(let [sanctuary (require "sanctuary")
 
-      sanctuary (import "sanctuary")
-
-      kebab-case-keys (import "./kebab-case-keys")
-      tags (import "./tags")
+      kebab-case-keys (require "./kebab-case-keys")
+      tags (require "./tags")
 
       s (kebab-case-keys sanctuary)
 
@@ -31,7 +29,7 @@
                             (lambda [_ _]
                                [(h3' {:id "related"} "Possibly related posts")
                                 (ul (s/map (lambda [slug]
-                                              (let [related-post (import (apply path/resolve [__dirname "posts" slug]))]
+                                              (let [related-post (require (++ ["./posts/" slug]))]
                                                  (li (a (++ ["/" slug "/"]) (:title related-post)))))
                                            related-posts))])
                             related-posts)]))])))

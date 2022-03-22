@@ -1,10 +1,10 @@
-(let [sanctuary (import "sanctuary")
+(let [sanctuary (require "sanctuary")
 
-      base-template (import "../base-template")
-      import-post (import "../import-post")
-      kebab-case-keys (import "../kebab-case-keys")
-      render-document (import "../render-document")
-      render-tags (import "../render-tags")
+      base-template (require "../base-template")
+      import-post (require "../import-post")
+      kebab-case-keys (require "../kebab-case-keys")
+      render-document (require "../render-document")
+      render-tags (require "../render-tags")
 
       s (kebab-case-keys sanctuary)]
 

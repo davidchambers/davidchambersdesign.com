@@ -100,11 +100,9 @@ exports.toJs = dirname => {
                            (Object.getOwnPropertySymbols (reduce (env => name => Object.assign (env, require (path.join (dirname, name.value))))
                                                                  (Object.create (null))
                                                                  (names)));
-        return CallExpr (ArrowFuncExpr ([Identifier (escapeIdentifier ('__dirname')),
-                                         ArrayPattern (params)])
-                                       (recur (expr.body)))
-                        ([Literal (dirname),
-                          CallExpr (ArrowFuncExpr ([Identifier ('env')])
+        return CallExpr1 (ArrowFuncExpr1 (ArrayPattern (params))
+                                         (recur (expr.body)))
+                         (CallExpr (ArrowFuncExpr ([Identifier ('env')])
                                                   (CallExpr (MemberExpr (false)
                                                                         (CallExpr (MemberExpr (false)
                                                                                               (Identifier ('Object'))
@@ -128,7 +126,7 @@ exports.toJs = dirname => {
                                                 CallExpr (MemberExpr (false)
                                                                      (Identifier ('Object'))
                                                                      (Identifier ('create')))
-                                                         ([Literal (null)])])])]);
+                                                         ([Literal (null)])])]));
       }
       case 'function':
         return FuncExpr1 (recur (expr.name))
@@ -167,5 +165,9 @@ exports.toCommonJsModule = jsExpr => (
                                           (MemberExpr (false)
                                                       (Identifier ('module'))
                                                       (Identifier ('exports')))
-                                          (jsExpr))])
+                                          (CallExpr (ArrowFuncExpr ([Identifier (escapeIdentifier ('__dirname')),
+                                                                     Identifier (escapeIdentifier ('require'))])
+                                                                   (jsExpr))
+                                                    ([Identifier ('__dirname'),
+                                                      Identifier ('require')])))])
 );

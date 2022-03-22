@@ -63,7 +63,6 @@ Expression
   / String
   / Symbol
   / Identifier
-  / Import
   / ImportStar
   / Function
   / Lambda
@@ -155,13 +154,6 @@ Symbol "symbol"
 Identifier "identifier"
   = name:$(IdentChar+)
   { return {type: 'identifier', name}; }
-
-Import "import"
-  = Separator* '('
-    Separator* 'import'
-    Separator* name:Expression
-    Separator* ')'
-    { return {type: 'import', name}; }
 
 ImportStar "import*"
   = Separator* '('
