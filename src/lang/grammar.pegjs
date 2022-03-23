@@ -95,7 +95,7 @@ HexadecimalNumber "hexadecimal number"
   { return {type: 'number', value: parseInt(digits, 16)}; }
 
 DecimalNumber "decimal number"
-  = Minus? Int Frac? Exp?
+  = Minus? Int Frac?
   { return {type: 'number', value: parseFloat(text())}; }
 
 Int
@@ -105,17 +105,8 @@ Int
 Frac
   = DecimalPoint dec+
 
-Exp
-  = E (Minus / Plus)? dec+
-
 Minus
   = '-'
-
-Plus
-  = '+'
-
-E
-  = 'e'
 
 DecimalPoint
   = '.'
