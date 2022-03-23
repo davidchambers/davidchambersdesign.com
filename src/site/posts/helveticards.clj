@@ -1,6 +1,9 @@
-(import* ["../elements" "../components"]
+(import* ["../elements"]
 
-(let [datetime (require "../datetime")] {
+(let [
+  uncaptioned-image   (require "../components/uncaptioned-image")
+  datetime            (require "../datetime")
+] {
 
   :id 92
 

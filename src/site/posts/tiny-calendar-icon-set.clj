@@ -1,6 +1,10 @@
-(import* ["../elements" "../components"]
+(import* ["../elements"]
 
-(let [datetime (require "../datetime")] {
+(let [
+  captioned-images    (require "../components/captioned-images")
+  update              (require "../components/update")
+  datetime            (require "../datetime")
+] {
 
   :id 14
 
@@ -32,16 +36,17 @@
          archives page, for which I created a set of 16 x 16px calendar icons."])
 
     (captioned-images
+       (lambda [captioned-image]
 
-       [(captioned-image
-           "/images/posts/14/calendar-300pc.png"
-           "Calendar icons for every possible day of the month"
-           "Calendar icons shown at 300% of actual size")
+          [(captioned-image
+              "/images/posts/14/calendar-300pc.png"
+              "Calendar icons for every possible day of the month"
+              "Calendar icons shown at 300% of actual size")
 
-        (captioned-image
-           "/images/posts/14/calendar.png"
-           "Calendar icons for every possible day of the month"
-           "Calendar icons shown actual size")])
+           (captioned-image
+              "/images/posts/14/calendar.png"
+              "Calendar icons for every possible day of the month"
+              "Calendar icons shown actual size")]))
 
     (p
        ["You are welcome to "

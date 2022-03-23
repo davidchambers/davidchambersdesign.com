@@ -1,6 +1,10 @@
-(import* ["../elements" "../components"]
+(import* ["../elements"]
 
-(let [datetime (require "../datetime")] {
+(let [
+  code-block          (require "../components/code-block")
+  pros-and-cons-list  (require "../components/pros-and-cons-list")
+  datetime            (require "../datetime")
+] {
 
   :id 30
 

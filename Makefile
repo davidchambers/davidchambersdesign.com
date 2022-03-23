@@ -20,10 +20,40 @@ src/lang/grammar.js: src/lang/grammar.pegjs
 src/site/kebab-case-keys.js: src/site/kebab-case-keys.clj $(LANG_JS)
 	node src/site/scripts/module.js '$<' >'$@'
 
+src/site/datetime.js: src/site/datetime.clj src/site/kebab-case-keys.js $(LANG_JS)
+	node src/site/scripts/module.js '$<' >'$@'
+
 src/site/elements.js: src/site/elements.clj src/site/scripts/module.js $(LANG_JS)
 	node src/site/scripts/module.js '$<' >'$@'
 
-src/site/components.js: src/site/components.clj src/site/scripts/module.js src/site/elements.js $(LANG_JS)
+src/site/components/caption.js: src/site/components/caption.clj src/site/scripts/module.js src/site/elements.js $(LANG_JS)
+	node src/site/scripts/module.js '$<' >'$@'
+
+src/site/components/captioned-image.js: src/site/components/captioned-image.clj src/site/scripts/module.js src/site/elements.js $(LANG_JS)
+	node src/site/scripts/module.js '$<' >'$@'
+
+src/site/components/captioned-images.js: src/site/components/captioned-images.clj src/site/scripts/module.js src/site/elements.js $(LANG_JS)
+	node src/site/scripts/module.js '$<' >'$@'
+
+src/site/components/code-block.js: src/site/components/code-block.clj src/site/scripts/module.js src/site/elements.js $(LANG_JS)
+	node src/site/scripts/module.js '$<' >'$@'
+
+src/site/components/decorative-image.js: src/site/components/decorative-image.clj src/site/scripts/module.js src/site/elements.js $(LANG_JS)
+	node src/site/scripts/module.js '$<' >'$@'
+
+src/site/components/interview-list.js: src/site/components/interview-list.clj src/site/scripts/module.js src/site/elements.js $(LANG_JS)
+	node src/site/scripts/module.js '$<' >'$@'
+
+src/site/components/pros-and-cons-list.js: src/site/components/pros-and-cons-list.clj src/site/scripts/module.js src/site/elements.js $(LANG_JS)
+	node src/site/scripts/module.js '$<' >'$@'
+
+src/site/components/uncaptioned-image.js: src/site/components/uncaptioned-image.clj src/site/scripts/module.js src/site/elements.js $(LANG_JS)
+	node src/site/scripts/module.js '$<' >'$@'
+
+src/site/components/update.js: src/site/components/update.clj src/site/scripts/module.js src/site/elements.js $(LANG_JS)
+	node src/site/scripts/module.js '$<' >'$@'
+
+src/site/posts/%.js: src/site/posts/%.clj src/site/scripts/module.js src/site/elements.js $(LANG_JS)
 	node src/site/scripts/module.js '$<' >'$@'
 
 src/site/base-template.js: src/site/base-template.clj src/site/scripts/module.js src/site/elements.js $(LANG_JS)

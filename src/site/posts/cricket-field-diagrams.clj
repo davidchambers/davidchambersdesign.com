@@ -1,6 +1,9 @@
-(import* ["../elements" "../components"]
+(import* ["../elements"]
 
-(let [datetime (require "../datetime")] {
+(let [
+  captioned-images    (require "../components/captioned-images")
+  datetime            (require "../datetime")
+] {
 
   :id 40
 
@@ -23,36 +26,37 @@
          considerations involved in designing for the Web."])
 
     (captioned-images
+       (lambda [captioned-image]
 
-       [(captioned-image
-           "/images/posts/40/mid-wicket.png"
-           "Cricket field with mid-wicket area highlighted"
-           "Mid-wicket")
+          [(captioned-image
+              "/images/posts/40/mid-wicket.png"
+              "Cricket field with mid-wicket area highlighted"
+              "Mid-wicket")
 
-        (captioned-image
-           "/images/posts/40/down-the-ground.png"
-           "Cricket field with covers highlighted"
-           "Down the ground")
+           (captioned-image
+              "/images/posts/40/down-the-ground.png"
+              "Cricket field with covers highlighted"
+              "Down the ground")
 
-        (captioned-image
-           "/images/posts/40/covers.png"
-           "Cricket field with covers highlighted"
-           "Covers")
+           (captioned-image
+              "/images/posts/40/covers.png"
+              "Cricket field with covers highlighted"
+              "Covers")
 
-        (captioned-image
-           "/images/posts/40/behind-point.png"
-           "Cricket field with area behind point highlighted"
-           "Behind point")
+           (captioned-image
+              "/images/posts/40/behind-point.png"
+              "Cricket field with area behind point highlighted"
+              "Behind point")
 
-        (captioned-image
-           "/images/posts/40/behind-the-wicket.png"
-           "Cricket field with area behind the wicket highlighted"
-           "Behind the wicket")
+           (captioned-image
+              "/images/posts/40/behind-the-wicket.png"
+              "Cricket field with area behind the wicket highlighted"
+              "Behind the wicket")
 
-        (captioned-image
-           "/images/posts/40/behind-square.png"
-           "Cricket field with area backward of square highlighted"
-           "Behind square")])
+            (captioned-image
+               "/images/posts/40/behind-square.png"
+               "Cricket field with area backward of square highlighted"
+               "Behind square")]))
 
     (p
        ["You're free to make use of these images (they're transparent PNGs).

@@ -1,6 +1,12 @@
-(import* ["../elements" "../components"]
+(import* ["../elements"]
 
-(let [datetime (require "../datetime")] {
+(let [
+  caption             (require "../components/caption")
+  captioned-images    (require "../components/captioned-images")
+  code-block          (require "../components/code-block")
+  update              (require "../components/update")
+  datetime            (require "../datetime")
+] {
 
   :id 15
 
@@ -49,18 +55,19 @@
          browser."])
 
     (captioned-images
+       (lambda [captioned-image]
 
-       [(captioned-image
-           "/images/posts/15/script-editor-syntax-highlighting.png"
-           ""
-           "Screenshot of Script Editor's rendering of an AppleScript
-            snippet")
+          [(captioned-image
+              "/images/posts/15/script-editor-syntax-highlighting.png"
+              ""
+              "Screenshot of Script Editor's rendering of an AppleScript
+               snippet")
 
-        (captioned-image
-           "/images/posts/15/syntaxhighlighter-applescript-theme.png"
-           ""
-           "Screenshot of snippet styled by AppleScript theme for
-            SyntaxHighlighter")])
+           (captioned-image
+              "/images/posts/15/syntaxhighlighter-applescript-theme.png"
+              ""
+              "Screenshot of snippet styled by AppleScript theme for
+               SyntaxHighlighter")]))
 
     (code-block :applescript
 

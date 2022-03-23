@@ -1,6 +1,8 @@
-(import* ["../elements" "../components"]
+(import* ["../elements"]
 
-(let [datetime (require "../datetime")] {
+(let [
+  datetime            (require "../datetime")
+] {
 
   :id 6
 

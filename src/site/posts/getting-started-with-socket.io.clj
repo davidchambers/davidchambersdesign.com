@@ -1,6 +1,9 @@
-(import* ["../elements" "../components"]
+(import* ["../elements"]
 
-(let [datetime (require "../datetime")] {
+(let [
+  code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
+] {
 
   :id 90
 
