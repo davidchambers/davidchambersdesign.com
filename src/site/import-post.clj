@@ -1,5 +1,3 @@
-(import* [:base]
-
 (let [path (require "path")
 
       sanctuary (require "sanctuary")
@@ -12,4 +10,4 @@
       (let [post (require (apply path/resolve [__dirname ".." ".." filename]))]
          (Object/fromEntries (s/append [:slug (apply path/basename [filename ".js"])]
                                        (s/map (lambda [symbol] [symbol (s/prop symbol post)])
-                                              (Object/getOwnPropertySymbols post))))))))
+                                              (Object/getOwnPropertySymbols post)))))))

@@ -1,5 +1,3 @@
-(import* [:base]
-
 (let [sanctuary (require "sanctuary")
 
       kebab-case-keys (require "./kebab-case-keys")
@@ -46,4 +44,4 @@
                (invoke-2 "slice" 0 5)
                (s/map (lambda [post] (:slug post)))
                (lambda [posts] (apply JSON/stringify [posts null 2]))]
-              filenames))))
+              filenames)))

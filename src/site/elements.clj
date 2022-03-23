@@ -1,5 +1,3 @@
-(import* [:base]
-
 (let
    [sanctuary (require "sanctuary")
 
@@ -17,14 +15,14 @@
          (Object/fromEntries (s/map (lambda [name]
                                        (let [value (s/prop name attrs)]
                                           [name
-                                           (if (== "symbol" (type-of value))
+                                           (if (== "symbol" (typeof value))
                                                (Symbol/keyFor value)
                                                (String value))]))
                                     (Object/getOwnPropertySymbols attrs))))
 
     canonicalize-children
       (s/compose (s/map (lambda [child]
-                           (if (== "string" (type-of child))
+                           (if (== "string" (typeof child))
                                (text (invoke-2 "replace"
                                                (s/regex "g" " -- ")
                                                "\u2009\u2014\u2009"
@@ -205,4 +203,4 @@
     :meta                  meta
     :param                 (self-closing-element :param)
     :path                  (self-closing-element :path)
-    :stop                  (self-closing-element :stop)}))
+    :stop                  (self-closing-element :stop)})

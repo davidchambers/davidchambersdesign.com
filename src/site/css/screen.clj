@@ -1,5 +1,3 @@
-(import* [:base]
-
 (let [sanctuary (require "sanctuary")
 
       kebab-case-keys (require "../kebab-case-keys")
@@ -1357,4 +1355,4 @@
        :color cyan
      ]
 
-   }])))))
+   }]))))

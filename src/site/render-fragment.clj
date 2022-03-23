@@ -1,5 +1,3 @@
-(import* [:base]
-
 (let [sanctuary (require "sanctuary")
 
       kebab-case-keys (require "./kebab-case-keys")
@@ -39,4 +37,4 @@
                                              "</" tag-name ">" (if inline "" "\n")])
                                         (++ [indentation "<" tag-name attrs ">\n"
                                              (render-fragment indent (+ 1 level) false (:children node))
-                                             indentation "</" tag-name ">\n"])))))))))))
+                                             indentation "</" tag-name ">\n"]))))))))))

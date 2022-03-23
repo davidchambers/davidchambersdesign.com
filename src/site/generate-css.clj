@@ -1,5 +1,3 @@
-(import* [:base]
-
 (let [sanctuary (require "sanctuary")
 
       screen (require "./css/screen")
@@ -13,7 +11,7 @@
         (function coerce [x]
            (if (Array/isArray x)
                (s/unwords (s/map coerce x))
-               (if (== "symbol" (type-of x))
+               (if (== "symbol" (typeof x))
                    (Symbol/keyFor x)
                    (String x))))
 
@@ -72,4 +70,4 @@
                                    vendor-prefixes-timing-function
                                    (format-block (s/map s/trim (s/lines selector)))]
                                   (s/prop selector style-sheet)))
-                       (Object/getOwnPropertyNames style-sheet)))))
+                       (Object/getOwnPropertyNames style-sheet))))

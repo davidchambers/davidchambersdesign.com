@@ -1,5 +1,3 @@
-(import* [:base]
-
 (let [path (require "path")
 
       sanctuary (require "sanctuary")
@@ -31,4 +29,4 @@
             related-posts (require json-filename)
             this-post (make-post absolute-filename)
             main (render-post this-post related-posts)]
-         (render-document "  " [(base-template (:title this-post) main)])))))
+         (render-document "  " [(base-template (:title this-post) main)]))))

@@ -1,6 +1,6 @@
 ; Import order matters due to conflicts: ‘sanctuary’ and ‘elements’
 ; both export ‘div’ and ‘head’.
-(import* [:base "./elements"]
+(import* ["./elements"]
 
 (let [sanctuary (require "sanctuary")
 

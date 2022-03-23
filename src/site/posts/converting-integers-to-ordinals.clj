@@ -1,4 +1,6 @@
-(import* [:base "../elements" "../components"] {
+(import* ["../elements" "../components"]
+
+(let [datetime (require "../datetime")] {
 
   :id 70
 
@@ -60,4 +62,4 @@
 
   ]
 
-})
+}))
