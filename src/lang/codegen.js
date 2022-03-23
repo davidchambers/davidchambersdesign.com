@@ -4,8 +4,6 @@ const path = require ('path');
 
 const sanctuary = require ('sanctuary');
 
-const expression = require ('./expression.js');
-
 
 const {
   map,
@@ -82,7 +80,7 @@ exports.toJs = dirname => function recur(expr) {
                              (expr.entries));
     }
     case 'import*': {
-      const params = map (symbol => recur (expression.identifier (Symbol.keyFor (symbol))))
+      const params = map (symbol => recur ({type: 'identifiers', head: Symbol.keyFor (symbol), tail: []}))
                          (Object.getOwnPropertySymbols (reduce (env => name => Object.assign (env, require (path.join (dirname, name.value))))
                                                                (Object.create (null))
                                                                (expr.names)));
