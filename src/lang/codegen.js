@@ -2,14 +2,8 @@
 
 const path = require ('path');
 
-const sanctuary = require ('sanctuary');
+const S = require ('sanctuary');
 
-
-const {
-  map,
-  reduce,
-  reverse,
-} = sanctuary.unchecked;
 
 const Program = sourceType => body => ({type: 'Program', sourceType, body});
 const ExprStatement = expression => ({type: 'ExpressionStatement', expression});
@@ -68,22 +62,22 @@ exports.toJs = dirname => function recur(expr) {
                                                 (Literal (expr.name)));
     }
     case 'identifiers': {
-      return reduce (ComputedMemberExpr)
-                    (Identifier (escapeIdentifier (expr.head)))
-                    (map (Literal) (expr.tail));
+      return S.reduce (ComputedMemberExpr)
+                      (Identifier (escapeIdentifier (expr.head)))
+                      (S.map (Literal) (expr.tail));
     }
     case 'array': {
-      return ArrayExpr (map (recur) (expr.elements));
+      return ArrayExpr (S.map (recur) (expr.elements));
     }
     case 'object': {
-      return ObjectExpr (map (([key, value]) => Property (recur (key)) (recur (value)))
-                             (expr.entries));
+      return ObjectExpr (S.map (([key, value]) => Property (recur (key)) (recur (value)))
+                               (expr.entries));
     }
     case 'import*': {
-      const params = map (symbol => recur ({type: 'identifiers', head: Symbol.keyFor (symbol), tail: []}))
-                         (Object.getOwnPropertySymbols (reduce (env => name => Object.assign (env, require (path.join (dirname, name.value))))
-                                                               (Object.create (null))
-                                                               (expr.names)));
+      const params = S.map (symbol => recur ({type: 'identifiers', head: Symbol.keyFor (symbol), tail: []}))
+                           (Object.getOwnPropertySymbols (S.reduce (env => name => Object.assign (env, require (path.join (dirname, name.value))))
+                                                                   (Object.create (null))
+                                                                   (expr.names)));
       return CallExpr1 (ArrowFuncExpr1 (ArrayPattern (params))
                                        (recur (expr.body)))
                        (CallExpr (ArrowFuncExpr ([Identifier ('env')])
@@ -94,7 +88,7 @@ exports.toJs = dirname => function recur(expr) {
                                                           ([ArrowFuncExpr ([Identifier ('sym')])
                                                                           (ComputedMemberExpr (Identifier ('env'))
                                                                                               (Identifier ('sym')))])))
-                                 ([CallExpr (StaticMemberExpr (ArrayExpr (map (recur) (expr.names)))
+                                 ([CallExpr (StaticMemberExpr (ArrayExpr (S.map (recur) (expr.names)))
                                                               (Identifier ('reduce')))
                                             ([ArrowFuncExpr ([Identifier ('env'), Identifier ('path')])
                                                             (CallExpr (StaticMemberExpr (Identifier ('Object'))
@@ -167,12 +161,12 @@ const apply = (
 
 const invoke = names => (
   ArrowFuncExpr1 (Identifier ('name'))
-                 (reduce (body => name => ArrowFuncExpr1 (Identifier (name)) (body))
-                         (ArrowFuncExpr1 (Identifier ('target'))
-                                         (CallExpr (ComputedMemberExpr (Identifier ('target'))
-                                                                       (Identifier ('name')))
-                                                   (map (Identifier) (names))))
-                         (reverse (names)))
+                 (S.reduce (body => name => ArrowFuncExpr1 (Identifier (name)) (body))
+                           (ArrowFuncExpr1 (Identifier ('target'))
+                                           (CallExpr (ComputedMemberExpr (Identifier ('target'))
+                                                                         (Identifier ('name')))
+                                                     (S.map (Identifier) (names))))
+                           (S.reverse (names)))
 );
 
 const env = {
@@ -355,9 +349,9 @@ exports.toCommonJsModule = jsExpr => (
             ExprStatement (AssignmentExpr ('=')
                                           (StaticMemberExpr (Identifier ('module'))
                                                             (Identifier ('exports')))
-                                          (CallExpr (ArrowFuncExpr (map (Identifier)
-                                                                        (map (escapeIdentifier)
-                                                                             (Object.keys (env))))
+                                          (CallExpr (ArrowFuncExpr (S.map (Identifier)
+                                                                          (S.map (escapeIdentifier)
+                                                                                 (Object.keys (env))))
                                                                    (jsExpr))
                                                     (Object.values (env))))])
 );
