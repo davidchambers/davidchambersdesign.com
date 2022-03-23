@@ -20,6 +20,7 @@ const Identifier = name => ({type: 'Identifier', name});
 const Literal = value => ({type: 'Literal', value});
 const Call = callee => args => ({type: 'CallExpression', callee, arguments: args, optional: false});
 const Call1 = callee => arg => Call (callee) ([arg]);
+const Call2 = callee => arg1 => arg2 => Call (callee) ([arg1, arg2]);
 const Array_ = elements => ({type: 'ArrayExpression', elements});
 const ArrowFunc = params => body => ({type: 'ArrowFunctionExpression', id: null, expression: true, generator: false, async: false, params, body});
 const ArrowFunc1 = param => ArrowFunc ([param]);
@@ -86,17 +87,17 @@ exports.toJs = dirname => function recur(expr) {
                                             (ArrowFunc ([Identifier ('sym')])
                                                        (Member (Identifier ('env'))
                                                                (Identifier ('sym'))))))
-                          (Call (Member (Array_ (S.map (recur) (expr.names)))
-                                        (Literal ('reduce')))
-                                ([ArrowFunc ([Identifier ('env'), Identifier ('path')])
-                                            (Call (Member (Identifier ('Object'))
-                                                          (Literal ('assign')))
-                                                  ([Identifier ('env'),
-                                                    Call1 (Identifier ('require'))
-                                                          (Identifier ('path'))])),
-                                  Call1 (Member (Identifier ('Object'))
+                          (Call2 (Member (Array_ (S.map (recur) (expr.names)))
+                                         (Literal ('reduce')))
+                                 (ArrowFunc ([Identifier ('env'), Identifier ('path')])
+                                            (Call2 (Member (Identifier ('Object'))
+                                                           (Literal ('assign')))
+                                                   (Identifier ('env'))
+                                                   (Call1 (Identifier ('require'))
+                                                          (Identifier ('path')))))
+                                 (Call1 (Member (Identifier ('Object'))
                                                 (Literal ('create')))
-                                        (Literal (null))])));
+                                        (Literal (null)))));
     }
     case 'function': {
       return Func1 (recur (expr.name))
