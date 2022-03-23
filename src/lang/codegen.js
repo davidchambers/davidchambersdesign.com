@@ -78,25 +78,25 @@ exports.toJs = dirname => function recur(expr) {
                                                                    (expr.names)));
       return Call1 (ArrowFunc1 (ArrayPattern (params))
                                (recur (expr.body)))
-                   (Call (ArrowFunc ([Identifier ('env')])
-                                    (Call (Member (Call (Member (Identifier ('Object'))
-                                                                (Literal ('getOwnPropertySymbols')))
-                                                        ([Identifier ('env')]))
-                                                  (Literal ('map')))
-                                          ([ArrowFunc ([Identifier ('sym')])
-                                                      (Member (Identifier ('env'))
-                                                              (Identifier ('sym')))])))
-                         ([Call (Member (Array_ (S.map (recur) (expr.names)))
+                   (Call1 (ArrowFunc ([Identifier ('env')])
+                                     (Call1 (Member (Call1 (Member (Identifier ('Object'))
+                                                                   (Literal ('getOwnPropertySymbols')))
+                                                           (Identifier ('env')))
+                                                    (Literal ('map')))
+                                            (ArrowFunc ([Identifier ('sym')])
+                                                       (Member (Identifier ('env'))
+                                                               (Identifier ('sym'))))))
+                          (Call (Member (Array_ (S.map (recur) (expr.names)))
                                         (Literal ('reduce')))
                                 ([ArrowFunc ([Identifier ('env'), Identifier ('path')])
                                             (Call (Member (Identifier ('Object'))
                                                           (Literal ('assign')))
                                                   ([Identifier ('env'),
-                                                    Call (Identifier ('require'))
-                                                         ([Identifier ('path')])])),
-                                  Call (Member (Identifier ('Object'))
-                                               (Literal ('create')))
-                                       ([Literal (null)])])]));
+                                                    Call1 (Identifier ('require'))
+                                                          (Identifier ('path'))])),
+                                  Call1 (Member (Identifier ('Object'))
+                                                (Literal ('create')))
+                                        (Literal (null))])));
     }
     case 'function': {
       return Func1 (recur (expr.name))
