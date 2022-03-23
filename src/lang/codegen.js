@@ -8,9 +8,7 @@ const S = require ('sanctuary');
 const Program = sourceType => body => ({type: 'Program', sourceType, body});
 const ExprStatement = expression => ({type: 'ExpressionStatement', expression});
 const AssignmentExpr = operator => left => right => ({type: 'AssignmentExpression', operator, left, right});
-const MemberExpr = computed => object => property => ({type: 'MemberExpression', object, property, computed, optional: false});
-const ComputedMemberExpr = MemberExpr (true);
-const StaticMemberExpr = MemberExpr (false);
+const MemberExpr = object => property => ({type: 'MemberExpression', object, property, computed: true, optional: false});
 const CondExpr = test => consequent => alternative => ({type: 'ConditionalExpression', test, consequent, alternate: alternative});
 const UnaryExpr = prefix => operator => argument => ({type: 'UnaryExpression', prefix, operator, argument});
 const BinaryExpr = operator => left => right => ({type: 'BinaryExpression', operator, left, right});
@@ -52,17 +50,17 @@ exports.toJs = dirname => function recur(expr) {
       return Literal (expr.value);
     }
     case 'symbol': {
-      return CallExpr1 (StaticMemberExpr (Identifier ('Symbol'))
-                                         (Identifier ('for')))
+      return CallExpr1 (MemberExpr (Identifier ('Symbol'))
+                                   (Literal ('for')))
                        (Literal (expr.name));
     }
     case 'property': {
       return ArrowFuncExpr1 (Identifier ('obj'))
-                            (ComputedMemberExpr (Identifier ('obj'))
-                                                (Literal (expr.name)));
+                            (MemberExpr (Identifier ('obj'))
+                                        (Literal (expr.name)));
     }
     case 'identifiers': {
-      return S.reduce (ComputedMemberExpr)
+      return S.reduce (MemberExpr)
                       (Identifier (escapeIdentifier (expr.head)))
                       (S.map (Literal) (expr.tail));
     }
@@ -81,23 +79,23 @@ exports.toJs = dirname => function recur(expr) {
       return CallExpr1 (ArrowFuncExpr1 (ArrayPattern (params))
                                        (recur (expr.body)))
                        (CallExpr (ArrowFuncExpr ([Identifier ('env')])
-                                                (CallExpr (StaticMemberExpr (CallExpr (StaticMemberExpr (Identifier ('Object'))
-                                                                                                        (Identifier ('getOwnPropertySymbols')))
-                                                                                      ([Identifier ('env')]))
-                                                                            (Identifier ('map')))
+                                                (CallExpr (MemberExpr (CallExpr (MemberExpr (Identifier ('Object'))
+                                                                                            (Literal ('getOwnPropertySymbols')))
+                                                                                ([Identifier ('env')]))
+                                                                      (Literal ('map')))
                                                           ([ArrowFuncExpr ([Identifier ('sym')])
-                                                                          (ComputedMemberExpr (Identifier ('env'))
-                                                                                              (Identifier ('sym')))])))
-                                 ([CallExpr (StaticMemberExpr (ArrayExpr (S.map (recur) (expr.names)))
-                                                              (Identifier ('reduce')))
+                                                                          (MemberExpr (Identifier ('env'))
+                                                                                      (Identifier ('sym')))])))
+                                 ([CallExpr (MemberExpr (ArrayExpr (S.map (recur) (expr.names)))
+                                                        (Literal ('reduce')))
                                             ([ArrowFuncExpr ([Identifier ('env'), Identifier ('path')])
-                                                            (CallExpr (StaticMemberExpr (Identifier ('Object'))
-                                                                                        (Identifier ('assign')))
+                                                            (CallExpr (MemberExpr (Identifier ('Object'))
+                                                                                  (Literal ('assign')))
                                                                       ([Identifier ('env'),
                                                                         CallExpr (Identifier ('require'))
                                                                                  ([Identifier ('path')])])),
-                                              CallExpr (StaticMemberExpr (Identifier ('Object'))
-                                                                         (Identifier ('create')))
+                                              CallExpr (MemberExpr (Identifier ('Object'))
+                                                                   (Literal ('create')))
                                                        ([Literal (null)])])]));
     }
     case 'function': {
@@ -117,10 +115,10 @@ exports.toJs = dirname => function recur(expr) {
     case 'application': {
       return CallExpr1 (expr.function.type === 'symbol' ?
                         ArrowFuncExpr1 (Identifier ('obj'))
-                                       (ComputedMemberExpr (Identifier ('obj'))
-                                                           (CallExpr1 (StaticMemberExpr (Identifier ('Symbol'))
-                                                                                        (Identifier ('for')))
-                                                                      (Literal (expr.function.name)))) :
+                                       (MemberExpr (Identifier ('obj'))
+                                                   (CallExpr1 (MemberExpr (Identifier ('Symbol'))
+                                                                          (Literal ('for')))
+                                                              (Literal (expr.function.name)))) :
                         recur (expr.function))
                        (recur (expr.argument));
     }
@@ -160,8 +158,8 @@ const invoke = names => (
   ArrowFuncExpr1 (Identifier ('name'))
                  (S.reduce (body => name => ArrowFuncExpr1 (Identifier (name)) (body))
                            (ArrowFuncExpr1 (Identifier ('target'))
-                                           (CallExpr (ComputedMemberExpr (Identifier ('target'))
-                                                                         (Identifier ('name')))
+                                           (CallExpr (MemberExpr (Identifier ('target'))
+                                                                 (Identifier ('name')))
                                                      (S.map (Identifier) (names))))
                            (S.reverse (names)))
 );
@@ -346,8 +344,8 @@ exports.toCommonJsModule = jsExpr => (
   Program ('script')
           ([ExprStatement (Literal ('use strict')),
             ExprStatement (AssignmentExpr ('=')
-                                          (StaticMemberExpr (Identifier ('module'))
-                                                            (Identifier ('exports')))
+                                          (MemberExpr (Identifier ('module'))
+                                                      (Literal ('exports')))
                                           (CallExpr (ArrowFuncExpr (S.map (Identifier)
                                                                           (S.map (escapeIdentifier)
                                                                                  (Object.keys (env))))
