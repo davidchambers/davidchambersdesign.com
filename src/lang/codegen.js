@@ -45,7 +45,10 @@ const escapeIdentifier = name => (
 exports.toJs = dirname => function recur(expr) {
   switch (expr.type) {
     case 'number': {
-      return expr.value < 0 ? Unary (true) ('-') (Literal (-expr.value)) : Literal (expr.value);
+      return S.ifElse (S.lt (0))
+                      (S.pipe ([S.negate, Literal, Unary (true) ('-')]))
+                      (Literal)
+                      (expr.value);
     }
     case 'string': {
       return Literal (expr.value);
@@ -71,6 +74,30 @@ exports.toJs = dirname => function recur(expr) {
     case 'object': {
       return Object_ (S.map (([key, value]) => Property (recur (key)) (recur (value)))
                             (expr.entries));
+    }
+    case 'lambda': {
+      return ArrowFunc1 (recur (expr.parameter))
+                        (recur (expr.body));
+    }
+    case 'function': {
+      return Func1 (recur (expr.name))
+                   (recur (expr.parameter))
+                   (Block ([Return (recur (expr.body))]));
+    }
+    case 'if': {
+      return Cond (recur (expr.predicate))
+                  (recur (expr.consequent))
+                  (recur (expr.alternative));
+    }
+    case 'application': {
+      return Call1 (expr.function.type === 'symbol' ?
+                    ArrowFunc1 (Identifier ('obj'))
+                               (Member (Identifier ('obj'))
+                                       (Call1 (Member (Identifier ('Symbol'))
+                                                      (Literal ('for')))
+                                              (Literal (expr.function.name)))) :
+                    recur (expr.function))
+                   (recur (expr.argument));
     }
     case 'import*': {
       const params = S.map (symbol => recur ({type: 'identifiers', head: Symbol.keyFor (symbol), tail: []}))
@@ -98,30 +125,6 @@ exports.toJs = dirname => function recur(expr) {
                                  (Call1 (Member (Identifier ('Object'))
                                                 (Literal ('create')))
                                         (Literal (null)))));
-    }
-    case 'function': {
-      return Func1 (recur (expr.name))
-                   (recur (expr.parameter))
-                   (Block ([Return (recur (expr.body))]));
-    }
-    case 'lambda': {
-      return ArrowFunc1 (recur (expr.parameter))
-                        (recur (expr.body));
-    }
-    case 'if': {
-      return Cond (recur (expr.predicate))
-                  (recur (expr.consequent))
-                  (recur (expr.alternative));
-    }
-    case 'application': {
-      return Call1 (expr.function.type === 'symbol' ?
-                    ArrowFunc1 (Identifier ('obj'))
-                               (Member (Identifier ('obj'))
-                                       (Call1 (Member (Identifier ('Symbol'))
-                                                      (Literal ('for')))
-                                              (Literal (expr.function.name)))) :
-                    recur (expr.function))
-                   (recur (expr.argument));
     }
   }
 };
