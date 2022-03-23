@@ -1,5 +1,3 @@
-; Import order matters due to conflicts: ‘sanctuary’ and ‘elements’
-; both export ‘div’ and ‘head’.
 (import* ["./elements"]
 
 (let [sanctuary (require "sanctuary")
