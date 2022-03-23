@@ -62,6 +62,8 @@ Expression
   = Number
   / String
   / Symbol
+  / Property
+  / Identifiers
   / Identifier
   / ImportStar
   / Function
@@ -151,9 +153,18 @@ Symbol "symbol"
 
 // ----- Identifier -----
 
+Property "property"
+  = '#' name:$(IdentChar+)
+  { return {type: 'property', name}; }
+
+Identifiers "identifiers"
+  = head:(    name:$(!'/' char:IdentChar)+ { return name; })
+    tail:('/' name:$(!'/' char:IdentChar)+ { return name; })+
+  { return {type: 'identifiers', head, tail}; }
+
 Identifier "identifier"
-  = name:$(IdentChar+)
-  { return {type: 'identifier', name}; }
+  = head:$(IdentChar+)
+  { return {type: 'identifiers', head, tail: []}; }
 
 ImportStar "import*"
   = Separator* '('

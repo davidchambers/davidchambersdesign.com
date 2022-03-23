@@ -63,20 +63,16 @@ exports.toJs = dirname => function recur(expr) {
                                    (Identifier ('for')))
                        (Literal (expr.name));
     }
-    case 'identifier': {
-      if (expr.name.startsWith ('#')) {
-        return ArrowFuncExpr1 (Identifier ('obj'))
-                              (MemberExpr (true)
-                                          (Identifier ('obj'))
-                                          (Literal (expr.name.slice ('#'.length))));
-      } else if (expr.name === '/') {
-        return Identifier (escapeIdentifier (expr.name));
-      } else {
-        const [head, ...tail] = expr.name.split ('/');
-        return reduce (MemberExpr (true))
-                      (Identifier (escapeIdentifier (head)))
-                      (map (Literal) (tail));
-      }
+    case 'property': {
+      return ArrowFuncExpr1 (Identifier ('obj'))
+                            (MemberExpr (true)
+                                        (Identifier ('obj'))
+                                        (Literal (expr.name)));
+    }
+    case 'identifiers': {
+      return reduce (MemberExpr (true))
+                    (Identifier (escapeIdentifier (expr.head)))
+                    (map (Literal) (expr.tail));
     }
     case 'array': {
       return ArrayExpr (map (recur) (expr.elements));

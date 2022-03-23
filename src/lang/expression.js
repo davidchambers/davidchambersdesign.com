@@ -10,7 +10,7 @@ const string = value => ({type: 'string', value});
 const symbol = name => ({type: 'symbol', name});
 
 //    identifier :: String -> Expression
-const identifier = name => ({type: 'identifier', name});
+const identifier = name => ({type: 'identifiers', head: name, tail: []});
 
 //    array :: Array Expression -> Expression
 const array = elements => ({type: 'array', elements});
