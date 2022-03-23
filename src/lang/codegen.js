@@ -167,6 +167,7 @@ const invoke = names => (
 );
 
 const env = {
+  /* eslint-disable key-spacing */
   '__dirname':          Identifier ('__dirname'),
   'require':            Identifier ('require'),
 
@@ -338,6 +339,7 @@ const env = {
   'Math':               Identifier ('Math'),
   // https://262.ecma-international.org/6.0/#sec-18.4.3
   'Reflect':            Identifier ('Reflect'),
+  /* eslint-enable key-spacing */
 };
 
 exports.toCommonJsModule = jsExpr => (
