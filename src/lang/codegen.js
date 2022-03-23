@@ -115,17 +115,14 @@ exports.toJs = dirname => function recur(expr) {
                       (recur (expr.alternative));
     }
     case 'application': {
-      if (expr.function.type === 'symbol') {
-        return CallExpr1 (ArrowFuncExpr1 (Identifier ('obj'))
-                                         (ComputedMemberExpr (Identifier ('obj'))
-                                                             (CallExpr1 (StaticMemberExpr (Identifier ('Symbol'))
-                                                                                          (Identifier ('for')))
-                                                                        (Literal (expr.function.name)))))
-                         (recur (expr.argument));
-      } else {
-        return CallExpr1 (recur (expr.function))
-                         (recur (expr.argument));
-      }
+      return CallExpr1 (expr.function.type === 'symbol' ?
+                        ArrowFuncExpr1 (Identifier ('obj'))
+                                       (ComputedMemberExpr (Identifier ('obj'))
+                                                           (CallExpr1 (StaticMemberExpr (Identifier ('Symbol'))
+                                                                                        (Identifier ('for')))
+                                                                      (Literal (expr.function.name)))) :
+                        recur (expr.function))
+                       (recur (expr.argument));
     }
   }
 };
