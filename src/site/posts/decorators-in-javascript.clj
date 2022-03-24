@@ -7,6 +7,8 @@
 
   :id 89
 
+  :slug "decorators-in-javascript"
+
   :title "Decorators in JavaScript"
 
   :datetime (datetime "2011-07-26" "22:00:00" :America/Los_Angeles)

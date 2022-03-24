@@ -6,6 +6,8 @@
 
   :id 6
 
+  :slug "david-carsons-2003-ted-lecture"
+
   :title "David Carson's 2003 TED lecture"
 
   :datetime (datetime "2009-02-10" "11:21:00" :Pacific/Auckland)

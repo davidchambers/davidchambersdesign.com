@@ -10,6 +10,8 @@
 
   :id 15
 
+  :slug "applescript-syntax-highlighting"
+
   :title "AppleScript syntax highlighting"
 
   :datetime (datetime "2009-06-04" "03:12:00" :Pacific/Auckland)

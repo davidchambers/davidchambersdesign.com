@@ -7,6 +7,8 @@
 
   :id 7
 
+  :slug "wordpress-login-redirect"
+
   :title "WordPress login redirect"
 
   :datetime (datetime "2009-03-01" "03:01:00" :Pacific/Auckland)

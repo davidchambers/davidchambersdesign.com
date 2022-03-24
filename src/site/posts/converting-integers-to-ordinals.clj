@@ -7,6 +7,8 @@
 
   :id 70
 
+  :slug "converting-integers-to-ordinals"
+
   :title "Converting integers to ordinals"
 
   :datetime (datetime "2010-09-16" "13:00:00" :Pacific/Auckland)

@@ -7,6 +7,8 @@
 
   :id 41
 
+  :slug "mootools-every-method"
+
   :title "MooTools every method"
 
   :datetime (datetime "2010-03-18" "00:40:00" :Pacific/Auckland)

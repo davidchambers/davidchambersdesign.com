@@ -7,6 +7,8 @@
 
   :id 68
 
+  :slug "efficient-rounding-in-javascript"
+
   :title "Efficient rounding in JavaScript"
 
   :datetime (datetime "2010-08-31" "22:20:00" :Pacific/Auckland)

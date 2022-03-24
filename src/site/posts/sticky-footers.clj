@@ -7,6 +7,8 @@
 
   :id 27
 
+  :slug "sticky-footers"
+
   :title "Sticky footers"
 
   :datetime (datetime "2009-09-20" "01:08:00" :Pacific/Auckland)

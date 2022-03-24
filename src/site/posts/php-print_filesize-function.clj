@@ -7,6 +7,8 @@
 
   :id 17
 
+  :slug "php-print_filesize-function"
+
   :title "PHP print_filesize function"
 
   :datetime (datetime "2009-06-10" "21:17:00" :Pacific/Auckland)

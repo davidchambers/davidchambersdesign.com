@@ -6,6 +6,8 @@
 
   :id 53
 
+  :slug "wmd-ftw"
+
   :title "wmd ftw!"
 
   :datetime (datetime "2010-06-13" "11:25:00" :Pacific/Auckland)

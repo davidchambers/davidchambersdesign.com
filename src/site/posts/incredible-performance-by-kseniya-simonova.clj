@@ -6,6 +6,8 @@
 
   :id 21
 
+  :slug "incredible-performance-by-kseniya-simonova"
+
   :title "Incredible performance by Kseniya Simonova"
 
   :datetime (datetime "2009-08-10" "10:29:00" :Pacific/Auckland)

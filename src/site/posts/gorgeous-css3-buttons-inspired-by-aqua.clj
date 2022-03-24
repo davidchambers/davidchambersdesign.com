@@ -10,6 +10,8 @@
 
   :id 39
 
+  :slug "gorgeous-css3-buttons-inspired-by-aqua"
+
   :title "Gorgeous CSS3 buttons inspired by Aqua"
 
   :datetime (datetime "2010-03-08" "12:39:00" :Pacific/Auckland)

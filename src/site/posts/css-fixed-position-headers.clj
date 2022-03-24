@@ -8,6 +8,8 @@
 
   :id 30
 
+  :slug "css-fixed-position-headers"
+
   :title "CSS fixed-position headers"
 
   :datetime (datetime "2009-10-30" "18:25:00" :Pacific/Auckland)

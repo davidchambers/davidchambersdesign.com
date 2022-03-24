@@ -7,6 +7,8 @@
 
   :id 54
 
+  :slug "first-matching-item"
+
   :title "First matching item"
 
   :datetime (datetime "2010-06-17" "23:17:00" :Pacific/Auckland)

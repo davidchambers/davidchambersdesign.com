@@ -8,6 +8,8 @@
 
   :id 47
 
+  :slug "application-specific-volume-control-in-mac-os-x"
+
   :title "Application-specific volume control in Mac OS X?"
 
   :datetime (datetime "2010-04-07" "02:04:00" :Pacific/Auckland)

@@ -7,6 +7,8 @@
 
   :id 46
 
+  :slug "extra-comma-considered-harmful"
+
   :title "Extra comma considered harmful"
 
   :datetime (datetime "2010-03-29" "15:30:00" :Pacific/Auckland)

@@ -7,6 +7,8 @@
 
   :id 65
 
+  :slug "digitalcolor-meter"
+
   :title "DigitalColor Meter"
 
   :datetime (datetime "2010-07-23" "01:45:00" :Pacific/Auckland)

@@ -7,6 +7,8 @@
 
   :id 45
 
+  :slug "using-google-for-site-search"
+
   :title "Using Google for site search"
 
   :datetime (datetime "2010-03-25" "22:06:00" :Pacific/Auckland)

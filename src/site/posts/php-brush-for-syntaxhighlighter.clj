@@ -10,6 +10,8 @@
 
   :id 16
 
+  :slug "php-brush-for-syntaxhighlighter"
+
   :title "PHP brush for SyntaxHighlighter"
 
   :datetime (datetime "2009-06-08" "17:00:00" :Pacific/Auckland)

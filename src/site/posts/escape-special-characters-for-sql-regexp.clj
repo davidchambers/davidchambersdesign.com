@@ -7,6 +7,8 @@
 
   :id 5
 
+  :slug "escape-special-characters-for-sql-regexp"
+
   :title "Escape special characters for SQL REGEXP"
 
   :datetime (datetime "2009-01-10" "22:21:00" :Pacific/Auckland)

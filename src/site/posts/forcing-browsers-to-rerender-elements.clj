@@ -7,6 +7,8 @@
 
   :id 42
 
+  :slug "forcing-browsers-to-rerender-elements"
+
   :title "Forcing browsers to rerender elements"
 
   :datetime (datetime "2010-03-22" "19:40:00" :Pacific/Auckland)

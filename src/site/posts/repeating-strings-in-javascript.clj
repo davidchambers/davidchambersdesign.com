@@ -7,6 +7,8 @@
 
   :id 82
 
+  :slug "repeating-strings-in-javascript"
+
   :title "Repeating strings in JavaScript"
 
   :datetime (datetime "2011-03-31" "17:30:00" :America/Los_Angeles)

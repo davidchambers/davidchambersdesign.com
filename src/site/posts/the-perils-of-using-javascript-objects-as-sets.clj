@@ -7,6 +7,8 @@
 
   :id 94
 
+  :slug "the-perils-of-using-javascript-objects-as-sets"
+
   :title "The perils of using JavaScript objects as sets"
 
   :datetime (datetime "2012-09-03" "20:00:00" :America/Los_Angeles)

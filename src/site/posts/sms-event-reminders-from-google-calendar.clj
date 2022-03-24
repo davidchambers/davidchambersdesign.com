@@ -7,6 +7,8 @@
 
   :id 13
 
+  :slug "sms-event-reminders-from-google-calendar"
+
   :title "SMS event reminders from Google Calendar"
 
   :datetime (datetime "2009-04-18" "21:44:00" :Pacific/Auckland)

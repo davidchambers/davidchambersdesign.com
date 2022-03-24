@@ -7,6 +7,8 @@
 
   :id 38
 
+  :slug "get-attributes-of-django-model-or-instance"
+
   :title "Get attributes of Django model or instance"
 
   :datetime (datetime "2010-02-22" "20:24:00" :Pacific/Auckland)

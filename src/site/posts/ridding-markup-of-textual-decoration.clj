@@ -7,6 +7,8 @@
 
   :id 73
 
+  :slug "ridding-markup-of-textual-decoration"
+
   :title "Ridding markup of textual decoration"
 
   :datetime (datetime "2010-11-15" "01:00:00" :Australia/Sydney)

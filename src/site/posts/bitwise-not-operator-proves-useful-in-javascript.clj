@@ -7,6 +7,8 @@
 
   :id 75
 
+  :slug "bitwise-not-operator-proves-useful-in-javascript"
+
   :title "Bitwise NOT operator proves useful in JavaScript"
 
   :datetime (datetime "2010-12-11" "15:00:00" :Australia/Sydney)

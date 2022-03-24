@@ -8,6 +8,8 @@
 
   :id 43
 
+  :slug "css-image-switcher-done-the-right-way"
+
   :title "CSS image switcher (done the right way)"
 
   :datetime (datetime "2010-03-24" "12:47:00" :Pacific/Auckland)

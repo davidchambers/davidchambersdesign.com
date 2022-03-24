@@ -8,6 +8,8 @@
 
   :id 22
 
+  :slug "coda-theme-for-syntaxhighlighter"
+
   :title "Coda theme for SyntaxHighlighter"
 
   :datetime (datetime "2009-08-16" "08:53:00" :Pacific/Auckland)

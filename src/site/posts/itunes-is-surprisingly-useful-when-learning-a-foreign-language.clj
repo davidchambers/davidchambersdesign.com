@@ -7,6 +7,8 @@
 
   :id 93
 
+  :slug "itunes-is-surprisingly-useful-when-learning-a-foreign-language"
+
   :title "iTunes: Surprisingly useful when learning a foreign language"
 
   :datetime (datetime "2012-01-29" "19:20:00" :America/Los_Angeles)

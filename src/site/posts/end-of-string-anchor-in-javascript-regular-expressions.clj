@@ -7,6 +7,8 @@
 
   :id 86
 
+  :slug "end-of-string-anchor-in-javascript-regular-expressions"
+
   :title "End of string anchor in JavaScript regular expressions"
 
   :datetime (datetime "2011-05-22" "18:30:00" :America/Los_Angeles)

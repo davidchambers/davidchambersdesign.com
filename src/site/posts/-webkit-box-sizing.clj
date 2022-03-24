@@ -7,6 +7,8 @@
 
   :id 58
 
+  :slug "-webkit-box-sizing"
+
   :title "-webkit-box-sizing"
 
   :datetime (datetime "2010-07-18" "21:30:00" :Pacific/Auckland)

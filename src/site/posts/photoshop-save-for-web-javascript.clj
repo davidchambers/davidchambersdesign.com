@@ -7,6 +7,8 @@
 
   :id 20
 
+  :slug "photoshop-save-for-web-javascript"
+
   :title "Photoshop \"save for web\" JavaScript"
 
   :datetime (datetime "2009-07-28" "03:27:00" :Pacific/Auckland)

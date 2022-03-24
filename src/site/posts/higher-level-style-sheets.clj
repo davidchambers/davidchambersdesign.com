@@ -7,6 +7,8 @@
 
   :id 91
 
+  :slug "higher-level-style-sheets"
+
   :title "Higher-level style sheets"
 
   :datetime (datetime "2011-10-02" "23:00:00" :America/Los_Angeles)

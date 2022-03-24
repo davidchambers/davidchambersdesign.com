@@ -7,6 +7,8 @@
 
   :id 90
 
+  :slug "getting-started-with-socket.io"
+
   :title "Getting started with Socket.IO"
 
   :datetime (datetime "2011-08-07" "00:15:00" :America/Los_Angeles)

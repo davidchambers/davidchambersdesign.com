@@ -7,6 +7,8 @@
 
   :id 31
 
+  :slug "using-html5-time-element-in-wordpress-themes"
+
   :title "Using HTML5 time element in WordPress themes"
 
   :datetime (datetime "2009-11-02" "02:04:00" :Pacific/Auckland)

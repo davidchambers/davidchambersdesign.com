@@ -9,6 +9,8 @@
 
   :id 80
 
+  :slug "customizing-your-bash-prompt-for-pleasure-and-profit"
+
   :title "Customizing your bash prompt for pleasure and profit"
 
   :datetime (datetime "2011-02-13" "01:30:00" :America/Los_Angeles)

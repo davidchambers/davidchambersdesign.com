@@ -8,6 +8,8 @@
 
   :id 23
 
+  :slug "tiny-calendar-icons-sprite"
+
   :title "Tiny calendar icons sprite"
 
   :datetime (datetime "2009-08-28" "18:04:00" :Pacific/Auckland)

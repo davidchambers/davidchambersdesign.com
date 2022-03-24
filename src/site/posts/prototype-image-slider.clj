@@ -8,6 +8,8 @@
 
   :id 26
 
+  :slug "prototype-image-slider"
+
   :title "Prototype image slider"
 
   :datetime (datetime "2009-09-16" "23:43:00" :Pacific/Auckland)

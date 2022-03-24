@@ -7,6 +7,8 @@
 
   :id 8
 
+  :slug "valid-xhtml-alternative-to-strike"
+
   :title ["Valid XHTML alternative to " (code "<strike>")]
 
   :datetime (datetime "2009-03-17" "21:53:00" :Pacific/Auckland)

@@ -7,6 +7,8 @@
 
   :id 4
 
+  :slug "intelligent-css-caching"
+
   :title "Intelligent CSS caching"
 
   :datetime (datetime "2008-12-18" "14:50:00" :Pacific/Auckland)

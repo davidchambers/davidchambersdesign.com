@@ -7,6 +7,8 @@
 
   :id 83
 
+  :slug "changing-the-colour-of-list-bullets-using-css"
+
   :title "Changing the colour of list bullets using CSS"
 
   :datetime (datetime "2011-04-13" "17:30:00" :America/Los_Angeles)

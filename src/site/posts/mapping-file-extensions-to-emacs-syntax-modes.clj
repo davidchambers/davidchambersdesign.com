@@ -8,6 +8,8 @@
 
   :id 81
 
+  :slug "mapping-file-extensions-to-emacs-syntax-modes"
+
   :title "Mapping file extensions to Emacs syntax modes"
 
   :datetime (datetime "2011-02-18" "23:15:00" :America/Los_Angeles)

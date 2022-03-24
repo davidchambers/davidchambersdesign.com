@@ -7,6 +7,8 @@
 
   :id 51
 
+  :slug "optimization-via-stringification"
+
   :title "Optimization via stringification"
 
   :datetime (datetime "2010-06-03" "14:28:00" :Pacific/Auckland)

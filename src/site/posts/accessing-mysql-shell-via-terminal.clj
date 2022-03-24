@@ -7,6 +7,8 @@
 
   :id 34
 
+  :slug "accessing-mysql-shell-via-terminal"
+
   :title "Accessing MySQL shell via Terminal"
 
   :datetime (datetime "2010-01-08" "13:49:00" :Pacific/Auckland)

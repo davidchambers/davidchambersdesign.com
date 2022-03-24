@@ -96,19 +96,16 @@ src/site/generate-css.js: src/site/generate-css.clj src/site/css/screen.js $(LAN
 src/site/icons/nav/%.js: src/site/icons/nav/%.clj src/site/scripts/module.js $(LANG_JS)
 	node src/site/scripts/module.js '$<' >'$@'
 
-src/site/import-post.js: src/site/import-post.clj $(LANG_JS)
-	node src/site/scripts/module.js '$<' >'$@'
-
-src/site/pages/archives.js: src/site/pages/archives.clj src/site/import-post.js src/site/base-template.js src/site/render-document.js src/site/render-archives.js $(LANG_JS)
+src/site/pages/archives.js: src/site/pages/archives.clj src/site/base-template.js src/site/render-document.js src/site/render-archives.js $(LANG_JS)
 	node src/site/scripts/module.js '$<' >'$@'
 
 src/site/pages/post.js: src/site/pages/post.clj src/site/base-template.js src/site/render-document.js src/site/render-icon.js src/site/render-post.js $(LANG_JS)
 	node src/site/scripts/module.js '$<' >'$@'
 
-src/site/pages/tags.js: src/site/pages/tags.clj src/site/import-post.js src/site/base-template.js src/site/render-document.js src/site/render-tags.js $(LANG_JS)
+src/site/pages/tags.js: src/site/pages/tags.clj src/site/base-template.js src/site/render-document.js src/site/render-tags.js $(LANG_JS)
 	node src/site/scripts/module.js '$<' >'$@'
 
-src/site/related-posts.js: src/site/related-posts.clj src/site/import-post.js $(LANG_JS)
+src/site/related-posts.js: src/site/related-posts.clj $(LANG_JS)
 	node src/site/scripts/module.js '$<' >'$@'
 
 public/images/%: images/%

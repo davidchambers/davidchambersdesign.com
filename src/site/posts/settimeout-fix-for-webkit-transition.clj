@@ -8,6 +8,8 @@
 
   :id 55
 
+  :slug "settimeout-fix-for-webkit-transition"
+
   :title "setTimeout fix for -webkit-transition"
 
   :datetime (datetime "2010-06-18" "03:12:00" :Pacific/Auckland)

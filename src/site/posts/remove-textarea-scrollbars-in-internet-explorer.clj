@@ -7,6 +7,8 @@
 
   :id 59
 
+  :slug "remove-textarea-scrollbars-in-internet-explorer"
+
   :title "Remove textarea scrollbars in Internet Explorer"
 
   :datetime (datetime "2010-07-18" "22:00:00" :Pacific/Auckland)

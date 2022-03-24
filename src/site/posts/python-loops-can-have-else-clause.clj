@@ -8,6 +8,8 @@
 
   :id 66
 
+  :slug "python-loops-can-have-else-clause"
+
   :title "Python loops can have else clause?!"
 
   :datetime (datetime "2010-07-25" "18:11:00" :Pacific/Auckland)

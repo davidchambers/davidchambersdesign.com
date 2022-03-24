@@ -1,9 +1,14 @@
-(let [sanctuary (require "sanctuary")
+(let [path (require "path")
+
+      sanctuary (require "sanctuary")
 
       kebab-case-keys (require "./kebab-case-keys")
-      import-post (require "./import-post")
 
       s (kebab-case-keys sanctuary)
+
+      import-post
+        (lambda [filename]
+           (require (apply path/resolve [__dirname ".." ".." filename])))
 
       intersection
         (lambda [set-1 set-2]

@@ -7,6 +7,8 @@
 
   :id 79
 
+  :slug "faster-terminal-navigation-via-aliases"
+
   :title "Faster Terminal navigation via aliases"
 
   :datetime (datetime "2011-02-12" "22:10:00" :America/Los_Angeles)

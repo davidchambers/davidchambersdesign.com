@@ -8,6 +8,8 @@
 
   :id 56
 
+  :slug "testing-django-apps-using-localhost-subdomains"
+
   :title "Testing Django apps using localhost subdomains"
 
   :datetime (datetime "2010-07-04" "08:23:00" :Pacific/Auckland)

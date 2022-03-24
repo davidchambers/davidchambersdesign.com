@@ -6,6 +6,8 @@
 
   :id 19
 
+  :slug "associative-arrays-in-javascript"
+
   :title "Associative arrays in JavaScript"
 
   :datetime (datetime "2009-06-29" "19:14:00" :Pacific/Auckland)

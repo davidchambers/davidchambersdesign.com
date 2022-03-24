@@ -7,6 +7,8 @@
 
   :id 84
 
+  :slug "solarized"
+
   :title "Solarized"
 
   :datetime (datetime "2011-04-23" "02:20:00" :America/Los_Angeles)

@@ -7,6 +7,8 @@
 
   :id 88
 
+  :slug "escaping-html-in-javascript"
+
   :title "Escaping HTML in JavaScript"
 
   :datetime (datetime "2011-05-30" "15:00:00" :America/Los_Angeles)

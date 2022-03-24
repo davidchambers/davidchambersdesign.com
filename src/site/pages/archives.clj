@@ -1,12 +1,17 @@
-(let [sanctuary (require "sanctuary")
+(let [path (require "path")
+
+      sanctuary (require "sanctuary")
 
       base-template (require "../base-template")
-      import-post (require "../import-post")
       kebab-case-keys (require "../kebab-case-keys")
       render-document (require "../render-document")
       render-archives (require "../render-archives")
 
-      s (kebab-case-keys sanctuary)]
+      s (kebab-case-keys sanctuary)
+
+      import-post
+        (lambda [filename]
+           (require (apply path/resolve [__dirname ".." ".." ".." filename])))]
 
    (lambda [filenames]
       (let [posts (s/map import-post filenames)

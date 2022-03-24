@@ -10,6 +10,8 @@
 
   :id 72
 
+  :slug "customizing-file-and-folder-icons-in-mac-os-x"
+
   :title "Customizing file and folder icons in Mac OS X"
 
   :datetime (datetime "2010-09-29" "00:00:00" :Pacific/Auckland)

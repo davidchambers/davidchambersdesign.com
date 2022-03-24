@@ -7,6 +7,8 @@
 
   :id 24
 
+  :slug "captions-over-images"
+
   :title "Captions over images"
 
   :datetime (datetime "2009-08-31" "03:36:00" :Pacific/Auckland)

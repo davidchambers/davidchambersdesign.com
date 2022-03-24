@@ -8,6 +8,8 @@
 
   :id 11
 
+  :slug "django-syntax-highlighting-for-coda"
+
   :title "Django syntax highlighting for Coda"
 
   :datetime (datetime "2009-04-16" "22:15:00" :Pacific/Auckland)

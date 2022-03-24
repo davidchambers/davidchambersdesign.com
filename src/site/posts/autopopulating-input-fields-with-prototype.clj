@@ -8,6 +8,8 @@
 
   :id 33
 
+  :slug "autopopulating-input-fields-with-prototype"
+
   :title "Auto-populating input fields with Prototype"
 
   :datetime (datetime "2010-01-07" "22:03:00" :Pacific/Auckland)

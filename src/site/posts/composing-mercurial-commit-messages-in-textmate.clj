@@ -9,6 +9,8 @@
 
   :id 76
 
+  :slug "composing-mercurial-commit-messages-in-textmate"
+
   :title "Composing Mercurial commit messages in TextMate"
 
   :datetime (datetime "2011-01-10" "01:25:00" :Australia/Sydney)

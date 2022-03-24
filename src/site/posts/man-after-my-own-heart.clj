@@ -6,6 +6,8 @@
 
   :id 64
 
+  :slug "man-after-my-own-heart"
+
   :title "Man after my own heart"
 
   :datetime (datetime "2010-07-23" "00:07:00" :Pacific/Auckland)

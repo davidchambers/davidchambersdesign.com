@@ -8,6 +8,8 @@
 
   :id 18
 
+  :slug "prototype-loader-for-syntaxhighlighter"
+
   :title "Prototype loader for SyntaxHighlighter"
 
   :datetime (datetime "2009-06-22" "01:04:00" :Pacific/Auckland)
