@@ -62,7 +62,6 @@ Expression
   = Number
   / String
   / Symbol
-  / Property
   / Identifiers
   / Identifier
   / ImportStar
@@ -143,10 +142,6 @@ Symbol "symbol"
   { return {type: 'symbol', name}; }
 
 // ----- Identifier -----
-
-Property "property"
-  = '#' name:$(IdentChar+)
-  { return {type: 'property', name}; }
 
 Identifiers "identifiers"
   = head:(    name:$(!'/' char:IdentChar)+ { return name; })

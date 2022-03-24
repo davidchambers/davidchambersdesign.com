@@ -58,11 +58,6 @@ exports.toJs = dirname => function recur(expr) {
                            (Literal ('for')))
                    (Literal (expr.name));
     }
-    case 'property': {
-      return ArrowFunc1 (Identifier ('obj'))
-                        (Member (Identifier ('obj'))
-                                (Literal (expr.name)));
-    }
     case 'identifiers': {
       return S.reduce (Member)
                       (Identifier (escapeIdentifier (expr.head)))
@@ -90,12 +85,11 @@ exports.toJs = dirname => function recur(expr) {
                   (recur (expr.alternative));
     }
     case 'application': {
-      return Call1 (expr.function.type === 'symbol' ?
+      return Call1 (S.elem (expr.function.type)
+                           (['number', 'string', 'symbol']) ?
                     ArrowFunc1 (Identifier ('obj'))
                                (Member (Identifier ('obj'))
-                                       (Call1 (Member (Identifier ('Symbol'))
-                                                      (Literal ('for')))
-                                              (Literal (expr.function.name)))) :
+                                       (recur (expr.function))) :
                     recur (expr.function))
                    (recur (expr.argument));
     }

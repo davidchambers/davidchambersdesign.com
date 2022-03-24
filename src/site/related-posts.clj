@@ -22,12 +22,12 @@
 
       similarity
         (lambda [set-1 set-2]
-           (/ (Math/sqrt (#size (union set-1 set-2)))
-              (#size (intersection set-1 set-2))))
+           (/ (Math/sqrt ("size" (union set-1 set-2)))
+              ("size" (intersection set-1 set-2))))
 
       seconds-between
         (lambda [from to]
-           (#seconds (invoke-2 "diff" from "seconds" to)))
+           ("seconds" (invoke-2 "diff" from "seconds" to)))
 
       with-scores
         (lambda [that this]
