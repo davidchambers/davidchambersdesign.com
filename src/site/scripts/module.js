@@ -1,13 +1,13 @@
 'use strict';
 
-const fs = require ('fs');
-const path = require ('path');
+const fs            = require ('node:fs');
+const path          = require ('node:path');
 
-const escodegen = require ('escodegen');
-const sanctuary = require ('sanctuary');
+const escodegen     = require ('escodegen');
+const sanctuary     = require ('sanctuary');
 
-const codegen = require ('../../lang/codegen.js');
-const grammar = require ('../../lang/grammar.js');
+const codegen       = require ('../../lang/codegen.js');
+const grammar       = require ('../../lang/grammar.js');
 
 
 const {
@@ -25,6 +25,7 @@ const transpile = pipe ([
   encase (filename => fs.readFileSync (filename, 'utf8')),
   chain (encase (grammar.parse)),
   map (codegen.toJs (dirname)),
+  map (codegen.withEnv (codegen.env)),
   map (codegen.toCommonJsModule),
   map (escodegen.generate),
 ]);

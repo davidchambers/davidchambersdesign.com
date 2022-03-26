@@ -1,6 +1,6 @@
 'use strict';
 
-const path = require ('path');
+const path = require ('node:path');
 
 const S = require ('sanctuary');
 
@@ -162,11 +162,8 @@ const invoke = names => (
                        (S.reverse (names)))
 );
 
-const env = {
+exports.env = {
   /* eslint-disable key-spacing */
-  '__dirname':          Identifier ('__dirname'),
-  'require':            Identifier ('require'),
-
   'apply':              apply,
 
   'invoke-0':           invoke ([]),
@@ -338,15 +335,31 @@ const env = {
   /* eslint-enable key-spacing */
 };
 
-exports.toCommonJsModule = jsExpr => (
+exports.wrap = name => expr => (
+  ArrowFunc1 (Identifier (escapeIdentifier (name)))
+             (expr)
+);
+
+const withEnv = exports.withEnv = env => expr => (
+  Call (ArrowFunc (S.map (Identifier)
+                         (S.map (escapeIdentifier)
+                                (Object.keys (env))))
+                  (expr))
+       (Object.values (env))
+);
+
+const nodeEnv = {
+  /* eslint-disable key-spacing */
+  '__dirname':          Identifier ('__dirname'),
+  'require':            Identifier ('require'),
+  /* eslint-enable key-spacing */
+};
+
+exports.toCommonJsModule = expr => (
   Program ('script')
           ([Statement (Literal ('use strict')),
             Statement (Assignment ('=')
                                   (Member (Identifier ('module'))
                                           (Literal ('exports')))
-                                  (Call (ArrowFunc (S.map (Identifier)
-                                                          (S.map (escapeIdentifier)
-                                                                 (Object.keys (env))))
-                                                   (jsExpr))
-                                        (Object.values (env))))])
+                                  (withEnv (nodeEnv) (expr)))])
 );

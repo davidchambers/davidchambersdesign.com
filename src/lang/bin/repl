@@ -1,0 +1,86 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const os            = require ('node:os');
+const path          = require ('node:path');
+const repl          = require ('node:repl');
+const vm            = require ('node:vm');
+
+const escodegen     = require ('escodegen');
+const sanctuary     = require ('sanctuary');
+
+const codegen       = require ('../codegen.js');
+const grammar       = require ('../grammar.js');
+
+
+const S = sanctuary.unchecked;
+
+const fixRelativeRequirePath = name => (
+  S.joinWith ('/')
+             (S.splitOn (path.sep)
+                        (name.startsWith ('.') ? path.resolve (name) : name))
+);
+
+const read = S.pipe ([
+  S.encase (grammar.parse),
+  S.map (codegen.toJs (path.join (__dirname, '..', '..'))),
+  S.map (codegen.withEnv (codegen.env)),
+  S.map (codegen.wrap ('require')),
+  S.map (escodegen.generate),
+  S.chain (S.encase (vm.runInNewContext)),
+  S.chain (S.encase (S.T (S.compose (require) (fixRelativeRequirePath)))),
+]);
+
+const print = value => {
+  switch (Object.prototype.toString.call (value)) {
+    case '[object Null]':
+    case '[object Undefined]':
+    case '[object Boolean]':
+      return `\u001B[35m${S.show (value)}\u001B[0m`;
+    case '[object Number]':
+      return `\u001B[33m${S.show (value)}\u001B[0m`;
+    case '[object String]':
+      return `\u001B[32m${S.show (value)}\u001B[0m`;
+    case '[object Symbol]':
+      return `\u001B[36m:${Symbol.keyFor (value)}\u001B[0m`;
+    case '[object Date]':
+      return `(new Date [${print (Number (value))}])`;
+    case '[object RegExp]':
+      return `(new RegExp [${print (value.source)} ${print (value.flags)}])`;
+    case '[object Set]':
+      return `(new Set [${print (Array.from (value))}])`;
+    case '[object Map]':
+      return `(new Map [${print (Array.from (value))}])`;
+    case '[object Array]':
+      return `[${S.unwords (S.map (print) (value))}]`;
+    case '[object Object]':
+      return `{${S.unwords (S.chain (property => [print (property), print (value[property])])
+                                    (S.concat (Object.getOwnPropertySymbols (value))
+                                              (Object.getOwnPropertyNames (value))))}}`;
+    default:
+      return `${S.show (value)}`;
+  }
+};
+
+const server = repl.start ({
+  prompt: '>>> ',
+  eval: (code, context, filename, callback) => {
+    const result = read (code);
+    if (result.isRight) {
+      callback (null, result.value);
+    } else if (result.value.name === 'SyntaxError') {
+      callback (new repl.Recoverable (result.value));
+    } else {
+      console.error (result.value);
+      console.log ();
+      server.displayPrompt (false);
+    }
+  },
+  writer: value => `${print (value)}\n`,
+});
+
+server.setupHistory (
+  path.join (os.homedir (), '.kiribiri-repl-history'),
+  err => { if (err != null) throw err; },
+);

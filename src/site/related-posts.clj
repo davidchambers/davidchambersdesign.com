@@ -1,4 +1,4 @@
-(let [path (require "path")
+(let [path (require "node:path")
 
       sanctuary (require "sanctuary")
 
@@ -8,7 +8,7 @@
 
       import-post
         (lambda [filename]
-           (require (apply path/resolve [__dirname ".." ".." filename])))
+           (require (apply path/join [__dirname ".." ".." filename])))
 
       intersection
         (lambda [set-1 set-2]
