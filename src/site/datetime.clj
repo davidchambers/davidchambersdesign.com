@@ -1,9 +1,7 @@
 (let [luxon (require "luxon")
-      sanctuary (require "sanctuary")
 
-      kebab-case-keys (require "./kebab-case-keys")
+      s (require "./sanctuary")
 
-      s (kebab-case-keys sanctuary)
       ++ (s/join-with "")]
 
 (lambda [date time zone]

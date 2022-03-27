@@ -1,10 +1,6 @@
 (let [path (require "node:path")
 
-      sanctuary (require "sanctuary")
-
-      kebab-case-keys (require "./kebab-case-keys")
-
-      s (kebab-case-keys sanctuary)
+      s (require "./sanctuary")
 
       intersection
         (lambda [set-1 set-2]

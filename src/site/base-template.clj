@@ -1,10 +1,6 @@
 (import* ["./elements"]
 
-(let [sanctuary (require "sanctuary")
-
-      kebab-case-keys (require "./kebab-case-keys")
-
-      s (kebab-case-keys sanctuary)]
+(let [s (require "./sanctuary")]
 
    (lambda [document-title main]
       (html

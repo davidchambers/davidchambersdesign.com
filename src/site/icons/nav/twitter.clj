@@ -1,11 +1,7 @@
 (import* ["../../elements"]
 
-(let [sanctuary (require "sanctuary")
-
-      kebab-case-keys (require "../../kebab-case-keys")
-      render-fragment (require "../../render-fragment")
-
-      s (kebab-case-keys sanctuary)
+(let [render-fragment (require "../../render-fragment")
+      s (require "../../sanctuary")
 
       ++ (s/join-with "")]
 

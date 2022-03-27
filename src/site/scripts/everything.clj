@@ -3,18 +3,16 @@
 fs              (require "node:fs")
 path            (require "node:path")
 
-sanctuary       (require "sanctuary")
-
 _               (require "../require-extension.js")
 base-template   (require "../base-template.clj")
 generate-css    (require "../generate-css.clj")
-kebab-case-keys (require "../kebab-case-keys.clj")
 related-posts   (require "../related-posts.clj")
 render-archives (require "../render-archives.clj")
 render-fragment (require "../render-fragment.clj")
 render-icon     (require "../render-icon.clj")
 render-post     (require "../render-post.clj")
 render-tags     (require "../render-tags.clj")
+s               (require "../sanctuary.clj")
 icon:about      (require "../icons/nav/about.clj")
 icon:archives   (require "../icons/nav/archives.clj")
 icon:bitbucket  (require "../icons/nav/bitbucket.clj")
@@ -22,8 +20,6 @@ icon:contact    (require "../icons/nav/contact.clj")
 icon:flushcache (require "../icons/nav/flushcache.clj")
 icon:tags       (require "../icons/nav/tags.clj")
 icon:twitter    (require "../icons/nav/twitter.clj")
-
-s (kebab-case-keys sanctuary)
 
 posts (s/map (lambda [name] (require (s/join-with "/" [".." "posts" name])))
              (s/filter (invoke-1 "endsWith" ".clj")

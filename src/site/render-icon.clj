@@ -1,11 +1,8 @@
 (let [orthogonal (require "orthogonal")
-      sanctuary (require "sanctuary")
 
       elements (require "./elements")
-      kebab-case-keys (require "./kebab-case-keys")
       render-fragment (require "./render-fragment")
-
-      s (kebab-case-keys sanctuary)]
+      s (require "./sanctuary")]
 
    (s/pipe [(s/map (lambda [p] ((:path elements) (apply Object/assign [{} p {:d (apply orthogonal/formatters/svg [(:d p) 1])}]))))
             ((:svg elements) {:xmlns "http://www.w3.org/2000/svg" :version "1.1"})

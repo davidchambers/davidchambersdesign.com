@@ -1,9 +1,5 @@
 (let
-   [sanctuary (require "sanctuary")
-
-    kebab-case-keys (require "./kebab-case-keys")
-
-    s (kebab-case-keys sanctuary)
+   [s (require "./sanctuary")
 
     text
       (lambda [value]

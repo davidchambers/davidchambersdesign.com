@@ -1,11 +1,7 @@
 (import* ["./elements"]
 
-(let [sanctuary (require "sanctuary")
-
-      kebab-case-keys (require "./kebab-case-keys")
+(let [s (require "./sanctuary")
       tags (require "./tags")
-
-      s (kebab-case-keys sanctuary)
 
       ++ (s/join-with "")]
 

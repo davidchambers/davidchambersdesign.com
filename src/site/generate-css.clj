@@ -1,9 +1,5 @@
-(let [sanctuary (require "sanctuary")
-
+(let [s (require "./sanctuary")
       screen (require "./css/screen")
-      kebab-case-keys (require "./kebab-case-keys")
-
-      s (kebab-case-keys sanctuary)
 
       ++ (s/join-with "")
 
