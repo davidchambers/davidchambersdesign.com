@@ -10,6 +10,7 @@ related-posts   (require "../related-posts.clj")
 render-archives (require "../render-archives.clj")
 render-fragment (require "../render-fragment.clj")
 render-icon     (require "../render-icon.clj")
+render-page     (require "../render-page.clj")
 render-post     (require "../render-post.clj")
 render-tags     (require "../render-tags.clj")
 s               (require "../sanctuary.clj")
@@ -21,9 +22,11 @@ icon:flushcache (require "../icons/nav/flushcache.clj")
 icon:tags       (require "../icons/nav/tags.clj")
 icon:twitter    (require "../icons/nav/twitter.clj")
 
+pages (s/map (lambda [name] (require (s/join-with "/" [".." "pages" name])))
+             (fs/readdirSync (apply path/join [__dirname ".." "pages"])))
+
 posts (s/map (lambda [name] (require (s/join-with "/" [".." "posts" name])))
-             (s/filter (invoke-1 "endsWith" ".clj")
-                       (fs/readdirSync (apply path/join [__dirname ".." "posts"]))))
+             (fs/readdirSync (apply path/join [__dirname ".." "posts"])))
 
 public (s/compose (apply path/join)
                   (s/concat [__dirname ".." "public"]))
@@ -65,6 +68,12 @@ _ (write-file (public ["archives.html"])
 _ (write-file (public ["tags.html"])
               (render-document (base-template "Tags"
                                               (render-tags posts))))
+
+_ (s/map (lambda [page]
+            (write-file (public [(s/concat (:slug page) ".html")])
+                        (render-document (base-template (:title page)
+                                                        (render-page page)))))
+         pages)
 
 _ (s/map (lambda [post]
             (write-file (public [(s/concat (:slug post) ".html")])

@@ -113,6 +113,8 @@
 
     :text text
     :excerpt excerpt
+
+    :b                      (inline-element :b {})
     ; The opening and closing tags of each of the following elements
     ; are always rendered on their own lines.
     :article'               article'
