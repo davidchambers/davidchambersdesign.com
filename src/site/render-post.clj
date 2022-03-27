@@ -15,7 +15,7 @@
                            (luxon/to-format "d MMMM y" (:datetime post)))])]
                    (:body post)
                    [(footer' {:class "metadata"}
-                       (s/join [[(ul (li' {:class "shorturl"} (a "http://dċd.ws/14/" "Short URL")))]
+                       (s/join [[(ul (li' {:class "shorturl"} (a (++ ["http://dċd.ws/" (:id post) "/"]) "Short URL")))]
                                 (s/array []
                                          (lambda [head tail]
                                             [(h4 "This post has the following tags:")
