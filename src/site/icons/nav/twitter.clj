@@ -11,7 +11,7 @@
             "  "
             0
             false
-            [(svg {:xmlns "http://www.w3.org/2000/svg" :version "1.1"}
+            [(svg {:xmlns "http://www.w3.org/2000/svg" :version "1.1" :width 16 :height 16}
                 [(linearGradient {:id "gradient" :x1 "50%" :y1 "0%" :x2 "50%" :y2 "100%"}
                     [(stop {:stop-color "#96ecfd" :offset "0%"})
                      (stop {:stop-color "#14dff0" :offset "100%"})])

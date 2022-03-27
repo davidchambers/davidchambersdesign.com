@@ -36,25 +36,25 @@ write-file (lambda [filename text] (apply fs/writeFileSync [filename text]))
 _ (write-file (public ["css" "screen.css"])
               generate-css)
 
-_ (write-file (public ["icons" "nav" "about.svg"])
+_ (write-file (public ["images" "nav" "icon" "about.svg"])
               (render-icon icon:about))
 
-_ (write-file (public ["icons" "nav" "archives.svg"])
+_ (write-file (public ["images" "nav" "icon" "archives.svg"])
               (render-icon icon:archives))
 
-_ (write-file (public ["icons" "nav" "bitbucket.svg"])
+_ (write-file (public ["images" "nav" "icon" "bitbucket.svg"])
               (render-icon icon:bitbucket))
 
-_ (write-file (public ["icons" "nav" "contact.svg"])
+_ (write-file (public ["images" "nav" "icon" "contact.svg"])
               (render-icon icon:contact))
 
-_ (write-file (public ["icons" "nav" "flushcache.svg"])
+_ (write-file (public ["images" "nav" "icon" "flushcache.svg"])
               (render-icon icon:flushcache))
 
-_ (write-file (public ["icons" "nav" "tags.svg"])
+_ (write-file (public ["images" "nav" "icon" "tags.svg"])
               (render-icon icon:tags))
 
-_ (write-file (public ["icons" "nav" "twitter.svg"])
+_ (write-file (public ["images" "nav" "icon" "twitter.svg"])
               icon:twitter)
 
 render-document (s/pipe [(s/of Array)
