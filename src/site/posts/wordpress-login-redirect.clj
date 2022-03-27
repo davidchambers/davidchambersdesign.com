@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 7
@@ -11,7 +11,7 @@
 
   :title "WordPress login redirect"
 
-  :datetime (datetime "2009-03-01" "03:01:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-03-01" "03:01:00" :Pacific/Auckland)
 
   :tags [:php :wordpress]
 

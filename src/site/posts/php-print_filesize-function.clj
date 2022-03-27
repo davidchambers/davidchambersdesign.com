@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 17
@@ -11,7 +11,7 @@
 
   :title "PHP print_filesize function"
 
-  :datetime (datetime "2009-06-10" "21:17:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-06-10" "21:17:00" :Pacific/Auckland)
 
   :tags [:best-practice :php]
 

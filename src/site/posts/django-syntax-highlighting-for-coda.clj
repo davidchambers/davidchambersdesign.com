@@ -1,9 +1,9 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   captioned-image     (require "../components/captioned-image")
   update              (require "../components/update")
-  datetime            (require "../datetime")
 ] {
 
   :id 11
@@ -12,7 +12,7 @@
 
   :title "Django syntax highlighting for Coda"
 
-  :datetime (datetime "2009-04-16" "22:15:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-04-16" "22:15:00" :Pacific/Auckland)
 
   :tags [:coda :django :mac-os-x]
 
@@ -36,7 +36,7 @@
        "Django syntax highlighting in Coda"
        "Django syntax highlighting in Coda")
 
-    (update (datetime "2010-11-14" "14:00:00" :Australia/Sydney)
+    (update (luxon/datetime "2010-11-14" "14:00:00" :Australia/Sydney)
 
        [(p
            ["I've since discovered an alternative mode which

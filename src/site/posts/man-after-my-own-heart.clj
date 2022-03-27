@@ -1,7 +1,7 @@
 (import* ["../elements"]
 
 (let [
-  datetime            (require "../datetime")
+  luxon               (require "../luxon")
 ] {
 
   :id 64
@@ -10,7 +10,7 @@
 
   :title "Man after my own heart"
 
-  :datetime (datetime "2010-07-23" "00:07:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-07-23" "00:07:00" :Pacific/Auckland)
 
   :tags [:architecture :design]
 

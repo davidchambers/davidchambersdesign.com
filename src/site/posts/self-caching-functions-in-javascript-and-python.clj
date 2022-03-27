@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 67
@@ -11,7 +11,7 @@
 
   :title "Self-caching functions in JavaScript and Python"
 
-  :datetime (datetime "2010-08-29" "01:10:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-08-29" "01:10:00" :Pacific/Auckland)
 
   :tags [:javascript :programming :python]
 

@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 68
@@ -11,7 +11,7 @@
 
   :title "Efficient rounding in JavaScript"
 
-  :datetime (datetime "2010-08-31" "22:20:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-08-31" "22:20:00" :Pacific/Auckland)
 
   :tags [:javascript :optimization :performance]
 

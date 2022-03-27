@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 82
@@ -11,7 +11,7 @@
 
   :title "Repeating strings in JavaScript"
 
-  :datetime (datetime "2011-03-31" "17:30:00" :America/Los_Angeles)
+  :datetime (luxon/datetime "2011-03-31" "17:30:00" :America/Los_Angeles)
 
   :tags [:javascript :programming]
 

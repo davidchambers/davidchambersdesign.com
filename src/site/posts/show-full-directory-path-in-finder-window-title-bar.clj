@@ -1,9 +1,9 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   captioned-image     (require "../components/captioned-image")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 2
@@ -12,7 +12,7 @@
 
   :title "Show full directory path in Finder window title bar"
 
-  :datetime (datetime "2008-11-29" "19:07:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2008-11-29" "19:07:00" :Pacific/Auckland)
 
   :tags [:mac-os-x]
 

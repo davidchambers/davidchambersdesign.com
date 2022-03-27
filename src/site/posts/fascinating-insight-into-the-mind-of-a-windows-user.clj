@@ -1,10 +1,10 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   captioned-image     (require "../components/captioned-image")
   decorative-image    (require "../components/decorative-image")
   interview-list      (require "../components/interview-list")
-  datetime            (require "../datetime")
 ] {
 
   :id 44
@@ -13,7 +13,7 @@
 
   :title "Fascinating insight into the mind of a Windows user"
 
-  :datetime (datetime "2010-03-25" "15:06:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-03-25" "15:06:00" :Pacific/Auckland)
 
   :tags [:mac-os-x :windows]
 

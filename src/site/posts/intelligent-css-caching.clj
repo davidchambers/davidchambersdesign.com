@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 4
@@ -11,7 +11,7 @@
 
   :title "Intelligent CSS caching"
 
-  :datetime (datetime "2008-12-18" "14:50:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2008-12-18" "14:50:00" :Pacific/Auckland)
 
   :tags [:css :php]
 

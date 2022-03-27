@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   captioned-images    (require "../components/captioned-images")
-  datetime            (require "../datetime")
 ] {
 
   :id 85
@@ -11,7 +11,7 @@
 
   :title "Hashify Editor"
 
-  :datetime (datetime "2011-04-24" "06:15:00" :America/Los_Angeles)
+  :datetime (luxon/datetime "2011-04-24" "06:15:00" :America/Los_Angeles)
 
   :tags [:hashify :markdown :showdown :ux]
 

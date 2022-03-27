@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 51
@@ -11,7 +11,7 @@
 
   :title "Optimization via stringification"
 
-  :datetime (datetime "2010-06-03" "14:28:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-06-03" "14:28:00" :Pacific/Auckland)
 
   :tags [:css :optimization :python]
 

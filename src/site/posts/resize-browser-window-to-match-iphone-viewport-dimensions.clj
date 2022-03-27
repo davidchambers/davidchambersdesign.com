@@ -1,10 +1,10 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   captioned-image     (require "../components/captioned-image")
   captioned-images    (require "../components/captioned-images")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 37
@@ -13,7 +13,7 @@
 
   :title "Resize browser window to match iPhone viewport dimensions"
 
-  :datetime (datetime "2010-02-16" "03:20:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-02-16" "03:20:00" :Pacific/Auckland)
 
   :tags [:bookmarklets :iphone :javascript]
 

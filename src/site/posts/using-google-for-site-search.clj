@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 45
@@ -11,7 +11,7 @@
 
   :title "Using Google for site search"
 
-  :datetime (datetime "2010-03-25" "22:06:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-03-25" "22:06:00" :Pacific/Auckland)
 
   :tags [:google :search]
 

@@ -1,10 +1,10 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
   decorative-image    (require "../components/decorative-image")
   update              (require "../components/update")
-  datetime            (require "../datetime")
 ] {
 
   :id 76
@@ -13,7 +13,7 @@
 
   :title "Composing Mercurial commit messages in TextMate"
 
-  :datetime (datetime "2011-01-10" "01:25:00" :Australia/Sydney)
+  :datetime (luxon/datetime "2011-01-10" "01:25:00" :Australia/Sydney)
 
   :tags [:hg :mac-os-x :markdown :mercurial :textmate]
 
@@ -57,7 +57,7 @@
              command tells TextMate not to return control to the command
              line until the editor window has been closed."])])
 
-    (update (datetime "2011-01-22" "15:20:00" :Australia/Sydney)
+    (update (luxon/datetime "2011-01-22" "15:20:00" :Australia/Sydney)
 
        [(p
            ["To use TextMate as your git editor, run the following command:"])

@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 8
@@ -11,7 +11,7 @@
 
   :title ["Valid XHTML alternative to " (code "<strike>")]
 
-  :datetime (datetime "2009-03-17" "21:53:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-03-17" "21:53:00" :Pacific/Auckland)
 
   :tags [:css :html]
 

@@ -1,9 +1,9 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
   pros-and-cons-list  (require "../components/pros-and-cons-list")
-  datetime            (require "../datetime")
 ] {
 
   :id 30
@@ -12,7 +12,7 @@
 
   :title "CSS fixed-position headers"
 
-  :datetime (datetime "2009-10-30" "18:25:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-10-30" "18:25:00" :Pacific/Auckland)
 
   :tags [:css :html :javascript :prototype]
 

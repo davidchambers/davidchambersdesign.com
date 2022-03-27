@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 88
@@ -11,7 +11,7 @@
 
   :title "Escaping HTML in JavaScript"
 
-  :datetime (datetime "2011-05-30" "15:00:00" :America/Los_Angeles)
+  :datetime (luxon/datetime "2011-05-30" "15:00:00" :America/Los_Angeles)
 
   :tags [:best-practice :javascript :security]
 

@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 70
@@ -11,7 +11,7 @@
 
   :title "Converting integers to ordinals"
 
-  :datetime (datetime "2010-09-16" "13:00:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-09-16" "13:00:00" :Pacific/Auckland)
 
   :tags [:javascript :programming :python]
 

@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   uncaptioned-image   (require "../components/uncaptioned-image")
-  datetime            (require "../datetime")
 ] {
 
   :id 93
@@ -11,7 +11,7 @@
 
   :title "iTunes: Surprisingly useful when learning a foreign language"
 
-  :datetime (datetime "2012-01-29" "19:20:00" :America/Los_Angeles)
+  :datetime (luxon/datetime "2012-01-29" "19:20:00" :America/Los_Angeles)
 
   :tags [:itunes :language :mac-os-x]
 

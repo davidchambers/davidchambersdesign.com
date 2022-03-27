@@ -1,6 +1,7 @@
 (import* ["./elements"]
 
-(let [s (require "./sanctuary")
+(let [luxon (require "./luxon")
+      s (require "./sanctuary")
       tags (require "./tags")
 
       ++ (s/join-with "")]
@@ -10,8 +11,8 @@
           (s/maybe {} (s/singleton :id) (s/value :article-id post))
           (s/join [[(header
                        [(h1 (:title post))
-                        (time {:datetime (invoke-1 "toFormat" "yyyy-MM-dd'T'HH:mm:ssZZ" (:datetime post)) :pubdate "pubdate"}
-                           (invoke-1 "toFormat" "d MMMM y" (:datetime post)))])]
+                        (time {:datetime (luxon/to-format "yyyy-MM-dd'T'HH:mm:ssZZ" (:datetime post)) :pubdate "pubdate"}
+                           (luxon/to-format "d MMMM y" (:datetime post)))])]
                    (:body post)
                    [(footer' {:class "metadata"}
                        (s/join [[(ul (li' {:class "shorturl"} (a "http://dċd.ws/14/" "Short URL")))]

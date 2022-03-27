@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 46
@@ -11,7 +11,7 @@
 
   :title "Extra comma considered harmful"
 
-  :datetime (datetime "2010-03-29" "15:30:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-03-29" "15:30:00" :Pacific/Auckland)
 
   :tags [:best-practice :javascript]
 

@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 83
@@ -11,7 +11,7 @@
 
   :title "Changing the colour of list bullets using CSS"
 
-  :datetime (datetime "2011-04-13" "17:30:00" :America/Los_Angeles)
+  :datetime (luxon/datetime "2011-04-13" "17:30:00" :America/Los_Angeles)
 
   :tags [:css :meaningful-markup]
 

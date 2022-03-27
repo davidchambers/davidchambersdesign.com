@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 75
@@ -11,7 +11,7 @@
 
   :title "Bitwise NOT operator proves useful in JavaScript"
 
-  :datetime (datetime "2010-12-11" "15:00:00" :Australia/Sydney)
+  :datetime (luxon/datetime "2010-12-11" "15:00:00" :Australia/Sydney)
 
   :tags [:javascript :programming]
 

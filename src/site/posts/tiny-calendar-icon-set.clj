@@ -1,9 +1,9 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   captioned-images    (require "../components/captioned-images")
   update              (require "../components/update")
-  datetime            (require "../datetime")
 ] {
 
   :id 14
@@ -12,13 +12,13 @@
 
   :title "Tiny calendar icon set"
 
-  :datetime (datetime "2009-04-24" "21:24:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-04-24" "21:24:00" :Pacific/Auckland)
 
   :tags [:design :icons]
 
   :body [
 
-    (update (datetime "2009-08-28" "18:12:00" :Pacific/Auckland)
+    (update (luxon/datetime "2009-08-28" "18:12:00" :Pacific/Auckland)
 
        [(p
            ["An update to this post has been published: "

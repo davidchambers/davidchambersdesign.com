@@ -1,11 +1,11 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   captioned-image     (require "../components/captioned-image")
   code-block          (require "../components/code-block")
   decorative-image    (require "../components/decorative-image")
   uncaptioned-image   (require "../components/uncaptioned-image")
-  datetime            (require "../datetime")
 ] {
 
   :id 72
@@ -14,7 +14,7 @@
 
   :title "Customizing file and folder icons in Mac OS X"
 
-  :datetime (datetime "2010-09-29" "00:00:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-09-29" "00:00:00" :Pacific/Auckland)
 
   :tags [:icons :mac-os-x :terminal.app]
 

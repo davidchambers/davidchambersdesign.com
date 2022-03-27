@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   captioned-image     (require "../components/captioned-image")
-  datetime            (require "../datetime")
 ] {
 
   :id 58
@@ -11,7 +11,7 @@
 
   :title "-webkit-box-sizing"
 
-  :datetime (datetime "2010-07-18" "21:30:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-07-18" "21:30:00" :Pacific/Auckland)
 
   :tags [:css :webkit]
 

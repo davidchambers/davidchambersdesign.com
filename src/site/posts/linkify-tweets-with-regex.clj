@@ -1,9 +1,9 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
   decorative-image    (require "../components/decorative-image")
-  datetime            (require "../datetime")
 ] {
 
   :id 48
@@ -12,7 +12,7 @@
 
   :title "Linkify tweets with regex"
 
-  :datetime (datetime "2010-04-10" "03:22:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-04-10" "03:22:00" :Pacific/Auckland)
 
   :tags [:javascript :php :python :regex :regular-expressions]
 

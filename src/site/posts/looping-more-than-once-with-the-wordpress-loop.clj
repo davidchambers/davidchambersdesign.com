@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 12
@@ -11,7 +11,7 @@
 
   :title "Looping more than once with the WordPress loop"
 
-  :datetime (datetime "2009-04-17" "00:34:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-04-17" "00:34:00" :Pacific/Auckland)
 
   :tags [:php :wordpress]
 

@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 24
@@ -11,7 +11,7 @@
 
   :title "Captions over images"
 
-  :datetime (datetime "2009-08-31" "03:36:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-08-31" "03:36:00" :Pacific/Auckland)
 
   :tags [:best-practice :css :html :javascript :jquery :meaningful-markup]
 

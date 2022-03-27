@@ -1,9 +1,9 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
   uncaptioned-image   (require "../components/uncaptioned-image")
-  datetime            (require "../datetime")
 ] {
 
   :id 56
@@ -12,7 +12,7 @@
 
   :title "Testing Django apps using localhost subdomains"
 
-  :datetime (datetime "2010-07-04" "08:23:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-07-04" "08:23:00" :Pacific/Auckland)
 
   :tags [:django :mac-os-x]
 

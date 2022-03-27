@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 34
@@ -11,7 +11,7 @@
 
   :title "Accessing MySQL shell via Terminal"
 
-  :datetime (datetime "2010-01-08" "13:49:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-01-08" "13:49:00" :Pacific/Auckland)
 
   :tags [:mac-os-x :mysql :terminal.app]
 

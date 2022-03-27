@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   captioned-image     (require "../components/captioned-image")
-  datetime            (require "../datetime")
 ] {
 
   :id 10
@@ -11,7 +11,7 @@
 
   :title "Inserting images in Gmail messages"
 
-  :datetime (datetime "2009-04-15" "20:27:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-04-15" "20:27:00" :Pacific/Auckland)
 
   :tags [:gmail :html]
 

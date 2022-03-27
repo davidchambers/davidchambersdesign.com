@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 78
@@ -11,7 +11,7 @@
 
   :title ["Simulating " (code "nonlocal") " in Python 2.x"]
 
-  :datetime (datetime "2011-02-05" "19:30:00" :America/Los_Angeles)
+  :datetime (luxon/datetime "2011-02-05" "19:30:00" :America/Los_Angeles)
 
   :tags [:hacks :programming :python]
 

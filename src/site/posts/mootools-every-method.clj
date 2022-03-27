@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 41
@@ -11,7 +11,7 @@
 
   :title "MooTools every method"
 
-  :datetime (datetime "2010-03-18" "00:40:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-03-18" "00:40:00" :Pacific/Auckland)
 
   :tags [:javascript :mootools]
 

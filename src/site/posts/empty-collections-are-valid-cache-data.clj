@@ -1,8 +1,8 @@
 (import* ["../elements"]
 
 (let [
+  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
 ] {
 
   :id 57
@@ -11,7 +11,7 @@
 
   :title "Empty collections are valid cache data"
 
-  :datetime (datetime "2010-07-06" "09:34:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-07-06" "09:34:00" :Pacific/Auckland)
 
   :tags [:django]
 
