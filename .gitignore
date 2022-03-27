@@ -1,8 +1,2 @@
 /node_modules/
 /src/lang/grammar.js
-/src/site/**/*.js
-/src/site/css/*.js
-/src/site/icons/**/*.js
-/src/site/pages/*.js
-/src/site/posts/*.js
-/src/site/posts/related/*.json

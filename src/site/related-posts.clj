@@ -6,10 +6,6 @@
 
       s (kebab-case-keys sanctuary)
 
-      import-post
-        (lambda [filename]
-           (require (apply path/join [__dirname ".." ".." filename])))
-
       intersection
         (lambda [set-1 set-2]
            (new Set [(invoke-1 "filter"
@@ -40,13 +36,10 @@
                   (s/Just (s/Pair (s/Pair primary secondary) this))
                   s/Nothing)))]
 
-   (lambda [filenames filename]
-      (s/pipe [(s/reject (s/equals filename))
-               (s/map import-post)
-               (s/map-maybe (with-scores (import-post filename)))
+   (lambda [posts post]
+      (s/pipe [(s/reject (lambda [this] (=== (:slug post) (:slug this))))
+               (s/map-maybe (with-scores post))
                s/sort
                (s/map s/snd)
-               (invoke-2 "slice" 0 5)
-               (s/map (lambda [post] (:slug post)))
-               (lambda [posts] (apply JSON/stringify [posts null 2]))]
-              filenames)))
+               (invoke-2 "slice" 0 5)]
+              posts)))

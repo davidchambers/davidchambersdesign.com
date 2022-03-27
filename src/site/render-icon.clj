@@ -22,11 +22,4 @@
                              (path (Object/fromEntries (s/append [:d (apply orthogonal/formatters/svg [(:d p) 1])]
                                                                  (s/map (lambda [symbol] [symbol (s/prop symbol p)])
                                                                         (Object/getOwnPropertySymbols p))))))
-                          (icon orthogonal/u
-                                orthogonal/d
-                                orthogonal/l
-                                orthogonal/r
-                                orthogonal/U
-                                orthogonal/D
-                                orthogonal/L
-                                orthogonal/R)))])]]))))
+                          icon))])]]))))

@@ -28,8 +28,7 @@
                    (s/array []
                             (lambda [_ _]
                                [(h3' {:id "related"} "Possibly related posts")
-                                (ul (s/map (lambda [slug]
-                                              (let [related-post (require (++ ["./posts/" slug]))]
-                                                 (li (a (++ ["/" slug "/"]) (:title related-post)))))
+                                (ul (s/map (lambda [related-post]
+                                              (li (a (++ ["/" (:slug related-post) "/"]) (:title related-post))))
                                            related-posts))])
                             related-posts)]))])))
