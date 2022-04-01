@@ -45,10 +45,7 @@ const escapeIdentifier = name => (
 exports.toJs = dirname => function recur(expr) {
   switch (expr.type) {
     case 'number': {
-      return S.ifElse (S.lt (0))
-                      (S.pipe ([S.negate, Literal, Unary (true) ('-')]))
-                      (Literal)
-                      (expr.value);
+      return Literal (expr.value);
     }
     case 'string': {
       return Literal (expr.value);
