@@ -12,7 +12,7 @@
 
   :title "Python loops can have else clause?!"
 
-  :datetime (luxon.datetime "2010-07-25" "18:11:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-07-25" "18:11:00" :Pacific/Auckland)
 
   :tags [:javascript :mootools :programming :python]
 
@@ -81,7 +81,7 @@
          to " (code "numbers") ". If the lists are equal, everything in "
         (code "numbers") " is divisible by 3."])
 
-    (update (luxon.datetime "2012-06-20" "14:15:00" :America/Los_Angeles)
+    (update (luxon/datetime "2012-06-20" "14:15:00" :America/Los_Angeles)
 
        [(p
            ["As " (a "https://twitter.com/rafael_ab/status/215428832872771584"

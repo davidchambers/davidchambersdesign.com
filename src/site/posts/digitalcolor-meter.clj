@@ -11,7 +11,7 @@
 
   :title "DigitalColor Meter"
 
-  :datetime (luxon.datetime "2010-07-23" "01:45:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-07-23" "01:45:00" :Pacific/Auckland)
 
   :tags [:mac-os-x :photoshop]
 

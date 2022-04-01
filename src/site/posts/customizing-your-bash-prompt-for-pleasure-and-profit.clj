@@ -13,7 +13,7 @@
 
   :title "Customizing your bash prompt for pleasure and profit"
 
-  :datetime (luxon.datetime "2011-02-13" "01:30:00" :America/Los_Angeles)
+  :datetime (luxon/datetime "2011-02-13" "01:30:00" :America/Los_Angeles)
 
   :tags [:mac-os-x :productivity :terminal.app]
 
@@ -90,7 +90,7 @@
        [(code "\\[\\e[0m\\]") " puts an end to the colouring,
          preventing it from \"spilling out\"."])
 
-    (update (luxon.datetime "2011-04-03" "21:00:00" :America/Los_Angeles)
+    (update (luxon/datetime "2011-04-03" "21:00:00" :America/Los_Angeles)
 
        [(p
            ["When first this post was published colour codes were not
@@ -100,7 +100,7 @@
              would sometimes remain visible when arrowing up and down.
              >.<"])])
 
-    (update (luxon.datetime "2012-04-20" "01:15:00" :America/Los_Angeles)
+    (update (luxon/datetime "2012-04-20" "01:15:00" :America/Los_Angeles)
 
        [(p
            ["I've recently taken up Vim. In Vim, one can enter "

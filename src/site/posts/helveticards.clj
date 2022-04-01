@@ -11,7 +11,7 @@
 
   :title "Helveticards"
 
-  :datetime (luxon.datetime "2011-11-20" "22:00:00" :America/Los_Angeles)
+  :datetime (luxon/datetime "2011-11-20" "22:00:00" :America/Los_Angeles)
 
   :tags [:design :typography]
 

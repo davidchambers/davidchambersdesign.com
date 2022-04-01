@@ -10,7 +10,7 @@
 
   :title "Dieter Rams video interview"
 
-  :datetime (luxon.datetime "2010-07-20" "19:30:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-07-20" "19:30:00" :Pacific/Auckland)
 
   :tags [:design :video]
 

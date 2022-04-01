@@ -11,7 +11,7 @@
 
   :title "MooTools every method"
 
-  :datetime (luxon.datetime "2010-03-18" "00:40:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-03-18" "00:40:00" :Pacific/Auckland)
 
   :tags [:javascript :mootools]
 

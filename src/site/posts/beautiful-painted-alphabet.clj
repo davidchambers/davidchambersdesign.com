@@ -10,7 +10,7 @@
 
   :title "Beautiful painted alphabet"
 
-  :datetime (luxon.datetime "2008-08-22" "01:56:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2008-08-22" "01:56:00" :Pacific/Auckland)
 
   :tags [:design :typography :video]
 

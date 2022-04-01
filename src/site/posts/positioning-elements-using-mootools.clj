@@ -11,7 +11,7 @@
 
   :title "Positioning elements using MooTools"
 
-  :datetime (luxon.datetime "2010-07-19" "17:45:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-07-19" "17:45:00" :Pacific/Auckland)
 
   :tags [:javascript :mootools]
 

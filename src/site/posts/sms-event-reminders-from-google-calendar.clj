@@ -11,7 +11,7 @@
 
   :title "SMS event reminders from Google Calendar"
 
-  :datetime (luxon.datetime "2009-04-18" "21:44:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-04-18" "21:44:00" :Pacific/Auckland)
 
   :tags [:gmail :google-calendar :sms]
 

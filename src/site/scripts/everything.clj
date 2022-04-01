@@ -22,14 +22,14 @@ icon:flushcache (require "../icons/nav/flushcache.clj")
 icon:tags       (require "../icons/nav/tags.clj")
 icon:twitter    (require "../icons/nav/twitter.clj")
 
-pages (s.map (lambda [name] (require (s.join-with "/" [".." "pages" name])))
+pages (s/map (lambda [name] (require (s/join-with "/" [".." "pages" name])))
              (fs.readdirSync (apply path.join [__dirname ".." "pages"])))
 
-posts (s.map (lambda [name] (require (s.join-with "/" [".." "posts" name])))
+posts (s/map (lambda [name] (require (s/join-with "/" [".." "posts" name])))
              (fs.readdirSync (apply path.join [__dirname ".." "posts"])))
 
-public (s.compose (apply path.join)
-                  (s.concat [__dirname ".." "public"]))
+public (s/compose (apply path.join)
+                  (s/concat [__dirname ".." "public"]))
 
 write-file (lambda [filename text] (apply fs.writeFileSync [filename text]))
 
@@ -57,9 +57,9 @@ _ (write-file (public ["images" "nav" "icon" "tags.svg"])
 _ (write-file (public ["images" "nav" "icon" "twitter.svg"])
               icon:twitter)
 
-render-document (s.pipe [(s.of Array)
+render-document (s/pipe [(s/of Array)
                          (render-fragment "  " 0 false)
-                         (s.concat "<!DOCTYPE html>\n")])
+                         (s/concat "<!DOCTYPE html>\n")])
 
 _ (write-file (public ["archives.html"])
               (render-document (base-template "Archives"
@@ -69,14 +69,14 @@ _ (write-file (public ["tags.html"])
               (render-document (base-template "Tags"
                                               (render-tags posts))))
 
-_ (s.map (lambda [page]
-            (write-file (public [(s.concat (:slug page) ".html")])
+_ (s/map (lambda [page]
+            (write-file (public [(s/concat (:slug page) ".html")])
                         (render-document (base-template (:title page)
                                                         (render-page page)))))
          pages)
 
-_ (s.map (lambda [post]
-            (write-file (public [(s.concat (:slug post) ".html")])
+_ (s/map (lambda [post]
+            (write-file (public [(s/concat (:slug post) ".html")])
                         (render-document (base-template (:title post)
                                                         (render-post post
                                                                      (related-posts posts post))))))

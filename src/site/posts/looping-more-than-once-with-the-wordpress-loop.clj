@@ -11,7 +11,7 @@
 
   :title "Looping more than once with the WordPress loop"
 
-  :datetime (luxon.datetime "2009-04-17" "00:34:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-04-17" "00:34:00" :Pacific/Auckland)
 
   :tags [:php :wordpress]
 

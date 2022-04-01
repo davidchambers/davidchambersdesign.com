@@ -11,7 +11,7 @@
 
   :title "Serializing Django model instances"
 
-  :datetime (luxon.datetime "2010-04-13" "08:16:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-04-13" "08:16:00" :Pacific/Auckland)
 
   :tags [:django :python]
 

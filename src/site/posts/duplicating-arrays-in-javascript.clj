@@ -11,7 +11,7 @@
 
   :title "Duplicating arrays in JavaScript"
 
-  :datetime (luxon.datetime "2010-01-09" "19:26:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-01-09" "19:26:00" :Pacific/Auckland)
 
   :tags [:javascript]
 

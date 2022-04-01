@@ -11,7 +11,7 @@
 
   :title "Memorable passwords for programmers"
 
-  :datetime (luxon.datetime "2009-10-21" "00:42:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-10-21" "00:42:00" :Pacific/Auckland)
 
   :tags [:security]
 

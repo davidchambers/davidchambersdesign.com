@@ -11,7 +11,7 @@
 
   :title "Empty collections are valid cache data"
 
-  :datetime (luxon.datetime "2010-07-06" "09:34:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-07-06" "09:34:00" :Pacific/Auckland)
 
   :tags [:django]
 

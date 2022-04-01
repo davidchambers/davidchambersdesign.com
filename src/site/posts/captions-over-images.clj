@@ -11,7 +11,7 @@
 
   :title "Captions over images"
 
-  :datetime (luxon.datetime "2009-08-31" "03:36:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-08-31" "03:36:00" :Pacific/Auckland)
 
   :tags [:best-practice :css :html :javascript :jquery :meaningful-markup]
 

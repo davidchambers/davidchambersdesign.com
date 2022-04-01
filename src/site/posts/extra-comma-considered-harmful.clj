@@ -11,7 +11,7 @@
 
   :title "Extra comma considered harmful"
 
-  :datetime (luxon.datetime "2010-03-29" "15:30:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-03-29" "15:30:00" :Pacific/Auckland)
 
   :tags [:best-practice :javascript]
 

@@ -11,7 +11,7 @@
 
   :title "First matching item"
 
-  :datetime (luxon.datetime "2010-06-17" "23:17:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-06-17" "23:17:00" :Pacific/Auckland)
 
   :tags [:programming]
 

@@ -57,8 +57,8 @@ exports.toJs = dirname => function recur(expr) {
     }
     case 'identifiers': {
       return S.reduce (Member)
-                      (Identifier (escapeIdentifier (expr.head)))
-                      (S.map (Literal) (expr.tail));
+                      (Identifier (escapeIdentifier (expr.name)))
+                      (S.map (recur) (expr.path));
     }
     case 'array': {
       return Array_ (S.map (recur) (expr.elements));
@@ -91,7 +91,7 @@ exports.toJs = dirname => function recur(expr) {
                    (recur (expr.argument));
     }
     case 'import*': {
-      const params = S.map (symbol => recur ({type: 'identifiers', head: Symbol.keyFor (symbol), tail: []}))
+      const params = S.map (symbol => recur ({type: 'identifiers', name: Symbol.keyFor (symbol), path: []}))
                            (Object.getOwnPropertySymbols (S.reduce (env => name => Object.assign (env, require (path.join (dirname, name.value))))
                                                                    (Object.create (null))
                                                                    (expr.names)));

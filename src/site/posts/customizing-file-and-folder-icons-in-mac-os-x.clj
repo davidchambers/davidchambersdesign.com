@@ -14,7 +14,7 @@
 
   :title "Customizing file and folder icons in Mac OS X"
 
-  :datetime (luxon.datetime "2010-09-29" "00:00:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-09-29" "00:00:00" :Pacific/Auckland)
 
   :tags [:icons :mac-os-x :terminal.app]
 

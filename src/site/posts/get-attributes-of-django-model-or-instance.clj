@@ -11,7 +11,7 @@
 
   :title "Get attributes of Django model or instance"
 
-  :datetime (luxon.datetime "2010-02-22" "20:24:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-02-22" "20:24:00" :Pacific/Auckland)
 
   :tags [:django :python]
 

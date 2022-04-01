@@ -12,7 +12,7 @@
 
   :title "Mapping file extensions to Emacs syntax modes"
 
-  :datetime (luxon.datetime "2011-02-18" "23:15:00" :America/Los_Angeles)
+  :datetime (luxon/datetime "2011-02-18" "23:15:00" :America/Los_Angeles)
 
   :tags [:emacs :syntax-highlighting]
 

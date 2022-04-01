@@ -141,13 +141,16 @@ Symbol "symbol"
 // ----- Identifier -----
 
 Identifiers "identifiers"
-  = head:(    name:$(!'.' char:IdentChar)+ { return name; })
-    tail:('.' name:$(!'.' char:IdentChar)+ { return name; })+
-  { return {type: 'identifiers', head, tail}; }
+  = name:$(!'.' !'/' IdentChar)+
+    path:(
+      '.' ident:$(!'.' !'/' IdentChar)+ { return {type: 'string', value: ident}; }
+    / '/' ident:$(!'.' !'/' IdentChar)+ { return {type: 'symbol', name: ident}; }
+    )+
+  { return {type: 'identifiers', name, path}; }
 
 Identifier "identifier"
-  = head:$(IdentChar+)
-  { return {type: 'identifiers', head, tail: []}; }
+  = name:$(IdentChar)+
+  { return {type: 'identifiers', name, path: []}; }
 
 ImportStar "import*"
   = Separator* '('

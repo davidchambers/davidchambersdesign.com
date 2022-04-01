@@ -11,7 +11,7 @@
 
   :title "Shockingly simple URL shortening"
 
-  :datetime (luxon.datetime "2010-01-26" "03:34:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-01-26" "03:34:00" :Pacific/Auckland)
 
   :tags [:.htaccess :twitter]
 

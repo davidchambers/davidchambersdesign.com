@@ -14,7 +14,7 @@
 
   :title "AppleScript syntax highlighting"
 
-  :datetime (luxon.datetime "2009-06-04" "03:12:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-06-04" "03:12:00" :Pacific/Auckland)
 
   :tags [:applescript :javascript :mac-os-x :syntaxhighlighter]
 
@@ -173,7 +173,7 @@
          class name automatically, which would remove the need to
          include " (code "class-name: applescript;") " each time.)"])
 
-    (update (luxon.datetime "2012-02-22" "23:11:00" :America/Los_Angeles)
+    (update (luxon/datetime "2012-02-22" "23:11:00" :America/Los_Angeles)
 
        [(p
            ["Providing a " (code "class-name") " in the, ahem, class name is

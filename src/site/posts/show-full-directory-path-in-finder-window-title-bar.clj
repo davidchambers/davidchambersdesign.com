@@ -12,7 +12,7 @@
 
   :title "Show full directory path in Finder window title bar"
 
-  :datetime (luxon.datetime "2008-11-29" "19:07:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2008-11-29" "19:07:00" :Pacific/Auckland)
 
   :tags [:mac-os-x]
 

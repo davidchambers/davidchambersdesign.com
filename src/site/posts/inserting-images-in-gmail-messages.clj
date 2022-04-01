@@ -11,7 +11,7 @@
 
   :title "Inserting images in Gmail messages"
 
-  :datetime (luxon.datetime "2009-04-15" "20:27:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-04-15" "20:27:00" :Pacific/Auckland)
 
   :tags [:gmail :html]
 

@@ -12,7 +12,7 @@
 
   :title "Testing Django apps using localhost subdomains"
 
-  :datetime (luxon.datetime "2010-07-04" "08:23:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-07-04" "08:23:00" :Pacific/Auckland)
 
   :tags [:django :mac-os-x]
 

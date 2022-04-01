@@ -11,7 +11,7 @@
 
   :title "Filtering lists in Python, Ruby, and JavaScript"
 
-  :datetime (luxon.datetime "2010-09-09" "04:21:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-09-09" "04:21:00" :Pacific/Auckland)
 
   :tags [:javascript :programming :python :ruby]
 

@@ -12,7 +12,7 @@
 
   :title "Coda theme for SyntaxHighlighter"
 
-  :datetime (luxon.datetime "2009-08-16" "08:53:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-08-16" "08:53:00" :Pacific/Auckland)
 
   :tags [:coda :css :javascript :prototype :syntaxhighlighter]
 
@@ -307,7 +307,7 @@
              If you're using the standard setup, this will be in the head
              section of the document."])])
 
-    (update (luxon.datetime "2009-08-24" "22:51:00" :Pacific/Auckland)
+    (update (luxon/datetime "2009-08-24" "22:51:00" :Pacific/Auckland)
 
        [(p
            ["Coda theme has been updated so that comments are now italicized

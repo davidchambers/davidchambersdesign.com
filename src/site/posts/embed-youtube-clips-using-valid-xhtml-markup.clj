@@ -11,7 +11,7 @@
 
   :title "Embed YouTube clips using valid XHTML markup"
 
-  :datetime (luxon.datetime "2009-09-14" "14:17:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-09-14" "14:17:00" :Pacific/Auckland)
 
   :tags [:css :html :video]
 

@@ -13,7 +13,7 @@
 
   :title "Composing Mercurial commit messages in TextMate"
 
-  :datetime (luxon.datetime "2011-01-10" "01:25:00" :Australia/Sydney)
+  :datetime (luxon/datetime "2011-01-10" "01:25:00" :Australia/Sydney)
 
   :tags [:hg :mac-os-x :markdown :mercurial :textmate]
 
@@ -57,7 +57,7 @@
              command tells TextMate not to return control to the command
              line until the editor window has been closed."])])
 
-    (update (luxon.datetime "2011-01-22" "15:20:00" :Australia/Sydney)
+    (update (luxon/datetime "2011-01-22" "15:20:00" :Australia/Sydney)
 
        [(p
            ["To use TextMate as your git editor, run the following command:"])

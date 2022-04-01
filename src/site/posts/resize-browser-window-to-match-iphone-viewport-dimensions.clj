@@ -13,7 +13,7 @@
 
   :title "Resize browser window to match iPhone viewport dimensions"
 
-  :datetime (luxon.datetime "2010-02-16" "03:20:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-02-16" "03:20:00" :Pacific/Auckland)
 
   :tags [:bookmarklets :iphone :javascript]
 

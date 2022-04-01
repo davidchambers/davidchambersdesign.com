@@ -12,7 +12,7 @@
 
   :title "Tiny calendar icons sprite"
 
-  :datetime (luxon.datetime "2009-08-28" "18:04:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2009-08-28" "18:04:00" :Pacific/Auckland)
 
   :tags [:css :design :html :icons]
 

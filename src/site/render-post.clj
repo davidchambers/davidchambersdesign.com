@@ -4,28 +4,28 @@
       s (require "./sanctuary")
       tags (require "./tags")
 
-      ++ (s.join-with "")]
+      ++ (s/join-with "")]
 
    (lambda [post related-posts]
       [(article'
-          (s.maybe {} (s.singleton :id) (s.value :article-id post))
-          (s.join [[(header
+          (s/maybe {} (s/singleton :id) (s/value :article-id post))
+          (s/join [[(header
                        [(h1 (:title post))
-                        (time {:datetime (luxon.to-format "yyyy-MM-dd'T'HH:mm:ssZZ" (:datetime post)) :pubdate "pubdate"}
-                           (luxon.to-format "d MMMM y" (:datetime post)))])]
+                        (time {:datetime (luxon/to-format "yyyy-MM-dd'T'HH:mm:ssZZ" (:datetime post)) :pubdate "pubdate"}
+                           (luxon/to-format "d MMMM y" (:datetime post)))])]
                    (:body post)
                    [(footer' {:class "metadata"}
-                       (s.join [[(ul (li' {:class "shorturl"} (a (++ ["http://dċd.ws/" (:id post) "/"]) "Short URL")))]
-                                (s.array []
+                       (s/join [[(ul (li' {:class "shorturl"} (a (++ ["http://dċd.ws/" (:id post) "/"]) "Short URL")))]
+                                (s/array []
                                          (lambda [head tail]
                                             [(h4 "This post has the following tags:")
-                                             (ol (s.map (lambda [tag] (li (a (++ ["/tag/" (Symbol.keyFor tag) "/"]) (s.prop tag tags))))
-                                                        (s.prepend head tail)))])
+                                             (ol (s/map (lambda [tag] (li (a (++ ["/tag/" (Symbol.keyFor tag) "/"]) (s/prop tag tags))))
+                                                        (s/prepend head tail)))])
                                          (:tags post))]))]
-                   (s.array []
+                   (s/array []
                             (lambda [_ _]
                                [(h3' {:id "related"} "Possibly related posts")
-                                (ul (s.map (lambda [related-post]
+                                (ul (s/map (lambda [related-post]
                                               (li (a (++ ["/" (:slug related-post) "/"]) (:title related-post))))
                                            related-posts))])
                             related-posts)]))])))

@@ -11,7 +11,7 @@
 
   :title "Cricket field diagrams"
 
-  :datetime (luxon.datetime "2010-03-15" "00:58:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2010-03-15" "00:58:00" :Pacific/Auckland)
 
   :tags [:design :icons]
 

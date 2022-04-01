@@ -11,7 +11,7 @@
 
   :title "Hashify Editor"
 
-  :datetime (luxon.datetime "2011-04-24" "06:15:00" :America/Los_Angeles)
+  :datetime (luxon/datetime "2011-04-24" "06:15:00" :America/Los_Angeles)
 
   :tags [:hashify :markdown :showdown :ux]
 

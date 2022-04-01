@@ -11,7 +11,7 @@
 
   :title "Intelligent CSS caching"
 
-  :datetime (luxon.datetime "2008-12-18" "14:50:00" :Pacific/Auckland)
+  :datetime (luxon/datetime "2008-12-18" "14:50:00" :Pacific/Auckland)
 
   :tags [:css :php]
 
