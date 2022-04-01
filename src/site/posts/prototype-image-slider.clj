@@ -12,7 +12,7 @@
 
   :title "Prototype image slider"
 
-  :datetime (luxon/datetime "2009-09-16" "23:43:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2009-09-16" "23:43:00" :Pacific/Auckland)
 
   :tags [:css :html :javascript :meaningful-markup :prototype]
 
@@ -41,7 +41,7 @@
             (a "/examples/prototype-image-slider/" "Prototype image slider demo") "
              to see the code in action."])])
 
-    (update (luxon/datetime "2009-09-17" "01:17:00" :Pacific/Auckland)
+    (update (luxon.datetime "2009-09-17" "01:17:00" :Pacific/Auckland)
 
        [(p
            ["I noticed that the script was failing miserably in Safari,
@@ -123,7 +123,7 @@
        ["If you find this code useful and would like me to flesh it out,
          let me know."])
 
-    (update (luxon/datetime "2009-09-21" "11:53:00" :Pacific/Auckland)
+    (update (luxon.datetime "2009-09-21" "11:53:00" :Pacific/Auckland)
 
        [(p
            ["I neglected to mention that this code also requires "

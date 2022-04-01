@@ -11,7 +11,7 @@
 
   :title "PHP print_filesize function"
 
-  :datetime (luxon/datetime "2009-06-10" "21:17:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2009-06-10" "21:17:00" :Pacific/Auckland)
 
   :tags [:best-practice :php]
 

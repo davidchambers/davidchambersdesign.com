@@ -11,7 +11,7 @@
 
   :title "Self-caching functions in JavaScript and Python"
 
-  :datetime (luxon/datetime "2010-08-29" "01:10:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-08-29" "01:10:00" :Pacific/Auckland)
 
   :tags [:javascript :programming :python]
 

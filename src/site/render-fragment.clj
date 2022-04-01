@@ -1,30 +1,30 @@
 (let [s (require "./sanctuary")
 
-      ++ (s/join-with "")
+      ++ (s.join-with "")
 
       replace (invoke-2 "replace")
 
-      escape (s/pipe [(replace (s/regex "g" "&") "&amp;")
-                      (replace (s/regex "g" "<") "&lt;")
-                      (replace (s/regex "g" ">") "&gt;")])]
+      escape (s.pipe [(replace (s.regex "g" "&") "&amp;")
+                      (replace (s.regex "g" "<") "&lt;")
+                      (replace (s.regex "g" ">") "&gt;")])]
 
    (function render-fragment [indent level inline]
-      (s/fold-map String
+      (s.fold-map String
                   (lambda [node]
                      (if (=== :text (:type node))
                          (escape (:value node))
                          (if (=== :excerpt (:type node))
                              (render-fragment indent level inline (:children node))
                              (let [indentation (invoke-1 "repeat" level indent)
-                                   tag-name (Symbol/keyFor (:tag-name node))
-                                   attrs (s/fold-map String
+                                   tag-name (Symbol.keyFor (:tag-name node))
+                                   attrs (s.fold-map String
                                                      (lambda [sym]
                                                         (++ [" "
-                                                             (Symbol/keyFor sym)
+                                                             (Symbol.keyFor sym)
                                                              "=\""
-                                                             (escape (s/unwords (s/map s/trim (s/lines (s/prop sym (:attrs node))))))
+                                                             (escape (s.unwords (s.map s.trim (s.lines (s.prop sym (:attrs node))))))
                                                              "\""]))
-                                                     (Object/getOwnPropertySymbols (:attrs node)))]
+                                                     (Object.getOwnPropertySymbols (:attrs node)))]
                                 (if (:self-closing node)
                                     (++ [indentation "<" tag-name attrs " />" (if inline "" "\n")])
                                     (if (=== :inline (:format node))

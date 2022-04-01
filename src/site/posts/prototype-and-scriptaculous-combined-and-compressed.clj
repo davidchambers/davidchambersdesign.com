@@ -11,7 +11,7 @@
 
   :title "Prototype and script.aculo.us, combined and compressed"
 
-  :datetime (luxon/datetime "2009-11-09" "23:14:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2009-11-09" "23:14:00" :Pacific/Auckland)
 
   :tags [:javascript :optimization :prototype :script.aculo.us]
 

@@ -11,7 +11,7 @@
 
   :title "Escaping HTML in JavaScript"
 
-  :datetime (luxon/datetime "2011-05-30" "15:00:00" :America/Los_Angeles)
+  :datetime (luxon.datetime "2011-05-30" "15:00:00" :America/Los_Angeles)
 
   :tags [:best-practice :javascript :security]
 

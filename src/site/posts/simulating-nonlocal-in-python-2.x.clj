@@ -11,7 +11,7 @@
 
   :title ["Simulating " (code "nonlocal") " in Python 2.x"]
 
-  :datetime (luxon/datetime "2011-02-05" "19:30:00" :America/Los_Angeles)
+  :datetime (luxon.datetime "2011-02-05" "19:30:00" :America/Los_Angeles)
 
   :tags [:hacks :programming :python]
 

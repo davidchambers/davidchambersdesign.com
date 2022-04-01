@@ -12,7 +12,7 @@
 
   :title "Auto-populating input fields with Prototype"
 
-  :datetime (luxon/datetime "2010-01-07" "22:03:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-01-07" "22:03:00" :Pacific/Auckland)
 
   :tags [:html5 :javascript :prototype :ux]
 
@@ -29,7 +29,7 @@
              While I approached the problem from a slightly different angle,
              I made sure to avoid the pitfalls Roger mentions."])])
 
-    (update (luxon/datetime "2010-06-09" "23:31:00" :Pacific/Auckland)
+    (update (luxon.datetime "2010-06-09" "23:31:00" :Pacific/Auckland)
 
        ["I've written an update to this article for those interested in "
         (a "/autopopulating-input-fields-with-mootools/"
@@ -146,7 +146,7 @@
        });
        ")
 
-    (update (luxon/datetime "2010-03-30" "17:17:00" :Pacific/Auckland)
+    (update (luxon.datetime "2010-03-30" "17:17:00" :Pacific/Auckland)
 
        [(p
            ["I've updated the selector used in the above example. Selecting
@@ -158,7 +158,7 @@
     (p
        [(strong "This site's search field shows the code in action.")])
 
-    (update (luxon/datetime "2010-04-16" "00:59:00" :Pacific/Auckland)
+    (update (luxon.datetime "2010-04-16" "00:59:00" :Pacific/Auckland)
 
        [(p
            ["For those that would like placeholder text in " (em "password") "

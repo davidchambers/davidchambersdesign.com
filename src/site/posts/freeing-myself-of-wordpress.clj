@@ -12,7 +12,7 @@
 
   :title "Freeing myself of WordPress"
 
-  :datetime (luxon/datetime "2010-06-03" "02:56:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-06-03" "02:56:00" :Pacific/Auckland)
 
   :tags [:django :mango :wordpress]
 

@@ -11,7 +11,7 @@
 
   :title "Faster Terminal navigation via aliases"
 
-  :datetime (luxon/datetime "2011-02-12" "22:10:00" :America/Los_Angeles)
+  :datetime (luxon.datetime "2011-02-12" "22:10:00" :America/Los_Angeles)
 
   :tags [:mac-os-x :productivity :terminal.app]
 

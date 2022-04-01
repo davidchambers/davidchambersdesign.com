@@ -11,7 +11,7 @@
 
   :title "Solarized"
 
-  :datetime (luxon/datetime "2011-04-23" "02:20:00" :America/Los_Angeles)
+  :datetime (luxon.datetime "2011-04-23" "02:20:00" :America/Los_Angeles)
 
   :tags [:coda :design :programming :solarized]
 

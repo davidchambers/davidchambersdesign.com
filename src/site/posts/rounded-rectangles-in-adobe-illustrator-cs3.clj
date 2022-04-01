@@ -13,7 +13,7 @@
 
   :title "Rounded rectangles in Adobe Illustrator CS3"
 
-  :datetime (luxon/datetime "2008-12-03" "12:49:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2008-12-03" "12:49:00" :Pacific/Auckland)
 
   :tags [:adobe :cs3 :illustrator]
 

@@ -11,7 +11,7 @@
 
   :title "Ridding markup of textual decoration"
 
-  :datetime (luxon/datetime "2010-11-15" "01:00:00" :Australia/Sydney)
+  :datetime (luxon.datetime "2010-11-15" "01:00:00" :Australia/Sydney)
 
   :tags [:css :html :meaningful-markup]
 

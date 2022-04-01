@@ -12,13 +12,13 @@
 
   :title "Tiny calendar icon set"
 
-  :datetime (luxon/datetime "2009-04-24" "21:24:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2009-04-24" "21:24:00" :Pacific/Auckland)
 
   :tags [:design :icons]
 
   :body [
 
-    (update (luxon/datetime "2009-08-28" "18:12:00" :Pacific/Auckland)
+    (update (luxon.datetime "2009-08-28" "18:12:00" :Pacific/Auckland)
 
        [(p
            ["An update to this post has been published: "

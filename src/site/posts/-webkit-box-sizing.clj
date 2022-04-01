@@ -11,7 +11,7 @@
 
   :title "-webkit-box-sizing"
 
-  :datetime (luxon/datetime "2010-07-18" "21:30:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-07-18" "21:30:00" :Pacific/Auckland)
 
   :tags [:css :webkit]
 

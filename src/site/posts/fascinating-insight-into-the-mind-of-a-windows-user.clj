@@ -13,7 +13,7 @@
 
   :title "Fascinating insight into the mind of a Windows user"
 
-  :datetime (luxon/datetime "2010-03-25" "15:06:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-03-25" "15:06:00" :Pacific/Auckland)
 
   :tags [:mac-os-x :windows]
 

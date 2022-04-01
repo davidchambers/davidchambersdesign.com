@@ -11,7 +11,7 @@
 
   :title "Changing the colour of list bullets using CSS"
 
-  :datetime (luxon/datetime "2011-04-13" "17:30:00" :America/Los_Angeles)
+  :datetime (luxon.datetime "2011-04-13" "17:30:00" :America/Los_Angeles)
 
   :tags [:css :meaningful-markup]
 

@@ -11,7 +11,7 @@
 
   :title "Safari keyboard shortcut to open current page in Google Chrome"
 
-  :datetime (luxon/datetime "2011-01-30" "21:35:00" :America/Los_Angeles)
+  :datetime (luxon.datetime "2011-01-30" "21:35:00" :America/Los_Angeles)
 
   :tags [:flash :google-chrome :keyboard-shortcuts :mac-os-x :safari]
 
@@ -56,7 +56,7 @@
            "opening pages in Google Chrome") " lists the (very easy)
          steps required to enable this shortcut."])
 
-    (update (luxon/datetime "2011-01-30" "23:30:00" :America/Los_Angeles)
+    (update (luxon.datetime "2011-01-30" "23:30:00" :America/Los_Angeles)
 
        [(p
            ["Chris points out that John himself mentioned this trick

@@ -11,7 +11,7 @@
 
   :title "Bitwise NOT operator proves useful in JavaScript"
 
-  :datetime (luxon/datetime "2010-12-11" "15:00:00" :Australia/Sydney)
+  :datetime (luxon.datetime "2010-12-11" "15:00:00" :Australia/Sydney)
 
   :tags [:javascript :programming]
 

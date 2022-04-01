@@ -12,7 +12,7 @@
 
   :title "JavaScript date and time localization"
 
-  :datetime (luxon/datetime "2010-11-28" "01:45:00" :Australia/Sydney)
+  :datetime (luxon.datetime "2010-11-28" "01:45:00" :Australia/Sydney)
 
   :tags [:html5 :i18n :javascript :jquery :localization :meaningful-markup]
 

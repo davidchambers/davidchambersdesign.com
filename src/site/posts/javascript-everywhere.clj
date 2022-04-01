@@ -10,7 +10,7 @@
 
   :title "JavaScript, JavaScript, everywhere"
 
-  :datetime (luxon/datetime "2010-07-20" "19:05:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-07-20" "19:05:00" :Pacific/Auckland)
 
   :tags [:javascript :node.js :sproutcore]
 

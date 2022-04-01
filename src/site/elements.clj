@@ -8,27 +8,27 @@
 
     canonicalize-attrs
       (lambda [attrs]
-         (Object/fromEntries (s/map (lambda [name]
-                                       (let [value (s/prop name attrs)]
+         (Object.fromEntries (s.map (lambda [name]
+                                       (let [value (s.prop name attrs)]
                                           [name
                                            (if (== "symbol" (typeof value))
-                                               (Symbol/keyFor value)
+                                               (Symbol.keyFor value)
                                                (String value))]))
-                                    (Object/getOwnPropertySymbols attrs))))
+                                    (Object.getOwnPropertySymbols attrs))))
 
     canonicalize-children
-      (s/compose (s/map (lambda [child]
+      (s.compose (s.map (lambda [child]
                            (if (== "string" (typeof child))
                                (text (invoke-2 "replace"
-                                               (s/regex "g" " -- ")
+                                               (s.regex "g" " -- ")
                                                "\u2009\u2014\u2009"
-                                               (s/fold-map String
+                                               (s.fold-map String
                                                            (invoke-2 "replace"
-                                                                     (s/regex "" "^[ ]+")
+                                                                     (s.regex "" "^[ ]+")
                                                                      " ")
-                                                           (s/lines child))))
+                                                           (s.lines child))))
                                child)))
-                 (s/unless Array/isArray Array/of))
+                 (s.unless Array.isArray Array.of))
 
     block-element
       (lambda [tag-name attrs children]
@@ -44,7 +44,7 @@
          (let [children (canonicalize-children children)]
             {:type :element
              :tag-name tag-name
-             :format (if (s/any (lambda [node] (=== :block (:format node))) children)
+             :format (if (s.any (lambda [node] (=== :block (:format node))) children)
                          :block
                          :inline)
              :self-closing false

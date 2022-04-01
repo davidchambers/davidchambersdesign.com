@@ -2,15 +2,15 @@
 
    (lambda [coerce]
 
-   (let [++ (s/join-with "")
+   (let [++ (s.join-with "")
 
-         % (s/compose (s/flip s/concat "%") coerce)
-         em (s/compose (s/flip s/concat "em") coerce)
-         px (s/compose (s/flip s/concat "px") coerce)
-         , (s/compose (s/join-with ", ") (s/map coerce))
+         % (s.compose (s.flip s.concat "%") coerce)
+         em (s.compose (s.flip s.concat "em") coerce)
+         px (s.compose (s.flip s.concat "px") coerce)
+         , (s.compose (s.join-with ", ") (s.map coerce))
          rgba (lambda [r g b a] (++ ["rgba(" (, [r g b a]) ")"]))
          url (lambda [url] (++ ["url(" url ")"]))
-         !important (s/compose (s/flip s/concat " !important") coerce)
+         !important (s.compose (s.flip s.concat " !important") coerce)
 
          base03  "#002b36"
          base02  "#073642"
@@ -37,21 +37,21 @@
            (lambda [count]
               (let [value (invoke-1 "toString"
                                     16
-                                    (Math/floor (- (* 5 (Math/log2 count)) 247)))]
+                                    (Math.floor (- (* 5 (Math.log2 count)) 247)))]
                  (++ ["#" value value value])))
          tag-color
            (lambda [count]
               (rgba 0 0 0 (invoke-2 "replace"
-                                    (s/regex "" "[.]$")
+                                    (s.regex "" "[.]$")
                                     ""
                                     (invoke-2 "replace"
-                                              (s/regex "" "0*$")
+                                              (s.regex "" "0*$")
                                               ""
                                               (invoke-1 "toFixed"
                                                         3
-                                                        (+ 0.3 (* 0.1 (Math/log2 count))))))))]
+                                                        (+ 0.3 (* 0.1 (Math.log2 count))))))))]
 
-   (s/reduce s/concat {} [{
+   (s.reduce s.concat {} [{
 
      "html" [
        :height (% 100)
@@ -666,11 +666,11 @@
 
    }
 
-   (s/from-pairs (s/map (lambda [count]
-                           (s/Pair (++ ["#tags li[data-count='" count "'] a"])
+   (s.from-pairs (s.map (lambda [count]
+                           (s.Pair (++ ["#tags li[data-count='" count "'] a"])
                                    [:background (tag-background count)
                                     :color (tag-color count)]))
-                        (s/range 1 20)))
+                        (s.range 1 20)))
 
    {
 

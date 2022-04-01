@@ -12,7 +12,7 @@
 
   :title "CSS fixed-position headers"
 
-  :datetime (luxon/datetime "2009-10-30" "18:25:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2009-10-30" "18:25:00" :Pacific/Auckland)
 
   :tags [:css :html :javascript :prototype]
 

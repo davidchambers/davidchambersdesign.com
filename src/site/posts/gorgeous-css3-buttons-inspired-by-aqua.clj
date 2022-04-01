@@ -14,7 +14,7 @@
 
   :title "Gorgeous CSS3 buttons inspired by Aqua"
 
-  :datetime (luxon/datetime "2010-03-08" "12:39:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-03-08" "12:39:00" :Pacific/Auckland)
 
   :tags [:css :css3 :html :mac-os-x]
 

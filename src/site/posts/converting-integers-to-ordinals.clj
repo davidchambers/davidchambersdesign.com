@@ -11,7 +11,7 @@
 
   :title "Converting integers to ordinals"
 
-  :datetime (luxon/datetime "2010-09-16" "13:00:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-09-16" "13:00:00" :Pacific/Auckland)
 
   :tags [:javascript :programming :python]
 

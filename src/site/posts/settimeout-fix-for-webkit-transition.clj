@@ -12,7 +12,7 @@
 
   :title "setTimeout fix for -webkit-transition"
 
-  :datetime (luxon/datetime "2010-06-18" "03:12:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-06-18" "03:12:00" :Pacific/Auckland)
 
   :tags [:css3 :javascript]
 
@@ -158,7 +158,7 @@
          this I'll post an update. If you are able to enlighten me,
          please do so by leaving a comment!"])
 
-    (update (luxon/datetime "2010-06-02" "00:15:00" :Pacific/Auckland)
+    (update (luxon.datetime "2010-06-02" "00:15:00" :Pacific/Auckland)
 
        [(p
            ["I've just been watching one of the "

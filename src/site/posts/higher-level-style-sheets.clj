@@ -11,7 +11,7 @@
 
   :title "Higher-level style sheets"
 
-  :datetime (luxon/datetime "2011-10-02" "23:00:00" :America/Los_Angeles)
+  :datetime (luxon.datetime "2011-10-02" "23:00:00" :America/Los_Angeles)
 
   :tags [:best-practice :compass :css :ruby :sass]
 

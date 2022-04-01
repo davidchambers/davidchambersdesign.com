@@ -11,7 +11,7 @@
 
   :title ["Valid XHTML alternative to " (code "<strike>")]
 
-  :datetime (luxon/datetime "2009-03-17" "21:53:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2009-03-17" "21:53:00" :Pacific/Auckland)
 
   :tags [:css :html]
 

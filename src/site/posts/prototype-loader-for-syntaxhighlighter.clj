@@ -12,7 +12,7 @@
 
   :title "Prototype loader for SyntaxHighlighter"
 
-  :datetime (luxon/datetime "2009-06-22" "01:04:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2009-06-22" "01:04:00" :Pacific/Auckland)
 
   :tags [:javascript :optimization :prototype :syntaxhighlighter]
 
@@ -39,7 +39,7 @@
              SyntaxHighlighter") ", which retrieves brushes on demand to
              reduce page loading times (in certain circumstances)."])])
 
-    (update (luxon/datetime "2009-06-27" "06:21:00" :Pacific/Auckland)
+    (update (luxon.datetime "2009-06-27" "06:21:00" :Pacific/Auckland)
 
        [(p
            ["I have completely rewritten the code so that it no longer
@@ -182,7 +182,7 @@
         (a "http://www.outofwhatbox.com/blog/2009/06/syntaxhighlighter-revised-again-works-on-its-own-once-again/"
            "SyntaxHighlighter improvements") " are well worth a look!"])
 
-    (update (luxon/datetime "2009-06-27" "06:21:00" :Pacific/Auckland)
+    (update (luxon.datetime "2009-06-27" "06:21:00" :Pacific/Auckland)
 
        [(p
            ["Thanks also to Bob Matsuoka for sharing his "
@@ -191,7 +191,7 @@
              workarounds for browsers that do not support the onload
              event when applied to script elements."])])
 
-    (update (luxon/datetime "2009-08-16" "01:24:00" :Pacific/Auckland)
+    (update (luxon.datetime "2009-08-16" "01:24:00" :Pacific/Auckland)
 
        [(p
            ["I've updated the script to ensure that the XML brush is always

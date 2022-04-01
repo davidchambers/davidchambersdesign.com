@@ -11,7 +11,7 @@
 
   :title "Decorators in JavaScript"
 
-  :datetime (luxon/datetime "2011-07-26" "22:00:00" :America/Los_Angeles)
+  :datetime (luxon.datetime "2011-07-26" "22:00:00" :America/Los_Angeles)
 
   :tags [:coffeescript :javascript :programming]
 

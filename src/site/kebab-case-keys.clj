@@ -6,5 +6,5 @@
       prime (replace (new RegExp ["_" "g"]) "'")]
 
    (lambda [object]
-      (Object/fromEntries (map (lambda [entry] [(prime (kebab-case (0 entry))) (1 entry)])
-                               (Object/entries object)))))
+      (Object.fromEntries (map (lambda [entry] [(prime (kebab-case (0 entry))) (1 entry)])
+                               (Object.entries object)))))

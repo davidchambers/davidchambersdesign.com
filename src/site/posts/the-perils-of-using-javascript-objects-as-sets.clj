@@ -11,7 +11,7 @@
 
   :title "The perils of using JavaScript objects as sets"
 
-  :datetime (luxon/datetime "2012-09-03" "20:00:00" :America/Los_Angeles)
+  :datetime (luxon.datetime "2012-09-03" "20:00:00" :America/Los_Angeles)
 
   :tags [:best-practice :data-structures :javascript :programming :python]
 

@@ -11,7 +11,7 @@
 
   :title "Gmail's favicon confusion"
 
-  :datetime (luxon/datetime "2010-07-21" "10:56:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-07-21" "10:56:00" :Pacific/Auckland)
 
   :tags [:design :gmail]
 

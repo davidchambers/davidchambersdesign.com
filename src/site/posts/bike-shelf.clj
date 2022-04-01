@@ -11,7 +11,7 @@
 
   :title "Bike shelf"
 
-  :datetime (luxon/datetime "2010-09-20" "19:53:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-09-20" "19:53:00" :Pacific/Auckland)
 
   :tags [:design]
 

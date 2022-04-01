@@ -11,7 +11,7 @@
 
   :title "Repeating strings in JavaScript"
 
-  :datetime (luxon/datetime "2011-03-31" "17:30:00" :America/Los_Angeles)
+  :datetime (luxon.datetime "2011-03-31" "17:30:00" :America/Los_Angeles)
 
   :tags [:javascript :programming]
 

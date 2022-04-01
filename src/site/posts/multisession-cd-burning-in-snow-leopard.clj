@@ -11,7 +11,7 @@
 
   :title "Multisession CD burning in Snow Leopard"
 
-  :datetime (luxon/datetime "2009-10-27" "08:58:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2009-10-27" "08:58:00" :Pacific/Auckland)
 
   :tags [:mac-os-x :snow-leopard]
 

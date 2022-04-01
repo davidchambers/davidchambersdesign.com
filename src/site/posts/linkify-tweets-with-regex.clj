@@ -12,7 +12,7 @@
 
   :title "Linkify tweets with regex"
 
-  :datetime (luxon/datetime "2010-04-10" "03:22:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-04-10" "03:22:00" :Pacific/Auckland)
 
   :tags [:javascript :php :python :regex :regular-expressions]
 

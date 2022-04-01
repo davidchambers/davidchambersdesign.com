@@ -11,7 +11,7 @@
 
   :title "Forcing browsers to rerender elements"
 
-  :datetime (luxon/datetime "2010-03-22" "19:40:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-03-22" "19:40:00" :Pacific/Auckland)
 
   :tags [:dom :ie :javascript]
 

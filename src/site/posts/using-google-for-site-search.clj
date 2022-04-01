@@ -11,7 +11,7 @@
 
   :title "Using Google for site search"
 
-  :datetime (luxon/datetime "2010-03-25" "22:06:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-03-25" "22:06:00" :Pacific/Auckland)
 
   :tags [:google :search]
 

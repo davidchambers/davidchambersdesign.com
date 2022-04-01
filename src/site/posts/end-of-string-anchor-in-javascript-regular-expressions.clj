@@ -11,7 +11,7 @@
 
   :title "End of string anchor in JavaScript regular expressions"
 
-  :datetime (luxon/datetime "2011-05-22" "18:30:00" :America/Los_Angeles)
+  :datetime (luxon.datetime "2011-05-22" "18:30:00" :America/Los_Angeles)
 
   :tags [:javascript :regex :regular-expressions]
 

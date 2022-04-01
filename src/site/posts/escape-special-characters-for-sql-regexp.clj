@@ -11,7 +11,7 @@
 
   :title "Escape special characters for SQL REGEXP"
 
-  :datetime (luxon/datetime "2009-01-10" "22:21:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2009-01-10" "22:21:00" :Pacific/Auckland)
 
   :tags [:php :sql]
 

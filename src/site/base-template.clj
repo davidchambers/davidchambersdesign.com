@@ -6,12 +6,12 @@
       (html
          [(head
              [(meta {:charset "utf-8"})
-              (title (s/chain (function plain-text [node]
+              (title (s.chain (function plain-text [node]
                                  (if (=== :text (:type node))
                                      [(:value node)]
                                      (if (:self-closing node)
                                          []
-                                         (s/chain plain-text (:children node)))))
+                                         (s.chain plain-text (:children node)))))
                               (canonicalize-children document-title)))
               (link {:rel "alternate" :type "application/atom+xml" :href "/feed/"})
               (link {:rel "stylesheet" :href "/css/reset.css" :media "all"})

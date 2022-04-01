@@ -12,7 +12,7 @@
 
   :title "CSS image switcher (done the right way)"
 
-  :datetime (luxon/datetime "2010-03-24" "12:47:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-03-24" "12:47:00" :Pacific/Auckland)
 
   :tags [:accessibility :best-practice :css :meaningful-markup :seo :ux]
 

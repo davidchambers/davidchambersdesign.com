@@ -144,8 +144,8 @@ Symbol "symbol"
 // ----- Identifier -----
 
 Identifiers "identifiers"
-  = head:(    name:$(!'/' char:IdentChar)+ { return name; })
-    tail:('/' name:$(!'/' char:IdentChar)+ { return name; })+
+  = head:(    name:$(!'.' char:IdentChar)+ { return name; })
+    tail:('.' name:$(!'.' char:IdentChar)+ { return name; })+
   { return {type: 'identifiers', head, tail}; }
 
 Identifier "identifier"

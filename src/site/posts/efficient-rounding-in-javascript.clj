@@ -11,7 +11,7 @@
 
   :title "Efficient rounding in JavaScript"
 
-  :datetime (luxon/datetime "2010-08-31" "22:20:00" :Pacific/Auckland)
+  :datetime (luxon.datetime "2010-08-31" "22:20:00" :Pacific/Auckland)
 
   :tags [:javascript :optimization :performance]
 
