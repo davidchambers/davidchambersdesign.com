@@ -15,6 +15,8 @@ const Binary = operator => left => right => ({type: 'BinaryExpression', operator
 const Func = id => params => body => ({type: 'FunctionExpression', id, params, body, expression: false, generator: false, async: false});
 const Func1 = id => param => Func (id) ([param]);
 const Block = body => ({type: 'BlockStatement', body});
+const Switch = discriminant => cases => ({type: 'SwitchStatement', discriminant, cases});
+const Case = test => consequent => ({type: 'SwitchCase', test, consequent});
 const Return = argument => ({type: 'ReturnStatement', argument});
 const Identifier = name => ({type: 'Identifier', name});
 const Literal = value => ({type: 'Literal', value});
@@ -22,8 +24,10 @@ const Call = callee => args => ({type: 'CallExpression', callee, arguments: args
 const Call1 = callee => arg => Call (callee) ([arg]);
 const Call2 = callee => arg1 => arg2 => Call (callee) ([arg1, arg2]);
 const Array_ = elements => ({type: 'ArrayExpression', elements});
-const ArrowFunc = params => body => ({type: 'ArrowFunctionExpression', id: null, expression: true, generator: false, async: false, params, body});
+const _ArrowFunc = expression => params => body => ({type: 'ArrowFunctionExpression', id: null, expression, generator: false, async: false, params, body});
+const ArrowFunc = _ArrowFunc (true);
 const ArrowFunc1 = param => ArrowFunc ([param]);
+const ArrowFuncStatement = _ArrowFunc (false);
 const Object_ = properties => ({type: 'ObjectExpression', properties});
 const Property = key => value => ({type: 'Property', method: false, shorthand: false, computed: true, key, value, kind: 'init'});
 const ArrayPattern = elements => ({type: 'ArrayPattern', elements});
@@ -80,6 +84,14 @@ exports.toJs = dirname => function recur(expr) {
       return Cond (recur (expr.predicate))
                   (recur (expr.consequent))
                   (recur (expr.alternative));
+    }
+    case 'switch': {
+      return Call1 (ArrowFuncStatement ([Identifier ('$discriminant')])
+                                       (Block ([Switch (Identifier ('$discriminant'))
+                                                       (S.map (case_ => Case (recur (case_.predicate))
+                                                                             ([Return (recur (case_.consequent))]))
+                                                              (expr.cases))])))
+                   (recur (expr.discriminant));
     }
     case 'application': {
       return Call1 (S.elem (expr.function.type)

@@ -69,6 +69,7 @@ Expression
   / Lambda
   / Let
   / If
+  / Switch
   / Array
   / Object
   / Application
@@ -219,6 +220,21 @@ If "if"
     Separator+ alternative:Expression
     Separator* ')'
     { return {type: 'if', predicate, consequent, alternative}; }
+
+Switch "switch"
+  = Separator* '('
+    Separator* 'switch'
+    Separator+ discriminant:Expression
+    Separator+ '['
+    cases:Case*
+    Separator* ']'
+    Separator* ')'
+    { return {type: 'switch', discriminant, cases}; }
+
+Case "case"
+  = Separator* predicate:Expression
+    Separator+ consequent:Expression
+    { return {predicate, consequent}; }
 
 Array
   = Separator* '['

@@ -115,6 +115,8 @@
     :excerpt excerpt
 
     :b                      (inline-element :b {})
+    :mask                   (block-element :mask)
+    :rect                   (self-closing-element :rect)
     ; The opening and closing tags of each of the following elements
     ; are always rendered on their own lines.
     :article'               article'

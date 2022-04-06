@@ -157,13 +157,14 @@
        :display :block
        :width (px 354)
        :height (px 24)
-       :background [(url "'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAYCAYAAADAkvdpAAABvUlEQVR42u2bbW6DMAyGYeJGcKZwptyJO2V/Vqnr2BYqx188j9Qfba3EfhNM6+C5lNKm95h/+Xz0eFZ2d9PFKl6v+uKXT79y7PtSSrvKuq6ttTadvUaOZ2V3N12s4vWqL3759CvTdf4xAQCAKcvzm23b/jQ+juPS4NLjWXE3XTTjfYzVY+N1vfDLxi/tfT9S1+Xky9Pax77vb9U+pMez4m66aMT7OlaPjbf1wi8bv7T3/WhdKU0AABhDIgYAIBEDANybBQn8oX1IAQAkYnii1jqjAgCJWJRoT0dERVrn6OumrUfvDdSrX9r6S+mlFd+rH9LzDk3EUZ4Tjo60ztHXTVuP3lKSV7+09ZfSSzu+WuuweTmsAwDIXJrI0lnnHToibfXQ9it6ZyZ5QzkRf4mWorMuwN9xOiIN9ND267/apPfOzCzxhUvEcI3RhwIAQCKGvl8Fon+JAcA3HNYBAJCIAQBIxAAAYMiPGrH3U0kr/+hci0XWDrZR+8aLXtbXhdX83xKx9+fzrPyjcy0W2TvYHoe5WfWSji/CdUlpAgDAmGXEHb13PGk7K/+k5/Wus6SdlI3n9fJ6PUTXK1N++QSrm+6cHbQMdAAAAABJRU5ErkJggg=='") :no-repeat]
+       :mask-image (url "/images/masthead-mask.svg")
+       :background [(url "/images/masthead.svg") :no-repeat]
        :line-height 10
        :overflow :hidden
      ]
 
      "a#title:focus, a#title:hover, a#title.hover" [
-       :background [(url "'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAYCAYAAADAkvdpAAABwUlEQVR42u2dQXKDMAxFTYcbcSdzJrhsu2lnUhpSh5H1JfPeMlGM9G3LYKPJVGv9LNeYTj7v3Z7K7m66qOKNqi9+xfRriHE/l1JKrfWtH63rWrZte/rdvu/d2lPZ3U0XVbxR9cWvmH6NNM8/CgAASJmPmfkVZ6vAq0xv2Z6Ku+niGe9PWy02UfsLvzR+eY/7nrrOT76cTm65L+19WLen4m66eMR7bKvFJlp/4ZfGL+9x31tXtiYAAMSQiAEASMQAAPdmRoJ4eB9SAACJGB6otU6oAEAiNiXb2xFZsdY5e79569G6gEb1y1t/K7284jv6YX3drok4y3vC2bHWOXu/eevRupUU1S9v/a308o7vsVLPGg7rAABG3poYpbIuOlREavXw9it7ZSZ5wzkRf4s2RGVdgsdxKiIFenj79d/eZPTKzFHiS5eI4T16HwoAAIkY2u4KTB+JASA2HNYBAJCIAQBIxAAAIOTPHnH0U0mVf1Su5WLUCrZe4yaKXup5obr+r0Qc/f08lX9UruVi9Ao26/8CjKaXdXwZ5iVbEwAAYuarK/qyLE0rnrWdyj/r60bX2cvOykbdX1HnQ3a9ss/zVrsviOXUMVW1/FMAAAAASUVORK5CYII='") :no-repeat]
+       :background-color "#ccc"
      ]
 
      "#nav > ul" [
