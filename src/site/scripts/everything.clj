@@ -3,7 +3,6 @@
 fs              (require "node:fs")
 path            (require "node:path")
 
-_               (require "../require-extension.js")
 base-template   (require "../base-template.clj")
 generate-css    (require "../generate-css.clj")
 masthead        (require "../masthead.clj")
