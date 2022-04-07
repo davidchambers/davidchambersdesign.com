@@ -1,4 +1,5 @@
 'use strict';
 
-require ('../../lang');
+require ('kiwi');
+
 require ('./everything.clj');
