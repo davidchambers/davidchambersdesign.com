@@ -1,26 +1,46 @@
 (let [s (require "./sanctuary")
 
-      - (lambda [x] (- x 0))
-      + (lambda [x] (+ x 0))
+      unary- (lambda [x] (- x 0))
+      unary+ (lambda [x] (+ x 0))
 
-      ++ (s/join-with "")
+      reducer
+        (lambda [prev path curr]
+           (if (=== :M (0 curr))
+               (if (|| (=== :M (0 prev))
+                       (=== :m (0 prev)))
+                   (s/Pair curr path)  ; ignore previous move
+                   (s/Pair curr (s/append prev path)))
+               (if (&& (|| (=== :M (0 prev))
+                           (=== :m (0 prev)))
+                       (=== :m (0 curr)))
+                   (s/Pair [(0 prev) [(+ (0 (1 prev)) (0 (1 curr))) (+ (1 (1 prev)) (1 (1 curr)))]] path)
+                   (s/Pair curr (s/append prev path)))))
 
-      M (lambda [x y] (++ ["M" " " x "," y]))
-      m (lambda [x y] (++ ["m" " " x "," y]))
-      l (lambda [x y] (++ ["l" " " x "," y]))
+      simplify
+        (s/array []
+                 (lambda [head tail]
+                    (s/pair s/append
+                            (s/reduce (s/pair reducer)
+                                      (s/Pair head [])
+                                      tail))))
 
-      render (s/compose s/unwords
-                        (s/map (lambda [directive]
-                                  (switch (0 directive)
-                                     [:M (M (1 directive) (2 directive))
-                                      :m (m (1 directive) (2 directive))
-                                      :l (m (- (1 directive)) 0)
-                                      :r (m (+ (1 directive)) 0)
-                                      :u (m 0 (- (1 directive)))
-                                      :d (m 0 (+ (1 directive)))
-                                      :L (l (- (1 directive)) 0)
-                                      :R (l (+ (1 directive)) 0)
-                                      :U (l 0 (- (1 directive)))
-                                      :D (l 0 (+ (1 directive)))]))))]
+      render (s/pipe [simplify
+                      s/join
+                      (s/map (lambda [x]
+                                (switch (typeof x)
+                                   ["number" (String x)
+                                    "object" (s/join-with "," x)  ; array
+                                    "symbol" (Symbol.keyFor x)])))
+                      s/unwords])]
 
-   {:render render})
+   {:render render
+    :⇦ (lambda [x] [:m [(unary- x) 0]])
+    :⇨ (lambda [x] [:m [(unary+ x) 0]])
+    :⇧ (lambda [y] [:m [0 (unary- y)]])
+    :⇩ (lambda [y] [:m [0 (unary+ y)]])
+    :← (lambda [x] [:h (unary- x)])
+    :→ (lambda [x] [:h (unary+ x)])
+    :↑ (lambda [y] [:v (unary- y)])
+    :↓ (lambda [y] [:v (unary+ y)])
+    :a (lambda [rx-ry angle large-arc-flag sweep-flag dx-dy]
+          [:a rx-ry angle large-arc-flag sweep-flag dx-dy])})

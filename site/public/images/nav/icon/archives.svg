@@ -1,9 +1,9 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16">
-  <path fill-rule="evenodd" fill="#da5" d="m 0,0 m 0,1 l 16,0 l 0,15 l -16,0 l 0,-15" />
-  <path fill-rule="evenodd" fill="#fff" d="m 1,0 m 0,1 l 14,0 l 0,14 l -14,0 l 0,-14" />
-  <path fill-rule="evenodd" fill="#b00" d="m 1,0 m 0,1 l 2,0 l 0,1 l 1,0 l 0,-1 l 2,0 l 0,1 l 1,0 l 0,-1 l 2,0 l 0,1 l 1,0 l 0,-1 l 2,0 l 0,1 l 1,0 l 0,-1 l 2,0 l 0,3 l -14,0 l 0,-3" />
-  <path fill-rule="evenodd" fill="#333" d="m 3,0 m 0,0 l 1,0 l 0,1 l -1,0 l 0,-1 m 3,0 m 0,0 l 1,0 l 0,1 l -1,0 l 0,-1 m 3,0 m 0,0 l 1,0 l 0,1 l -1,0 l 0,-1 m 3,0 m 0,0 l 1,0 l 0,1 l -1,0 l 0,-1" />
-  <path fill-rule="evenodd" fill="#000" d="m 4,0 m 0,6 l 4,0 l 0,7 l -4,0 l 0,-1 l 3,0 l 0,-2 l -3,0 l 0,-1 l 3,0 l 0,-2 l -3,0 l 0,-1 m 6,0 m 0,0 l 2,0 l 0,7 l -1,0 l 0,-6 l -1,0 l 0,-1" />
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <path fill="#da5" d="m 0,1 h 1 v 14 h 14 v -14 h 1 v 15 h -16 v -15" />
+  <path fill="#333" d="m 3,0 h 1 v 1 h -1 v -1 m 3,0 h 1 v 1 h -1 v -1 m 3,0 h 1 v 1 h -1 v -1 m 3,0 h 1 v 1 h -1 v -1" />
+  <path fill="#b00" d="m 1,1 h 2 v 1 h 1 v -1 h 2 v 1 h 1 v -1 h 2 v 1 h 1 v -1 h 2 v 1 h 1 v -1 h 2 v 3 h -14 v -3" />
+  <path fill="#fff" d="m 1,4 h 14 v 11 h -14 v -11" />
+  <path fill="#000" d="m 4,6 h 4 v 7 h -4 v -1 h 3 v -2 h -3 v -1 h 3 v -2 h -3 v -1 m 6,0 h 2 v 7 h -1 v -6 h -1 v -1" />
 </svg>
