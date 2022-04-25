@@ -95,7 +95,7 @@ HexadecimalNumber "hexadecimal number"
   { return {type: 'number', value: parseInt(digits, 16)}; }
 
 DecimalNumber "decimal number"
-  = Int Frac?
+  = ('-' / '+')? Int Frac?
   { return {type: 'number', value: parseFloat(text())}; }
 
 Int

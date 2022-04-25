@@ -1,8 +1,5 @@
 (let [s (require "./sanctuary")
 
-      unary- (lambda [x] (- x 0))
-      unary+ (lambda [x] (+ x 0))
-
       reducer
         (lambda [prev path curr]
            (if (=== :M (0 curr))
@@ -34,13 +31,13 @@
                       s/unwords])]
 
    {:render render
-    :⇦ (lambda [x] [:m [(unary- x) 0]])
-    :⇨ (lambda [x] [:m [(unary+ x) 0]])
-    :⇧ (lambda [y] [:m [0 (unary- y)]])
-    :⇩ (lambda [y] [:m [0 (unary+ y)]])
-    :← (lambda [x] [:h (unary- x)])
-    :→ (lambda [x] [:h (unary+ x)])
-    :↑ (lambda [y] [:v (unary- y)])
-    :↓ (lambda [y] [:v (unary+ y)])
+    :⇦ (lambda [x] [:m [(- x 0) 0]])
+    :⇨ (lambda [x] [:m [(+ x 0) 0]])
+    :⇧ (lambda [y] [:m [0 (- y 0)]])
+    :⇩ (lambda [y] [:m [0 (+ y 0)]])
+    :← (lambda [x] [:h (- x 0)])
+    :→ (lambda [x] [:h (+ x 0)])
+    :↑ (lambda [y] [:v (- y 0)])
+    :↓ (lambda [y] [:v (+ y 0)])
     :a (lambda [rx-ry angle large-arc-flag sweep-flag dx-dy]
           [:a rx-ry angle large-arc-flag sweep-flag dx-dy])})

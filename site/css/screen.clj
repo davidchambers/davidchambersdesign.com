@@ -74,7 +74,7 @@
 
      "#skip" [
        :position :absolute
-       :left (px (s/negate 9999))
+       :left (px -9999)
      ]
 
      "#wrap" [
@@ -126,7 +126,7 @@
      ]
      "#header header form div label" [
        :position :absolute
-       :left (px (s/negate 9999))
+       :left (px -9999)
      ]
      "#header header form div input[type='search']" [
        :position :absolute
@@ -263,7 +263,7 @@
 
      "#wrap + footer" [
        :position :relative
-       :margin [(em (s/negate 5.25)) :auto 0]
+       :margin [(em -5.25) :auto 0]
        :width (% 65)
        :min-width (px 615)
        :max-width (em 60)
@@ -273,7 +273,7 @@
        :z-index 20
      ]
      "#wrap + footer > :first-child" [
-       :margin [(px (s/negate 1)) 0 0]
+       :margin [(px -1) 0 0]
        :color base1
      ]
 
@@ -372,7 +372,7 @@
      ]
      "dl dt embed, dl dt img, dl dt object" [
        :display :block
-       :margin [0 0 (px (s/negate 1))]
+       :margin [0 0 (px -1)]
      ]
      "dl dt embed, dl dt img" [
        :border [(px 1) :solid "#cccccc"]
@@ -406,7 +406,7 @@
 
      ".unidentified span" [
        :float :left
-       :margin [(px (s/negate 159)) 0 0]
+       :margin [(px -159) 0 0]
      ]
      ".unidentified a" [
        :visibility :hidden
@@ -446,31 +446,31 @@
        :border (!important :none)
      ]
      "img[src*='/elam/'], img[src*='/lightbox/']" [
-       :margin [(em 1.75) 0 (px (s/negate 1))]
+       :margin [(em 1.75) 0 (px -1)]
        :border [(px 1) :solid "#cccccc"]
      ]
      "img[src*='/lightbox/large/']" [
        :margin 0
      ]
      "img[src*='/windows/']" [
-       :margin [(px 3) (px (s/negate 40)) (px (s/negate 29))]
+       :margin [(px 3) (px -40) (px -29)]
        :max-width (!important :none)
        :border (!important :none)
      ]
      "img[src*='/windows/lion/']" [
-       :margin [(px (s/negate 6)) (px (s/negate 56)) (px (s/negate 52))]
+       :margin [(px -6) (px -56) (px -52)]
      ]
      "dt > img[src*='/windows/']" [
-       :margin [(px (s/negate 24)) (px (s/negate 40)) (px (s/negate 35))]
+       :margin [(px -24) (px -40) (px -35)]
      ]
      "dt > img[src*='/windows/lion/']" [
-       :margin [(px (s/negate 33)) (px (s/negate 56)) (px (s/negate 58))]
+       :margin [(px -33) (px -56) (px -58)]
      ]
      "p > img[src*='/windows/']" [
-       :margin [(px (s/negate 18)) (px (s/negate 40)) (px (s/negate 29))]
+       :margin [(px -18) (px -40) (px -29)]
      ]
      "p > img[src*='/windows/lion/']" [
-       :margin [(px (s/negate 27)) (px (s/negate 56)) (px (s/negate 52))]
+       :margin [(px -27) (px -56) (px -52)]
      ]
      "p > img:only-child" [
        :border [(px 1) :solid "#cccccc"]
@@ -532,7 +532,7 @@
      ]
 
      "pre" [
-       :margin [(em 1.286) 0 (em (s/negate 0.214))]
+       :margin [(em 1.286) 0 (em -0.214)]
        :border [(px 1) :solid base2]
        :background-color recycled-paper
        :padding [(em 0.143) (em 0.714)]
@@ -580,7 +580,7 @@
      ]
      "ul li.pro, ul li.con" [
        :margin 0
-       :margin-left (px (s/negate 21))
+       :margin-left (px -21)
        :background [:no-repeat 0 (em 0.25)]
        :padding [0 0 0 (px 21)]
        :list-style :none
@@ -597,7 +597,7 @@
      ]
 
      "article > header > dl" [
-       :margin [(em 1.571) 0 (em (s/negate 0.071))]
+       :margin [(em 1.571) 0 (em -0.071)]
        :font ["1.167em/1.5" (, ["Courier" "'Courier New'" :monospace])]
        :color base1
        :overflow :auto
@@ -656,8 +656,8 @@
        :color (tag-color 20)
      ]
      "#tags li a:focus, #tags li a:hover, #tags li a.hover" [
-       :left (px (s/negate 21))
-       :top (px (s/negate 6))
+       :left (px -21)
+       :top (px -6)
        :width (% 100)
        :padding [(px 16) (px 21)]
        :box-shadow [0 (px 1) (px 3) (rgba 0 0 0 0.2)]
@@ -680,7 +680,7 @@
      ]
 
      "div.syntaxhighlighter" [
-       :margin (!important [(em 1.75) 0 (px (s/negate 1))])
+       :margin (!important [(em 1.75) 0 (px -1)])
      ]
      "div.syntaxhighlighter code" [
        :border :none
@@ -699,7 +699,7 @@
 
      ".structural" [
        :position (!important :absolute)
-       :left (!important (px (s/negate 9999)))
+       :left (!important (px -9999))
      ]
 
      "ol li.interviewer" [
@@ -762,7 +762,7 @@
      ]
 
      ".update" [
-       :margin [(em 1.75) 0 (px (s/negate 1))]
+       :margin [(em 1.75) 0 (px -1)]
        :border-width [(px 1) 0]
        :border-style :solid
        :border-color base1
@@ -776,7 +776,7 @@
      ]
 
      "footer.metadata" [
-       :margin-left (em (s/negate 1))
+       :margin-left (em -1)
        :padding [(em 1.75) 0 0 (em 1)]
        :overflow :hidden
      ]
@@ -788,7 +788,7 @@
        :list-style :none
      ]
      "footer.metadata ul a" [
-       :margin-left (em (s/negate 0.833))
+       :margin-left (em -0.833)
        :border-radius (em 0.875)
        :background blue
        :padding [0 (em 0.667) 0 (em 0.833)]
@@ -799,7 +799,7 @@
      ]
      "footer.metadata h4" [
        :position :absolute
-       :left (px (s/negate 9999))
+       :left (px -9999)
      ]
      "footer.metadata ol" [
        :margin 0
@@ -811,7 +811,7 @@
      ]
 
      "article article" [
-       :margin [0 0 0 (px (s/negate 30))]
+       :margin [0 0 0 (px -30)]
        :border-bottom [(px 1) :solid "#cccccc"]
        :padding [(em 0.417) 0 (em 1.25) (px 30)]
        :overflow :auto
@@ -845,7 +845,7 @@
        :padding [0 0 0 (em 1)]
      ]
      "article h2 + article" [
-       :margin [(em 1.25) 0 0 (px (s/negate 30))]
+       :margin [(em 1.25) 0 0 (px -30)]
        :border-top [(px 1) :solid "#cccccc"]
      ]
 
@@ -890,7 +890,7 @@
      ]
      "form > fieldset + div > label" [
        :position :absolute
-       :left (px (s/negate 9999))
+       :left (px -9999)
      ]
      "form > fieldset + div + div > label" [
        :left (em 1.75)
@@ -960,7 +960,7 @@
 
      "ol.archives" [
        :margin 0
-       :margin-left (px (s/negate 21))
+       :margin-left (px -21)
        :list-style :none
      ]
      "ol.archives li h2" [
@@ -984,97 +984,97 @@
        :overflow :hidden
      ]
      "ol.archives time[datetime*='01T']" [
-       :background-position [(px (s/negate 60)) (px (s/negate 20))]
+       :background-position [(px -60) (px -20)]
      ]
      "ol.archives time[datetime*='02T']" [
-       :background-position [(px (s/negate 80)) (px (s/negate 20))]
+       :background-position [(px -80) (px -20)]
      ]
      "ol.archives time[datetime*='03T']" [
-       :background-position [(px (s/negate 100)) (px (s/negate 20))]
+       :background-position [(px -100) (px -20)]
      ]
      "ol.archives time[datetime*='04T']" [
-       :background-position [(px (s/negate 120)) (px (s/negate 20))]
+       :background-position [(px -120) (px -20)]
      ]
      "ol.archives time[datetime*='05T']" [
-       :background-position [(px (s/negate 140)) (px (s/negate 20))]
+       :background-position [(px -140) (px -20)]
      ]
      "ol.archives time[datetime*='06T']" [
-       :background-position [(px (s/negate 20)) (px (s/negate 40))]
+       :background-position [(px -20) (px -40)]
      ]
      "ol.archives time[datetime*='07T']" [
-       :background-position [(px (s/negate 40)) (px (s/negate 40))]
+       :background-position [(px -40) (px -40)]
      ]
      "ol.archives time[datetime*='08T']" [
-       :background-position [(px (s/negate 60)) (px (s/negate 40))]
+       :background-position [(px -60) (px -40)]
      ]
      "ol.archives time[datetime*='09T']" [
-       :background-position [(px (s/negate 80)) (px (s/negate 40))]
+       :background-position [(px -80) (px -40)]
      ]
      "ol.archives time[datetime*='10T']" [
-       :background-position [(px (s/negate 100)) (px (s/negate 40))]
+       :background-position [(px -100) (px -40)]
      ]
      "ol.archives time[datetime*='11T']" [
-       :background-position [(px (s/negate 120)) (px (s/negate 40))]
+       :background-position [(px -120) (px -40)]
      ]
      "ol.archives time[datetime*='12T']" [
-       :background-position [(px (s/negate 140)) (px (s/negate 40))]
+       :background-position [(px -140) (px -40)]
      ]
      "ol.archives time[datetime*='13T']" [
-       :background-position [(px (s/negate 20)) (px (s/negate 60))]
+       :background-position [(px -20) (px -60)]
      ]
      "ol.archives time[datetime*='14T']" [
-       :background-position [(px (s/negate 40)) (px (s/negate 60))]
+       :background-position [(px -40) (px -60)]
      ]
      "ol.archives time[datetime*='15T']" [
-       :background-position [(px (s/negate 60)) (px (s/negate 60))]
+       :background-position [(px -60) (px -60)]
      ]
      "ol.archives time[datetime*='16T']" [
-       :background-position [(px (s/negate 80)) (px (s/negate 60))]
+       :background-position [(px -80) (px -60)]
      ]
      "ol.archives time[datetime*='17T']" [
-       :background-position [(px (s/negate 100)) (px (s/negate 60))]
+       :background-position [(px -100) (px -60)]
      ]
      "ol.archives time[datetime*='18T']" [
-       :background-position [(px (s/negate 120)) (px (s/negate 60))]
+       :background-position [(px -120) (px -60)]
      ]
      "ol.archives time[datetime*='19T']" [
-       :background-position [(px (s/negate 140)) (px (s/negate 60))]
+       :background-position [(px -140) (px -60)]
      ]
      "ol.archives time[datetime*='20T']" [
-       :background-position [(px (s/negate 20)) (px (s/negate 80))]
+       :background-position [(px -20) (px -80)]
      ]
      "ol.archives time[datetime*='21T']" [
-       :background-position [(px (s/negate 40)) (px (s/negate 80))]
+       :background-position [(px -40) (px -80)]
      ]
      "ol.archives time[datetime*='22T']" [
-       :background-position [(px (s/negate 60)) (px (s/negate 80))]
+       :background-position [(px -60) (px -80)]
      ]
      "ol.archives time[datetime*='23T']" [
-       :background-position [(px (s/negate 80)) (px (s/negate 80))]
+       :background-position [(px -80) (px -80)]
      ]
      "ol.archives time[datetime*='24T']" [
-       :background-position [(px (s/negate 100)) (px (s/negate 80))]
+       :background-position [(px -100) (px -80)]
      ]
      "ol.archives time[datetime*='25T']" [
-       :background-position [(px (s/negate 120)) (px (s/negate 80))]
+       :background-position [(px -120) (px -80)]
      ]
      "ol.archives time[datetime*='26T']" [
-       :background-position [(px (s/negate 140)) (px (s/negate 80))]
+       :background-position [(px -140) (px -80)]
      ]
      "ol.archives time[datetime*='27T']" [
-       :background-position [(px (s/negate 20)) (px (s/negate 100))]
+       :background-position [(px -20) (px -100)]
      ]
      "ol.archives time[datetime*='28T']" [
-       :background-position [(px (s/negate 40)) (px (s/negate 100))]
+       :background-position [(px -40) (px -100)]
      ]
      "ol.archives time[datetime*='29T']" [
-       :background-position [(px (s/negate 60)) (px (s/negate 100))]
+       :background-position [(px -60) (px -100)]
      ]
      "ol.archives time[datetime*='30T']" [
-       :background-position [(px (s/negate 80)) (px (s/negate 100))]
+       :background-position [(px -80) (px -100)]
      ]
      "ol.archives time[datetime*='31T']" [
-       :background-position [(px (s/negate 100)) (px (s/negate 100))]
+       :background-position [(px -100) (px -100)]
      ]
 
      "#cricket-field-diagrams dl" [
@@ -1132,7 +1132,7 @@
        :left (px 340)
      ]
      "#cricket-field-diagrams dl dt img" [
-       :margin (px (s/negate 1))
+       :margin (px -1)
        :border :none
      ]
 
