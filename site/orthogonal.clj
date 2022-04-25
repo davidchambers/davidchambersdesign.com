@@ -3,13 +3,13 @@
       reducer
         (lambda [prev path curr]
            (if (=== :M (0 curr))
-               (if (|| (=== :M (0 prev))
+               (if (or (=== :M (0 prev))
                        (=== :m (0 prev)))
                    (s/Pair curr path)  ; ignore previous move
                    (s/Pair curr (s/append prev path)))
-               (if (&& (|| (=== :M (0 prev))
-                           (=== :m (0 prev)))
-                       (=== :m (0 curr)))
+               (if (and (or (=== :M (0 prev))
+                            (=== :m (0 prev)))
+                        (=== :m (0 curr)))
                    (s/Pair [(0 prev) [(+ (0 (1 prev)) (0 (1 curr))) (+ (1 (1 prev)) (1 (1 curr)))]] path)
                    (s/Pair curr (s/append prev path)))))
 

@@ -33,6 +33,7 @@ const Property = key => value => ({type: 'Property', method: false, shorthand: f
 const ArrayPattern = elements => ({type: 'ArrayPattern', elements});
 const New = callee => args => ({type: 'NewExpression', callee, arguments: args});
 const SpreadElement = arg => ({type: 'SpreadElement', argument: arg});
+const Logical = operator => left => right => ({type: 'LogicalExpression', operator, left, right});
 
 const escapeIdentifier = name => (
   '_' +
@@ -82,6 +83,16 @@ exports.toJs = dirname => function recur(expr) {
       return Func1 (recur (expr.name))
                    (recur (expr.parameter))
                    (Block ([Return (recur (expr.body))]));
+    }
+    case 'and': {
+      return Logical ('&&')
+                     (recur (expr.left))
+                     (recur (expr.right));
+    }
+    case 'or': {
+      return Logical ('||')
+                     (recur (expr.left))
+                     (recur (expr.right));
     }
     case 'if': {
       return Cond (recur (expr.predicate))

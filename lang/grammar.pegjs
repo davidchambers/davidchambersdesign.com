@@ -68,6 +68,8 @@ Expression
   / Function
   / Lambda
   / Let
+  / And
+  / Or
   / If
   / Switch
   / Array
@@ -211,6 +213,22 @@ Binding "binding"
   = Separator* ident:Identifier
     Separator+ expr:Expression
     { return [ident, expr]; }
+
+And "and"
+  = Separator* '('
+    Separator* 'and'
+    Separator+ left:Expression
+    Separator+ right:Expression
+    Separator* ')'
+    { return {type: 'and', left, right}; }
+
+Or "or"
+  = Separator* '('
+    Separator* 'or'
+    Separator+ left:Expression
+    Separator+ right:Expression
+    Separator* ')'
+    { return {type: 'or', left, right}; }
 
 If "if"
   = Separator* '('
