@@ -37,38 +37,39 @@ _ (write-file (public ["css" "screen.css"])
               generate-css)
 
 render-svg
-  (s/pipe [(e/svg {:xmlns "http://www.w3.org/2000/svg" :version "1.1"})
-           (s/of Array)
-           (render-fragment "  " 0 false)
-           (s/concat "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n")
-           (s/concat "<?xml version=\"1.0\" standalone=\"no\"?>\n")])
+  (lambda [attrs]
+     (s/pipe [(e/svg (apply Object.assign [{:xmlns "http://www.w3.org/2000/svg" :version "1.1"} attrs]))
+              (s/of Array)
+              (render-fragment "  " 0 false)
+              (s/concat "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n")
+              (s/concat "<?xml version=\"1.0\" standalone=\"no\"?>\n")]))
 
 _ (write-file (public ["images" "masthead.svg"])
-              (render-svg (:fill masthead)))
+              (render-svg {} (:fill masthead)))
 
 _ (write-file (public ["images" "masthead-mask.svg"])
-              (render-svg (:mask masthead)))
+              (render-svg {} (:mask masthead)))
 
 _ (write-file (public ["images" "nav" "icon" "about.svg"])
-              (render-svg icon:about))
+              (render-svg {:width 16 :height 16} icon:about))
 
 _ (write-file (public ["images" "nav" "icon" "archives.svg"])
-              (render-svg icon:archives))
+              (render-svg {:width 16 :height 16} icon:archives))
 
 _ (write-file (public ["images" "nav" "icon" "bitbucket.svg"])
-              (render-svg icon:bitbucket))
+              (render-svg {:width 16 :height 16} icon:bitbucket))
 
 _ (write-file (public ["images" "nav" "icon" "contact.svg"])
-              (render-svg icon:contact))
+              (render-svg {:width 16 :height 16} icon:contact))
 
 _ (write-file (public ["images" "nav" "icon" "flushcache.svg"])
-              (render-svg icon:flushcache))
+              (render-svg {:width 16 :height 16} icon:flushcache))
 
 _ (write-file (public ["images" "nav" "icon" "tags.svg"])
-              (render-svg icon:tags))
+              (render-svg {:width 16 :height 16} icon:tags))
 
 _ (write-file (public ["images" "nav" "icon" "twitter.svg"])
-              (render-svg icon:twitter))
+              (render-svg {:width 16 :height 16} icon:twitter))
 
 render-document (s/pipe [(s/of Array)
                          (render-fragment "  " 0 false)
