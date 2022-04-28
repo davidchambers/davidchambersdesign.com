@@ -1,8 +1,8 @@
-(let [s (require "../sanctuary")]
+(lambda [coerce]
 
-   (lambda [coerce]
+   (let [s (require "../sanctuary")
 
-   (let [++ (s/join-with "")
+         ++ (s/join-with "")
 
          % (s/compose (s/flip s/concat "%") coerce)
          em (s/compose (s/flip s/concat "em") coerce)
@@ -10,46 +10,46 @@
          , (s/compose (s/join-with ", ") (s/map coerce))
          rgba (lambda [r g b a] (++ ["rgba(" (, [r g b a]) ")"]))
          url (lambda [url] (++ ["url(" url ")"]))
-         !important (s/compose (s/flip s/concat " !important") coerce)
+         !important (s/compose (+ " !important") coerce)
 
-         base03  "#002b36"
-         base02  "#073642"
-         base01  "#586e75"
-         base00  "#657b83"
-         base0   "#839496"
-         base1   "#93a1a1"
-         base2   "#eee8d5"
-         base3   "#fdf6e3"
-         yellow  "#b58900"
-         orange  "#cb4b16"
-         red     "#dc322f"
-         magenta "#d33682"
-         violet  "#6c71c4"
-         blue    "#268bd2"
-         cyan    "#2aa198"
-         green   "#859900"
+         base03         "#002b36"
+         base02         "#073642"
+         base01         "#586e75"
+         base00         "#657b83"
+         base0          "#839496"
+         base1          "#93a1a1"
+         base2          "#eee8d5"
+         base3          "#fdf6e3"
+         yellow         "#b58900"
+         orange         "#cb4b16"
+         red            "#dc322f"
+         magenta        "#d33682"
+         violet         "#6c71c4"
+         blue           "#268bd2"
+         cyan           "#2aa198"
+         green          "#859900"
 
-         mid-gray "#a9a9a9"
-         pink "#ff5e99"
+         mid-gray       "#a9a9a9"
+         pink           "#ff5e99"
          recycled-paper "#fef9ec"
 
          tag-background
-           (lambda [count]
-              (let [value (invoke-1 "toString"
-                                    16
-                                    (Math.floor (- (* 5 (Math.log2 count)) 247)))]
-                 (++ ["#" value value value])))
+           (s/pipe [Math.log2
+                    (* 5)
+                    (s/flip - 247)
+                    Math.floor
+                    (invoke-1 "toString" 16)
+                    (invoke-2 "padStart" 2 "0")
+                    (invoke-1 "repeat" 3)
+                    (s/concat "#")])
          tag-color
-           (lambda [count]
-              (rgba 0 0 0 (invoke-2 "replace"
-                                    (s/regex "" "[.]$")
-                                    ""
-                                    (invoke-2 "replace"
-                                              (s/regex "" "0*$")
-                                              ""
-                                              (invoke-1 "toFixed"
-                                                        3
-                                                        (+ 0.3 (* 0.1 (Math.log2 count))))))))]
+           (s/pipe [Math.log2
+                    (* 0.1)
+                    (+ 0.3)
+                    (invoke-1 "toFixed" 3)
+                    (invoke-2 "replace" (s/regex "" "0*$") "")
+                    (invoke-2 "replace" (s/regex "" "[.]$") "")
+                    (rgba 0 0 0)])]
 
    (s/reduce s/concat {} [{
 
@@ -974,107 +974,118 @@
        :list-style :none
      ]
      "ol.archives time" [
+       :position :relative
        :display :block
        :float :left
        :margin [(em 0.167) (em 0.5) 0 0]
        :width (px 16)
        :height (px 16)
-       :background [(url "'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALAAAACICAYAAABHnmGeAAADxUlEQVR42u3d0W3bQBCEYTFISS4hLThFOiU4rTitnF9iwBBM2yR3j3u87wcE6EXjIz1YDimOuLTWbsCo/LALwMAAAwMMDAYGGBhgYICBwcAAAwMMDDAwGBhgYICBwcAAAwMMDDAwGHgSHh4e2pb39HL1dtFam+r18vTYnm+39ny7tdbapvcvT4+NXqze0dfUE/jvsmx6Ty9XT4TAdPyccaN/7fwtjH9/ftNL0DOBYQLjdlv+57WIXyta7rLfUc0MvTeN9++rrI+Bd16RWYJOOt7/AyM0o/Wy9l9vRAiIEPj6kFpNL3uNIsRFIkmGVsVIclbEESEgQiD/kFr1xO3s9TFw0mE/OgNmZsoI7bN+KF2EgAgxGtFfadI7Mbp4RgZGRoQAAwMMDFQzsI4YveE6cTpi9C7TidMRo6cTB3xCyhcZOmL0tuiZwDCBsxmhI1ZR776nF6G7phmpFbUfS03g92ePlbTuNSvpffT5o7r3n43Wit6PIgREiOgYUfEmohF6bNXpvc1dDbyWk6oQub4RavDZ+1GEAKpGiKsf/jK3daT9mD2Nuxl4tk5XVqU+q7MXdSWi97mNCAER4h4dMXrd4opOHEZGhAADAwwMVDOwjhg9nTh6OnE6cfRG0JOBMR06cfRO1zOBYQJnEd2Z+kjvyPPOeqyP3sAZOLoz1eOusSNrzNbL2H+V9EQIiBA9IkVlzegbsnUBL2TgGZ93pgsoQgDXjRCzRZzK67tkrT66M7WmEXEmHb0+2ytCAH0nsI4YvW7xRycOIyNCgIEBBgaqGVhHjJ5OHD2dOJ04eiPoycCYDp04eqfrmcAwgTNY60cd6U19pRmptXV9PfX29ACrb285A392c/Pem6jXNFtroVpr666gl/n/OFNPhIAIkRkhqmmuae39G7309mp+V29vhDiqV87AWYvPeoBKxN9Yq5nvNd6IekcioggBESLrkB91UhJ5ePrO+vZe2YiYQj0q/hnr69WN63YVIioCfPbZrbo94kOG3l7t6tsrQkCEiEBHjF4vdOIwNCIEGBhgYKCagXXEauldEp04nbORXzpxE+mJEEAxdOIm0DOBgZkm8Bsjd84q6H1Hc/ZvUk/pxGV0xPbcGlhd76t9uEx+AidCwATecvjL1MvsiJ21vVmaDLzzEJipF3GIzow40TEMIgRM4G2HwMzHtkZU1492xKIjialb6CpERMQYtcNWpQMoQgAzTGAdsVp6V0YnDiIEwMAAA4OBAQYGGBhgYDAwwMAAAwMMDAYGGBhgYDAwwMAAAwMMDAYGRuEVbcTUMFk81KcAAAAASUVORK5CYII='") :no-repeat]
+       :background-image (url "../images/nav/icon/archives.svg")
+       :background-repeat :no-repeat
        :line-height 10
        :overflow :hidden
      ]
-     "ol.archives time[datetime*='01T']" [
-       :background-position [(px -60) (px -20)]
+     "ol.archives time:after" [
+       :position :absolute
+       :top 0
+       :left 0
+       :right 0
+       :bottom 0
+       :display :block
+       :content "''"
      ]
-     "ol.archives time[datetime*='02T']" [
-       :background-position [(px -80) (px -20)]
+     "ol.archives time[datetime*='01T']:after" [
+       :background-image (url "../images/nav/icon/dates-1.svg")
      ]
-     "ol.archives time[datetime*='03T']" [
-       :background-position [(px -100) (px -20)]
+     "ol.archives time[datetime*='02T']:after" [
+       :background-image (url "../images/nav/icon/dates-2.svg")
      ]
-     "ol.archives time[datetime*='04T']" [
-       :background-position [(px -120) (px -20)]
+     "ol.archives time[datetime*='03T']:after" [
+       :background-image (url "../images/nav/icon/dates-3.svg")
      ]
-     "ol.archives time[datetime*='05T']" [
-       :background-position [(px -140) (px -20)]
+     "ol.archives time[datetime*='04T']:after" [
+       :background-image (url "../images/nav/icon/dates-4.svg")
      ]
-     "ol.archives time[datetime*='06T']" [
-       :background-position [(px -20) (px -40)]
+     "ol.archives time[datetime*='05T']:after" [
+       :background-image (url "../images/nav/icon/dates-5.svg")
      ]
-     "ol.archives time[datetime*='07T']" [
-       :background-position [(px -40) (px -40)]
+     "ol.archives time[datetime*='06T']:after" [
+       :background-image (url "../images/nav/icon/dates-6.svg")
      ]
-     "ol.archives time[datetime*='08T']" [
-       :background-position [(px -60) (px -40)]
+     "ol.archives time[datetime*='07T']:after" [
+       :background-image (url "../images/nav/icon/dates-7.svg")
      ]
-     "ol.archives time[datetime*='09T']" [
-       :background-position [(px -80) (px -40)]
+     "ol.archives time[datetime*='08T']:after" [
+       :background-image (url "../images/nav/icon/dates-8.svg")
      ]
-     "ol.archives time[datetime*='10T']" [
-       :background-position [(px -100) (px -40)]
+     "ol.archives time[datetime*='09T']:after" [
+       :background-image (url "../images/nav/icon/dates-9.svg")
      ]
-     "ol.archives time[datetime*='11T']" [
-       :background-position [(px -120) (px -40)]
+     "ol.archives time[datetime*='10T']:after" [
+       :background-image (url "../images/nav/icon/dates-10.svg")
      ]
-     "ol.archives time[datetime*='12T']" [
-       :background-position [(px -140) (px -40)]
+     "ol.archives time[datetime*='11T']:after" [
+       :background-image (url "../images/nav/icon/dates-11.svg")
      ]
-     "ol.archives time[datetime*='13T']" [
-       :background-position [(px -20) (px -60)]
+     "ol.archives time[datetime*='12T']:after" [
+       :background-image (url "../images/nav/icon/dates-12.svg")
      ]
-     "ol.archives time[datetime*='14T']" [
-       :background-position [(px -40) (px -60)]
+     "ol.archives time[datetime*='13T']:after" [
+       :background-image (url "../images/nav/icon/dates-13.svg")
      ]
-     "ol.archives time[datetime*='15T']" [
-       :background-position [(px -60) (px -60)]
+     "ol.archives time[datetime*='14T']:after" [
+       :background-image (url "../images/nav/icon/dates-14.svg")
      ]
-     "ol.archives time[datetime*='16T']" [
-       :background-position [(px -80) (px -60)]
+     "ol.archives time[datetime*='15T']:after" [
+       :background-image (url "../images/nav/icon/dates-15.svg")
      ]
-     "ol.archives time[datetime*='17T']" [
-       :background-position [(px -100) (px -60)]
+     "ol.archives time[datetime*='16T']:after" [
+       :background-image (url "../images/nav/icon/dates-16.svg")
      ]
-     "ol.archives time[datetime*='18T']" [
-       :background-position [(px -120) (px -60)]
+     "ol.archives time[datetime*='17T']:after" [
+       :background-image (url "../images/nav/icon/dates-17.svg")
      ]
-     "ol.archives time[datetime*='19T']" [
-       :background-position [(px -140) (px -60)]
+     "ol.archives time[datetime*='18T']:after" [
+       :background-image (url "../images/nav/icon/dates-18.svg")
      ]
-     "ol.archives time[datetime*='20T']" [
-       :background-position [(px -20) (px -80)]
+     "ol.archives time[datetime*='19T']:after" [
+       :background-image (url "../images/nav/icon/dates-19.svg")
      ]
-     "ol.archives time[datetime*='21T']" [
-       :background-position [(px -40) (px -80)]
+     "ol.archives time[datetime*='20T']:after" [
+       :background-image (url "../images/nav/icon/dates-20.svg")
      ]
-     "ol.archives time[datetime*='22T']" [
-       :background-position [(px -60) (px -80)]
+     "ol.archives time[datetime*='21T']:after" [
+       :background-image (url "../images/nav/icon/dates-21.svg")
      ]
-     "ol.archives time[datetime*='23T']" [
-       :background-position [(px -80) (px -80)]
+     "ol.archives time[datetime*='22T']:after" [
+       :background-image (url "../images/nav/icon/dates-22.svg")
      ]
-     "ol.archives time[datetime*='24T']" [
-       :background-position [(px -100) (px -80)]
+     "ol.archives time[datetime*='23T']:after" [
+       :background-image (url "../images/nav/icon/dates-23.svg")
      ]
-     "ol.archives time[datetime*='25T']" [
-       :background-position [(px -120) (px -80)]
+     "ol.archives time[datetime*='24T']:after" [
+       :background-image (url "../images/nav/icon/dates-24.svg")
      ]
-     "ol.archives time[datetime*='26T']" [
-       :background-position [(px -140) (px -80)]
+     "ol.archives time[datetime*='25T']:after" [
+       :background-image (url "../images/nav/icon/dates-25.svg")
      ]
-     "ol.archives time[datetime*='27T']" [
-       :background-position [(px -20) (px -100)]
+     "ol.archives time[datetime*='26T']:after" [
+       :background-image (url "../images/nav/icon/dates-26.svg")
      ]
-     "ol.archives time[datetime*='28T']" [
-       :background-position [(px -40) (px -100)]
+     "ol.archives time[datetime*='27T']:after" [
+       :background-image (url "../images/nav/icon/dates-27.svg")
      ]
-     "ol.archives time[datetime*='29T']" [
-       :background-position [(px -60) (px -100)]
+     "ol.archives time[datetime*='28T']:after" [
+       :background-image (url "../images/nav/icon/dates-28.svg")
      ]
-     "ol.archives time[datetime*='30T']" [
-       :background-position [(px -80) (px -100)]
+     "ol.archives time[datetime*='29T']:after" [
+       :background-image (url "../images/nav/icon/dates-29.svg")
      ]
-     "ol.archives time[datetime*='31T']" [
-       :background-position [(px -100) (px -100)]
+     "ol.archives time[datetime*='30T']:after" [
+       :background-image (url "../images/nav/icon/dates-30.svg")
+     ]
+     "ol.archives time[datetime*='31T']:after" [
+       :background-image (url "../images/nav/icon/dates-31.svg")
      ]
 
      "#cricket-field-diagrams dl" [
@@ -1352,4 +1363,4 @@
        :color cyan
      ]
 
-   }]))))
+   }])))

@@ -21,6 +21,7 @@ icon:contact    (require "../icons/nav/contact.clj")
 icon:flushcache (require "../icons/nav/flushcache.clj")
 icon:tags       (require "../icons/nav/tags.clj")
 icon:twitter    (require "../icons/nav/twitter.clj")
+dates           (require "../icons/nav/dates.clj")
 
 pages (s/map (lambda [name] (require (s/join-with "/" [".." "pages" name])))
              (fs.readdirSync (apply path.join [__dirname ".." "pages"])))
@@ -58,6 +59,99 @@ _ (write-file (public ["images" "nav" "icon" "archives.svg"])
 
 _ (write-file (public ["images" "nav" "icon" "bitbucket.svg"])
               (render-svg {:width 16 :height 16} icon:bitbucket))
+
+_ (write-file (public ["images" "nav" "icon" "dates-1.svg"])
+              (render-svg {:width 16 :height 16} (1 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-2.svg"])
+              (render-svg {:width 16 :height 16} (2 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-3.svg"])
+              (render-svg {:width 16 :height 16} (3 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-4.svg"])
+              (render-svg {:width 16 :height 16} (4 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-5.svg"])
+              (render-svg {:width 16 :height 16} (5 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-6.svg"])
+              (render-svg {:width 16 :height 16} (6 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-7.svg"])
+              (render-svg {:width 16 :height 16} (7 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-8.svg"])
+              (render-svg {:width 16 :height 16} (8 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-9.svg"])
+              (render-svg {:width 16 :height 16} (9 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-10.svg"])
+              (render-svg {:width 16 :height 16} (10 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-11.svg"])
+              (render-svg {:width 16 :height 16} (11 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-12.svg"])
+              (render-svg {:width 16 :height 16} (12 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-13.svg"])
+              (render-svg {:width 16 :height 16} (13 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-14.svg"])
+              (render-svg {:width 16 :height 16} (14 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-15.svg"])
+              (render-svg {:width 16 :height 16} (15 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-16.svg"])
+              (render-svg {:width 16 :height 16} (16 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-17.svg"])
+              (render-svg {:width 16 :height 16} (17 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-18.svg"])
+              (render-svg {:width 16 :height 16} (18 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-19.svg"])
+              (render-svg {:width 16 :height 16} (19 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-20.svg"])
+              (render-svg {:width 16 :height 16} (20 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-21.svg"])
+              (render-svg {:width 16 :height 16} (21 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-22.svg"])
+              (render-svg {:width 16 :height 16} (22 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-23.svg"])
+              (render-svg {:width 16 :height 16} (23 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-24.svg"])
+              (render-svg {:width 16 :height 16} (24 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-25.svg"])
+              (render-svg {:width 16 :height 16} (25 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-26.svg"])
+              (render-svg {:width 16 :height 16} (26 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-27.svg"])
+              (render-svg {:width 16 :height 16} (27 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-28.svg"])
+              (render-svg {:width 16 :height 16} (28 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-29.svg"])
+              (render-svg {:width 16 :height 16} (29 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-30.svg"])
+              (render-svg {:width 16 :height 16} (30 dates)))
+
+_ (write-file (public ["images" "nav" "icon" "dates-31.svg"])
+              (render-svg {:width 16 :height 16} (31 dates)))
 
 _ (write-file (public ["images" "nav" "icon" "contact.svg"])
               (render-svg {:width 16 :height 16} icon:contact))

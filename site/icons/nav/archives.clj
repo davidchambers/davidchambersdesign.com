@@ -22,17 +22,9 @@
 
       paper
         [(⇨  1) (⇩  4)
-         (→ 14) (↓ 11) (← 14) (↑ 11)]
-
-      date
-        [(⇨  4) (⇩  6)
-         (→  4) (↓  7) (←  4) (↑  1) (→  3) (↑  2) (←  3) (↑  1)
-         (→  3) (↑  2) (←  3) (↑  1)
-         (⇨  6) (⇩  0)
-         (→  2) (↓  7) (←  1) (↑  6) (←  1) (↑  1)]]
+         (→ 14) (↓ 11) (← 14) (↑ 11)]]
 
    [(path {:fill "#da5" :d (render base)})
     (path {:fill "#333" :d (render spiral)})
     (path {:fill "#b00" :d (render header)})
-    (path {:fill "#fff" :d (render paper)})
-    (path {:fill "#000" :d (render date)})]))
+    (path {:fill "#fff" :d (render paper)})]))
