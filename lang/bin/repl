@@ -72,6 +72,15 @@ const server = repl.start ({
     } else if (result.value.name === 'SyntaxError') {
       callback (new repl.Recoverable (result.value));
     } else {
+      if (result.value.name === 'ReferenceError') {
+        result.value.message = result.value.message.replace (
+          /^_([^ ]+)/,
+          (_, encoded) => encoded.replace (
+            /[$]([0-9A-F]{4})/g,
+            (_, code) => String.fromCharCode (parseInt (code, 16))
+          )
+        );
+      }
       console.error (result.value);
       console.log ();
       server.displayPrompt (false);
