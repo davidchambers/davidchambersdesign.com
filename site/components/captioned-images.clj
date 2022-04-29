@@ -1,4 +1,4 @@
-(import* ["../elements"]
+(import ["../elements"]
 
 (let [s (require "../sanctuary")
 

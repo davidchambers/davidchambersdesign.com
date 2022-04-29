@@ -1,4 +1,4 @@
-(import* ["../elements"]
+(import ["../elements"]
 
 (let [
   uncaptioned-image (require "../components/uncaptioned-image")

@@ -64,7 +64,7 @@ Expression
   / Symbol
   / Identifiers
   / Identifier
-  / ImportStar
+  / Import
   / Function
   / Lambda
   / Let
@@ -155,9 +155,9 @@ Identifier "identifier"
   = name:$(IdentChar)+
   { return {type: 'identifiers', name, path: []}; }
 
-ImportStar "import*"
+Import "import"
   = Separator* '('
-    Separator* 'import*'
+    Separator* 'import'
     Separator* '['
     names:(
       head:(Separator* name:Expression { return name; })
@@ -167,7 +167,7 @@ ImportStar "import*"
     Separator* ']'
     Separator* body:Expression
     Separator* ')'
-    { return {type: 'import*', names, body}; }
+    { return {type: 'import', names, body}; }
 
 Function "function"
   = Separator* '('

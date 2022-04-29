@@ -1,4 +1,4 @@
-(import* ["../elements"]
+(import ["../elements"]
 
 (lambda [src alt caption]
    (dl

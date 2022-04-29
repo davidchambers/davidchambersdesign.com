@@ -1,4 +1,4 @@
-(import* ["./orthogonal"]
+(import ["./orthogonal"]
 
 (let [e (require "./elements")
       s (require "./sanctuary")

@@ -1,4 +1,4 @@
-(import* ["../elements"]
+(import ["../elements"]
 
 (let [
   luxon               (require "../luxon")

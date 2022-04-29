@@ -116,7 +116,7 @@ exports.toJs = dirname => function recur(expr) {
                     recur (expr.function))
                    (recur (expr.argument));
     }
-    case 'import*': {
+    case 'import': {
       const params = S.map (symbol => recur ({type: 'identifiers', name: Symbol.keyFor (symbol), path: []}))
                            (Object.getOwnPropertySymbols (S.reduce (env => name => Object.assign (env, require (path.join (dirname, name.value))))
                                                                    (Object.create (null))

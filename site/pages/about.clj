@@ -1,4 +1,4 @@
-(import* ["../elements"]
+(import ["../elements"]
 
 (let [
   captioned-image   (require "../components/captioned-image")
