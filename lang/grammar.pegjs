@@ -4,13 +4,13 @@ Start
     Separator*
     { return expr; }
 
-LineTerminator "line terminator"
+LineTerminator 'line terminator'
   = '\u000A' // LINE FEED (LF)
   / '\u000D' // CARRIAGE RETURN (CR)
   / '\u2028' // LINE SEPARATOR
   / '\u2029' // PARAGRAPH SEPARATOR
 
-Whitespace "whitespace"
+Whitespace 'whitespace'
   = LineTerminator
   / '\u0009' // CHARACTER TABULATION
   / '\u000B' // LINE TABULATION
@@ -34,14 +34,14 @@ Whitespace "whitespace"
   / '\u3000' // IDEOGRAPHIC SPACE
   / '\uFEFF' // BYTE ORDER MARK
 
-Comment "comment"
+Comment 'comment'
   = ';' (!LineTerminator .)*
 
-Separator "separator"
+Separator 'separator'
   = Whitespace
   / Comment
 
-IdentChar "identifier character"
+SymbolChar 'symbol character'
   = !Whitespace
     !'\u0022' // QUOTATION MARK
     !'\u0028' // LEFT PARENTHESIS
@@ -53,12 +53,21 @@ IdentChar "identifier character"
     !'\u007D' // RIGHT CURLY BRACKET
     .
 
-dec = [0-9]
-bin = [0-1]
-oct = [0-7]
-hex = [0-9A-F]
+IdentChar 'identifier character'
+  = !Whitespace
+    !'\u0022' // QUOTATION MARK
+    !'\u0028' // LEFT PARENTHESIS
+    !'\u0029' // RIGHT PARENTHESIS
+    !'\u002E' // FULL STOP
+    !'\u002F' // SOLIDUS
+    !'\u003B' // SEMICOLON
+    !'\u005B' // LEFT SQUARE BRACKET
+    !'\u005D' // RIGHT SQUARE BRACKET
+    !'\u007B' // LEFT CURLY BRACKET
+    !'\u007D' // RIGHT CURLY BRACKET
+    .
 
-Expression
+Expression 'expression'
   = Number
   / String
   / Symbol
@@ -76,53 +85,35 @@ Expression
   / Object
   / Application
 
-// ----- Numbers -----
-
-Number "number"
+Number 'number'
   = BinaryNumber
   / OctalNumber
   / HexadecimalNumber
   / DecimalNumber
 
-BinaryNumber "binary number"
-  = Zero 'b' digits:$(bin+)
+BinaryNumber 'binary number'
+  = '0' 'b' digits:$([0-1])+
   { return {type: 'number', value: parseInt(digits, 2)}; }
 
-OctalNumber "octal number"
-  = Zero 'o' digits:$(oct+)
+OctalNumber 'octal number'
+  = '0' 'o' digits:$([0-7])+
   { return {type: 'number', value: parseInt(digits, 8)}; }
 
-HexadecimalNumber "hexadecimal number"
-  = Zero 'x' digits:$(hex+)
+HexadecimalNumber 'hexadecimal number'
+  = '0' 'x' digits:$([0-9A-F])+
   { return {type: 'number', value: parseInt(digits, 16)}; }
 
-DecimalNumber "decimal number"
-  = ('-' / '+')? Int Frac?
+DecimalNumber 'decimal number'
+  = ('-' / '+')?
+    ('0' / ([1-9] [0-9]*))
+    ('.' [0-9]+)?
   { return {type: 'number', value: parseFloat(text())}; }
 
-Int
-  = Zero
-  / (Nonzero dec*)
-
-Frac
-  = DecimalPoint dec+
-
-DecimalPoint
-  = '.'
-
-Zero
-  = '0'
-
-Nonzero
-  = [1-9]
-
-// ----- Strings -----
-
-String "string"
-  = '"' chars:(Char*) '"'
+String 'string'
+  = '"' chars:Char* '"'
   { return {type: 'string', value: chars.join('')}; }
 
-Char
+Char 'char'
   = '\\' '"'  { return '"'; }
   / '\\' '\\' { return '\\'; }
   / '\\' 'b'  { return '\b'; }
@@ -130,32 +121,28 @@ Char
   / '\\' 'n'  { return '\n'; }
   / '\\' 'r'  { return '\r'; }
   / '\\' 't'  { return '\t'; }
-  / '\\' 'u' digits:$(hex hex hex hex)
+  / '\\' 'u' digits:$([0-9A-F] [0-9A-F] [0-9A-F] [0-9A-F])
               { return String.fromCharCode(parseInt(digits, 16)); }
   / '\\'      { expected('valid escape sequence'); }
   / [^"]
 
-// ----- Symbols -----
-
-Symbol "symbol"
-  = ':' name:$(IdentChar+)
+Symbol 'symbol'
+  = ':' name:$(SymbolChar)+
   { return {type: 'symbol', name}; }
 
-// ----- Identifier -----
-
-Identifiers "identifiers"
-  = name:$(!'.' !'/' IdentChar)+
+Identifiers 'identifiers'
+  = name:$(IdentChar)+
     path:(
-      '.' ident:$(!'.' !'/' IdentChar)+ { return {type: 'string', value: ident}; }
-    / '/' ident:$(!'.' !'/' IdentChar)+ { return {type: 'symbol', name: ident}; }
+      '.' ident:$(IdentChar)+ { return {type: 'string', value: ident}; }
+    / '/' ident:$(IdentChar)+ { return {type: 'symbol', name: ident}; }
     )+
   { return {type: 'identifiers', name, path}; }
 
-Identifier "identifier"
-  = name:$(IdentChar)+
+Identifier 'identifier'
+  = name:$('.' / '/' / IdentChar)+
   { return {type: 'identifiers', name, path: []}; }
 
-Import "import"
+Import 'import'
   = Separator* '('
     Separator* 'import'
     Separator* '['
@@ -169,7 +156,7 @@ Import "import"
     Separator* ')'
     { return {type: 'import', names, body}; }
 
-Function "function"
+Function 'function'
   = Separator* '('
     Separator* 'function'
     Separator* name:Identifier
@@ -181,7 +168,7 @@ Function "function"
     Separator* ')'
     { return {type: 'function', name, parameter, body: parameters.reduceRight((body, parameter) => ({type: 'lambda', parameter, body}), body)}; }
 
-Lambda "lambda"
+Lambda 'lambda'
   = Separator* '('
     Separator* 'lambda'
     Separator* '['
@@ -195,7 +182,7 @@ Lambda "lambda"
     Separator* ')'
     { return parameters.reduceRight((body, parameter) => ({type: 'lambda', parameter, body}), body); }
 
-Let "let"
+Let 'let'
   = Separator* '('
     Separator* 'let'
     Separator* '['
@@ -209,12 +196,12 @@ Let "let"
     Separator* ')'
     { return (bindings ?? []).reduceRight((body, [parameter, expr]) => ({type: 'application', function: {type: 'lambda', parameter, body}, argument: expr}), body); }
 
-Binding "binding"
+Binding 'binding'
   = Separator* ident:Identifier
     Separator+ expr:Expression
     { return [ident, expr]; }
 
-And "and"
+And 'and'
   = Separator* '('
     Separator* 'and'
     Separator+ left:Expression
@@ -222,7 +209,7 @@ And "and"
     Separator* ')'
     { return {type: 'and', left, right}; }
 
-Or "or"
+Or 'or'
   = Separator* '('
     Separator* 'or'
     Separator+ left:Expression
@@ -230,7 +217,7 @@ Or "or"
     Separator* ')'
     { return {type: 'or', left, right}; }
 
-If "if"
+If 'if'
   = Separator* '('
     Separator* 'if'
     Separator+ predicate:Expression
@@ -239,7 +226,7 @@ If "if"
     Separator* ')'
     { return {type: 'if', predicate, consequent, alternative}; }
 
-Switch "switch"
+Switch 'switch'
   = Separator* '('
     Separator* 'switch'
     Separator+ discriminant:Expression
@@ -249,12 +236,12 @@ Switch "switch"
     Separator* ')'
     { return {type: 'switch', discriminant, cases}; }
 
-Case "case"
+Case 'case'
   = Separator* predicate:Expression
     Separator+ consequent:Expression
     { return {predicate, consequent}; }
 
-Array
+Array 'array'
   = Separator* '['
     elements:(
       head:(Separator* expr:Expression { return expr; })
@@ -264,7 +251,7 @@ Array
     Separator* ']'
     { return {type: 'array', elements: elements ?? []}; }
 
-Object
+Object 'object'
   = Separator* '{'
     entries:(
       head:(Separator* key:Expression Separator+ value:Expression { return [key, value]; })
@@ -274,7 +261,7 @@ Object
     Separator* '}'
     { return {type: 'object', entries: entries ?? []}; }
 
-Application
+Application 'application'
   = Separator* '('
     Separator* func:Expression
     args:(Separator+ arg:Expression { return arg; })+
