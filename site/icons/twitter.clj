@@ -1,4 +1,4 @@
-(import ["../../elements" "../../orthogonal"]
+(import ["../elements" "../orthogonal"]
 
    [(linearGradient {:id "gradient" :x1 "50%" :y1 "0%" :x2 "50%" :y2 "100%"}
        [(stop {:stop-color "#96ecfd" :offset "0%"})

@@ -1,4 +1,4 @@
-(import ["../../elements" "../../orthogonal"]
+(import ["../elements" "../orthogonal"]
 
 (let [base
         [(⇨  0) (⇩  1)

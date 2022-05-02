@@ -111,13 +111,15 @@ body {
   display: block;
   width: 354px;
   height: 24px;
-  mask-image: url(/images/masthead-mask.svg);
-  background: url(/images/masthead.svg) no-repeat;
+  mask-image: url(/svg/masthead-mask.svg);
+  background: url(/svg/masthead.svg) no-repeat;
   line-height: 10;
   overflow: hidden;
 }
 
-a#title:focus, a#title:hover, a#title.hover {
+a#title:focus,
+a#title:hover,
+a#title.hover {
   background-color: #ccc;
 }
 
@@ -153,12 +155,14 @@ a#title:focus, a#title:hover, a#title.hover {
   visibility: visible;
 }
 
-#nav a:hover, #nav a.hover {
+#nav a:hover,
+#nav a.hover {
   border-color: #cb4b16;
   background-color: white;
 }
 
-#nav a:hover > span, #nav a.hover > span {
+#nav a:hover > span,
+#nav a.hover > span {
   visibility: visible;
   z-index: 20;
 }
@@ -177,7 +181,7 @@ a#title:focus, a#title:hover, a#title.hover {
 }
 
 #nav a[href='/about/'] {
-  background-image: url(../images/nav/icon/about.svg);
+  background-image: url(../svg/about.svg);
 }
 
 #nav a[href='/about/'] > span {
@@ -185,7 +189,7 @@ a#title:focus, a#title:hover, a#title.hover {
 }
 
 #nav a[href='/archives/'] {
-  background-image: url(../images/nav/icon/archives.svg);
+  background-image: url(../svg/archives.svg);
 }
 
 #nav a[href='/archives/'] > span {
@@ -193,7 +197,7 @@ a#title:focus, a#title:hover, a#title.hover {
 }
 
 #nav a[href='https://bitbucket.org/davidchambers'] {
-  background-image: url(../images/nav/icon/bitbucket.svg);
+  background-image: url(../svg/bitbucket.svg);
 }
 
 #nav a[href='https://bitbucket.org/davidchambers'] > span {
@@ -201,7 +205,7 @@ a#title:focus, a#title:hover, a#title.hover {
 }
 
 #nav a[href='/contact/'] {
-  background-image: url(../images/nav/icon/contact.svg);
+  background-image: url(../svg/contact.svg);
 }
 
 #nav a[href='/contact/'] > span {
@@ -209,7 +213,7 @@ a#title:focus, a#title:hover, a#title.hover {
 }
 
 #nav a[href='/flushcache/'] {
-  background-image: url(../images/nav/icon/flushcache.svg);
+  background-image: url(../svg/flushcache.svg);
 }
 
 #nav a[href='/flushcache/'] > span {
@@ -217,7 +221,7 @@ a#title:focus, a#title:hover, a#title.hover {
 }
 
 #nav a[href='/tags/'] {
-  background-image: url(../images/nav/icon/tags.svg);
+  background-image: url(../svg/tags.svg);
 }
 
 #nav a[href='/tags/'] > span {
@@ -225,7 +229,7 @@ a#title:focus, a#title:hover, a#title.hover {
 }
 
 #nav a[href='/twitter/'] {
-  background-image: url(../images/nav/icon/twitter.svg);
+  background-image: url(../svg/twitter.svg);
 }
 
 #nav a[href='/twitter/'] > span {
@@ -284,7 +288,8 @@ a:hover {
   color: #cb4b16;
 }
 
-a code, a var {
+a code,
+a var {
   color: inherit;
 }
 
@@ -310,7 +315,8 @@ caption {
   font-weight: normal;
 }
 
-code, var {
+code,
+var {
   border: 1px solid #eee8d5;
   background: #fef9ec;
   padding: 1px 4px;
@@ -343,13 +349,15 @@ dl dt {
   font-weight: bold;
 }
 
-dl dt.textual, dl dt.textual ~ dt {
+dl dt.textual,
+dl dt.textual ~ dt {
   float: left;
   margin: 0;
   padding: 1.75em 0.5em 0 0;
 }
 
-dl dt.textual:after, dl dt.textual ~ dt:after {
+dl dt.textual:after,
+dl dt.textual ~ dt:after {
   content: ':';
 }
 
@@ -359,12 +367,15 @@ dl dt.textual ~ dd {
   padding: 1.75em 0 0;
 }
 
-dl dt embed, dl dt img, dl dt object {
+dl dt embed,
+dl dt img,
+dl dt object {
   display: block;
   margin: 0 0 -1px;
 }
 
-dl dt embed, dl dt img {
+dl dt embed,
+dl dt img {
   border: 1px solid #cccccc;
 }
 
@@ -377,13 +388,17 @@ em {
   font-style: italic;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font: bold 1.667em/1.05 'proxima-nova-1', 'proxima-nova-2', Helvetica, Arial, sans-serif;
   color: #586e75;
   text-shadow: 0 1px 0 white;
 }
 
-h2, h3 {
+h2,
+h3 {
   margin: 1.312em 0 0;
   font-size: 1.334em;
   line-height: 1.312;
@@ -442,7 +457,8 @@ img[src*='/decorative/right/'] {
   border: none !important;
 }
 
-img[src*='/elam/'], img[src*='/lightbox/'] {
+img[src*='/elam/'],
+img[src*='/lightbox/'] {
   margin: 1.75em 0 -1px;
   border: 1px solid #cccccc;
 }
@@ -485,7 +501,10 @@ img.margin-top {
   margin-top: 1.75em;
 }
 
-input[type='url'], input[type='text'], input[type='email'], input[type='search'] {
+input[type='url'],
+input[type='text'],
+input[type='email'],
+input[type='search'] {
   -webkit-box-sizing: content-box;
   height: 15px;
   border: 1px solid #cccccc;
@@ -494,7 +513,10 @@ input[type='url'], input[type='text'], input[type='email'], input[type='search']
   font-size: 1em;
 }
 
-input[type='url']:focus, input[type='text']:focus, input[type='email']:focus, input[type='search']:focus {
+input[type='url']:focus,
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='search']:focus {
   border-color: #268bd2;
   outline: none;
 }
@@ -592,7 +614,8 @@ ul {
   list-style: square outside url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAGElEQVQI12OYOXPmf3QMBAwM9JAAEdgwAMpjZprFgxhUAAAAAElFTkSuQmCC');
 }
 
-ul li.pro, ul li.con {
+ul li.pro,
+ul li.con {
   margin: 0;
   margin-left: -21px;
   background: no-repeat 0 0.25em;
@@ -685,7 +708,9 @@ article > header > dl > dd > a {
   color: rgba(0, 0, 0, 0.732);
 }
 
-#tags li a:focus, #tags li a:hover, #tags li a.hover {
+#tags li a:focus,
+#tags li a:hover,
+#tags li a.hover {
   left: -21px;
   top: -6px;
   width: 100%;
@@ -834,11 +859,15 @@ ol li.interviewer ~ li:nth-child(odd) {
   color: #93a1a1;
 }
 
-#comments, #related, #respond {
+#comments,
+#related,
+#respond {
   margin: 2.625em 0 0;
 }
 
-.unidentified.comments, .unidentified.related, .unidentified.respond {
+.unidentified.comments,
+.unidentified.related,
+.unidentified.respond {
   margin: 2.625em 0 0;
 }
 
@@ -870,7 +899,8 @@ ol li.interviewer ~ li:nth-child(odd) {
   line-height: 1;
 }
 
-#main article header h1, #main article header h2 {
+#main article header h1,
+#main article header h2 {
   display: inline;
   margin: 0 0.25em 0 0;
   font: bold 1.667em/1.05 'proxima-nova-1', 'proxima-nova-2', Helvetica, Arial, sans-serif;
@@ -931,7 +961,8 @@ footer.metadata ul a {
   color: white;
 }
 
-footer.metadata ul a:focus, footer.metadata ul a:hover {
+footer.metadata ul a:focus,
+footer.metadata ul a:hover {
   background: #cb4b16;
 }
 
@@ -985,7 +1016,8 @@ article article footer img {
   display: block;
 }
 
-article article footer strong, article article footer time {
+article article footer strong,
+article article footer time {
   display: block;
   margin: 0 0 0 32px;
   padding: 0 0 0 1em;
@@ -1148,12 +1180,13 @@ ol.archives time {
   margin: 0.167em 0.5em 0 0;
   width: 16px;
   height: 16px;
-  background-image: url(../images/nav/icon/archives.svg);
+  background-image: url(../svg/archives.svg);
   background-repeat: no-repeat;
   line-height: 10;
   overflow: hidden;
 }
 
+ol.archives time:before,
 ol.archives time:after {
   position: absolute;
   top: 0;
@@ -1161,131 +1194,203 @@ ol.archives time:after {
   right: 0;
   bottom: 0;
   display: block;
+  background-position-y: 6px;
   content: '';
 }
 
+ol.archives time[datetime*='10T']:before,
+ol.archives time[datetime*='11T']:before,
+ol.archives time[datetime*='12T']:before,
+ol.archives time[datetime*='13T']:before,
+ol.archives time[datetime*='14T']:before,
+ol.archives time[datetime*='15T']:before,
+ol.archives time[datetime*='16T']:before,
+ol.archives time[datetime*='17T']:before,
+ol.archives time[datetime*='18T']:before,
+ol.archives time[datetime*='19T']:before {
+  background-image: url(../svg/dates-1.svg);
+}
+
+ol.archives time[datetime*='20T']:before,
+ol.archives time[datetime*='21T']:before,
+ol.archives time[datetime*='22T']:before,
+ol.archives time[datetime*='23T']:before,
+ol.archives time[datetime*='24T']:before,
+ol.archives time[datetime*='25T']:before,
+ol.archives time[datetime*='26T']:before,
+ol.archives time[datetime*='27T']:before,
+ol.archives time[datetime*='28T']:before,
+ol.archives time[datetime*='29T']:before {
+  background-image: url(../svg/dates-2.svg);
+}
+
+ol.archives time[datetime*='30T']:before,
+ol.archives time[datetime*='31T']:before {
+  background-image: url(../svg/dates-3.svg);
+}
+
+ol.archives time[datetime*='0T']:after {
+  background-image: url(../svg/dates-0.svg);
+}
+
+ol.archives time[datetime*='1T']:after {
+  background-image: url(../svg/dates-1.svg);
+}
+
+ol.archives time[datetime*='2T']:after {
+  background-image: url(../svg/dates-2.svg);
+}
+
+ol.archives time[datetime*='3T']:after {
+  background-image: url(../svg/dates-3.svg);
+}
+
+ol.archives time[datetime*='4T']:after {
+  background-image: url(../svg/dates-4.svg);
+}
+
+ol.archives time[datetime*='5T']:after {
+  background-image: url(../svg/dates-5.svg);
+}
+
+ol.archives time[datetime*='6T']:after {
+  background-image: url(../svg/dates-6.svg);
+}
+
+ol.archives time[datetime*='7T']:after {
+  background-image: url(../svg/dates-7.svg);
+}
+
+ol.archives time[datetime*='8T']:after {
+  background-image: url(../svg/dates-8.svg);
+}
+
+ol.archives time[datetime*='9T']:after {
+  background-image: url(../svg/dates-9.svg);
+}
+
 ol.archives time[datetime*='01T']:after {
-  background-image: url(../images/nav/icon/dates-1.svg);
+  background-position-x: 7px;
 }
 
 ol.archives time[datetime*='02T']:after {
-  background-image: url(../images/nav/icon/dates-2.svg);
+  background-position-x: 6px;
 }
 
 ol.archives time[datetime*='03T']:after {
-  background-image: url(../images/nav/icon/dates-3.svg);
+  background-position-x: 6px;
 }
 
 ol.archives time[datetime*='04T']:after {
-  background-image: url(../images/nav/icon/dates-4.svg);
+  background-position-x: 6px;
 }
 
 ol.archives time[datetime*='05T']:after {
-  background-image: url(../images/nav/icon/dates-5.svg);
+  background-position-x: 6px;
 }
 
 ol.archives time[datetime*='06T']:after {
-  background-image: url(../images/nav/icon/dates-6.svg);
+  background-position-x: 6px;
 }
 
 ol.archives time[datetime*='07T']:after {
-  background-image: url(../images/nav/icon/dates-7.svg);
+  background-position-x: 6px;
 }
 
 ol.archives time[datetime*='08T']:after {
-  background-image: url(../images/nav/icon/dates-8.svg);
+  background-position-x: 6px;
 }
 
 ol.archives time[datetime*='09T']:after {
-  background-image: url(../images/nav/icon/dates-9.svg);
+  background-position-x: 6px;
 }
 
 ol.archives time[datetime*='10T']:after {
-  background-image: url(../images/nav/icon/dates-10.svg);
+  background-position-x: 8px;
 }
 
 ol.archives time[datetime*='11T']:after {
-  background-image: url(../images/nav/icon/dates-11.svg);
+  background-position-x: 9px;
 }
 
 ol.archives time[datetime*='12T']:after {
-  background-image: url(../images/nav/icon/dates-12.svg);
+  background-position-x: 8px;
 }
 
 ol.archives time[datetime*='13T']:after {
-  background-image: url(../images/nav/icon/dates-13.svg);
+  background-position-x: 8px;
 }
 
 ol.archives time[datetime*='14T']:after {
-  background-image: url(../images/nav/icon/dates-14.svg);
+  background-position-x: 8px;
 }
 
 ol.archives time[datetime*='15T']:after {
-  background-image: url(../images/nav/icon/dates-15.svg);
+  background-position-x: 8px;
 }
 
 ol.archives time[datetime*='16T']:after {
-  background-image: url(../images/nav/icon/dates-16.svg);
+  background-position-x: 8px;
 }
 
 ol.archives time[datetime*='17T']:after {
-  background-image: url(../images/nav/icon/dates-17.svg);
+  background-position-x: 8px;
 }
 
 ol.archives time[datetime*='18T']:after {
-  background-image: url(../images/nav/icon/dates-18.svg);
+  background-position-x: 8px;
 }
 
 ol.archives time[datetime*='19T']:after {
-  background-image: url(../images/nav/icon/dates-19.svg);
+  background-position-x: 8px;
 }
 
 ol.archives time[datetime*='20T']:after {
-  background-image: url(../images/nav/icon/dates-20.svg);
+  background-position-x: 9px;
 }
 
 ol.archives time[datetime*='21T']:after {
-  background-image: url(../images/nav/icon/dates-21.svg);
+  background-position-x: 10px;
 }
 
 ol.archives time[datetime*='22T']:after {
-  background-image: url(../images/nav/icon/dates-22.svg);
+  background-position-x: 9px;
 }
 
 ol.archives time[datetime*='23T']:after {
-  background-image: url(../images/nav/icon/dates-23.svg);
+  background-position-x: 9px;
 }
 
 ol.archives time[datetime*='24T']:after {
-  background-image: url(../images/nav/icon/dates-24.svg);
+  background-position-x: 9px;
 }
 
 ol.archives time[datetime*='25T']:after {
-  background-image: url(../images/nav/icon/dates-25.svg);
+  background-position-x: 9px;
 }
 
 ol.archives time[datetime*='26T']:after {
-  background-image: url(../images/nav/icon/dates-26.svg);
+  background-position-x: 9px;
 }
 
 ol.archives time[datetime*='27T']:after {
-  background-image: url(../images/nav/icon/dates-27.svg);
+  background-position-x: 9px;
 }
 
 ol.archives time[datetime*='28T']:after {
-  background-image: url(../images/nav/icon/dates-28.svg);
+  background-position-x: 9px;
 }
 
 ol.archives time[datetime*='29T']:after {
-  background-image: url(../images/nav/icon/dates-29.svg);
+  background-position-x: 9px;
 }
 
 ol.archives time[datetime*='30T']:after {
-  background-image: url(../images/nav/icon/dates-30.svg);
+  background-position-x: 9px;
 }
 
 ol.archives time[datetime*='31T']:after {
-  background-image: url(../images/nav/icon/dates-31.svg);
+  background-position-x: 10px;
 }
 
 #cricket-field-diagrams dl {

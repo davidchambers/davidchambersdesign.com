@@ -1,4 +1,4 @@
-(import ["../../elements" "../../orthogonal"]
+(import ["../elements" "../orthogonal"]
 
 (let [bucket
         [(⇨  0) (⇩  0)
