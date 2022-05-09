@@ -2,15 +2,27 @@
 
    (let [s (require "../sanctuary")
 
+         . s/compose
          ++ (s/join-with "")
 
-         % (s/compose (s/flip s/concat "%") coerce)
-         em (s/compose (s/flip s/concat "em") coerce)
-         px (s/compose (s/flip s/concat "px") coerce)
-         , (s/compose (s/join-with ", ") (s/map coerce))
+         % (. (s/flip s/concat "%") coerce)
+         em (. (s/flip s/concat "em") coerce)
+         px (. (s/flip s/concat "px") coerce)
+
+         ' (s/pipe [(invoke-2 "replace" (s/regex "g" "(?=')") "\\")
+                    (s/concat "'")
+                    (s/flip s/concat "'")])
+
+         , (. (s/join-with ", ") (s/map coerce))
+
+         sans-serif (. , (. (s/append :sans-serif) (s/map ')))
+         monospace (. , (. (s/append :monospace) (s/map ')))
+
          rgba (lambda [r g b a] (++ ["rgba(" (, [r g b a]) ")"]))
+
          url (lambda [url] (++ ["url(" url ")"]))
-         !important (s/compose (+ " !important") coerce)
+
+         !important (. (+ " !important") coerce)
 
          base03         "#002b36"
          base02         "#073642"
@@ -67,7 +79,7 @@
        :height (% 100)
        :background-color base3
        :font-size (% 75)
-       :font-family (, ["'Lucida Grande'" "'Lucida Sans Unicode'" "Helvetica" "Arial" :sans-serif])
+       :font-family (sans-serif ["Lucida Grande" "Lucida Sans Unicode" "Helvetica" "Arial"])
        :color base00
        :cursor :default
      ]
@@ -214,48 +226,39 @@
        :overflow :hidden
        :visibility :hidden
      ]
-     ["#nav a[href='/about/']"] [
-       :background-image (url "../svg/about.svg")
-     ]
      ["#nav a[href='/about/'] > span"] [
        :background-image (url "'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAABNUlEQVRo3u2YQRKDIAxFSac38k4eyjN5p3TjwlIJITEC0/822qJJDBA+0LIs6YCPK6VvSv/fyaWPfd9/Hty2LX+29fftcU7IaDmp2WjxYYpnXdcEQC9eSAEAAPTlfVIRdFy5oCb4dE9CW96uVaxJ8B2tBKX4LfZrebCodqvt0vvaHLXEyo7x4el/dvQLAFMpYhKKp9SusdsyQTQFvVQkIuK/ypFkJ4+DlX4ttqVvjFjkSCh8pOgrTxEmxeLg7V8AQhXxP/CECmJDHBRo25qn8wJxtVOiRt8ofABUFDELCmoGeLA4IlTnE4o2Kr89YwdgqqMJGmyisGKbnjLVlm+PgX/38A/5rY01AIY6mpDO9djRPkLRuSM+CpzUXtuRsfX2XbM/+vgDIBEzxAAAAIxwNAEAAKATH+FfdBZqw1WQAAAAAElFTkSuQmCC'")
-     ]
-     ["#nav a[href='/archives/']"] [
-       :background-image (url "../svg/archives.svg")
      ]
      ["#nav a[href='/archives/'] > span"] [
        :background-image (url "'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAACHElEQVRo3u1aWa7DIAxkqnejcCYOxZlyJ7+fRkKIzQbCUixVagIEPHaHiQuu61JfI6WUuu8bqtK01slnpdqttepFI+8agTZkxkK9a6Pm3d23VnOTIJdWxM2fM7WGoTlrjJk+8f9GTNqC7DslEm1KcMeOHVuAiB8CIq01uUTpqtdYW4pgQ+rXv+dfW2vpu5PBUcrk7XLwlDTF2joqaE4/MNS4347APYqorhLl4W5Cqedw1136hkGZsZRRVrPjWuKDBNeY+kRgbml8lbBvrXrn5A46r/F1+3DLDSEyTZUgfLKVmEvMD8m6xBtq76ygS+dA4sfObVeJ75K1hZJYuq6SsSGCogLfVsI15wMJ110SRzSIbwxnyZpUB/9r/VmfiFOEG1PDpSWIEFnHCDWklmOqeQOjzv1TBFNS15OMxQ/gysUrh51046qNLzmfkf638mdqIiY/yDXqtadZaymkelMljEUNTBJAY9IggbpuMXZ3XGfBrmQe6VvWCP9nzjmWIkatI7Xk7daHY2qYUzN++ixMzGjQX6pmSgmIKsb+Iq41uCNThui5Ic26UebGkVqkVCE+NfH8eZc7qtbCjDHwSTVGyowaMQKBArM/55UWjLmJSRxUQTQcTPx2VODZqrSwAq6tchGVxMKJEV4kMmnuvJlzfQFwzhE/BDu6/LBBZWGqetVOR/J+GdflyWaUrXCO+HPCtLWdc9H74XriuaH9AyA2SpOz0ppaAAAAAElFTkSuQmCC'")
      ]
-     ["#nav a[href='https://bitbucket.org/davidchambers']"] [
-       :background-image (url "../svg/bitbucket.svg")
-     ]
      ["#nav a[href='https://bitbucket.org/davidchambers'] > span"] [
        :background-image (url "'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAABvklEQVRo3u2awZaAIAhF+6e+1q91VnNOZyaDBw/UYuHCLELFK4LHeZ79Wnrvx7XcPdc+YxWGbERGa6231vqoPruspk+Grr9ydul3lf3XRaa9/QOUBlgF4gJxpq4F4CpvX2ciiEd16bkE6qd3tO9qvpXarCC+emijNgTqT/LQ/2plMPW7a4vo00gO2id0s/XqaLUX60lB+z+pbpGLjqU0HtZ+oXartd2I09kRFZpg1DVtKORR436aJKn+d3FpQYGA1CKDrZ8WkN5NDwESc8y942G1F6vHxtRHei9yPLPG/a4/HltM8YizQDySLW0WyIZihUNkHYGOF8RRIJkJYqtcj47e+fWCyePxWk5F6ImEMVcZ446sMzaMtwKxBNkn0O4AYu3krgZiBApfBrF1PtDQxEwQWzz5aBCzTmspoYnVQDxqQ/RBwxcreMSjY9LqIGZ5HZkgjpKNzq83OTwLxFYbnuERa8fdcgJghCzoMWKt54p4tp5EXwSImckQNNHBTPix++sFXSYstZtedrLOEiP2JlctAGImnK3/ZyfrPKEJN4jrmkqVr19Pqut177gWtvM8lGFUKSB8GABvAfHuc/ADvtWjgc0r3tgAAAAASUVORK5CYII='")
-     ]
-     ["#nav a[href='/contact/']"] [
-       :background-image (url "../svg/contact.svg")
      ]
      ["#nav a[href='/contact/'] > span"] [
        :background-image (url "'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAACHUlEQVRo3u1aS67DIAy0n3qjciYOlTPlTtNNIyFkYhtISvs8qzYE8AeGwQo/n08iIlCBfd+ZJiGlBM+Y27Zp7SAiyjmfjpdzLsc6/JvhlzbWzLkCc/AtObvazrv9NM2Xc/73C/QhBAuxb4cQBByItRVwEzGdqeFD0UrtpdqVlG/ZN6WEo+1szFL1Ficm18+3bYOmih0ntXRyQ9gAqNq5NbZgMxsVAk42H5SNic5+PTFptbGihrT3RubV+kKJGTriRoqA4Y7coiNHVjXt9XM0P3FTNODPWlZokegZyZYEW/9ujVmWHmqiLf8PkLCXqLmxwNT5qzILDLeO1rxUPW8dDFJf6TkmxeSu2xMb5m3FV8sZGwioN2+e8Vxry+j7bD971qzVvlDEo/DWlCUyP6kfffIExcgJXtWpuZOALKrLajMUQkLV/4rY1/NY5kVHrFbGbHW4ku/85blZTxFfAUllLwh2ksDdm5c7bIaiWj7t14ji+ibgh3wJXEXEHrV6B+p6sdQuvaP1u1plaF9/TCIpj82Ww4Vn3AQcdkK4Ev86Qa14yN95sNbvRqniTcTlJoBU100pwfsZmlbGKMeUShEHwfaWJt790LgGsrAQuLFAeucfJSgYbCaDzXU/jezYaJs3pjNI+85N6/HHYqM3D6v46W0Ppd+ThPd3xCVRfloBR1bWUDOxocbjGDG8TrT8FB6xDALOEkfAdiWPGAbMeAE9OSswkuIpmQAAAABJRU5ErkJggg=='")
      ]
-     ["#nav a[href='/flushcache/']"] [
-       :background-image (url "../svg/flushcache.svg")
-     ]
      ["#nav a[href='/flushcache/'] > span"] [
        :background-image (url "'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAAAu0lEQVRo3u3a0QrCMAwF0PxT///b4rOyma7tsOp5OKAUQh3hNnRGay1PxMvnGavqfHwPmQmwVBVQglgQA5sFcfU9DqbqGJiy86ROtfZuvWcPVW1NA9waxDkQvD3BHBevPI5qxsRB0buHrt+iaYDdJ+Jqio2BIK6m1tG6Q1O7pgF+4WpiJohX1u09RAQx8HVBfEdgzkzos4fK07qmAXb410Tvi7TRq4m4+DJu5R7KupoGWB7EHgKAIAb4aw9tcYNEXXm9DwAAAABJRU5ErkJggg=='")
-     ]
-     ["#nav a[href='/tags/']"] [
-       :background-image (url "../svg/tags.svg")
      ]
      ["#nav a[href='/tags/'] > span"] [
        :background-image (url "'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAAB/klEQVRo3u1aWxKFIAiVO+1I19SiWpN74n410zipPLOH/JUWcIATVBBjxHAiOWcIA2Tbtt2eXX953BPu/vI66rUtPbU1rg5LwUF6a36PtOeJGN4dB0tsPHC+xT3XdT09v5SFMYqAX1ZgMIt4ktfHBKbPcll6G1JK2OqUy/Vy33HdkOSRAQh2AMQKaWg689q1lG4ZCF1HIHQk5TF0fAUjfDnYBqbuls3UeFP8a3XwPZtBgRMQ84waHy0WZ3jXcODkq6S2NHmhzTdqzXFrh07ER/JMKWFKCUuSpR4rybZFOEhwuLYfgn/XZqFD6nctAWs4c/WUSUjBFojjLRIKixtvZK5zbdbE7kh2Usw5WFDvhYJcbjUj2u6TmxfafKPWgthndkcskSN5C4DHj4y9UCEy7zEKlPiiEx4t3VfEG5l60MAu7ncQj+nSawSHh9g55NXFj0LCOWeQdLVlN+1UKPPdoy8RUYkaXhJbUBQ/XhQXK8y94ndnn28pP28FZwS+v+K4uGCe0hVbdVfhwfiOji047//qg/3LPmMLg6VHoi3S7K07faiDE6eACQo46rHyj2uPlb2c+0AvwS6KLSfePR0eeWXplwRzDhbBKZaaXPWyk2qH1E5yjCHG6DVCiKT2n91ImwY9QWeX9f54Tyw+hl/rP2LrkWMG/frReMqUKQ+WP8nkIlo7OqsfAAAAAElFTkSuQmCC'")
      ]
-     ["#nav a[href='/twitter/']"] [
-       :background-image (url "../svg/twitter.svg")
-     ]
      ["#nav a[href='/twitter/'] > span"] [
        :background-image (url "'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAKCAYAAACOjFT5AAAByklEQVRo3u1a7a2DMAzMVWzETgzFTOzk/o14IdjGdsxrLFVqUxLOd/4IEVjXlUrbUORGjbncMbUdx/FnbN/3IVgYfESbFsPdvAy+ZbXJXQ7Oh+iwbZt4zlKBsAA1A+t3bGo9uZs6GNki7DLa3+fv9Rg611x1N3qwwzvfFx2ceMgHp/tqfSajoOKsw9ltXGHljN/FjkfiWMRaFHdv4UCby5wc4qxXOlg1OnBwmOjyCew4qD534uCmeFtgaQnXwmAV8L3mJPWZO0/yOAchdm5yW+iGh2sUJX+UhLu3cSBZu/5fmydgNEOpDlwcJs3xwyxevd1K9NmqdZGEMCE0fMDRZ8tzLi12DlaU9z2SSzB7cpedAzKKt6d5YnUEEa6BdEdMAZhoYEBC6CsN9pnKOwvctP9h+KHaMLwQ44IEciJEIi45BAAG8KENaOtEoBfFLjUeG8k5NrJxl4GDyKKI5LGq5ntJ5AQajmAAkZH31vpsxdV5HSTU20MTC/4iucvKQe+c1jKXM9SGKxwmtlTv4ELQ9SDojpKzMwkG6+sl4mr5sPDhKdZihB1Omnrhi+QWQVhHc2AVu3DKXTjo4vHmUqod8bRp06ZlN7PiW9sX2+LFydcChv0AAAAASUVORK5CYII='")
      ]
+     ["#nav a[href='https://bitbucket.org/davidchambers']"] [
+       :background-image (url "../svg/bitbucket.svg")
+     ]
+
+   ]
+
+   (s/chain (lambda [slug]
+               [[(++ ["#nav a[href='/" slug "/']"])]
+                [:background-image (url (++ ["../svg/" slug ".svg"]))]])
+            ["about" "archives" "contact" "flushcache" "tags" "twitter"])
+
+   [
 
      ["#main"] [
        :margin [0 :auto]
@@ -336,7 +339,7 @@
        :border [(px 1) :solid base2]
        :background recycled-paper
        :padding [(px 1) (px 4)]
-       :font [:normal "120%/1" (, ["Courier" "'Courier New'" :monospace])]
+       :font [:normal "120%/1" (monospace ["Courier" "Courier New"])]
        :color base01
      ]
 
@@ -401,7 +404,7 @@
       "h2"
       "h3"
       "h4"] [
-       :font [:bold "1.667em/1.05" (, ["'proxima-nova-1'" "'proxima-nova-2'" "Helvetica" "Arial" :sans-serif])]
+       :font [:bold "1.667em/1.05" (sans-serif ["proxima-nova-1" "proxima-nova-2" "Helvetica" "Arial"])]
        :color base01
        :text-shadow [0 (px 1) 0 :white]
      ]
@@ -558,7 +561,7 @@
        :border [(px 1) :solid base2]
        :background-color recycled-paper
        :padding [(em 0.143) (em 0.714)]
-       :font ["1.167em/1.5" (, ["Courier" "'Courier New'" :monospace])]
+       :font ["1.167em/1.5" (monospace ["Courier" "Courier New"])]
        :overflow :auto
      ]
      ["li pre"] [
@@ -580,7 +583,7 @@
        :border [(px 1) :solid "#cccccc"]
        :background recycled-paper
        :padding [(em 0.333) (em 0.5)]
-       :font ["1em/1.25" (, ["Monaco" :monospace])]
+       :font ["1em/1.25" (monospace ["Monaco"])]
        :outline :none
        :overflow :auto
      ]
@@ -621,7 +624,7 @@
 
      ["article > header > dl"] [
        :margin [(em 1.571) 0 (em -0.071)]
-       :font ["1.167em/1.5" (, ["Courier" "'Courier New'" :monospace])]
+       :font ["1.167em/1.5" (monospace ["Courier" "Courier New"])]
        :color base1
        :overflow :auto
      ]
@@ -778,13 +781,13 @@
       "#main article header h2"] [
        :display :inline
        :margin [0 (em 0.25) 0 0]
-       :font [:bold "1.667em/1.05" (, ["'proxima-nova-1'" "'proxima-nova-2'" "Helvetica" "Arial" :sans-serif])]
+       :font [:bold "1.667em/1.05" (sans-serif ["proxima-nova-1" "proxima-nova-2" "Helvetica" "Arial"])]
        :color base01
        :text-shadow [0 (px 1) 0 :white]
      ]
      ["#main article header time"] [
        :display :inline
-       :font [:bold "1.667em/1.05" (, ["'proxima-nova-1'" "'proxima-nova-2'" "Helvetica" "Arial" :sans-serif])]
+       :font [:bold "1.667em/1.05" (sans-serif ["proxima-nova-1" "proxima-nova-2" "Helvetica" "Arial"])]
        :color base01
        :text-shadow [0 (px 1) 0 :white]
        :font-weight :normal
@@ -944,7 +947,7 @@
        :background-image "-o-linear-gradient(#eeeeee, #cccccc)"
        :background-image "linear-gradient(#eeeeee, #cccccc)"
        :padding [0 (px 10)]
-       :font ["1.167em/30px" (, ["'proxima-nova-1'" "'proxima-nova-2'" "'Lucida Grande'" "'Lucida Sans Unicode'" :sans-serif])]
+       :font ["1.167em/30px" (sans-serif ["proxima-nova-1" "proxima-nova-2" "Lucida Grande" "Lucida Sans Unicode"])]
        :text-shadow [0 (px 1) 0 :white]
      ]
      ["input[type='submit']:focus"] [
@@ -999,7 +1002,7 @@
      ["ol.archives li h2"] [
        :margin [(em 1.75) 0 0 (px 21)]
        :padding 0
-       :font [:bold "1em/1.75" (, ["'Lucida Grande'" "'Lucida Sans Unicode'" "Helvetica" "Arial" :sans-serif])]
+       :font [:bold "1em/1.75" (sans-serif ["Lucida Grande" "Lucida Sans Unicode" "Helvetica" "Arial"])]
        :color base1
      ]
      ["ol.archives li ol"] [
