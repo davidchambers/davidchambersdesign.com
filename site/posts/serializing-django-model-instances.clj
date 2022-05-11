@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 49
@@ -11,7 +11,7 @@
 
   :title "Serializing Django model instances"
 
-  :datetime (luxon/datetime "2010-04-13" "08:16:00" :Pacific/Auckland)
+  :datetime (datetime "2010-04-13" "08:16:00" :Pacific/Auckland)
 
   :tags [:django :python]
 

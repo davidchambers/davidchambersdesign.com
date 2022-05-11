@@ -1,7 +1,7 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
+  datetime            (require "../datetime")
 ] {
 
   :id 6
@@ -10,7 +10,7 @@
 
   :title "David Carson's 2003 TED lecture"
 
-  :datetime (luxon/datetime "2009-02-10" "11:21:00" :Pacific/Auckland)
+  :datetime (datetime "2009-02-10" "11:21:00" :Pacific/Auckland)
 
   :tags [:design :typography :video]
 

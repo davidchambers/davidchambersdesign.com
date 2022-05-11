@@ -1,9 +1,9 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
   captioned-image     (require "../components/captioned-image")
+  datetime            (require "../datetime")
 ] {
 
   :id 23
@@ -12,7 +12,7 @@
 
   :title "Tiny calendar icons sprite"
 
-  :datetime (luxon/datetime "2009-08-28" "18:04:00" :Pacific/Auckland)
+  :datetime (datetime "2009-08-28" "18:04:00" :Pacific/Auckland)
 
   :tags [:css :design :html :icons]
 

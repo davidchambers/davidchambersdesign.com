@@ -8,7 +8,7 @@
             trim-leading-spaces
               (lambda [line]
                  (s/from-maybe line
-                               (s/chain (s/flip s/strip-prefix line)
+                               (s/chain (s/strip-prefix _ line)
                                         (s/map (s/prop "match")
                                                (s/chain (s/match (s/regex "" "^[ ]*"))
                                                         (s/head lines))))))]

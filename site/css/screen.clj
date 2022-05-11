@@ -3,24 +3,23 @@
    (let [s (require "../sanctuary")
 
          . s/compose
-         ++ (s/join-with "")
 
-         % (. (s/flip s/concat "%") coerce)
-         em (. (s/flip s/concat "em") coerce)
-         px (. (s/flip s/concat "px") coerce)
+         % (. (+ "%") coerce)
+         em (. (+ "em") coerce)
+         px (. (+ "px") coerce)
 
-         ' (s/pipe [(invoke-2 "replace" (s/regex "g" "(?=')") "\\")
-                    (s/concat "'")
-                    (s/flip s/concat "'")])
+         ' (s/pipe [(.replace (s/regex "g" "(?=')") "\\" _)
+                    (+ _ "'")
+                    (+ "'")])
 
          , (. (s/join-with ", ") (s/map coerce))
 
          sans-serif (. , (. (s/append :sans-serif) (s/map ')))
          monospace (. , (. (s/append :monospace) (s/map ')))
 
-         rgba (lambda [r g b a] (++ ["rgba(" (, [r g b a]) ")"]))
+         rgba (lambda [r g b a] (.join "" ["rgba(" (, [r g b a]) ")"]))
 
-         url (lambda [url] (++ ["url(" url ")"]))
+         url (lambda [url] (.join "" ["url(" url ")"]))
 
          !important (. (+ " !important") coerce)
 
@@ -48,19 +47,19 @@
          tag-background
            (s/pipe [Math.log2
                     (* 5)
-                    (s/flip - 247)
+                    (- _ 247)
                     Math.floor
-                    (invoke-1 "toString" 16)
-                    (invoke-2 "padStart" 2 "0")
-                    (invoke-1 "repeat" 3)
+                    (.toString 16 _)
+                    (.padStart 2 "0" _)
+                    (.repeat 3 _)
                     (s/concat "#")])
          tag-color
            (s/pipe [Math.log2
                     (* 0.1)
                     (+ 0.3)
-                    (invoke-1 "toFixed" 3)
-                    (invoke-2 "replace" (s/regex "" "0*$") "")
-                    (invoke-2 "replace" (s/regex "" "[.]$") "")
+                    (.toFixed 3 _)
+                    (.replace (s/regex "" "0*$") "" _)
+                    (.replace (s/regex "" "[.]$") "" _)
                     (rgba 0 0 0)])]
 
    (s/join [[
@@ -254,8 +253,8 @@
    ]
 
    (s/chain (lambda [slug]
-               [[(++ ["#nav a[href='/" slug "/']"])]
-                [:background-image (url (++ ["../svg/" slug ".svg"]))]])
+               [[(.join "" ["#nav a[href='/" slug "/']"])]
+                [:background-image (url (.join "" ["../svg/" slug ".svg"]))]])
             ["about" "archives" "contact" "flushcache" "tags" "twitter"])
 
    [
@@ -697,7 +696,7 @@
 
    (s/fold-map Array
                (lambda [count]
-                  [[(++ ["#tags li[data-count='" count "'] a"])]
+                  [[(.join "" ["#tags li[data-count='" count "'] a"])]
                    [:background (tag-background count)
                     :color (tag-color count)]])
                (s/range 1 20))

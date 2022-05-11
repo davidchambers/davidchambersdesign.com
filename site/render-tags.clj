@@ -1,9 +1,7 @@
 (import ["./elements"]
 
 (let [s (require "./sanctuary")
-      tags (require "./tags")
-
-      ++ (s/join-with "")]
+      tags (require "./tags")]
 
    (lambda [posts]
       (let [counts (s/reduce (lambda [counts post]
@@ -21,6 +19,6 @@
           (ol' {:id "tags"}
              (s/map (lambda [tag]
                        (li' {:data-count (s/prop tag counts)}
-                          (a (++ ["/tag/" (Symbol.keyFor tag) "/"]) (s/prop tag tags))))
+                          (a (.join "" ["/tag/" (Symbol.keyFor tag) "/"]) (s/prop tag tags))))
                     (Object.getOwnPropertySymbols tags)))
           (div {:class "clearfix"} [])]))))

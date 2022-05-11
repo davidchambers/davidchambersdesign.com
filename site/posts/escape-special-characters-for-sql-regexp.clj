@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 5
@@ -11,7 +11,7 @@
 
   :title "Escape special characters for SQL REGEXP"
 
-  :datetime (luxon/datetime "2009-01-10" "22:21:00" :Pacific/Auckland)
+  :datetime (datetime "2009-01-10" "22:21:00" :Pacific/Auckland)
 
   :tags [:php :sql]
 

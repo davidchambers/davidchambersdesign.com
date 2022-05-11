@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 59
@@ -11,7 +11,7 @@
 
   :title "Remove textarea scrollbars in Internet Explorer"
 
-  :datetime (luxon/datetime "2010-07-18" "22:00:00" :Pacific/Auckland)
+  :datetime (datetime "2010-07-18" "22:00:00" :Pacific/Auckland)
 
   :tags [:css]
 

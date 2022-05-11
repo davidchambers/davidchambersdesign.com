@@ -1,7 +1,7 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
+  datetime            (require "../datetime")
 ] {
 
   :id 61
@@ -10,7 +10,7 @@
 
   :title "JavaScript, JavaScript, everywhere"
 
-  :datetime (luxon/datetime "2010-07-20" "19:05:00" :Pacific/Auckland)
+  :datetime (datetime "2010-07-20" "19:05:00" :Pacific/Auckland)
 
   :tags [:javascript :node.js :sproutcore]
 

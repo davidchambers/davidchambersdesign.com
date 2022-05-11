@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 28
@@ -11,7 +11,7 @@
 
   :title "Memorable passwords for programmers"
 
-  :datetime (luxon/datetime "2009-10-21" "00:42:00" :Pacific/Auckland)
+  :datetime (datetime "2009-10-21" "00:42:00" :Pacific/Auckland)
 
   :tags [:security]
 

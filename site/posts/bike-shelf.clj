@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   uncaptioned-image   (require "../components/uncaptioned-image")
+  datetime            (require "../datetime")
 ] {
 
   :id 71
@@ -11,7 +11,7 @@
 
   :title "Bike shelf"
 
-  :datetime (luxon/datetime "2010-09-20" "19:53:00" :Pacific/Auckland)
+  :datetime (datetime "2010-09-20" "19:53:00" :Pacific/Auckland)
 
   :tags [:design]
 

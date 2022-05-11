@@ -1,8 +1,6 @@
 (let [s (require "./sanctuary")
       screen (require "./css/screen")
 
-      ++ (s/join-with "")
-
       coerce
         (function coerce [x]
            (if (Array.isArray x)
@@ -20,7 +18,7 @@
       vendor-prefix (lambda [unprefixed prefixed]
                        (s/chain (s/pair (lambda [k v]
                                            (if (=== unprefixed k)
-                                               (s/map (s/flip s/Pair v)
+                                               (s/map (s/Pair _ v)
                                                       (s/append unprefixed prefixed))
                                                [(s/Pair k v)])))))
 
@@ -44,7 +42,7 @@
 
       format-block
         (lambda [selectors]
-           (s/pipe [(s/map (s/pair (lambda [k v] (++ ["  " (coerce k) ": " (coerce v) ";"]))))
+           (s/pipe [(s/map (s/pair (lambda [k v] (.join "" ["  " (coerce k) ": " (coerce v) ";"]))))
                     (s/prepend (s/concat (s/join-with ",\n" selectors) " {"))
                     (s/append "}")
                     s/unlines]))]

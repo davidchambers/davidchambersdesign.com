@@ -1,7 +1,7 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
+  datetime            (require "../datetime")
 ] {
 
   :id 9
@@ -10,7 +10,7 @@
 
   :title "Changing keyboard shortcuts in Mac OS X"
 
-  :datetime (luxon/datetime "2009-03-25" "16:36:00" :Pacific/Auckland)
+  :datetime (datetime "2009-03-25" "16:36:00" :Pacific/Auckland)
 
   :tags [:keyboard-shortcuts :mac-os-x]
 

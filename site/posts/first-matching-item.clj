@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 54
@@ -11,7 +11,7 @@
 
   :title "First matching item"
 
-  :datetime (luxon/datetime "2010-06-17" "23:17:00" :Pacific/Auckland)
+  :datetime (datetime "2010-06-17" "23:17:00" :Pacific/Auckland)
 
   :tags [:programming]
 

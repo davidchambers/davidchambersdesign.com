@@ -1,7 +1,7 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
+  datetime            (require "../datetime")
 ] {
 
   :id 1
@@ -10,7 +10,7 @@
 
   :title "Beautiful painted alphabet"
 
-  :datetime (luxon/datetime "2008-08-22" "01:56:00" :Pacific/Auckland)
+  :datetime (datetime "2008-08-22" "01:56:00" :Pacific/Auckland)
 
   :tags [:design :typography :video]
 

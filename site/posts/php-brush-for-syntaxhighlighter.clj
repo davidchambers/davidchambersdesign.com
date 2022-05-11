@@ -1,11 +1,11 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   caption             (require "../components/caption")
   captioned-image     (require "../components/captioned-image")
   code-block          (require "../components/code-block")
   update              (require "../components/update")
+  datetime            (require "../datetime")
 ] {
 
   :id 16
@@ -14,7 +14,7 @@
 
   :title "PHP brush for SyntaxHighlighter"
 
-  :datetime (luxon/datetime "2009-06-08" "17:00:00" :Pacific/Auckland)
+  :datetime (datetime "2009-06-08" "17:00:00" :Pacific/Auckland)
 
   :tags [:javascript :php :syntaxhighlighter]
 
@@ -66,7 +66,7 @@
         (strong "constant") ", " (strong "keyword") ", and "
         (strong "variable") " for exactly what you'd expect."])
 
-    (update (luxon/datetime "2009-08-16" "02:33:00" :Pacific/Auckland)
+    (update (datetime "2009-08-16" "02:33:00" :Pacific/Auckland)
 
        [(p
            ["Until this point I have had a class name added to each

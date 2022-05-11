@@ -1,10 +1,10 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   captioned-image     (require "../components/captioned-image")
   decorative-image    (require "../components/decorative-image")
   interview-list      (require "../components/interview-list")
+  datetime            (require "../datetime")
 ] {
 
   :id 3
@@ -13,7 +13,7 @@
 
   :title "Rounded rectangles in Adobe Illustrator CS3"
 
-  :datetime (luxon/datetime "2008-12-03" "12:49:00" :Pacific/Auckland)
+  :datetime (datetime "2008-12-03" "12:49:00" :Pacific/Auckland)
 
   :tags [:adobe :cs3 :illustrator]
 

@@ -107,6 +107,15 @@ exports.toJs = dirname => function recur(expr) {
                                                               (expr.cases))])))
                    (recur (expr.discriminant));
     }
+    case 'new': {
+      return New (recur (expr.callee))
+                 (S.map (recur) (expr.arguments));
+    }
+    case 'invocation': {
+      return Call (Member (recur (expr.target))
+                          (Literal (expr.name.name)))
+                  (S.map (recur) (expr.arguments));
+    }
     case 'application': {
       return Call1 (S.elem (expr.function.type)
                            (['number', 'string', 'symbol']) ?
@@ -161,13 +170,6 @@ const op2 = operator => (
                                  (Identifier ('right'))))
 );
 
-const opNew = (
-  ArrowFunc1 (Identifier ('Constructor'))
-             (ArrowFunc1 (Identifier ('args'))
-                         (New (Identifier ('Constructor'))
-                              ([SpreadElement (Identifier ('args'))])))
-);
-
 const apply = (
   ArrowFunc1 (Identifier ('f'))
              (ArrowFunc1 (Identifier ('args'))
@@ -175,30 +177,9 @@ const apply = (
                                 (SpreadElement (Identifier ('args')))))
 );
 
-const invoke = names => (
-  ArrowFunc1 (Identifier ('name'))
-             (S.reduce (body => name => ArrowFunc1 (Identifier (name)) (body))
-                       (ArrowFunc1 (Identifier ('target'))
-                                   (Call (Member (Identifier ('target'))
-                                                 (Identifier ('name')))
-                                         (S.map (Identifier) (names))))
-                       (S.reverse (names)))
-);
-
 exports.env = {
   /* eslint-disable key-spacing */
   'apply':              apply,
-
-  'invoke-0':           invoke ([]),
-  'invoke-1':           invoke (['$1']),
-  'invoke-2':           invoke (['$1', '$2']),
-  'invoke-3':           invoke (['$1', '$2', '$3']),
-  'invoke-4':           invoke (['$1', '$2', '$3', '$4']),
-  'invoke-5':           invoke (['$1', '$2', '$3', '$4', '$5']),
-  'invoke-6':           invoke (['$1', '$2', '$3', '$4', '$5', '$6']),
-  'invoke-7':           invoke (['$1', '$2', '$3', '$4', '$5', '$6', '$7']),
-  'invoke-8':           invoke (['$1', '$2', '$3', '$4', '$5', '$6', '$7', '$8']),
-  'invoke-9':           invoke (['$1', '$2', '$3', '$4', '$5', '$6', '$7', '$8', '$9']),
 
   // https://262.ecma-international.org/6.0/#sec-11.8.1
   'null':               Literal (null),
@@ -207,7 +188,6 @@ exports.env = {
   'false':              Literal (false),
 
   // https://262.ecma-international.org/6.0/#sec-12.3.3
-  'new':                opNew,
 
   // https://262.ecma-international.org/6.0/#sec-12.5.5
   'void':               op1 ('void'),

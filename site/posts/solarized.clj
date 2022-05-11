@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   captioned-image     (require "../components/captioned-image")
+  datetime            (require "../datetime")
 ] {
 
   :id 84
@@ -11,7 +11,7 @@
 
   :title "Solarized"
 
-  :datetime (luxon/datetime "2011-04-23" "02:20:00" :America/Los_Angeles)
+  :datetime (datetime "2011-04-23" "02:20:00" :America/Los_Angeles)
 
   :tags [:coda :design :programming :solarized]
 

@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 35
@@ -11,7 +11,7 @@
 
   :title "Duplicating arrays in JavaScript"
 
-  :datetime (luxon/datetime "2010-01-09" "19:26:00" :Pacific/Auckland)
+  :datetime (datetime "2010-01-09" "19:26:00" :Pacific/Auckland)
 
   :tags [:javascript]
 

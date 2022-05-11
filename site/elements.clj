@@ -19,13 +19,10 @@
     canonicalize-children
       (s/compose (s/map (lambda [child]
                            (if (== "string" (typeof child))
-                               (text (invoke-2 "replace"
-                                               (s/regex "g" " -- ")
+                               (text (.replace (s/regex "g" " -- ")
                                                "\u2009\u2014\u2009"
                                                (s/fold-map String
-                                                           (invoke-2 "replace"
-                                                                     (s/regex "" "^[ ]+")
-                                                                     " ")
+                                                           (.replace (s/regex "" "^[ ]+") " " _)
                                                            (s/lines child))))
                                child)))
                  (s/unless Array.isArray Array.of))

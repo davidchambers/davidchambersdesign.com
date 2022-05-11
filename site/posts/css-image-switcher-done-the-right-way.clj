@@ -1,9 +1,9 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   captioned-image     (require "../components/captioned-image")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 43
@@ -12,7 +12,7 @@
 
   :title "CSS image switcher (done the right way)"
 
-  :datetime (luxon/datetime "2010-03-24" "12:47:00" :Pacific/Auckland)
+  :datetime (datetime "2010-03-24" "12:47:00" :Pacific/Auckland)
 
   :tags [:accessibility :best-practice :css :meaningful-markup :seo :ux]
 

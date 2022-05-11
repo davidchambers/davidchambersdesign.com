@@ -1,7 +1,7 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
+  datetime            (require "../datetime")
 ] {
 
   :id 21
@@ -10,7 +10,7 @@
 
   :title "Incredible performance by Kseniya Simonova"
 
-  :datetime (luxon/datetime "2009-08-10" "10:29:00" :Pacific/Auckland)
+  :datetime (datetime "2009-08-10" "10:29:00" :Pacific/Auckland)
 
   :tags [:art :performance :video]
 

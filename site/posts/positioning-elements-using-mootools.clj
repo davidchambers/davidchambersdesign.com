@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 60
@@ -11,7 +11,7 @@
 
   :title "Positioning elements using MooTools"
 
-  :datetime (luxon/datetime "2010-07-19" "17:45:00" :Pacific/Auckland)
+  :datetime (datetime "2010-07-19" "17:45:00" :Pacific/Auckland)
 
   :tags [:javascript :mootools]
 

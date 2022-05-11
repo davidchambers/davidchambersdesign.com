@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   uncaptioned-image   (require "../components/uncaptioned-image")
+  datetime            (require "../datetime")
 ] {
 
   :id 65
@@ -11,7 +11,7 @@
 
   :title "DigitalColor Meter"
 
-  :datetime (luxon/datetime "2010-07-23" "01:45:00" :Pacific/Auckland)
+  :datetime (datetime "2010-07-23" "01:45:00" :Pacific/Auckland)
 
   :tags [:mac-os-x :photoshop]
 

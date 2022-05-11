@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 20
@@ -11,7 +11,7 @@
 
   :title "Photoshop \"save for web\" JavaScript"
 
-  :datetime (luxon/datetime "2009-07-28" "03:27:00" :Pacific/Auckland)
+  :datetime (datetime "2009-07-28" "03:27:00" :Pacific/Auckland)
 
   :tags [:javascript :mac-os-x :photoshop]
 

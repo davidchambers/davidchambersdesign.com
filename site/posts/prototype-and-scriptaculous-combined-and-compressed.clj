@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 32
@@ -11,7 +11,7 @@
 
   :title "Prototype and script.aculo.us, combined and compressed"
 
-  :datetime (luxon/datetime "2009-11-09" "23:14:00" :Pacific/Auckland)
+  :datetime (datetime "2009-11-09" "23:14:00" :Pacific/Auckland)
 
   :tags [:javascript :optimization :prototype :script.aculo.us]
 

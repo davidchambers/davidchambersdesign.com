@@ -1,11 +1,11 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   captioned-image     (require "../components/captioned-image")
   captioned-images    (require "../components/captioned-images")
   code-block          (require "../components/code-block")
   decorative-image    (require "../components/decorative-image")
+  datetime            (require "../datetime")
 ] {
 
   :id 39
@@ -14,7 +14,7 @@
 
   :title "Gorgeous CSS3 buttons inspired by Aqua"
 
-  :datetime (luxon/datetime "2010-03-08" "12:39:00" :Pacific/Auckland)
+  :datetime (datetime "2010-03-08" "12:39:00" :Pacific/Auckland)
 
   :tags [:css :css3 :html :mac-os-x]
 

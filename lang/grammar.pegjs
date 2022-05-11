@@ -83,6 +83,8 @@ Expression 'expression'
   / Switch
   / Array
   / Object
+  / New
+  / Invocation
   / Application
 
 Number 'number'
@@ -261,9 +263,66 @@ Object 'object'
     Separator* '}'
     { return {type: 'object', entries: entries ?? []}; }
 
+// (+ _ "prefix")
+// (lambda [_1] (+ _1 "prefix"))
+
+// (f _ _ x)
+// (lambda [_1 _2] (f _1 _2 x))
+
+Placeholder 'placeholder'
+  = '_'
+  { return {type: 'placeholder'}; }
+
+New 'new'
+  = Separator* '('
+    Separator* 'new'
+    Separator+ callee:Expression
+    args:(Separator+ arg:Expression { return arg; })*
+    Separator* ')'
+    { return {type: 'new', callee, arguments: args}; }
+
+Invocation 'invocation'
+  = Separator* '('
+    Separator* '.' name:Identifier
+    args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
+    Separator* ')'
+    {
+      const parameters = [];
+      const filledArgs = [];
+      for (const arg of args) {
+        if (arg.type === 'placeholder') {
+          const parameter = {type: 'identifiers', name: `_${parameters.length + 1}`, path: []};
+          parameters.push(parameter);
+          filledArgs.push(parameter);
+        } else {
+          filledArgs.push(arg);
+        }
+      }
+      return parameters.reduceRight(
+        (body, parameter) => ({type: 'lambda', parameter, body}),
+        {type: 'invocation', target: filledArgs[filledArgs.length - 1], name, arguments: filledArgs.slice(0, -1)}
+      );
+    }
+
 Application 'application'
   = Separator* '('
     Separator* func:Expression
-    args:(Separator+ arg:Expression { return arg; })+
+    args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
     Separator* ')'
-    { return args.reduce((func, arg) => ({type: 'application', function: func, argument: arg}), func); }
+    {
+      const parameters = [];
+      const filledArgs = [];
+      for (const arg of args) {
+        if (arg.type === 'placeholder') {
+          const parameter = {type: 'identifiers', name: `_${parameters.length + 1}`, path: []};
+          parameters.push(parameter);
+          filledArgs.push(parameter);
+        } else {
+          filledArgs.push(arg);
+        }
+      }
+      return parameters.reduceRight(
+        (body, parameter) => ({type: 'lambda', parameter, body}),
+        filledArgs.reduce((func, arg) => ({type: 'application', function: func, argument: arg}), func)
+      );
+    }

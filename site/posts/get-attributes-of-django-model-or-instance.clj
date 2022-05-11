@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 38
@@ -11,7 +11,7 @@
 
   :title "Get attributes of Django model or instance"
 
-  :datetime (luxon/datetime "2010-02-22" "20:24:00" :Pacific/Auckland)
+  :datetime (datetime "2010-02-22" "20:24:00" :Pacific/Auckland)
 
   :tags [:django :python]
 

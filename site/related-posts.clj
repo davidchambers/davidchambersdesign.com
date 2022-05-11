@@ -4,13 +4,11 @@
 
       intersection
         (lambda [set-1 set-2]
-           (new Set [(invoke-1 "filter"
-                               (lambda [x] (invoke-1 "has" x set-1))
-                               (Array.from set-2))]))
+           (new Set (.filter (.has _ set-1) (Array.from set-2))))
 
       union
         (lambda [set-1 set-2]
-           (new Set [(s/concat (Array.from set-1) (Array.from set-2))]))
+           (new Set (s/concat (Array.from set-1) (Array.from set-2))))
 
       similarity
         (lambda [set-1 set-2]
@@ -19,12 +17,12 @@
 
       seconds-between
         (lambda [from to]
-           ("seconds" (invoke-2 "diff" from "seconds" to)))
+           ("seconds" (.diff from "seconds" to)))
 
       with-scores
         (lambda [that this]
-           (let [score (similarity (new Set [(:tags that)])
-                                   (new Set [(:tags this)]))
+           (let [score (similarity (new Set (:tags that))
+                                   (new Set (:tags this)))
                  primary (s/negate score)
                  secondary (Math.abs (seconds-between (:datetime that)
                                                       (:datetime this)))]
@@ -37,5 +35,5 @@
                (s/map-maybe (with-scores post))
                s/sort
                (s/map s/snd)
-               (invoke-2 "slice" 0 5)]
+               (.slice 0 5 _)]
               posts)))

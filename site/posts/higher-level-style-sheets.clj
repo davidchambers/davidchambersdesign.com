@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 91
@@ -11,7 +11,7 @@
 
   :title "Higher-level style sheets"
 
-  :datetime (luxon/datetime "2011-10-02" "23:00:00" :America/Los_Angeles)
+  :datetime (datetime "2011-10-02" "23:00:00" :America/Los_Angeles)
 
   :tags [:best-practice :compass :css :ruby :sass]
 

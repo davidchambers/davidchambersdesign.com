@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 31
@@ -11,7 +11,7 @@
 
   :title "Using HTML5 time element in WordPress themes"
 
-  :datetime (luxon/datetime "2009-11-02" "02:04:00" :Pacific/Auckland)
+  :datetime (datetime "2009-11-02" "02:04:00" :Pacific/Auckland)
 
   :tags [:html5 :php :wordpress]
 

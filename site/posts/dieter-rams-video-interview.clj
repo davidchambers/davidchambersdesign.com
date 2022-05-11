@@ -1,7 +1,7 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
+  datetime            (require "../datetime")
 ] {
 
   :id 62
@@ -10,7 +10,7 @@
 
   :title "Dieter Rams video interview"
 
-  :datetime (luxon/datetime "2010-07-20" "19:30:00" :Pacific/Auckland)
+  :datetime (datetime "2010-07-20" "19:30:00" :Pacific/Auckland)
 
   :tags [:design :video]
 

@@ -1,7 +1,7 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
+  datetime            (require "../datetime")
 ] {
 
   :id 53
@@ -10,7 +10,7 @@
 
   :title "wmd ftw!"
 
-  :datetime (luxon/datetime "2010-06-13" "11:25:00" :Pacific/Auckland)
+  :datetime (datetime "2010-06-13" "11:25:00" :Pacific/Auckland)
 
   :tags [:javascript :markdown :ux :wmd]
 

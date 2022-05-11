@@ -1,8 +1,8 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   code-block          (require "../components/code-block")
+  datetime            (require "../datetime")
 ] {
 
   :id 52
@@ -11,7 +11,7 @@
 
   :title "Auto-populating input fields with MooTools"
 
-  :datetime (luxon/datetime "2010-06-09" "23:23:00" :Pacific/Auckland)
+  :datetime (datetime "2010-06-09" "23:23:00" :Pacific/Auckland)
 
   :tags [:html5 :javascript :mootools :ux]
 

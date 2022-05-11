@@ -1,7 +1,7 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
+  datetime            (require "../datetime")
 ] {
 
   :id 19
@@ -10,7 +10,7 @@
 
   :title "Associative arrays in JavaScript"
 
-  :datetime (luxon/datetime "2009-06-29" "19:14:00" :Pacific/Auckland)
+  :datetime (datetime "2009-06-29" "19:14:00" :Pacific/Auckland)
 
   :tags [:best-practice :javascript]
 

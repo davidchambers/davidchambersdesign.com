@@ -1,9 +1,9 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
   uncaptioned-image   (require "../components/uncaptioned-image")
   update              (require "../components/update")
+  datetime            (require "../datetime")
 ] {
 
   :id 47
@@ -12,7 +12,7 @@
 
   :title "Application-specific volume control in Mac OS X?"
 
-  :datetime (luxon/datetime "2010-04-07" "02:04:00" :Pacific/Auckland)
+  :datetime (datetime "2010-04-07" "02:04:00" :Pacific/Auckland)
 
   :tags [:mac-os-x :ux]
 
@@ -60,7 +60,7 @@
        ["+1 in the comments if you'd like to see this feature implemented.
          :)"])
 
-    (update (luxon/datetime "2010-04-15" "14:36:00" :Pacific/Auckland)
+    (update (datetime "2010-04-15" "14:36:00" :Pacific/Auckland)
 
        [(p
            [(a "http://www.joesoft.com/products/hear.php" "Hear") "

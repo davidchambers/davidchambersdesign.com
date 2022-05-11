@@ -1,7 +1,7 @@
 (import ["../elements"]
 
 (let [
-  luxon               (require "../luxon")
+  datetime            (require "../datetime")
 ] {
 
   :id 87
@@ -10,7 +10,7 @@
 
   :title "Getting truth out of the DOM – Yehuda Katz"
 
-  :datetime (luxon/datetime "2011-05-24" "22:15:00" :America/Los_Angeles)
+  :datetime (datetime "2011-05-24" "22:15:00" :America/Los_Angeles)
 
   :tags [:best-practice :javascript :mvc :video]
 
