@@ -196,7 +196,7 @@ Let 'let'
     Separator* ']'
     Separator* body:Expression
     Separator* ')'
-    { return (bindings ?? []).reduceRight((body, [parameter, expr]) => ({type: 'application', function: {type: 'lambda', parameter, body}, argument: expr}), body); }
+    { return (bindings ?? []).reduceRight((body, [parameter, expr]) => ({type: 'application', callee: {type: 'lambda', parameter, body}, arguments: [expr]}), body); }
 
 Binding 'binding'
   = Separator* ident:Identifier
@@ -286,43 +286,11 @@ Invocation 'invocation'
     Separator* '.' name:Identifier
     args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
     Separator* ')'
-    {
-      const parameters = [];
-      const filledArgs = [];
-      for (const arg of args) {
-        if (arg.type === 'placeholder') {
-          const parameter = {type: 'identifiers', name: `_${parameters.length + 1}`, path: []};
-          parameters.push(parameter);
-          filledArgs.push(parameter);
-        } else {
-          filledArgs.push(arg);
-        }
-      }
-      return parameters.reduceRight(
-        (body, parameter) => ({type: 'lambda', parameter, body}),
-        {type: 'invocation', target: filledArgs[filledArgs.length - 1], name, arguments: filledArgs.slice(0, -1)}
-      );
-    }
+    { return {type: 'invocation', name, arguments: args}; }
 
 Application 'application'
   = Separator* '('
-    Separator* func:Expression
+    Separator* callee:Expression
     args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
     Separator* ')'
-    {
-      const parameters = [];
-      const filledArgs = [];
-      for (const arg of args) {
-        if (arg.type === 'placeholder') {
-          const parameter = {type: 'identifiers', name: `_${parameters.length + 1}`, path: []};
-          parameters.push(parameter);
-          filledArgs.push(parameter);
-        } else {
-          filledArgs.push(arg);
-        }
-      }
-      return parameters.reduceRight(
-        (body, parameter) => ({type: 'lambda', parameter, body}),
-        filledArgs.reduce((func, arg) => ({type: 'application', function: func, argument: arg}), func)
-      );
-    }
+    { return {type: 'application', callee, arguments: args}; }

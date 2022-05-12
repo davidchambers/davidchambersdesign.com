@@ -46,6 +46,7 @@ const escapeIdentifier = name => (
                      .padStart (4, '0'))
 );
 
+const genIdentifier = S.pipe ([String, S.concat ('_'), Identifier]);
 
 exports.toJs = dirname => function recur(expr) {
   switch (expr.type) {
@@ -108,22 +109,55 @@ exports.toJs = dirname => function recur(expr) {
                    (recur (expr.discriminant));
     }
     case 'new': {
-      return New (recur (expr.callee))
-                 (S.map (recur) (expr.arguments));
+      return S.reduce (take => arg => give => take (n => args => wrap => arg.type === 'placeholder' ?
+                                                                         give (n + 1)
+                                                                              (S.append (genIdentifier (n)) (args))
+                                                                              (body => ArrowFunc1 (genIdentifier (n))
+                                                                                                  (wrap (body))) :
+                                                                         give (n)
+                                                                              (S.append (recur (arg)) (args))
+                                                                              (wrap)))
+                      (S.I)
+                      (S.reverse (expr.arguments))
+                      (n => args => wrap => wrap (args))
+                      (1)
+                      ([])
+                      (S.compose (New (recur (expr.callee))) (S.reverse));
     }
     case 'invocation': {
-      return Call (Member (recur (expr.target))
-                          (Literal (expr.name.name)))
-                  (S.map (recur) (expr.arguments));
+      return S.reduce (take => arg => give => take (n => args => wrap => arg.type === 'placeholder' ?
+                                                                         give (n + 1)
+                                                                              (S.append (genIdentifier (n)) (args))
+                                                                              (body => ArrowFunc1 (genIdentifier (n))
+                                                                                                  (wrap (body))) :
+                                                                         give (n)
+                                                                              (S.append (recur (arg)) (args))
+                                                                              (wrap)))
+                      (S.I)
+                      (S.reverse (expr.arguments))
+                      (n => args => wrap => wrap (args))
+                      (1)
+                      ([])
+                      (([target, ...args]) => Call (Member (target) (Literal (expr.name.name)))
+                                                   (S.reverse (args)));
     }
     case 'application': {
-      return Call1 (S.elem (expr.function.type)
-                           (['number', 'string', 'symbol']) ?
-                    ArrowFunc1 (Identifier ('obj'))
-                               (Member (Identifier ('obj'))
-                                       (recur (expr.function))) :
-                    recur (expr.function))
-                   (recur (expr.argument));
+      return S.reduce (take => arg => give => take (n => wrap => arg.type === 'placeholder' ?
+                                                                 give (n + 1)
+                                                                      (body => ArrowFunc1 (genIdentifier (n))
+                                                                                          (wrap (Call1 (body) (genIdentifier (n))))) :
+                                                                 give (n)
+                                                                      (body => wrap (Call1 (body) (recur (arg))))))
+                      (S.I)
+                      (S.reverse (expr.arguments))
+                      (n => wrap => wrap)
+                      (1)
+                      (S.I)
+                      (S.elem (expr.callee.type) (['number', 'string', 'symbol']) ?
+                       ArrowFunc1 (Identifier ('obj'))
+                                  (Member (Identifier ('obj'))
+                                          (recur (expr.callee))) :
+                       recur (expr.callee));
     }
     case 'import': {
       const params = S.map (symbol => recur ({type: 'identifiers', name: Symbol.keyFor (symbol), path: []}))
