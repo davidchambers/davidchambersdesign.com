@@ -263,12 +263,6 @@ Object 'object'
     Separator* '}'
     { return {type: 'object', entries: entries ?? []}; }
 
-// (+ _ "prefix")
-// (lambda [_1] (+ _1 "prefix"))
-
-// (f _ _ x)
-// (lambda [_1 _2] (f _1 _2 x))
-
 Placeholder 'placeholder'
   = '_'
   { return {type: 'placeholder'}; }
@@ -276,10 +270,9 @@ Placeholder 'placeholder'
 New 'new'
   = Separator* '('
     Separator* 'new'
-    Separator+ callee:Expression
-    args:(Separator+ arg:Expression { return arg; })*
+    args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
     Separator* ')'
-    { return {type: 'new', callee, arguments: args}; }
+    { return {type: 'new', arguments: args}; }
 
 Invocation 'invocation'
   = Separator* '('
@@ -290,7 +283,7 @@ Invocation 'invocation'
 
 Application 'application'
   = Separator* '('
-    Separator* callee:Expression
+    Separator* callee:(Placeholder / Expression)
     args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
     Separator* ')'
     { return {type: 'application', callee, arguments: args}; }

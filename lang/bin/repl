@@ -45,13 +45,13 @@ const print = value => {
     case '[object Symbol]':
       return `\u001B[36m:${Symbol.keyFor (value)}\u001B[0m`;
     case '[object Date]':
-      return `(new Date [${print (Number (value))}])`;
+      return `(\u001B[1mnew\u001B[0m Date ${print (Number (value))})`;
     case '[object RegExp]':
-      return `(new RegExp [${print (value.source)} ${print (value.flags)}])`;
+      return `(\u001B[1mnew\u001B[0m RegExp ${print (value.source)} ${print (value.flags)})`;
     case '[object Set]':
-      return `(new Set [${print (Array.from (value))}])`;
+      return `(\u001B[1mnew\u001B[0m Set ${print (Array.from (value))})`;
     case '[object Map]':
-      return `(new Map [${print (Array.from (value))}])`;
+      return `(\u001B[1mnew\u001B[0m Map ${print (Array.from (value))})`;
     case '[object Array]':
       return `[${S.unwords (S.map (print) (value))}]`;
     case '[object Object]':

@@ -24,22 +24,22 @@ icon:twitter    (require "../icons/twitter.clj")
 dates           (require "../icons/dates.clj")
 
 pages (s/map (lambda [name] (require (s/join-with "/" [".." "pages" name])))
-             (fs.readdirSync (apply path.join [__dirname ".." "pages"])))
+             (fs.readdirSync (.apply null [__dirname ".." "pages"] path.join)))
 
 posts (s/map (lambda [name] (require (s/join-with "/" [".." "posts" name])))
-             (fs.readdirSync (apply path.join [__dirname ".." "posts"])))
+             (fs.readdirSync (.apply null [__dirname ".." "posts"] path.join)))
 
-public (s/compose (apply path.join)
+public (s/compose (.apply null _ path.join)
                   (s/concat [__dirname ".." "public"]))
 
-write-file (lambda [filename text] (apply fs.writeFileSync [filename text]))
+write-file (lambda [filename text] (.apply null [filename text] fs.writeFileSync))
 
 _ (write-file (public ["css" "screen.css"])
               generate-css)
 
 render-svg
   (lambda [attrs]
-     (s/pipe [(e/svg (apply Object.assign [{:xmlns "http://www.w3.org/2000/svg" :version "1.1"} attrs]))
+     (s/pipe [(e/svg (.apply null [{:xmlns "http://www.w3.org/2000/svg" :version "1.1"} attrs] Object.assign))
               (s/of Array)
               (render-fragment "  " 0 false)
               (s/concat "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n")

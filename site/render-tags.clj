@@ -4,12 +4,11 @@
       tags (require "./tags")]
 
    (lambda [posts]
-      (let [counts (s/reduce (lambda [counts post]
+      (let [concat (lambda [obj-1 obj-2] (.apply null [{} obj-1 obj-2] Object.assign))
+            counts (s/reduce (lambda [counts post]
                                 (s/reduce (lambda [counts tag]
-                                             (apply Object.assign
-                                                    [{}
-                                                     counts
-                                                     (Object.fromEntries [[tag (+ 1 (s/prop tag counts))]])]))
+                                             (concat counts
+                                                     (Object.fromEntries [[tag (+ 1 (s/prop tag counts))]])))
                                           counts
                                           (:tags post)))
                              (Object.fromEntries (s/map (lambda [name] [name 0])

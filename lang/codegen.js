@@ -109,55 +109,63 @@ exports.toJs = dirname => function recur(expr) {
                    (recur (expr.discriminant));
     }
     case 'new': {
-      return S.reduce (take => arg => give => take (n => args => wrap => arg.type === 'placeholder' ?
-                                                                         give (n + 1)
-                                                                              (S.append (genIdentifier (n)) (args))
-                                                                              (body => ArrowFunc1 (genIdentifier (n))
-                                                                                                  (wrap (body))) :
-                                                                         give (n)
-                                                                              (S.append (recur (arg)) (args))
-                                                                              (wrap)))
+      return S.reduce (take => arg => give => take (n => args => insert => arg.type === 'placeholder' ?
+                                                                           give (n - 1)
+                                                                                (S.prepend (genIdentifier (n)) (args))
+                                                                                (body => ArrowFunc1 (genIdentifier (n))
+                                                                                                    (insert (body))) :
+                                                                           give (n - 1)
+                                                                                (S.prepend (recur (arg)) (args))
+                                                                                (insert)))
                       (S.I)
                       (S.reverse (expr.arguments))
-                      (n => args => wrap => wrap (args))
-                      (1)
+                      (n => args => insert => insert (args))
+                      (expr.arguments.length - 1)
                       ([])
-                      (S.compose (New (recur (expr.callee))) (S.reverse));
+                      (([callee, ...args]) => New (callee) (args));
     }
     case 'invocation': {
-      return S.reduce (take => arg => give => take (n => args => wrap => arg.type === 'placeholder' ?
-                                                                         give (n + 1)
-                                                                              (S.append (genIdentifier (n)) (args))
-                                                                              (body => ArrowFunc1 (genIdentifier (n))
-                                                                                                  (wrap (body))) :
-                                                                         give (n)
-                                                                              (S.append (recur (arg)) (args))
-                                                                              (wrap)))
+      return S.reduce (take => arg => give => take (n => args => insert => arg.type === 'placeholder' ?
+                                                                           give (n - 1)
+                                                                                (S.append (genIdentifier (n)) (args))
+                                                                                (S.compose (ArrowFunc1 (genIdentifier (n))) (insert)) :
+                                                                           give (n - 1)
+                                                                                (S.append (recur (arg)) (args))
+                                                                                (insert)))
                       (S.I)
                       (S.reverse (expr.arguments))
-                      (n => args => wrap => wrap (args))
-                      (1)
+                      (n => args => insert => insert (args))
+                      (expr.arguments.length)
                       ([])
-                      (([target, ...args]) => Call (Member (target) (Literal (expr.name.name)))
+                      (([object, ...args]) => Call (Member (object) (Literal (expr.name.name)))
                                                    (S.reverse (args)));
     }
     case 'application': {
-      return S.reduce (take => arg => give => take (n => wrap => arg.type === 'placeholder' ?
-                                                                 give (n + 1)
-                                                                      (body => ArrowFunc1 (genIdentifier (n))
-                                                                                          (wrap (Call1 (body) (genIdentifier (n))))) :
-                                                                 give (n)
-                                                                      (body => wrap (Call1 (body) (recur (arg))))))
+      return S.reduce (take => arg => give => take (n => insert => give (n - 1)
+                                                                        (callee => arg.type === 'placeholder' ?
+                                                                                   ArrowFunc1 (genIdentifier (n))
+                                                                                              (insert (Call1 (callee) (genIdentifier (n)))) :
+                                                                                   insert (Call1 (callee) (recur (arg))))))
                       (S.I)
                       (S.reverse (expr.arguments))
-                      (n => wrap => wrap)
-                      (1)
-                      (S.I)
-                      (S.elem (expr.callee.type) (['number', 'string', 'symbol']) ?
-                       ArrowFunc1 (Identifier ('obj'))
-                                  (Member (Identifier ('obj'))
-                                          (recur (expr.callee))) :
-                       recur (expr.callee));
+                      (n => insert => (callee => {
+                                         switch (callee.type) {
+                                           case 'placeholder':
+                                             return ArrowFunc1 (genIdentifier (0))
+                                                               (insert (genIdentifier (0)));
+                                           case 'number':
+                                           case 'string':
+                                           case 'symbol':
+                                             return insert (ArrowFunc1 (genIdentifier (0))
+                                                                       (Member (genIdentifier (0))
+                                                                               (recur (callee))));
+                                           default:
+                                             return insert (recur (callee));
+                                         }
+                                       })
+                                      (expr.callee))
+                      (expr.arguments.length)
+                      (S.I);
     }
     case 'import': {
       const params = S.map (symbol => recur ({type: 'identifiers', name: Symbol.keyFor (symbol), path: []}))
@@ -204,17 +212,8 @@ const op2 = operator => (
                                  (Identifier ('right'))))
 );
 
-const apply = (
-  ArrowFunc1 (Identifier ('f'))
-             (ArrowFunc1 (Identifier ('args'))
-                         (Call1 (Identifier ('f'))
-                                (SpreadElement (Identifier ('args')))))
-);
-
+/* eslint-disable key-spacing */
 exports.env = {
-  /* eslint-disable key-spacing */
-  'apply':              apply,
-
   // https://262.ecma-international.org/6.0/#sec-11.8.1
   'null':               Literal (null),
   // https://262.ecma-international.org/6.0/#sec-11.8.2
@@ -369,8 +368,8 @@ exports.env = {
   'Math':               Identifier ('Math'),
   // https://262.ecma-international.org/6.0/#sec-18.4.3
   'Reflect':            Identifier ('Reflect'),
-  /* eslint-enable key-spacing */
 };
+/* eslint-enable key-spacing */
 
 exports.wrap = name => expr => (
   ArrowFunc1 (Identifier (escapeIdentifier (name)))
@@ -385,12 +384,15 @@ const withEnv = exports.withEnv = env => expr => (
        (Object.values (env))
 );
 
+/* eslint-disable key-spacing */
 const nodeEnv = {
-  /* eslint-disable key-spacing */
   '__dirname':          Identifier ('__dirname'),
+  '__filename':         Identifier ('__filename'),
+  'exports':            Identifier ('exports'),
+  'module':             Identifier ('module'),
   'require':            Identifier ('require'),
-  /* eslint-enable key-spacing */
 };
+/* eslint-enable key-spacing */
 
 exports.toCommonJsModule = expr => (
   Program ('script')
