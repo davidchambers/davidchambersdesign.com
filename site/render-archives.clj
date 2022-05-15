@@ -17,7 +17,7 @@
                          (:posts section)))]))]
 
    (s/pipe [(s/map (s/join s/Pair))
-            (s/map (s/map-left (s/prop :datetime)))
+            (s/map (s/map-left (:datetime _)))
             (s/sort-by (s/compose (s/compose s/negate Number) s/fst))
             (s/map (s/map-left (.toFormat "MMMM y" _)))
             (s/group-by (s/on s/equals s/fst))

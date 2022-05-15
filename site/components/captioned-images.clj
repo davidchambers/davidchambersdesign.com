@@ -4,4 +4,4 @@
 
       captioned-image (require "./captioned-image")]
 
-   (f -> (dl (s/chain (s/prop :children) (f captioned-image))))))
+   (f -> (dl (s/chain (:children _) (f captioned-image))))))

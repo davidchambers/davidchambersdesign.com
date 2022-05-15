@@ -9,7 +9,7 @@
               (line ->
                  (s/from-maybe line
                                (s/chain (s/strip-prefix _ line)
-                                        (s/map (s/prop "match")
+                                        (s/map ("match" _)
                                                (s/chain (s/match (s/regex "" "^[ ]*"))
                                                         (s/head lines))))))]
          (pre (code (text (s/unlines (s/map trim-leading-spaces lines)))))))))
