@@ -80,31 +80,26 @@
          elements rendered in the same way."])
 
     (captioned-images
-       (captioned-image ->
 
-          [(captioned-image
-              "/images/posts/39/start-game-button-and-hyperlink-unstyled.png"
-              "Unstyled button and hyperlink"
-              "Unstyled submit input and hyperlink")
+       [["/images/posts/39/start-game-button-and-hyperlink-unstyled.png"
+         "Unstyled button and hyperlink"
+         "Unstyled submit input and hyperlink"]
 
-           (captioned-image
-              "/images/posts/39/start-game-button-and-hyperlink-border.png"
-              "Button and hyperlink with border"
-              (code "border: 1px solid #850; color: #850;"))
+        ["/images/posts/39/start-game-button-and-hyperlink-border.png"
+         "Button and hyperlink with border"
+         (code "border: 1px solid #850; color: #850;")]
 
-           (captioned-image
-              "/images/posts/39/start-game-button-and-hyperlink-background-color.png"
-              "Button and hyperlink with background colour"
-              (code "background: #fc6; text-decoration: none;"))
+        ["/images/posts/39/start-game-button-and-hyperlink-background-color.png"
+         "Button and hyperlink with background colour"
+         (code "background: #fc6; text-decoration: none;")]
 
-           (captioned-image
-              "/images/posts/39/start-game-button-and-hyperlink-padding-font.png"
-              "Button and hyperlink with consistent padding and font properties"
-              (code "padding: 0.25em 0.5em;
-                     font: bold 12px/15px
-                           \"Lucida Grande\",
-                           \"Lucida Sans Unicode\",
-                           sans-serif;"))]))
+        ["/images/posts/39/start-game-button-and-hyperlink-padding-font.png"
+         "Button and hyperlink with consistent padding and font properties"
+         (code "padding: 0.25em 0.5em;
+                font: bold 12px/15px
+                      \"Lucida Grande\",
+                      \"Lucida Sans Unicode\",
+                      sans-serif;")]])
 
     (h4 "Progressive enhancement")
 
@@ -211,17 +206,14 @@
        ")
 
     (captioned-images
-       (captioned-image ->
 
-          [(captioned-image
-              "/images/posts/39/start-game-button-and-hyperlink-focus.png"
-              "Focus state"
-              "Focus state (right) alongside default state")
+       [["/images/posts/39/start-game-button-and-hyperlink-focus.png"
+         "Focus state"
+         "Focus state (right) alongside default state"]
 
-           (captioned-image
-              "/images/posts/39/start-game-button-and-hyperlink-focus-hover.png"
-              "Focus+hover state"
-              "The focus and hover states play nicely together")]))
+        ["/images/posts/39/start-game-button-and-hyperlink-focus-hover.png"
+         "Focus+hover state"
+         "The focus and hover states play nicely together"]])
 
     (h4 "Active")
 

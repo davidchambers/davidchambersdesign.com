@@ -9,7 +9,6 @@ generate-css    (require "../generate-css.clj")
 masthead        (require "../masthead.clj")
 related-posts   (require "../related-posts.clj")
 render-archives (require "../render-archives.clj")
-render-fragment (require "../render-fragment.clj")
 render-page     (require "../render-page.clj")
 render-post     (require "../render-post.clj")
 render-tags     (require "../render-tags.clj")
@@ -41,7 +40,7 @@ render-svg
   (attrs ->
      (s/pipe [(e/svg (.apply null [{:xmlns "http://www.w3.org/2000/svg" :version "1.1"} attrs] Object.assign))
               (s/of Array)
-              (render-fragment "  " 0 false)
+              (s/fold-map String (:render _ "  " 0 false))
               (s/concat "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n")
               (s/concat "<?xml version=\"1.0\" standalone=\"no\"?>\n")]))
 
@@ -103,7 +102,7 @@ _ (write-file (public ["svg" "twitter.svg"])
               (render-svg {:width 16 :height 16} icon:twitter))
 
 render-document (s/pipe [(s/of Array)
-                         (render-fragment "  " 0 false)
+                         (s/fold-map String (:render _ "  " 0 false))
                          (s/concat "<!DOCTYPE html>\n")])
 
 _ (write-file (public ["archives.html"])

@@ -83,17 +83,14 @@
          with a single click."])
 
     (captioned-images
-       (captioned-image ->
 
-          [(captioned-image
-              "/images/posts/85/hashify-editor-at-david-chambers-design.png"
-              "Hashify Editor at David Chambers Design"
-              "Hashify Editor at David Chambers Design")
+       [["/images/posts/85/hashify-editor-at-david-chambers-design.png"
+         "Hashify Editor at David Chambers Design"
+         "Hashify Editor at David Chambers Design"]
 
-           (captioned-image
-              "/images/posts/85/comment-preview-at-hashify.me.png"
-              "Comment preview at hashify.me"
-              "Comment preview at hashify.me")]))
+        ["/images/posts/85/comment-preview-at-hashify.me.png"
+         "Comment preview at hashify.me"
+         "Comment preview at hashify.me"]])
 
     (h3 "Adoption")
 

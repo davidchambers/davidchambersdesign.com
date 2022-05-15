@@ -57,19 +57,14 @@
          browser."])
 
     (captioned-images
-       (captioned-image ->
 
-          [(captioned-image
-              "/images/posts/15/script-editor-syntax-highlighting.png"
-              ""
-              "Screenshot of Script Editor's rendering of an AppleScript
-               snippet")
+       [["/images/posts/15/script-editor-syntax-highlighting.png"
+         ""
+         "Screenshot of Script Editor's rendering of an AppleScript snippet"]
 
-           (captioned-image
-              "/images/posts/15/syntaxhighlighter-applescript-theme.png"
-              ""
-              "Screenshot of snippet styled by AppleScript theme for
-               SyntaxHighlighter")]))
+        ["/images/posts/15/syntaxhighlighter-applescript-theme.png"
+         ""
+         "Screenshot of snippet styled by AppleScript theme for SyntaxHighlighter"]])
 
     (code-block :applescript
 

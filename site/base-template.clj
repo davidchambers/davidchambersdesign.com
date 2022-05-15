@@ -6,13 +6,7 @@
       (html
          [(head
              [(meta {:charset "utf-8"})
-              (title (s/chain (function plain-text [node]
-                                 (if (=== :text (:type node))
-                                     [(:value node)]
-                                     (if (:self-closing node)
-                                         []
-                                         (s/chain plain-text (:children node)))))
-                              (canonicalize-children document-title)))
+              (title (s/chain (:text _) (canonicalize-children document-title)))
               (link {:rel "alternate" :type "application/atom+xml" :href "/feed/"})
               (link {:rel "stylesheet" :href "/css/reset.css" :media "all"})
               (link {:rel "stylesheet" :href "/css/print.css" :media "print"})

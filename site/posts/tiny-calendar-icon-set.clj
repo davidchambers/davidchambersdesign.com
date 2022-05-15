@@ -38,17 +38,14 @@
          archives page, for which I created a set of 16 x 16px calendar icons."])
 
     (captioned-images
-       (captioned-image ->
 
-          [(captioned-image
-              "/images/posts/14/calendar-300pc.png"
-              "Calendar icons for every possible day of the month"
-              "Calendar icons shown at 300% of actual size")
+       [["/images/posts/14/calendar-300pc.png"
+         "Calendar icons for every possible day of the month"
+         "Calendar icons shown at 300% of actual size"]
 
-           (captioned-image
-              "/images/posts/14/calendar.png"
-              "Calendar icons for every possible day of the month"
-              "Calendar icons shown actual size")]))
+        ["/images/posts/14/calendar.png"
+         "Calendar icons for every possible day of the month"
+         "Calendar icons shown actual size"]])
 
     (p
        ["You are welcome to "

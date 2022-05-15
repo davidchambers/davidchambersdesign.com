@@ -1,10 +1,14 @@
 (let
    [s (require "./sanctuary")
 
+    escape (s/pipe [(.replace (s/regex "g" "&") "&amp;" _)
+                    (.replace (s/regex "g" "<") "&lt;" _)
+                    (.replace (s/regex "g" ">") "&gt;" _)])
+
     text
       (value ->
-         {:type :text
-          :value value})
+         {:text [value]
+          :render (indent level inline -> (escape value))})
 
     canonicalize-attrs
       (attrs ->
@@ -29,37 +33,109 @@
 
     block-element
       (tag-name attrs children ->
-         {:type :element
-          :tag-name tag-name
-          :format :block
-          :self-closing false
-          :attrs (canonicalize-attrs attrs)
-          :children (canonicalize-children children)})
+         (let [attrs (canonicalize-attrs attrs)
+               children (canonicalize-children children)]
+            {:format :block
+             :text (s/chain (:text _) children)
+             :render (indent level inline ->
+                        (.join ""
+                               [(.repeat level indent)
+                                "<"
+                                (Symbol.keyFor tag-name)
+                                (s/fold-map String
+                                            (sym ->
+                                               (.join ""
+                                                      [" "
+                                                       (Symbol.keyFor sym)
+                                                       "=\""
+                                                       (escape (s/unwords (s/map s/trim (s/lines (s/prop sym attrs)))))
+                                                       "\""]))
+                                            (Object.getOwnPropertySymbols attrs))
+                                ">\n"
+                                (s/fold-map String (:render _ indent (+ 1 level) false) children)
+                                (.repeat level indent)
+                                "</"
+                                (Symbol.keyFor tag-name)
+                                ">\n"]))}))
 
     inline-element
       (tag-name attrs children ->
-         (let [children (canonicalize-children children)]
-            {:type :element
-             :tag-name tag-name
-             :format (if (s/any (node -> (=== :block (:format node))) children)
-                         :block
-                         :inline)
-             :self-closing false
-             :attrs (canonicalize-attrs attrs)
-             :children children}))
+         (let [attrs (canonicalize-attrs attrs)
+               children (canonicalize-children children)
+               format (if (s/any (node -> (=== :block (:format node))) children)
+                          :block
+                          :inline)]
+            {:format format
+             :text (s/chain (:text _) children)
+             :render (indent level inline ->
+                        (if (=== :inline format)
+                            (.join ""
+                                   [(.repeat level indent)
+                                    "<"
+                                    (Symbol.keyFor tag-name)
+                                    (s/fold-map String
+                                                (sym ->
+                                                   (.join ""
+                                                          [" "
+                                                           (Symbol.keyFor sym)
+                                                           "=\""
+                                                           (escape (s/unwords (s/map s/trim (s/lines (s/prop sym attrs)))))
+                                                           "\""]))
+                                                (Object.getOwnPropertySymbols attrs))
+                                    ">"
+                                    (s/fold-map String (:render _ indent 0 true) children)
+                                    "</"
+                                    (Symbol.keyFor tag-name)
+                                    ">"
+                                    (if inline "" "\n")])
+                            (.join ""
+                                   [(.repeat level indent)
+                                    "<"
+                                    (Symbol.keyFor tag-name)
+                                    (s/fold-map String
+                                                (sym ->
+                                                   (.join ""
+                                                          [" "
+                                                           (Symbol.keyFor sym)
+                                                           "=\""
+                                                           (escape (s/unwords (s/map s/trim (s/lines (s/prop sym attrs)))))
+                                                           "\""]))
+                                                (Object.getOwnPropertySymbols attrs))
+                                    ">\n"
+                                    (s/fold-map String (:render _ indent (+ 1 level) false) children)
+                                    (.repeat level indent)
+                                    "</"
+                                    (Symbol.keyFor tag-name)
+                                    ">\n"])))}))
 
     self-closing-element
       (tag-name attrs ->
-         {:type :element
-          :tag-name tag-name
-          :format :inline
-          :self-closing true
-          :attrs (canonicalize-attrs attrs)})
+         (let [attrs (canonicalize-attrs attrs)]
+            {:format :inline
+             :text []
+             :render (indent level inline ->
+                        (.join ""
+                               [(.repeat level indent)
+                                "<"
+                                (Symbol.keyFor tag-name)
+                                (s/fold-map String
+                                            (sym ->
+                                               (.join ""
+                                                      [" "
+                                                       (Symbol.keyFor sym)
+                                                       "=\""
+                                                       (escape (s/unwords (s/map s/trim (s/lines (s/prop sym attrs)))))
+                                                       "\""]))
+                                            (Object.getOwnPropertySymbols attrs))
+                                " />"
+                                (if inline "" "\n")]))}))
 
     excerpt
       (children ->
-         {:type :excerpt
-          :children (canonicalize-children children)})
+         (let [children (canonicalize-children children)]
+            {:text (s/chain (:text _) children)
+             :render (indent level inline ->
+                        (s/fold-map String (:render _ indent level inline) children))}))
 
     ; 4.1 The document element
     html' (block-element :html)
