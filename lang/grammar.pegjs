@@ -41,25 +41,11 @@ Separator 'separator'
   = Whitespace
   / Comment
 
-SymbolChar 'symbol character'
-  = !Whitespace
-    !'\u0022' // QUOTATION MARK
-    !'\u0028' // LEFT PARENTHESIS
-    !'\u0029' // RIGHT PARENTHESIS
-    !'\u003B' // SEMICOLON
-    !'\u005B' // LEFT SQUARE BRACKET
-    !'\u005D' // RIGHT SQUARE BRACKET
-    !'\u007B' // LEFT CURLY BRACKET
-    !'\u007D' // RIGHT CURLY BRACKET
-    .
-
 IdentChar 'identifier character'
   = !Whitespace
     !'\u0022' // QUOTATION MARK
     !'\u0028' // LEFT PARENTHESIS
     !'\u0029' // RIGHT PARENTHESIS
-    !'\u002E' // FULL STOP
-    !'\u002F' // SOLIDUS
     !'\u003B' // SEMICOLON
     !'\u005B' // LEFT SQUARE BRACKET
     !'\u005D' // RIGHT SQUARE BRACKET
@@ -71,7 +57,6 @@ Expression 'expression'
   = Number
   / String
   / Symbol
-  / Identifiers
   / Identifier
   / Import
   / Function
@@ -129,20 +114,12 @@ Char 'char'
   / [^"]
 
 Symbol 'symbol'
-  = ':' name:$(SymbolChar)+
+  = ':' name:$(IdentChar)+
   { return {type: 'symbol', name}; }
 
-Identifiers 'identifiers'
-  = name:$(IdentChar)+
-    path:(
-      '.' ident:$(IdentChar)+ { return {type: 'string', value: ident}; }
-    / '/' ident:$(IdentChar)+ { return {type: 'symbol', name: ident}; }
-    )+
-  { return {type: 'identifiers', name, path}; }
-
 Identifier 'identifier'
-  = !'->' name:$('.' / '/' / IdentChar)+
-  { return {type: 'identifiers', name, path: []}; }
+  = !'->' name:$(IdentChar)+
+  { return {type: 'identifier', name}; }
 
 Import 'import'
   = Separator* '('

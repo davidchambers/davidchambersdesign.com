@@ -64,10 +64,25 @@ exports.toJs = dirname => function recur(expr) {
                            (Literal ('for')))
                    (Literal (expr.name));
     }
-    case 'identifiers': {
-      return S.reduce (Member)
-                      (Identifier (escapeIdentifier (expr.name)))
-                      (S.map (recur) (expr.path));
+    case 'identifier': {
+      if (expr.name === '.' || expr.name === '/') {
+        return Identifier (escapeIdentifier (expr.name));
+      } else {
+        const [head, ...tail] = (
+          expr.name
+          .split (/([./][^./]+)/)
+          .filter (s => s !== '')
+        );
+        return tail.reduce (
+          (expr, name) => {
+            switch (name.slice (0, 1)) {
+              case '.': return Member (expr) (recur ({type: 'string', value: name.slice (1)}));
+              case '/': return Member (expr) (recur ({type: 'symbol', name: name.slice (1)}));
+            }
+          },
+          Identifier (escapeIdentifier (head))
+        );
+      }
     }
     case 'array': {
       return Array_ (S.map (recur) (expr.elements));
@@ -168,7 +183,7 @@ exports.toJs = dirname => function recur(expr) {
                       (S.I);
     }
     case 'import': {
-      const params = S.map (symbol => recur ({type: 'identifiers', name: Symbol.keyFor (symbol), path: []}))
+      const params = S.map (symbol => recur ({type: 'identifier', name: Symbol.keyFor (symbol)}))
                            (Object.getOwnPropertySymbols (S.reduce (env => name => Object.assign (env, require (path.join (dirname, name.value))))
                                                                    (Object.create (null))
                                                                    (expr.names)));
