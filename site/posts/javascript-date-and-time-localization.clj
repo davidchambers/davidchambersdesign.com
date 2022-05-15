@@ -135,7 +135,7 @@
        ")
 
     (let [url "http://bitbucket.org/davidchambers/jquery.localize"
-          link (lambda [path] (a (+ path url)))]
+          link (path -> (a (+ path url)))]
        (p
           ["Date and time formats are fully customizable via "
            (link "/src#directives" "directives") ", and there is

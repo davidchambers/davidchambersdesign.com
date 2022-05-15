@@ -1,4 +1,3 @@
 (import ["../elements"]
 
-(lambda [caption]
-   (p' {:class "caption"} caption)))
+(caption -> (p' {:class "caption"} caption)))

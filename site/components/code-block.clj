@@ -2,11 +2,11 @@
 
 (let [s (require "../sanctuary")]
 
-   (lambda [language source-code]
+   (language source-code ->
       (let [lines
               (s/from-maybe [] (s/chain s/init (s/tail (s/lines source-code))))
             trim-leading-spaces
-              (lambda [line]
+              (line ->
                  (s/from-maybe line
                                (s/chain (s/strip-prefix _ line)
                                         (s/map (s/prop "match")

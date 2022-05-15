@@ -83,7 +83,7 @@
          with a single click."])
 
     (captioned-images
-       (lambda [captioned-image]
+       (captioned-image ->
 
           [(captioned-image
               "/images/posts/85/hashify-editor-at-david-chambers-design.png"

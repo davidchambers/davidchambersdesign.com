@@ -28,7 +28,7 @@
          considerations involved in designing for the Web."])
 
     (captioned-images
-       (lambda [captioned-image]
+       (captioned-image ->
 
           [(captioned-image
               "/images/posts/40/mid-wicket.png"

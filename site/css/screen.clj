@@ -1,4 +1,4 @@
-(lambda [coerce]
+(coerce ->
 
    (let [s (require "../sanctuary")
 
@@ -17,9 +17,9 @@
          sans-serif (. , (. (s/append :sans-serif) (s/map ')))
          monospace (. , (. (s/append :monospace) (s/map ')))
 
-         rgba (lambda [r g b a] (.join "" ["rgba(" (, [r g b a]) ")"]))
+         rgba (r g b a -> (.join "" ["rgba(" (, [r g b a]) ")"]))
 
-         url (lambda [url] (.join "" ["url(" url ")"]))
+         url (url -> (.join "" ["url(" url ")"]))
 
          !important (. (+ " !important") coerce)
 
@@ -252,9 +252,8 @@
 
    ]
 
-   (s/chain (lambda [slug]
-               [[(.join "" ["#nav a[href='/" slug "/']"])]
-                [:background-image (url (.join "" ["../svg/" slug ".svg"]))]])
+   (s/chain (slug -> [[(.join "" ["#nav a[href='/" slug "/']"])]
+                      [:background-image (url (.join "" ["../svg/" slug ".svg"]))]])
             ["about" "archives" "contact" "flushcache" "tags" "twitter"])
 
    [
@@ -695,10 +694,9 @@
    ]
 
    (s/fold-map Array
-               (lambda [count]
-                  [[(.join "" ["#tags li[data-count='" count "'] a"])]
-                   [:background (tag-background count)
-                    :color (tag-color count)]])
+               (count -> [[(.join "" ["#tags li[data-count='" count "'] a"])]
+                          [:background (tag-background count)
+                           :color (tag-color count)]])
                (s/range 1 20))
 
    [

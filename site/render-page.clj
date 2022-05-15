@@ -1,3 +1,3 @@
 (import ["./elements"]
 
-(lambda [page] [(article (:body page))]))
+(page -> [(article (:body page))]))

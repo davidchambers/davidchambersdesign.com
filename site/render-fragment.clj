@@ -6,7 +6,7 @@
 
    (function render-fragment [indent level inline]
       (s/fold-map String
-                  (lambda [node]
+                  (node ->
                      (if (=== :text (:type node))
                          (escape (:value node))
                          (if (=== :excerpt (:type node))
@@ -14,7 +14,7 @@
                              (let [indentation (.repeat level indent)
                                    tag-name (Symbol.keyFor (:tag-name node))
                                    attrs (s/fold-map String
-                                                     (lambda [sym]
+                                                     (sym ->
                                                         (.join ""
                                                                [" "
                                                                 (Symbol.keyFor sym)

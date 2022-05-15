@@ -2,7 +2,7 @@
 
 (let [s (require "../sanctuary")]
 
-   (lambda [datetime body]
+   (datetime body ->
       (div {:class "update"}
          (s/prepend (h4 ["Update \u2014 "
                          (time {:datetime (.toISO datetime)}

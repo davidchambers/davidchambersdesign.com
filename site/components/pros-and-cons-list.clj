@@ -1,5 +1,5 @@
 (import ["../elements"]
 
-(lambda [f]
+(f ->
    (ul (f (li' {:class "pro"})
           (li' {:class "con"})))))

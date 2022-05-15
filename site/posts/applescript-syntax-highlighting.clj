@@ -57,7 +57,7 @@
          browser."])
 
     (captioned-images
-       (lambda [captioned-image]
+       (captioned-image ->
 
           [(captioned-image
               "/images/posts/15/script-editor-syntax-highlighting.png"

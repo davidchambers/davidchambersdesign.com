@@ -2,8 +2,8 @@
 
 (let [s (require "../sanctuary")]
 
-   (lambda [interviewer interviewee exchange]
-      (ol (s/snd (s/reduce (s/pair (lambda [name items quotation]
+   (interviewer interviewee exchange ->
+      (ol (s/snd (s/reduce (s/pair (name items quotation ->
                                       (if (s/equals interviewer name)
                                           (s/Pair interviewee
                                                   (s/append (li' {:class "interviewer"}

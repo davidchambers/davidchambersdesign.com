@@ -1,7 +1,7 @@
 (let [s (require "./sanctuary")
 
       reducer
-        (lambda [prev path curr]
+        (prev path curr ->
            (if (=== :M (0 curr))
                (if (or (=== :M (0 prev))
                        (=== :m (0 prev)))
@@ -15,7 +15,7 @@
 
       simplify
         (s/array []
-                 (lambda [head tail]
+                 (head tail ->
                     (s/pair s/append
                             (s/reduce (s/pair reducer)
                                       (s/Pair head [])
@@ -23,21 +23,20 @@
 
       render (s/pipe [simplify
                       s/join
-                      (s/map (lambda [x]
-                                (switch (typeof x)
-                                   ["number" (String x)
-                                    "object" (s/join-with "," x)  ; array
-                                    "symbol" (Symbol.keyFor x)])))
+                      (s/map (x -> (switch (typeof x)
+                                      ["number" (String x)
+                                       "object" (s/join-with "," x)  ; array
+                                       "symbol" (Symbol.keyFor x)])))
                       s/unwords])]
 
    {:render render
-    :⇦ (lambda [x] [:m [(- x 0) 0]])
-    :⇨ (lambda [x] [:m [(+ x 0) 0]])
-    :⇧ (lambda [y] [:m [0 (- y 0)]])
-    :⇩ (lambda [y] [:m [0 (+ y 0)]])
-    :← (lambda [x] [:h (- x 0)])
-    :→ (lambda [x] [:h (+ x 0)])
-    :↑ (lambda [y] [:v (- y 0)])
-    :↓ (lambda [y] [:v (+ y 0)])
-    :a (lambda [rx-ry angle large-arc-flag sweep-flag dx-dy]
+    :⇦ (x -> [:m [(- x 0) 0]])
+    :⇨ (x -> [:m [(+ x 0) 0]])
+    :⇧ (y -> [:m [0 (- y 0)]])
+    :⇩ (y -> [:m [0 (+ y 0)]])
+    :← (x -> [:h (- x 0)])
+    :→ (x -> [:h (+ x 0)])
+    :↑ (y -> [:v (- y 0)])
+    :↓ (y -> [:v (+ y 0)])
+    :a (rx-ry angle large-arc-flag sweep-flag dx-dy ->
           [:a rx-ry angle large-arc-flag sweep-flag dx-dy])})

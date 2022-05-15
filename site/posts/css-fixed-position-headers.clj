@@ -91,7 +91,7 @@
          padding from adding unwanted white space between elements."])
 
     (pros-and-cons-list
-       (lambda [+ -]
+       (+ - ->
           [(+ ["No additional markup is required."])
            (+ ["Straightforward CSS."])
            (- ["The CSS selector needs to contain all block-level elements
@@ -151,7 +151,7 @@
          element of interest is not obscured by the header."])
 
     (pros-and-cons-list
-       (lambda [+ -]
+       (+ - ->
           [(+ ["Straightforward CSS."])
            (+ ["Links are always clickable!"])
            (- ["Additional markup is required, necessitating that
@@ -212,7 +212,7 @@
        ")
 
     (pros-and-cons-list
-       (lambda [+ -]
+       (+ - ->
           [(+ ["No additional markup is required."])
            (+ ["Straightforward CSS."])
            (+ ["Links are always clickable."])

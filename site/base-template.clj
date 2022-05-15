@@ -2,7 +2,7 @@
 
 (let [s (require "./sanctuary")]
 
-   (lambda [document-title main]
+   (document-title main ->
       (html
          [(head
              [(meta {:charset "utf-8"})

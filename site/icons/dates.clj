@@ -3,7 +3,7 @@
 (let [e (require "../elements")
       s (require "../sanctuary")]
 
-   (s/map (lambda [path]
+   (s/map (path ->
              (e/path {:fill-rule :evenodd
                       :fill "#000"
                       :d (render (s/concat [(⇨  0) (⇩  0)] path))}))

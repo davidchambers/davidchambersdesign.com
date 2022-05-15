@@ -141,7 +141,7 @@ Identifiers 'identifiers'
   { return {type: 'identifiers', name, path}; }
 
 Identifier 'identifier'
-  = name:$('.' / '/' / IdentChar)+
+  = !'->' name:$('.' / '/' / IdentChar)+
   { return {type: 'identifiers', name, path: []}; }
 
 Import 'import'
@@ -172,15 +172,8 @@ Function 'function'
 
 Lambda 'lambda'
   = Separator* '('
-    Separator* 'lambda'
-    Separator* '['
-    parameters:(
-      head:(Separator* ident:Identifier { return ident; })
-      tail:(Separator+ ident:Identifier { return ident; })*
-      { return [head, ...tail]; }
-    )
-    Separator* ']'
-    Separator* body:Expression
+    Separator* parameters:(ident:Identifier Separator+ { return ident; })+ '->'
+    Separator+ body:Expression
     Separator* ')'
     { return parameters.reduceRight((body, parameter) => ({type: 'lambda', parameter, body}), body); }
 

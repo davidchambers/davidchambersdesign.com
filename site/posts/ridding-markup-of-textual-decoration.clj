@@ -37,7 +37,7 @@
     (h2 "Adding decorative textual content via CSS")
 
     (let [url "http://reference.sitepoint.com"
-          sitepoint (lambda [path text] (a (+ path url) (code text)))]
+          sitepoint (path text -> (a (+ path url) (code text)))]
        (p
           ["The " (sitepoint "/css/content" "content") " property
             is extremely powerful. It's used in conjunction with

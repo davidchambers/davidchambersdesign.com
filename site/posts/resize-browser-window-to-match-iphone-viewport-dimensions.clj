@@ -56,7 +56,7 @@
            "iPhone testing bookmarklets: portrait and landscape")])
 
     (captioned-images
-       (lambda [captioned-image]
+       (captioned-image ->
 
           [(captioned-image
               "/images/posts/windows/safari-window-iphone-dimensions-portrait.png"

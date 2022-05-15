@@ -138,7 +138,7 @@
            (→  1) (↓ 20) (←  1) (↑ 20)]
 
       update
-        (lambda [positions dir]
+        (positions dir ->
            (s/prepend (s/T (0 positions)
                            (switch (0 dir)
                               [:m (s/bimap (+ (0 (1 dir))) (+ (1 (1 dir))))
@@ -146,7 +146,7 @@
                                :v (s/bimap s/I (+ (1 dir)))]))
                       positions))
 
-      reset (lambda [path]
+      reset (path ->
                (let [paths (s/extend s/I (s/reduce update [(s/Pair 0 0)] path))
                      xs (s/chain (s/map s/fst) paths)
                      ys (s/chain (s/map s/snd) paths)
@@ -154,7 +154,7 @@
                      dy (- (0 ys) 0)]
                   [:m [dx dy]]))
 
-      paths (s/pipe [(s/map (lambda [char] (s/append (reset char) char)))
+      paths (s/pipe [(s/map (char -> (s/append (reset char) char)))
                      (s/intercalate [[:m [6 0]]])
                      (s/prepend [:M [0 0]])])
 

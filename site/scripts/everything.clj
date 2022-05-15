@@ -23,22 +23,22 @@ icon:tags       (require "../icons/tags.clj")
 icon:twitter    (require "../icons/twitter.clj")
 dates           (require "../icons/dates.clj")
 
-pages (s/map (lambda [name] (require (s/join-with "/" [".." "pages" name])))
+pages (s/map (name -> (require (s/join-with "/" [".." "pages" name])))
              (fs.readdirSync (.apply null [__dirname ".." "pages"] path.join)))
 
-posts (s/map (lambda [name] (require (s/join-with "/" [".." "posts" name])))
+posts (s/map (name -> (require (s/join-with "/" [".." "posts" name])))
              (fs.readdirSync (.apply null [__dirname ".." "posts"] path.join)))
 
 public (s/compose (.apply null _ path.join)
                   (s/concat [__dirname ".." "public"]))
 
-write-file (lambda [filename text] (.apply null [filename text] fs.writeFileSync))
+write-file (filename text -> (.apply null [filename text] fs.writeFileSync))
 
 _ (write-file (public ["css" "screen.css"])
               generate-css)
 
 render-svg
-  (lambda [attrs]
+  (attrs ->
      (s/pipe [(e/svg (.apply null [{:xmlns "http://www.w3.org/2000/svg" :version "1.1"} attrs] Object.assign))
               (s/of Array)
               (render-fragment "  " 0 false)
@@ -114,13 +114,13 @@ _ (write-file (public ["tags.html"])
               (render-document (base-template "Tags"
                                               (render-tags posts))))
 
-_ (s/map (lambda [page]
+_ (s/map (page ->
             (write-file (public [(s/concat (:slug page) ".html")])
                         (render-document (base-template (:title page)
                                                         (render-page page)))))
          pages)
 
-_ (s/map (lambda [post]
+_ (s/map (post ->
             (write-file (public [(s/concat (:slug post) ".html")])
                         (render-document (base-template (:title post)
                                                         (render-post post

@@ -3,7 +3,7 @@
 (let [s (require "./sanctuary")
       tags (require "./tags")]
 
-   (lambda [post related-posts]
+   (post related-posts ->
       [(article'
           (s/maybe {} (s/singleton :id) (s/value :article-id post))
           (s/join [[(header
@@ -14,15 +14,15 @@
                    [(footer' {:class "metadata"}
                        (s/join [[(ul (li' {:class "shorturl"} (a (.join "" ["http://dċd.ws/" (:id post) "/"]) "Short URL")))]
                                 (s/array []
-                                         (lambda [head tail]
+                                         (head tail ->
                                             [(h4 "This post has the following tags:")
-                                             (ol (s/map (lambda [tag] (li (a (.join "" ["/tag/" (Symbol.keyFor tag) "/"]) (s/prop tag tags))))
+                                             (ol (s/map (tag -> (li (a (.join "" ["/tag/" (Symbol.keyFor tag) "/"]) (s/prop tag tags))))
                                                         (s/prepend head tail)))])
                                          (:tags post))]))]
                    (s/array []
-                            (lambda [_ _]
+                            (_ _ ->
                                [(h3' {:id "related"} "Possibly related posts")
-                                (ul (s/map (lambda [related-post]
+                                (ul (s/map (related-post ->
                                               (li (a (.join "" ["/" (:slug related-post) "/"]) (:title related-post))))
                                            related-posts))])
                             related-posts)]))])))

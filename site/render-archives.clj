@@ -3,11 +3,11 @@
 (let [s (require "./sanctuary")
 
       render-section
-        (lambda [section]
+        (section ->
            (li
               [(h2 (:heading section))
                (ol
-                  (s/map (lambda [post]
+                  (s/map (post ->
                             (li
                                [(a' {:href (s/concat "/" (:slug post))} (:title post))
                                 " "
@@ -21,7 +21,7 @@
             (s/sort-by (s/compose (s/compose s/negate Number) s/fst))
             (s/map (s/map-left (.toFormat "MMMM y" _)))
             (s/group-by (s/on s/equals s/fst))
-            (s/chain (s/array [] (lambda [head tail] [{:heading (s/fst head) :posts (s/map s/snd (s/prepend head tail))}])))
+            (s/chain (s/array [] (head tail -> [{:heading (s/fst head) :posts (s/map s/snd (s/prepend head tail))}])))
             (s/map render-section)
             (ol' {:class "archives"})
             (s/concat [(h1 "Archives")])])))

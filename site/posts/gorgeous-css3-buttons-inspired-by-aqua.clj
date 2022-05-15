@@ -80,7 +80,7 @@
          elements rendered in the same way."])
 
     (captioned-images
-       (lambda [captioned-image]
+       (captioned-image ->
 
           [(captioned-image
               "/images/posts/39/start-game-button-and-hyperlink-unstyled.png"
@@ -211,7 +211,7 @@
        ")
 
     (captioned-images
-       (lambda [captioned-image]
+       (captioned-image ->
 
           [(captioned-image
               "/images/posts/39/start-game-button-and-hyperlink-focus.png"

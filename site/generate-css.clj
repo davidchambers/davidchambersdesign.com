@@ -12,11 +12,11 @@
       split-every-2
         (function split-every-2 [kvs]
            (s/array []
-                    (lambda [k] (s/array [] (lambda [v kvs] (s/prepend (s/Pair k v) (split-every-2 kvs)))))
+                    (k -> (s/array [] (v kvs -> (s/prepend (s/Pair k v) (split-every-2 kvs)))))
                     kvs))
 
-      vendor-prefix (lambda [unprefixed prefixed]
-                       (s/chain (s/pair (lambda [k v]
+      vendor-prefix (unprefixed prefixed ->
+                       (s/chain (s/pair (k v ->
                                            (if (=== unprefixed k)
                                                (s/map (s/Pair _ v)
                                                       (s/append unprefixed prefixed))
@@ -41,8 +41,8 @@
                                       :-o-transition-timing-function])])
 
       format-block
-        (lambda [selectors]
-           (s/pipe [(s/map (s/pair (lambda [k v] (.join "" ["  " (coerce k) ": " (coerce v) ";"]))))
+        (selectors ->
+           (s/pipe [(s/map (s/pair (k v -> (.join "" ["  " (coerce k) ": " (coerce v) ";"]))))
                     (s/prepend (s/concat (s/join-with ",\n" selectors) " {"))
                     (s/append "}")
                     s/unlines]))]

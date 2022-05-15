@@ -38,7 +38,7 @@
          archives page, for which I created a set of 16 x 16px calendar icons."])
 
     (captioned-images
-       (lambda [captioned-image]
+       (captioned-image ->
 
           [(captioned-image
               "/images/posts/14/calendar-300pc.png"

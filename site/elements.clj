@@ -2,13 +2,13 @@
    [s (require "./sanctuary")
 
     text
-      (lambda [value]
+      (value ->
          {:type :text
           :value value})
 
     canonicalize-attrs
-      (lambda [attrs]
-         (Object.fromEntries (s/map (lambda [name]
+      (attrs ->
+         (Object.fromEntries (s/map (name ->
                                        (let [value (s/prop name attrs)]
                                           [name
                                            (if (== "symbol" (typeof value))
@@ -17,7 +17,7 @@
                                     (Object.getOwnPropertySymbols attrs))))
 
     canonicalize-children
-      (s/compose (s/map (lambda [child]
+      (s/compose (s/map (child ->
                            (if (== "string" (typeof child))
                                (text (.replace (s/regex "g" " -- ")
                                                "\u2009\u2014\u2009"
@@ -28,7 +28,7 @@
                  (s/unless Array.isArray Array.of))
 
     block-element
-      (lambda [tag-name attrs children]
+      (tag-name attrs children ->
          {:type :element
           :tag-name tag-name
           :format :block
@@ -37,11 +37,11 @@
           :children (canonicalize-children children)})
 
     inline-element
-      (lambda [tag-name attrs children]
+      (tag-name attrs children ->
          (let [children (canonicalize-children children)]
             {:type :element
              :tag-name tag-name
-             :format (if (s/any (lambda [node] (=== :block (:format node))) children)
+             :format (if (s/any (node -> (=== :block (:format node))) children)
                          :block
                          :inline)
              :self-closing false
@@ -49,7 +49,7 @@
              :children children}))
 
     self-closing-element
-      (lambda [tag-name attrs]
+      (tag-name attrs ->
          {:type :element
           :tag-name tag-name
           :format :inline
@@ -57,7 +57,7 @@
           :attrs (canonicalize-attrs attrs)})
 
     excerpt
-      (lambda [children]
+      (children ->
          {:type :excerpt
           :children (canonicalize-children children)})
 
@@ -146,7 +146,7 @@
     ; are rendered inline unless the element contains an element
     ; whose opening and closing tags are rendered on their own lines.
     :a'                    (inline-element :a)
-    :a      (lambda [href] (inline-element :a {:href href}))
+    :a            (href -> (inline-element :a {:href href}))
     :aside'                aside'
     :aside                 (aside' {})
     :code'                 (inline-element :code)
