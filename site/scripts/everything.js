@@ -1,5 +1,5 @@
 'use strict';
 
-require ('kiwi');
+require ('serif');
 
-require ('./everything.clj');
+require ('./everything.serif');

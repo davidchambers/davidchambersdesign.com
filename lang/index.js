@@ -9,7 +9,7 @@ const codegen       = require ('../lang/codegen.js');
 const grammar       = require ('../lang/grammar.js');
 
 
-require.extensions['.clj'] = (module, filename) => {
+require.extensions['.serif'] = (module, filename) => {
   const source = fs.readFileSync (filename, 'utf8');
   module._compile (
     escodegen.generate (

@@ -90,6 +90,6 @@ const server = repl.start ({
 });
 
 server.setupHistory (
-  path.join (os.homedir (), '.kiribiri-repl-history'),
+  path.join (os.homedir (), '.serif-repl-history'),
   err => { if (err != null) throw err; },
 );
