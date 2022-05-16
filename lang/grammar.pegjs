@@ -59,7 +59,6 @@ Expression 'expression'
   / Symbol
   / Identifier
   / Import
-  / Function
   / Lambda
   / Let
   / And
@@ -134,18 +133,6 @@ Import 'import'
     Separator* body:Expression
     Separator* ')'
     { return {type: 'import', names, body}; }
-
-Function 'function'
-  = Separator* '('
-    Separator* 'function'
-    Separator* name:Identifier
-    Separator* '['
-    parameter:(Separator* ident:Identifier { return ident; })
-    parameters:(Separator+ ident:Identifier { return ident; })*
-    Separator* ']'
-    Separator* body:Expression
-    Separator* ')'
-    { return {type: 'function', name, parameter, body: parameters.reduceRight((body, parameter) => ({type: 'lambda', parameter, body}), body)}; }
 
 Lambda 'lambda'
   = Separator* '('

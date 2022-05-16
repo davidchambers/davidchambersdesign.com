@@ -1,19 +1,24 @@
 (let [s (require "./sanctuary")
       screen (require "./css/screen")
 
-      coerce
-        (function coerce [x]
-           (if (Array.isArray x)
-               (s/unwords (s/map coerce x))
-               (if (== "symbol" (typeof x))
-                   (Symbol.keyFor x)
-                   (String x))))
+      I (x -> x)          ; I :: a -> a
+      W (f x -> (f x x))  ; W :: (a -> a -> b) -> a -> b
+
+      ; Did we just discover the Y combinator? :D
+      coerce (W I
+                (f x -> (if (Array.isArray x)
+                            (s/unwords (s/map (f f) x))
+                            (if (== "symbol" (typeof x))
+                                (Symbol.keyFor x)
+                                (String x)))))
 
       split-every-2
-        (function split-every-2 [kvs]
-           (s/array []
-                    (k -> (s/array [] (v kvs -> (s/prepend (s/Pair k v) (split-every-2 kvs)))))
-                    kvs))
+        (s/reduce (take x give -> (take (key? keys vals -> (if key?
+                                                               (give false (s/append x keys) vals)
+                                                               (give true keys (s/append x vals))))))
+                  (give -> (give true [] []))
+                  _
+                  (key? -> s/zip))
 
       vendor-prefix (unprefixed prefixed ->
                        (s/chain (s/pair (k v ->
