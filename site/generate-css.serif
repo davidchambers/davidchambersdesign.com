@@ -1,20 +1,20 @@
 (let [s (require "./sanctuary")
       screen (require "./css/screen")
 
-      Y (f -> (f f))
+      Y (f -> ((g -> (g g)) (g -> (f (x -> (g g x))))))
 
       coerce
-        (Y (f x -> (if (Array.isArray x)
-                       (s/unwords (s/map (f f) x))
-                       (if (== "symbol" (typeof x))
-                           (Symbol.keyFor x)
-                           (String x)))))
+        (Y (recur x -> (if (Array.isArray x)
+                           (s/unwords (s/map recur x))
+                           (if (== "symbol" (typeof x))
+                               (Symbol.keyFor x)
+                               (String x)))))
 
       split-every-2
-        (Y (f -> (s/array []
-                          (k -> (s/array []
-                                         (v -> (s/compose (s/prepend (s/Pair k v))
-                                                          (f f))))))))
+        (Y (recur -> (s/array []
+                              (k -> (s/array []
+                                             (v -> (s/compose (s/prepend (s/Pair k v))
+                                                              recur)))))))
 
       vendor-prefix (unprefixed prefixed ->
                        (s/chain (s/pair (k v ->
