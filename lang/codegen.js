@@ -184,7 +184,10 @@ exports.toJs = dirname => function recur(expr) {
     }
     case 'import': {
       const params = S.map (symbol => recur ({type: 'identifier', name: Symbol.keyFor (symbol)}))
-                           (Object.getOwnPropertySymbols (S.reduce (env => name => Object.assign (env, require (path.join (dirname, name.value))))
+                           (Object.getOwnPropertySymbols (S.reduce (env => name => Object.assign (env,
+                                                                                                  name.value.startsWith ('/') ? require (name.value) :
+                                                                                                  name.value.startsWith ('.') ? require (path.join (dirname, name.value)) :
+                                                                                                  /** ** ** otherwise ** ** **/ require (path.join (dirname, 'node_modules', name.value))))
                                                                    (Object.create (null))
                                                                    (expr.names)));
       return Call1 (ArrowFunc1 (ArrayPattern (params))

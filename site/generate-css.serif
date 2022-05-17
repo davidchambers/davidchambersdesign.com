@@ -1,7 +1,7 @@
+(import ["serif/combinators"]
+
 (let [s (require "./sanctuary")
       screen (require "./css/screen")
-
-      Y (f -> ((g -> (g g)) (g -> (f (x -> (g g x))))))
 
       coerce
         (Y (recur x -> (if (Array.isArray x)
@@ -54,4 +54,4 @@
             (s/map (s/map vendor-prefixes))
             (s/map (s/pair format-block))
             (s/join-with "\n")]
-           coerce))
+           coerce)))
