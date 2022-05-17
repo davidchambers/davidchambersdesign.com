@@ -3,19 +3,18 @@
 
       Y (f -> (f f))
 
-      coerce (Y (f x -> (if (Array.isArray x)
-                            (s/unwords (s/map (f f) x))
-                            (if (== "symbol" (typeof x))
-                                (Symbol.keyFor x)
-                                (String x)))))
+      coerce
+        (Y (f x -> (if (Array.isArray x)
+                       (s/unwords (s/map (f f) x))
+                       (if (== "symbol" (typeof x))
+                           (Symbol.keyFor x)
+                           (String x)))))
 
       split-every-2
-        (s/reduce (take x give -> (take (key? keys vals -> (if key?
-                                                               (give false (s/append x keys) vals)
-                                                               (give true keys (s/append x vals))))))
-                  (give -> (give true [] []))
-                  _
-                  (key? -> s/zip))
+        (Y (f -> (s/array []
+                          (k -> (s/array []
+                                         (v -> (s/compose (s/prepend (s/Pair k v))
+                                                          (f f))))))))
 
       vendor-prefix (unprefixed prefixed ->
                        (s/chain (s/pair (k v ->
