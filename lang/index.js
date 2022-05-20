@@ -14,9 +14,8 @@ require.extensions['.serif'] = (module, filename) => {
   module._compile (
     escodegen.generate (
       codegen.toCommonJsModule (
-        codegen.withEnv (codegen.env)
-                        (codegen.toJs (path.dirname (filename))
-                                      (grammar.parse (source))),
+        codegen.toJs (path.dirname (filename))
+                     (codegen.withEcmaScript (grammar.parse (source))),
       ),
     ),
     filename,

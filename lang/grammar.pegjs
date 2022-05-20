@@ -125,8 +125,8 @@ Import 'import'
     Separator* 'import'
     Separator* '['
     names:(
-      head:(Separator* name:Expression { return name; })
-      tail:(Separator+ name:Expression { return name; })*
+      head:(Separator* string:String { return string.value; })
+      tail:(Separator+ string:String { return string.value; })*
       { return [head, ...tail]; }
     )?
     Separator* ']'
@@ -233,7 +233,7 @@ New 'new'
 
 Invocation 'invocation'
   = Separator* '('
-    Separator* '.' name:Identifier
+    Separator* '.' name:(ident:Identifier { return ident.name; })
     args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
     Separator* ')'
     { return {type: 'invocation', name, arguments: args}; }

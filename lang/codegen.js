@@ -48,6 +48,9 @@ const escapeIdentifier = name => (
 
 const genIdentifier = S.pipe ([String, S.concat ('_'), Identifier]);
 
+// (import ["serif/es"] <body>)
+exports.withEcmaScript = body => ({type: 'import', names: ['serif/es'], body});
+
 exports.toJs = dirname => function recur(expr) {
   switch (expr.type) {
     case 'number': {
@@ -152,7 +155,7 @@ exports.toJs = dirname => function recur(expr) {
                       (n => args => insert => insert (args))
                       (expr.arguments.length)
                       ([])
-                      (([object, ...args]) => Call (Member (object) (Literal (expr.name.name)))
+                      (([object, ...args]) => Call (Member (object) (Literal (expr.name)))
                                                    (S.reverse (args)));
     }
     case 'application': {
@@ -184,10 +187,7 @@ exports.toJs = dirname => function recur(expr) {
     }
     case 'import': {
       const params = S.map (symbol => recur ({type: 'identifier', name: Symbol.keyFor (symbol)}))
-                           (Object.getOwnPropertySymbols (S.reduce (env => name => Object.assign (env,
-                                                                                                  name.value.startsWith ('/') ? require (name.value) :
-                                                                                                  name.value.startsWith ('.') ? require (path.join (dirname, name.value)) :
-                                                                                                  /** ** ** otherwise ** ** **/ require (path.join (dirname, 'node_modules', name.value))))
+                           (Object.getOwnPropertySymbols (S.reduce (env => name => Object.assign (env, require (name.startsWith ('.') ? path.join (dirname, name) : name)))
                                                                    (Object.create (null))
                                                                    (expr.names)));
       return Call1 (ArrowFunc1 (ArrayPattern (params))
@@ -200,7 +200,7 @@ exports.toJs = dirname => function recur(expr) {
                                             (ArrowFunc ([Identifier ('sym')])
                                                        (Member (Identifier ('env'))
                                                                (Identifier ('sym'))))))
-                          (Call2 (Member (Array_ (S.map (recur) (expr.names)))
+                          (Call2 (Member (Array_ (S.map (Literal) (expr.names)))
                                          (Literal ('reduce')))
                                  (ArrowFunc ([Identifier ('env'), Identifier ('path')])
                                             (Call2 (Member (Identifier ('Object'))
