@@ -24,12 +24,11 @@ const fixRelativeRequirePath = name => (
 
 const read = S.pipe ([
   S.encase (grammar.parse),
+  S.map (codegen.withEcmaScript),
   S.map (codegen.toJs (path.join (__dirname, '..', '..'))),
-  S.map (codegen.withEnv (codegen.env)),
-  S.map (codegen.wrap ('require')),
+  S.map (codegen.proxy (['require'])),
   S.map (escodegen.generate),
-  S.chain (S.encase (vm.runInNewContext)),
-  S.chain (S.encase (S.T (S.compose (require) (fixRelativeRequirePath)))),
+  S.chain (S.encase (code => vm.runInNewContext (code, {require: S.compose (require) (fixRelativeRequirePath)}))),
 ]);
 
 const print = value => {
