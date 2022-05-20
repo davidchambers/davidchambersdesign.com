@@ -164,26 +164,25 @@ exports.toJs = dirname => function recur(expr) {
                                                                                                ArrowFunc1 (genIdentifier (n))
                                                                                                           (insert (Call1 (callee) (genIdentifier (n)))) :
                                                                                                insert (Call1 (callee) (recur (arg))))))
-                      (S.I)
+                      (provide => n => insert => provide (n) (insert))
                       (S.reverse (expr.arguments))
-                      (n => insert => (callee => {
-                                         switch (callee.type) {
-                                           case 'placeholder':
-                                             return ArrowFunc1 (genIdentifier (0))
-                                                               (insert (genIdentifier (0)));
-                                           case 'number':
-                                           case 'string':
-                                           case 'symbol':
-                                             return insert (ArrowFunc1 (genIdentifier (0))
-                                                                       (Member (genIdentifier (0))
-                                                                               (recur (callee))));
-                                           default:
-                                             return insert (recur (callee));
-                                         }
-                                       })
-                                      (expr.callee))
+                      (n => insert => {
+                         switch (expr.callee.type) {
+                           case 'placeholder':
+                             return ArrowFunc1 (genIdentifier (n))
+                                               (insert (genIdentifier (n)));
+                           case 'number':
+                           case 'string':
+                           case 'symbol':
+                             return insert (ArrowFunc1 (genIdentifier (n))
+                                                       (Member (genIdentifier (n))
+                                                               (recur (expr.callee))));
+                           default:
+                             return insert (recur (expr.callee));
+                         }
+                       })
                       (expr.arguments.length)
-                      (S.I);
+                      (callee => callee);
     }
     case 'import': {
       const params = S.map (symbol => recur ({type: 'identifier', name: Symbol.keyFor (symbol)}))
