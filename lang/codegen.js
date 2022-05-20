@@ -135,7 +135,7 @@ exports.toJs = dirname => function recur(expr) {
                                                                                     provide (n - 1)
                                                                                             (S.prepend (recur (arg)) (args))
                                                                                             (insert)))
-                      (S.I)
+                      (provide => n => args => insert => provide (n) (args) (insert))
                       (S.reverse (expr.arguments))
                       (n => args => insert => insert (args))
                       (expr.arguments.length - 1)
