@@ -124,14 +124,14 @@ exports.toJs = dirname => function recur(expr) {
                    (recur (expr.discriminant));
     }
     case 'new': {
-      return S.reduce (take => arg => give => take (n => args => insert => arg.type === 'placeholder' ?
-                                                                           give (n - 1)
-                                                                                (S.prepend (genIdentifier (n)) (args))
-                                                                                (body => ArrowFunc1 (genIdentifier (n))
-                                                                                                    (insert (body))) :
-                                                                           give (n - 1)
-                                                                                (S.prepend (recur (arg)) (args))
-                                                                                (insert)))
+      return S.reduce (receive => arg => provide => receive (n => args => insert => arg.type === 'placeholder' ?
+                                                                                    provide (n - 1)
+                                                                                            (S.prepend (genIdentifier (n)) (args))
+                                                                                            (body => ArrowFunc1 (genIdentifier (n))
+                                                                                                                (insert (body))) :
+                                                                                    provide (n - 1)
+                                                                                            (S.prepend (recur (arg)) (args))
+                                                                                            (insert)))
                       (S.I)
                       (S.reverse (expr.arguments))
                       (n => args => insert => insert (args))
@@ -140,13 +140,13 @@ exports.toJs = dirname => function recur(expr) {
                       (([callee, ...args]) => New (callee) (args));
     }
     case 'invocation': {
-      return S.reduce (take => arg => give => take (n => args => insert => arg.type === 'placeholder' ?
-                                                                           give (n - 1)
-                                                                                (S.append (genIdentifier (n)) (args))
-                                                                                (S.compose (ArrowFunc1 (genIdentifier (n))) (insert)) :
-                                                                           give (n - 1)
-                                                                                (S.append (recur (arg)) (args))
-                                                                                (insert)))
+      return S.reduce (receive => arg => provide => receive (n => args => insert => arg.type === 'placeholder' ?
+                                                                                    provide (n - 1)
+                                                                                            (S.append (genIdentifier (n)) (args))
+                                                                                            (S.compose (ArrowFunc1 (genIdentifier (n))) (insert)) :
+                                                                                    provide (n - 1)
+                                                                                            (S.append (recur (arg)) (args))
+                                                                                            (insert)))
                       (S.I)
                       (S.reverse (expr.arguments))
                       (n => args => insert => insert (args))
@@ -156,11 +156,11 @@ exports.toJs = dirname => function recur(expr) {
                                                    (S.reverse (args)));
     }
     case 'application': {
-      return S.reduce (take => arg => give => take (n => insert => give (n - 1)
-                                                                        (callee => arg.type === 'placeholder' ?
-                                                                                   ArrowFunc1 (genIdentifier (n))
-                                                                                              (insert (Call1 (callee) (genIdentifier (n)))) :
-                                                                                   insert (Call1 (callee) (recur (arg))))))
+      return S.reduce (receive => arg => provide => receive (n => insert => provide (n - 1)
+                                                                                    (callee => arg.type === 'placeholder' ?
+                                                                                               ArrowFunc1 (genIdentifier (n))
+                                                                                                          (insert (Call1 (callee) (genIdentifier (n)))) :
+                                                                                               insert (Call1 (callee) (recur (arg))))))
                       (S.I)
                       (S.reverse (expr.arguments))
                       (n => insert => (callee => {
