@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>The give and take of continuation-passing style</title>
+    <link rel="alternate" type="application/atom+xml" href="/feed/" />
+    <link rel="stylesheet" href="/css/reset.css" media="all" />
+    <link rel="stylesheet" href="/css/print.css" media="print" />
+    <link rel="stylesheet" href="/css/screen.css" media="screen" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://static.davidchambersdesign.com/favicon.ico" />
+    <script src="http://use.typekit.com/jhk0ogh.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  </head>
+  <body>
+    <div id="skip">
+      <a href="#main">Skip to main content</a>
+    </div>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <a id="title" href="/">David Chambers Design</a>
+          <hr />
+          <p>It's where I share interesting info with other web geeks</p>
+          <nav id="nav">
+            <ul>
+              <li><a href="/about/"><span><strong>About.</strong> Who I am and what I do.</span></a></li>
+              <li><a href="/contact/"><span><strong>Contact.</strong> Just in case you want to get in touch.</span></a></li>
+              <li><a href="/archives/"><span><strong>Archives.</strong> Old posts, recent posts, they're all here.</span></a></li>
+              <li><a href="/tags/"><span><strong>Tags.</strong> Helpful if you're after posts on a particular topic.</span></a></li>
+              <li><a href="https://bitbucket.org/davidchambers"><span><strong>Bitbucket.</strong> Home to most of my open-source projects.</span></a></li>
+              <li><a href="/twitter/"><span><strong>Twitter.</strong> It's where I chirrup… or chirp… or something.</span></a></li>
+            </ul>
+          </nav>
+        </header>
+      </div>
+      <div id="main">
+        <article>
+          <header>
+            <h1>The <code>give</code> and <code>take</code> of continuation-passing style</h1>
+            <time datetime="2020-10-08T10:41:26+02:00" pubdate="pubdate">8 October 2020</time>
+          </header>
+          <p>I have been experimenting with <a href="https://en.wikipedia.org/wiki/Continuation-passing_style">continuation-passing style</a> recently. Writing code in this style feels strange but exciting! I recently discovered that one can use functions in place of objects.</p>
+          <p>Local mutation and reassignment are acceptable, but I avoid them whenever practical. As a result I use <code>reduce</code> <em>a lot</em>.</p>
+          <pre><code>//    reduce :: (b -&gt; a -&gt; b) -&gt; b -&gt; Array a -&gt; b
+const reduce = f =&gt; b =&gt; as =&gt; as.reduce ((b, a) =&gt; f (b) (a), b);
+
+//    append :: a -&gt; Array a -&gt; Array a
+const append = a =&gt; as =&gt; [...as, a];
+
+//    blah :: Integer -&gt; String -&gt; { id :: Integer, name :: String }
+const blah = id =&gt; name =&gt; ({id, name});
+
+&gt; reduce (({id, blahs}) =&gt; name =&gt; ({id: id + 1, blahs: append (blah (id) (name)) (blahs)}))
+.        ({id: 1, blahs: []})
+.        (['foo', 'bar', 'baz'])
+. .blahs
+[{id: 1, name: 'foo'}, {id: 2, name: 'bar'}, {id: 3, name: 'baz'}]
+</code></pre>
+          <p>☝️ This has been my approach for the past several years. The accumulator contains all necessary state, and at the end of the reduction I access whichever fields are relevant (in this case just <code>blahs</code>).</p>
+          <pre><code>&gt; reduce (cont =&gt; name =&gt; id =&gt; append (blah (id) (name)) (cont (id + 1)))
+.        (id =&gt; [])
+.        (['foo', 'bar', 'baz'])
+.        (1)
+[{id: 3, name: 'foo'}, {id: 2, name: 'bar'}, {id: 1, name: 'baz'}]
+</code></pre>
+          <p>☝️ This was my first attempt at using continuations. The problem is that function wrapping happens from left to right, so the <code>id</code> is threaded from right to left, giving the wrong result.</p>
+          <pre><code>&gt; reduce (cont =&gt; name =&gt; id =&gt; blahs =&gt; cont (id + 1) (append (blah (id) (name)) (blahs)))
+.        (id =&gt; blahs =&gt; blahs)
+.        (['foo', 'bar', 'baz'])
+.        (1)
+.        ([])
+[{id: 1, name: 'baz'}, {id: 2, name: 'bar'}, {id: 3, name: 'baz'}]
+</code></pre>
+          <p>☝️ This was my second attempt. The order is reversed, but the <code>id</code> and <code>name</code> values are still mismatched.</p>
+          <p>I needed more control. What if the initial accumulator were <code>give =&gt; give (1) ([])</code>? In the base case, this would mean using <code>(give =&gt; give (1) ([])) (id =&gt; blahs =&gt; blahs)</code> to get <code>[]</code>, the empty list of blahs. What is the type of <code>give =&gt; give (1) ([])</code>? I will refer to this function as <code>take</code>.</p>
+          <pre><code>//    take :: (Integer -&gt; Array String -&gt; a) -&gt; a
+const take = give =&gt; give (1) ([]);
+</code></pre>
+          <p><code>a</code> is a type variable. We have no idea what <code>give</code>, the continuation provided to <code>take</code>, will return. <code>take</code> returns whatever give returns, though, so the return type of <code>take</code> matches the return type of <code>give</code>.</p>
+          <p>Having established that the type of the accumulator is <code>(Integer -&gt; Array String -&gt; a) -&gt; a</code>, we need to have the reducing function return a function of that type.</p>
+          <pre><code>&gt; reduce (take =&gt; name =&gt; give =&gt; give (1) ([blah (1) (name)]))
+.        (give =&gt; give (1) ([]))
+.        (['foo', 'bar', 'baz'])
+.        (id =&gt; blahs =&gt; blahs)
+[{id: 1, name: 'baz'}]
+</code></pre>
+          <p>☝️ The answer is wrong — we lost <code>'foo'</code> and <code>'bar'</code>, and <code>'baz'</code> has the wrong <code>id</code> — but the types align.</p>
+          <pre><code>&gt; reduce (take =&gt; name =&gt; take (id =&gt; blahs =&gt; give =&gt; give (id + 1) (append (blah (id) (name)) (blahs))))
+.        (give =&gt; give (1) ([]))
+.        (['foo', 'bar', 'baz'])
+.        (id =&gt; blahs =&gt; blahs)
+[{id: 1, name: 'foo'}, {id: 2, name: 'bar'}, {id: 3, name: 'baz'}]
+</code></pre>
+          <p>☝️ Success! We receive a continuation we refer to as <code>take</code>. We apply <code>take</code> to gain access to <code>id</code> and <code>blahs</code>, and we then return a new continuation, <code>give =&gt; give (id + 1) (append (blah (id) (name)) (blahs))</code>, which is the <code>take</code> function for the next iteration.</p>
+          <p>This approach extends to an arbitrary number of state variables (e.g. <code>give =&gt; give (0) ('') ([]) ({})</code>). I find the names <code>give</code> and <code>take</code> helpful for remembering which continuation is which. :)</p>
+          <footer class="metadata">
+            <ul>
+              <li class="shorturl"><a href="http://dċd.ws/95/">Short URL</a></li>
+            </ul>
+            <h4>This post has the following tags:</h4>
+            <ol>
+              <li><a href="/tag/continuation-passing-style/">continuation-passing style</a></li>
+              <li><a href="/tag/javascript/">JavaScript</a></li>
+              <li><a href="/tag/programming/">programming</a></li>
+            </ol>
+          </footer>
+          <h3 id="related">Possibly related posts</h3>
+          <ul>
+            <li><a href="/repeating-strings-in-javascript/">Repeating strings in JavaScript</a></li>
+            <li><a href="/bitwise-not-operator-proves-useful-in-javascript/">Bitwise NOT operator proves useful in JavaScript</a></li>
+            <li><a href="/decorators-in-javascript/">Decorators in JavaScript</a></li>
+            <li><a href="/converting-integers-to-ordinals/">Converting integers to ordinals</a></li>
+            <li><a href="/self-caching-functions-in-javascript-and-python/">Self-caching functions in JavaScript and Python</a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <p>Powered by <a href="http://mango.io/wtf?" data-version="0.9dev">Mango</a>. Hosted on <a href="http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d">Linode</a>. Original content <a href="/copying/">WTFPL-licensed</a>.</p>
+    </footer>
+  </body>
+</html>
