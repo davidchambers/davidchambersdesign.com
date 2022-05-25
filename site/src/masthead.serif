@@ -1,4 +1,4 @@
-(import ["../lang/combinators" "./orthogonal"]
+(import ["serif/combinators" "./orthogonal"]
 
 (let [e (require "./elements")
       s (require "./sanctuary")

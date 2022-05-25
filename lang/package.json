@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     "escodegen": "2.0.0",
+    "fluture": "14.0.0",
     "sanctuary": "3.1.0"
   },
   "devDependencies": {
