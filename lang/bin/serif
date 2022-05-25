@@ -10,15 +10,10 @@ const Future        = require ('fluture');
 const S             = require ('sanctuary');
 
 const codegen       = require ('../codegen.js');
+const {K, Y}        = require ('../combinators.js');
 const expression    = require ('../expression.js');
 const grammar       = require ('../grammar.js');
 
-
-//    K :: a -> b -> a
-const K = x => y => x;
-
-//    Y :: ???
-const Y = f => (g => g (g)) (g => f (x => g (g) (x)));
 
 //    readFile :: String -> Future Error String
 const readFile = filename => (

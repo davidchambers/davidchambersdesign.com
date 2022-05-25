@@ -1,6 +1,7 @@
 'use strict';
-module['exports'] = ((___dirname, ___filename, _exports, _module, _require) => (([_null, _true, _false, _void, _typeof, _$007E, _$0021, _$002A, _$002F, _$0025, _$002B, _$002D, _$003C$003C, _$003E$003E, _$003E$003E$003E, _$003C, _$003E, _$003C$003D, _$003E$003D, _instanceof, _in, _$003D$003D, _$0021$003D, _$003D$003D$003D, _$0021$003D$003D, _$0026, _$005E, _$007C, _$0026$0026, _$007C$007C, _Infinity, _NaN, _undefined, _eval, _isFinite, _isNaN, _parseFloat, _parseInt, _decodeURI, _decodeURIComponent, _encodeURI, _encodeURIComponent, _Array, _ArrayBuffer, _Boolean, _DataView, _Date, _Error, _EvalError, _Float32Array, _Float64Array, _Function, _Int8Array, _Int16Array, _Int32Array, _Map, _Number, _Object, _Proxy, _Promise, _RangeError, _ReferenceError, _RegExp, _Set, _String, _Symbol, _SyntaxError, _TypeError, _Uint8Array, _Uint8ClampedArray, _Uint16Array, _Uint32Array, _URIError, _WeakMap, _WeakSet, _JSON, _Math, _Reflect]) => ({
-    [Symbol['for']('I')]: _x => _x,
-    [Symbol['for']('K')]: _x => _y => _x,
-    [Symbol['for']('Y')]: _f => (_g => _g(_g))(_g => _f(_x => _g(_g)(_x)))
-}))((env => Object['getOwnPropertySymbols'](env)['map'](sym => env[sym]))(['serif/es']['reduce']((env, path) => Object['assign'](env, require(path)), Object['create'](null)))))(__dirname, __filename, exports, module, require);
+
+exports['I'] = exports[Symbol.for ('I')] = x => x;
+
+exports['K'] = exports[Symbol.for ('K')] = x => y => x;
+
+exports['Y'] = exports[Symbol.for ('Y')] = f => (g => g (g)) (g => f (x => g (g) (x)));
