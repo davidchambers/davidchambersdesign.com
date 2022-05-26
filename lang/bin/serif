@@ -10,7 +10,7 @@ const Future        = require ('fluture');
 const S             = require ('sanctuary');
 
 const codegen       = require ('../codegen.js');
-const {K, Y}        = require ('../combinators.js');
+const {B, K, Y}     = require ('../combinators.js');
 const expression    = require ('../expression.js');
 const grammar       = require ('../grammar.js');
 
@@ -116,8 +116,8 @@ const program = src => lib => S.pipe ([
   S.map (sort ([])),
   S.chain (S.traverse (Future)
                       (S.chain (compile)
-                               (S.compose (updateExtension ('.serif') ('.js'))
-                                          (updatePath (src) (lib))))),
+                               (B (updateExtension ('.serif') ('.js'))
+                                  (updatePath (src) (lib))))),
   S.map (S.map (S.concat ('- '))),
   S.map (S.concat (['', 'Files generated:', ''])),
   S.map (S.unlines),

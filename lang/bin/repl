@@ -11,6 +11,7 @@ const escodegen     = require ('escodegen');
 const sanctuary     = require ('sanctuary');
 
 const codegen       = require ('../codegen.js');
+const {B}           = require ('../combinators.js');
 const grammar       = require ('../grammar.js');
 
 
@@ -28,7 +29,7 @@ const read = S.pipe ([
   S.map (codegen.toJs (path.join (__dirname, '..', '..'))),
   S.map (codegen.proxy (['require'])),
   S.map (escodegen.generate),
-  S.chain (S.encase (code => vm.runInNewContext (code, {require: S.compose (require) (fixRelativeRequirePath)}))),
+  S.chain (S.encase (code => vm.runInNewContext (code, {require: B (require) (fixRelativeRequirePath)}))),
 ]);
 
 const print = value => {

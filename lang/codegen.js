@@ -4,6 +4,9 @@ const path = require ('node:path');
 
 const S = require ('sanctuary');
 
+const {B, Y} = require ('./combinators.js');
+const expression = require ('./expression.js');
+
 
 const Program = sourceType => body => ({type: 'Program', sourceType, body});
 const Statement = expression => ({type: 'ExpressionStatement', expression});
@@ -35,6 +38,8 @@ const New = callee => args => ({type: 'NewExpression', callee, arguments: args})
 const SpreadElement = arg => ({type: 'SpreadElement', argument: arg});
 const Logical = operator => left => right => ({type: 'LogicalExpression', operator, left, right});
 
+const never = null;
+
 const escapeIdentifier = name => (
   '_' +
   name.replace (/[^A-Za-z0-9_]/g,
@@ -51,170 +56,129 @@ const genIdentifier = S.pipe ([String, S.concat ('_'), Identifier]);
 // (import ["serif/es"] <body>)
 exports.withEcmaScript = body => ({type: 'import', names: ['serif/es'], body});
 
-exports.toJs = dirname => function recur(expr) {
-  switch (expr.type) {
-    case 'number': {
-      return S.ifElse (S.lt (0))
-                      (S.pipe ([S.negate, Literal, Unary (true) ('-')]))
-                      (Literal)
-                      (expr.value);
-    }
-    case 'string': {
-      return Literal (expr.value);
-    }
-    case 'symbol': {
-      return Call1 (Member (Identifier ('Symbol'))
-                           (Literal ('for')))
-                   (Literal (expr.name));
-    }
-    case 'identifier': {
-      if (expr.name === '.' || expr.name === '/') {
-        return Identifier (escapeIdentifier (expr.name));
-      } else {
-        const [head, ...tail] = (
-          expr.name
-          .split (/([./][^./]+)/)
-          .filter (s => s !== '')
-        );
-        return tail.reduce (
-          (expr, name) => {
-            switch (name.slice (0, 1)) {
-              case '.': return Member (expr) (recur ({type: 'string', value: name.slice (1)}));
-              case '/': return Member (expr) (recur ({type: 'symbol', name: name.slice (1)}));
-            }
-          },
-          Identifier (escapeIdentifier (head))
-        );
-      }
-    }
-    case 'array': {
-      return Array_ (S.map (recur) (expr.elements));
-    }
-    case 'object': {
-      return Object_ (S.map (([key, value]) => Property (recur (key)) (recur (value)))
-                            (expr.entries));
-    }
-    case 'lambda': {
-      return ArrowFunc1 (recur (expr.parameter))
-                        (recur (expr.body));
-    }
-    case 'function': {
-      return Func1 (recur (expr.name))
-                   (recur (expr.parameter))
-                   (Block ([Return (recur (expr.body))]));
-    }
-    case 'and': {
-      return Logical ('&&')
-                     (recur (expr.left))
-                     (recur (expr.right));
-    }
-    case 'or': {
-      return Logical ('||')
-                     (recur (expr.left))
-                     (recur (expr.right));
-    }
-    case 'if': {
-      return Cond (recur (expr.predicate))
-                  (recur (expr.consequent))
-                  (recur (expr.alternative));
-    }
-    case 'switch': {
-      return Call1 (ArrowFuncStatement ([Identifier ('$discriminant')])
-                                       (Block ([Switch (Identifier ('$discriminant'))
-                                                       (S.map (case_ => Case (recur (case_.predicate))
-                                                                             ([Return (recur (case_.consequent))]))
-                                                              (expr.cases))])))
-                   (recur (expr.discriminant));
-    }
-    case 'new': {
-      return S.reduce (receive => arg => provide => receive (n => args => insert => arg.type === 'placeholder' ?
-                                                                                    provide (n - 1)
-                                                                                            (S.prepend (genIdentifier (n)) (args))
-                                                                                            (body => ArrowFunc1 (genIdentifier (n))
-                                                                                                                (insert (body))) :
-                                                                                    provide (n - 1)
-                                                                                            (S.prepend (recur (arg)) (args))
-                                                                                            (insert)))
-                      (provide => n => args => insert => provide (n) (args) (insert))
-                      (S.reverse (expr.arguments))
-                      (n => args => insert => insert (args))
-                      (expr.arguments.length - 1)
-                      ([])
-                      (([callee, ...args]) => New (callee) (args));
-    }
-    case 'invocation': {
-      return S.reduce (receive => arg => provide => receive (n => args => insert => arg.type === 'placeholder' ?
-                                                                                    provide (n - 1)
-                                                                                            (S.append (genIdentifier (n)) (args))
-                                                                                            (S.compose (ArrowFunc1 (genIdentifier (n))) (insert)) :
-                                                                                    provide (n - 1)
-                                                                                            (S.append (recur (arg)) (args))
-                                                                                            (insert)))
-                      (provide => n => args => insert => provide (n) (args) (insert))
-                      (S.reverse (expr.arguments))
-                      (n => args => insert => insert (args))
-                      (expr.arguments.length)
-                      ([])
-                      (([object, ...args]) => Call (Member (object) (Literal (expr.name)))
-                                                   (S.reverse (args)));
-    }
-    case 'application': {
-      return S.reduce (receive => arg => provide => receive (insert => provide (n => callee => arg.type === 'placeholder' ?
-                                                                                               ArrowFunc1 (genIdentifier (n))
-                                                                                                          (insert (n + 1) (Call1 (callee) (genIdentifier (n)))) :
-                                                                                               insert (n) (Call1 (callee) (recur (arg))))))
-                      (provide => insert => provide (insert))
-                      (S.reverse (expr.arguments))
-                      (insert => {
-                         switch (expr.callee.type) {
-                           case 'placeholder':
-                             return ArrowFunc1 (genIdentifier (0))
-                                               (insert (1) (genIdentifier (0)));
-                           case 'number':
-                           case 'string':
-                           case 'symbol':
-                             return insert (1)
-                                           (ArrowFunc1 (genIdentifier (0))
-                                                       (Member (genIdentifier (0))
-                                                               (recur (expr.callee))));
-                           default:
-                             return insert (1) (recur (expr.callee));
-                         }
-                       })
-                      (n => callee => callee);
-    }
-    case 'import': {
-      const params = S.map (symbol => recur ({type: 'identifier', name: Symbol.keyFor (symbol)}))
-                           (Object.getOwnPropertySymbols (S.reduce (env => name => Object.assign (env, require (name.startsWith ('.') ? path.join (dirname, name) : name)))
-                                                                   (Object.create (null))
-                                                                   (expr.names)));
-      return Call1 (ArrowFunc1 (ArrayPattern (params))
-                               (recur (expr.body)))
-                   (Call1 (ArrowFunc ([Identifier ('env')])
-                                     (Call1 (Member (Call1 (Member (Identifier ('Object'))
-                                                                   (Literal ('getOwnPropertySymbols')))
-                                                           (Identifier ('env')))
-                                                    (Literal ('map')))
-                                            (ArrowFunc ([Identifier ('sym')])
-                                                       (Member (Identifier ('env'))
-                                                               (Identifier ('sym'))))))
-                          (Call2 (Member (Array_ (S.map (Literal) (expr.names)))
-                                         (Literal ('reduce')))
-                                 (ArrowFunc ([Identifier ('env'), Identifier ('path')])
-                                            (Call2 (Member (Identifier ('Object'))
-                                                           (Literal ('assign')))
-                                                   (Identifier ('env'))
-                                                   (Call1 (Identifier ('require'))
-                                                          (Identifier ('path')))))
-                                 (Call1 (Member (Identifier ('Object'))
-                                                (Literal ('create')))
-                                        (Literal (null)))));
-    }
-  }
-};
+exports.toJs = dirname => Y (recur => expression.fold ({
+  'number': S.ifElse (S.lt (0))
+                     (S.pipe ([S.negate, Literal, Unary (true) ('-')]))
+                     (Literal),
+  'string': Literal,
+  'symbol': B (Call1 (Member (Identifier ('Symbol'))
+                             (Literal ('for'))))
+              (Literal),
+  'identifier': name => (
+    name === '.' || name === '/' ?
+    Identifier (escapeIdentifier (name)) :
+    S.array (never)
+            (B (S.reduce (expr => B (S.maybe (never) (Member (expr)))
+                                    (S.lift2 (S.alt)
+                                             (B (S.map (value => recur ({type: 'string', value})))
+                                                (S.stripPrefix ('.')))
+                                             (B (S.map (name => recur ({type: 'symbol', name})))
+                                                (S.stripPrefix ('/'))))))
+               (B (Identifier)
+                  (escapeIdentifier)))
+            (S.reject (S.equals ('')) (name.split (/([./][^./]+)/)))
+  ),
+  'array': B (Array_) (S.map (recur)),
+  'object': B (Object_) (S.map (([key, value]) => Property (recur (key)) (recur (value)))),
+  'lambda': S.on (ArrowFunc1) (recur),
+  'and': S.on (Logical ('&&')) (recur),
+  'or': S.on (Logical ('||')) (recur),
+  'if': predicate => consequent => alternative => Cond (recur (predicate)) (recur (consequent)) (recur (alternative)),
+  'switch': discriminant => cases => (
+    Call1 (ArrowFuncStatement ([Identifier ('$discriminant')])
+                              (Block ([Switch (Identifier ('$discriminant'))
+                                              (S.map (case_ => Case (recur (case_.predicate))
+                                                                    ([Return (recur (case_.consequent))]))
+                                                     (cases))])))
+          (recur (discriminant))
+  ),
+  'new': args => (
+    S.reduce (receive => arg => provide => receive (n => args => insert => arg.type === 'placeholder' ?
+                                                                           provide (n - 1)
+                                                                                   (S.prepend (genIdentifier (n)) (args))
+                                                                                   (body => ArrowFunc1 (genIdentifier (n))
+                                                                                                       (insert (body))) :
+                                                                           provide (n - 1)
+                                                                                   (S.prepend (recur (arg)) (args))
+                                                                                   (insert)))
+             (provide => n => args => insert => provide (n) (args) (insert))
+             (S.reverse (args))
+             (n => args => insert => insert (args))
+             (args.length - 1)
+             ([])
+             (([callee, ...args]) => New (callee) (args))
+  ),
+  'invocation': name => args => (
+    S.reduce (receive => arg => provide => receive (n => args => insert => arg.type === 'placeholder' ?
+                                                                           provide (n - 1)
+                                                                                   (S.append (genIdentifier (n)) (args))
+                                                                                   (B (ArrowFunc1 (genIdentifier (n))) (insert)) :
+                                                                           provide (n - 1)
+                                                                                   (S.append (recur (arg)) (args))
+                                                                                   (insert)))
+             (provide => n => args => insert => provide (n) (args) (insert))
+             (S.reverse (args))
+             (n => args => insert => insert (args))
+             (args.length)
+             ([])
+             (([object, ...args]) => Call (Member (object) (Literal (name)))
+                                          (S.reverse (args)))
+  ),
+  'application': callee => args => (
+    S.reduce (receive => arg => provide => receive (insert => provide (n => callee => arg.type === 'placeholder' ?
+                                                                                      ArrowFunc1 (genIdentifier (n))
+                                                                                                 (insert (n + 1) (Call1 (callee) (genIdentifier (n)))) :
+                                                                                      insert (n) (Call1 (callee) (recur (arg))))))
+             (provide => insert => provide (insert))
+             (S.reverse (args))
+             (insert => {
+                switch (callee.type) {
+                  case 'placeholder':
+                    return ArrowFunc1 (genIdentifier (0))
+                                      (insert (1) (genIdentifier (0)));
+                  case 'number':
+                  case 'string':
+                  case 'symbol':
+                    return insert (1)
+                                  (ArrowFunc1 (genIdentifier (0))
+                                              (Member (genIdentifier (0))
+                                                      (recur (callee))));
+                  default:
+                    return insert (1) (recur (callee));
+                }
+              })
+             (n => callee => callee)
+  ),
+  'import': names => body => (
+    Call1 (ArrowFunc1 (ArrayPattern (S.map (symbol => recur ({type: 'identifier', name: Symbol.keyFor (symbol)}))
+                                           (Object.getOwnPropertySymbols (S.reduce (env => name => Object.assign (env, require (name.startsWith ('.') ? path.join (dirname, name) : name)))
+                                                                                   (Object.create (null))
+                                                                                   (names)))))
+                      (recur (body)))
+          (Call1 (ArrowFunc ([Identifier ('env')])
+                            (Call1 (Member (Call1 (Member (Identifier ('Object'))
+                                                          (Literal ('getOwnPropertySymbols')))
+                                                  (Identifier ('env')))
+                                           (Literal ('map')))
+                                   (ArrowFunc ([Identifier ('sym')])
+                                              (Member (Identifier ('env'))
+                                                      (Identifier ('sym'))))))
+                 (Call2 (Member (Array_ (S.map (Literal) (names)))
+                                (Literal ('reduce')))
+                        (ArrowFunc ([Identifier ('env'), Identifier ('path')])
+                                   (Call2 (Member (Identifier ('Object'))
+                                                  (Literal ('assign')))
+                                          (Identifier ('env'))
+                                          (Call1 (Identifier ('require'))
+                                                 (Identifier ('path')))))
+                        (Call1 (Member (Identifier ('Object'))
+                                       (Literal ('create')))
+                               (Literal (null)))))
+  ),
+}));
 
 const proxy = exports.proxy = names => expr => (
-  Call (ArrowFunc (S.map (S.compose (Identifier) (escapeIdentifier))
+  Call (ArrowFunc (S.map (B (Identifier) (escapeIdentifier))
                          (names))
                   (expr))
        (S.map (Identifier)
