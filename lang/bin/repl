@@ -2,34 +2,36 @@
 
 'use strict';
 
+const fs            = require ('node:fs');
 const os            = require ('node:os');
 const path          = require ('node:path');
 const repl          = require ('node:repl');
-const vm            = require ('node:vm');
 
 const escodegen     = require ('escodegen');
+const Future        = require ('fluture');
 const sanctuary     = require ('sanctuary');
 
 const codegen       = require ('../codegen.js');
-const {B}           = require ('../combinators.js');
 const grammar       = require ('../grammar.js');
 
 
 const S = sanctuary.unchecked;
 
-const fixRelativeRequirePath = name => (
-  S.joinWith ('/')
-             (S.splitOn (path.sep)
-                        (name.startsWith ('.') ? path.resolve (name) : name))
-);
+const B = f => g => x => f (g (x));
 
-const read = S.pipe ([
-  S.encase (grammar.parse),
-  S.map (codegen.withEcmaScript),
-  S.map (codegen.toJs (path.join (__dirname, '..', '..'))),
-  S.map (codegen.proxy (['require'])),
+//    filename :: Integer -> String
+const filename = now => `/tmp/serif-repl-${now}.mjs`;
+
+//    read :: Integer -> String -> Future Error a
+const read = now => S.pipe ([
+  S.concat ('export default default default = '),
+  S.concat (`import * from ${JSON.stringify (path.join (__dirname, '..', 'es.mjs'))} `),
+  Future.encase (grammar.parse),
+  S.map (codegen.toEsModule (path.join (__dirname, '..', '..'))),
   S.map (escodegen.generate),
-  S.chain (S.encase (code => vm.runInNewContext (code, {require: B (require) (fixRelativeRequirePath)}))),
+  S.chain (code => Future.node (done => fs.writeFile (filename (now), code, {encoding: 'utf8'}, done))),
+  S.chain (_ => Future.encaseP (name => import (name)) (filename (now))),
+  S.map (module => module.default),
 ]);
 
 const print = value => {
@@ -66,25 +68,26 @@ const print = value => {
 const server = repl.start ({
   prompt: '>>> ',
   eval: (code, context, filename, callback) => {
-    const result = read (code);
-    if (result.isRight) {
-      callback (null, result.value);
-    } else if (result.value.name === 'SyntaxError') {
-      callback (new repl.Recoverable (result.value));
-    } else {
-      if (result.value.name === 'ReferenceError') {
-        result.value.message = result.value.message.replace (
-          /^_([^ ]+)/,
-          (_, encoded) => encoded.replace (
-            /[$]([0-9A-F]{4})/g,
-            (_, code) => String.fromCharCode (parseInt (code, 16))
-          )
-        );
-      }
-      console.error (result.value);
-      console.log ();
-      server.displayPrompt (false);
-    }
+    Future.fork (err => {
+                   if (err.name === 'SyntaxError') {
+                     callback (new repl.Recoverable (err));
+                   } else {
+                     if (err.name === 'ReferenceError') {
+                       err.message = err.message.replace (
+                         /^_([^ ]+)/,
+                         (_, encoded) => encoded.replace (
+                           /[$]([0-9A-F]{4})/g,
+                           (_, code) => String.fromCharCode (parseInt (code, 16))
+                         )
+                       );
+                     }
+                     console.error (err);
+                     console.log ();
+                     server.displayPrompt (false);
+                   }
+                 })
+                (result => callback (null, result))
+                (read (Date.now ()) (code));
   },
   writer: value => `${print (value)}\n`,
 });

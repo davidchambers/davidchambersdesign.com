@@ -1,8 +1,7 @@
-(import ["../elements"]
+import * from "../elements.serif"
+import default as datetime from "../datetime.serif"
 
-(let [
-  datetime            (require "../datetime")
-] {
+export default {
 
   :id 21
 
@@ -29,4 +28,4 @@
 
   ]
 
-}))
+}

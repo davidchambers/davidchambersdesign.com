@@ -1,5 +1,6 @@
-(import ["../elements"]
+import * from "../elements.serif"
 
-(f ->
-   (ul (f (li' {:class "pro"})
-          (li' {:class "con"})))))
+export default
+  (f ->
+     (ul (f (li' {:class "pro"})
+            (li' {:class "con"}))))

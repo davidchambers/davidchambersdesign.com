@@ -1,8 +1,9 @@
-(import ["../elements"]
+import * from "serif/es.mjs"
 
-(let [
-  datetime            (require "../datetime")
-] {
+import * from "../elements.serif"
+import default as datetime from "../datetime.serif"
+
+export default {
 
   :id 61
 
@@ -115,4 +116,4 @@
 
   ]
 
-}))
+}

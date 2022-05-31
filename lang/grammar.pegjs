@@ -1,8 +1,56 @@
-Start
-  = Separator*
-    expr:Expression
+Module
+  = statements:(
+      head:(Separator* statement:Statement { return statement; })
+      tail:(Separator+ statement:Statement { return statement; })*
+      { return [head, ...tail]; }
+    )?
     Separator*
-    { return expr; }
+  { return statements; }
+
+Statement
+  = StarImport
+  / DefaultImport
+  / DefaultExport
+  / NamedExports
+  / Declaration
+  / Expression
+
+StarImport 'star import'
+  = Separator* 'import'
+    Separator+ '*'
+    Separator+ 'from'
+    Separator+ source:(string:String { return string.value; })
+  { return {type: 'star-import', source}; }
+
+DefaultImport 'default import'
+  = Separator* 'import'
+    Separator+ 'default'
+    Separator+ 'as'
+    Separator+ name:(ident:Identifier { return ident.name; })
+    Separator+ 'from'
+    Separator+ source:(string:String { return string.value; })
+  { return {type: 'default-import', name, source}; }
+
+DefaultExport 'default export'
+  = Separator* 'export'
+    Separator+ 'default'
+    Separator+ expression:Expression
+  { return {type: 'default-export', expression}; }
+
+NamedExports 'named exports'
+  = Separator* 'export'
+    Separator+ '{'
+    names:(
+      head:(Separator* ident:Identifier { return ident.name; })
+      tail:(Separator+ ident:Identifier { return ident.name; })*
+      { return [head, ...tail]; }
+    )?
+    Separator* '}'
+  { return {type: 'named-exports', names: names ?? []}; }
+
+Declaration 'declaration'
+  = binding:Binding
+  { return {type: 'declaration', identifier: binding[0], expression: binding[1]}; }
 
 LineTerminator 'line terminator'
   = '\u000A' // LINE FEED (LF)
@@ -157,6 +205,7 @@ Let 'let'
 
 Binding 'binding'
   = Separator* ident:Identifier
+    Separator+ '='
     Separator+ expr:Expression
     { return [ident, expr]; }
 

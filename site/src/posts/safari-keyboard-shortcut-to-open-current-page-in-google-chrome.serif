@@ -1,9 +1,8 @@
-(import ["../elements"]
+import * from "../elements.serif"
+import default as update from "../components/update.serif"
+import default as datetime from "../datetime.serif"
 
-(let [
-  update              (require "../components/update")
-  datetime            (require "../datetime")
-] {
+export default {
 
   :id 77
 
@@ -64,4 +63,4 @@
 
   ]
 
-}))
+}

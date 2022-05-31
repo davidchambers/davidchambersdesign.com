@@ -1,8 +1,9 @@
-(import ["../elements"]
+import * from "../elements.serif"
 
-   (images -> (dl (.flatMap (image -> (let [src (0 image)
-                                            alt (1 image)
-                                            cap (2 image)]
-                                         [(dt (img {:alt alt :src src}))
-                                          (dd cap)]))
-                            images))))
+export default
+  (images -> (dl (.flatMap (image -> (let [src = (0 image)
+                                           alt = (1 image)
+                                           cap = (2 image)]
+                                        [(dt (img {:alt alt :src src}))
+                                         (dd cap)]))
+                           images)))

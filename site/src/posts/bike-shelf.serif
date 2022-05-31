@@ -1,9 +1,8 @@
-(import ["../elements"]
+import * from "../elements.serif"
+import default as uncaptioned-image from "../components/uncaptioned-image.serif"
+import default as datetime from "../datetime.serif"
 
-(let [
-  uncaptioned-image   (require "../components/uncaptioned-image")
-  datetime            (require "../datetime")
-] {
+export default {
 
   :id 71
 
@@ -32,4 +31,4 @@
 
   ]
 
-}))
+}

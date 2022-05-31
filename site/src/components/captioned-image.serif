@@ -1,6 +1,7 @@
-(import ["../elements"]
+import * from "../elements.serif"
 
-(src alt caption ->
-   (dl
-      [(dt (img {:alt alt :src src}))
-       (dd caption)])))
+export default
+  (src alt caption ->
+     (dl
+        [(dt (img {:alt alt :src src}))
+         (dd caption)]))

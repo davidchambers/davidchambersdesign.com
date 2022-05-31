@@ -1,9 +1,8 @@
-(import ["../elements"]
+import * from "../elements.serif"
+import default as code-block from "../components/code-block.serif"
+import default as datetime from "../datetime.serif"
 
-(let [
-  code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
-] {
+export default {
 
   :id 38
 
@@ -78,4 +77,4 @@
 
   ]
 
-}))
+}

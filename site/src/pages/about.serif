@@ -1,8 +1,7 @@
-(import ["../elements"]
+import * from "../elements.serif"
+import default as captioned-image from "../components/captioned-image.serif"
 
-(let [
-  captioned-image   (require "../components/captioned-image")
-] {
+export default {
 
   :slug "about"
 
@@ -41,4 +40,4 @@
 
   ]
 
-}))
+}

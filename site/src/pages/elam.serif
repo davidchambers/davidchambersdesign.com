@@ -1,8 +1,7 @@
-(import ["../elements"]
+import * from "../elements.serif"
+import default as uncaptioned-image from "../components/uncaptioned-image.serif"
 
-(let [
-  uncaptioned-image (require "../components/uncaptioned-image")
-] {
+export default {
 
   :slug "elam"
 
@@ -193,4 +192,4 @@
 
   ]
 
-}))
+}

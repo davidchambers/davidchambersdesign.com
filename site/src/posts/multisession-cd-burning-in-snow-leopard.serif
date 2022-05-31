@@ -1,9 +1,8 @@
-(import ["../elements"]
+import * from "../elements.serif"
+import default as decorative-image from "../components/decorative-image.serif"
+import default as datetime from "../datetime.serif"
 
-(let [
-  decorative-image    (require "../components/decorative-image")
-  datetime            (require "../datetime")
-] {
+export default {
 
   :id 29
 
@@ -80,4 +79,4 @@
 
   ]
 
-}))
+}

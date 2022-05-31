@@ -1,12 +1,11 @@
-(import ["../elements"]
+import * from "../elements.serif"
+import default as caption from "../components/caption.serif"
+import default as captioned-image from "../components/captioned-image.serif"
+import default as code-block from "../components/code-block.serif"
+import default as update from "../components/update.serif"
+import default as datetime from "../datetime.serif"
 
-(let [
-  caption             (require "../components/caption")
-  captioned-image     (require "../components/captioned-image")
-  code-block          (require "../components/code-block")
-  update              (require "../components/update")
-  datetime            (require "../datetime")
-] {
+export default {
 
   :id 16
 
@@ -126,4 +125,4 @@
 
   ]
 
-}))
+}

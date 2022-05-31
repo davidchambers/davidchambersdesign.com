@@ -1,3 +1,3 @@
-(import ["../elements"]
+import * from "../elements.serif"
 
-(src alt -> (p (img {:alt alt :src src}))))
+export default (src alt -> (p (img {:alt alt :src src})))

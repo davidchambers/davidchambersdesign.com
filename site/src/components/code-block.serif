@@ -1,15 +1,15 @@
-(import ["../elements"]
+import * from "../elements.serif"
+import default as s from "../sanctuary.serif"
 
-(let [s (require "../sanctuary")]
-
-   (language source-code ->
-      (let [lines
-              (s/from-maybe [] (s/chain s/init (s/tail (s/lines source-code))))
-            trim-leading-spaces
-              (line ->
-                 (s/from-maybe line
-                               (s/chain (s/strip-prefix _ line)
-                                        (s/map ("match" _)
-                                               (s/chain (s/match (s/regex "" "^[ ]*"))
-                                                        (s/head lines))))))]
-         (pre (code (text (s/unlines (s/map trim-leading-spaces lines)))))))))
+export default
+  (language source-code ->
+     (let [lines =
+             (s/from-maybe [] (s/chain s/init (s/tail (s/lines source-code))))
+           trim-leading-spaces =
+             (line ->
+                (s/from-maybe line
+                              (s/chain (s/strip-prefix _ line)
+                                       (s/map ("match" _)
+                                              (s/chain (s/match (s/regex "" "^[ ]*"))
+                                                       (s/head lines))))))]
+        (pre (code (text (s/unlines (s/map trim-leading-spaces lines)))))))

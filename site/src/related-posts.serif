@@ -1,39 +1,44 @@
-(let [path (require "node:path")
+import default as path from "node:path"
 
-      s (require "./sanctuary")
+import * from "serif/es.mjs"
 
-      intersection
-        (set-1 set-2 ->
-           (new Set (.filter (.has _ set-1) (Array.from set-2))))
+import default as s from "./sanctuary.serif"
 
-      union
-        (set-1 set-2 ->
-           (new Set (s/concat (Array.from set-1) (Array.from set-2))))
+export default related-posts
 
-      similarity
-        (set-1 set-2 ->
-           (/ (Math.sqrt ("size" (union set-1 set-2)))
-              ("size" (intersection set-1 set-2))))
+intersection =
+  (set-1 set-2 ->
+     (new Set (.filter (.has _ set-1) (Array.from set-2))))
 
-      seconds-between
-        (from to ->
-           ("seconds" (.diff from "seconds" to)))
+union =
+  (set-1 set-2 ->
+     (new Set (s/concat (Array.from set-1) (Array.from set-2))))
 
-      with-scores
-        (that this ->
-           (let [score (similarity (new Set (:tags that))
-                                   (new Set (:tags this)))
-                 primary (s/negate score)
-                 secondary (Math.abs (seconds-between (:datetime that)
-                                                      (:datetime this)))]
-              (if (>= 0.5 score)
-                  (s/Just (s/Pair (s/Pair primary secondary) this))
-                  s/Nothing)))]
+similarity =
+  (set-1 set-2 ->
+     (/ (Math.sqrt ("size" (union set-1 set-2)))
+        ("size" (intersection set-1 set-2))))
 
-   (posts post ->
-      (s/pipe [(s/reject (this -> (=== (:slug post) (:slug this))))
-               (s/map-maybe (with-scores post))
-               s/sort
-               (s/map s/snd)
-               (.slice 0 5 _)]
-              posts)))
+seconds-between =
+  (from to ->
+     ("seconds" (.diff from "seconds" to)))
+
+with-scores =
+  (that this ->
+     (let [score = (similarity (new Set (:tags that))
+                               (new Set (:tags this)))
+           primary = (s/negate score)
+           secondary = (Math.abs (seconds-between (:datetime that)
+                                                  (:datetime this)))]
+        (if (>= 0.5 score)
+            (s/Just (s/Pair (s/Pair primary secondary) this))
+            s/Nothing)))
+
+related-posts =
+  (posts post ->
+     (s/pipe [(s/reject (this -> (=== (:slug post) (:slug this))))
+              (s/map-maybe (with-scores post))
+              s/sort
+              (s/map s/snd)
+              (.slice 0 5 _)]
+             posts))

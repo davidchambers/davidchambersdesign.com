@@ -1,10 +1,14 @@
-(let [sanctuary (require "sanctuary")
+import * from "serif/es.mjs"
+import default as sanctuary from "sanctuary"
 
-      kebab-case (.replace (new RegExp "(?!\\b)[A-Z0-9]" "g")
-                           (c -> (+ (.toLowerCase c) "-"))
-                           _)
+export default default
 
-      prime (.replace "_" "'" _)]
+kebab-case = (.replace (new RegExp "(?!\\b)[A-Z0-9]" "g")
+                       (c -> (+ (.toLowerCase c) "-"))
+                       _)
 
-   (Object.fromEntries (.map (entry -> [(Symbol.for (prime (kebab-case (0 entry)))) (1 entry)])
-                             (Object.entries sanctuary.unchecked))))
+prime = (.replace "_" "'" _)
+
+default =
+  (Object.fromEntries (.map (entry -> [(Symbol.for (prime (kebab-case (0 entry)))) (1 entry)])
+                            (Object.entries sanctuary.unchecked)))

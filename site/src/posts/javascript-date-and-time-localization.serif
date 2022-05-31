@@ -1,10 +1,11 @@
-(import ["../elements"]
+import * from "serif/es.mjs"
 
-(let [
-  captioned-image     (require "../components/captioned-image")
-  code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
-] {
+import * from "../elements.serif"
+import default as captioned-image from "../components/captioned-image.serif"
+import default as code-block from "../components/code-block.serif"
+import default as datetime from "../datetime.serif"
+
+export default {
 
   :id 74
 
@@ -134,8 +135,8 @@
        <time datetime=\"2010-11-28T00:30+11:00\">28 November 2010</time>
        ")
 
-    (let [url "http://bitbucket.org/davidchambers/jquery.localize"
-          link (path -> (a (+ path url)))]
+    (let [url = "http://bitbucket.org/davidchambers/jquery.localize"
+          link = (path -> (a (+ path url)))]
        (p
           ["Date and time formats are fully customizable via "
            (link "/src#directives" "directives") ", and there is
@@ -146,4 +147,4 @@
 
   ]
 
-}))
+}

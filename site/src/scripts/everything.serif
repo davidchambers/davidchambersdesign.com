@@ -1,220 +1,324 @@
-(let [
+import default as fs from "node:fs"
+import default as path from "node:path"
+import default as url from "node:url"
 
-fs              (require "node:fs")
-path            (require "node:path")
+import * from "serif/es.mjs"
 
-base-template   (require "../base-template")
-e               (require "../elements")
-generate-css    (require "../generate-css")
-masthead        (require "../masthead")
-related-posts   (require "../related-posts")
-render-archives (require "../render-archives")
-render-page     (require "../render-page")
-render-post     (require "../render-post")
-render-tags     (require "../render-tags")
-s               (require "../sanctuary")
-icon:about      (require "../icons/about")
-icon:archives   (require "../icons/archives")
-icon:bitbucket  (require "../icons/bitbucket")
-icon:contact    (require "../icons/contact")
-icon:flushcache (require "../icons/flushcache")
-icon:tags       (require "../icons/tags")
-icon:twitter    (require "../icons/twitter")
-dates           (require "../icons/dates")
-pages           [(require "../pages/about")
-                 (require "../pages/elam")]
-posts           [(require "../posts/beautiful-painted-alphabet")
-                 (require "../posts/show-full-directory-path-in-finder-window-title-bar")
-                 (require "../posts/rounded-rectangles-in-adobe-illustrator-cs3")
-                 (require "../posts/intelligent-css-caching")
-                 (require "../posts/escape-special-characters-for-sql-regexp")
-                 (require "../posts/david-carsons-2003-ted-lecture")
-                 (require "../posts/wordpress-login-redirect")
-                 (require "../posts/valid-xhtml-alternative-to-strike")
-                 (require "../posts/changing-keyboard-shortcuts-in-mac-os-x")
-                 (require "../posts/inserting-images-in-gmail-messages")
-                 (require "../posts/django-syntax-highlighting-for-coda")
-                 (require "../posts/looping-more-than-once-with-the-wordpress-loop")
-                 (require "../posts/sms-event-reminders-from-google-calendar")
-                 (require "../posts/tiny-calendar-icon-set")
-                 (require "../posts/applescript-syntax-highlighting")
-                 (require "../posts/php-brush-for-syntaxhighlighter")
-                 (require "../posts/php-print_filesize-function")
-                 (require "../posts/prototype-loader-for-syntaxhighlighter")
-                 (require "../posts/associative-arrays-in-javascript")
-                 (require "../posts/photoshop-save-for-web-javascript")
-                 (require "../posts/incredible-performance-by-kseniya-simonova")
-                 (require "../posts/coda-theme-for-syntaxhighlighter")
-                 (require "../posts/tiny-calendar-icons-sprite")
-                 (require "../posts/captions-over-images")
-                 (require "../posts/embed-youtube-clips-using-valid-xhtml-markup")
-                 (require "../posts/prototype-image-slider")
-                 (require "../posts/sticky-footers")
-                 (require "../posts/memorable-passwords-for-programmers")
-                 (require "../posts/multisession-cd-burning-in-snow-leopard")
-                 (require "../posts/css-fixed-position-headers")
-                 (require "../posts/using-html5-time-element-in-wordpress-themes")
-                 (require "../posts/prototype-and-scriptaculous-combined-and-compressed")
-                 (require "../posts/autopopulating-input-fields-with-prototype")
-                 (require "../posts/accessing-mysql-shell-via-terminal")
-                 (require "../posts/duplicating-arrays-in-javascript")
-                 (require "../posts/shockingly-simple-url-shortening")
-                 (require "../posts/resize-browser-window-to-match-iphone-viewport-dimensions")
-                 (require "../posts/get-attributes-of-django-model-or-instance")
-                 (require "../posts/gorgeous-css3-buttons-inspired-by-aqua")
-                 (require "../posts/cricket-field-diagrams")
-                 (require "../posts/mootools-every-method")
-                 (require "../posts/forcing-browsers-to-rerender-elements")
-                 (require "../posts/css-image-switcher-done-the-right-way")
-                 (require "../posts/fascinating-insight-into-the-mind-of-a-windows-user")
-                 (require "../posts/using-google-for-site-search")
-                 (require "../posts/extra-comma-considered-harmful")
-                 (require "../posts/application-specific-volume-control-in-mac-os-x")
-                 (require "../posts/linkify-tweets-with-regex")
-                 (require "../posts/serializing-django-model-instances")
-                 (require "../posts/freeing-myself-of-wordpress")
-                 (require "../posts/optimization-via-stringification")
-                 (require "../posts/autopopulating-input-fields-with-mootools")
-                 (require "../posts/wmd-ftw")
-                 (require "../posts/first-matching-item")
-                 (require "../posts/settimeout-fix-for-webkit-transition")
-                 (require "../posts/testing-django-apps-using-localhost-subdomains")
-                 (require "../posts/empty-collections-are-valid-cache-data")
-                 (require "../posts/-webkit-box-sizing")
-                 (require "../posts/remove-textarea-scrollbars-in-internet-explorer")
-                 (require "../posts/positioning-elements-using-mootools")
-                 (require "../posts/javascript-everywhere")
-                 (require "../posts/dieter-rams-video-interview")
-                 (require "../posts/gmail-favicon-confusion")
-                 (require "../posts/man-after-my-own-heart")
-                 (require "../posts/digitalcolor-meter")
-                 (require "../posts/python-loops-can-have-else-clause")
-                 (require "../posts/self-caching-functions-in-javascript-and-python")
-                 (require "../posts/efficient-rounding-in-javascript")
-                 (require "../posts/filtering-lists-in-python-ruby-and-javascript")
-                 (require "../posts/converting-integers-to-ordinals")
-                 (require "../posts/bike-shelf")
-                 (require "../posts/customizing-file-and-folder-icons-in-mac-os-x")
-                 (require "../posts/ridding-markup-of-textual-decoration")
-                 (require "../posts/javascript-date-and-time-localization")
-                 (require "../posts/bitwise-not-operator-proves-useful-in-javascript")
-                 (require "../posts/composing-mercurial-commit-messages-in-textmate")
-                 (require "../posts/safari-keyboard-shortcut-to-open-current-page-in-google-chrome")
-                 (require "../posts/simulating-nonlocal-in-python-2.x")
-                 (require "../posts/faster-terminal-navigation-via-aliases")
-                 (require "../posts/customizing-your-bash-prompt-for-pleasure-and-profit")
-                 (require "../posts/mapping-file-extensions-to-emacs-syntax-modes")
-                 (require "../posts/repeating-strings-in-javascript")
-                 (require "../posts/changing-the-colour-of-list-bullets-using-css")
-                 (require "../posts/solarized")
-                 (require "../posts/hashify-editor")
-                 (require "../posts/end-of-string-anchor-in-javascript-regular-expressions")
-                 (require "../posts/getting-truth-out-of-the-dom")
-                 (require "../posts/escaping-html-in-javascript")
-                 (require "../posts/decorators-in-javascript")
-                 (require "../posts/getting-started-with-socket.io")
-                 (require "../posts/higher-level-style-sheets")
-                 (require "../posts/helveticards")
-                 (require "../posts/itunes-is-surprisingly-useful-when-learning-a-foreign-language")
-                 (require "../posts/the-perils-of-using-javascript-objects-as-sets")
-                 (require "../posts/give-and-take-of-continuation-passing-style")]
+import * from "../elements.serif"
+import default as base-template from "../base-template.serif"
+import default as generate-css from "../generate-css.serif"
+import default as masthead from "../masthead.serif"
+import default as related-posts from "../related-posts.serif"
+import default as render-archives from "../render-archives.serif"
+import default as render-page from "../render-page.serif"
+import default as render-post from "../render-post.serif"
+import default as render-tags from "../render-tags.serif"
+import default as s from "../sanctuary.serif"
+import default as icon:about from "../icons/about.serif"
+import default as icon:archives from "../icons/archives.serif"
+import default as icon:bitbucket from "../icons/bitbucket.serif"
+import default as icon:contact from "../icons/contact.serif"
+import default as icon:flushcache from "../icons/flushcache.serif"
+import default as icon:tags from "../icons/tags.serif"
+import default as icon:twitter from "../icons/twitter.serif"
+import default as dates from "../icons/dates.serif"
+import default as page:about from "../pages/about.serif"
+import default as page:elam from "../pages/elam.serif"
+import default as post:beautiful-painted-alphabet from "../posts/beautiful-painted-alphabet.serif"
+import default as post:show-full-directory-path-in-finder-window-title-bar from "../posts/show-full-directory-path-in-finder-window-title-bar.serif"
+import default as post:rounded-rectangles-in-adobe-illustrator-cs3 from "../posts/rounded-rectangles-in-adobe-illustrator-cs3.serif"
+import default as post:intelligent-css-caching from "../posts/intelligent-css-caching.serif"
+import default as post:escape-special-characters-for-sql-regexp from "../posts/escape-special-characters-for-sql-regexp.serif"
+import default as post:david-carsons-2003-ted-lecture from "../posts/david-carsons-2003-ted-lecture.serif"
+import default as post:wordpress-login-redirect from "../posts/wordpress-login-redirect.serif"
+import default as post:valid-xhtml-alternative-to-strike from "../posts/valid-xhtml-alternative-to-strike.serif"
+import default as post:changing-keyboard-shortcuts-in-mac-os-x from "../posts/changing-keyboard-shortcuts-in-mac-os-x.serif"
+import default as post:inserting-images-in-gmail-messages from "../posts/inserting-images-in-gmail-messages.serif"
+import default as post:django-syntax-highlighting-for-coda from "../posts/django-syntax-highlighting-for-coda.serif"
+import default as post:looping-more-than-once-with-the-wordpress-loop from "../posts/looping-more-than-once-with-the-wordpress-loop.serif"
+import default as post:sms-event-reminders-from-google-calendar from "../posts/sms-event-reminders-from-google-calendar.serif"
+import default as post:tiny-calendar-icon-set from "../posts/tiny-calendar-icon-set.serif"
+import default as post:applescript-syntax-highlighting from "../posts/applescript-syntax-highlighting.serif"
+import default as post:php-brush-for-syntaxhighlighter from "../posts/php-brush-for-syntaxhighlighter.serif"
+import default as post:php-print_filesize-function from "../posts/php-print_filesize-function.serif"
+import default as post:prototype-loader-for-syntaxhighlighter from "../posts/prototype-loader-for-syntaxhighlighter.serif"
+import default as post:associative-arrays-in-javascript from "../posts/associative-arrays-in-javascript.serif"
+import default as post:photoshop-save-for-web-javascript from "../posts/photoshop-save-for-web-javascript.serif"
+import default as post:incredible-performance-by-kseniya-simonova from "../posts/incredible-performance-by-kseniya-simonova.serif"
+import default as post:coda-theme-for-syntaxhighlighter from "../posts/coda-theme-for-syntaxhighlighter.serif"
+import default as post:tiny-calendar-icons-sprite from "../posts/tiny-calendar-icons-sprite.serif"
+import default as post:captions-over-images from "../posts/captions-over-images.serif"
+import default as post:embed-youtube-clips-using-valid-xhtml-markup from "../posts/embed-youtube-clips-using-valid-xhtml-markup.serif"
+import default as post:prototype-image-slider from "../posts/prototype-image-slider.serif"
+import default as post:sticky-footers from "../posts/sticky-footers.serif"
+import default as post:memorable-passwords-for-programmers from "../posts/memorable-passwords-for-programmers.serif"
+import default as post:multisession-cd-burning-in-snow-leopard from "../posts/multisession-cd-burning-in-snow-leopard.serif"
+import default as post:css-fixed-position-headers from "../posts/css-fixed-position-headers.serif"
+import default as post:using-html5-time-element-in-wordpress-themes from "../posts/using-html5-time-element-in-wordpress-themes.serif"
+import default as post:prototype-and-scriptaculous-combined-and-compressed from "../posts/prototype-and-scriptaculous-combined-and-compressed.serif"
+import default as post:autopopulating-input-fields-with-prototype from "../posts/autopopulating-input-fields-with-prototype.serif"
+import default as post:accessing-mysql-shell-via-terminal from "../posts/accessing-mysql-shell-via-terminal.serif"
+import default as post:duplicating-arrays-in-javascript from "../posts/duplicating-arrays-in-javascript.serif"
+import default as post:shockingly-simple-url-shortening from "../posts/shockingly-simple-url-shortening.serif"
+import default as post:resize-browser-window-to-match-iphone-viewport-dimensions from "../posts/resize-browser-window-to-match-iphone-viewport-dimensions.serif"
+import default as post:get-attributes-of-django-model-or-instance from "../posts/get-attributes-of-django-model-or-instance.serif"
+import default as post:gorgeous-css3-buttons-inspired-by-aqua from "../posts/gorgeous-css3-buttons-inspired-by-aqua.serif"
+import default as post:cricket-field-diagrams from "../posts/cricket-field-diagrams.serif"
+import default as post:mootools-every-method from "../posts/mootools-every-method.serif"
+import default as post:forcing-browsers-to-rerender-elements from "../posts/forcing-browsers-to-rerender-elements.serif"
+import default as post:css-image-switcher-done-the-right-way from "../posts/css-image-switcher-done-the-right-way.serif"
+import default as post:fascinating-insight-into-the-mind-of-a-windows-user from "../posts/fascinating-insight-into-the-mind-of-a-windows-user.serif"
+import default as post:using-google-for-site-search from "../posts/using-google-for-site-search.serif"
+import default as post:extra-comma-considered-harmful from "../posts/extra-comma-considered-harmful.serif"
+import default as post:application-specific-volume-control-in-mac-os-x from "../posts/application-specific-volume-control-in-mac-os-x.serif"
+import default as post:linkify-tweets-with-regex from "../posts/linkify-tweets-with-regex.serif"
+import default as post:serializing-django-model-instances from "../posts/serializing-django-model-instances.serif"
+import default as post:freeing-myself-of-wordpress from "../posts/freeing-myself-of-wordpress.serif"
+import default as post:optimization-via-stringification from "../posts/optimization-via-stringification.serif"
+import default as post:autopopulating-input-fields-with-mootools from "../posts/autopopulating-input-fields-with-mootools.serif"
+import default as post:wmd-ftw from "../posts/wmd-ftw.serif"
+import default as post:first-matching-item from "../posts/first-matching-item.serif"
+import default as post:settimeout-fix-for-webkit-transition from "../posts/settimeout-fix-for-webkit-transition.serif"
+import default as post:testing-django-apps-using-localhost-subdomains from "../posts/testing-django-apps-using-localhost-subdomains.serif"
+import default as post:empty-collections-are-valid-cache-data from "../posts/empty-collections-are-valid-cache-data.serif"
+import default as post:-webkit-box-sizing from "../posts/-webkit-box-sizing.serif"
+import default as post:remove-textarea-scrollbars-in-internet-explorer from "../posts/remove-textarea-scrollbars-in-internet-explorer.serif"
+import default as post:positioning-elements-using-mootools from "../posts/positioning-elements-using-mootools.serif"
+import default as post:javascript-everywhere from "../posts/javascript-everywhere.serif"
+import default as post:dieter-rams-video-interview from "../posts/dieter-rams-video-interview.serif"
+import default as post:gmail-favicon-confusion from "../posts/gmail-favicon-confusion.serif"
+import default as post:man-after-my-own-heart from "../posts/man-after-my-own-heart.serif"
+import default as post:digitalcolor-meter from "../posts/digitalcolor-meter.serif"
+import default as post:python-loops-can-have-else-clause from "../posts/python-loops-can-have-else-clause.serif"
+import default as post:self-caching-functions-in-javascript-and-python from "../posts/self-caching-functions-in-javascript-and-python.serif"
+import default as post:efficient-rounding-in-javascript from "../posts/efficient-rounding-in-javascript.serif"
+import default as post:filtering-lists-in-python-ruby-and-javascript from "../posts/filtering-lists-in-python-ruby-and-javascript.serif"
+import default as post:converting-integers-to-ordinals from "../posts/converting-integers-to-ordinals.serif"
+import default as post:bike-shelf from "../posts/bike-shelf.serif"
+import default as post:customizing-file-and-folder-icons-in-mac-os-x from "../posts/customizing-file-and-folder-icons-in-mac-os-x.serif"
+import default as post:ridding-markup-of-textual-decoration from "../posts/ridding-markup-of-textual-decoration.serif"
+import default as post:javascript-date-and-time-localization from "../posts/javascript-date-and-time-localization.serif"
+import default as post:bitwise-not-operator-proves-useful-in-javascript from "../posts/bitwise-not-operator-proves-useful-in-javascript.serif"
+import default as post:composing-mercurial-commit-messages-in-textmate from "../posts/composing-mercurial-commit-messages-in-textmate.serif"
+import default as post:safari-keyboard-shortcut-to-open-current-page-in-google-chrome from "../posts/safari-keyboard-shortcut-to-open-current-page-in-google-chrome.serif"
+import default as post:simulating-nonlocal-in-python-2-x from "../posts/simulating-nonlocal-in-python-2.x.serif"
+import default as post:faster-terminal-navigation-via-aliases from "../posts/faster-terminal-navigation-via-aliases.serif"
+import default as post:customizing-your-bash-prompt-for-pleasure-and-profit from "../posts/customizing-your-bash-prompt-for-pleasure-and-profit.serif"
+import default as post:mapping-file-extensions-to-emacs-syntax-modes from "../posts/mapping-file-extensions-to-emacs-syntax-modes.serif"
+import default as post:repeating-strings-in-javascript from "../posts/repeating-strings-in-javascript.serif"
+import default as post:changing-the-colour-of-list-bullets-using-css from "../posts/changing-the-colour-of-list-bullets-using-css.serif"
+import default as post:solarized from "../posts/solarized.serif"
+import default as post:hashify-editor from "../posts/hashify-editor.serif"
+import default as post:end-of-string-anchor-in-javascript-regular-expressions from "../posts/end-of-string-anchor-in-javascript-regular-expressions.serif"
+import default as post:getting-truth-out-of-the-dom from "../posts/getting-truth-out-of-the-dom.serif"
+import default as post:escaping-html-in-javascript from "../posts/escaping-html-in-javascript.serif"
+import default as post:decorators-in-javascript from "../posts/decorators-in-javascript.serif"
+import default as post:getting-started-with-socket-io from "../posts/getting-started-with-socket.io.serif"
+import default as post:higher-level-style-sheets from "../posts/higher-level-style-sheets.serif"
+import default as post:helveticards from "../posts/helveticards.serif"
+import default as post:itunes-is-surprisingly-useful-when-learning-a-foreign-language from "../posts/itunes-is-surprisingly-useful-when-learning-a-foreign-language.serif"
+import default as post:the-perils-of-using-javascript-objects-as-sets from "../posts/the-perils-of-using-javascript-objects-as-sets.serif"
+import default as post:give-and-take-of-continuation-passing-style from "../posts/give-and-take-of-continuation-passing-style.serif"
 
-public (s/compose (.apply null _ path.join)
-                  (s/concat [__dirname ".." ".." "public"]))
+__dirname = (path.dirname (url.fileURLToPath ("url" import.meta)))
 
-write-file (filename text -> (.apply null [filename text] fs.writeFileSync))
+pages = [
+  page:about
+  page:elam
+]
 
-_ (write-file (public ["css" "screen.css"])
-              generate-css)
+posts = [
+  post:beautiful-painted-alphabet
+  post:show-full-directory-path-in-finder-window-title-bar
+  post:rounded-rectangles-in-adobe-illustrator-cs3
+  post:intelligent-css-caching
+  post:escape-special-characters-for-sql-regexp
+  post:david-carsons-2003-ted-lecture
+  post:wordpress-login-redirect
+  post:valid-xhtml-alternative-to-strike
+  post:changing-keyboard-shortcuts-in-mac-os-x
+  post:inserting-images-in-gmail-messages
+  post:django-syntax-highlighting-for-coda
+  post:looping-more-than-once-with-the-wordpress-loop
+  post:sms-event-reminders-from-google-calendar
+  post:tiny-calendar-icon-set
+  post:applescript-syntax-highlighting
+  post:php-brush-for-syntaxhighlighter
+  post:php-print_filesize-function
+  post:prototype-loader-for-syntaxhighlighter
+  post:associative-arrays-in-javascript
+  post:photoshop-save-for-web-javascript
+  post:incredible-performance-by-kseniya-simonova
+  post:coda-theme-for-syntaxhighlighter
+  post:tiny-calendar-icons-sprite
+  post:captions-over-images
+  post:embed-youtube-clips-using-valid-xhtml-markup
+  post:prototype-image-slider
+  post:sticky-footers
+  post:memorable-passwords-for-programmers
+  post:multisession-cd-burning-in-snow-leopard
+  post:css-fixed-position-headers
+  post:using-html5-time-element-in-wordpress-themes
+  post:prototype-and-scriptaculous-combined-and-compressed
+  post:autopopulating-input-fields-with-prototype
+  post:accessing-mysql-shell-via-terminal
+  post:duplicating-arrays-in-javascript
+  post:shockingly-simple-url-shortening
+  post:resize-browser-window-to-match-iphone-viewport-dimensions
+  post:get-attributes-of-django-model-or-instance
+  post:gorgeous-css3-buttons-inspired-by-aqua
+  post:cricket-field-diagrams
+  post:mootools-every-method
+  post:forcing-browsers-to-rerender-elements
+  post:css-image-switcher-done-the-right-way
+  post:fascinating-insight-into-the-mind-of-a-windows-user
+  post:using-google-for-site-search
+  post:extra-comma-considered-harmful
+  post:application-specific-volume-control-in-mac-os-x
+  post:linkify-tweets-with-regex
+  post:serializing-django-model-instances
+  post:freeing-myself-of-wordpress
+  post:optimization-via-stringification
+  post:autopopulating-input-fields-with-mootools
+  post:wmd-ftw
+  post:first-matching-item
+  post:settimeout-fix-for-webkit-transition
+  post:testing-django-apps-using-localhost-subdomains
+  post:empty-collections-are-valid-cache-data
+  post:-webkit-box-sizing
+  post:remove-textarea-scrollbars-in-internet-explorer
+  post:positioning-elements-using-mootools
+  post:javascript-everywhere
+  post:dieter-rams-video-interview
+  post:gmail-favicon-confusion
+  post:man-after-my-own-heart
+  post:digitalcolor-meter
+  post:python-loops-can-have-else-clause
+  post:self-caching-functions-in-javascript-and-python
+  post:efficient-rounding-in-javascript
+  post:filtering-lists-in-python-ruby-and-javascript
+  post:converting-integers-to-ordinals
+  post:bike-shelf
+  post:customizing-file-and-folder-icons-in-mac-os-x
+  post:ridding-markup-of-textual-decoration
+  post:javascript-date-and-time-localization
+  post:bitwise-not-operator-proves-useful-in-javascript
+  post:composing-mercurial-commit-messages-in-textmate
+  post:safari-keyboard-shortcut-to-open-current-page-in-google-chrome
+  post:simulating-nonlocal-in-python-2-x
+  post:faster-terminal-navigation-via-aliases
+  post:customizing-your-bash-prompt-for-pleasure-and-profit
+  post:mapping-file-extensions-to-emacs-syntax-modes
+  post:repeating-strings-in-javascript
+  post:changing-the-colour-of-list-bullets-using-css
+  post:solarized
+  post:hashify-editor
+  post:end-of-string-anchor-in-javascript-regular-expressions
+  post:getting-truth-out-of-the-dom
+  post:escaping-html-in-javascript
+  post:decorators-in-javascript
+  post:getting-started-with-socket-io
+  post:higher-level-style-sheets
+  post:helveticards
+  post:itunes-is-surprisingly-useful-when-learning-a-foreign-language
+  post:the-perils-of-using-javascript-objects-as-sets
+  post:give-and-take-of-continuation-passing-style
+]
 
-render-svg
+public = (s/compose (.apply null _ path.join)
+                    (s/concat [__dirname ".." ".." "public"]))
+
+write-file = (filename text -> (.apply null [filename text] fs.writeFileSync))
+
+_ = (write-file (public ["css" "screen.css"])
+                generate-css)
+
+render-svg =
   (attrs ->
-     (s/pipe [(e/svg (.apply null [{:xmlns "http://www.w3.org/2000/svg" :version "1.1"} attrs] Object.assign))
+     (s/pipe [(svg (.apply null [{:xmlns "http://www.w3.org/2000/svg" :version "1.1"} attrs] Object.assign))
               (s/of Array)
               (s/fold-map String (:render _ "  " 0 false))
               (s/concat "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n")
               (s/concat "<?xml version=\"1.0\" standalone=\"no\"?>\n")]))
 
-_ (write-file (public ["svg" "masthead.svg"])
-              (render-svg {} (:fill masthead)))
+_01 = (write-file (public ["svg" "masthead.svg"])
+                  (render-svg {} (:fill masthead)))
 
-_ (write-file (public ["svg" "masthead-mask.svg"])
-              (render-svg {} (:mask masthead)))
+_02 = (write-file (public ["svg" "masthead-mask.svg"])
+                  (render-svg {} (:mask masthead)))
 
-_ (write-file (public ["svg" "about.svg"])
-              (render-svg {:width 16 :height 16} icon:about))
+_03 = (write-file (public ["svg" "about.svg"])
+                  (render-svg {:width 16 :height 16} icon:about))
 
-_ (write-file (public ["svg" "archives.svg"])
-              (render-svg {:width 16 :height 16} icon:archives))
+_04 = (write-file (public ["svg" "archives.svg"])
+                  (render-svg {:width 16 :height 16} icon:archives))
 
-_ (write-file (public ["svg" "bitbucket.svg"])
-              (render-svg {:width 16 :height 16} icon:bitbucket))
+_05 = (write-file (public ["svg" "bitbucket.svg"])
+                  (render-svg {:width 16 :height 16} icon:bitbucket))
 
-_ (write-file (public ["svg" "dates-0.svg"])
-              (render-svg {} (0 dates)))
+_06 = (write-file (public ["svg" "dates-0.svg"])
+                  (render-svg {} (0 dates)))
 
-_ (write-file (public ["svg" "dates-1.svg"])
-              (render-svg {} (1 dates)))
+_07 = (write-file (public ["svg" "dates-1.svg"])
+                  (render-svg {} (1 dates)))
 
-_ (write-file (public ["svg" "dates-2.svg"])
-              (render-svg {} (2 dates)))
+_08 = (write-file (public ["svg" "dates-2.svg"])
+                  (render-svg {} (2 dates)))
 
-_ (write-file (public ["svg" "dates-3.svg"])
-              (render-svg {} (3 dates)))
+_09 = (write-file (public ["svg" "dates-3.svg"])
+                  (render-svg {} (3 dates)))
 
-_ (write-file (public ["svg" "dates-4.svg"])
-              (render-svg {} (4 dates)))
+_10 = (write-file (public ["svg" "dates-4.svg"])
+                  (render-svg {} (4 dates)))
 
-_ (write-file (public ["svg" "dates-5.svg"])
-              (render-svg {} (5 dates)))
+_11 = (write-file (public ["svg" "dates-5.svg"])
+                  (render-svg {} (5 dates)))
 
-_ (write-file (public ["svg" "dates-6.svg"])
-              (render-svg {} (6 dates)))
+_12 = (write-file (public ["svg" "dates-6.svg"])
+                  (render-svg {} (6 dates)))
 
-_ (write-file (public ["svg" "dates-7.svg"])
-              (render-svg {} (7 dates)))
+_13 = (write-file (public ["svg" "dates-7.svg"])
+                  (render-svg {} (7 dates)))
 
-_ (write-file (public ["svg" "dates-8.svg"])
-              (render-svg {} (8 dates)))
+_14 = (write-file (public ["svg" "dates-8.svg"])
+                  (render-svg {} (8 dates)))
 
-_ (write-file (public ["svg" "dates-9.svg"])
-              (render-svg {} (9 dates)))
+_15 = (write-file (public ["svg" "dates-9.svg"])
+                  (render-svg {} (9 dates)))
 
-_ (write-file (public ["svg" "contact.svg"])
-              (render-svg {:width 16 :height 16} icon:contact))
+_16 = (write-file (public ["svg" "contact.svg"])
+                  (render-svg {:width 16 :height 16} icon:contact))
 
-_ (write-file (public ["svg" "flushcache.svg"])
-              (render-svg {:width 16 :height 16} icon:flushcache))
+_17 = (write-file (public ["svg" "flushcache.svg"])
+                  (render-svg {:width 16 :height 16} icon:flushcache))
 
-_ (write-file (public ["svg" "tags.svg"])
-              (render-svg {:width 16 :height 16} icon:tags))
+_18 = (write-file (public ["svg" "tags.svg"])
+                  (render-svg {:width 16 :height 16} icon:tags))
 
-_ (write-file (public ["svg" "twitter.svg"])
-              (render-svg {:width 16 :height 16} icon:twitter))
+_19 = (write-file (public ["svg" "twitter.svg"])
+                  (render-svg {:width 16 :height 16} icon:twitter))
 
-render-document (s/pipe [(s/of Array)
-                         (s/fold-map String (:render _ "  " 0 false))
-                         (s/concat "<!DOCTYPE html>\n")])
+render-document = (s/pipe [(s/of Array)
+                           (s/fold-map String (:render _ "  " 0 false))
+                           (s/concat "<!DOCTYPE html>\n")])
 
-_ (write-file (public ["archives.html"])
-              (render-document (base-template "Archives"
-                                              (render-archives posts))))
+_20 = (write-file (public ["archives.html"])
+                  (render-document (base-template "Archives"
+                                                (render-archives posts))))
 
-_ (write-file (public ["tags.html"])
-              (render-document (base-template "Tags"
-                                              (render-tags posts))))
+_21 = (write-file (public ["tags.html"])
+                  (render-document (base-template "Tags"
+                                                  (render-tags posts))))
 
-_ (s/map (page ->
-            (write-file (public [(s/concat (:slug page) ".html")])
-                        (render-document (base-template (:title page)
-                                                        (render-page page)))))
-         pages)
+_22 = (s/map (page ->
+                (write-file (public [(s/concat (:slug page) ".html")])
+                            (render-document (base-template (:title page)
+                                                            (render-page page)))))
+             pages)
 
-_ (s/map (post ->
-            (write-file (public [(s/concat (:slug post) ".html")])
-                        (render-document (base-template (:title post)
-                                                        (render-post post
-                                                                     (related-posts posts post))))))
-         posts)
-
-] 0)
+_23 = (s/map (post ->
+                (write-file (public [(s/concat (:slug post) ".html")])
+                            (render-document (base-template (:title post)
+                                                            (render-post post
+                                                                         (related-posts posts post))))))
+             posts)

@@ -1,10 +1,9 @@
-(import ["../elements"]
+import * from "../elements.serif"
+import default as code-block from "../components/code-block.serif"
+import default as captioned-image from "../components/captioned-image.serif"
+import default as datetime from "../datetime.serif"
 
-(let [
-  code-block          (require "../components/code-block")
-  captioned-image     (require "../components/captioned-image")
-  datetime            (require "../datetime")
-] {
+export default {
 
   :id 23
 
@@ -168,4 +167,4 @@
 
   ]
 
-}))
+}

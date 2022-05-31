@@ -10,10 +10,13 @@ const Future        = require ('fluture');
 const S             = require ('sanctuary');
 
 const codegen       = require ('../codegen.js');
-const {B, K, Y}     = require ('../combinators.js');
-const expression    = require ('../expression.js');
 const grammar       = require ('../grammar.js');
 
+
+const I = x => x;
+const K = x => y => x;
+const B = f => g => x => f (g (x));
+const Y = f => (g => g (g)) (g => f (x => g (g) (x)));
 
 //    readFile :: String -> Future Error String
 const readFile = filename => (
@@ -35,37 +38,16 @@ const mkdir = dirname => (
 //    parse :: String -> Future Error SerifExpr
 const parse = Future.encase (grammar.parse);
 
-//    imports :: SerifExpr -> Array String
-const imports = Y (recur => expression.fold ({
-  number: K ([]),
-  string: K ([]),
-  symbol: K ([]),
-  identifier: K ([]),
-  array: S.chain (recur),
-  object: S.chain (S.chain (recur)),
-  and: S.on (S.concat) (recur),
-  or: S.on (S.concat) (recur),
-  if: predicate => consequent => alternative => S.chain (recur) ([predicate, consequent, alternative]),
-  switch: discriminant => cases => S.concat (recur (discriminant)) (S.chain (c => S.concat (recur (c.predicate)) (recur (c.consequent))) (cases)),
-  import: names => body => S.concat (names) (recur (body)),
-  lambda: K (recur),
-  invocation: K (S.chain (recur)),
-  application: callee => args => (
-    callee.type === 'identifier' && callee.name === 'require' && args[0].type === 'string'
-    ? [args[0].value]
-    : S.concat (recur (callee)) (S.chain (recur) (args))
-  ),
-  new: S.chain (recur),
-  placeholder: [],
-}));
-
 //    dependencies :: StrMap (Array String) -> String -> Future Error (StrMap (Array String))
 const dependencies = Y (recur => deps => filename =>
-  S.maybe (S.pipe ([readFile,
+  S.maybe (S.pipe ([(x => (console.error (filename), x)),
+                    readFile,
                     S.chain (parse),
-                    S.map (imports),
-                    S.map (S.filter (name => name.startsWith ('/') || name.startsWith ('.'))),
-                    S.map (S.map (name => path.join (filename, '..', name + '.serif'))),
+                    S.map (S.mapMaybe (statement => statement.type === 'star-import'    ? S.Just (statement.source) :
+                                                    statement.type === 'default-import' ? S.Just (statement.source) :
+                                                    /** * ** * ** otherwise ** * ** * **/ S.Nothing)),
+                    S.map (S.filter (source => source.startsWith ('/') || source.startsWith ('.'))),
+                    S.map (S.map (source => path.join (filename, '..', source))),
                     S.chain (filenames => S.reduce (S.flip (filename => S.chain (deps => recur (deps) (filename))))
                                                    (Future.resolve (S.insert (filename) (filenames) (deps)))
                                                    (filenames))])
@@ -90,9 +72,7 @@ const sort = Y (recur => filenames =>
 const compile = filename => S.pipe ([
   readFile,
   S.chain (parse),
-  S.map (codegen.withEcmaScript),
-  S.map (codegen.toJs (path.dirname (filename))),
-  S.map (codegen.toCommonJsModule),
+  S.map (codegen.toEsModule (path.dirname (filename))),
   S.map (escodegen.generate),
   S.apSecond (mkdir (path.dirname (filename))),
   S.chain (writeFile (filename)),
@@ -116,7 +96,7 @@ const program = src => lib => S.pipe ([
   S.map (sort ([])),
   S.chain (S.traverse (Future)
                       (S.chain (compile)
-                               (B (updateExtension ('.serif') ('.js'))
+                               (B (updateExtension ('.serif') ('.mjs'))
                                   (updatePath (src) (lib))))),
   S.map (S.map (S.concat ('- '))),
   S.map (S.concat (['', 'Files generated:', ''])),

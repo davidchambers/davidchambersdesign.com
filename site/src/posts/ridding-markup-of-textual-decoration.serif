@@ -1,9 +1,10 @@
-(import ["../elements"]
+import * from "serif/es.mjs"
 
-(let [
-  code-block          (require "../components/code-block")
-  datetime            (require "../datetime")
-] {
+import * from "../elements.serif"
+import default as code-block from "../components/code-block.serif"
+import default as datetime from "../datetime.serif"
+
+export default {
 
   :id 73
 
@@ -36,8 +37,8 @@
 
     (h2 "Adding decorative textual content via CSS")
 
-    (let [url "http://reference.sitepoint.com"
-          sitepoint (path text -> (a (+ path url) (code text)))]
+    (let [url = "http://reference.sitepoint.com"
+          sitepoint = (path text -> (a (+ path url) (code text)))]
        (p
           ["The " (sitepoint "/css/content" "content") " property
             is extremely powerful. It's used in conjunction with
@@ -151,4 +152,4 @@
 
   ]
 
-}))
+}
