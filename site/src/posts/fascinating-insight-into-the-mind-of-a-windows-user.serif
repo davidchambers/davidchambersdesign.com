@@ -1,7 +1,5 @@
 import * from "../elements.serif"
-import default as captioned-image from "../components/captioned-image.serif"
-import default as decorative-image from "../components/decorative-image.serif"
-import default as interview-list from "../components/interview-list.serif"
+import * from "../components.serif"
 import default as datetime from "../datetime.serif"
 
 export default {

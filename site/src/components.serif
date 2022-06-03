@@ -1,0 +1,77 @@
+import * from "./elements.serif"
+import default as s from "./sanctuary.serif"
+
+export {
+  caption
+  captioned-image
+  captioned-images
+  code-block
+  decorative-image
+  interview-list
+  pros-and-cons-list
+  uncaptioned-image
+  update
+}
+
+caption =
+  (caption -> (p' {:class "caption"} caption))
+
+captioned-image =
+  (src alt caption ->
+     (dl
+        [(dt (img {:alt alt :src src}))
+         (dd caption)]))
+
+captioned-images =
+  (images -> (dl (s/chain (image -> (let [src = (0 image)
+                                          alt = (1 image)
+                                          cap = (2 image)]
+                                       [(dt (img {:alt alt :src src}))
+                                        (dd cap)]))
+                          images)))
+code-block =
+  (language source-code ->
+     (let [lines =
+             (s/from-maybe [] (s/chain s/init (s/tail (s/lines source-code))))
+           trim-leading-spaces =
+             (line ->
+                (s/from-maybe line
+                              (s/chain (s/strip-prefix _ line)
+                                       (s/map ("match" _)
+                                              (s/chain (s/match (s/regex "" "^[ ]*"))
+                                                       (s/head lines))))))]
+        (pre (code (text (s/unlines (s/map trim-leading-spaces lines)))))))
+
+decorative-image =
+  (src -> (p (img {:alt "" :src src})))
+
+interview-list =
+  (interviewer interviewee exchange ->
+     (ol (s/snd (s/reduce (s/pair (name items quotation ->
+                                     (if (s/equals interviewer name)
+                                         (s/Pair interviewee
+                                                 (s/append (li' {:class "interviewer"}
+                                                              (s/concat [(strong (s/concat interviewer ":")) " "] quotation))
+                                                           items))
+                                         (s/Pair interviewer
+                                                 (s/append (li' {}
+                                                              (s/concat [(strong (s/concat interviewee ":")) " "] quotation))
+                                                           items)))))
+                          (s/Pair interviewer [])
+                          (s/map canonicalize-children exchange)))))
+
+pros-and-cons-list =
+  (f ->
+     (ul (f (li' {:class "pro"})
+            (li' {:class "con"}))))
+
+uncaptioned-image =
+  (src alt -> (p (img {:alt alt :src src})))
+
+update =
+  (datetime body ->
+     (div {:class "update"}
+        (s/prepend (h4 ["Update \u2014 "
+                        (time {:datetime (.toISO datetime)}
+                           (.toFormat "d MMMM y" datetime))])
+                   (canonicalize-children body))))

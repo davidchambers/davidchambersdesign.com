@@ -1,3 +1,0 @@
-import * from "../elements.serif"
-
-export default (src alt -> (p (img {:alt alt :src src})))

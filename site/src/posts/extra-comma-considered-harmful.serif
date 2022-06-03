@@ -1,5 +1,5 @@
 import * from "../elements.serif"
-import default as code-block from "../components/code-block.serif"
+import * from "../components.serif"
 import default as datetime from "../datetime.serif"
 
 export default {
