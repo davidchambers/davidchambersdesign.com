@@ -46,6 +46,7 @@ const Logical = operator => left => right => ({type: 'LogicalExpression', operat
 const ImportDeclaration = specifiers => source => ({type: 'ImportDeclaration', specifiers, source});
 const ImportDefaultSpecifier = local => ({type: 'ImportDefaultSpecifier', local});
 const ImportNamespaceSpecifier = local => ({type: 'ImportNamespaceSpecifier', local});
+const ImportSpecifier = imported => ({type: 'ImportSpecifier', local: imported, imported});
 const ExportDefaultDeclaration = declaration => ({type: 'ExportDefaultDeclaration', declaration});
 const ExportNamedDeclaration = specifiers => ({type: 'ExportNamedDeclaration', declaration: null, specifiers, source: null});
 const ExportSpecifier = exported => ({type: 'ExportSpecifier', local: exported, exported});
@@ -249,6 +250,22 @@ exports.toEsModule = dirname => statements => {
                       imports: [
                         ...imports,
                         ImportDeclaration ([ImportNamespaceSpecifier (sourceIdentifier)])
+                                          (Literal (S.maybe (statement.source)
+                                                            (S.flip (S.concat) ('.mjs'))
+                                                            (S.stripSuffix ('.serif') (statement.source)))),
+                      ],
+                      declarations,
+                      exports,
+                    };
+                  }
+                  case 'named-imports': {
+                    return {
+                      sourceIdentifiers,
+                      context: [...context, ...statement.names],
+                      imports: [
+                        ...imports,
+                        ImportDeclaration (S.map (name => ImportSpecifier (Identifier (escapeIdentifier (name))))
+                                                 (statement.names))
                                           (Literal (S.maybe (statement.source)
                                                             (S.flip (S.concat) ('.mjs'))
                                                             (S.stripSuffix ('.serif') (statement.source)))),

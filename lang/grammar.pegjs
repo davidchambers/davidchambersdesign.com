@@ -9,6 +9,7 @@ Module
 
 Statement
   = StarImport
+  / NamedImports
   / DefaultImport
   / DefaultExport
   / NamedExports
@@ -21,6 +22,19 @@ StarImport 'star import'
     Separator+ 'from'
     Separator+ source:(string:String { return string.value; })
   { return {type: 'star-import', source}; }
+
+NamedImports 'named imports'
+  = Separator* 'import'
+    Separator+ '{'
+    names:(
+      head:(Separator* ident:Identifier { return ident.name; })
+      tail:(Separator+ ident:Identifier { return ident.name; })*
+      { return [head, ...tail]; }
+    )?
+    Separator* '}'
+    Separator+ 'from'
+    Separator+ source:(string:String { return string.value; })
+  { return {type: 'named-imports', names: names ?? [], source}; }
 
 DefaultImport 'default import'
   = Separator* 'import'

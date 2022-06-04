@@ -1,7 +1,7 @@
 import * from "serif/es.mjs"
 
 import * from "../elements.serif"
-import * from "../components.serif"
+import {code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
 export default {

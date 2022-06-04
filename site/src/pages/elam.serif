@@ -1,5 +1,5 @@
 import * from "../elements.serif"
-import * from "../components.serif"
+import {uncaptioned-image} from "../components.serif"
 
 export default {
 
