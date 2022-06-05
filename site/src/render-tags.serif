@@ -8,21 +8,20 @@ export default render-tags
 
 concat = (.assign {} _ _ Object)
 
-render-tags =
-  (posts ->
-     (let [counts = (s/reduce (counts post ->
-                                 (s/reduce (counts tag ->
-                                              (concat counts
-                                                      (Object.fromEntries [[tag (+ 1 (s/prop tag counts))]])))
-                                           counts
-                                           (:tags post)))
-                              (Object.fromEntries (s/map (name -> [name 0])
-                                                         (Object.getOwnPropertySymbols tags)))
-                              posts)]
-        [(h1 "Tags")
-         (ol' {:id "tags"}
-            (s/map (tag ->
-                      (li' {:data-count (s/prop tag counts)}
-                         (a (.join "" ["/tag/" (Symbol.keyFor tag) "/"]) (s/prop tag tags))))
-                   (Object.getOwnPropertySymbols tags)))
-         (div {:class "clearfix"} [])]))
+render-tags posts =
+  (let [counts = (s/reduce (counts post ->
+                              (s/reduce (counts tag ->
+                                           (concat counts
+                                                   (Object.fromEntries [[tag (+ 1 (s/prop tag counts))]])))
+                                        counts
+                                        (:tags post)))
+                           (Object.fromEntries (s/map (name -> [name 0])
+                                                      (Object.getOwnPropertySymbols tags)))
+                           posts)]
+     [(h1 "Tags")
+      (ol' {:id "tags"}
+         (s/map (tag ->
+                   (li' {:data-count (s/prop tag counts)}
+                      (a (.join "" ["/tag/" (Symbol.keyFor tag) "/"]) (s/prop tag tags))))
+                (Object.getOwnPropertySymbols tags)))
+      (div {:class "clearfix"} [])])

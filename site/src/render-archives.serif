@@ -5,19 +5,18 @@ import default as s from "./sanctuary.serif"
 
 export default render-archives
 
-render-section =
-  (section ->
-     (li
-        [(h2 (:heading section))
-         (ol
-            (s/map (post ->
-                      (li
-                         [(a' {:href (s/concat "/" (:slug post))} (:title post))
-                          " "
-                          (time {:datetime (.toISO (:datetime post))}
-                             (s/concat (.toFormat "d MMMM y | h:mm" (:datetime post))
-                                       (s/to-lower (.toFormat "a" (:datetime post)))))]))
-                   (:posts section)))]))
+render-section section =
+  (li
+     [(h2 (:heading section))
+      (ol
+         (s/map (post ->
+                   (li
+                      [(a' {:href (s/concat "/" (:slug post))} (:title post))
+                       " "
+                       (time {:datetime (.toISO (:datetime post))}
+                          (s/concat (.toFormat "d MMMM y | h:mm" (:datetime post))
+                                    (s/to-lower (.toFormat "a" (:datetime post)))))]))
+                (:posts section)))])
 
 render-archives =
   (s/pipe [(s/map (s/join s/Pair))

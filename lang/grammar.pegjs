@@ -63,8 +63,11 @@ NamedExports 'named exports'
   { return {type: 'named-exports', names: names ?? []}; }
 
 Declaration 'declaration'
-  = binding:Binding
-  { return {type: 'declaration', identifier: binding[0], expression: binding[1]}; }
+  = Separator* name:(ident:Identifier { return ident.name; })
+    parameterNames:(Separator+ !'=' ident:Identifier { return ident.name; })*
+    Separator+ '='
+    Separator+ expression:Expression
+  { return {type: 'declaration', name, parameterNames, expression}; }
 
 LineTerminator 'line terminator'
   = '\u000A' // LINE FEED (LF)

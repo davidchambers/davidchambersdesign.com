@@ -315,15 +315,23 @@ exports.toEsModule = dirname => statements => {
                     };
                   }
                   case 'declaration': {
-                    const name = statement.identifier.name;
                     return {
                       sourceIdentifiers,
-                      context: [...context, name],
+                      context: [...context, statement.name],
                       imports,
                       declarations: [
                         ...declarations,
-                        Const ([VariableDeclarator (toJs (dirname) ([...context, name]) (statement.identifier))
-                                                   (toJs (dirname) (context) (statement.expression))]),
+                        Const ([VariableDeclarator (Identifier (escapeIdentifier (statement.name)))
+                                                   (S.array (body => body)
+                                                            (param => params => body => Func1 (Identifier (escapeIdentifier (statement.name)))
+                                                                                              (param)
+                                                                                              (Block ([Return (S.reduce (S.flip (ArrowFunc1))
+                                                                                                                        (body)
+                                                                                                                        (S.reverse (params)))])))
+                                                            (S.map (B (Identifier) (escapeIdentifier)) (statement.parameterNames))
+                                                            (toJs (dirname)
+                                                                  ([...context, statement.name, ...statement.parameterNames])
+                                                                  (statement.expression)))]),
                       ],
                       exports,
                     };

@@ -1,30 +1,30 @@
 import * from "serif/es.mjs"
-import * from "serif/combinators.mjs"
 
 import default as s from "./sanctuary.serif"
 import default as screen from "./css/screen.serif"
 
 export default generate-css
 
-coerce =
-  (Y (recur x -> (if (Array.isArray x)
-                     (s/unwords (s/map recur x))
-                     (if (== "symbol" (typeof x))
-                         (Symbol.keyFor x)
-                         (String x)))))
+coerce x =
+  (if (Array.isArray x)
+      (s/unwords (s/map coerce x))
+      (if (== "symbol" (typeof x))
+          (Symbol.keyFor x)
+          (String x)))
 
-split-every-2 =
-  (Y (recur -> (s/array []
-                        (k -> (s/array []
-                                       (v -> (s/compose (s/prepend (s/Pair k v))
-                                                        recur)))))))
+split-every-2 xs =
+  (s/array []
+           (k -> (s/array []
+                          (v -> (s/compose (s/prepend (s/Pair k v))
+                                           split-every-2))))
+           xs)
 
-vendor-prefix = (unprefixed prefixed ->
-                   (s/chain (s/pair (k v ->
-                                       (if (=== unprefixed k)
-                                           (s/map (s/Pair _ v)
-                                                  (s/append unprefixed prefixed))
-                                           [(s/Pair k v)])))))
+vendor-prefix unprefixed prefixed =
+  (s/chain (s/pair (k v ->
+                      (if (=== unprefixed k)
+                          (s/map (s/Pair _ v)
+                                 (s/append unprefixed prefixed))
+                          [(s/Pair k v)]))))
 
 vendor-prefixes =
   (s/pipe [(vendor-prefix :border-radius
@@ -44,12 +44,11 @@ vendor-prefixes =
                               :-moz-transition-timing-function
                                 :-o-transition-timing-function])])
 
-format-block =
-  (selectors ->
-     (s/pipe [(s/map (s/pair (k v -> (.join "" ["  " (coerce k) ": " (coerce v) ";"]))))
-              (s/prepend (s/concat (s/join-with ",\n" selectors) " {"))
-              (s/append "}")
-              s/unlines]))
+format-block selectors =
+  (s/pipe [(s/map (s/pair (k v -> (.join "" ["  " (coerce k) ": " (coerce v) ";"]))))
+           (s/prepend (s/concat (s/join-with ",\n" selectors) " {"))
+           (s/append "}")
+           s/unlines])
 
 generate-css =
   (s/pipe [screen
