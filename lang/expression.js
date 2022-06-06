@@ -9,6 +9,7 @@ exports.fold = cases => expr => {
     case 'array':           return cases.array (expr.elements);
     case 'object':          return cases.object (expr.entries);
     case 'lambda':          return cases.lambda (expr.parameter) (expr.body);
+    case 'let':             return cases.let (expr.bindings) (expr.body);
     case 'and':             return cases.and (expr.left) (expr.right);
     case 'or':              return cases.or (expr.left) (expr.right);
     case 'if':              return cases.if (expr.predicate) (expr.consequent) (expr.alternative);

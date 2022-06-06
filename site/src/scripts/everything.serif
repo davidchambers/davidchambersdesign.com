@@ -228,7 +228,7 @@ posts = [
 public = (s/compose (.apply null _ path.join)
                     (s/concat [__dirname ".." ".." "public"]))
 
-write-file = (filename text -> (.apply null [filename text] fs.writeFileSync))
+write-file = (.writeFileSync _ _ fs)
 
 _ = (write-file (public ["css" "screen.css"])
                 generate-css)

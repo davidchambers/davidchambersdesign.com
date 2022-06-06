@@ -152,6 +152,22 @@ const toJs = exports.toJs = dirname => Y (recur => context => expr => expression
   'object': B (Object_) (B (S.map (array2 (Property))) (S.map (S.map (recur (context))))),
   'lambda': parameter => body => ArrowFunc1 (recur ([...context, parameter.name]) (parameter))
                                             (recur ([...context, parameter.name]) (body)),
+  'let': bindings => body => S.reduce (body => S.array (body)
+                                                       (binding => bindings => Call1 (ArrowFunc1 (Identifier (escapeIdentifier (binding.name)))
+                                                                                                 (body))
+                                                                                     (S.array (expr => expr)
+                                                                                              (param => params => expr => Func1 (Identifier (escapeIdentifier (binding.name)))
+                                                                                                                                (param)
+                                                                                                                                (Block ([Return (S.reduce (S.flip (ArrowFunc1))
+                                                                                                                                                          (expr)
+                                                                                                                                                          (S.reverse (params)))])))
+                                                                                              (S.map (B (Identifier) (escapeIdentifier)) (binding.parameterNames))
+                                                                                              (recur ([...context,
+                                                                                                       ...(S.map (binding => binding.name) (bindings)),  // preceding bindings
+                                                                                                       ...binding.parameterNames])
+                                                                                                     (binding.expression)))))
+                                      (recur (S.concat (context) (S.map (binding => binding.name) (bindings))) (body))
+                                      (S.extend (S.I) (S.reverse (bindings))),
   'and': S.on (Logical ('&&')) (recur (context)),
   'or': S.on (Logical ('||')) (recur (context)),
   'if': predicate => consequent => alternative => Cond (recur (context) (predicate)) (recur (context) (consequent)) (recur (context) (alternative)),

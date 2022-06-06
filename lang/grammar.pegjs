@@ -218,13 +218,14 @@ Let 'let'
     Separator* ']'
     Separator* body:Expression
     Separator* ')'
-    { return (bindings ?? []).reduceRight((body, [parameter, expr]) => ({type: 'application', callee: {type: 'lambda', parameter, body}, arguments: [expr]}), body); }
+    { return {type: 'let', bindings, body}; }
 
 Binding 'binding'
-  = Separator* ident:Identifier
+  = Separator* name:(ident:Identifier { return ident.name; })
+    parameterNames:(Separator+ !'=' ident:Identifier { return ident.name; })*
     Separator+ '='
-    Separator+ expr:Expression
-    { return [ident, expr]; }
+    Separator+ expression:Expression
+    { return {name, parameterNames, expression}; }
 
 And 'and'
   = Separator* '('
