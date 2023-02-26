@@ -1,19 +1,16 @@
 #!/usr/bin/env node
 
-'use strict';
+import fs           from 'node:fs';
+import path         from 'node:path';
 
-const fs            = require ('node:fs');
-const path          = require ('node:path');
+import escodegen    from 'escodegen';
+import * as Future  from 'fluture';
+import S            from 'sanctuary';
 
-const escodegen     = require ('escodegen');
-const Future        = require ('fluture');
-const S             = require ('sanctuary');
-
-const codegen       = require ('../codegen.js');
-const grammar       = require ('../grammar.js');
+import * as codegen from '../codegen.js';
+import * as grammar from '../grammar.js';
 
 
-const I = x => x;
 const K = x => y => x;
 const B = f => g => x => f (g (x));
 const Y = f => (g => g (g)) (g => f (x => g (g) (x)));
@@ -40,10 +37,10 @@ const parse = Future.encase (grammar.parse);
 
 //    dependencies :: StrMap (Array String) -> String -> Future Error (StrMap (Array String))
 const dependencies = Y (recur => deps => filename =>
-  S.maybe (S.pipe ([(x => (console.error (filename), x)),
-                    readFile,
+  S.maybe (S.pipe ([readFile,
                     S.chain (parse),
                     S.map (S.mapMaybe (statement => statement.type === 'star-import'    ? S.Just (statement.source) :
+                                                    statement.type === 'named-imports'  ? S.Just (statement.source) :
                                                     statement.type === 'default-import' ? S.Just (statement.source) :
                                                     /** * ** * ** otherwise ** * ** * **/ S.Nothing)),
                     S.map (S.filter (source => source.startsWith ('/') || source.startsWith ('.'))),
@@ -56,23 +53,25 @@ const dependencies = Y (recur => deps => filename =>
           (S.value (filename) (deps))
 );
 
-//    sort :: Array String -> Array (Pair String (Array String)) -> Array String
-const sort = Y (recur => filenames =>
-  S.array (filenames)
-          (S.pair (s => ss => pairs => S.all (S.flip (S.elem) (filenames)) (ss) ?
-                                       recur (S.append (s)
-                                                       (filenames))
-                                             (pairs) :
-                                       recur (filenames)
-                                             (S.append (S.Pair (s) (ss))
-                                                       (pairs))))
-);
+//    sort :: Array (Pair String (Array String)) -> Array String
+const sort = pairs => {
+  return Array.from (
+    (function recur(sorted) {
+       return S.array (sorted)
+                      (pair => pair.snd.every (s => sorted.has (s))
+                               ? recur (sorted.add (pair.fst))
+                               : B (recur (sorted)) (S.append (pair)));
+     })
+    (new Set ([]))
+    (pairs)
+  );
+};
 
 //    compile :: String -> String -> Future Error String
 const compile = filename => S.pipe ([
   readFile,
   S.chain (parse),
-  S.map (codegen.toEsModule (path.dirname (filename))),
+  S.map (codegen.toEsModule),
   S.map (escodegen.generate),
   S.apSecond (mkdir (path.dirname (filename))),
   S.chain (writeFile (filename)),
@@ -93,11 +92,15 @@ const updateExtension = from => to => filename => (
 const program = src => lib => S.pipe ([
   dependencies ({}),
   S.map (S.pairs),
-  S.map (sort ([])),
-  S.chain (S.traverse (Future)
-                      (S.chain (compile)
-                               (B (updateExtension ('.serif') ('.mjs'))
-                                  (updatePath (src) (lib))))),
+  S.map (sort),
+  S.map (S.filter (s => s.endsWith ('.serif'))),
+  S.chain (S.traverse (Future.Future)
+                      (filename => compile (updateExtension ('.serif')
+                                                            ('.js')
+                                                            (updatePath (src)
+                                                                        (lib)
+                                                                        (filename)))
+                                           (filename))),
   S.map (S.map (S.concat ('- '))),
   S.map (S.concat (['', 'Files generated:', ''])),
   S.map (S.unlines),

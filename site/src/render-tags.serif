@@ -1,4 +1,4 @@
-import * from "serif/es.mjs"
+import * from "serif/es"
 
 import * from "./elements.serif"
 import default as s from "./sanctuary.serif"

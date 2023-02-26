@@ -1,6 +1,6 @@
 import default as path from "node:path"
 
-import * from "serif/es.mjs"
+import * from "serif/es"
 
 import default as s from "./sanctuary.serif"
 

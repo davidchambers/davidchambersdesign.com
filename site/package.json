@@ -1,7 +1,7 @@
 {
   "name": "davidchambersdesign.com",
   "private": true,
-  "type": "script",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git://github.com/davidchambers/davidchambersdesign.com.git"

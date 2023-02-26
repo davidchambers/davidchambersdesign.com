@@ -1,37 +1,45 @@
-#!/usr/bin/env node
+import os           from 'node:os';
+import path         from 'node:path';
+import repl         from 'node:repl';
+import vm           from 'node:vm';
 
-'use strict';
+import escodegen    from 'escodegen';
+import * as Future  from 'fluture';
+import sanctuary    from 'sanctuary';
 
-const fs            = require ('node:fs');
-const os            = require ('node:os');
-const path          = require ('node:path');
-const repl          = require ('node:repl');
-
-const escodegen     = require ('escodegen');
-const Future        = require ('fluture');
-const sanctuary     = require ('sanctuary');
-
-const codegen       = require ('../codegen.js');
-const grammar       = require ('../grammar.js');
+import * as codegen from '../codegen.js';
+import * as grammar from '../grammar.js';
 
 
 const S = sanctuary.unchecked;
 
-const B = f => g => x => f (g (x));
+const evaluateModule = async source => {
+  const context = vm.createContext (global);
+  const module = new vm.SourceTextModule (source, {context});
+  await module.link (async (specifier, referencingModule) => {
+    const entries = Object.entries (await import (specifier));
+    const module = new vm.SyntheticModule (
+      entries.map (([name]) => name),
+      () => {
+        for (const [name, value] of entries) {
+          module.setExport (name, value);
+        }
+      },
+      {identifier: specifier, context: referencingModule.context}
+    );
+    return module;
+  });
+  await module.evaluate ();
+  return module.namespace.default;
+};
 
-//    filename :: Integer -> String
-const filename = now => `/tmp/serif-repl-${now}.mjs`;
-
-//    read :: Integer -> String -> Future Error a
-const read = now => S.pipe ([
-  S.concat ('export default default default = '),
-  S.concat (`import * from ${JSON.stringify (path.join (__dirname, '..', 'es.mjs'))} `),
+//    read :: String -> Future Error a
+const read = S.pipe ([
+  S.concat ('import * from "../es.js"\nexport default '),
   Future.encase (grammar.parse),
-  S.map (codegen.toEsModule (path.join (__dirname, '..', '..'))),
+  S.map (codegen.toEsModule),
   S.map (escodegen.generate),
-  S.chain (code => Future.node (done => fs.writeFile (filename (now), code, {encoding: 'utf8'}, done))),
-  S.chain (_ => Future.encaseP (name => import (name)) (filename (now))),
-  S.map (module => module.default),
+  S.chain (Future.encaseP (evaluateModule)),
 ]);
 
 const print = value => {
@@ -87,7 +95,7 @@ const server = repl.start ({
                    }
                  })
                 (result => callback (null, result))
-                (read (Date.now ()) (code));
+                (read (code));
   },
   writer: value => `${print (value)}\n`,
 });

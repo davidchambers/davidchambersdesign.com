@@ -2,7 +2,7 @@ import default as fs from "node:fs"
 import default as path from "node:path"
 import default as url from "node:url"
 
-import * from "serif/es.mjs"
+import * from "serif/es"
 
 import * from "../elements.serif"
 import default as base-template from "../base-template.serif"

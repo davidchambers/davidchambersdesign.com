@@ -1,6 +1,4 @@
-'use strict';
-
-exports.fold = cases => expr => {
+export const fold = cases => expr => {
   switch (expr.type) {
     case 'number':          return cases.number (expr.value);
     case 'string':          return cases.string (expr.value);

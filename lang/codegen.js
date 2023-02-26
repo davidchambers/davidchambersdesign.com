@@ -1,26 +1,16 @@
-'use strict';
+import S from 'sanctuary';
 
-const path          = require ('node:path');
-
-const Future        = require ('fluture');
-const S             = require ('sanctuary');
-
-const expression    = require ('./expression.js');
+import * as expression from './expression.js';
 
 
-const I = x => x;
-const K = x => y => x;
 const B = f => g => x => f (g (x));
 const Y = f => (g => g (g)) (g => f (x => g (g) (x)));
 
 const Program = sourceType => body => ({type: 'Program', sourceType, body});
-const Statement = expression => ({type: 'ExpressionStatement', expression});
-const Assignment = operator => left => right => ({type: 'AssignmentExpression', operator, left, right});
 const Member_ = computed => object => property => ({type: 'MemberExpression', object, property, computed, optional: false});
 const Member = Member_ (true);
 const Cond = test => consequent => alternative => ({type: 'ConditionalExpression', test, consequent, alternate: alternative});
 const Unary = prefix => operator => argument => ({type: 'UnaryExpression', prefix, operator, argument});
-const Binary = operator => left => right => ({type: 'BinaryExpression', operator, left, right});
 const Func = id => params => body => ({type: 'FunctionExpression', id, params, body, expression: false, generator: false, async: false});
 const Func1 = id => param => Func (id) ([param]);
 const Block = body => ({type: 'BlockStatement', body});
@@ -31,7 +21,6 @@ const Identifier = name => ({type: 'Identifier', name});
 const Literal = value => ({type: 'Literal', value});
 const Call = callee => args => ({type: 'CallExpression', callee, arguments: args, optional: false});
 const Call1 = callee => arg => Call (callee) ([arg]);
-const Call2 = callee => arg1 => arg2 => Call (callee) ([arg1, arg2]);
 const Array_ = elements => ({type: 'ArrayExpression', elements});
 const _ArrowFunc = expression => params => body => ({type: 'ArrowFunctionExpression', id: null, expression, generator: false, async: false, params, body});
 const ArrowFunc = _ArrowFunc (true);
@@ -39,9 +28,7 @@ const ArrowFunc1 = param => ArrowFunc ([param]);
 const ArrowFuncStatement = _ArrowFunc (false);
 const Object_ = properties => ({type: 'ObjectExpression', properties});
 const Property = key => value => ({type: 'Property', method: false, shorthand: false, computed: true, key, value, kind: 'init'});
-const ArrayPattern = elements => ({type: 'ArrayPattern', elements});
 const New = callee => args => ({type: 'NewExpression', callee, arguments: args});
-const SpreadElement = arg => ({type: 'SpreadElement', argument: arg});
 const Logical = operator => left => right => ({type: 'LogicalExpression', operator, left, right});
 const ImportDeclaration = specifiers => source => ({type: 'ImportDeclaration', specifiers, source});
 const ImportDefaultSpecifier = local => ({type: 'ImportDefaultSpecifier', local});
@@ -53,51 +40,6 @@ const ExportSpecifier = exported => ({type: 'ExportSpecifier', local: exported, 
 const VariableDeclaration = kind => declarations => ({type: 'VariableDeclaration', kind, declarations});
 const Const = VariableDeclaration ('const');
 const VariableDeclarator = id => init => ({type: 'VariableDeclarator', id, init});
-
-///
-
-//    match :: StrMap (Node -> Array a) -> Array Node -> Array a
-const match = cases => S.chain (node => S.maybe ([])
-                                                (S.T (node))
-                                                (S.value (node.type) (cases)));
-
-//    namedExports :: Array Node -> Array String
-const namedExports = (
-  match ({'ExportNamedDeclaration':
-          node => node.declaration == null ?
-                  S.chain (node => match ({'Identifier': node => [node.name]}) ([node.exported]))
-                          (node.specifiers) :
-                  match ({'ClassDeclaration':
-                          node => match ({'Identifier': node => [node.name]}) ([node.id]),
-                          'VariableDeclaration':
-                          node => match ({'Identifier':
-                                          node => [node.name],
-                                          'ArrayPattern':
-                                          node => match ({'Identifier': node => [node.name]})
-                                                        (node.elements),
-                                          'ObjectPattern':
-                                          node => match ({'Identifier': node => [node.name]})
-                                                        (match ({'Property': node => [node.value]})
-                                                               (node.properties))})
-                                        (match ({'VariableDeclarator': node => [node.id]})
-                                               (node.declarations))})
-                        ([node.declaration])})
-);
-
-//    fetchNamedExports :: String -> Future Error (Array String)
-const fetchNamedExports = S.pipe ([
-  resource => S.either (S.K (S.Left (resource)))
-                       (url => S.elem (url.protocol) (['http:', 'https:']) ? S.Right (url) : S.Left (resource))
-                       (S.encase (resource => new URL (resource)) (resource)),
-  S.either (S.pipe ([Future.encaseP (resource => import (resource)),
-                     S.map (Object.keys)]))
-           (S.pipe ([Future.encaseP (fetch),
-                     S.chain (Future.encaseP (response => response.text ())),
-                     S.chain (Future.encase (source => acorn.parse (source, {ecmaVersion: 'latest', sourceType: 'module'}))),
-                     S.map (program => namedExports (program.body))])),
-]);
-
-///
 
 const never = null;
 
@@ -124,14 +66,13 @@ const reference = context => name => (
   Member (Identifier ('$')) (Literal (escapeIdentifier (name)))
 );
 
-const Object$                       = Member (Identifier ('Object'));
-const Object$assign                 = Object$ (Literal ('assign'));
-const Object$create                 = Object$ (Literal ('create'));
-const Object$getOwnPropertySymbols  = Object$ (Literal ('getOwnPropertySymbols'));
-const Symbol$                       = Member (Identifier ('Symbol'));
-const Symbol$for                    = Symbol$ (Literal ('for'));
+const Object$       = Member (Identifier ('Object'));
+const Object$assign = Object$ (Literal ('assign'));
+const Object$create = Object$ (Literal ('create'));
+const Symbol$       = Member (Identifier ('Symbol'));
+const Symbol$for    = Symbol$ (Literal ('for'));
 
-const toJs = exports.toJs = dirname => Y (recur => context => expr => expression.fold ({
+export const toJs = Y (recur => context => expr => expression.fold ({
   'number': value => value < 0 ? Unary (true) ('-') (Literal (-value)) : Literal (value),
   'string': Literal,
   'symbol': B (Call1 (Symbol$for)) (Literal),
@@ -238,11 +179,9 @@ const toJs = exports.toJs = dirname => Y (recur => context => expr => expression
   ),
 }) (expr));
 
-exports.toEsModule = dirname => statements => {
+export const toEsModule = statements => {
   //  Exports are allowed to occur anywhere in a Serif module, to allow
   //  exports to follow imports near the top of the module if desired.
-  //  Exports in ES modules should always come last so they may refer
-  //  to top-level identifiers introduced by declarations.
   const orderedStatements = (
     S.pair (S.concat)
            (S.reduce (pair => statement => S.either (B (S.mapLeft) (S.append))
@@ -255,7 +194,7 @@ exports.toEsModule = dirname => statements => {
                      (S.Pair ([]) ([]))
                      (statements))
   );
-  const {sourceIdentifiers, context, imports, declarations, exports} = (
+  const {sourceIdentifiers, imports, declarations, exports} = (
     S.reduce (({sourceIdentifiers, context, imports, declarations, exports}) => statement => {
                 switch (statement.type) {
                   case 'star-import': {
@@ -267,7 +206,7 @@ exports.toEsModule = dirname => statements => {
                         ...imports,
                         ImportDeclaration ([ImportNamespaceSpecifier (sourceIdentifier)])
                                           (Literal (S.maybe (statement.source)
-                                                            (S.flip (S.concat) ('.mjs'))
+                                                            (S.flip (S.concat) ('.js'))
                                                             (S.stripSuffix ('.serif') (statement.source)))),
                       ],
                       declarations,
@@ -283,7 +222,7 @@ exports.toEsModule = dirname => statements => {
                         ImportDeclaration (S.map (name => ImportSpecifier (Identifier (escapeIdentifier (name))))
                                                  (statement.names))
                                           (Literal (S.maybe (statement.source)
-                                                            (S.flip (S.concat) ('.mjs'))
+                                                            (S.flip (S.concat) ('.js'))
                                                             (S.stripSuffix ('.serif') (statement.source)))),
                       ],
                       declarations,
@@ -298,7 +237,7 @@ exports.toEsModule = dirname => statements => {
                         ...imports,
                         ImportDeclaration ([ImportDefaultSpecifier (Identifier (escapeIdentifier (statement.name)))])
                                           (Literal (S.maybe (statement.source)
-                                                            (S.flip (S.concat) ('.mjs'))
+                                                            (S.flip (S.concat) ('.js'))
                                                             (S.stripSuffix ('.serif') (statement.source)))),
                       ],
                       declarations,
@@ -313,7 +252,7 @@ exports.toEsModule = dirname => statements => {
                       declarations,
                       exports: [
                         ...exports,
-                        ExportDefaultDeclaration (toJs (dirname) (context) (statement.expression)),
+                        ExportDefaultDeclaration (toJs (context) (statement.expression)),
                       ],
                     };
                   }
@@ -345,45 +284,32 @@ exports.toEsModule = dirname => statements => {
                                                                                                                         (body)
                                                                                                                         (S.reverse (params)))])))
                                                             (S.map (B (Identifier) (escapeIdentifier)) (statement.parameterNames))
-                                                            (toJs (dirname)
-                                                                  ([...context, statement.name, ...statement.parameterNames])
+                                                            (toJs ([...context, statement.name, ...statement.parameterNames])
                                                                   (statement.expression)))]),
                       ],
                       exports,
                     };
+                  }
+                  default: {
+                    console.error (statement);
+                    throw new Error ('XXX');
                   }
                 }
               })
              ({sourceIdentifiers: [], context: [], imports: [], declarations: [], exports: []})
              (orderedStatements)
   );
-  return Program ('module')
-                 ([...imports,
-                   Const ([VariableDeclarator (Identifier ('$'))
-                                              (Call (Member (Array_ (sourceIdentifiers)) (Literal ('reduce')))
-                                                    ([ArrowFunc ([Identifier ('$'), Identifier ('o')])
-                                                                (Call (Object$assign)
-                                                                      ([Identifier ('$'), Identifier ('o')])),
-                                                      Call (Object$create)
-                                                           ([Literal (null)])]))]),
-                   ...declarations,
-                   ...exports]);
+  return (
+    Program ('module')
+            ([...imports,
+              Const ([VariableDeclarator (Identifier ('$'))
+                                         (Call (Member (Array_ (sourceIdentifiers)) (Literal ('reduce')))
+                                               ([ArrowFunc ([Identifier ('$'), Identifier ('o')])
+                                                           (Call (Object$assign)
+                                                                 ([Identifier ('$'), Identifier ('o')])),
+                                                 Call (Object$create)
+                                                      ([Literal (null)])]))]),
+              ...declarations,
+              ...exports])
+  );
 };
-
-const proxy = exports.proxy = names => expr => (
-  Call (ArrowFunc (S.map (B (Identifier) (escapeIdentifier))
-                         (names))
-                  (expr))
-       (S.map (Identifier)
-              (names))
-);
-
-exports.toCommonJsModule = expr => (
-  Program ('script')
-          ([Statement (Literal ('use strict')),
-            Statement (Assignment ('=')
-                                  (Member (Identifier ('module'))
-                                          (Literal ('exports')))
-                                  (proxy (['__dirname', '__filename', 'exports', 'module', 'require'])
-                                         (expr)))])
-);

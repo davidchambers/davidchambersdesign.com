@@ -1,5 +1,5 @@
-import * from "serif/es.mjs"
-import * from "serif/combinators.serif"
+import * from "serif/es"
+import * from "serif/combinators"
 
 import * from "./elements.serif"
 import * from "./orthogonal.serif"
