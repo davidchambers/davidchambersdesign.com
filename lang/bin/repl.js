@@ -37,7 +37,7 @@ const evaluateModule = async source => {
 const read = S.pipe ([
   S.concat ('import * from "../es.js"\nexport default '),
   Future.encase (grammar.parse),
-  S.map (codegen.toEsModule),
+  S.map (codegen.toModule),
   S.map (escodegen.generate),
   S.chain (Future.encaseP (evaluateModule)),
 ]);

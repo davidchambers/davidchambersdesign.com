@@ -71,7 +71,7 @@ const sort = pairs => {
 const compile = filename => S.pipe ([
   readFile,
   S.chain (parse),
-  S.map (codegen.toEsModule),
+  S.map (codegen.toModule),
   S.map (escodegen.generate),
   S.apSecond (mkdir (path.dirname (filename))),
   S.chain (writeFile (filename)),
