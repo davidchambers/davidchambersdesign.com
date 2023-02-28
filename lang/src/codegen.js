@@ -3,8 +3,8 @@ const escapeIdentifier = name => '_' + name.replace(
   c => '$' + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')
 );
 
-const reference = (name, context) => (
-  (new Set(context)).has(name) ? {
+const reference = (name, names) => (
+  names.has(name) ? {
     type: 'Identifier',
     name: escapeIdentifier(name),
   } : {
@@ -22,7 +22,7 @@ const reference = (name, context) => (
   }
 );
 
-function toJs(expr, context) {
+function toJsAst(expr, names) {
   if (expr.type === 'number') {
     if (expr.value < 0) {
       return {
@@ -84,7 +84,7 @@ function toJs(expr, context) {
       };
     }
     if (expr.name === '.' || expr.name === '/') {
-      return reference(expr.name, context);
+      return reference(expr.name, names);
     }
     const [head, ...tail] = expr.name.split(/(?=[./])/);
     return tail.reduce(
@@ -122,12 +122,12 @@ function toJs(expr, context) {
           never  // eslint-disable-line no-undef
         ),
       }),
-      reference(head, context)
+      reference(head, names)
     );
   } else if (expr.type === 'array') {
     return {
       type: 'ArrayExpression',
-      elements: expr.elements.map(expr => toJs(expr, context)),
+      elements: expr.elements.map(expr => toJsAst(expr, names)),
     };
   } else if (expr.type === 'object') {
     return {
@@ -138,16 +138,17 @@ function toJs(expr, context) {
         method: false,
         shorthand: false,
         computed: true,
-        key: toJs(key, context),
-        value: toJs(value, context),
+        key: toJsAst(key, names),
+        value: toJsAst(value, names),
       })),
     };
   } else if (expr.type === 'lambda') {
+    const names$ = new Set([...names, expr.parameter.name]);
     return ({
       type: 'ArrowFunctionExpression',
       expression: false,
-      params: [toJs(expr.parameter, [...context, expr.parameter.name])],
-      body: toJs(expr.body, [...context, expr.parameter.name]),
+      params: [toJsAst(expr.parameter, names$)],
+      body: toJsAst(expr.body, names$),
     });
   } else if (expr.type === 'let') {
     return expr.bindings.reduceRight(
@@ -187,11 +188,11 @@ function toJs(expr, context) {
                       params: [param],
                       body,
                     }),
-                    toJs(binding.expression, [
-                      ...context,
+                    toJsAst(binding.expression, new Set([
+                      ...names,
                       ...bindings.slice(0, idx).map(binding => binding.name),
                       ...binding.parameterNames,
-                    ])
+                    ]))
                   ),
                 }],
               },
@@ -211,39 +212,39 @@ function toJs(expr, context) {
               body,
             },
             arguments: [
-              toJs(binding.expression, [
-                ...context,
+              toJsAst(binding.expression, new Set([
+                ...names,
                 ...bindings.slice(0, idx).map(binding => binding.name),
-              ]),
+              ])),
             ],
           };
         }
       },
-      toJs(expr.body, [
-        ...context,
+      toJsAst(expr.body, new Set([
+        ...names,
         ...expr.bindings.map(binding => binding.name),
-      ])
+      ]))
     );
   } else if (expr.type === 'and') {
     return {
       type: 'LogicalExpression',
       operator: '&&',
-      left: toJs(expr.left, context),
-      right: toJs(expr.right, context),
+      left: toJsAst(expr.left, names),
+      right: toJsAst(expr.right, names),
     };
   } else if (expr.type === 'or') {
     return {
       type: 'LogicalExpression',
       operator: '||',
-      left: toJs(expr.left, context),
-      right: toJs(expr.right, context),
+      left: toJsAst(expr.left, names),
+      right: toJsAst(expr.right, names),
     };
   } else if (expr.type === 'if') {
     return {
       type: 'ConditionalExpression',
-      test: toJs(expr.predicate, context),
-      consequent: toJs(expr.consequent, context),
-      alternate: toJs(expr.alternative, context),
+      test: toJsAst(expr.predicate, names),
+      consequent: toJsAst(expr.consequent, names),
+      alternate: toJsAst(expr.alternative, names),
     };
   } else if (expr.type === 'switch') {
     return {
@@ -266,16 +267,16 @@ function toJs(expr, context) {
             },
             cases: expr.cases.map(({predicate, consequent}) => ({
               type: 'SwitchCase',
-              test: toJs(predicate, context),
+              test: toJsAst(predicate, names),
               consequent: [{
                 type: 'ReturnStatement',
-                argument: toJs(consequent, context),
+                argument: toJsAst(consequent, names),
               }],
             })),
           }],
         },
       },
-      arguments: [toJs(expr.discriminant, context)],
+      arguments: [toJsAst(expr.discriminant, names)],
     };
   } else if (expr.type === 'new' || expr.type === 'invocation') {
     const params = [];
@@ -288,7 +289,7 @@ function toJs(expr, context) {
         params.push(param);
         args.push(param);
       } else {
-        args.push(toJs(argument, context));
+        args.push(toJsAst(argument, names));
       }
     }
     switch (expr.type) {
@@ -356,12 +357,12 @@ function toJs(expr, context) {
               computed: true,
               optional: false,
               object: param,
-              property: toJs(expr.callee, context),
+              property: toJsAst(expr.callee, names),
             },
           };
         }
         default: {
-          return toJs(expr.callee, context);
+          return toJsAst(expr.callee, names);
         }
       }
     })();
@@ -375,7 +376,7 @@ function toJs(expr, context) {
         params.push(param);
         args.push(param);
       } else {
-        args.push(toJs(argument, context));
+        args.push(toJsAst(argument, names));
       }
     }
     return params.reduceRight((body, param) => ({
@@ -392,22 +393,23 @@ function toJs(expr, context) {
   }
 }
 
-export const toModule = _statements => {
+export const toModule = statements => {
   //  Exports are allowed to occur anywhere in a Serif module, to allow
   //  exports to follow imports near the top of the module if desired.
-  const grouped = [[], []];
+  //  This matches the semantics of ECMAScript modules. Exports are
+  //  processed last, once all top-level bindings are known.
   const exportTypes = new Set(['named-exports', 'default-export']);
-  for (const statement of _statements) {
-    grouped[exportTypes.has(statement.type) ? 1 : 0].push(statement);
-  }
-  const statements = grouped.flat();
+  const statementsExportsLast = [...statements].sort((s1, s2) =>
+    (exportTypes.has(s1.type) ? 1 : 0) -
+    (exportTypes.has(s2.type) ? 1 : 0)
+  );
 
   const sourceIdentifiers = [];
   const names = new Set([]);
   const imports = [];
   const declarations = [];
   const exports = [];
-  for (const statement of statements) {
+  for (const statement of statementsExportsLast) {
     switch (statement.type) {
       case 'star-import': {
         const identifier = {
@@ -486,7 +488,7 @@ export const toModule = _statements => {
       case 'default-export': {
         exports.push({
           type: 'ExportDefaultDeclaration',
-          declaration: toJs(statement.expression, Array.from(names)),
+          declaration: toJsAst(statement.expression, names),
         });
         break;
       }
@@ -518,11 +520,11 @@ export const toModule = _statements => {
               }],
             },
           };
-        })(toJs(statement.expression, [
+        })(toJsAst(statement.expression, new Set([
           ...names,
           statement.name,
           ...statement.parameterNames,
-        ]));
+        ])));
         declarations.push({
           type: 'VariableDeclaration',
           kind: 'const',

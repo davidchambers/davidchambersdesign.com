@@ -1,5 +1,5 @@
 .PHONY: all
-all: grammar.js
+all: src/grammar.js
 
-grammar.js: grammar.pegjs
+src/grammar.js: serif.pegjs
 	node_modules/.bin/peggy --format es <'$<' >'$@'

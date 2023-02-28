@@ -1,8 +1,9 @@
 {
-  "name": "TK",
+  "name": "serif",
   "version": "0.0.0",
   "type": "module",
   "exports": {
+    ".": "./index.js",
     "./combinators": "./combinators.js",
     "./es": "./es.js"
   },
@@ -10,9 +11,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "escodegen": "2.0.0",
-    "fluture": "14.0.0",
-    "sanctuary": "3.1.0"
+    "escodegen": "2.0.0"
   },
   "devDependencies": {
     "peggy": "3.0.0",
