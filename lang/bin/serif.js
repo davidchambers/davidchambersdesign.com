@@ -1,40 +1,41 @@
-import fs from 'node:fs/promises';
-import {dirname, join, relative} from 'node:path';
+import fs           from 'node:fs/promises';
+import path         from 'node:path';
 
-import escodegen from 'escodegen';
+import escodegen    from 'escodegen';
 
-import serif from 'serif';
+import serif        from 'serif';
 
 
 async function findDependencies(entryPoint) {
-  const $map = new Map([]);
+  const tree = new Map([]);
   await recur(entryPoint);
-  return $map;
+  return tree;
 
   async function recur(filename) {
-    if ($map.has(filename)) return;
-    const serifSource = await fs.readFile(filename, 'utf8');
-    const serifAst = serif.parse(serifSource);
-    const filenames = serifAst.flatMap(statement =>
+    if (tree.has(filename)) return;
+    const source = await fs.readFile(filename, 'utf8');
+    const ast = serif.parse(source);
+    const dependencies = ast.flatMap(statement =>
       (statement.type === 'star-import' ||
        statement.type === 'named-imports' ||
        statement.type === 'default-import') &&
       (statement.source.startsWith('/') ||
        statement.source.startsWith('.'))
-      ? [join(filename, '..', statement.source)]
+      ? [path.join(filename, '..', statement.source)]
       : []
     );
-    $map.set(filename, filenames);
-    for (const filename of filenames) await recur(filename);
+    tree.set(filename, {ast, dependencies});
+    for (const dependency of dependencies) await recur(dependency);
   }
 }
 
-function orderDependencies(map) {
+function orderDependencies(tree) {
   const sorted = new Set([]);
-  const unsorted = Array.from(map.keys());
+  const unsorted = Array.from(tree.keys());
   while (unsorted.length > 0) {
     const filename = unsorted.shift();
-    if (map.get(filename).every(filename => sorted.has(filename))) {
+    const {dependencies} = tree.get(filename);
+    if (dependencies.every(filename => sorted.has(filename))) {
       sorted.add(filename);
     } else {
       unsorted.push(filename);
@@ -43,26 +44,27 @@ function orderDependencies(map) {
   return Array.from(sorted);
 }
 
-async function compile(filenames) {
-  const serifSource = await fs.readFile(filenames.serif, 'utf8');
-  const serifAst = serif.parse(serifSource);
-  const jsAst = serif.trans(serifAst);
-  const jsSource = escodegen.generate(jsAst);
-  await fs.mkdir(dirname(filenames.js), {recursive: true});
-  await fs.writeFile(filenames.js, jsSource, 'utf8');
-}
-
 {
   const cwd = process.cwd();
   const [,, src, lib, filename] = process.argv;
-  const dependencies = await findDependencies(filename);
-  const filenames = orderDependencies(dependencies).map(serif => ({
-    serif,
-    js: join(lib, relative(src, serif)).replace(/[.]serif$/, '.js'),
-  }));
-  await Promise.all(filenames.map(compile));
-  for (const {serif, js} of filenames) {
-    console.log(`• ${relative(cwd, serif)}`);
-    console.log(`  ➔ ${relative(cwd, js)}`);
+  const tree = await findDependencies(filename);
+  // Create JavaScript module for each Serif module:
+  const filenames = await Promise.all(
+    orderDependencies(tree).map(async serifFilename => {
+      const serifAst = tree.get(serifFilename).ast;
+      const ast = serif.trans(serifAst);
+      const source = escodegen.generate(ast);
+      const dirname = path.dirname(serifFilename);
+      const basename = path.basename(serifFilename, '.serif') + '.js';
+      const jsFilename = path.join(lib, path.relative(src, dirname), basename);
+      await fs.mkdir(dirname, {recursive: true});
+      await fs.writeFile(jsFilename, source, 'utf8');
+      return {serifFilename, jsFilename};
+    })
+  );
+  // List files created:
+  for (const {serifFilename, jsFilename} of filenames) {
+    console.log('• ' + path.relative(cwd, serifFilename));
+    console.log('  ➔ ' + path.relative(cwd, jsFilename));
   }
 }

@@ -15,7 +15,8 @@
   },
   "devDependencies": {
     "peggy": "3.0.0",
-    "sanctuary-scripts": "5.0.x"
+    "sanctuary-scripts": "5.0.x",
+    "sanctuary-style": "6.0.x"
   },
   "scripts": {
     "repl": "node --experimental-vm-modules --no-warnings -- bin/repl.js"
