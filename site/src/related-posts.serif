@@ -7,10 +7,10 @@ import default as s from "./sanctuary.serif"
 export default related-posts
 
 intersection set-1 set-2 =
-  (new Set (.filter (.has _ set-1) (Array.from set-2)))
+  (new Set (.filter (.has _ set-1) [...set-2]))
 
 union set-1 set-2 =
-  (new Set (s/concat (Array.from set-1) (Array.from set-2)))
+  (new Set [...set-1 ...set-2])
 
 similarity set-1 set-2 =
   (/ (Math.sqrt ("size" (union set-1 set-2)))

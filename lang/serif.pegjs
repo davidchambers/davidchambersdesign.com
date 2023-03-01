@@ -263,6 +263,11 @@ If 'if'
     Separator* ')'
     { return {type: 'if', predicate, consequent, alternative}; }
 
+Case 'case'
+  = Separator* predicate:Expression
+    Separator+ consequent:Expression
+    { return {predicate, consequent}; }
+
 Switch 'switch'
   = Separator* '('
     Separator* 'switch'
@@ -273,30 +278,33 @@ Switch 'switch'
     Separator* ')'
     { return {type: 'switch', discriminant, cases}; }
 
-Case 'case'
-  = Separator* predicate:Expression
-    Separator+ consequent:Expression
-    { return {predicate, consequent}; }
+SpreadElement 'spread element'
+  = '...' argument:Expression
+    { return {type: 'spread-element', argument}; }
 
 Array 'array'
   = Separator* '['
     elements:(
-      head:(Separator* expr:Expression { return expr; })
-      tail:(Separator+ expr:Expression { return expr; })*
+      head:(Separator* element:(SpreadElement / Expression) { return element; })
+      tail:(Separator+ element:(SpreadElement / Expression) { return element; })*
       { return [head, ...tail]; }
     )?
     Separator* ']'
     { return {type: 'array', elements: elements ?? []}; }
 
+Property 'property'
+  = key:Expression Separator+ value:Expression
+    { return {type: 'property', key, value}; }
+
 Object 'object'
   = Separator* '{'
-    entries:(
-      head:(Separator* key:Expression Separator+ value:Expression { return [key, value]; })
-      tail:(Separator+ key:Expression Separator+ value:Expression { return [key, value]; })*
+    properties:(
+      head:(Separator* property:(SpreadElement / Property) { return property; })
+      tail:(Separator+ property:(SpreadElement / Property) { return property; })*
       { return [head, ...tail]; }
     )?
     Separator* '}'
-    { return {type: 'object', entries: entries ?? []}; }
+    { return {type: 'object', properties: properties ?? []}; }
 
 Placeholder 'placeholder'
   = '_'
@@ -319,6 +327,6 @@ Invocation 'invocation'
 Application 'application'
   = Separator* '('
     Separator* callee:(Placeholder / Expression)
-    args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
+    args:(Separator+ arg:(Placeholder / SpreadElement / Expression) { return arg; })+
     Separator* ')'
     { return {type: 'application', callee, arguments: args}; }

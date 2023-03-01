@@ -114,20 +114,31 @@ function toJsAst(expr) {
   } else if (expr.type === 'array') {
     return {
       type: 'ArrayExpression',
-      elements: expr.elements.map(expr => toJsAst(expr)),
+      elements: expr.elements.map(element =>
+        element.type === 'spread-element'
+        ? {type: 'SpreadElement', argument: toJsAst(element.argument)}
+        : toJsAst(element)
+      ),
     };
   } else if (expr.type === 'object') {
     return {
       type: 'ObjectExpression',
-      properties: expr.entries.map(([key, value]) => ({
-        type: 'Property',
-        kind: 'init',
-        method: false,
-        shorthand: false,
-        computed: true,
-        key: toJsAst(key),
-        value: toJsAst(value),
-      })),
+      properties: expr.properties.map(property =>
+        property.type === 'spread-element' ? {
+          type: 'SpreadElement',
+          argument: toJsAst(property.argument),
+        } :
+        property.type === 'property' ? {
+          type: 'Property',
+          kind: 'init',
+          method: false,
+          shorthand: false,
+          computed: true,
+          key: toJsAst(property.key),
+          value: toJsAst(property.value),
+        } :
+        never  // eslint-disable-line no-undef
+      ),
     };
   } else if (expr.type === 'lambda') {
     return ({
@@ -334,6 +345,11 @@ function toJsAst(expr) {
         const param = {type: 'Identifier', name: `_${n}`};
         params.push(param);
         args.push(param);
+      } else if (argument.type === 'spread-element') {
+        args.push({
+          type: 'SpreadElement',
+          argument: toJsAst(argument.argument),
+        });
       } else {
         args.push(toJsAst(argument));
       }
