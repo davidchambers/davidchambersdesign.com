@@ -233,13 +233,10 @@ write-file = (.writeFileSync _ _ fs)
 _ = (write-file (public ["css" "screen.css"])
                 generate-css)
 
-render-svg =
-  (attrs ->
-     (s/pipe [(svg (.apply null [{:xmlns "http://www.w3.org/2000/svg" :version "1.1"} attrs] Object.assign))
-              (s/of Array)
-              (s/fold-map String (:render _ "  " 0 false))
-              (s/concat "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n")
-              (s/concat "<?xml version=\"1.0\" standalone=\"no\"?>\n")]))
+render-svg attrs =
+  (s/pipe [(svg (.apply null [{:xmlns "http://www.w3.org/2000/svg" :version "1.1"} attrs] Object.assign))
+           (:render _ "  " 0 false)
+           (+ _ "<?xml version=\"1.0\" standalone=\"no\"?>\n")])
 
 _01 = (write-file (public ["svg" "masthead.svg"])
                   (render-svg {} (:fill masthead)))
