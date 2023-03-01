@@ -61,9 +61,7 @@ function print(x) {
       return '[' + x.map(print).join(' ') + ']';
     case '[object Object]':
       return '{' + (
-        [...Object.getOwnPropertySymbols(x), ...Object.getOwnPropertyNames(x)]
-        .map(prop => print(prop) + ' ' + print(x[prop]))
-        .join(' ')
+        Reflect.ownKeys(x).map(k => print(k) + ' ' + print(x[k])).join(' ')
       ) + '}';
     default:
       return `${x}`;
