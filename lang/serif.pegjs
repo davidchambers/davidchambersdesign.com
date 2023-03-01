@@ -21,7 +21,18 @@ StarImport 'star import'
     Separator+ '*'
     Separator+ 'from'
     Separator+ source:(string:String { return string.value; })
-  { return {type: 'star-import', source}; }
+    hiding:(
+      Separator+ 'hiding'
+      Separator+ '{'
+      names:(
+        head:(Separator* ident:Identifier { return ident.name; })
+        tail:(Separator+ ident:Identifier { return ident.name; })*
+        { return [head, ...tail]; }
+      )?
+      Separator* '}'
+      { return names ?? []; }
+    )?
+  { return {type: 'star-import', source, hiding: hiding ?? []}; }
 
 NamedImports 'named imports'
   = Separator* 'import'

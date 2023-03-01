@@ -1,7 +1,10 @@
-import * from "../elements.serif"
+import {linearGradient path stop} from "../elements.serif"
 import * from "../orthogonal.serif"
 
 export default twitter
+
+a rx-ry angle large-arc-flag sweep-flag dx-dy =
+  [:a rx-ry angle large-arc-flag sweep-flag dx-dy]
 
 twitter = [
   (linearGradient {:id "gradient" :x1 "50%" :y1 "0%" :x2 "50%" :y2 "100%"}

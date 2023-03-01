@@ -1,28 +1,18 @@
-const escapeIdentifier = name => '_' + name.replace(
-  /[^A-Za-z0-9_]/g,
-  c => '$' + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')
-);
+function escapeIdentifier(name) {
+  return '_' + name.replace(
+    /[^A-Za-z0-9_]/g,
+    c => '$' + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')
+  );
+}
 
-const reference = (name, names) => (
-  names.has(name) ? {
+function Identifier(name) {
+  return {
     type: 'Identifier',
     name: escapeIdentifier(name),
-  } : {
-    type: 'MemberExpression',
-    computed: true,
-    optional: false,
-    object: {
-      type: 'Identifier',
-      name: '$',
-    },
-    property: {
-      type: 'Literal',
-      value: escapeIdentifier(name),
-    },
-  }
-);
+  };
+}
 
-function toJsAst(expr, names) {
+function toJsAst(expr) {
   if (expr.type === 'number') {
     if (expr.value < 0) {
       return {
@@ -84,50 +74,47 @@ function toJsAst(expr, names) {
       };
     }
     if (expr.name === '.' || expr.name === '/') {
-      return reference(expr.name, names);
+      return Identifier(expr.name);
     }
     const [head, ...tail] = expr.name.split(/(?=[./])/);
-    return tail.reduce(
-      (object, part) => ({
-        type: 'MemberExpression',
-        computed: true,
-        optional: false,
-        object,
-        property: (
-          part.startsWith('.') ? {
-            type: 'Literal',
-            value: part.slice('.'.length),
-          } :
-          part.startsWith('/') ? {
-            type: 'CallExpression',
+    return tail.reduce((object, part) => ({
+      type: 'MemberExpression',
+      computed: true,
+      optional: false,
+      object,
+      property: (
+        part.startsWith('.') ? {
+          type: 'Literal',
+          value: part.slice('.'.length),
+        } :
+        part.startsWith('/') ? {
+          type: 'CallExpression',
+          optional: false,
+          callee: {
+            type: 'MemberExpression',
+            computed: false,
             optional: false,
-            callee: {
-              type: 'MemberExpression',
-              computed: false,
-              optional: false,
-              object: {
-                type: 'Identifier',
-                name: 'Symbol',
-              },
-              property: {
-                type: 'Identifier',
-                name: 'for',
-              },
+            object: {
+              type: 'Identifier',
+              name: 'Symbol',
             },
-            arguments: [{
-              type: 'Literal',
-              value: part.slice('/'.length),
-            }],
-          } :
-          never  // eslint-disable-line no-undef
-        ),
-      }),
-      reference(head, names)
-    );
+            property: {
+              type: 'Identifier',
+              name: 'for',
+            },
+          },
+          arguments: [{
+            type: 'Literal',
+            value: part.slice('/'.length),
+          }],
+        } :
+        never  // eslint-disable-line no-undef
+      ),
+    }), Identifier(head));
   } else if (expr.type === 'array') {
     return {
       type: 'ArrayExpression',
-      elements: expr.elements.map(expr => toJsAst(expr, names)),
+      elements: expr.elements.map(expr => toJsAst(expr)),
     };
   } else if (expr.type === 'object') {
     return {
@@ -138,113 +125,85 @@ function toJsAst(expr, names) {
         method: false,
         shorthand: false,
         computed: true,
-        key: toJsAst(key, names),
-        value: toJsAst(value, names),
+        key: toJsAst(key),
+        value: toJsAst(value),
       })),
     };
   } else if (expr.type === 'lambda') {
-    const names$ = new Set([...names, expr.parameter.name]);
     return ({
       type: 'ArrowFunctionExpression',
       expression: false,
-      params: [toJsAst(expr.parameter, names$)],
-      body: toJsAst(expr.body, names$),
+      params: [toJsAst(expr.parameter)],
+      body: toJsAst(expr.body),
     });
   } else if (expr.type === 'let') {
-    return expr.bindings.reduceRight(
-      (body, binding, idx, bindings) => {
-        if (binding.parameterNames.length > 0) {
-          const [param, ...params] = binding.parameterNames.map(name => ({
-            type: 'Identifier',
-            name: escapeIdentifier(name),
-          }));
-          return {
-            type: 'CallExpression',
-            optional: false,
-            callee: {
-              type: 'ArrowFunctionExpression',
-              expression: true,
-              params: [{
-                type: 'Identifier',
-                name: escapeIdentifier(binding.name),
+    return expr.bindings.reduceRight((body, binding) => {
+      if (binding.parameterNames.length > 0) {
+        const [param, ...params] = binding.parameterNames.map(Identifier);
+        return {
+          type: 'CallExpression',
+          optional: false,
+          callee: {
+            type: 'ArrowFunctionExpression',
+            expression: true,
+            params: [Identifier(binding.name)],
+            body,
+          },
+          arguments: [{
+            type: 'FunctionExpression',
+            id: Identifier(binding.name),
+            params: [param],
+            body: {
+              type: 'BlockStatement',
+              body: [{
+                type: 'ReturnStatement',
+                argument: params.reduceRight(
+                  (body, param) => ({
+                    type: 'ArrowFunctionExpression',
+                    expression: true,
+                    params: [param],
+                    body,
+                  }),
+                  toJsAst(binding.expression)
+                ),
               }],
-              body,
             },
-            arguments: [{
-              type: 'FunctionExpression',
-              id: {
-                type: 'Identifier',
-                name: escapeIdentifier(binding.name),
-              },
-              params: [param],
-              body: {
-                type: 'BlockStatement',
-                body: [{
-                  type: 'ReturnStatement',
-                  argument: params.reduceRight(
-                    (body, param) => ({
-                      type: 'ArrowFunctionExpression',
-                      expression: true,
-                      params: [param],
-                      body,
-                    }),
-                    toJsAst(binding.expression, new Set([
-                      ...names,
-                      ...bindings.slice(0, idx).map(binding => binding.name),
-                      ...binding.parameterNames,
-                    ]))
-                  ),
-                }],
-              },
-            }],
-          };
-        } else {
-          return {
-            type: 'CallExpression',
-            optional: false,
-            callee: {
-              type: 'ArrowFunctionExpression',
-              expression: true,
-              params: [{
-                type: 'Identifier',
-                name: escapeIdentifier(binding.name),
-              }],
-              body,
-            },
-            arguments: [
-              toJsAst(binding.expression, new Set([
-                ...names,
-                ...bindings.slice(0, idx).map(binding => binding.name),
-              ])),
-            ],
-          };
-        }
-      },
-      toJsAst(expr.body, new Set([
-        ...names,
-        ...expr.bindings.map(binding => binding.name),
-      ]))
-    );
+          }],
+        };
+      } else {
+        return {
+          type: 'CallExpression',
+          optional: false,
+          callee: {
+            type: 'ArrowFunctionExpression',
+            expression: true,
+            params: [Identifier(binding.name)],
+            body,
+          },
+          arguments: [toJsAst(binding.expression)],
+        };
+      }
+    }, toJsAst(expr.body));
   } else if (expr.type === 'and') {
     return {
       type: 'LogicalExpression',
       operator: '&&',
-      left: toJsAst(expr.left, names),
-      right: toJsAst(expr.right, names),
+      left: toJsAst(expr.left),
+      right: toJsAst(expr.right),
     };
   } else if (expr.type === 'or') {
     return {
       type: 'LogicalExpression',
       operator: '||',
-      left: toJsAst(expr.left, names),
-      right: toJsAst(expr.right, names),
+      left: toJsAst(expr.left),
+      right: toJsAst(expr.right),
     };
   } else if (expr.type === 'if') {
     return {
       type: 'ConditionalExpression',
-      test: toJsAst(expr.predicate, names),
-      consequent: toJsAst(expr.consequent, names),
-      alternate: toJsAst(expr.alternative, names),
+      test: toJsAst(expr.predicate),
+      consequent: toJsAst(expr.consequent),
+      alternate: toJsAst(expr.alternative),
     };
   } else if (expr.type === 'switch') {
     return {
@@ -267,16 +226,16 @@ function toJsAst(expr, names) {
             },
             cases: expr.cases.map(({predicate, consequent}) => ({
               type: 'SwitchCase',
-              test: toJsAst(predicate, names),
+              test: toJsAst(predicate),
               consequent: [{
                 type: 'ReturnStatement',
-                argument: toJsAst(consequent, names),
+                argument: toJsAst(consequent),
               }],
             })),
           }],
         },
       },
-      arguments: [toJsAst(expr.discriminant, names)],
+      arguments: [toJsAst(expr.discriminant)],
     };
   } else if (expr.type === 'new' || expr.type === 'invocation') {
     const params = [];
@@ -289,7 +248,7 @@ function toJsAst(expr, names) {
         params.push(param);
         args.push(param);
       } else {
-        args.push(toJsAst(argument, names));
+        args.push(toJsAst(argument));
       }
     }
     switch (expr.type) {
@@ -357,12 +316,12 @@ function toJsAst(expr, names) {
               computed: true,
               optional: false,
               object: param,
-              property: toJsAst(expr.callee, names),
+              property: toJsAst(expr.callee),
             },
           };
         }
         default: {
-          return toJsAst(expr.callee, names);
+          return toJsAst(expr.callee);
         }
       }
     })();
@@ -376,7 +335,7 @@ function toJsAst(expr, names) {
         params.push(param);
         args.push(param);
       } else {
-        args.push(toJsAst(argument, names));
+        args.push(toJsAst(argument));
       }
     }
     return params.reduceRight((body, param) => ({
@@ -393,245 +352,119 @@ function toJsAst(expr, names) {
   }
 }
 
-export const toModule = statements => {
-  //  Exports are allowed to occur anywhere in a Serif module, to allow
-  //  exports to follow imports near the top of the module if desired.
-  //  This matches the semantics of ECMAScript modules. Exports are
-  //  processed last, once all top-level bindings are known.
+function exportsLast(statements) {
   const exportTypes = new Set(['named-exports', 'default-export']);
-  const statementsExportsLast = [...statements].sort((s1, s2) =>
+  return [...statements].sort((s1, s2) =>
     (exportTypes.has(s1.type) ? 1 : 0) -
     (exportTypes.has(s2.type) ? 1 : 0)
   );
+}
 
-  const sourceIdentifiers = [];
-  const names = new Set([]);
-  const imports = [];
-  const declarations = [];
-  const exports = [];
-  for (const statement of statementsExportsLast) {
-    switch (statement.type) {
-      case 'star-import': {
-        const identifier = {
-          type: 'Identifier',
-          name: escapeIdentifier(statement.source),
-        };
-        sourceIdentifiers.push(identifier);
-        imports.push({
-          type: 'ImportDeclaration',
-          specifiers: [{
-            type: 'ImportNamespaceSpecifier',
-            local: identifier,
-          }],
-          source: {
-            type: 'Literal',
-            value: statement.source.replace(/[.]serif$/, '.js'),
-          },
-        });
-        break;
-      }
-      case 'named-imports': {
-        for (const name of statement.names) names.add(name);
-        imports.push({
-          type: 'ImportDeclaration',
-          specifiers: (
-            statement.names
-            .map(name => ({type: 'Identifier', name: escapeIdentifier(name)}))
-            .map(identifier => ({
-              type: 'ImportSpecifier',
-              local: identifier,
-              imported: identifier,
-            }))
-          ),
-          source: {
-            type: 'Literal',
-            value: statement.source.replace(/[.]serif$/, '.js'),
-          },
-        });
-        break;
-      }
-      case 'default-import': {
-        names.add(statement.name);
-        imports.push({
-          type: 'ImportDeclaration',
-          specifiers: [{
-            type: 'ImportDefaultSpecifier',
-            local: {
-              type: 'Identifier',
-              name: escapeIdentifier(statement.name),
-            },
-          }],
-          source: {
-            type: 'Literal',
-            value: statement.source.replace(/[.]serif$/, '.js'),
-          },
-        });
-        break;
-      }
-      case 'named-exports': {
-        exports.push({
-          type: 'ExportNamedDeclaration',
-          declaration: null,
-          specifiers: (
-            statement.names
-            .map(name => ({type: 'Identifier', name: escapeIdentifier(name)}))
-            .map(identifier => ({
-              type: 'ExportSpecifier',
-              local: identifier,
-              exported: identifier,
-            }))
-          ),
-          source: null,
-        });
-        break;
-      }
-      case 'default-export': {
-        exports.push({
-          type: 'ExportDefaultDeclaration',
-          declaration: toJsAst(statement.expression, names),
-        });
-        break;
-      }
-      case 'declaration': {
-        names.add(statement.name);
-        const init = (body => {
-          if (statement.parameterNames.length === 0) return body;
-          const [param, ...params] = statement.parameterNames.map(name => ({
-            type: 'Identifier',
-            name: escapeIdentifier(name),
-          }));
-          return {
-            type: 'FunctionExpression',
-            id: {
-              type: 'Identifier',
-              name: escapeIdentifier(statement.name),
-            },
-            params: [param],
-            body: {
-              type: 'BlockStatement',
-              body: [{
-                type: 'ReturnStatement',
-                argument: params.reduceRight((body, param) => ({
-                  type: 'ArrowFunctionExpression',
-                  expression: false,
-                  params: [param],
-                  body,
-                }), body),
-              }],
-            },
-          };
-        })(toJsAst(statement.expression, new Set([
-          ...names,
-          statement.name,
-          ...statement.parameterNames,
-        ])));
-        declarations.push({
-          type: 'VariableDeclaration',
-          kind: 'const',
-          declarations: [{
-            type: 'VariableDeclarator',
-            id: {
-              type: 'Identifier',
-              name: escapeIdentifier(statement.name),
-            },
-            init,
-          }],
-        });
-        break;
-      }
-    }
-  }
-
+export async function toModule(statements, exportedNames) {
   return {
     type: 'Program',
     sourceType: 'module',
-    body: [
-      ...imports,
-      {
+    body: await Promise.all(exportsLast(statements).map(async statement =>
+      statement.type === 'star-import' ? {
+        type: 'ImportDeclaration',
+        specifiers: (
+          (statement.source.endsWith('.serif')
+           ? (hiding =>
+               exportedNames(statement.source)
+               .filter(name => !hiding.has(name))
+               .map(escapeIdentifier)
+             )(new Set(statement.hiding))
+           : Object.keys(await import(statement.source)))
+          .map(name => ({
+            type: 'ImportSpecifier',
+            local: {
+              type: 'Identifier',
+              name,
+            },
+            imported: {
+              type: 'Identifier',
+              name,
+            },
+          }))
+        ),
+        source: {
+          type: 'Literal',
+          value: statement.source.replace(/[.]serif$/, '.js'),
+        },
+      } :
+      statement.type === 'named-imports' ? {
+        type: 'ImportDeclaration',
+        specifiers: statement.names.map(name => ({
+          type: 'ImportSpecifier',
+          local: Identifier(name),
+          imported: Identifier(name),
+        })),
+        source: {
+          type: 'Literal',
+          value: statement.source.replace(/[.]serif$/, '.js'),
+        },
+      } :
+      statement.type === 'default-import' ? {
+        type: 'ImportDeclaration',
+        specifiers: [{
+          type: 'ImportDefaultSpecifier',
+          local: Identifier(statement.name),
+        }],
+        source: {
+          type: 'Literal',
+          value: statement.source.replace(/[.]serif$/, '.js'),
+        },
+      } :
+      statement.type === 'named-exports' ? {
+        type: 'ExportNamedDeclaration',
+        declaration: null,
+        specifiers: statement.names.map(name => ({
+          type: 'ExportSpecifier',
+          local: Identifier(name),
+          exported: Identifier(name),
+        })),
+        source: null,
+      } :
+      statement.type === 'default-export' ? {
+        type: 'ExportDefaultDeclaration',
+        declaration: toJsAst(statement.expression),
+      } :
+      statement.parameterNames.length === 0 ? {
         type: 'VariableDeclaration',
         kind: 'const',
         declarations: [{
           type: 'VariableDeclarator',
-          id: {
-            type: 'Identifier',
-            name: '$',
-          },
+          id: Identifier(statement.name),
+          init: toJsAst(statement.expression),
+        }],
+      } : {
+        type: 'VariableDeclaration',
+        kind: 'const',
+        declarations: [{
+          type: 'VariableDeclarator',
+          id: Identifier(statement.name),
           init: {
-            type: 'CallExpression',
-            optional: false,
-            callee: {
-              type: 'MemberExpression',
-              computed: false,
-              optional: false,
-              object: {
-                type: 'ArrayExpression',
-                elements: sourceIdentifiers,
-              },
-              property: {
-                type: 'Identifier',
-                name: 'reduce',
-              },
-            },
-            arguments: [{
-               type: 'ArrowFunctionExpression',
-               expression: false,
-               params: [{
-                 type: 'Identifier',
-                 name: '$',
-               }, {
-                 type: 'Identifier',
-                 name: 'o',
-               }],
-               body: {
-                 type: 'CallExpression',
-                 optional: false,
-                 callee: {
-                   type: 'MemberExpression',
-                   computed: false,
-                   optional: false,
-                   object: {
-                     type: 'Identifier',
-                     name: 'Object',
-                   },
-                   property: {
-                     type: 'Identifier',
-                     name: 'assign',
-                   },
-                 },
-                 arguments: [{
-                   type: 'Identifier',
-                   name: '$',
-                 }, {
-                   type: 'Identifier',
-                   name: 'o',
-                 }],
-               },
-            }, {
-              type: 'CallExpression',
-              optional: false,
-              callee: {
-                type: 'MemberExpression',
-                computed: false,
-                optional: false,
-                object: {
-                  type: 'Identifier',
-                  name: 'Object',
-                },
-                property: {
-                  type: 'Identifier',
-                  name: 'create',
-                },
-              },
-              arguments: [{
-                type: 'Literal',
-                value: null,
+            type: 'FunctionExpression',
+            id: Identifier(statement.name),
+            params: statement.parameterNames.slice(0, 1).map(Identifier),
+            body: {
+              type: 'BlockStatement',
+              body: [{
+                type: 'ReturnStatement',
+                argument: statement.parameterNames.slice(1).reduceRight(
+                  (body, name) => ({
+                    type: 'ArrowFunctionExpression',
+                    expression: false,
+                    params: [Identifier(name)],
+                    body,
+                  }),
+                  toJsAst(statement.expression)
+                ),
               }],
-            }],
+            },
           },
         }],
-      },
-      ...declarations,
-      ...exports,
-    ],
+      }
+    )),
   };
-};
+}

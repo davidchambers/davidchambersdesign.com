@@ -1,4 +1,4 @@
-import * from "../elements.serif"
+import {path} from "../elements.serif"
 import * from "../orthogonal.serif"
 
 export default bitbucket

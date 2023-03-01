@@ -1,7 +1,7 @@
 import * from "serif/es"
 import * from "serif/combinators"
 
-import * from "./elements.serif"
+import {path} from "./elements.serif"
 import * from "./orthogonal.serif"
 import default as s from "./sanctuary.serif"
 

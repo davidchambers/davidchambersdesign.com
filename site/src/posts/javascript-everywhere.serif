@@ -1,6 +1,6 @@
 import * from "serif/es"
 
-import * from "../elements.serif"
+import * from "../elements.serif" hiding {body}
 import default as datetime from "../datetime.serif"
 
 export default {

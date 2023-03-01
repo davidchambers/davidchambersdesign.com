@@ -1,4 +1,4 @@
-import * from "../elements.serif"
+import * from "../elements.serif" hiding {body}
 import {captioned-images update} from "../components.serif"
 import default as datetime from "../datetime.serif"
 

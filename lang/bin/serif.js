@@ -1,9 +1,9 @@
-import fs           from 'node:fs/promises';
-import path         from 'node:path';
+import {mkdir, readFile, writeFile} from 'node:fs/promises';
+import {basename, dirname, join, relative} from 'node:path';
 
-import escodegen    from 'escodegen';
+import escodegen from 'escodegen';
 
-import serif        from 'serif';
+import serif from 'serif';
 
 
 async function findDependencies(entryPoint) {
@@ -13,7 +13,7 @@ async function findDependencies(entryPoint) {
 
   async function recur(filename) {
     if (tree.has(filename)) return;
-    const source = await fs.readFile(filename, 'utf8');
+    const source = await readFile(filename, 'utf8');
     const ast = serif.parse(source);
     const dependencies = ast.flatMap(statement =>
       (statement.type === 'star-import' ||
@@ -21,10 +21,13 @@ async function findDependencies(entryPoint) {
        statement.type === 'default-import') &&
       (statement.source.startsWith('/') ||
        statement.source.startsWith('.'))
-      ? [path.join(filename, '..', statement.source)]
+      ? [join(filename, '..', statement.source)]
       : []
     );
-    tree.set(filename, {ast, dependencies});
+    const exportedNames = ast.flatMap(statement =>
+      statement.type === 'named-exports' ? statement.names : []
+    );
+    tree.set(filename, {ast, dependencies, exportedNames});
     for (const dependency of dependencies) await recur(dependency);
   }
 }
@@ -51,20 +54,27 @@ function orderDependencies(tree) {
   // Create JavaScript module for each Serif module:
   const filenames = await Promise.all(
     orderDependencies(tree).map(async serifFilename => {
+      const serifDirname = dirname(serifFilename);
       const serifAst = tree.get(serifFilename).ast;
-      const ast = serif.trans(serifAst);
-      const source = escodegen.generate(ast);
-      const dirname = path.dirname(serifFilename);
-      const basename = path.basename(serifFilename, '.serif') + '.js';
-      const jsFilename = path.join(lib, path.relative(src, dirname), basename);
-      await fs.mkdir(dirname, {recursive: true});
-      await fs.writeFile(jsFilename, source, 'utf8');
+      const jsAst = await serif.trans(
+        serifAst,
+        importPath => {
+          const importFilename = join(serifDirname, ...importPath.split('/'));
+          return tree.get(importFilename).exportedNames;
+        }
+      );
+      const jsSource = escodegen.generate(jsAst);
+      const jsDirname = dirname(serifFilename);
+      const jsBasename = basename(serifFilename, '.serif') + '.js';
+      const jsFilename = join(lib, relative(src, jsDirname), jsBasename);
+      await mkdir(jsDirname, {recursive: true});
+      await writeFile(jsFilename, jsSource, 'utf8');
       return {serifFilename, jsFilename};
     })
   );
   // List files created:
   for (const {serifFilename, jsFilename} of filenames) {
-    console.log('• ' + path.relative(cwd, serifFilename));
-    console.log('  ➔ ' + path.relative(cwd, jsFilename));
+    console.log('• ' + relative(cwd, serifFilename));
+    console.log('  ➔ ' + relative(cwd, jsFilename));
   }
 }

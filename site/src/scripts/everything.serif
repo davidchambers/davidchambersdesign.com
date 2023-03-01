@@ -4,7 +4,7 @@ import default as url from "node:url"
 
 import * from "serif/es"
 
-import * from "../elements.serif"
+import {svg} from "../elements.serif"
 import default as base-template from "../base-template.serif"
 import default as generate-css from "../generate-css.serif"
 import default as masthead from "../masthead.serif"

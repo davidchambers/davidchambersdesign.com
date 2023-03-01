@@ -2,7 +2,7 @@ import * from "serif/es"
 
 import default as s from "./sanctuary.serif"
 
-export {render ⇦ ⇨ ⇧ ⇩ ← → ↑ ↓ a}
+export {render ⇦ ⇨ ⇧ ⇩ ← → ↑ ↓}
 
 reducer prev path curr =
   (if (=== :M (0 curr))
@@ -42,6 +42,3 @@ render =
 → x = [:h (+ x 0)]
 ↑ y = [:v (- y 0)]
 ↓ y = [:v (+ y 0)]
-
-a rx-ry angle large-arc-flag sweep-flag dx-dy =
-  [:a rx-ry angle large-arc-flag sweep-flag dx-dy]
