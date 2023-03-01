@@ -296,9 +296,9 @@ _18 = (write-file (public ["svg" "tags.svg"])
 _19 = (write-file (public ["svg" "twitter.svg"])
                   (render-svg {:width 16 :height 16} icon:twitter))
 
-render-document = (s/pipe [(s/of Array)
-                           (s/fold-map String (:render _ "  " 0 false))
-                           (s/concat "<!DOCTYPE html>\n")])
+render-document element =
+  (+ (:render element "  " 0 false)
+     "<!DOCTYPE html>\n")
 
 _20 = (write-file (public ["archives.html"])
                   (render-document (base-template "Archives"
