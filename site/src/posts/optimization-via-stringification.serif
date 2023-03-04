@@ -7,7 +7,7 @@ export default {
   :slug "optimization-via-stringification"
   :title "Optimization via stringification"
   :datetime (datetime "2010-06-03" "14:28:00" :Pacific/Auckland)
-  :tags [:css :optimization :python]
+  :tags ["css" "optimization" "python"]
   :body body
 }
 

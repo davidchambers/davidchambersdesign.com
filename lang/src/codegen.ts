@@ -42,34 +42,29 @@ const esFromSymbol = ({name}: Serif.Symbol): ES.CallExpression => (
   )
 );
 
-const esFromIdentifier = ({name}: Serif.Identifier): ES.Identifier | ES.MemberExpression => {
-  if (name === 'import.meta') {
-    return es.MemberExpression(
-      Identifier('import' as Escaped),
-      Identifier('meta' as Escaped)
-    );
-  }
-  if (name === '.' || name === '/') {
-    return Identifier(escape(name));
-  }
-  const [head, ...tail] = name.split(/(?=[./])/);
-  return tail.reduce<ES.Identifier | ES.MemberExpression>(
-    (object, part) => es.MemberExpression(
-      object,
-      part.startsWith('.')
-      ? es.Literal(part.slice('.'.length))
-      : /* part.startsWith('/') */ es.CallExpression(
-        es.MemberExpression(
-          Identifier('Symbol' as Escaped),
-          Identifier('for' as Escaped),
-        ),
-        [es.Literal(part.slice('/'.length))],
-      ),
-      {computed: true}
-    ),
-    Identifier(escape(head))
-  );
-};
+const esFromMetaProperty = ({meta, property}: Serif.MetaProperty): ES.MetaProperty => (
+  es.MetaProperty(
+    Identifier(meta as Escaped),
+    Identifier(property as Escaped),
+  )
+);
+
+const esFromMemberExpression = ({object, property}: Serif.MemberExpression): ES.MemberExpression => (
+  es.MemberExpression(
+    esFromExpression(object),
+    property.type === 'identifier' ?
+      es.Literal(property.name) :
+    property.type === 'symbol' ?
+      esFromSymbol(property) :
+    // else
+      esFromMemberExpression(property),
+    {computed: true}
+  )
+);
+
+const esFromIdentifier = ({name}: Serif.Identifier): ES.Identifier | ES.MemberExpression => (
+  Identifier(escape(name))
+);
 
 const esFromArray = ({elements}: Serif.Array): ES.ArrayExpression => (
   es.ArrayExpression(
@@ -282,21 +277,23 @@ const esFromApplication = (expr: Serif.Application): ES.Expression => {
 
 const esFromExpression = (expr: Serif.Expression): ES.Expression => {
   switch (expr.type) {
-    case 'number':      return esFromNumber(expr);
-    case 'string':      return esFromString(expr);
-    case 'symbol':      return esFromSymbol(expr);
-    case 'identifier':  return esFromIdentifier(expr);
-    case 'array':       return esFromArray(expr);
-    case 'object':      return esFromObject(expr);
-    case 'lambda':      return esFromLambda(expr);
-    case 'let':         return esFromLet(expr);
-    case 'and':         return esFromAnd(expr);
-    case 'or':          return esFromOr(expr);
-    case 'if':          return esFromIf(expr);
-    case 'switch':      return esFromSwitch(expr);
-    case 'new':         return esFromNew(expr);
-    case 'invocation':  return esFromInvocation(expr);
-    case 'application': return esFromApplication(expr);
+    case 'number':              return esFromNumber(expr);
+    case 'string':              return esFromString(expr);
+    case 'symbol':              return esFromSymbol(expr);
+    case 'MetaProperty':        return esFromMetaProperty(expr);
+    case 'MemberExpression':    return esFromMemberExpression(expr);
+    case 'identifier':          return esFromIdentifier(expr);
+    case 'array':               return esFromArray(expr);
+    case 'object':              return esFromObject(expr);
+    case 'lambda':              return esFromLambda(expr);
+    case 'let':                 return esFromLet(expr);
+    case 'and':                 return esFromAnd(expr);
+    case 'or':                  return esFromOr(expr);
+    case 'if':                  return esFromIf(expr);
+    case 'switch':              return esFromSwitch(expr);
+    case 'new':                 return esFromNew(expr);
+    case 'invocation':          return esFromInvocation(expr);
+    case 'application':         return esFromApplication(expr);
   }
 };
 
@@ -338,26 +335,26 @@ export async function toModule(
       statement.type === 'default-export' ? es.ExportDefaultDeclaration(
         esFromExpression(statement.expression),
       ) :
-      statement.parameterNames.length === 0
-      ? es.VariableDeclaration([
-          es.VariableDeclarator(
+      statement.type === 'declaration' && statement.parameterNames.length === 0 ? es.VariableDeclaration([
+        es.VariableDeclarator(
+          Identifier(escape(statement.name)),
+          esFromExpression(statement.expression),
+        ),
+      ]) :
+      statement.type === 'declaration' ? es.VariableDeclaration([
+        es.VariableDeclarator(
+          Identifier(escape(statement.name)),
+          es.FunctionExpression(
             Identifier(escape(statement.name)),
-            esFromExpression(statement.expression),
+            statement.parameterNames.slice(0, 1).map(name => Identifier(escape(name))),
+            es.BlockStatement([es.ReturnStatement(statement.parameterNames.slice(1).reduceRight(
+              (body, name) => es.ArrowFunctionExpression([Identifier(escape(name))], body),
+              esFromExpression(statement.expression)
+            ))]),
           ),
-        ])
-      : es.VariableDeclaration([
-          es.VariableDeclarator(
-            Identifier(escape(statement.name)),
-            es.FunctionExpression(
-              Identifier(escape(statement.name)),
-              statement.parameterNames.slice(0, 1).map(name => Identifier(escape(name))),
-              es.BlockStatement([es.ReturnStatement(statement.parameterNames.slice(1).reduceRight(
-                (body, name) => es.ArrowFunctionExpression([Identifier(escape(name))], body),
-                esFromExpression(statement.expression)
-              ))]),
-            ),
-          ),
-        ])
+        ),
+      ]) :
+      es.ExpressionStatement(esFromExpression(statement))
     )),
   );
 }

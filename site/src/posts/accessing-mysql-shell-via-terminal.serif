@@ -7,7 +7,7 @@ export default {
   :slug "accessing-mysql-shell-via-terminal"
   :title "Accessing MySQL shell via Terminal"
   :datetime (datetime "2010-01-08" "13:49:00" :Pacific/Auckland)
-  :tags [:mac-os-x :mysql :terminal.app]
+  :tags ["mac-os-x" "mysql" "terminal.app"]
   :body body
 }
 

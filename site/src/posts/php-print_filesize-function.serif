@@ -7,7 +7,7 @@ export default {
   :slug "php-print_filesize-function"
   :title "PHP print_filesize function"
   :datetime (datetime "2009-06-10" "21:17:00" :Pacific/Auckland)
-  :tags [:best-practice :php]
+  :tags ["best-practice" "php"]
   :body body
 }
 

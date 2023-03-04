@@ -7,7 +7,7 @@ export default {
   :slug "digitalcolor-meter"
   :title "DigitalColor Meter"
   :datetime (datetime "2010-07-23" "01:45:00" :Pacific/Auckland)
-  :tags [:mac-os-x :photoshop]
+  :tags ["mac-os-x" "photoshop"]
   :body body
 }
 

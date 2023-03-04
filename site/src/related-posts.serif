@@ -22,17 +22,17 @@ seconds-between from to =
 with-scores that this =
   (let [score = (similarity (new Set (:tags that))
                             (new Set (:tags this)))
-        primary = (s/negate score)
+        primary = (s:negate score)
         secondary = (Math.abs (seconds-between (:datetime that)
                                                (:datetime this)))]
      (if (>= 0.5 score)
-         (s/Just (s/Pair (s/Pair primary secondary) this))
-         s/Nothing))
+         (s:Just (s:Pair (s:Pair primary secondary) this))
+         s:Nothing))
 
 related-posts posts post =
-  (s/pipe [(s/reject (this -> (=== (:slug post) (:slug this))))
-           (s/map-maybe (with-scores post))
-           s/sort
-           (s/map s/snd)
+  (s:pipe [(s:reject (this -> (=== (:slug post) (:slug this))))
+           (s:map-maybe (with-scores post))
+           s:sort
+           (s:map s:snd)
            (.slice 0 5 _)]
           posts)

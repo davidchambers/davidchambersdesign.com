@@ -13,6 +13,18 @@ export interface Symbol {
   readonly name: string;
 }
 
+export interface MetaProperty {
+  readonly type: 'MetaProperty';
+  readonly meta: string;
+  readonly property: string;
+}
+
+export interface MemberExpression {
+  readonly type: 'MemberExpression';
+  readonly object: Expression;
+  readonly property: MemberExpression | Identifier | Symbol;
+}
+
 export interface Identifier {
   readonly type: 'identifier';
   readonly name: string;
@@ -114,6 +126,8 @@ export type Expression =
   | Number
   | String
   | Symbol
+  | MetaProperty
+  | MemberExpression
   | Identifier
   | Array
   | Object
@@ -169,3 +183,4 @@ export type Statement =
   | DefaultExport
   | NamedExports
   | Declaration
+  | Expression

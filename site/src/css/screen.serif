@@ -4,9 +4,7 @@ import default as s from "../sanctuary.serif"
 
 export default screen
 
-. = s/compose
-
-' = (s/pipe [(.replace (s/regex "g" "(?=')") "\\" _)
+' = (s:pipe [(.replace (s:regex "g" "(?=')") "\\" _)
              (+ _ "'")
              (+ "'")])
 
@@ -32,42 +30,42 @@ pink            = "#ff5e99"
 recycled-paper  = "#fef9ec"
 
 screen coerce =
-  (let [% = (. (+ "%") coerce)
-        em = (. (+ "em") coerce)
-        px = (. (+ "px") coerce)
+  (let [% = (s:compose (+ "%") coerce)
+        em = (s:compose (+ "em") coerce)
+        px = (s:compose (+ "px") coerce)
 
-        , = (. (s/join-with ", ") (s/map coerce))
+        , = (s:compose (s:join-with ", ") (s:map coerce))
 
-        sans-serif = (. , (. (s/append :sans-serif) (s/map ')))
-        monospace = (. , (. (s/append :monospace) (s/map ')))
+        sans-serif = (s:compose , (s:compose (s:append :sans-serif) (s:map ')))
+        monospace = (s:compose , (s:compose (s:append :monospace) (s:map ')))
 
         rgba r g b a = (.join "" ["rgba(" (, [r g b a]) ")"])
 
         url url = (.join "" ["url(" url ")"])
 
-        !important = (. (+ " !important") coerce)
+        !important = (s:compose (+ " !important") coerce)
 
         tag-background =
-          (s/pipe [Math.log2
+          (s:pipe [Math.log2
                    (* 5)
                    (- _ 247)
                    Math.floor
                    (.toString 16 _)
                    (.padStart 2 "0" _)
                    (.repeat 3 _)
-                   (s/concat "#")])
+                   (s:concat "#")])
 
         tag-color =
-          (s/pipe [Math.log2
+          (s:pipe [Math.log2
                    (* 0.1)
                    (+ 0.3)
                    (.toFixed 3 _)
-                   (.replace (s/regex "" "0*$") "" _)
-                   (.replace (s/regex "" "[.]$") "" _)
+                   (.replace (s:regex "" "0*$") "" _)
+                   (.replace (s:regex "" "[.]$") "" _)
                    (rgba 0 0 0)])]
 
 
-  (s/join [[
+  (s:join [[
 
     ["html"] [
       :height (% 100)
@@ -257,7 +255,7 @@ screen coerce =
 
   ]
 
-  (s/chain (slug -> [[(.join "" ["#nav a[href='/" slug "/']"])]
+  (s:chain (slug -> [[(.join "" ["#nav a[href='/" slug "/']"])]
                      [:background-image (url (.join "" ["../svg/" slug ".svg"]))]])
            ["about" "archives" "contact" "flushcache" "tags" "twitter"])
 
@@ -698,11 +696,11 @@ screen coerce =
 
   ]
 
-  (s/fold-map Array
+  (s:fold-map Array
               (count -> [[(.join "" ["#tags li[data-count='" count "'] a"])]
                          [:background (tag-background count)
                           :color (tag-color count)]])
-              (s/range 1 20))
+              (s:range 1 20))
 
   [
 

@@ -7,7 +7,7 @@ export default {
   :slug "escape-special-characters-for-sql-regexp"
   :title "Escape special characters for SQL REGEXP"
   :datetime (datetime "2009-01-10" "22:21:00" :Pacific/Auckland)
-  :tags [:php :sql]
+  :tags ["php" "sql"]
   :body body
 }
 

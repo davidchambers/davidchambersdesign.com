@@ -7,7 +7,7 @@ export default {
   :slug "captions-over-images"
   :title "Captions over images"
   :datetime (datetime "2009-08-31" "03:36:00" :Pacific/Auckland)
-  :tags [:best-practice :css :html :javascript :jquery :meaningful-markup]
+  :tags ["best-practice" "css" "html" "javascript" "jquery" "meaningful-markup"]
   :body body
 }
 

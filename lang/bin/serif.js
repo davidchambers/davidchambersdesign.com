@@ -14,7 +14,30 @@ async function findDependencies(entryPoint) {
   async function recur(filename) {
     if (tree.has(filename)) return;
     const source = await readFile(filename, 'utf8');
-    const ast = serif.parse(source);
+    let ast;
+    try {
+      ast = serif.parse(source, filename);
+    } catch (err) {
+      const lines = (
+        (await readFile(err.location.source, 'utf8'))
+        .split(/^/m)
+        .map((text, idx) => ({number: idx + 1, text: text.trimEnd()}))
+        .filter(line => {
+          const offset = line.number - err.location.start.line;
+          return offset > -5 && offset <= 0;
+        })
+      );
+      console.error(`\n${
+        err.location.source
+      }\n\n${
+        lines.map(line => line.text + '\n').join('')
+      }${
+        ' '.repeat(err.location.start.column - 1)
+      }^\n${
+        err.message
+      }\n`);
+      throw err;
+    }
     const dependencies = ast.flatMap(statement =>
       (statement.type === 'star-import' ||
        statement.type === 'named-imports' ||
@@ -50,7 +73,12 @@ function orderDependencies(tree) {
 {
   const cwd = process.cwd();
   const [,, src, lib, filename] = process.argv;
-  const tree = await findDependencies(filename);
+  let tree;
+  try {
+    tree = await findDependencies(filename);
+  } catch (err) {
+    process.exit(1);
+  }
   // Create JavaScript module for each Serif module:
   const filenames = await Promise.all(
     orderDependencies(tree).map(async serifFilename => {

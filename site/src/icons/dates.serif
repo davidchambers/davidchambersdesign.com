@@ -5,7 +5,7 @@ import default as s from "../sanctuary.serif"
 export default dates
 
 dates =
-  (s/map (d -> (path {:fill-rule :evenodd :fill "#000" :d (render [(⇨ 0) (⇩ 0) ...d])}))
+  (s:map (d -> (path {:fill-rule :evenodd :fill "#000" :d (render [(⇨ 0) (⇩ 0) ...d])}))
          [[(→ 4) (↓ 7) (← 4) (↑ 7) (⇨ 1) (⇩ 1) (→ 2) (↓ 5) (← 2) (↑ 5)]
           [(→ 2) (↓ 7) (← 1) (↑ 6) (← 1) (↑ 1)]
           [(→ 4) (↓ 4) (← 3) (↓ 2) (→ 3) (↓ 1) (← 4) (↑ 4) (→ 3) (↑ 2) (← 3) (↑ 1)]

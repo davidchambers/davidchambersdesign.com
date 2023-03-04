@@ -122,6 +122,22 @@ IdentChar 'identifier character'
     !'\u0022' // QUOTATION MARK
     !'\u0028' // LEFT PARENTHESIS
     !'\u0029' // RIGHT PARENTHESIS
+    !'\u002E' // FULL STOP
+    !'\u003A' // COLON
+    !'\u003B' // SEMICOLON
+    !'\u005B' // LEFT SQUARE BRACKET
+    !'\u005D' // RIGHT SQUARE BRACKET
+    !'\u007B' // LEFT CURLY BRACKET
+    !'\u007D' // RIGHT CURLY BRACKET
+    .
+
+SymbolChar 'symbol character'
+  = !Whitespace
+    !'\u0022' // QUOTATION MARK
+    !'\u0028' // LEFT PARENTHESIS
+    !'\u0029' // RIGHT PARENTHESIS
+    !'\u002E' // FULL STOP
+    !'\u003A' // COLON
     !'\u003B' // SEMICOLON
     !'\u005B' // LEFT SQUARE BRACKET
     !'\u005D' // RIGHT SQUARE BRACKET
@@ -133,6 +149,8 @@ Expression 'expression'
   = Number
   / String
   / Symbol
+  / ImportMeta
+  / MemberExpression
   / Identifier
   / Import
   / Lambda
@@ -189,8 +207,17 @@ Char 'char'
   / [^"]
 
 Symbol 'symbol'
-  = ':' name:$(IdentChar)+
+  = ':' name:$(SymbolChar)+
   { return {type: 'symbol', name}; }
+
+ImportMeta 'import.meta'
+  = meta:'import' '.' property:'meta'
+  { return {type: 'MetaProperty', meta, property}; }
+
+MemberExpression 'member expression'
+  = object:Identifier
+    properties:('.' property:Identifier { return property; } / property:Symbol { return property; })+
+  { return properties.reduce((object, property) => ({type: 'MemberExpression', object, property}), object); }
 
 Identifier 'identifier'
   = !'->' name:$(IdentChar)+

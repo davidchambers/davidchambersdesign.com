@@ -7,7 +7,7 @@ export default {
   :slug "gmail-favicon-confusion"
   :title "Gmail's favicon confusion"
   :datetime (datetime "2010-07-21" "10:56:00" :Pacific/Auckland)
-  :tags [:design :gmail]
+  :tags ["design" "gmail"]
   :body body
 }
 

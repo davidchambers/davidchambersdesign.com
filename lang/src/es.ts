@@ -89,6 +89,17 @@ export const CallExpression = (
   optional: options?.optional ?? false,
 });
 
+// 13.3.12 Meta Properties
+
+export const MetaProperty = (
+  meta: ES.Identifier,
+  property: ES.Identifier,
+): ES.MetaProperty => ({
+  type: 'MetaProperty',
+  meta,
+  property,
+});
+
 // 13.5 Unary Operators
 
 export const UnaryExpression = (
@@ -153,6 +164,15 @@ export const VariableDeclarator = (
   type: 'VariableDeclarator',
   id,
   init,
+});
+
+// 14.5 Expression Statement
+
+export const ExpressionStatement = (
+  expression: ES.Expression,
+): ES.ExpressionStatement => ({
+  type: 'ExpressionStatement',
+  expression,
 });
 
 // 14.10 The return Statement

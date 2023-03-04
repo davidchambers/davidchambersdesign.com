@@ -7,7 +7,7 @@ export default {
   :slug "intelligent-css-caching"
   :title "Intelligent CSS caching"
   :datetime (datetime "2008-12-18" "14:50:00" :Pacific/Auckland)
-  :tags [:css :php]
+  :tags ["css" "php"]
   :body body
 }
 
