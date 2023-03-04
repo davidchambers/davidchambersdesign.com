@@ -313,16 +313,17 @@ Placeholder 'placeholder'
 New 'new'
   = Separator* '('
     Separator* 'new'
-    args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
+    Separator+ callee:(Placeholder / Expression)
+    args:(Separator+ arg:(Placeholder / Expression) { return arg; })*
     Separator* ')'
-    { return {type: 'new', arguments: args}; }
+    { return {type: 'new', callee, arguments: args}; }
 
 Invocation 'invocation'
   = Separator* '('
     Separator* '.' name:(ident:Identifier { return ident.name; })
     args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
     Separator* ')'
-    { return {type: 'invocation', name, arguments: args}; }
+    { return {type: 'invocation', name, object: args.pop(), arguments: args}; }
 
 Application 'application'
   = Separator* '('
