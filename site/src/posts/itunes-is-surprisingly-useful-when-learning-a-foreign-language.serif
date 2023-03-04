@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {uncaptioned-image} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 93
   :slug "itunes-is-surprisingly-useful-when-learning-a-foreign-language"
   :title "iTunes: Surprisingly useful when learning a foreign language"

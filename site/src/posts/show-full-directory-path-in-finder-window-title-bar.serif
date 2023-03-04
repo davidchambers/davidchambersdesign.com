@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {captioned-image code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 2
   :slug "show-full-directory-path-in-finder-window-title-bar"
   :title "Show full directory path in Finder window title bar"

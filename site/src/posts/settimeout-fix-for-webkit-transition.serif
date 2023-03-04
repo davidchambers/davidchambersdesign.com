@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {code-block update} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 55
   :slug "settimeout-fix-for-webkit-transition"
   :title "setTimeout fix for -webkit-transition"
@@ -19,11 +19,11 @@ body = [
          ["Here's a simple animation which utilizes "
           (code "webkitTransition") ":"])
 
-      (p' {:id "transition-example-1"
-           :style "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;"}
+      (p' #{:id "transition-example-1"
+            :style "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;"}
          ["Click to animate"])
 
-      (script {}
+      (script #{}
          "(function () {
               var element = document.getElementById('transition-example-1');
               element.style.webkitTransitionProperty = 'left';
@@ -55,11 +55,11 @@ body = [
   (p
      ["The following example, though, does not act as one might expect!"])
 
-  (p' {:id "transition-example-2"
-       :style "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;"}
+  (p' #{:id "transition-example-2"
+        :style "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;"}
      ["Click to reposition"])
 
-  (script {}
+  (script #{}
      "(function () {
           var element = document.getElementById('transition-example-2');
           element.addEventListener('click', function () {
@@ -106,11 +106,11 @@ body = [
   (p
      ["I did manage to get the element to behave as I had intended:"])
 
-  (p' {:id "transition-example-3"
-       :style "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;"}
+  (p' #{:id "transition-example-3"
+        :style "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;"}
      ["Click to reposition"])
 
-  (script {}
+  (script #{}
      "(function () {
           var element = document.getElementById('transition-example-3');
           element.addEventListener('click', function () {

@@ -1,7 +1,7 @@
 import * from "../elements.serif" hiding {body}
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 87
   :slug "getting-truth-out-of-the-dom"
   :title "Getting truth out of the DOM – Yehuda Katz"

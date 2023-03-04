@@ -1,7 +1,7 @@
 import * from "../elements.serif" hiding {body}
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 19
   :slug "associative-arrays-in-javascript"
   :title "Associative arrays in JavaScript"

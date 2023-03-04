@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 31
   :slug "using-html5-time-element-in-wordpress-themes"
   :title "Using HTML5 time element in WordPress themes"

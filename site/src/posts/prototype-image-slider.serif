@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {code-block update} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 26
   :slug "prototype-image-slider"
   :title "Prototype image slider"
@@ -53,7 +53,7 @@ body = [
           (a "http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777"
              "recommendation by Tobie Langel") " did the trick!"])])
 
-  (h3' {:id "usage"} "Usage")
+  (h3' #{:id "usage"} "Usage")
 
   (p
      ["First, you'll need to save a copy of "

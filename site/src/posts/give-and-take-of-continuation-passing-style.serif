@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 95
   :slug "give-and-take-of-continuation-passing-style"
   :title ["The " (code "give") " and " (code "take") " of continuation-passing style"]

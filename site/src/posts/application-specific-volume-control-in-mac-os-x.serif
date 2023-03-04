@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {uncaptioned-image update} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 47
   :slug "application-specific-volume-control-in-mac-os-x"
   :title "Application-specific volume control in Mac OS X?"
@@ -80,7 +80,7 @@ body = [
      "Photoshop's drop shadow dialog")
 
   (dl
-     [(dt' {:class "textual"} "shadow color")
+     [(dt' #{:class "textual"} "shadow color")
       (dd "#000000 (black)")
 
       (dt "opacity")

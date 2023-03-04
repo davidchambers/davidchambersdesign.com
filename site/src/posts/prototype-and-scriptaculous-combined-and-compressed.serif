@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 32
   :slug "prototype-and-scriptaculous-combined-and-compressed"
   :title "Prototype and script.aculo.us, combined and compressed"

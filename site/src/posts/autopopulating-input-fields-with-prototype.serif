@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {code-block update} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 33
   :slug "autopopulating-input-fields-with-prototype"
   :title "Auto-populating input fields with Prototype"
@@ -40,7 +40,7 @@ body = [
       (li (a "#placeholder-class" "Placeholder class"))
       (li (a "#usage" "Usage"))])
 
-  (h3' {:id "behaviour"} "Behaviour")
+  (h3' #{:id "behaviour"} "Behaviour")
 
   (ul
      [(li
@@ -55,7 +55,7 @@ body = [
          ["Placeholder text should be reinserted if input field
            is empty when it loses focus."])])
 
-  (h3' {:id "html5-placeholder-text"} "HTML5 placeholder text")
+  (h3' #{:id "html5-placeholder-text"} "HTML5 placeholder text")
 
   (p
      ["HTML5 allows placeholder text to be specified in the markup
@@ -63,7 +63,7 @@ body = [
        browsers (currently Chrome and Safari) this produces the
        behaviour described above with no reliance on JavaScript."])
 
-  (h3' {:id "markup"} "Markup")
+  (h3' #{:id "markup"} "Markup")
 
   (code-block :html
 
@@ -71,7 +71,7 @@ body = [
      <input type=\"search\" id=\"s\" name=\"s\" placeholder=\"search...\" />
      ")
 
-  (h3' {:id "styling"} "Styling")
+  (h3' #{:id "styling"} "Styling")
 
   (code-block :css
 
@@ -83,7 +83,7 @@ body = [
      ["I decided to use " (code "#a9a9a9") " as Safari uses this colour
        for placeholder text."])
 
-  (h3' {:id "placeholder-class"} "Placeholder class")
+  (h3' #{:id "placeholder-class"} "Placeholder class")
 
   (code-block :javascript
 
@@ -111,7 +111,7 @@ body = [
      ["The Placeholder class requires "
       (a "http://prototypejs.org/" "Prototype") "."])
 
-  (h3' {:id "usage"} "Usage")
+  (h3' #{:id "usage"} "Usage")
 
   (p
      ["To create a new instance of the Placeholder class, simply pass

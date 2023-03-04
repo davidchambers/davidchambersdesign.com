@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 78
   :slug "simulating-nonlocal-in-python-2.x"
   :title ["Simulating " (code "nonlocal") " in Python 2.x"]

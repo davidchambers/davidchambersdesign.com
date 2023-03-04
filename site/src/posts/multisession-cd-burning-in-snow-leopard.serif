@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {decorative-image} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 29
   :slug "multisession-cd-burning-in-snow-leopard"
   :title "Multisession CD burning in Snow Leopard"

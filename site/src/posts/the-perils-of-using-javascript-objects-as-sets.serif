@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 94
   :slug "the-perils-of-using-javascript-objects-as-sets"
   :title "The perils of using JavaScript objects as sets"

@@ -4,7 +4,7 @@ import * from "../elements.serif" hiding {body}
 import {captioned-image code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 74
   :slug "javascript-date-and-time-localization"
   :title "JavaScript date and time localization"

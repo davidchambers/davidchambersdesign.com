@@ -149,6 +149,7 @@ Expression 'expression'
   = Number
   / String
   / Symbol
+  / Object
   / ImportMeta
   / MemberExpression
   / Identifier
@@ -160,7 +161,6 @@ Expression 'expression'
   / If
   / Switch
   / Array
-  / Object
   / New
   / Invocation
   / Application
@@ -324,7 +324,7 @@ Property 'property'
     { return {type: 'property', key, value}; }
 
 Object 'object'
-  = Separator* '{'
+  = Separator* '#{'
     properties:(
       head:(Separator* property:(SpreadElement / Property) { return property; })
       tail:(Separator+ property:(SpreadElement / Property) { return property; })*

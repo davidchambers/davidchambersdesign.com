@@ -1,7 +1,7 @@
 import * from "../elements.serif" hiding {body}
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 53
   :slug "wmd-ftw"
   :title "wmd ftw!"
@@ -36,7 +36,7 @@ body = [
        response to changes to \"name\", \"e-mail\", and \"website\"
        as well as to changes to the comment itself."])
 
-  (video {:src "/images/posts/53/wmd.mp4" :controls "controls"}
+  (video #{:src "/images/posts/53/wmd.mp4" :controls "controls"}
 
      [(p
          ["Get with the programme; this video's in an HTML5 "

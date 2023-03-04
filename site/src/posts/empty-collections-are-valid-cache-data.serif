@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 57
   :slug "empty-collections-are-valid-cache-data"
   :title "Empty collections are valid cache data"

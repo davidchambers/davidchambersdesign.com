@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 75
   :slug "bitwise-not-operator-proves-useful-in-javascript"
   :title "Bitwise NOT operator proves useful in JavaScript"

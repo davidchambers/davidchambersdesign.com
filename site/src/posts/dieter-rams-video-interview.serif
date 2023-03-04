@@ -1,7 +1,7 @@
 import * from "../elements.serif" hiding {body}
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 62
   :slug "dieter-rams-video-interview"
   :title "Dieter Rams video interview"

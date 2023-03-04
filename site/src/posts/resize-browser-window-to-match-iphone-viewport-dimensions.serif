@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {captioned-image captioned-images code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 37
   :slug "resize-browser-window-to-match-iphone-viewport-dimensions"
   :title "Resize browser window to match iPhone viewport dimensions"

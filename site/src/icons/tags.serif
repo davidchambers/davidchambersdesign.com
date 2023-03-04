@@ -46,9 +46,9 @@ string = [
 ]
 
 tags = [
-  (path {:fill "#741" :d (render stroke)})
-  (path {:fill "#feb" :d (render fill)})
-  (path {:fill "#c93" :d (render text)})
-  (path {:fill "#fff" :d (render sticker)})
-  (path {:fill "#333" :d (render string)})
+  (path #{:fill "#741" :d (render stroke)})
+  (path #{:fill "#feb" :d (render fill)})
+  (path #{:fill "#c93" :d (render text)})
+  (path #{:fill "#fff" :d (render sticker)})
+  (path #{:fill "#333" :d (render string)})
 ]

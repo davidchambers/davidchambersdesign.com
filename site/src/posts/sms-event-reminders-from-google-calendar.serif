@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {captioned-image} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 13
   :slug "sms-event-reminders-from-google-calendar"
   :title "SMS event reminders from Google Calendar"

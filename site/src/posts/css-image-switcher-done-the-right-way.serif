@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body}
 import {captioned-image code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"
 
-export default {
+export default #{
   :id 43
   :slug "css-image-switcher-done-the-right-way"
   :title "CSS image switcher (done the right way)"
