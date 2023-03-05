@@ -112,6 +112,25 @@ export const UnaryExpression = (
   prefix: true,
 });
 
+// 13.6 Exponentiation Operator
+// 13.7 Multiplicative Operators
+// 13.8 Additive Operators
+// 13.9 Bitwise Shift Operators
+// 13.10 Relational Operators
+// 13.11 Equality Operators
+// 13.12 Binary Bitwise Operators
+
+export const BinaryExpression = (
+  operator: ES.BinaryOperator,
+  left: ES.Expression,
+  right: ES.Expression,
+): ES.BinaryExpression => ({
+  type: 'BinaryExpression',
+  operator,
+  left,
+  right,
+});
+
 // 13.13 Binary Logical Operators
 
 export const LogicalExpression = (

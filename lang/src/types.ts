@@ -57,16 +57,172 @@ export interface Lambda {
   readonly body: Expression;
 }
 
-export interface Binding {
-  readonly name: string;
-  readonly parameterNames: ReadonlyArray<string>;
-  readonly expression: Expression;
-}
-
 export interface BlockExpression {
   readonly type: 'BlockExpression';
   readonly statements: ReadonlyArray<Statement>;
 }
+
+export type UnaryOperator =
+  | 'typeof'
+  | '+'
+  | '-'
+  | '~'
+  | '!'
+
+export interface UnaryExpression {
+  readonly type: 'UnaryExpression';
+  readonly operator: UnaryOperator;
+  readonly argument: Expression;
+}
+
+export type ExponentiationOperator =
+  | '**'
+
+export interface ExponentiationExpression {
+  readonly type: 'BinaryExpression';
+  readonly operator: ExponentiationOperator;
+  readonly left: Expression;
+  readonly right: Expression;
+}
+
+export type MultiplicativeOperator =
+  | '*'
+  | '/'
+  | '%'
+
+export interface MultiplicativeExpression {
+  readonly type: 'BinaryExpression';
+  readonly operator: MultiplicativeOperator;
+  readonly left: Expression;
+  readonly right: Expression;
+}
+
+export type AdditiveOperator =
+  | '+'
+  | '-'
+
+export interface AdditiveExpression {
+  readonly type: 'BinaryExpression';
+  readonly operator: AdditiveOperator;
+  readonly left: Expression;
+  readonly right: Expression;
+}
+
+export type ShiftOperator =
+  | '<<'
+  | '>>'
+  | '>>>'
+
+export interface ShiftExpression {
+  readonly type: 'BinaryExpression';
+  readonly operator: ShiftOperator;
+  readonly left: Expression;
+  readonly right: Expression;
+}
+
+export type RelationalOperator =
+  | '<'
+  | '>'
+  | '<='
+  | '>='
+  | 'instanceof'
+  | 'in'
+
+export interface RelationalExpression {
+  readonly type: 'BinaryExpression';
+  readonly operator: RelationalOperator;
+  readonly left: Expression;
+  readonly right: Expression;
+}
+
+export type EqualityOperator =
+  | '=='
+  | '!='
+  | '==='
+  | '!=='
+
+export interface EqualityExpression {
+  readonly type: 'BinaryExpression';
+  readonly operator: EqualityOperator;
+  readonly left: Expression;
+  readonly right: Expression;
+}
+
+export type BitwiseANDOperator =
+  | '&'
+
+export interface BitwiseANDExpression {
+  readonly type: 'BinaryExpression';
+  readonly operator: BitwiseANDOperator;
+  readonly left: Expression;
+  readonly right: Expression;
+}
+
+export type BitwiseXOROperator =
+  | '^'
+
+export interface BitwiseXORExpression {
+  readonly type: 'BinaryExpression';
+  readonly operator: BitwiseXOROperator;
+  readonly left: Expression;
+  readonly right: Expression;
+}
+
+export type BitwiseOROperator =
+  | '|'
+
+export interface BitwiseORExpression {
+  readonly type: 'BinaryExpression';
+  readonly operator: BitwiseOROperator;
+  readonly left: Expression;
+  readonly right: Expression;
+}
+
+export type BinaryExpression =
+  | ExponentiationExpression
+  | MultiplicativeExpression
+  | AdditiveExpression
+  | ShiftExpression
+  | RelationalExpression
+  | EqualityExpression
+  | BitwiseANDExpression
+  | BitwiseXORExpression
+  | BitwiseORExpression
+
+export type LogicalANDOperator =
+  | '&&'
+
+export interface LogicalANDExpression {
+  readonly type: 'LogicalExpression';
+  readonly operator: LogicalANDOperator;
+  readonly left: Expression;
+  readonly right: Expression;
+}
+
+export type LogicalOROperator =
+  | '||'
+
+export interface LogicalORExpression {
+  readonly type: 'LogicalExpression';
+  readonly operator: LogicalOROperator;
+  readonly left: Expression;
+  readonly right: Expression;
+}
+
+export type CoalesceOperator =
+  | '??'
+
+export interface CoalesceExpression {
+  readonly type: 'LogicalExpression';
+  readonly operator: CoalesceOperator;
+  readonly left: Expression;
+  readonly right: Expression;
+}
+
+export type LogicalExpression =
+  | LogicalANDExpression
+  | LogicalORExpression
+  | CoalesceExpression
 
 export interface And {
   readonly type: 'and';
@@ -121,6 +277,9 @@ export type Expression =
   | Object
   | Lambda
   | BlockExpression
+  | UnaryExpression
+  | BinaryExpression
+  | LogicalExpression
   | And
   | Or
   | ConditionalExpression

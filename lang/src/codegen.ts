@@ -162,6 +162,40 @@ const esFromBlockExpression = ({statements}: Serif.BlockExpression): ES.Expressi
   );
 };
 
+const esFromUnaryExpression = ({
+  operator,
+  argument,
+}: Serif.UnaryExpression): ES.UnaryExpression => ({
+  type: 'UnaryExpression',
+  prefix: true,
+  operator,
+  argument: esFromExpression(argument),
+});
+
+const esFromBinaryExpression = ({
+  operator,
+  left,
+  right,
+}: Serif.BinaryExpression): ES.BinaryExpression => (
+  es.BinaryExpression(
+    operator,
+    esFromExpression(left),
+    esFromExpression(right),
+  )
+);
+
+const esFromLogicalExpression = ({
+  operator,
+  left,
+  right,
+}: Serif.LogicalExpression): ES.LogicalExpression => (
+  es.LogicalExpression(
+    operator,
+    esFromExpression(left),
+    esFromExpression(right),
+  )
+);
+
 const esFromAnd = ({left, right}: Serif.And): ES.LogicalExpression => (
   es.LogicalExpression('&&', esFromExpression(left), esFromExpression(right))
 );
@@ -312,6 +346,9 @@ const esFromExpression = (expr: Serif.Expression): ES.Expression => {
     case 'object':                      return esFromObject(expr);
     case 'lambda':                      return esFromLambda(expr);
     case 'BlockExpression':             return esFromBlockExpression(expr);
+    case 'UnaryExpression':             return esFromUnaryExpression(expr);
+    case 'BinaryExpression':            return esFromBinaryExpression(expr);
+    case 'LogicalExpression':           return esFromLogicalExpression(expr);
     case 'and':                         return esFromAnd(expr);
     case 'or':                          return esFromOr(expr);
     case 'ConditionalExpression':       return esFromConditionalExpression(expr);

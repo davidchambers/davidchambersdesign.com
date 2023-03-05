@@ -150,7 +150,8 @@ SymbolChar 'symbol character'
     .
 
 Expression 'expression'
-  = Number
+  = BinaryExpression
+  / Number
   / String
   / Symbol
   / Object
@@ -237,6 +238,129 @@ BlockExpression 'block expression'
     statements:Statement*
     Separator* '}'
     { return {type: 'BlockExpression', statements}; }
+
+CallExpression
+  = Number
+  / String
+
+UnaryOperator
+  = 'typeof'
+  / '+'
+  / '-'
+  / '~'
+  / '!'
+
+UnaryExpression
+  = Separator* operator:UnaryOperator argument:(Number / String)
+    { return {type: 'UnaryExpression', operator, argument}; }
+  / expression:CallExpression
+    { return expression; }
+
+ExponentiationOperator
+  = '**'
+
+ExponentiationExpression
+  = Separator*
+    left:UnaryExpression
+    tail:(Separator+ operator:ExponentiationOperator Separator+ right:UnaryExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+
+MultiplicativeOperator
+  = '*'
+  / '/'
+  / '%'
+
+MultiplicativeExpression
+  = Separator*
+    left:ExponentiationExpression
+    tail:(Separator+ operator:ExponentiationExpression Separator+ right:(Number / String) { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+
+AdditiveOperator
+  = '+'
+  / '-'
+
+AdditiveExpression
+  = Separator*
+    left:MultiplicativeExpression
+    tail:(Separator+ operator:AdditiveOperator Separator+ right:MultiplicativeExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+
+ShiftOperator
+  = '<<'
+  / '>>>'
+  / '>>'
+
+ShiftExpression
+  = Separator*
+    left:AdditiveExpression
+    tail:(Separator+ operator:ShiftOperator Separator+ right:AdditiveExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+
+RelationalOperator
+  = '<='
+  / '<'
+  / '>='
+  / '>'
+  / 'instanceof'
+  / 'in'
+
+RelationalExpression
+  = Separator*
+    left:ShiftExpression
+    tail:(Separator+ operator:RelationalOperator Separator+ right:ShiftExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+
+EqualityOperator
+  = '==='
+  / '=='
+  / '!=='
+  / '!='
+
+EqualityExpression
+  = Separator*
+    left:RelationalExpression
+    tail:(Separator+ operator:EqualityOperator Separator+ right:RelationalExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+
+BitwiseANDOperator
+  = '&'
+
+BitwiseANDExpression
+  = Separator*
+    left:EqualityExpression
+    tail:(Separator+ operator:BitwiseANDOperator right:EqualityExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+
+BitwiseXOROperator
+  = '^'
+
+BitwiseXORExpression
+  = Separator*
+    left:BitwiseANDExpression
+    tail:(Separator+ oeprator:BitwiseXOROperator right:BitwiseANDExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+
+BitwiseOROperator
+  = '|'
+
+BitwiseORExpression
+  = Separator*
+    left:BitwiseXORExpression
+    tail:(Separator+ operator:BitwiseOROperator right:BitwiseXORExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+
+LogicalANDOperator
+  = '&&'
+
+LogicalANDExpression
+  = Separator*
+    left:BitwiseORExpression
+    tail:(Separator+ operator:LogicalANDOperator right:BitwiseORExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => ({type: 'LogicalExpression', operator, left, right}), left); }
+
+BinaryExpression 'binary expression'
+  = LogicalANDExpression
 
 And 'and'
   = Separator* '('
