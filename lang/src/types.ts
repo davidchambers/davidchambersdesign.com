@@ -293,18 +293,6 @@ export interface ConditionalExpression {
   readonly alternative: Expression;
 }
 
-export interface And {
-  readonly type: 'and';
-  readonly left: Expression;
-  readonly right: Expression;
-}
-
-export interface Or {
-  readonly type: 'or';
-  readonly left: Expression;
-  readonly right: Expression;
-}
-
 export interface Placeholder {
   readonly type: 'placeholder';
 }
@@ -343,8 +331,6 @@ export type Expression =
   | BinaryExpression
   | LogicalExpression
   | ConditionalExpression
-  | And
-  | Or
   | New
   | Invocation
   | Application

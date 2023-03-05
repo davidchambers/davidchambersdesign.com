@@ -196,14 +196,6 @@ const esFromLogicalExpression = ({
   )
 );
 
-const esFromAnd = ({left, right}: Serif.And): ES.LogicalExpression => (
-  es.LogicalExpression('&&', esFromExpression(left), esFromExpression(right))
-);
-
-const esFromOr = ({left, right}: Serif.Or): ES.LogicalExpression => (
-  es.LogicalExpression('||', esFromExpression(left), esFromExpression(right))
-);
-
 const esFromConditionalExpression = ({
   predicate,
   consequent,
@@ -349,8 +341,6 @@ const esFromExpression = (expr: Serif.Expression): ES.Expression => {
     case 'UnaryExpression':             return esFromUnaryExpression(expr);
     case 'BinaryExpression':            return esFromBinaryExpression(expr);
     case 'LogicalExpression':           return esFromLogicalExpression(expr);
-    case 'and':                         return esFromAnd(expr);
-    case 'or':                          return esFromOr(expr);
     case 'ConditionalExpression':       return esFromConditionalExpression(expr);
     case 'new':                         return esFromNew(expr);
     case 'invocation':                  return esFromInvocation(expr);

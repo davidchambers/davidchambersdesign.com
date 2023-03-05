@@ -153,8 +153,6 @@ Expression 'expression'
   = ConditionalExpression
   / Identifier
   / Lambda
-  / And
-  / Or
   / New
   / Invocation
   / Application
@@ -438,22 +436,6 @@ ConditionalExpression
     Separator+ alternative:ConditionalExpression
     { return {type: 'ConditionalExpression', predicate, consequent, alternative}; }
   / CoalesceExpression
-
-And 'and'
-  = Separator* '('
-    Separator* 'and'
-    Separator+ left:Expression
-    Separator+ right:Expression
-    Separator* ')'
-    { return {type: 'and', left, right}; }
-
-Or 'or'
-  = Separator* '('
-    Separator* 'or'
-    Separator+ left:Expression
-    Separator+ right:Expression
-    Separator* ')'
-    { return {type: 'or', left, right}; }
 
 SpreadElement 'spread element'
   = '...' argument:Expression
