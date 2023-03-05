@@ -63,10 +63,9 @@ export interface Binding {
   readonly expression: Expression;
 }
 
-export interface Let {
-  readonly type: 'let';
-  readonly bindings: ReadonlyArray<Binding>;
-  readonly body: Expression;
+export interface BlockExpression {
+  readonly type: 'BlockExpression';
+  readonly statements: ReadonlyArray<Statement>;
 }
 
 export interface And {
@@ -132,7 +131,7 @@ export type Expression =
   | Array
   | Object
   | Lambda
-  | Let
+  | BlockExpression
   | And
   | Or
   | If
@@ -176,6 +175,11 @@ export interface Declaration {
   readonly expression: Expression;
 }
 
+export interface ExpressionStatement {
+  readonly type: 'ExpressionStatement';
+  readonly expression: Expression;
+}
+
 export type Statement =
   | StarImport
   | NamedImports
@@ -183,4 +187,4 @@ export type Statement =
   | DefaultExport
   | NamedExports
   | Declaration
-  | Expression
+  | ExpressionStatement

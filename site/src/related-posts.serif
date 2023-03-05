@@ -19,15 +19,16 @@ similarity set-1 set-2 =
 seconds-between from to =
   ("seconds" (.diff from "seconds" to))
 
-with-scores that this =
-  (let [score = (similarity (new Set (:tags that))
-                            (new Set (:tags this)))
-        primary = (s:negate score)
-        secondary = (Math.abs (seconds-between (:datetime that)
-                                               (:datetime this)))]
-     (if (>= 0.5 score)
-         (s:Just (s:Pair (s:Pair primary secondary) this))
-         s:Nothing))
+with-scores that this = {
+  score = (similarity (new Set (:tags that))
+                      (new Set (:tags this)))
+  primary = (s:negate score)
+  secondary = (Math.abs (seconds-between (:datetime that)
+                                         (:datetime this)))
+  (if (>= 0.5 score)
+      (s:Just (s:Pair (s:Pair primary secondary) this))
+      s:Nothing)
+}
 
 related-posts posts post =
   (s:pipe [(s:reject (this -> (=== (:slug post) (:slug this))))

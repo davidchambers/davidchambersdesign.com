@@ -102,32 +102,66 @@ const esFromLambda = ({parameter, body}: Serif.Lambda): ES.ArrowFunctionExpressi
   )
 );
 
-const esFromLet = ({bindings, body}: Serif.Let): ES.Expression => (
-  bindings.reduceRight(
-    (body, binding) => {
-      if (binding.parameterNames.length > 0) {
-        const [param, ...params] = binding.parameterNames.map(name => Identifier(escape(name)));
-        return es.CallExpression(
-          es.ArrowFunctionExpression([Identifier(escape(binding.name))], body),
-          [es.FunctionExpression(
-            Identifier(escape(binding.name)),
-            [param],
-            es.BlockStatement([es.ReturnStatement(params.reduceRight(
-              (body, param) => es.ArrowFunctionExpression([param], body),
-              esFromExpression(binding.expression)
-            ))]),
-          )],
-        );
-      } else {
-        return es.CallExpression(
-          es.ArrowFunctionExpression([Identifier(escape(binding.name))], body),
-          [esFromExpression(binding.expression)],
-        );
+const esFromBlockExpression = ({statements}: Serif.BlockExpression): ES.Expression => {
+  if (statements.length === 0) {
+    return Identifier('undefined' as Escaped);
+  }
+  const init = statements.slice(0, -1).flatMap<ES.Statement>(statement => {
+    switch (statement.type) {
+      case 'ExpressionStatement': {
+        return [esFromExpressionStatement(statement)];
       }
-    },
-    esFromExpression(body)
-  )
-);
+      case 'declaration': {
+        if (statement.parameterNames.length === 0) {
+          return [es.VariableDeclaration([
+            es.VariableDeclarator(
+              Identifier(escape(statement.name)),
+              esFromExpression(statement.expression),
+            ),
+          ])];
+        } else {
+          const [param, ...params] = statement.parameterNames.map(name => Identifier(escape(name)));
+          return [es.VariableDeclaration([
+            es.VariableDeclarator(
+              Identifier(escape(statement.name)),
+              es.FunctionExpression(
+                Identifier(escape(statement.name)),
+                [param],
+                es.BlockStatement([es.ReturnStatement(params.reduceRight(
+                  (body, param) => es.ArrowFunctionExpression([param], body),
+                  esFromExpression(statement.expression)
+                ))])
+              )
+            ),
+          ])];
+        }
+      }
+      default: {
+        return [];
+      }
+    }
+  });
+
+  const last = (last => {
+    switch (last.type) {
+      case 'ExpressionStatement': {
+        return [es.ReturnStatement(esFromExpression(last.expression))];
+      }
+      case 'declaration': {
+        // TODO: Return function
+        return [];
+      }
+      default: {
+        return [];
+      }
+    }
+  })(statements[statements.length - 1]);
+
+  return es.CallExpression(
+    es.ArrowFunctionExpression([], es.BlockStatement([...init, ...last])),
+    []
+  );
+};
 
 const esFromAnd = ({left, right}: Serif.And): ES.LogicalExpression => (
   es.LogicalExpression('&&', esFromExpression(left), esFromExpression(right))
@@ -275,6 +309,10 @@ const esFromApplication = (expr: Serif.Application): ES.Expression => {
   );
 };
 
+const esFromExpressionStatement = ({expression}: Serif.ExpressionStatement): ES.ExpressionStatement => (
+  es.ExpressionStatement(esFromExpression(expression))
+);
+
 const esFromExpression = (expr: Serif.Expression): ES.Expression => {
   switch (expr.type) {
     case 'number':              return esFromNumber(expr);
@@ -286,7 +324,7 @@ const esFromExpression = (expr: Serif.Expression): ES.Expression => {
     case 'array':               return esFromArray(expr);
     case 'object':              return esFromObject(expr);
     case 'lambda':              return esFromLambda(expr);
-    case 'let':                 return esFromLet(expr);
+    case 'BlockExpression':     return esFromBlockExpression(expr);
     case 'and':                 return esFromAnd(expr);
     case 'or':                  return esFromOr(expr);
     case 'if':                  return esFromIf(expr);
@@ -354,7 +392,7 @@ export async function toModule(
           ),
         ),
       ]) :
-      es.ExpressionStatement(esFromExpression(statement))
+      esFromExpressionStatement(statement)
     )),
   );
 }

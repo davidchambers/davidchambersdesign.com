@@ -29,41 +29,40 @@ mid-gray        = "#a9a9a9"
 pink            = "#ff5e99"
 recycled-paper  = "#fef9ec"
 
-screen coerce =
-  (let [% = (s:compose (+ "%") coerce)
-        em = (s:compose (+ "em") coerce)
-        px = (s:compose (+ "px") coerce)
+screen coerce = {
+  % = (s:compose (+ "%") coerce)
+  em = (s:compose (+ "em") coerce)
+  px = (s:compose (+ "px") coerce)
 
-        , = (s:compose (s:join-with ", ") (s:map coerce))
+  , = (s:compose (s:join-with ", ") (s:map coerce))
 
-        sans-serif = (s:compose , (s:compose (s:append :sans-serif) (s:map ')))
-        monospace = (s:compose , (s:compose (s:append :monospace) (s:map ')))
+  sans-serif = (s:compose , (s:compose (s:append :sans-serif) (s:map ')))
+  monospace = (s:compose , (s:compose (s:append :monospace) (s:map ')))
 
-        rgba r g b a = (.join "" ["rgba(" (, [r g b a]) ")"])
+  rgba r g b a = (.join "" ["rgba(" (, [r g b a]) ")"])
 
-        url url = (.join "" ["url(" url ")"])
+  url url = (.join "" ["url(" url ")"])
 
-        !important = (s:compose (+ " !important") coerce)
+  !important = (s:compose (+ " !important") coerce)
 
-        tag-background =
-          (s:pipe [Math.log2
-                   (* 5)
-                   (- _ 247)
-                   Math.floor
-                   (.toString 16 _)
-                   (.padStart 2 "0" _)
-                   (.repeat 3 _)
-                   (s:concat "#")])
+  tag-background =
+    (s:pipe [Math.log2
+             (* 5)
+             (- _ 247)
+             Math.floor
+             (.toString 16 _)
+             (.padStart 2 "0" _)
+             (.repeat 3 _)
+             (s:concat "#")])
 
-        tag-color =
-          (s:pipe [Math.log2
-                   (* 0.1)
-                   (+ 0.3)
-                   (.toFixed 3 _)
-                   (.replace (s:regex "" "0*$") "" _)
-                   (.replace (s:regex "" "[.]$") "" _)
-                   (rgba 0 0 0)])]
-
+  tag-color =
+    (s:pipe [Math.log2
+             (* 0.1)
+             (+ 0.3)
+             (.toFixed 3 _)
+             (.replace (s:regex "" "0*$") "" _)
+             (.replace (s:regex "" "[.]$") "" _)
+             (rgba 0 0 0)])
 
   (s:join [[
 
@@ -1377,4 +1376,5 @@ screen coerce =
       :color cyan
     ]
 
-  ]]))
+  ]])
+}

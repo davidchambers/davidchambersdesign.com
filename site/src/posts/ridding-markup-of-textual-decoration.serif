@@ -34,14 +34,16 @@ body = [
 
   (h2 "Adding decorative textual content via CSS")
 
-  (let [url = "http://reference.sitepoint.com"
-        sitepoint path text = (a (+ path url) (code text))]
-     (p
-        ["The " (sitepoint "/css/content" "content") " property
-          is extremely powerful. It's used in conjunction with
-          the " (sitepoint "/css/pseudoelement-before" ":before") "
-          and " (sitepoint "/css/pseudoelement-after" ":after") "
-          pseudo-elements."]))
+  {
+    url = "http://reference.sitepoint.com"
+    sitepoint path text = (a (+ path url) (code text))
+    (p
+       ["The " (sitepoint "/css/content" "content") " property
+         is extremely powerful. It's used in conjunction with
+         the " (sitepoint "/css/pseudoelement-before" ":before") "
+         and " (sitepoint "/css/pseudoelement-after" ":after") "
+         pseudo-elements."])
+  }
 
   (code-block :plain-text
 

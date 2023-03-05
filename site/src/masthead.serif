@@ -150,13 +150,14 @@ update positions dir =
                       :v (s:bimap I (+ (1 dir)))]))
              positions)
 
-reset path =
-  (let [paths = (s:extend I (s:reduce update [(s:Pair 0 0)] path))
-        xs = (s:chain (s:map s:fst) paths)
-        ys = (s:chain (s:map s:snd) paths)
-        dx = (- (0 xs) (s:reduce s:max 0 xs))
-        dy = (- (0 ys) 0)]
-     [:m [dx dy]])
+reset path = {
+  paths = (s:extend I (s:reduce update [(s:Pair 0 0)] path))
+  xs = (s:chain (s:map s:fst) paths)
+  ys = (s:chain (s:map s:snd) paths)
+  dx = (- (0 xs) (s:reduce s:max 0 xs))
+  dy = (- (0 ys) 0)
+  [:m [dx dy]]
+}
 
 paths = (s:pipe [(s:map (char -> (s:append (reset char) char)))
                  (s:intercalate [[:m [6 0]]])

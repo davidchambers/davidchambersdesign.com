@@ -22,24 +22,26 @@ captioned-image src alt caption =
       (dd caption)])
 
 captioned-images images =
-  (dl (s:chain (image -> (let [src = (0 image)
-                               alt = (1 image)
-                               cap = (2 image)]
-                            [(dt (img #{:alt alt :src src}))
-                             (dd cap)]))
+  (dl (s:chain (image -> {
+                  src = (0 image)
+                  alt = (1 image)
+                  cap = (2 image)
+                  [(dt (img #{:alt alt :src src}))
+                   (dd cap)]
+                })
                images))
 
-code-block language source-code =
-  (let [lines =
-          (s:from-maybe [] (s:chain s:init (s:tail (s:lines source-code))))
-        trim-leading-spaces =
-          (line ->
-             (s:from-maybe line
-                           (s:chain (s:strip-prefix _ line)
-                                    (s:map ("match" _)
-                                           (s:chain (s:match (s:regex "" "^[ ]*"))
-                                                    (s:head lines))))))]
-     (pre (code (text (s:unlines (s:map trim-leading-spaces lines))))))
+code-block language source-code = {
+  lines =
+    (s:from-maybe [] (s:chain s:init (s:tail (s:lines source-code))))
+  trim-leading-spaces line =
+    (s:from-maybe line
+                  (s:chain (s:strip-prefix _ line)
+                           (s:map ("match" _)
+                                  (s:chain (s:match (s:regex "" "^[ ]*"))
+                                           (s:head lines)))))
+  (pre (code (text (s:unlines (s:map trim-leading-spaces lines)))))
+}
 
 decorative-image src =
   (p (img #{:alt "" :src src}))

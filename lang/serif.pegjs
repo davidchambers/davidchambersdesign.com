@@ -14,7 +14,7 @@ Statement
   / DefaultExport
   / NamedExports
   / Declaration
-  / Expression
+  / ExpressionStatement
 
 StarImport 'star import'
   = Separator* 'import'
@@ -79,6 +79,10 @@ Declaration 'declaration'
     Separator+ '='
     Separator+ expression:Expression
   { return {type: 'declaration', name, parameterNames, expression}; }
+
+ExpressionStatement 'expression statement'
+  = Separator* expression:Expression
+  { return {type: 'ExpressionStatement', expression}; }
 
 LineTerminator 'line terminator'
   = '\u000A' // LINE FEED (LF)
@@ -155,7 +159,7 @@ Expression 'expression'
   / Identifier
   / Import
   / Lambda
-  / Let
+  / BlockExpression
   / And
   / Or
   / If
@@ -244,26 +248,11 @@ Lambda 'lambda'
     Separator* ')'
     { return parameters.reduceRight((body, parameter) => ({type: 'lambda', parameter, body}), body); }
 
-Let 'let'
-  = Separator* '('
-    Separator* 'let'
-    Separator* '['
-    bindings:(
-      head:(Separator* binding:Binding { return binding; })
-      tail:(Separator+ binding:Binding { return binding; })*
-      { return [head, ...tail]; }
-    )?
-    Separator* ']'
-    Separator* body:Expression
-    Separator* ')'
-    { return {type: 'let', bindings, body}; }
-
-Binding 'binding'
-  = Separator* name:(ident:Identifier { return ident.name; })
-    parameterNames:(Separator+ !'=' ident:Identifier { return ident.name; })*
-    Separator+ '='
-    Separator+ expression:Expression
-    { return {name, parameterNames, expression}; }
+BlockExpression 'block expression'
+  = Separator* '{'
+    statements:Statement*
+    Separator* '}'
+    { return {type: 'BlockExpression', statements}; }
 
 And 'and'
   = Separator* '('
