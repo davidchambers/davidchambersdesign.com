@@ -80,8 +80,8 @@ export interface Or {
   readonly right: Expression;
 }
 
-export interface If {
-  readonly type: 'if';
+export interface ConditionalExpression {
+  readonly type: 'ConditionalExpression';
   readonly predicate: Expression;
   readonly consequent: Expression;
   readonly alternative: Expression;
@@ -134,7 +134,7 @@ export type Expression =
   | BlockExpression
   | And
   | Or
-  | If
+  | ConditionalExpression
   | Switch
   | New
   | Invocation

@@ -154,6 +154,7 @@ Expression 'expression'
   / String
   / Symbol
   / Object
+  / ConditionalExpression
   / ImportMeta
   / MemberExpression
   / Identifier
@@ -162,7 +163,6 @@ Expression 'expression'
   / BlockExpression
   / And
   / Or
-  / If
   / Switch
   / Array
   / New
@@ -270,14 +270,13 @@ Or 'or'
     Separator* ')'
     { return {type: 'or', left, right}; }
 
-If 'if'
-  = Separator* '('
-    Separator* 'if'
+ConditionalExpression 'conditional expression'
+  = Separator* 'if'
     Separator+ predicate:Expression
     Separator+ consequent:Expression
+    Separator+ 'else'
     Separator+ alternative:Expression
-    Separator* ')'
-    { return {type: 'if', predicate, consequent, alternative}; }
+    { return {type: 'ConditionalExpression', predicate, consequent, alternative}; }
 
 Case 'case'
   = Separator* predicate:Expression

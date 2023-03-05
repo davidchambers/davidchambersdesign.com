@@ -4,17 +4,23 @@ import default as s from "./sanctuary.serif"
 
 export {render ⇦ ⇨ ⇧ ⇩ ← → ↑ ↓}
 
-reducer prev path curr =
-  (if (=== :M (0 curr))
-      (if (or (=== :M (0 prev))
-              (=== :m (0 prev)))
-          (s:Pair curr path)  ; ignore previous move
-          (s:Pair curr (s:append prev path)))
-      (if (and (or (=== :M (0 prev))
-                   (=== :m (0 prev)))
-               (=== :m (0 curr)))
-          (s:Pair [(0 prev) [(+ (0 (1 prev)) (0 (1 curr))) (+ (1 (1 prev)) (1 (1 curr)))]] path)
-          (s:Pair curr (s:append prev path))))
+reducer prev path curr = {
+  if (=== :M (0 curr)) {
+    if (or (=== :M (0 prev)) (=== :m (0 prev))) {
+      (s:Pair curr path)  ; ignore previous move
+    } else {
+      (s:Pair curr [...path prev])
+    }
+  } else {
+    if (and (or (=== :M (0 prev))
+                (=== :m (0 prev)))
+            (=== :m (0 curr))) {
+      (s:Pair [(0 prev) [(+ (0 (1 prev)) (0 (1 curr))) (+ (1 (1 prev)) (1 (1 curr)))]] path)
+    } else {
+      (s:Pair curr [...path prev])
+    }
+  }
+}
 
 simplify =
   (s:array []

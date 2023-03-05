@@ -5,12 +5,15 @@ import default as screen from "./css/screen.serif"
 
 export default generate-css
 
-coerce x =
-  (if (Array.isArray x)
-      (s:unwords (s:map coerce x))
-      (if (== "symbol" (typeof x))
-          (Symbol.keyFor x)
-          (String x)))
+coerce x = {
+  if (Array.isArray x) {
+    (s:unwords (s:map coerce x))
+  } else if (== "symbol" (typeof x)) {
+    (Symbol.keyFor x)
+  } else {
+    (String x)
+  }
+}
 
 split-every-2 xs =
   (s:array []
@@ -20,11 +23,13 @@ split-every-2 xs =
            xs)
 
 vendor-prefix unprefixed prefixed =
-  (s:chain (s:pair (k v ->
-                      (if (=== unprefixed k)
-                          (s:map (s:Pair _ v)
-                                 (s:append unprefixed prefixed))
-                          [(s:Pair k v)]))))
+  (s:chain (s:pair (k v -> {
+                      if (=== unprefixed k) {
+                        (s:map (s:Pair _ v) (s:append unprefixed prefixed))
+                      } else {
+                        [(s:Pair k v)]
+                      }
+                    })))
 
 vendor-prefixes =
   (s:pipe [(vendor-prefix :border-radius

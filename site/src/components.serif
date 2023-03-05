@@ -47,16 +47,19 @@ decorative-image src =
   (p (img #{:alt "" :src src}))
 
 interview-list interviewer interviewee exchange =
-  (ol (s:snd (s:reduce (s:pair (name items quotation ->
-                                  (if (s:equals interviewer name)
-                                      (s:Pair interviewee
-                                              (s:append (li' #{:class "interviewer"}
-                                                           [(strong (s:concat interviewer ":")) " " ...quotation])
-                                                        items))
-                                      (s:Pair interviewer
-                                              (s:append (li' #{}
-                                                           [(strong (s:concat interviewee ":")) " " ...quotation])
-                                                        items)))))
+  (ol (s:snd (s:reduce (s:pair (name items quotation -> {
+                                  if (s:equals interviewer name) {
+                                    (s:Pair interviewee
+                                            [...items
+                                             (li' #{:class "interviewer"}
+                                                [(strong (s:concat interviewer ":")) " " ...quotation])])
+                                  } else {
+                                    (s:Pair interviewer
+                                            [...items
+                                             (li' #{}
+                                                [(strong (s:concat interviewee ":")) " " ...quotation])])
+                                  }
+                                }))
                        (s:Pair interviewer [])
                        (s:map canonicalize-children exchange))))
 

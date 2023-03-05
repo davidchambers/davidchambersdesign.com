@@ -25,9 +25,11 @@ with-scores that this = {
   primary = (s:negate score)
   secondary = (Math.abs (seconds-between (:datetime that)
                                          (:datetime this)))
-  (if (>= 0.5 score)
-      (s:Just (s:Pair (s:Pair primary secondary) this))
-      s:Nothing)
+  if (>= 0.5 score) {
+    (s:Just (s:Pair (s:Pair primary secondary) this))
+  } else {
+    s:Nothing
+  }
 }
 
 related-posts posts post =

@@ -171,7 +171,11 @@ const esFromOr = ({left, right}: Serif.Or): ES.LogicalExpression => (
   es.LogicalExpression('||', esFromExpression(left), esFromExpression(right))
 );
 
-const esFromIf = ({predicate, consequent, alternative}: Serif.If): ES.ConditionalExpression => (
+const esFromConditionalExpression = ({
+  predicate,
+  consequent,
+  alternative,
+}: Serif.ConditionalExpression): ES.ConditionalExpression => (
   es.ConditionalExpression(
     esFromExpression(predicate),
     esFromExpression(consequent),
@@ -315,23 +319,23 @@ const esFromExpressionStatement = ({expression}: Serif.ExpressionStatement): ES.
 
 const esFromExpression = (expr: Serif.Expression): ES.Expression => {
   switch (expr.type) {
-    case 'number':              return esFromNumber(expr);
-    case 'string':              return esFromString(expr);
-    case 'symbol':              return esFromSymbol(expr);
-    case 'MetaProperty':        return esFromMetaProperty(expr);
-    case 'MemberExpression':    return esFromMemberExpression(expr);
-    case 'identifier':          return esFromIdentifier(expr);
-    case 'array':               return esFromArray(expr);
-    case 'object':              return esFromObject(expr);
-    case 'lambda':              return esFromLambda(expr);
-    case 'BlockExpression':     return esFromBlockExpression(expr);
-    case 'and':                 return esFromAnd(expr);
-    case 'or':                  return esFromOr(expr);
-    case 'if':                  return esFromIf(expr);
-    case 'switch':              return esFromSwitch(expr);
-    case 'new':                 return esFromNew(expr);
-    case 'invocation':          return esFromInvocation(expr);
-    case 'application':         return esFromApplication(expr);
+    case 'number':                      return esFromNumber(expr);
+    case 'string':                      return esFromString(expr);
+    case 'symbol':                      return esFromSymbol(expr);
+    case 'MetaProperty':                return esFromMetaProperty(expr);
+    case 'MemberExpression':            return esFromMemberExpression(expr);
+    case 'identifier':                  return esFromIdentifier(expr);
+    case 'array':                       return esFromArray(expr);
+    case 'object':                      return esFromObject(expr);
+    case 'lambda':                      return esFromLambda(expr);
+    case 'BlockExpression':             return esFromBlockExpression(expr);
+    case 'and':                         return esFromAnd(expr);
+    case 'or':                          return esFromOr(expr);
+    case 'ConditionalExpression':       return esFromConditionalExpression(expr);
+    case 'switch':                      return esFromSwitch(expr);
+    case 'new':                         return esFromNew(expr);
+    case 'invocation':                  return esFromInvocation(expr);
+    case 'application':                 return esFromApplication(expr);
   }
 };
 
