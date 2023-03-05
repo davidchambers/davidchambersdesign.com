@@ -150,20 +150,11 @@ SymbolChar 'symbol character'
     .
 
 Expression 'expression'
-  = BinaryExpression
-  / Number
-  / String
-  / Symbol
-  / Object
-  / ConditionalExpression
-  / ImportMeta
-  / MemberExpression
+  = ConditionalExpression
   / Identifier
   / Lambda
-  / BlockExpression
   / And
   / Or
-  / Array
   / New
   / Invocation
   / Application
@@ -218,9 +209,10 @@ ImportMeta 'import.meta'
   { return {type: 'MetaProperty', meta, property}; }
 
 MemberExpression 'member expression'
-  = object:Identifier
-    properties:('.' property:Identifier { return property; } / property:Symbol { return property; })+
-  { return properties.reduce((object, property) => ({type: 'MemberExpression', object, property}), object); }
+  = ImportMeta
+  / object:PrimaryExpression
+    properties:('.' property:Identifier { return property; } / property:Symbol { return property; })*
+    { return properties.reduce((object, property) => ({type: 'MemberExpression', object, property}), object); }
 
 Identifier 'identifier'
   = !'->' name:$(IdentChar)+
@@ -239,9 +231,22 @@ BlockExpression 'block expression'
     Separator* '}'
     { return {type: 'BlockExpression', statements}; }
 
-CallExpression
+PrimaryExpression
   = Number
   / String
+  / Symbol
+  / Array
+  / Object
+  / Identifier
+  / BlockExpression
+
+CallExpression
+  = MemberExpression
+  / Lambda
+  / New
+  / Invocation
+  / Application
+  / PrimaryExpression
 
 UnaryOperator
   = 'typeof'
@@ -251,10 +256,10 @@ UnaryOperator
   / '!'
 
 UnaryExpression
-  = Separator* operator:UnaryOperator argument:(Number / String)
+  = Separator* operator:UnaryOperator
+    Separator+ argument:PrimaryExpression
     { return {type: 'UnaryExpression', operator, argument}; }
-  / expression:CallExpression
-    { return expression; }
+  / CallExpression
 
 ExponentiationOperator
   = '**'
@@ -262,7 +267,11 @@ ExponentiationOperator
 ExponentiationExpression
   = Separator*
     left:UnaryExpression
-    tail:(Separator+ operator:ExponentiationOperator Separator+ right:UnaryExpression { return {operator, right}; })*
+    tail:(
+      Separator+ operator:ExponentiationOperator
+      Separator+ right:UnaryExpression
+      { return {operator, right}; }
+    )*
     { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
 
 MultiplicativeOperator
@@ -273,7 +282,11 @@ MultiplicativeOperator
 MultiplicativeExpression
   = Separator*
     left:ExponentiationExpression
-    tail:(Separator+ operator:ExponentiationExpression Separator+ right:(Number / String) { return {operator, right}; })*
+    tail:(
+      Separator+ operator:MultiplicativeOperator
+      Separator+ right:ExponentiationExpression
+      { return {operator, right}; }
+    )*
     { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
 
 AdditiveOperator
@@ -283,7 +296,11 @@ AdditiveOperator
 AdditiveExpression
   = Separator*
     left:MultiplicativeExpression
-    tail:(Separator+ operator:AdditiveOperator Separator+ right:MultiplicativeExpression { return {operator, right}; })*
+    tail:(
+      Separator+ operator:AdditiveOperator
+      Separator+ right:MultiplicativeExpression
+      { return {operator, right}; }
+    )*
     { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
 
 ShiftOperator
@@ -294,7 +311,11 @@ ShiftOperator
 ShiftExpression
   = Separator*
     left:AdditiveExpression
-    tail:(Separator+ operator:ShiftOperator Separator+ right:AdditiveExpression { return {operator, right}; })*
+    tail:(
+      Separator+ operator:ShiftOperator
+      Separator+ right:AdditiveExpression
+      { return {operator, right}; }
+    )*
     { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
 
 RelationalOperator
@@ -308,7 +329,11 @@ RelationalOperator
 RelationalExpression
   = Separator*
     left:ShiftExpression
-    tail:(Separator+ operator:RelationalOperator Separator+ right:ShiftExpression { return {operator, right}; })*
+    tail:(
+      Separator+ operator:RelationalOperator
+      Separator+ right:ShiftExpression
+      { return {operator, right}; }
+    )*
     { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
 
 EqualityOperator
@@ -320,7 +345,11 @@ EqualityOperator
 EqualityExpression
   = Separator*
     left:RelationalExpression
-    tail:(Separator+ operator:EqualityOperator Separator+ right:RelationalExpression { return {operator, right}; })*
+    tail:(
+      Separator+ operator:EqualityOperator
+      Separator+ right:RelationalExpression
+      { return {operator, right}; }
+    )*
     { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
 
 BitwiseANDOperator
@@ -329,7 +358,11 @@ BitwiseANDOperator
 BitwiseANDExpression
   = Separator*
     left:EqualityExpression
-    tail:(Separator+ operator:BitwiseANDOperator right:EqualityExpression { return {operator, right}; })*
+    tail:(
+      Separator+ operator:BitwiseANDOperator
+      Separator+ right:EqualityExpression
+      { return {operator, right}; }
+    )*
     { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
 
 BitwiseXOROperator
@@ -338,7 +371,11 @@ BitwiseXOROperator
 BitwiseXORExpression
   = Separator*
     left:BitwiseANDExpression
-    tail:(Separator+ oeprator:BitwiseXOROperator right:BitwiseANDExpression { return {operator, right}; })*
+    tail:(
+      Separator+ oeprator:BitwiseXOROperator
+      Separator+ right:BitwiseANDExpression
+      { return {operator, right}; }
+    )*
     { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
 
 BitwiseOROperator
@@ -347,7 +384,11 @@ BitwiseOROperator
 BitwiseORExpression
   = Separator*
     left:BitwiseXORExpression
-    tail:(Separator+ operator:BitwiseOROperator right:BitwiseXORExpression { return {operator, right}; })*
+    tail:(
+      Separator+ operator:BitwiseOROperator
+      Separator+ right:BitwiseXORExpression
+      { return {operator, right}; }
+    )*
     { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
 
 LogicalANDOperator
@@ -356,11 +397,47 @@ LogicalANDOperator
 LogicalANDExpression
   = Separator*
     left:BitwiseORExpression
-    tail:(Separator+ operator:LogicalANDOperator right:BitwiseORExpression { return {operator, right}; })*
+    tail:(
+      Separator+ operator:LogicalANDOperator
+      Separator+ right:BitwiseORExpression
+      { return {operator, right}; }
+    )*
     { return tail.reduce((left, {operator, right}) => ({type: 'LogicalExpression', operator, left, right}), left); }
 
-BinaryExpression 'binary expression'
-  = LogicalANDExpression
+LogicalOROperator
+  = '||'
+
+LogicalORExpression
+  = Separator*
+    left:LogicalANDExpression
+    tail:(
+      Separator+ operator:LogicalOROperator
+      Separator+ right:LogicalANDExpression
+      { return {operator, right}; }
+    )*
+    { return tail.reduce((left, {operator, right}) => ({type: 'LogicalExpression', operator, left, right}), left); }
+
+CoalesceOperator
+  = '??'
+
+CoalesceExpression
+  = Separator*
+    left:LogicalORExpression
+    tail:(
+      Separator+ operator:CoalesceOperator
+      Separator+ right:LogicalORExpression
+      { return {operator, right}; }
+    )*
+    { return tail.reduce((left, {operator, right}) => ({type: 'LogicalExpression', operator, left, right}), left); }
+
+ConditionalExpression
+  = Separator* 'if'
+    Separator+ predicate:ConditionalExpression
+    Separator+ consequent:ConditionalExpression
+    Separator+ 'else'
+    Separator+ alternative:ConditionalExpression
+    { return {type: 'ConditionalExpression', predicate, consequent, alternative}; }
+  / CoalesceExpression
 
 And 'and'
   = Separator* '('
@@ -377,14 +454,6 @@ Or 'or'
     Separator+ right:Expression
     Separator* ')'
     { return {type: 'or', left, right}; }
-
-ConditionalExpression 'conditional expression'
-  = Separator* 'if'
-    Separator+ predicate:Expression
-    Separator+ consequent:Expression
-    Separator+ 'else'
-    Separator+ alternative:Expression
-    { return {type: 'ConditionalExpression', predicate, consequent, alternative}; }
 
 SpreadElement 'spread element'
   = '...' argument:Expression
@@ -415,7 +484,7 @@ Object 'object'
     { return {type: 'object', properties: properties ?? []}; }
 
 Placeholder 'placeholder'
-  = '_'
+  = '_' !IdentChar
   { return {type: 'placeholder'}; }
 
 New 'new'

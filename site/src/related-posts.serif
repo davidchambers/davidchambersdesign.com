@@ -12,9 +12,9 @@ intersection set-1 set-2 =
 union set-1 set-2 =
   (new Set [...set-1 ...set-2])
 
-similarity set-1 set-2 =
-  (/ (Math.sqrt ("size" (union set-1 set-2)))
-     ("size" (intersection set-1 set-2)))
+similarity set-1 set-2 = {
+  ("size" (intersection set-1 set-2)) / (Math.sqrt ("size" (union set-1 set-2)))
+}
 
 seconds-between from to =
   ("seconds" (.diff from "seconds" to))
@@ -25,7 +25,7 @@ with-scores that this = {
   primary = (s:negate score)
   secondary = (Math.abs (seconds-between (:datetime that)
                                          (:datetime this)))
-  if (>= 0.5 score) {
+  if score >= 0.5 {
     (s:Just (s:Pair (s:Pair primary secondary) this))
   } else {
     s:Nothing
@@ -33,7 +33,7 @@ with-scores that this = {
 }
 
 related-posts posts post =
-  (s:pipe [(s:reject (this -> (=== (:slug post) (:slug this))))
+  (s:pipe [(s:reject (this -> (:slug this) === (:slug post)))
            (s:map-maybe (with-scores post))
            s:sort
            (s:map s:snd)

@@ -8,7 +8,7 @@ export default generate-css
 coerce x = {
   if (Array.isArray x) {
     (s:unwords (s:map coerce x))
-  } else if (== "symbol" (typeof x)) {
+  } else if typeof x == "symbol" {
     (Symbol.keyFor x)
   } else {
     (String x)
@@ -24,7 +24,7 @@ split-every-2 xs =
 
 vendor-prefix unprefixed prefixed =
   (s:chain (s:pair (k v -> {
-                      if (=== unprefixed k) {
+                      if k === unprefixed {
                         (s:map (s:Pair _ v) (s:append unprefixed prefixed))
                       } else {
                         [(s:Pair k v)]

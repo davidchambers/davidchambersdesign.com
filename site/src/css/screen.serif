@@ -4,9 +4,7 @@ import default as s from "../sanctuary.serif"
 
 export default screen
 
-' = (s:pipe [(.replace (s:regex "g" "(?=')") "\\" _)
-             (+ _ "'")
-             (+ "'")])
+' text = "'" + (.replace (s:regex "g" "(?=')") "\\" text) + "'"
 
 base03          = "#002b36"
 base02          = "#073642"
@@ -30,11 +28,11 @@ pink            = "#ff5e99"
 recycled-paper  = "#fef9ec"
 
 screen coerce = {
-  % = (s:compose (+ "%") coerce)
-  em = (s:compose (+ "em") coerce)
-  px = (s:compose (+ "px") coerce)
+  % x = (coerce x) + "%"
+  em x = (coerce x) + "em"
+  px x = (coerce x) + "px"
 
-  , = (s:compose (s:join-with ", ") (s:map coerce))
+  , xs = (s:join-with ", " (s:map coerce xs))
 
   sans-serif = (s:compose , (s:compose (s:append :sans-serif) (s:map ')))
   monospace = (s:compose , (s:compose (s:append :monospace) (s:map ')))
@@ -43,12 +41,12 @@ screen coerce = {
 
   url url = (.join "" ["url(" url ")"])
 
-  !important = (s:compose (+ " !important") coerce)
+  !important x = (coerce x) + " !important"
 
   tag-background =
     (s:pipe [Math.log2
-             (* 5)
-             (- _ 247)
+             (x -> x * 5)
+             (x -> 247 - x)
              Math.floor
              (.toString 16 _)
              (.padStart 2 "0" _)
@@ -57,8 +55,8 @@ screen coerce = {
 
   tag-color =
     (s:pipe [Math.log2
-             (* 0.1)
-             (+ 0.3)
+             (x -> x * 0.1)
+             (x -> x + 0.3)
              (.toFixed 3 _)
              (.replace (s:regex "" "0*$") "" _)
              (.replace (s:regex "" "[.]$") "" _)

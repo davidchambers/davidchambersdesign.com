@@ -5,54 +5,6 @@ export const _null                  = null;
 export const _true                  = true;
 export const _false                 = false;
 
-// https://262.ecma-international.org/6.0/#sec-12.3.3
-
-// https://262.ecma-international.org/6.0/#sec-12.5.5
-export const _void                  = x => void x;
-// https://262.ecma-international.org/6.0/#sec-12.5.6
-export const _typeof                = x => typeof x;
-// https://262.ecma-international.org/6.0/#sec-12.5.11
-export const _$007E                 = x => ~x;
-// https://262.ecma-international.org/6.0/#sec-12.5.12
-export const _$0021                 = x => !x;
-
-// https://262.ecma-international.org/6.0/#sec-12.6
-export const _$002A                 = y => x => x * y;
-export const _$002F                 = y => x => x / y;
-export const _$0025                 = y => x => x % y;
-
-// https://262.ecma-international.org/6.0/#sec-12.7
-export const _$002B                 = y => x => x + y;
-export const _$002D                 = y => x => x - y;
-
-// https://262.ecma-international.org/6.0/#sec-12.8
-export const _$003C$003C            = y => x => x << y;
-export const _$003E$003E            = y => x => x >> y;
-export const _$003E$003E$003E       = y => x => x >>> y;
-
-// https://262.ecma-international.org/6.0/#sec-12.9
-export const _$003C                 = y => x => x < y;
-export const _$003E                 = y => x => x > y;
-export const _$003C$003D            = y => x => x <= y;
-export const _$003E$003D            = y => x => x >= y;
-export const _instanceof            = y => x => x instanceof y;
-export const _in                    = y => x => x in y;
-
-// https://262.ecma-international.org/6.0/#sec-12.10
-export const _$003D$003D            = y => x => x == y;
-export const _$0021$003D            = y => x => x != y;
-export const _$003D$003D$003D       = y => x => x === y;
-export const _$0021$003D$003D       = y => x => x !== y;
-
-// https://262.ecma-international.org/6.0/#sec-12.11
-export const _$0026                 = y => x => x & y;
-export const _$005E                 = y => x => x ^ y;
-export const _$007C                 = y => x => x | y;
-
-// https://262.ecma-international.org/6.0/#sec-12.12
-export const _$0026$0026            = y => x => x && y;
-export const _$007C$007C            = y => x => x || y;
-
 // https://262.ecma-international.org/6.0/#sec-18.1.1
 export const _Infinity              = Infinity;
 // https://262.ecma-international.org/6.0/#sec-18.1.2

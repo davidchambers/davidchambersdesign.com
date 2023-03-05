@@ -12,7 +12,7 @@ render-tags posts = {
   counts = (s:reduce (counts post ->
                         (s:reduce (counts tag ->
                                      (concat counts
-                                             (Object.fromEntries [[tag (+ 1 (s:prop tag counts))]])))
+                                             (Object.fromEntries [[tag {(s:prop tag counts) + 1}]])))
                                   counts
                                   (:tags post)))
                      (s:map (_ -> 0) tags)

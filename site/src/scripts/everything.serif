@@ -237,7 +237,7 @@ write-file filename data =
 render-svg attrs =
   (s:pipe [(svg #{:xmlns "http://www.w3.org/2000/svg" :version "1.1" ...attrs})
            (:render _ "  " 0 false)
-           (+ _ "<?xml version=\"1.0\" standalone=\"no\"?>\n")])
+           (s -> "<?xml version=\"1.0\" standalone=\"no\"?>\n" + s)])
 
 (write-file (public ["svg" "masthead.svg"])
             (render-svg #{} (:fill masthead)))
@@ -296,9 +296,9 @@ render-svg attrs =
 (write-file (public ["svg" "twitter.svg"])
             (render-svg #{:width 16 :height 16} icon/twitter))
 
-render-document element =
-  (+ (:render element "  " 0 false)
-     "<!DOCTYPE html>\n")
+render-document element = {
+  "<!DOCTYPE html>\n" + (element:render "  " 0 false)
+}
 
 (write-file (public ["archives.html"])
             (render-document (base-template "Archives"

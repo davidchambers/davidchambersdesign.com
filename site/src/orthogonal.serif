@@ -5,17 +5,18 @@ import default as s from "./sanctuary.serif"
 export {render ⇦ ⇨ ⇧ ⇩ ← → ↑ ↓}
 
 reducer prev path curr = {
-  if (=== :M (0 curr)) {
-    if (or (=== :M (0 prev)) (=== :m (0 prev))) {
+  if (0 curr) === :M {
+    if {(0 prev) === :M || (0 prev) === :m} {
       (s:Pair curr path)  ; ignore previous move
     } else {
       (s:Pair curr [...path prev])
     }
   } else {
-    if (and (or (=== :M (0 prev))
-                (=== :m (0 prev)))
-            (=== :m (0 curr))) {
-      (s:Pair [(0 prev) [(+ (0 (1 prev)) (0 (1 curr))) (+ (1 (1 prev)) (1 (1 curr)))]] path)
+    if {(0 prev) === :M || (0 prev) === :m} && (0 curr) === :m {
+      (s:Pair [(0 prev)
+               [(0 (1 prev)) + (0 (1 curr))
+                (1 (1 prev)) + (1 (1 curr))]]
+              path)
     } else {
       (s:Pair curr [...path prev])
     }
@@ -34,9 +35,9 @@ render =
   (s:pipe [simplify
            s:join
            (s:map (x -> {
-                     if (=== "object" (typeof x)) {  ; array
+                     if typeof x === "object" {  ; array
                        (.join "," x)
-                     } else if (=== "symbol" (typeof x)) {
+                     } else if typeof x === "symbol" {
                        (Symbol.keyFor x)
                      } else {
                        (String x)
@@ -44,12 +45,12 @@ render =
                    }))
            s:unwords])
 
-⇦ x = [:m [(- x 0) 0]]
-⇨ x = [:m [(+ x 0) 0]]
-⇧ y = [:m [0 (- y 0)]]
-⇩ y = [:m [0 (+ y 0)]]
+⇦ x = [:m [{- x} 0]]
+⇨ x = [:m [{+ x} 0]]
+⇧ y = [:m [0 {- y}]]
+⇩ y = [:m [0 {+ y}]]
 
-← x = [:h (- x 0)]
-→ x = [:h (+ x 0)]
-↑ y = [:v (- y 0)]
-↓ y = [:v (+ y 0)]
+← x = [:h {- x}]
+→ x = [:h {+ x}]
+↑ y = [:v {- y}]
+↓ y = [:v {+ y}]

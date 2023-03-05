@@ -62,6 +62,17 @@ export interface BlockExpression {
   readonly statements: ReadonlyArray<Statement>;
 }
 
+export type PrimaryExpression =
+  | Identifier
+  | Number
+  | String
+  | Symbol
+  | Array
+  | Object
+
+export type CallExpression =
+  | PrimaryExpression
+
 export type UnaryOperator =
   | 'typeof'
   | '+'
@@ -69,20 +80,27 @@ export type UnaryOperator =
   | '~'
   | '!'
 
+export type UnaryOperand =
+  | CallExpression
+
 export interface UnaryExpression {
   readonly type: 'UnaryExpression';
   readonly operator: UnaryOperator;
-  readonly argument: Expression;
+  readonly argument: UnaryOperand;
 }
 
 export type ExponentiationOperator =
   | '**'
 
+export type ExponentiationOperand =
+  | UnaryExpression
+  | UnaryOperand
+
 export interface ExponentiationExpression {
   readonly type: 'BinaryExpression';
   readonly operator: ExponentiationOperator;
-  readonly left: Expression;
-  readonly right: Expression;
+  readonly left: ExponentiationOperand;
+  readonly right: ExponentiationOperand;
 }
 
 export type MultiplicativeOperator =
@@ -90,22 +108,30 @@ export type MultiplicativeOperator =
   | '/'
   | '%'
 
+export type MultiplicativeOperand =
+  | ExponentiationExpression
+  | ExponentiationOperand
+
 export interface MultiplicativeExpression {
   readonly type: 'BinaryExpression';
   readonly operator: MultiplicativeOperator;
-  readonly left: Expression;
-  readonly right: Expression;
+  readonly left: MultiplicativeOperand;
+  readonly right: MultiplicativeOperand;
 }
 
 export type AdditiveOperator =
   | '+'
   | '-'
 
+export type AdditiveOperand =
+  | MultiplicativeExpression
+  | MultiplicativeOperand
+
 export interface AdditiveExpression {
   readonly type: 'BinaryExpression';
   readonly operator: AdditiveOperator;
-  readonly left: Expression;
-  readonly right: Expression;
+  readonly left: AdditiveOperand;
+  readonly right: AdditiveOperand;
 }
 
 export type ShiftOperator =
@@ -113,11 +139,15 @@ export type ShiftOperator =
   | '>>'
   | '>>>'
 
+export type ShiftOperand =
+  | AdditiveExpression
+  | AdditiveOperand
+
 export interface ShiftExpression {
   readonly type: 'BinaryExpression';
   readonly operator: ShiftOperator;
-  readonly left: Expression;
-  readonly right: Expression;
+  readonly left: ShiftOperand;
+  readonly right: ShiftOperand;
 }
 
 export type RelationalOperator =
@@ -128,11 +158,15 @@ export type RelationalOperator =
   | 'instanceof'
   | 'in'
 
+export type RelationalOperand =
+  | ShiftExpression
+  | ShiftOperand
+
 export interface RelationalExpression {
   readonly type: 'BinaryExpression';
   readonly operator: RelationalOperator;
-  readonly left: Expression;
-  readonly right: Expression;
+  readonly left: RelationalOperand;
+  readonly right: RelationalOperand;
 }
 
 export type EqualityOperator =
@@ -141,41 +175,57 @@ export type EqualityOperator =
   | '==='
   | '!=='
 
+export type EqualityOperand =
+  | RelationalExpression
+  | RelationalOperand
+
 export interface EqualityExpression {
   readonly type: 'BinaryExpression';
   readonly operator: EqualityOperator;
-  readonly left: Expression;
-  readonly right: Expression;
+  readonly left: EqualityOperand;
+  readonly right: EqualityOperand;
 }
 
 export type BitwiseANDOperator =
   | '&'
 
+export type BitwiseANDOperand =
+  | EqualityExpression
+  | EqualityOperand
+
 export interface BitwiseANDExpression {
   readonly type: 'BinaryExpression';
   readonly operator: BitwiseANDOperator;
-  readonly left: Expression;
-  readonly right: Expression;
+  readonly left: BitwiseANDOperand;
+  readonly right: BitwiseANDOperand;
 }
 
 export type BitwiseXOROperator =
   | '^'
 
+export type BitwiseXOROperand =
+  | BitwiseANDExpression
+  | BitwiseANDOperand
+
 export interface BitwiseXORExpression {
   readonly type: 'BinaryExpression';
   readonly operator: BitwiseXOROperator;
-  readonly left: Expression;
-  readonly right: Expression;
+  readonly left: BitwiseXOROperand;
+  readonly right: BitwiseXOROperand;
 }
 
 export type BitwiseOROperator =
   | '|'
 
+export type BitwiseOROperand =
+  | BitwiseXORExpression
+  | BitwiseXOROperand
+
 export interface BitwiseORExpression {
   readonly type: 'BinaryExpression';
   readonly operator: BitwiseOROperator;
-  readonly left: Expression;
-  readonly right: Expression;
+  readonly left: BitwiseOROperand;
+  readonly right: BitwiseOROperand;
 }
 
 export type BinaryExpression =
@@ -192,37 +242,56 @@ export type BinaryExpression =
 export type LogicalANDOperator =
   | '&&'
 
+export type LogicalANDOperand =
+  | BitwiseORExpression
+  | BitwiseOROperand
+
 export interface LogicalANDExpression {
   readonly type: 'LogicalExpression';
   readonly operator: LogicalANDOperator;
-  readonly left: Expression;
-  readonly right: Expression;
+  readonly left: LogicalANDOperand;
+  readonly right: LogicalANDOperand;
 }
 
 export type LogicalOROperator =
   | '||'
 
+export type LogicalOROperand =
+  | LogicalANDExpression
+  | LogicalANDOperand
+
 export interface LogicalORExpression {
   readonly type: 'LogicalExpression';
   readonly operator: LogicalOROperator;
-  readonly left: Expression;
-  readonly right: Expression;
+  readonly left: LogicalOROperand;
+  readonly right: LogicalOROperand;
 }
 
 export type CoalesceOperator =
   | '??'
 
+export type CoalesceOperand =
+  | LogicalORExpression
+  | LogicalOROperand
+
 export interface CoalesceExpression {
   readonly type: 'LogicalExpression';
   readonly operator: CoalesceOperator;
-  readonly left: Expression;
-  readonly right: Expression;
+  readonly left: CoalesceOperand;
+  readonly right: CoalesceOperand;
 }
 
 export type LogicalExpression =
   | LogicalANDExpression
   | LogicalORExpression
   | CoalesceExpression
+
+export interface ConditionalExpression {
+  readonly type: 'ConditionalExpression';
+  readonly predicate: Expression;
+  readonly consequent: Expression;
+  readonly alternative: Expression;
+}
 
 export interface And {
   readonly type: 'and';
@@ -234,13 +303,6 @@ export interface Or {
   readonly type: 'or';
   readonly left: Expression;
   readonly right: Expression;
-}
-
-export interface ConditionalExpression {
-  readonly type: 'ConditionalExpression';
-  readonly predicate: Expression;
-  readonly consequent: Expression;
-  readonly alternative: Expression;
 }
 
 export interface Placeholder {
@@ -280,9 +342,9 @@ export type Expression =
   | UnaryExpression
   | BinaryExpression
   | LogicalExpression
+  | ConditionalExpression
   | And
   | Or
-  | ConditionalExpression
   | New
   | Invocation
   | Application

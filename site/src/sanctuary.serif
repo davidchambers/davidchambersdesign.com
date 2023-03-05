@@ -4,7 +4,7 @@ import default as sanctuary from "sanctuary"
 export default default
 
 kebab-case = (.replace (new RegExp "(?!\\b)[A-Z0-9]" "g")
-                       (c -> (+ (.toLowerCase c) "-"))
+                       (c -> "-" + (.toLowerCase c))
                        _)
 
 prime = (.replace "_" "'" _)

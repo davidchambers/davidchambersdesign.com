@@ -107,13 +107,13 @@ canonicalize-attrs attrs =
   (Object.fromEntries (s:map (name -> {
                                 value = (s:prop name attrs)
                                 [name
-                                 if (== "symbol" (typeof value)) (Symbol.keyFor value) else (String value)]
+                                 if typeof value == "symbol" (Symbol.keyFor value) else (String value)]
                               })
                              (Object.getOwnPropertySymbols attrs)))
 
 canonicalize-children =
   (s:compose (s:map (child -> {
-                       if (== "string" (typeof child)) {
+                       if typeof child == "string" {
                          (text (.replace (s:regex "g" " -- ")
                                          "\u2009\u2014\u2009"
                                          (s:fold-map String
@@ -146,7 +146,7 @@ block-element tag-name -attrs -children = {
                                               "\""]))
                                    (Object.getOwnPropertySymbols attrs))
                        ">\n"
-                       (s:fold-map String (:render _ indent (+ 1 level) false) children)
+                       (s:fold-map String (:render _ indent {level + 1} false) children)
                        (.repeat level indent)
                        "</"
                        (Symbol.keyFor tag-name)
@@ -158,7 +158,7 @@ inline-element tag-name -attrs -children = {
   attrs = (canonicalize-attrs -attrs)
   children = (canonicalize-children -children)
   format = {
-    if (s:any (node -> (=== :block (:format node))) children) {
+    if (s:any (node -> (:format node) === :block) children) {
       :block
     } else {
       :inline
@@ -168,7 +168,7 @@ inline-element tag-name -attrs -children = {
     :format format
     :text (s:chain (:text _) children)
     :render (indent level inline -> {
-               if (=== :inline format) {
+               if format === :inline {
                  (.join ""
                         [(.repeat level indent)
                          "<"
@@ -203,7 +203,7 @@ inline-element tag-name -attrs -children = {
                                                  "\""]))
                                       (Object.getOwnPropertySymbols attrs))
                           ">\n"
-                          (s:fold-map String (:render _ indent (+ 1 level) false) children)
+                          (s:fold-map String (:render _ indent {level + 1} false) children)
                           (.repeat level indent)
                           "</"
                           (Symbol.keyFor tag-name)
