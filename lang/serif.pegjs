@@ -158,7 +158,6 @@ Expression 'expression'
   / ImportMeta
   / MemberExpression
   / Identifier
-  / Import
   / Lambda
   / BlockExpression
   / And
@@ -225,20 +224,6 @@ MemberExpression 'member expression'
 Identifier 'identifier'
   = !'->' name:$(IdentChar)+
   { return {type: 'identifier', name}; }
-
-Import 'import'
-  = Separator* '('
-    Separator* 'import'
-    Separator* '['
-    names:(
-      head:(Separator* string:String { return string.value; })
-      tail:(Separator+ string:String { return string.value; })*
-      { return [head, ...tail]; }
-    )?
-    Separator* ']'
-    Separator* body:Expression
-    Separator* ')'
-    { return {type: 'import', names, body}; }
 
 Lambda 'lambda'
   = Separator* '('
