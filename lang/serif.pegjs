@@ -163,7 +163,6 @@ Expression 'expression'
   / BlockExpression
   / And
   / Or
-  / Switch
   / Array
   / New
   / Invocation
@@ -277,21 +276,6 @@ ConditionalExpression 'conditional expression'
     Separator+ 'else'
     Separator+ alternative:Expression
     { return {type: 'ConditionalExpression', predicate, consequent, alternative}; }
-
-Case 'case'
-  = Separator* predicate:Expression
-    Separator+ consequent:Expression
-    { return {predicate, consequent}; }
-
-Switch 'switch'
-  = Separator* '('
-    Separator* 'switch'
-    Separator+ discriminant:Expression
-    Separator+ '['
-    cases:Case*
-    Separator* ']'
-    Separator* ')'
-    { return {type: 'switch', discriminant, cases}; }
 
 SpreadElement 'spread element'
   = '...' argument:Expression

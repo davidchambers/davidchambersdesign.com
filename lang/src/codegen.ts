@@ -21,7 +21,6 @@ const prefix = (name: string): Escaped => (
 const Identifier = (name: Escaped): ES.Identifier => ({type: 'Identifier', name});
 
 const $callee = Identifier(prefix('callee'));
-const $discriminant = Identifier(prefix('discriminant'));
 const $object = Identifier(prefix('object'));
 
 const esFromNumber = ({value}: Serif.Number): ES.UnaryExpression | ES.Literal => (
@@ -183,22 +182,6 @@ const esFromConditionalExpression = ({
   )
 );
 
-const esFromSwitch = ({discriminant, cases}: Serif.Switch): ES.CallExpression => (
-  es.CallExpression(
-    es.ArrowFunctionExpression(
-      [$discriminant],
-      es.BlockStatement([es.SwitchStatement(
-        $discriminant,
-        cases.map(({predicate, consequent}) => es.SwitchCase(
-          esFromExpression(predicate),
-          [es.ReturnStatement(esFromExpression(consequent))],
-        )),
-      )]),
-    ),
-    [esFromExpression(discriminant)],
-  )
-);
-
 const esFromNew = (expr: Serif.New): ES.NewExpression | ES.ArrowFunctionExpression => (
   [
     ...[expr.callee].flatMap(({type}) =>
@@ -332,7 +315,6 @@ const esFromExpression = (expr: Serif.Expression): ES.Expression => {
     case 'and':                         return esFromAnd(expr);
     case 'or':                          return esFromOr(expr);
     case 'ConditionalExpression':       return esFromConditionalExpression(expr);
-    case 'switch':                      return esFromSwitch(expr);
     case 'new':                         return esFromNew(expr);
     case 'invocation':                  return esFromInvocation(expr);
     case 'application':                 return esFromApplication(expr);

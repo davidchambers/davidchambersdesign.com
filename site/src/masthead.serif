@@ -144,10 +144,13 @@ export {fill mask}
 
 update positions dir =
   (s:prepend (s:T (0 positions)
-                  (switch (0 dir)
-                     [:m (s:bimap (+ (0 (1 dir))) (+ (1 (1 dir))))
-                      :h (s:bimap (+ (1 dir)) I)
-                      :v (s:bimap I (+ (1 dir)))]))
+                  if (=== :h (0 dir)) {
+                    (s:bimap (+ (1 dir)) I)
+                  } else if (=== :v (0 dir)) {
+                    (s:bimap I (+ (1 dir)))
+                  } else {
+                    (s:bimap (+ (0 (1 dir))) (+ (1 (1 dir))))
+                  })
              positions)
 
 reset path = {

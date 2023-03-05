@@ -87,17 +87,6 @@ export interface ConditionalExpression {
   readonly alternative: Expression;
 }
 
-export interface Case {
-  readonly predicate: Expression;
-  readonly consequent: Expression;
-}
-
-export interface Switch {
-  readonly type: 'switch';
-  readonly discriminant: Expression;
-  readonly cases: ReadonlyArray<Case>;
-}
-
 export interface Placeholder {
   readonly type: 'placeholder';
 }
@@ -135,7 +124,6 @@ export type Expression =
   | And
   | Or
   | ConditionalExpression
-  | Switch
   | New
   | Invocation
   | Application
