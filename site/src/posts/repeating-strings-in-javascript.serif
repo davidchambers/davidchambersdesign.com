@@ -7,15 +7,15 @@ export default #{
   :slug "repeating-strings-in-javascript"
   :title "Repeating strings in JavaScript"
   :datetime (datetime "2011-03-31" "17:30:00" :America/Los_Angeles)
-  :tags ["javascript" "programming"]
+  :tags #["javascript" "programming"]
   :body body
 }
 
-body = [
+body = #[
 
   (p
-     ["Python and Ruby share beautiful syntax for repeating strings;
-       PHP's syntax is characteristically ugly."])
+     #["Python and Ruby share beautiful syntax for repeating strings;
+        PHP's syntax is characteristically ugly."])
 
   (h3' #{:id "python"} "Python")
 
@@ -44,8 +44,8 @@ body = [
   (h3' #{:id "javascript"} "JavaScript?")
 
   (p
-     ["True to form, repeating strings in JavaScript is ugly and
-       counterintuitive, but kinda cool."])
+     #["True to form, repeating strings in JavaScript is ugly and
+        counterintuitive, but kinda cool."])
 
   (code-block :javascript
 

@@ -4,7 +4,7 @@ import default as luxon from "luxon"
 export default datetime
 
 datetime date time zone =
-  (.fromFormat (.join "" [date " " time " (" (Symbol.keyFor zone) ")"])
+  (.fromFormat (.join "" #[date " " time " (" (Symbol.keyFor zone) ")"])
                "yyyy-MM-dd HH:mm:ss (z)"
                #{"setZone" true}
                luxon.DateTime)

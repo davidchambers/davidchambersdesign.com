@@ -16,8 +16,8 @@ coerce x = {
 }
 
 split-every-2 xs =
-  (s:array []
-           (k -> (s:array []
+  (s:array #[]
+           (k -> (s:array #[]
                           (v -> (s:compose (s:prepend (s:Pair k v))
                                            split-every-2))))
            xs)
@@ -27,39 +27,39 @@ vendor-prefix unprefixed prefixed =
                       if k === unprefixed {
                         (s:map (s:Pair _ v) (s:append unprefixed prefixed))
                       } else {
-                        [(s:Pair k v)]
+                        #[(s:Pair k v)]
                       }
                     })))
 
 vendor-prefixes =
-  (s:pipe [(vendor-prefix :border-radius
-                          [:-webkit-border-radius
-                              :-moz-border-radius
-                               :-ms-border-radius
-                                :-o-border-radius])
-           (vendor-prefix :box-shadow
-                          [:-webkit-box-shadow
-                              :-moz-box-shadow])
-           (vendor-prefix :transition-duration
-                          [:-webkit-transition-duration
-                              :-moz-transition-duration
-                                :-o-transition-duration])
-           (vendor-prefix :transition-timing-function
-                          [:-webkit-transition-timing-function
-                              :-moz-transition-timing-function
-                                :-o-transition-timing-function])])
+  (s:pipe #[(vendor-prefix :border-radius
+                           #[:-webkit-border-radius
+                                :-moz-border-radius
+                                 :-ms-border-radius
+                                  :-o-border-radius])
+            (vendor-prefix :box-shadow
+                           #[:-webkit-box-shadow
+                                :-moz-box-shadow])
+            (vendor-prefix :transition-duration
+                           #[:-webkit-transition-duration
+                                :-moz-transition-duration
+                                  :-o-transition-duration])
+            (vendor-prefix :transition-timing-function
+                           #[:-webkit-transition-timing-function
+                                :-moz-transition-timing-function
+                                  :-o-transition-timing-function])])
 
 format-block selectors =
-  (s:pipe [(s:map (s:pair (k v -> (.join "" ["  " (coerce k) ": " (coerce v) ";"]))))
-           (s:prepend (s:concat (s:join-with ",\n" selectors) " {"))
-           (s:append "}")
-           s:unlines])
+  (s:pipe #[(s:map (s:pair (k v -> (.join "" #["  " (coerce k) ": " (coerce v) ";"]))))
+            (s:prepend (s:concat (s:join-with ",\n" selectors) " {"))
+            (s:append "}")
+            s:unlines])
 
 generate-css =
-  (s:pipe [screen
-           split-every-2
-           (s:map (s:map split-every-2))
-           (s:map (s:map vendor-prefixes))
-           (s:map (s:pair format-block))
-           (s:join-with "\n")]
+  (s:pipe #[screen
+            split-every-2
+            (s:map (s:map split-every-2))
+            (s:map (s:map vendor-prefixes))
+            (s:map (s:pair format-block))
+            (s:join-with "\n")]
           coerce)

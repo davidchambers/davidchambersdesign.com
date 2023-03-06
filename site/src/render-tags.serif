@@ -12,16 +12,16 @@ render-tags posts = {
   counts = (s:reduce (counts post ->
                         (s:reduce (counts tag ->
                                      (concat counts
-                                             (Object.fromEntries [[tag {(s:prop tag counts) + 1}]])))
+                                             (Object.fromEntries #[#[tag {(s:prop tag counts) + 1}]])))
                                   counts
                                   (:tags post)))
                      (s:map (_ -> 0) tags)
                      posts)
-  [(h1 "Tags")
-   (ol' #{:id "tags"}
-      (s:map (tag ->
-                (li' #{:data-count (s:prop tag counts)}
-                   (a (.join "" ["/tag/" tag "/"]) (s:prop tag tags))))
-             (Object.keys tags)))
-   (div #{:class "clearfix"} [])]
+  #[(h1 "Tags")
+    (ol' #{:id "tags"}
+       (s:map (tag ->
+                 (li' #{:data-count (s:prop tag counts)}
+                    (a (.join "" #["/tag/" tag "/"]) (s:prop tag tags))))
+              (Object.keys tags)))
+    (div #{:class "clearfix"} #[])]
 }

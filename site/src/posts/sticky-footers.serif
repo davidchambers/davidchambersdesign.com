@@ -7,25 +7,25 @@ export default #{
   :slug "sticky-footers"
   :title "Sticky footers"
   :datetime (datetime "2009-09-20" "01:08:00" :Pacific/Auckland)
-  :tags ["css" "html"]
+  :tags #["css" "html"]
   :body body
 }
 
-body = [
+body = #[
 
   (excerpt
 
-     [(p
-         [(strong "Sticky footers should be ubiquitous. They are not.")])
+     #[(p
+          #[(strong "Sticky footers should be ubiquitous. They are not.")])
 
-      (p
-         ["This leads me to believe that many developers are unaware
-           of how to prevent footers from floating up on pages without
-           much content."])])
+       (p
+          #["This leads me to believe that many developers are unaware
+             of how to prevent footers from floating up on pages without
+             much content."])])
 
   (p
-     ["I'll explain how it's done. The markup must look something like
-       the following:"])
+     #["I'll explain how it's done. The markup must look something like
+        the following:"])
 
   (code-block :html
 
@@ -41,8 +41,8 @@ body = [
      ")
 
   (p
-     ["The required CSS is also straightforward. First, set the heights
-       of the html and body elements to the height of the viewport:"])
+     #["The required CSS is also straightforward. First, set the heights
+        of the html and body elements to the height of the viewport:"])
 
   (code-block :css
 
@@ -52,8 +52,8 @@ body = [
      ")
 
   (p
-     ["This makes it possible to set the " (em "minimum") " height of
-       the wrapper div to the height of the viewport:"])
+     #["This makes it possible to set the " (em "minimum") " height of
+        the wrapper div to the height of the viewport:"])
 
   (code-block :css
 
@@ -62,8 +62,8 @@ body = [
      ")
 
   (p
-     ["Next, pull up the footer so that it's visible without scrolling
-       on pages without a lot of content:"])
+     #["Next, pull up the footer so that it's visible without scrolling
+        on pages without a lot of content:"])
 
   (code-block :css
 
@@ -72,8 +72,8 @@ body = [
      ")
 
   (p
-     ["Finally, apply bottom padding to the main content div to ensure
-       that nothing is covered by the footer:"])
+     #["Finally, apply bottom padding to the main content div to ensure
+        that nothing is covered by the footer:"])
 
   (code-block :css
 
@@ -82,7 +82,7 @@ body = [
      ")
 
   (p
-     ["Putting it all together gives the following:"])
+     #["Putting it all together gives the following:"])
 
   (code-block :css
 
@@ -95,14 +95,14 @@ body = [
      ")
 
   (p
-     ["This CSS works in all modern browsers. If you need to support
-       antiquated browsers, you should have a look at the hacks suggested
-       at " (a "http://www.cssstickyfooter.com/" "CSS Sticky Footer") "."])
+     #["This CSS works in all modern browsers. If you need to support
+        antiquated browsers, you should have a look at the hacks suggested
+        at " (a "http://www.cssstickyfooter.com/" "CSS Sticky Footer") "."])
 
   (p
-     [(strong
-         ["Check out the "
-          (a "/examples/sticky-footers/" "sticky footer demo") "
-           to see all this theory in action."])])
+     #[(strong
+          #["Check out the "
+            (a "/examples/sticky-footers/" "sticky footer demo") "
+             to see all this theory in action."])])
 
 ]

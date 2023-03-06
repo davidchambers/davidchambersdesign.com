@@ -122,12 +122,12 @@ import default as post/give-and-take-of-continuation-passing-style from "../post
 
 __dirname = (path.dirname (url.fileURLToPath ("url" import.meta)))
 
-pages = [
+pages = #[
   page/about
   page/elam
 ]
 
-posts = [
+posts = #[
   post/beautiful-painted-alphabet
   post/show-full-directory-path-in-finder-window-title-bar
   post/rounded-rectangles-in-adobe-illustrator-cs3
@@ -226,96 +226,96 @@ posts = [
 ]
 
 public components =
-  (path.join ...[__dirname ".." ".." "public" ...components])
+  (path.join ...#[__dirname ".." ".." "public" ...components])
 
 write-file filename data =
-  (fs.writeFileSync ...[filename data])
+  (fs.writeFileSync ...#[filename data])
 
-(write-file (public ["css" "screen.css"])
+(write-file (public #["css" "screen.css"])
             generate-css)
 
 render-svg attrs =
-  (s:pipe [(svg #{:xmlns "http://www.w3.org/2000/svg" :version "1.1" ...attrs})
-           (:render _ "  " 0 false)
-           (s -> "<?xml version=\"1.0\" standalone=\"no\"?>\n" + s)])
+  (s:pipe #[(svg #{:xmlns "http://www.w3.org/2000/svg" :version "1.1" ...attrs})
+            (:render _ "  " 0 false)
+            (s -> "<?xml version=\"1.0\" standalone=\"no\"?>\n" + s)])
 
-(write-file (public ["svg" "masthead.svg"])
+(write-file (public #["svg" "masthead.svg"])
             (render-svg #{} (:fill masthead)))
 
-(write-file (public ["svg" "masthead-mask.svg"])
+(write-file (public #["svg" "masthead-mask.svg"])
             (render-svg #{} (:mask masthead)))
 
-(write-file (public ["svg" "about.svg"])
+(write-file (public #["svg" "about.svg"])
             (render-svg #{:width 16 :height 16} icon/about))
 
-(write-file (public ["svg" "archives.svg"])
+(write-file (public #["svg" "archives.svg"])
             (render-svg #{:width 16 :height 16} icon/archives))
 
-(write-file (public ["svg" "bitbucket.svg"])
+(write-file (public #["svg" "bitbucket.svg"])
             (render-svg #{:width 16 :height 16} icon/bitbucket))
 
-(write-file (public ["svg" "dates-0.svg"])
+(write-file (public #["svg" "dates-0.svg"])
             (render-svg #{} (0 dates)))
 
-(write-file (public ["svg" "dates-1.svg"])
+(write-file (public #["svg" "dates-1.svg"])
             (render-svg #{} (1 dates)))
 
-(write-file (public ["svg" "dates-2.svg"])
+(write-file (public #["svg" "dates-2.svg"])
             (render-svg #{} (2 dates)))
 
-(write-file (public ["svg" "dates-3.svg"])
+(write-file (public #["svg" "dates-3.svg"])
             (render-svg #{} (3 dates)))
 
-(write-file (public ["svg" "dates-4.svg"])
+(write-file (public #["svg" "dates-4.svg"])
             (render-svg #{} (4 dates)))
 
-(write-file (public ["svg" "dates-5.svg"])
+(write-file (public #["svg" "dates-5.svg"])
             (render-svg #{} (5 dates)))
 
-(write-file (public ["svg" "dates-6.svg"])
+(write-file (public #["svg" "dates-6.svg"])
             (render-svg #{} (6 dates)))
 
-(write-file (public ["svg" "dates-7.svg"])
+(write-file (public #["svg" "dates-7.svg"])
             (render-svg #{} (7 dates)))
 
-(write-file (public ["svg" "dates-8.svg"])
+(write-file (public #["svg" "dates-8.svg"])
             (render-svg #{} (8 dates)))
 
-(write-file (public ["svg" "dates-9.svg"])
+(write-file (public #["svg" "dates-9.svg"])
             (render-svg #{} (9 dates)))
 
-(write-file (public ["svg" "contact.svg"])
+(write-file (public #["svg" "contact.svg"])
             (render-svg #{:width 16 :height 16} icon/contact))
 
-(write-file (public ["svg" "flushcache.svg"])
+(write-file (public #["svg" "flushcache.svg"])
             (render-svg #{:width 16 :height 16} icon/flushcache))
 
-(write-file (public ["svg" "tags.svg"])
+(write-file (public #["svg" "tags.svg"])
             (render-svg #{:width 16 :height 16} icon/tags))
 
-(write-file (public ["svg" "twitter.svg"])
+(write-file (public #["svg" "twitter.svg"])
             (render-svg #{:width 16 :height 16} icon/twitter))
 
 render-document element = {
   "<!DOCTYPE html>\n" + (element:render "  " 0 false)
 }
 
-(write-file (public ["archives.html"])
+(write-file (public #["archives.html"])
             (render-document (base-template "Archives"
                                           (render-archives posts))))
 
-(write-file (public ["tags.html"])
+(write-file (public #["tags.html"])
             (render-document (base-template "Tags"
                                             (render-tags posts))))
 
 (s:map (page ->
-          (write-file (public [(s:concat (:slug page) ".html")])
+          (write-file (public #[(s:concat (:slug page) ".html")])
                       (render-document (base-template (:title page)
                                                       (render-page page)))))
        pages)
 
 (s:map (post ->
-          (write-file (public [(s:concat (:slug post) ".html")])
+          (write-file (public #[(s:concat (:slug post) ".html")])
                       (render-document (base-template (:title post)
                                                       (render-post post
                                                                    (related-posts posts post))))))

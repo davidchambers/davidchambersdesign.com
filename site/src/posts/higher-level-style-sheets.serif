@@ -7,34 +7,34 @@ export default #{
   :slug "higher-level-style-sheets"
   :title "Higher-level style sheets"
   :datetime (datetime "2011-10-02" "23:00:00" :America/Los_Angeles)
-  :tags ["best-practice" "compass" "css" "ruby" "sass"]
+  :tags #["best-practice" "compass" "css" "ruby" "sass"]
   :body body
 }
 
-body = [
+body = #[
 
   (excerpt
 
-     [(p
-         ["Yesterday I used three things for the first time: "
-          (a "http://sass-lang.com/" "Sass") ", "
-          (a "http://compass-style.org/" "Compass") ", and Ruby.
-           To summarize:"])
+     #[(p
+          #["Yesterday I used three things for the first time: "
+            (a "http://sass-lang.com/" "Sass") ", "
+            (a "http://compass-style.org/" "Compass") ", and Ruby.
+             To summarize:"])
 
-      (ul
-         [(li "I ♥ Sass")
-          (li "I ♥ Compass")
-          (li "I ♥ Ruby")])
+       (ul
+          #[(li "I ♥ Sass")
+            (li "I ♥ Compass")
+            (li "I ♥ Ruby")])
 
-      (p
-         ["One's own site is a great place to play with new
-           (or in this case, not so new) web technologies.
-           I decided to get stuck in and manually convert the "
-          (a "https://bitbucket.org/davidchambers/dcd-static/src/872e932b4941/styles/screen.css"
-             "1200 line style sheet") " from CSS to something a bit
-           more awesome. This post documents the most interesting
-           portion of that transformation, which involved this site's "
-          (a "/archives/" "archives") " styles."])])
+       (p
+          #["One's own site is a great place to play with new
+             (or in this case, not so new) web technologies.
+             I decided to get stuck in and manually convert the "
+            (a "https://bitbucket.org/davidchambers/dcd-static/src/872e932b4941/styles/screen.css"
+               "1200 line style sheet") " from CSS to something a bit
+             more awesome. This post documents the most interesting
+             portion of that transformation, which involved this site's "
+            (a "/archives/" "archives") " styles."])])
 
   (h3 "Original CSS")
 
@@ -129,21 +129,21 @@ body = [
      ")
 
   (p
-     ["That's a lot of text, most of which relates to the calendar sprite.
-       To start, though..."])
+     #["That's a lot of text, most of which relates to the calendar sprite.
+        To start, though..."])
 
   (h3 "Significant whitespace and nesting")
 
   (p
-     ["As in Python and CoffeeScript, whitespace is significant in Sass.
-       As a result, squiggly brackets are not required to delimit blocks,
-       and semicolons are not required to separate one rule from the next."])
+     #["As in Python and CoffeeScript, whitespace is significant in Sass.
+        As a result, squiggly brackets are not required to delimit blocks,
+        and semicolons are not required to separate one rule from the next."])
 
   (p
-     ["Sass allows selectors to be nested. The main advantage
-       of this approach is that selectors needn't include their
-       \"context\" (ancestors). It also means that a style sheet's
-       structure resembles that of the corresponding markup."])
+     #["Sass allows selectors to be nested. The main advantage
+        of this approach is that selectors needn't include their
+        \"context\" (ancestors). It also means that a style sheet's
+        structure resembles that of the corresponding markup."])
 
   (code-block :sass
 
@@ -171,36 +171,36 @@ body = [
          overflow: hidden
      ")
 
-  (h3 ["Compass's " (code "inline-image") " function"])
+  (h3 #["Compass's " (code "inline-image") " function"])
 
   (p
-     ["For an image that's " (em "design") " rather than content, it's
-       better to link to it from a style sheet than to include it as an "
-      (code "img") ". Better still, it can be Base64 encoded and embedded
-       in the style sheet as a data URI, saving an HTTP request."])
+     #["For an image that's " (em "design") " rather than content, it's
+        better to link to it from a style sheet than to include it as an "
+       (code "img") ". Better still, it can be Base64 encoded and embedded
+        in the style sheet as a data URI, saving an HTTP request."])
 
   (p
-     ["Until yesterday, I'd always done this by hand. It's a bit of a pain,
-       but I'm pretty familiar with the routine:"])
+     #["Until yesterday, I'd always done this by hand. It's a bit of a pain,
+        but I'm pretty familiar with the routine:"])
 
   (ol
-     [(li ["Export image file as PNG"])
-      (li [(a "http://www.smushit.com/ysmush.it/" "Smush.it")])
-      (li ["Save smushed image"])
-      (li ["Drop smushed image into Hashify
-            (e.g. " (a "http://bit.ly/pbovZI" "calendar.png") ")"])
-      (li ["Copy data URI from Hashify and paste it into style sheet"])])
+     #[(li #["Export image file as PNG"])
+       (li #[(a "http://www.smushit.com/ysmush.it/" "Smush.it")])
+       (li #["Save smushed image"])
+       (li #["Drop smushed image into Hashify
+              (e.g. " (a "http://bit.ly/pbovZI" "calendar.png") ")"])
+       (li #["Copy data URI from Hashify and paste it into style sheet"])])
 
   (p
-     ["Having to perform these steps each time the source
-       image is changed is a real nuisance. Compass offers
-       an extremely elegant solution: a Sass function named "
-      (a "http://compass-style.org/reference/compass/helpers/inline-data/#inline-image"
-         (code "inline-image")) ". When compiled, "
-      (code "inline-image(\"calendar.png\")") " becomes a data
-       URI – the Base64-encoded representation of calendar.png.
-       If calendar.png is changed, " (code "compass compile") "
-       is all that's required to update the data URI."])
+     #["Having to perform these steps each time the source
+        image is changed is a real nuisance. Compass offers
+        an extremely elegant solution: a Sass function named "
+       (a "http://compass-style.org/reference/compass/helpers/inline-data/#inline-image"
+          (code "inline-image")) ". When compiled, "
+       (code "inline-image(\"calendar.png\")") " becomes a data
+        URI – the Base64-encoded representation of calendar.png.
+        If calendar.png is changed, " (code "compass compile") "
+        is all that's required to update the data URI."])
 
   (code-block :sass
 
@@ -225,12 +225,12 @@ body = [
   (h3 "Generating repetitive CSS programmatically")
 
   (p
-     ["Having a placeholder for the data URI is great;
-       31 " (code "background-position") " declarations not
-       so much. Compass provides helpers for generating and
-       working with sprites, but in this case all that's
-       required is to generate background positions for an
-       existing sprite. The first step is to add a loop:"])
+     #["Having a placeholder for the data URI is great;
+        31 " (code "background-position") " declarations not
+        so much. Compass provides helpers for generating and
+        working with sprites, but in this case all that's
+        required is to generate background positions for an
+        existing sprite. The first step is to add a loop:"])
 
   (code-block :sass
 
@@ -240,8 +240,8 @@ body = [
      ")
 
   (p
-     ["The loop variable, " (code "$date") ", can be
-       interpolated to generate the selectors:"])
+     #["The loop variable, " (code "$date") ", can be
+        interpolated to generate the selectors:"])
 
   (code-block :sass
 
@@ -251,10 +251,10 @@ body = [
      ")
 
   (p
-     ["Almost. This gives " (code "datetime*=\"1T\"") ", "
-      (code "datetime*=\"2T\"") ", etc. rather than their
-       zero-padded equivalents. Adding a leading zero when
-       required is not difficult:"])
+     #["Almost. This gives " (code "datetime*=\"1T\"") ", "
+       (code "datetime*=\"2T\"") ", etc. rather than their
+        zero-padded equivalents. Adding a leading zero when
+        required is not difficult:"])
 
   (code-block :sass
 
@@ -266,8 +266,8 @@ body = [
      ")
 
   (p
-     ["Finally, variables can be used to calculate the "
-      (code "background-position") " of each element:"])
+     #["Finally, variables can be used to calculate the "
+       (code "background-position") " of each element:"])
 
   (code-block :sass
 
@@ -288,38 +288,38 @@ body = [
      ")
 
   (p
-     ["These 13 lines of relatively straightforward logic
-       produce the same output as the 62 lines they replace."])
+     #["These 13 lines of relatively straightforward logic
+        produce the same output as the 62 lines they replace."])
 
   (h3 "The right level of abstraction")
 
   (p
-     ["In "
-      (a "http://5by5.tv/hypercritical/14"
-         "A Dark Age of Objective-C") "
-       and in "
-      (a "http://5by5.tv/hypercritical/15"
-         "The Bridges of Siracusa County") ",
-       John Siracusa made the claim that software developers have an
-       insatiable desire for ever higher-level programming languages
-       and frameworks. In and of itself, though, abstraction is not
-       a virtue. Most abstractions fail for one reason or another:
-       they aren't sufficiently flexible, or they are so generic
-       that they provide very little utility, or they don't fit
-       well with people's mental models."])
+     #["In "
+       (a "http://5by5.tv/hypercritical/14"
+          "A Dark Age of Objective-C") "
+        and in "
+       (a "http://5by5.tv/hypercritical/15"
+          "The Bridges of Siracusa County") ",
+        John Siracusa made the claim that software developers have an
+        insatiable desire for ever higher-level programming languages
+        and frameworks. In and of itself, though, abstraction is not
+        a virtue. Most abstractions fail for one reason or another:
+        they aren't sufficiently flexible, or they are so generic
+        that they provide very little utility, or they don't fit
+        well with people's mental models."])
 
   (p
-     [(em "Good") " abstractions are wonderful. jQuery, for example,
-       makes it possible to act on collections of elements as one
-       would individual elements. Before jQuery, binding an event
-       handler to several elements required more than a superficial
-       understanding of JavaScript (advanced knowledge if it were
-       necessary to close over variables). Good abstractions allow
-       us to write succinct, self-documenting code."])
+     #[(em "Good") " abstractions are wonderful. jQuery, for example,
+        makes it possible to act on collections of elements as one
+        would individual elements. Before jQuery, binding an event
+        handler to several elements required more than a superficial
+        understanding of JavaScript (advanced knowledge if it were
+        necessary to close over variables). Good abstractions allow
+        us to write succinct, self-documenting code."])
 
   (p
-     ["I'm hopeful that Sass and its kin will do for CSS what jQuery has
-       done for the DOM (and what CoffeeScript is doing for JavaScript).
-       My first taste of higher-level CSS tasted very good indeed."])
+     #["I'm hopeful that Sass and its kin will do for CSS what jQuery has
+        done for the DOM (and what CoffeeScript is doing for JavaScript).
+        My first taste of higher-level CSS tasted very good indeed."])
 
 ]

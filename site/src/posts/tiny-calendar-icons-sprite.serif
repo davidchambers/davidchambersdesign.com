@@ -7,35 +7,35 @@ export default #{
   :slug "tiny-calendar-icons-sprite"
   :title "Tiny calendar icons sprite"
   :datetime (datetime "2009-08-28" "18:04:00" :Pacific/Auckland)
-  :tags ["css" "design" "html" "icons"]
+  :tags #["css" "design" "html" "icons"]
   :body body
 }
 
-body = [
+body = #[
 
   (excerpt
 
-     [(p
-         ["Recently I've been on a mission to minimize the number
-           of HTTP requests made while loading pages on this site.
-           Until yesterday, the " (a "/archives/" "archives") "
-           page was making an HTTP request for each of the "
-          (a "/tiny-calendar-icon-set/" "tiny calendar icons") "
-           used on the page. Therefore, up to 31 HTTP requests were
-           required just to retrieve the calendar icons. Not good."])
+     #[(p
+          #["Recently I've been on a mission to minimize the number
+             of HTTP requests made while loading pages on this site.
+             Until yesterday, the " (a "/archives/" "archives") "
+             page was making an HTTP request for each of the "
+            (a "/tiny-calendar-icon-set/" "tiny calendar icons") "
+             used on the page. Therefore, up to 31 HTTP requests were
+             required just to retrieve the calendar icons. Not good."])
 
-      (p
-         ["The same result can be achieved with a single HTTP request
-           through the use of a sprite:"])
+       (p
+          #["The same result can be achieved with a single HTTP request
+             through the use of a sprite:"])
 
-      (captioned-image
-         "/images/posts/23/calendar.png"
-         "Tiny calendar icons sprite"
-         "Tiny calendar icons sprite, which you're welcome to save and use")])
+       (captioned-image
+          "/images/posts/23/calendar.png"
+          "Tiny calendar icons sprite"
+          "Tiny calendar icons sprite, which you're welcome to save and use")])
 
   (p
-     ["One uses a sprite by applying a background image to an element
-       using CSS. One could start with an empty span element:"])
+     #["One uses a sprite by applying a background image to an element
+        using CSS. One could start with an empty span element:"])
 
   (code-block :html
 
@@ -44,8 +44,8 @@ body = [
      ")
 
   (p
-     ["The following CSS sets the width and height of the element and
-       sets the sprite as its background image:"])
+     #["The following CSS sets the width and height of the element and
+        sets the sprite as its background image:"])
 
   (code-block :css
 
@@ -61,19 +61,19 @@ body = [
      ")
 
   (p
-     ["By default the top left corner of an element's background image
-       is aligned with the element's top left corner, so at this stage
-       all that's displayed is a 16px by 16px white box:"])
+     #["By default the top left corner of an element's background image
+        is aligned with the element's top left corner, so at this stage
+        all that's displayed is a 16px by 16px white box:"])
 
   (captioned-image
      "/images/posts/23/calendar-span-default-bg-pos.png"
      "Calendar sprite applied as background image using default positioning"
-     ["Calendar sprite applied as background image using "
-      (strong "default") " positioning"])
+     #["Calendar sprite applied as background image using "
+       (strong "default") " positioning"])
 
   (p
-     ["To have the \"1\" icon displayed, the element's background position
-       is specified:"])
+     #["To have the \"1\" icon displayed, the element's background position
+        is specified:"])
 
   (code-block :css
 
@@ -90,7 +90,7 @@ body = [
      ")
 
   (p
-     ["This drags the background image 60px to the left, and lifts it 20px:"])
+     #["This drags the background image 60px to the left, and lifts it 20px:"])
 
   (captioned-image
      "/images/posts/23/calendar-span-specified-bg-pos.png"
@@ -98,7 +98,7 @@ body = [
      "Calendar sprite applied as background image using correct positioning")
 
   (p
-     ["Here's the final CSS:"])
+     #["Here's the final CSS:"])
 
   (code-block :css
 
@@ -152,8 +152,8 @@ body = [
      ")
 
   (p
-     ["Note that I introduced the class name " (strong "day") " to streamline
-       the CSS. This must appear in the HTML, as in this example:"])
+     #["Note that I introduced the class name " (strong "day") " to streamline
+        the CSS. This must appear in the HTML, as in this example:"])
 
   (code-block :html
 

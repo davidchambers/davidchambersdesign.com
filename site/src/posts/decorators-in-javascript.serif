@@ -7,15 +7,15 @@ export default #{
   :slug "decorators-in-javascript"
   :title "Decorators in JavaScript"
   :datetime (datetime "2011-07-26" "22:00:00" :America/Los_Angeles)
-  :tags ["coffeescript" "javascript" "programming"]
+  :tags #["coffeescript" "javascript" "programming"]
   :body body
 }
 
-body = [
+body = #[
 
   (p
-     ["A decorator is a function which takes a function and returns
-       a function:"])
+     #["A decorator is a function which takes a function and returns
+        a function:"])
 
   (code-block :coffeescript
 
@@ -24,11 +24,11 @@ body = [
      ")
 
   (p
-     ["Obviously, this doesn't do anything useful. It's the fact that a
-       decorator can return a function which behaves " (em "similarly") "
-       to the function passed to it that makes the pattern interesting.
-       Commonly a decorator will simply wrap a function invocation in a
-       check of some sort:"])
+     #["Obviously, this doesn't do anything useful. It's the fact that a
+        decorator can return a function which behaves " (em "similarly") "
+        to the function passed to it that makes the pattern interesting.
+        Commonly a decorator will simply wrap a function invocation in a
+        check of some sort:"])
 
   (code-block :javascript
 
@@ -44,8 +44,8 @@ body = [
      ")
 
   (p
-     ["The above decorator could be used to \"guard\" actions that only
-       authenticated users are permitted to perform:"])
+     #["The above decorator could be used to \"guard\" actions that only
+        authenticated users are permitted to perform:"])
 
   (code-block :javascript
 
@@ -72,7 +72,7 @@ body = [
      ")
 
   (p
-     ["The CoffeeScript equivalent is quite a bit clearer:"])
+     #["The CoffeeScript equivalent is quite a bit clearer:"])
 
   (code-block :coffeescript
 
@@ -96,11 +96,11 @@ body = [
      ")
 
   (p
-     ["Decorators are commonly used in Python -- which provides special
-       syntax for \"decorating\" functions -- but are rarely seen in
-       JavaScript code. This despite the fact that JavaScript's first-class
-       functions are ideally suited to the task. Perhaps CoffeeScript's
-       lighter-weight function syntax will result in decorators making
-       more frequent appearances in JavaScript code."])
+     #["Decorators are commonly used in Python -- which provides special
+        syntax for \"decorating\" functions -- but are rarely seen in
+        JavaScript code. This despite the fact that JavaScript's first-class
+        functions are ideally suited to the task. Perhaps CoffeeScript's
+        lighter-weight function syntax will result in decorators making
+        more frequent appearances in JavaScript code."])
 
 ]

@@ -3,7 +3,7 @@ import * from "../orthogonal.serif"
 
 export default flushcache
 
-stroke = [
+stroke = #[
   (⇨  5) (⇩  0)
   (→  6) (↓  1) (→  1) (↓  1)
   (→  1) (↓  1) (→  1) (↑  1)
@@ -24,7 +24,7 @@ stroke = [
   (→  1) (↑  1) (→  1) (↑  1)
 ]
 
-fill = [
+fill = #[
   (⇨  5) (⇩  1)
   (→  6) (↓  1) (→  1) (↓  1) (→  1) (↓  1) (→  1) (↑  1)
   (→  1) (↓  4) (←  4) (↑  1) (→  1) (↑  1) (←  1) (↑  1)
@@ -36,7 +36,7 @@ fill = [
   (→  1) (↑  1) (→  1) (↑  1) (→  1) (↑  1)
 ]
 
-flushcache = [
+flushcache = #[
   (path #{:fill "#391" :d (render stroke)})
   (path #{:fill "#6c4" :d (render fill)})
 ]

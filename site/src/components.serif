@@ -18,22 +18,22 @@ caption caption =
 
 captioned-image src alt caption =
   (dl
-     [(dt (img #{:alt alt :src src}))
-      (dd caption)])
+     #[(dt (img #{:alt alt :src src}))
+       (dd caption)])
 
 captioned-images images =
   (dl (s:chain (image -> {
                   src = (0 image)
                   alt = (1 image)
                   cap = (2 image)
-                  [(dt (img #{:alt alt :src src}))
-                   (dd cap)]
+                  #[(dt (img #{:alt alt :src src}))
+                    (dd cap)]
                 })
                images))
 
 code-block language source-code = {
   lines =
-    (s:from-maybe [] (s:chain s:init (s:tail (s:lines source-code))))
+    (s:from-maybe #[] (s:chain s:init (s:tail (s:lines source-code))))
   trim-leading-spaces line =
     (s:from-maybe line
                   (s:chain (s:strip-prefix _ line)
@@ -50,17 +50,17 @@ interview-list interviewer interviewee exchange =
   (ol (s:snd (s:reduce (s:pair (name items quotation -> {
                                   if (s:equals interviewer name) {
                                     (s:Pair interviewee
-                                            [...items
-                                             (li' #{:class "interviewer"}
-                                                [(strong (s:concat interviewer ":")) " " ...quotation])])
+                                            #[...items
+                                              (li' #{:class "interviewer"}
+                                                 #[(strong (s:concat interviewer ":")) " " ...quotation])])
                                   } else {
                                     (s:Pair interviewer
-                                            [...items
-                                             (li' #{}
-                                                [(strong (s:concat interviewee ":")) " " ...quotation])])
+                                            #[...items
+                                              (li' #{}
+                                                 #[(strong (s:concat interviewee ":")) " " ...quotation])])
                                   }
                                 }))
-                       (s:Pair interviewer [])
+                       (s:Pair interviewer #[])
                        (s:map canonicalize-children exchange))))
 
 pros-and-cons-list f =
@@ -72,7 +72,7 @@ uncaptioned-image src alt =
 
 update datetime body =
   (div #{:class "update"}
-     (s:prepend (h4 ["Update \u2014 "
-                     (time #{:datetime (.toISO datetime)}
-                        (.toFormat "d MMMM y" datetime))])
+     (s:prepend (h4 #["Update \u2014 "
+                      (time #{:datetime (.toISO datetime)}
+                         (.toFormat "d MMMM y" datetime))])
                 (canonicalize-children body)))

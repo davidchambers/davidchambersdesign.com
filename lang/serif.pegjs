@@ -442,7 +442,7 @@ SpreadElement 'spread element'
     { return {type: 'spread-element', argument}; }
 
 Array 'array'
-  = Separator* '['
+  = Separator* '#['
     elements:(
       head:(Separator* element:(SpreadElement / Expression) { return element; })
       tail:(Separator+ element:(SpreadElement / Expression) { return element; })*

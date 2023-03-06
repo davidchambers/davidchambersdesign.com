@@ -7,15 +7,15 @@ export default #{
   :slug "serializing-django-model-instances"
   :title "Serializing Django model instances"
   :datetime (datetime "2010-04-13" "08:16:00" :Pacific/Auckland)
-  :tags ["django" "python"]
+  :tags #["django" "python"]
   :body body
 }
 
-body = [
+body = #[
 
   (p
-     ["One might expect the following code to serialize a Django model
-       instance:"])
+     #["One might expect the following code to serialize a Django model
+        instance:"])
 
   (code-block :python
 
@@ -25,10 +25,10 @@ body = [
      ")
 
   (p
-     ["Unforunately, this raises a TypeError, as the instance is not JSON
-       serializable. I don't understand " (em "why") " model instances are
-       not serializable, but I do have a solution: define a serialization
-       method on the instance's model."])
+     #["Unforunately, this raises a TypeError, as the instance is not JSON
+        serializable. I don't understand " (em "why") " model instances are
+        not serializable, but I do have a solution: define a serialization
+        method on the instance's model."])
 
   (code-block :python
 
@@ -39,7 +39,7 @@ body = [
      ")
 
   (p
-     ["Here's the verbose equivalent for those averse to one-liners:"])
+     #["Here's the verbose equivalent for those averse to one-liners:"])
 
   (code-block :python
 
@@ -58,10 +58,10 @@ body = [
      ")
 
   (p
-     [(code "_meta.fields") " is an ordered list of model fields
-       which can be accessed from instances and from the model itself. "
-      (a "http://www.djangofoo.com/tag/meta-fields" "_meta.fields") "
-       is one of the few features not covered in Django's excellent
-       documentation."])
+     #[(code "_meta.fields") " is an ordered list of model fields
+        which can be accessed from instances and from the model itself. "
+       (a "http://www.djangofoo.com/tag/meta-fields" "_meta.fields") "
+        is one of the few features not covered in Django's excellent
+        documentation."])
 
 ]
