@@ -309,13 +309,13 @@ render-document element = {
                                             (render-tags posts))))
 
 (s:map (page ->
-          (write-file (public #[(s:concat (:slug page) ".html")])
+          (write-file (public #[(:slug page) + ".html"])
                       (render-document (base-template (:title page)
                                                       (render-page page)))))
        pages)
 
 (s:map (post ->
-          (write-file (public #[(s:concat (:slug post) ".html")])
+          (write-file (public #[(:slug post) + ".html"])
                       (render-document (base-template (:title post)
                                                       (render-post post
                                                                    (related-posts posts post))))))

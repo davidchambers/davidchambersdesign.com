@@ -6,22 +6,16 @@ import default as tags from "./tags.serif"
 
 export default render-tags
 
-concat = (.assign #{} _ _ Object)
-
 render-tags posts = {
-  counts = (s:reduce (counts post ->
-                        (s:reduce (counts tag ->
-                                     (concat counts
-                                             (Object.fromEntries #[#[tag {(s:prop tag counts) + 1}]])))
-                                  counts
-                                  (:tags post)))
+  counts = (s:reduce (counts tag -> #{...counts [tag] (s:prop tag counts) + 1})
                      (s:map (_ -> 0) tags)
-                     posts)
+                     (s:chain (s:prop :tags) posts))
   #[(h1 "Tags")
     (ol' #{:id "tags"}
        (s:map (tag ->
                  (li' #{:data-count (s:prop tag counts)}
-                    (a (.join "" #["/tag/" tag "/"]) (s:prop tag tags))))
+                    (a ["/tag/" + tag + "/"]
+                       (s:prop tag tags))))
               (Object.keys tags)))
     (div #{:class "clearfix"} #[])]
 }

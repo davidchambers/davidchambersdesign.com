@@ -34,15 +34,7 @@ simplify =
 render =
   (s:pipe #[simplify
             s:join
-            (s:map (x -> {
-                      if typeof x === "object" {  ; array
-                        (.join "," x)
-                      } else if typeof x === "symbol" {
-                        (Symbol.keyFor x)
-                      } else {
-                        (String x)
-                      }
-                    }))
+            (s:map (x -> if typeof x === "symbol" (Symbol.keyFor x) else (String x)))
             s:unwords])
 
 ⇦ x = #[:m #[{- x} 0]]

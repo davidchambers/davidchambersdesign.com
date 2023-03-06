@@ -50,8 +50,8 @@ vendor-prefixes =
                                   :-o-transition-timing-function])])
 
 format-block selectors =
-  (s:pipe #[(s:map (s:pair (k v -> (.join "" #["  " (coerce k) ": " (coerce v) ";"]))))
-            (s:prepend (s:concat (s:join-with ",\n" selectors) " {"))
+  (s:pipe #[(s:map (s:pair (k v -> "  " + (coerce k) + ": " + (coerce v) + ";")))
+            (s:prepend (s:join-with ",\n" selectors) + " {")
             (s:append "}")
             s:unlines])
 

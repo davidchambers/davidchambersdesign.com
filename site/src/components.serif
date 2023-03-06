@@ -52,12 +52,12 @@ interview-list interviewer interviewee exchange =
                                     (s:Pair interviewee
                                             #[...items
                                               (li' #{:class "interviewer"}
-                                                 #[(strong (s:concat interviewer ":")) " " ...quotation])])
+                                                 #[(strong interviewer + ":") " " ...quotation])])
                                   } else {
                                     (s:Pair interviewer
                                             #[...items
                                               (li' #{}
-                                                 #[(strong (s:concat interviewee ":")) " " ...quotation])])
+                                                 #[(strong interviewee + ":") " " ...quotation])])
                                   }
                                 }))
                        (s:Pair interviewer #[])

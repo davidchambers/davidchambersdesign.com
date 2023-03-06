@@ -224,9 +224,9 @@ Lambda 'lambda'
     { return parameters.reduceRight((body, parameter) => ({type: 'lambda', parameter, body}), body); }
 
 BlockExpression 'block expression'
-  = Separator* '{'
-    statements:Statement*
-    Separator* '}'
+  = Separator* '{' statements:Statement* Separator* '}'
+    { return {type: 'BlockExpression', statements}; }
+  / Separator* '[' statements:Statement* Separator* ']'
     { return {type: 'BlockExpression', statements}; }
 
 PrimaryExpression

@@ -15,17 +15,17 @@ render-post post related-posts =
                            (.toFormat "d MMMM y" (:datetime post)))])]
                  (:body post)
                  #[(footer' #{:class "metadata"}
-                      (s:join #[#[(ul (li' #{:class "shorturl"} (a (.join "" #["http://dċd.ws/" (:id post) "/"]) "Short URL")))]
+                      (s:join #[#[(ul (li' #{:class "shorturl"} (a ["http://dċd.ws/" + (:id post) + "/"] "Short URL")))]
                                 (s:array #[]
                                          (head tail ->
                                             #[(h4 "This post has the following tags:")
-                                              (ol (s:map (tag -> (li (a (.join "" #["/tag/" tag "/"]) (s:prop tag tags))))
+                                              (ol (s:map (tag -> (li (a ["/tag/" + tag + "/"] (s:prop tag tags))))
                                                          (s:prepend head tail)))])
                                          (:tags post))]))]
                  (s:array #[]
                           (_ _ ->
                              #[(h3' #{:id "related"} "Possibly related posts")
                                (ul (s:map (related-post ->
-                                             (li (a (.join "" #["/" (:slug related-post) "/"]) (:title related-post))))
+                                             (li (a ["/" + (:slug related-post) + "/"] (:title related-post))))
                                           related-posts))])
                           related-posts)]))]
