@@ -139,23 +139,27 @@ export {fill mask}
         (⇨  2) (⇧ 22)
         (→  1) (↓ 20) (←  1) (↑ 20)]
 
-update positions dir =
-  (s:prepend (s:T (0 positions)
-                  if (0 dir) === :h {
-                    (s:bimap (n -> n + (1 dir)) s:I)
-                  } else if (0 dir) === :v {
-                    (s:bimap s:I (n -> n + (1 dir)))
-                  } else {
-                    (s:bimap (n -> n + (0 (1 dir))) (n -> n + (1 (1 dir))))
-                  })
-             positions)
+update positions dir = {
+  x = (s:fst positions[0])
+  y = (s:snd positions[0])
+  #[
+    if dir[0] === :h {
+      (s:Pair [x + dir[1]] y)
+    } else if dir[0] === :v {
+      (s:Pair x [y + dir[1]])
+    } else {
+      (s:Pair [x + dir[1][0]] [y + dir[1][1]])
+    }
+    ...positions
+  ]
+}
 
 reset path = {
   paths = (s:extend s:I (s:reduce update #[(s:Pair 0 0)] path))
   xs = (s:chain (s:map s:fst) paths)
   ys = (s:chain (s:map s:snd) paths)
-  dx = (s:reduce s:max 0 xs) - (0 xs)
-  dy = 0 - (0 ys)
+  dx = (s:reduce s:max 0 xs) - xs[0]
+  dy = 0 - ys[0]
   #[:m #[dx dy]]
 }
 

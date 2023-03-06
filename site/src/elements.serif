@@ -103,7 +103,7 @@ text value =
 
 canonicalize-attrs attrs =
   (Object.fromEntries (s:map (name -> {
-                                value = (s:prop name attrs)
+                                value = attrs[name]
                                 #[name
                                   if typeof value == "symbol" (Symbol.keyFor value) else (String value)]
                               })
@@ -135,11 +135,11 @@ block-element tag-name -attrs -children = {
                      " "
                      + (Symbol.keyFor sym)
                      + "=\""
-                     + (escape (s:unwords (s:map s:trim (s:lines (s:prop sym attrs)))))
+                     + (escape (s:unwords (s:map s:trim (s:lines attrs[sym]))))
                      + "\"")
                   (Object.getOwnPropertySymbols attrs))
     + ">\n"
-    + (s:fold-map String (:render _ indent {level + 1} false) children)
+    + (s:fold-map String (child -> (child:render indent {level + 1} false)) children)
     + (.repeat level indent)
     + "</"
     + (Symbol.keyFor tag-name)
@@ -147,7 +147,7 @@ block-element tag-name -attrs -children = {
   }
   #{
     :format :block
-    :text (s:chain (:text _) children)
+    :text (s:chain (child -> child:text) children)
     :render render
   }
 }
@@ -155,7 +155,7 @@ block-element tag-name -attrs -children = {
 inline-element tag-name -attrs -children = {
   attrs = (canonicalize-attrs -attrs)
   children = (canonicalize-children -children)
-  format = if (s:any (node -> (:format node) === :block) children) :block else :inline
+  format = if (s:any (node -> node:format === :block) children) :block else :inline
   render indent level inline = {
     if format === :inline {
       (.repeat level indent)
@@ -166,11 +166,11 @@ inline-element tag-name -attrs -children = {
                        " "
                        + (Symbol.keyFor sym)
                        + "=\""
-                       + (escape (s:unwords (s:map s:trim (s:lines (s:prop sym attrs)))))
+                       + (escape (s:unwords (s:map s:trim (s:lines attrs[sym]))))
                        + "\"")
                     (Object.getOwnPropertySymbols attrs))
       + ">"
-      + (s:fold-map String (:render _ indent 0 true) children)
+      + (s:fold-map String (child -> (child:render indent 0 true)) children)
       + "</"
       + (Symbol.keyFor tag-name)
       + ">"
@@ -184,11 +184,11 @@ inline-element tag-name -attrs -children = {
                        " "
                        + (Symbol.keyFor sym)
                        + "=\""
-                       + (escape (s:unwords (s:map s:trim (s:lines (s:prop sym attrs)))))
+                       + (escape (s:unwords (s:map s:trim (s:lines attrs[sym]))))
                        + "\"")
                     (Object.getOwnPropertySymbols attrs))
       + ">\n"
-      + (s:fold-map String (:render _ indent {level + 1} false) children)
+      + (s:fold-map String (child -> (child:render indent {level + 1} false)) children)
       + (.repeat level indent)
       + "</"
       + (Symbol.keyFor tag-name)
@@ -197,7 +197,7 @@ inline-element tag-name -attrs -children = {
   }
   #{
     :format format
-    :text (s:chain (:text _) children)
+    :text (s:chain (child -> child:text) children)
     :render render
   }
 }
@@ -213,7 +213,7 @@ self-closing-element tag-name -attrs = {
                      " "
                      + (Symbol.keyFor sym)
                      + "=\""
-                     + (escape (s:unwords (s:map s:trim (s:lines (s:prop sym attrs)))))
+                     + (escape (s:unwords (s:map s:trim (s:lines attrs[sym]))))
                      + "\"")
                   (Object.getOwnPropertySymbols attrs))
     + " />"
@@ -229,10 +229,10 @@ self-closing-element tag-name -attrs = {
 excerpt -children = {
   children = (canonicalize-children -children)
   render indent level inline = {
-    (s:fold-map String (:render _ indent level inline) children)
+    (s:fold-map String (child -> (child:render indent level inline)) children)
   }
   #{
-    :text (s:chain (:text _) children)
+    :text (s:chain (child -> child:text) children)
     :render render
   }
 }

@@ -108,12 +108,7 @@ const esFromMetaProperty = ({meta, property}: Serif.MetaProperty): ES.MetaProper
 const esFromMemberExpression = ({object, property}: Serif.MemberExpression): ES.MemberExpression => (
   es.MemberExpression(
     esFromExpression(object),
-    property.type === 'identifier' ?
-      es.Literal(property.name) :
-    property.type === 'symbol' ?
-      esFromSymbol(property) :
-    // else
-      esFromMemberExpression(property),
+    esFromExpression(property),
     {computed: true}
   )
 );
@@ -320,64 +315,29 @@ const esFromInvocation = (expr: Serif.Invocation): ES.CallExpression | ES.ArrowF
   );
 };
 
-const esFromApplication = (expr: Serif.Application): ES.Expression => {
-  const callee: ES.Expression = (() => {
-    switch (expr.callee.type) {
-      case 'placeholder': {
-        const param = Identifier(prefix('0'));
-        return es.ArrowFunctionExpression([param], param);
-      }
-      case 'number':
-      case 'string':
-      case 'symbol': {
-        const param = Identifier(prefix('0'));
-        return es.ArrowFunctionExpression(
-          [param],
-          es.MemberExpression(param, esFromExpression(expr.callee), {computed: true})
-        );
-      }
-      default: {
-        return esFromExpression(expr.callee);
-      }
-    }
-  })();
-  return (
-    expr.arguments
-    .flatMap((argument, idx) =>
+const esFromApplication = (expr: Serif.Application): ES.Expression => (
+  expr.arguments.reduceRight(
+    (body, argument, idx) => (
       argument.type === 'placeholder'
-      ? Identifier(prefix(String(idx + 1)))
-      : []
+      ? es.ArrowFunctionExpression([Identifier(prefix(String(idx + 1)))], body)
+      : body
+    ),
+    expr.arguments.reduce(
+      (callee, argument, idx) => es.CallExpression(
+        callee,
+        argument.type === 'placeholder' ?
+          [Identifier(prefix(String(idx + 1)))] :
+        argument.type === 'spread-element' ?
+          [es.SpreadElement(esFromExpression(argument.argument))] :
+        // else
+          [esFromExpression(argument)]
+      ),
+      expr.callee.type === 'placeholder'
+      ? (param => es.ArrowFunctionExpression([param], param))(Identifier(prefix('0')))
+      : esFromExpression(expr.callee)
     )
-    .reduceRight(
-      (body, param) => es.ArrowFunctionExpression([param], body),
-      expr.arguments.reduce<ES.Expression>(
-        (callee, argument, idx) => {
-          switch (argument.type) {
-            case 'placeholder': {
-              return es.CallExpression(
-                callee,
-                [Identifier(prefix(String(idx + 1)))],
-              );
-            }
-            case 'spread-element': {
-              return es.CallExpression(
-                callee,
-                [es.SpreadElement(esFromExpression(argument.argument))],
-              );
-            }
-            default: {
-              return es.CallExpression(
-                callee,
-                [esFromExpression(argument)],
-              );
-            }
-          }
-        },
-        callee
-      )
-    )
-  );
-};
+  )
+);
 
 const esFromExpressionStatement = ({expression}: Serif.ExpressionStatement): ES.ExpressionStatement => (
   es.ExpressionStatement(esFromExpression(expression))

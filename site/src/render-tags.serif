@@ -5,15 +5,14 @@ import default as tags from "./tags.serif"
 export default render-tags
 
 render-tags posts = {
-  counts = (s:reduce (counts tag -> #{...counts [tag] (s:prop tag counts) + 1})
+  counts = (s:reduce (counts tag -> #{...counts [tag] counts[tag] + 1})
                      (s:map (_ -> 0) tags)
-                     (s:chain (s:prop :tags) posts))
+                     (s:chain (post -> post:tags) posts))
   #[(h1 "Tags")
     (ol' #{:id "tags"}
        (s:map (tag ->
-                 (li' #{:data-count (s:prop tag counts)}
-                    (a ["/tag/" + tag + "/"]
-                       (s:prop tag tags))))
+                 (li' #{:data-count counts[tag]}
+                    (a ["/tag/" + tag + "/"] tags[tag])))
               (Object.keys tags)))
     (div #{:class "clearfix"} #[])]
 }

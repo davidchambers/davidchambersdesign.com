@@ -118,7 +118,7 @@ import default as post/itunes-is-surprisingly-useful-when-learning-a-foreign-lan
 import default as post/the-perils-of-using-javascript-objects-as-sets from "../posts/the-perils-of-using-javascript-objects-as-sets.serif"
 import default as post/give-and-take-of-continuation-passing-style from "../posts/give-and-take-of-continuation-passing-style.serif"
 
-__dirname = (path.dirname (url.fileURLToPath ("url" import.meta)))
+__dirname = (path.dirname (url.fileURLToPath import.meta.url))
 
 pages = #[
   page/about
@@ -232,16 +232,17 @@ write-file filename data =
 (write-file (public #["css" "screen.css"])
             generate-css)
 
-render-svg attrs =
-  (s:pipe #[(svg #{:xmlns "http://www.w3.org/2000/svg" :version "1.1" ...attrs})
-            (:render _ "  " 0 false)
-            (s -> "<?xml version=\"1.0\" standalone=\"no\"?>\n" + s)])
+render-svg attrs paths = {
+  attrs' = #{:xmlns "http://www.w3.org/2000/svg" :version "1.1" ...attrs}
+  "<?xml version=\"1.0\" standalone=\"no\"?>\n"
+  + ((svg attrs' paths):render "  " 0 false)
+}
 
 (write-file (public #["svg" "masthead.svg"])
-            (render-svg #{} (:fill masthead)))
+            (render-svg #{} masthead:fill))
 
 (write-file (public #["svg" "masthead-mask.svg"])
-            (render-svg #{} (:mask masthead)))
+            (render-svg #{} masthead:mask))
 
 (write-file (public #["svg" "about.svg"])
             (render-svg #{:width 16 :height 16} icon/about))
@@ -253,34 +254,34 @@ render-svg attrs =
             (render-svg #{:width 16 :height 16} icon/bitbucket))
 
 (write-file (public #["svg" "dates-0.svg"])
-            (render-svg #{} (0 dates)))
+            (render-svg #{} dates[0]))
 
 (write-file (public #["svg" "dates-1.svg"])
-            (render-svg #{} (1 dates)))
+            (render-svg #{} dates[1]))
 
 (write-file (public #["svg" "dates-2.svg"])
-            (render-svg #{} (2 dates)))
+            (render-svg #{} dates[2]))
 
 (write-file (public #["svg" "dates-3.svg"])
-            (render-svg #{} (3 dates)))
+            (render-svg #{} dates[3]))
 
 (write-file (public #["svg" "dates-4.svg"])
-            (render-svg #{} (4 dates)))
+            (render-svg #{} dates[4]))
 
 (write-file (public #["svg" "dates-5.svg"])
-            (render-svg #{} (5 dates)))
+            (render-svg #{} dates[5]))
 
 (write-file (public #["svg" "dates-6.svg"])
-            (render-svg #{} (6 dates)))
+            (render-svg #{} dates[6]))
 
 (write-file (public #["svg" "dates-7.svg"])
-            (render-svg #{} (7 dates)))
+            (render-svg #{} dates[7]))
 
 (write-file (public #["svg" "dates-8.svg"])
-            (render-svg #{} (8 dates)))
+            (render-svg #{} dates[8]))
 
 (write-file (public #["svg" "dates-9.svg"])
-            (render-svg #{} (9 dates)))
+            (render-svg #{} dates[9]))
 
 (write-file (public #["svg" "contact.svg"])
             (render-svg #{:width 16 :height 16} icon/contact))
@@ -307,14 +308,14 @@ render-document element = {
                                             (render-tags posts))))
 
 (s:map (page ->
-          (write-file (public #[(:slug page) + ".html"])
-                      (render-document (base-template (:title page)
+          (write-file (public #[page:slug + ".html"])
+                      (render-document (base-template page:title
                                                       (render-page page)))))
        pages)
 
 (s:map (post ->
-          (write-file (public #[(:slug post) + ".html"])
-                      (render-document (base-template (:title post)
+          (write-file (public #[post:slug + ".html"])
+                      (render-document (base-template post:title
                                                       (render-post post
                                                                    (related-posts posts post))))))
        posts)

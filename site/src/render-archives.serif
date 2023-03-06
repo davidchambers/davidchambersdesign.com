@@ -5,20 +5,20 @@ export default render-archives
 
 render-section section =
   (li
-     #[(h2 (:heading section))
+     #[(h2 section:heading)
        (ol
           (s:map (post ->
                     (li
-                       #[(a' #{:href "/" + (:slug post)} (:title post))
+                       #[(a' #{:href "/" + post:slug} post:title)
                          " "
-                         (time #{:datetime (.toISO (:datetime post))}
-                            (.toFormat "d MMMM y | h:mm" (:datetime post))
-                            + (s:to-lower (.toFormat "a" (:datetime post))))]))
-                 (:posts section)))])
+                         (time #{:datetime (.toISO post:datetime)}
+                            (.toFormat "d MMMM y | h:mm" post:datetime)
+                            + (s:to-lower (.toFormat "a" post:datetime)))]))
+                 section:posts))])
 
 render-archives =
   (s:pipe #[(s:map (s:join s:Pair))
-            (s:map (s:map-left (:datetime _)))
+            (s:map (s:map-left (post -> post:datetime)))
             (s:sort-by (s:compose (s:compose s:negate Number) s:fst))
             (s:map (s:map-left (.toFormat "MMMM y" _)))
             (s:group-by (s:on s:equals s:fst))

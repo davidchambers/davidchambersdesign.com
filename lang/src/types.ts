@@ -27,7 +27,7 @@ export interface MetaProperty {
 export interface MemberExpression {
   readonly type: 'MemberExpression';
   readonly object: Expression;
-  readonly property: MemberExpression | Identifier | Symbol;
+  readonly property: Expression;
 }
 
 export interface Identifier {

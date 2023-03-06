@@ -211,9 +211,12 @@ ImportMeta 'import.meta'
   { return {type: 'MetaProperty', meta, property}; }
 
 MemberExpression 'member expression'
-  = ImportMeta
-  / object:PrimaryExpression
-    properties:('.' property:Identifier { return property; } / property:Symbol { return property; })*
+  = object:PrimaryExpression
+    properties:(
+        Symbol
+      / '.' ident:Identifier                              { return {type: 'string', value: ident.name}; }
+      / '[' Separator* property:Expression Separator* ']' { return property; }
+    )*
     { return properties.reduce((object, property) => ({type: 'MemberExpression', object, property}), object); }
 
 Identifier 'identifier'
@@ -240,15 +243,16 @@ PrimaryExpression
   / Symbol
   / Array
   / Object
+  / ImportMeta
   / Identifier
   / BlockExpression
+  / New
+  / Invocation
+  / Application
 
 CallExpression
   = MemberExpression
   / Lambda
-  / New
-  / Invocation
-  / Application
   / PrimaryExpression
 
 UnaryOperator

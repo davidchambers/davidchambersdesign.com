@@ -9,5 +9,5 @@ kebab-case = (.replace (new RegExp "(?!\\b)[A-Z0-9]" "g")
 prime = (.replace "_" "'" _)
 
 default =
-  (Object.fromEntries (.map (entry -> #[(Symbol.for (prime (kebab-case (0 entry)))) (1 entry)])
+  (Object.fromEntries (.map (entry -> #[(Symbol.for (prime (kebab-case entry[0]))) entry[1]])
                             (Object.entries sanctuary.unchecked)))
