@@ -1,5 +1,3 @@
-import * from "serif/es"
-
 import default as s from "../sanctuary.serif"
 
 export default screen

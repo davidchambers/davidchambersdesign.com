@@ -157,6 +157,10 @@ Expression 'expression'
   / Invocation
   / Application
 
+Boolean 'Boolean'
+  = 'true'  { return {type: 'BooleanLiteral', value: true}; }
+  / 'false' { return {type: 'BooleanLiteral', value: false}; }
+
 Number 'number'
   = BinaryNumber
   / OctalNumber
@@ -230,7 +234,8 @@ BlockExpression 'block expression'
     { return {type: 'BlockExpression', statements}; }
 
 PrimaryExpression
-  = Number
+  = Boolean
+  / Number
   / String
   / Symbol
   / Array

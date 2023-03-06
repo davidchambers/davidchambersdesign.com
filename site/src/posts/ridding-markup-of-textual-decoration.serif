@@ -1,5 +1,3 @@
-import * from "serif/es"
-
 import * from "../elements.serif" hiding {body}
 import {code-block} from "../components.serif"
 import default as datetime from "../datetime.serif"

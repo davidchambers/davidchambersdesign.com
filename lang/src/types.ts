@@ -1,3 +1,8 @@
+export interface Boolean {
+  readonly type: 'BooleanLiteral';
+  readonly value: boolean;
+}
+
 export interface Number {
   readonly type: 'number';
   readonly value: number;
@@ -64,6 +69,7 @@ export interface BlockExpression {
 
 export type PrimaryExpression =
   | Identifier
+  | Boolean
   | Number
   | String
   | Symbol
@@ -317,6 +323,7 @@ export interface Application {
 }
 
 export type Expression =
+  | Boolean
   | Number
   | String
   | Symbol

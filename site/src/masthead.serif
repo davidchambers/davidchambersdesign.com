@@ -1,6 +1,3 @@
-import * from "serif/es"
-import * from "serif/combinators"
-
 import {path} from "./elements.serif"
 import * from "./orthogonal.serif"
 import default as s from "./sanctuary.serif"
@@ -145,16 +142,16 @@ export {fill mask}
 update positions dir =
   (s:prepend (s:T (0 positions)
                   if (0 dir) === :h {
-                    (s:bimap (n -> n + (1 dir)) I)
+                    (s:bimap (n -> n + (1 dir)) s:I)
                   } else if (0 dir) === :v {
-                    (s:bimap I (n -> n + (1 dir)))
+                    (s:bimap s:I (n -> n + (1 dir)))
                   } else {
                     (s:bimap (n -> n + (0 (1 dir))) (n -> n + (1 (1 dir))))
                   })
              positions)
 
 reset path = {
-  paths = (s:extend I (s:reduce update #[(s:Pair 0 0)] path))
+  paths = (s:extend s:I (s:reduce update #[(s:Pair 0 0)] path))
   xs = (s:chain (s:map s:fst) paths)
   ys = (s:chain (s:map s:snd) paths)
   dx = (s:reduce s:max 0 xs) - (0 xs)

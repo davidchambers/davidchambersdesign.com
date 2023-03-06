@@ -1,4 +1,3 @@
-import * from "serif/es"
 import default as sanctuary from "sanctuary"
 
 export default default

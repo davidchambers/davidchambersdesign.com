@@ -6,12 +6,65 @@ import type * as Serif from './types.js';
 
 type Escaped = string & {_tag: 'Escaped'}
 
+// https://262.ecma-international.org/13.0/#sec-keywords-and-reserved-words
+const esReservedWords = new Set([
+  // reserved words
+  'await',
+  'break',
+  'case',
+  'catch',
+  'class',
+  'const',
+  'continue',
+  'debugger',
+  'default',
+  'delete',
+  'do',
+  'else',
+  'enum',
+  'export',
+  'extends',
+  'false',
+  'finally',
+  'for',
+  'function',
+  'if',
+  'import',
+  'in',
+  'instanceof',
+  'new',
+  'null',
+  'return',
+  'super',
+  'switch',
+  'this',
+  'throw',
+  'true',
+  'try',
+  'typeof',
+  'var',
+  'void',
+  'while',
+  'with',
+  'yield',
+  // future reserved words
+  'enum',
+  'implements',
+  'interface',
+  'package',
+  'private',
+  'protected',
+  'public',
+]);
+
 const escapeChar = (c: string) => (
   '$' + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')
 );
 
 const escape = (name: string): Escaped => (
-  '_' + name.replace(/[^A-Za-z0-9_]/g, escapeChar) as Escaped
+  /^[a-z][a-z0-9]*$/i.test(name) && !esReservedWords.has(name)
+  ? name as Escaped
+  : '_' + name.replace(/[^a-z0-9]/gi, escapeChar) as Escaped
 );
 
 const prefix = (name: string): Escaped => (
@@ -22,6 +75,10 @@ const Identifier = (name: Escaped): ES.Identifier => ({type: 'Identifier', name}
 
 const $callee = Identifier(prefix('callee'));
 const $object = Identifier(prefix('object'));
+
+const esFromBooleanLiteral = ({value}: Serif.Boolean): ES.Literal => (
+  es.Literal(value)
+);
 
 const esFromNumber = ({value}: Serif.Number): ES.UnaryExpression | ES.Literal => (
   value < 0 ? es.UnaryExpression('-', es.Literal(-value)) : es.Literal(value)
@@ -328,6 +385,7 @@ const esFromExpressionStatement = ({expression}: Serif.ExpressionStatement): ES.
 
 const esFromExpression = (expr: Serif.Expression): ES.Expression => {
   switch (expr.type) {
+    case 'BooleanLiteral':              return esFromBooleanLiteral(expr);
     case 'number':                      return esFromNumber(expr);
     case 'string':                      return esFromString(expr);
     case 'symbol':                      return esFromSymbol(expr);

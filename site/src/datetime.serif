@@ -1,4 +1,3 @@
-import * from "serif/es"
 import default as luxon from "luxon"
 
 export default datetime

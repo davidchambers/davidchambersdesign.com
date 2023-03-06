@@ -29,9 +29,7 @@ async function evaluateModule(source) {
 }
 
 async function read(serifSource) {
-  const serifAst = serif.parse(
-    `import * from "serif/es"\nexport default ${serifSource}`
-  );
+  const serifAst = serif.parse(`export default ${serifSource}`);
   const jsAst = await serif.trans(serifAst);
   const jsSource = escodegen.generate(jsAst);
   return evaluateModule(jsSource);
