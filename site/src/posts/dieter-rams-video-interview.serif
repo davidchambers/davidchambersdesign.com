@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body}
-import default as datetime from "../datetime.serif"
+import datetime from "../datetime.serif"
 
 export default #{
   :id 62

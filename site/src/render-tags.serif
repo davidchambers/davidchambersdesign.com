@@ -1,6 +1,6 @@
 import * from "./elements.serif"
-import default as s from "./sanctuary.serif"
-import default as tags from "./tags.serif"
+import s from "./sanctuary.serif"
+import tags from "./tags.serif"
 
 export default render-tags
 

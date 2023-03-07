@@ -1,5 +1,5 @@
-import default as s from "./sanctuary.serif"
-import default as screen from "./css/screen.serif"
+import s from "./sanctuary.serif"
+import screen from "./css/screen.serif"
 
 export default generate-css
 

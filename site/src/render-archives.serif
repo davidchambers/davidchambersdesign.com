@@ -1,5 +1,5 @@
 import * from "./elements.serif"
-import default as s from "./sanctuary.serif"
+import s from "./sanctuary.serif"
 
 export default render-archives
 

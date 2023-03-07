@@ -38,17 +38,16 @@ async function findDependencies(entryPoint) {
       }\n`);
       throw err;
     }
-    const dependencies = ast.flatMap(statement =>
-      (statement.type === 'star-import' ||
-       statement.type === 'named-imports' ||
-       statement.type === 'default-import') &&
-      (statement.source.startsWith('/') ||
-       statement.source.startsWith('.'))
-      ? [join(filename, '..', statement.source)]
-      : []
+    const dependencies = (
+      ast.imports
+      .map(importDeclaration => importDeclaration.source.value)
+      .filter(source => source.startsWith('/') || source.startsWith('.'))
+      .map(source => join(filename, '..', source))
     );
-    const exportedNames = ast.flatMap(statement =>
-      statement.type === 'named-exports' ? statement.names : []
+    const exportedNames = ast.exports.flatMap(exportDeclaration =>
+      exportDeclaration.type === 'ExportNamedDeclaration'
+      ? exportDeclaration.specifiers.map(specifier => specifier.name)
+      : []
     );
     tree.set(filename, {ast, dependencies, exportedNames});
     for (const dependency of dependencies) await recur(dependency);

@@ -1,77 +1,76 @@
 Module
-  = statements:(
+  = imports:ImportDeclaration*
+    exports:(ExportNamedDeclaration / ExportDefaultDeclaration)*
+    statements:(
       head:(Separator* statement:Statement { return statement; })
       tail:(Separator+ statement:Statement { return statement; })*
       { return [head, ...tail]; }
     )?
     Separator*
-  { return statements; }
+  { return {imports, exports, statements: statements ?? []}; }
 
-Statement
-  = StarImport
-  / NamedImports
-  / DefaultImport
-  / DefaultExport
-  / NamedExports
-  / Declaration
-  / ExpressionStatement
+ImportSpecifier 'import specifier'
+  = local:Identifier
+    { return {type: 'ImportSpecifier', local, imported: local}; }
 
-StarImport 'star import'
+ImportDefaultSpecifier 'import default specifier'
+  = local:Identifier
+    { return {type: 'ImportDefaultSpecifier', local}; }
+
+ImportDeclaration 'import declaration'
   = Separator* 'import'
+    Separator+ '{'
+    specifiers:(
+      head:(Separator* specifier:ImportSpecifier { return specifier; })
+      tail:(Separator+ specifier:ImportSpecifier { return specifier; })*
+      { return [head, ...tail]; }
+    )?
+    Separator* '}'
+    Separator+ 'from'
+    Separator+ source:String
+    { return {type: 'ImportDeclaration', source, specifiers: specifiers ?? []}; }
+  / Separator* 'import'
     Separator+ '*'
     Separator+ 'from'
-    Separator+ source:(string:String { return string.value; })
+    Separator+ source:String
     hiding:(
       Separator+ 'hiding'
       Separator+ '{'
-      names:(
-        head:(Separator* ident:Identifier { return ident.name; })
-        tail:(Separator+ ident:Identifier { return ident.name; })*
+      hiding:(
+        head:(Separator* ident:Identifier { return ident; })
+        tail:(Separator+ ident:Identifier { return ident; })*
         { return [head, ...tail]; }
       )?
       Separator* '}'
-      { return names ?? []; }
+      { return hiding ?? []; }
     )?
-  { return {type: 'star-import', source, hiding: hiding ?? []}; }
+    { return {type: 'ImportDeclaration', source, specifiers: '*', hiding: hiding ?? []}; }
+  / Separator* 'import'
+    Separator+ specifier:ImportDefaultSpecifier
+    Separator+ 'from'
+    Separator+ source:String
+    { return {type: 'ImportDeclaration', source, specifiers: [specifier]}; }
 
-NamedImports 'named imports'
-  = Separator* 'import'
+ExportDefaultDeclaration 'export default declaration'
+  = Separator* 'export'
+    Separator+ 'default'
+    Separator+ declaration:Expression
+    { return {type: 'ExportDefaultDeclaration', declaration}; }
+
+ExportNamedDeclaration 'export named declaration'
+  = Separator* 'export'
     Separator+ '{'
-    names:(
-      head:(Separator* ident:Identifier { return ident.name; })
-      tail:(Separator+ ident:Identifier { return ident.name; })*
+    specifiers:(
+      head:(Separator* ident:Identifier { return ident; })
+      tail:(Separator+ ident:Identifier { return ident; })*
       { return [head, ...tail]; }
     )?
     Separator* '}'
-    Separator+ 'from'
-    Separator+ source:(string:String { return string.value; })
-  { return {type: 'named-imports', names: names ?? [], source}; }
+    { return {type: 'ExportNamedDeclaration', specifiers: specifiers ?? []}; }
 
-DefaultImport 'default import'
-  = Separator* 'import'
-    Separator+ 'default'
-    Separator+ 'as'
-    Separator+ name:(ident:Identifier { return ident.name; })
-    Separator+ 'from'
-    Separator+ source:(string:String { return string.value; })
-  { return {type: 'default-import', name, source}; }
-
-DefaultExport 'default export'
-  = Separator* 'export'
-    Separator+ 'default'
-    Separator+ expression:Expression
-  { return {type: 'default-export', expression}; }
-
-NamedExports 'named exports'
-  = Separator* 'export'
-    Separator+ '{'
-    names:(
-      head:(Separator* ident:Identifier { return ident.name; })
-      tail:(Separator+ ident:Identifier { return ident.name; })*
-      { return [head, ...tail]; }
-    )?
-    Separator* '}'
-  { return {type: 'named-exports', names: names ?? []}; }
+Statement
+  = Declaration
+  / ExpressionStatement
 
 Declaration 'declaration'
   = Separator* name:(ident:Identifier { return ident.name; })

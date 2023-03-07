@@ -1,6 +1,6 @@
-import default as path from "node:path"
+import path from "node:path"
 
-import default as s from "./sanctuary.serif"
+import s from "./sanctuary.serif"
 
 export default related-posts
 

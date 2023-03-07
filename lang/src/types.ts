@@ -342,32 +342,48 @@ export type Expression =
   | Invocation
   | Application
 
-export interface StarImport {
-  readonly type: 'star-import';
-  readonly source: string;
-  readonly hiding: ReadonlyArray<string>;
+interface _ImportDeclarationBase {
+  readonly type: 'ImportDeclaration';
+  readonly source: String;
 }
 
-export interface NamedImports {
-  readonly type: 'named-imports';
-  readonly names: ReadonlyArray<string>;
-  readonly source: string;
+interface _ImportDefaultDeclaration extends _ImportDeclarationBase {
+  readonly specifiers: ReadonlyArray<ImportDefaultSpecifier>
 }
 
-export interface DefaultImport {
-  readonly type: 'default-import';
-  readonly name: string;
-  readonly source: string;
+interface _ImportDeclaration extends _ImportDeclarationBase {
+  readonly specifiers: ReadonlyArray<ImportSpecifier>
 }
 
-export interface DefaultExport {
-  readonly type: 'default-export';
-  readonly expression: Expression;
+interface _ImportEverythingDeclaration extends _ImportDeclarationBase {
+  readonly specifiers: '*';
+  readonly hiding: ReadonlyArray<Identifier>
 }
 
-export interface NamedExports {
-  readonly type: 'named-exports';
-  readonly names: ReadonlyArray<string>;
+export type ImportDeclaration =
+  | _ImportDefaultDeclaration
+  | _ImportDeclaration
+  | _ImportEverythingDeclaration
+
+export interface ImportDefaultSpecifier {
+  readonly type: 'ImportDefaultSpecifier';
+  readonly local: Identifier;
+}
+
+export interface ImportSpecifier {
+  readonly type: 'ImportSpecifier';
+  readonly local: Identifier;
+  readonly imported: Identifier;
+}
+
+export interface ExportNamedDeclaration {
+  readonly type: 'ExportNamedDeclaration';
+  readonly specifiers: ReadonlyArray<Identifier>;
+}
+
+export interface ExportDefaultDeclaration {
+  readonly type: 'ExportDefaultDeclaration';
+  readonly declaration: Expression;
 }
 
 export interface Declaration {
@@ -383,10 +399,11 @@ export interface ExpressionStatement {
 }
 
 export type Statement =
-  | StarImport
-  | NamedImports
-  | DefaultImport
-  | DefaultExport
-  | NamedExports
   | Declaration
   | ExpressionStatement
+
+export interface Module {
+  readonly imports: ReadonlyArray<ImportDeclaration>;
+  readonly exports: ReadonlyArray<ExportNamedDeclaration | ExportDefaultDeclaration>;
+  readonly statements: ReadonlyArray<Statement>;
+}

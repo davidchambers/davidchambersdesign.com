@@ -1,6 +1,6 @@
 import * from "../elements.serif" hiding {body}
 import {captioned-image code-block} from "../components.serif"
-import default as datetime from "../datetime.serif"
+import datetime from "../datetime.serif"
 
 export default #{
   :id 2

@@ -1,4 +1,4 @@
-import default as sanctuary from "sanctuary"
+import sanctuary from "sanctuary"
 
 export default default
 

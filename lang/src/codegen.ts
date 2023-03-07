@@ -113,7 +113,7 @@ const esFromMemberExpression = ({object, property}: Serif.MemberExpression): ES.
   )
 );
 
-const esFromIdentifier = ({name}: Serif.Identifier): ES.Identifier | ES.MemberExpression => (
+const esFromIdentifier = ({name}: Serif.Identifier): ES.Identifier => (
   Identifier(escape(name))
 );
 
@@ -339,6 +339,33 @@ const esFromApplication = (expr: Serif.Application): ES.Expression => (
   )
 );
 
+const esFromDeclaration = ({
+  name,
+  parameterNames,
+  expression,
+}: Serif.Declaration): ES.Declaration => (
+  parameterNames.length === 0 ?
+  es.VariableDeclaration([
+    es.VariableDeclarator(
+      Identifier(escape(name)),
+      esFromExpression(expression),
+    ),
+  ]) :
+  es.VariableDeclaration([
+    es.VariableDeclarator(
+      Identifier(escape(name)),
+      es.FunctionExpression(
+        Identifier(escape(name)),
+        parameterNames.slice(0, 1).map(name => Identifier(escape(name))),
+        es.BlockStatement([es.ReturnStatement(parameterNames.slice(1).reduceRight(
+          (body, name) => es.ArrowFunctionExpression([Identifier(escape(name))], body),
+          esFromExpression(expression)
+        ))]),
+      ),
+    ),
+  ])
+);
+
 const esFromExpressionStatement = ({expression}: Serif.ExpressionStatement): ES.ExpressionStatement => (
   es.ExpressionStatement(esFromExpression(expression))
 );
@@ -366,64 +393,57 @@ const esFromExpression = (expr: Serif.Expression): ES.Expression => {
   }
 };
 
-const exportTypes = new Set(['named-exports', 'default-export']);
-
-const exportsLast = (
-  statements: ReadonlyArray<Serif.Statement>,
-): ReadonlyArray<Serif.Statement> => (
-  [...statements].sort((s1, s2) =>
-    (exportTypes.has(s1.type) ? 1 : 0) -
-    (exportTypes.has(s2.type) ? 1 : 0)
-  )
-);
-
 export async function toModule(
-  statements: ReadonlyArray<Serif.Statement>,
+  module: Serif.Module,
   exportedNames: (source: string) => ReadonlyArray<string>,
 ): Promise<ES.Program> {
-  return es.Program(
-    await Promise.all(exportsLast(statements).map(async statement =>
-      statement.type === 'star-import' ? es.ImportDeclaration(
-        (statement.source.endsWith('.serif')
-         ? (hiding => exportedNames(statement.source).filter(name => !hiding.has(name)).map(escape))(new Set(statement.hiding))
-         : Object.keys(await import(statement.source)) as Array<Escaped>)
-        .map(name => es.ImportSpecifier(Identifier(name), Identifier(name))),
-        statement.source.replace(/[.]serif$/, '.js')
-      ) :
-      statement.type === 'named-imports' ? es.ImportDeclaration(
-        statement.names.map(name => es.ImportSpecifier(Identifier(escape(name)), Identifier(escape(name)))),
-        statement.source.replace(/[.]serif$/, '.js')
-      ) :
-      statement.type === 'default-import' ? es.ImportDeclaration(
-        [es.ImportDefaultSpecifier(Identifier(escape(statement.name)))],
-        statement.source.replace(/[.]serif$/, '.js')
-      ) :
-      statement.type === 'named-exports' ? es.ExportNamedDeclaration(
-        statement.names.map(name => es.ExportSpecifier(Identifier(escape(name))))
-      ) :
-      statement.type === 'default-export' ? es.ExportDefaultDeclaration(
-        esFromExpression(statement.expression),
-      ) :
-      statement.type === 'declaration' && statement.parameterNames.length === 0 ? es.VariableDeclaration([
-        es.VariableDeclarator(
-          Identifier(escape(statement.name)),
-          esFromExpression(statement.expression),
-        ),
-      ]) :
-      statement.type === 'declaration' ? es.VariableDeclaration([
-        es.VariableDeclarator(
-          Identifier(escape(statement.name)),
-          es.FunctionExpression(
-            Identifier(escape(statement.name)),
-            statement.parameterNames.slice(0, 1).map(name => Identifier(escape(name))),
-            es.BlockStatement([es.ReturnStatement(statement.parameterNames.slice(1).reduceRight(
-              (body, name) => es.ArrowFunctionExpression([Identifier(escape(name))], body),
-              esFromExpression(statement.expression)
-            ))]),
-          ),
-        ),
-      ]) :
-      esFromExpressionStatement(statement)
-    )),
+  const imports = await Promise.all(
+    module.imports.map(async importDeclaration => es.ImportDeclaration(
+      importDeclaration.specifiers === '*' ?
+      (importDeclaration.source.value.endsWith('.serif')
+       ? (hiding => exportedNames(importDeclaration.source.value)
+                    .filter(name => !hiding.has(name))
+                    .map(escape))
+         (new Set(importDeclaration.hiding.map(ident => ident.name)))
+       : Object.keys(await import(importDeclaration.source.value)) as Array<Escaped>)
+      .map(name => es.ImportSpecifier(Identifier(name), Identifier(name))) :
+      importDeclaration.specifiers.map(specifier => {
+        switch (specifier.type) {
+          case 'ImportDefaultSpecifier': {
+            return es.ImportDefaultSpecifier(
+              esFromIdentifier(specifier.local)
+            );
+          }
+          case 'ImportSpecifier': {
+            return es.ImportSpecifier(
+              esFromIdentifier(specifier.local),
+              esFromIdentifier(specifier.imported)
+            );
+          }
+        }
+      }),
+      importDeclaration.source.value.replace(/[.]serif$/, '.js')
+    ))
   );
+  const statements = module.statements.map(statement => {
+    switch (statement.type) {
+      case 'declaration':         return esFromDeclaration(statement);
+      case 'ExpressionStatement': return esFromExpressionStatement(statement);
+    }
+  });
+  const exports = module.exports.map(exportDeclaration => {
+    switch (exportDeclaration.type) {
+      case 'ExportNamedDeclaration': {
+        return es.ExportNamedDeclaration(
+          exportDeclaration.specifiers.map(specifier => es.ExportSpecifier(esFromIdentifier(specifier)))
+        );
+      }
+      case 'ExportDefaultDeclaration': {
+        return es.ExportDefaultDeclaration(
+          esFromExpression(exportDeclaration.declaration)
+        );
+      }
+    }
+  });
+  return es.Program([...imports, ...statements, ...exports]);
 }
