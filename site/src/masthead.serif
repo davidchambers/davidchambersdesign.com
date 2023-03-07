@@ -143,9 +143,9 @@ update positions dir = {
   x = (s:fst positions[0])
   y = (s:snd positions[0])
   #[
-    if dir[0] === :h {
+    if dir[0] === :h then {
       (s:Pair [x + dir[1]] y)
-    } else if dir[0] === :v {
+    } else if dir[0] === :v then {
       (s:Pair x [y + dir[1]])
     } else {
       (s:Pair [x + dir[1][0]] [y + dir[1][1]])

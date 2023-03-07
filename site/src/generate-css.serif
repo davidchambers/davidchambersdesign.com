@@ -4,9 +4,9 @@ import default as screen from "./css/screen.serif"
 export default generate-css
 
 coerce x = {
-  if (Array.isArray x) {
+  if (Array.isArray x) then {
     (s:unwords (s:map coerce x))
-  } else if typeof x == "symbol" {
+  } else if typeof x == "symbol" then {
     (Symbol.keyFor x)
   } else {
     (String x)
@@ -22,7 +22,7 @@ split-every-2 xs =
 
 vendor-prefix unprefixed prefixed =
   (s:chain (s:pair (k v -> {
-                      if k === unprefixed {
+                      if k === unprefixed then {
                         (s:map (s:Pair _ v) (s:append unprefixed prefixed))
                       } else {
                         #[(s:Pair k v)]

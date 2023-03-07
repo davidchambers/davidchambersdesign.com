@@ -43,7 +43,7 @@ decorative-image src =
 
 interview-list interviewer interviewee exchange =
   (ol (s:snd (s:reduce (s:pair (name items quotation -> {
-                                  if (s:equals interviewer name) {
+                                  if name === interviewer then {
                                     (s:Pair interviewee
                                             #[...items
                                               (li' #{:class "interviewer"}

@@ -23,7 +23,7 @@ with-scores that this = {
   primary = (s:negate score)
   secondary = (Math.abs (seconds-between that:datetime
                                          this:datetime))
-  if score >= 0.5 {
+  if score >= 0.5 then {
     (s:Just (s:Pair (s:Pair primary secondary) this))
   } else {
     s:Nothing

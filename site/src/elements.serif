@@ -105,13 +105,13 @@ canonicalize-attrs attrs =
   (Object.fromEntries (s:map (name -> {
                                 value = attrs[name]
                                 #[name
-                                  if typeof value == "symbol" (Symbol.keyFor value) else (String value)]
+                                  if typeof value == "symbol" then (Symbol.keyFor value) else (String value)]
                               })
                              (Object.getOwnPropertySymbols attrs)))
 
 canonicalize-children =
   (s:compose (s:map (child -> {
-                       if typeof child == "string" {
+                       if typeof child == "string" then {
                          (text (.replace (s:regex "g" " -- ")
                                          "\u2009\u2014\u2009"
                                          (s:fold-map String
@@ -160,7 +160,7 @@ render-inline-element tag-name attrs children indent level inline = {
   + "</"
   + (Symbol.keyFor tag-name)
   + ">"
-  + [if inline "" else "\n"]
+  + [if inline then "" else "\n"]
 }
 
 render-self-closing-element tag-name attrs indent level inline = {
@@ -176,7 +176,7 @@ render-self-closing-element tag-name attrs indent level inline = {
                    + "\"")
                 (Object.getOwnPropertySymbols attrs))
   + " />"
-  + [if inline "" else "\n"]
+  + [if inline then "" else "\n"]
 }
 
 block-element tag-name -attrs -children = {
@@ -192,12 +192,12 @@ block-element tag-name -attrs -children = {
 inline-element tag-name -attrs -children = {
   attrs = (canonicalize-attrs -attrs)
   children = (canonicalize-children -children)
-  format = if (s:any (node -> node:format === :block) children) :block else :inline
+  format = if (s:any (node -> node:format === :block) children) then :block else :inline
   #{
     :format format
     :text (s:chain (child -> child:text) children)
     :render (indent level inline -> {
-      render = if format === :inline render-inline-element else render-block-element
+      render = if format === :inline then render-inline-element else render-block-element
       (render tag-name attrs children indent level inline)
     })
   }

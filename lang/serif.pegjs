@@ -440,6 +440,7 @@ CoalesceExpression
 ConditionalExpression
   = Separator* 'if'
     Separator+ predicate:ConditionalExpression
+    Separator+ 'then'
     Separator+ consequent:ConditionalExpression
     Separator+ 'else'
     Separator+ alternative:ConditionalExpression
