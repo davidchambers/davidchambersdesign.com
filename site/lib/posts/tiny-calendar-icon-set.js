@@ -1,0 +1,130 @@
+import {
+  _canonicalize$002Dchildren,
+  text,
+  excerpt,
+  a,
+  _a$0027,
+  article,
+  _article$0027,
+  aside,
+  _aside$0027,
+  b,
+  blockquote,
+  _blockquote$0027,
+  _body$0027,
+  code,
+  _code$0027,
+  dd,
+  _dd$0027,
+  del,
+  _del$0027,
+  div,
+  dl,
+  _dl$0027,
+  dt,
+  _dt$0027,
+  em,
+  _em$0027,
+  embed,
+  footer,
+  _footer$0027,
+  h1,
+  _h1$0027,
+  h2,
+  _h2$0027,
+  h3,
+  _h3$0027,
+  h4,
+  _h4$0027,
+  h5,
+  _h5$0027,
+  h6,
+  _h6$0027,
+  head,
+  _head$0027,
+  header,
+  _header$0027,
+  hr,
+  _hr$0027,
+  html,
+  _html$0027,
+  i,
+  _i$0027,
+  img,
+  ins,
+  _ins$0027,
+  li,
+  _li$0027,
+  linearGradient,
+  link,
+  mask,
+  meta,
+  nav,
+  _nav$0027,
+  object,
+  ol,
+  _ol$0027,
+  p,
+  _p$0027,
+  param,
+  path,
+  pre,
+  _pre$0027,
+  rect,
+  script,
+  span,
+  stop,
+  strong,
+  _strong$0027,
+  svg,
+  time,
+  title,
+  _title$0027,
+  ul,
+  _ul$0027,
+  _var,
+  _var$0027,
+  video
+} from '../elements.js';
+import {
+  _captioned$002Dimages,
+  update
+} from '../components.js';
+import datetime from '../datetime.js';
+const body = [
+  update(datetime('2009-08-28')('18:12:00')(Symbol.for('Pacific/Auckland')))([p([
+      'An update to this post has been published: ',
+      a('/tiny-calendar-icons-sprite/')('Tiny calendar icons sprite'),
+      '.'
+    ])]),
+  p(['I\'ve always enjoyed creating icons in Photoshop. Not the gorgeous,\n        often richly detailed icons that grace OS X applications -- although\n        I would love to learn to create these as well -- but icons designed\n        pixel by pixel for display at very small scales.']),
+  p(['Working with a tiny canvas and a limited palette (I restrict myself to\n        hexadecimal colours that can be written in shorthand) is a challenge,\n        but I find the experience rewarding. I recently redesigned this site\'s\n        archives page, for which I created a set of 16 x 16px calendar icons.']),
+  _captioned$002Dimages([
+    [
+      '/images/posts/14/calendar-300pc.png',
+      'Calendar icons for every possible day of the month',
+      'Calendar icons shown at 300% of actual size'
+    ],
+    [
+      '/images/posts/14/calendar.png',
+      'Calendar icons for every possible day of the month',
+      'Calendar icons shown actual size'
+    ]
+  ]),
+  p([
+    'You are welcome to ',
+    a('/downloads/tiny-calendar-icon-set.zip')('download the tiny calendar icon set'),
+    '.'
+  ])
+];
+export default {
+  [Symbol.for('id')]: 14,
+  [Symbol.for('slug')]: 'tiny-calendar-icon-set',
+  [Symbol.for('title')]: 'Tiny calendar icon set',
+  [Symbol.for('datetime')]: datetime('2009-04-24')('21:24:00')(Symbol.for('Pacific/Auckland')),
+  [Symbol.for('tags')]: [
+    'design',
+    'icons'
+  ],
+  [Symbol.for('body')]: body
+};

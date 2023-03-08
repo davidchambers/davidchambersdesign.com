@@ -90,7 +90,8 @@ function orderDependencies(tree) {
           return tree.get(importFilename).exportedNames;
         }
       );
-      const jsSource = escodegen.generate(jsAst);
+      const options = {format: {indent: {style: '  '}}};
+      const jsSource = escodegen.generate(jsAst, options) + '\n';
       const jsDirname = dirname(serifFilename);
       const jsBasename = basename(serifFilename, '.serif') + '.js';
       const jsFilename = join(lib, relative(src, jsDirname), jsBasename);

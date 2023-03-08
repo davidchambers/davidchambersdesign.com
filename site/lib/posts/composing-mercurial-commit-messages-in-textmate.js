@@ -1,0 +1,162 @@
+import {
+  _canonicalize$002Dchildren,
+  text,
+  excerpt,
+  a,
+  _a$0027,
+  article,
+  _article$0027,
+  aside,
+  _aside$0027,
+  b,
+  blockquote,
+  _blockquote$0027,
+  _body$0027,
+  code,
+  _code$0027,
+  dd,
+  _dd$0027,
+  del,
+  _del$0027,
+  div,
+  dl,
+  _dl$0027,
+  dt,
+  _dt$0027,
+  em,
+  _em$0027,
+  embed,
+  footer,
+  _footer$0027,
+  h1,
+  _h1$0027,
+  h2,
+  _h2$0027,
+  h3,
+  _h3$0027,
+  h4,
+  _h4$0027,
+  h5,
+  _h5$0027,
+  h6,
+  _h6$0027,
+  head,
+  _head$0027,
+  header,
+  _header$0027,
+  hr,
+  _hr$0027,
+  html,
+  _html$0027,
+  i,
+  _i$0027,
+  img,
+  ins,
+  _ins$0027,
+  li,
+  _li$0027,
+  linearGradient,
+  link,
+  mask,
+  meta,
+  nav,
+  _nav$0027,
+  object,
+  ol,
+  _ol$0027,
+  p,
+  _p$0027,
+  param,
+  path,
+  pre,
+  _pre$0027,
+  rect,
+  script,
+  span,
+  stop,
+  strong,
+  _strong$0027,
+  svg,
+  time,
+  title,
+  _title$0027,
+  ul,
+  _ul$0027,
+  _var,
+  _var$0027,
+  video
+} from '../elements.js';
+import {
+  _code$002Dblock,
+  _decorative$002Dimage,
+  update
+} from '../components.js';
+import datetime from '../datetime.js';
+const body = [
+  _decorative$002Dimage('/images/posts/decorative/right/textmate-icon.png'),
+  p([
+    'Using the ',
+    code('-m'),
+    ' flag can be a timesaver, but for several\n        reasons I prefer to write my commit messages in a text editor:'
+  ]),
+  ul([
+    li('Spell-checking'),
+    li('Familiar keyboard navigation'),
+    li('No need to escape quotation marks')
+  ]),
+  p([
+    a('http://macromates.com/')('TextMate'),
+    '\n        is particularly well suited to my needs due to its built-in ',
+    a('http://daringfireball.net/projects/markdown/syntax')('Markdown'),
+    '\n        highlighting and previewing \u2013 yes, I write commit messages in\n        Markdown!'
+  ]),
+  p([strong([
+      'To set TextMate as Mercurial\'s editor, add ',
+      code('editor = mate -w'),
+      ' to the ',
+      code('[ui]'),
+      '\n             section of your ',
+      code('~/.hgrc'),
+      ' file.'
+    ])]),
+  p([
+    a('http://vincecima.com/post/578017364/using-textmate-as-mercurials-editor')('Vince Cima explains'),
+    ':'
+  ]),
+  blockquote([p([
+      'Next time you do ',
+      code('hg commit'),
+      ' TextMate will open a\n             temporary file you write your commit message into. Type your\n             message, save the file and then close the window to finish\n             the commit. The ',
+      code('-w'),
+      ' flag on the ',
+      code('mate'),
+      '\n             command tells TextMate not to return control to the command\n             line until the editor window has been closed.'
+    ])]),
+  update(datetime('2011-01-22')('15:20:00')(Symbol.for('Australia/Sydney')))([
+    p(['To use TextMate as your git editor, run the following command:']),
+    _code$002Dblock(Symbol.for('console'))('\n          git config --global core.editor "mate -w"\n          '),
+    p([
+      'This adds ',
+      code('editor = mate -w'),
+      ' to the ',
+      code('[core]'),
+      '\n            section of your ',
+      code('~/.gitconfig'),
+      ' file.'
+    ])
+  ])
+];
+export default {
+  [Symbol.for('id')]: 76,
+  [Symbol.for('slug')]: 'composing-mercurial-commit-messages-in-textmate',
+  [Symbol.for('title')]: 'Composing Mercurial commit messages in TextMate',
+  [Symbol.for('datetime')]: datetime('2011-01-10')('01:25:00')(Symbol.for('Australia/Sydney')),
+  [Symbol.for('tags')]: [
+    'hg',
+    'mac-os-x',
+    'markdown',
+    'mercurial',
+    'textmate'
+  ],
+  [Symbol.for('body')]: body
+};
