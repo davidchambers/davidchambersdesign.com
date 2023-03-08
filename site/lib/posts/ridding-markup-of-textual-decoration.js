@@ -104,9 +104,7 @@ const body = [
   (() => {
     const url = 'http://reference.sitepoint.com';
     const sitepoint = function sitepoint(path) {
-      return text => a((() => {
-        return url + path;
-      })())(code(text));
+      return text => a(url + path)(code(text));
     };
     return p([
       'The ',

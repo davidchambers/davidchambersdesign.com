@@ -19,33 +19,15 @@ const _canonicalize$002Dattrs = function _canonicalize$002Dattrs(attrs) {
     ];
   })())(Object['getOwnPropertySymbols'](attrs)));
 };
-const _canonicalize$002Dchildren = s[Symbol.for('compose')](s[Symbol.for('map')](child => (() => {
-  return typeof child == 'string' ? (() => {
-    return text(s[Symbol.for('fold-map')](String)($object => $object['replace'](s[Symbol.for('regex')]('')('^[ ]+'), ' '))(s[Symbol.for('lines')](child))['replace'](s[Symbol.for('regex')]('g')(' -- '), '\u2009\u2014\u2009'));
-  })() : (() => {
-    return child;
-  })();
-})()))(s[Symbol.for('unless')](Array['isArray'])(Array['of']));
+const _canonicalize$002Dchildren = s[Symbol.for('compose')](s[Symbol.for('map')](child => typeof child == 'string' ? text(s[Symbol.for('fold-map')](String)($object => $object['replace'](s[Symbol.for('regex')]('')('^[ ]+'), ' '))(s[Symbol.for('lines')](child))['replace'](s[Symbol.for('regex')]('g')(' -- '), '\u2009\u2014\u2009')) : child))(s[Symbol.for('unless')](Array['isArray'])(Array['of']));
 const _render$002Dblock$002Delement = function _render$002Dblock$002Delement(_tag$002Dname) {
-  return attrs => children => indent => level => _$002Dinline => (() => {
-    return indent['repeat'](level) + '<' + Symbol['keyFor'](_tag$002Dname) + s[Symbol.for('fold-map')](String)(sym => ' ' + Symbol['keyFor'](sym) + '="' + escape(s[Symbol.for('unwords')](s[Symbol.for('map')](s[Symbol.for('trim')])(s[Symbol.for('lines')](attrs[sym])))) + '"')(Object['getOwnPropertySymbols'](attrs)) + '>\n' + s[Symbol.for('fold-map')](String)(child => child[Symbol.for('render')](indent)((() => {
-      return level + 1;
-    })())(false))(children) + indent['repeat'](level) + '</' + Symbol['keyFor'](_tag$002Dname) + '>\n';
-  })();
+  return attrs => children => indent => level => _$002Dinline => indent['repeat'](level) + '<' + Symbol['keyFor'](_tag$002Dname) + s[Symbol.for('fold-map')](String)(sym => ' ' + Symbol['keyFor'](sym) + '="' + escape(s[Symbol.for('unwords')](s[Symbol.for('map')](s[Symbol.for('trim')])(s[Symbol.for('lines')](attrs[sym])))) + '"')(Object['getOwnPropertySymbols'](attrs)) + '>\n' + s[Symbol.for('fold-map')](String)(child => child[Symbol.for('render')](indent)(level + 1)(false))(children) + indent['repeat'](level) + '</' + Symbol['keyFor'](_tag$002Dname) + '>\n';
 };
 const _render$002Dinline$002Delement = function _render$002Dinline$002Delement(_tag$002Dname) {
-  return attrs => children => indent => level => inline => (() => {
-    return indent['repeat'](level) + '<' + Symbol['keyFor'](_tag$002Dname) + s[Symbol.for('fold-map')](String)(sym => ' ' + Symbol['keyFor'](sym) + '="' + escape(s[Symbol.for('unwords')](s[Symbol.for('map')](s[Symbol.for('trim')])(s[Symbol.for('lines')](attrs[sym])))) + '"')(Object['getOwnPropertySymbols'](attrs)) + '>' + s[Symbol.for('fold-map')](String)(child => child[Symbol.for('render')](indent)(0)(true))(children) + '</' + Symbol['keyFor'](_tag$002Dname) + '>' + (() => {
-      return inline ? '' : '\n';
-    })();
-  })();
+  return attrs => children => indent => level => inline => indent['repeat'](level) + '<' + Symbol['keyFor'](_tag$002Dname) + s[Symbol.for('fold-map')](String)(sym => ' ' + Symbol['keyFor'](sym) + '="' + escape(s[Symbol.for('unwords')](s[Symbol.for('map')](s[Symbol.for('trim')])(s[Symbol.for('lines')](attrs[sym])))) + '"')(Object['getOwnPropertySymbols'](attrs)) + '>' + s[Symbol.for('fold-map')](String)(child => child[Symbol.for('render')](indent)(0)(true))(children) + '</' + Symbol['keyFor'](_tag$002Dname) + '>' + (inline ? '' : '\n');
 };
 const _render$002Dself$002Dclosing$002Delement = function _render$002Dself$002Dclosing$002Delement(_tag$002Dname) {
-  return attrs => indent => level => inline => (() => {
-    return indent['repeat'](level) + '<' + Symbol['keyFor'](_tag$002Dname) + s[Symbol.for('fold-map')](String)(sym => ' ' + Symbol['keyFor'](sym) + '="' + escape(s[Symbol.for('unwords')](s[Symbol.for('map')](s[Symbol.for('trim')])(s[Symbol.for('lines')](attrs[sym])))) + '"')(Object['getOwnPropertySymbols'](attrs)) + ' />' + (() => {
-      return inline ? '' : '\n';
-    })();
-  })();
+  return attrs => indent => level => inline => indent['repeat'](level) + '<' + Symbol['keyFor'](_tag$002Dname) + s[Symbol.for('fold-map')](String)(sym => ' ' + Symbol['keyFor'](sym) + '="' + escape(s[Symbol.for('unwords')](s[Symbol.for('map')](s[Symbol.for('trim')])(s[Symbol.for('lines')](attrs[sym])))) + '"')(Object['getOwnPropertySymbols'](attrs)) + ' />' + (inline ? '' : '\n');
 };
 const _block$002Delement = function _block$002Delement(_tag$002Dname) {
   return _$002Dattrs => _$002Dchildren => (() => {
@@ -87,9 +69,7 @@ const excerpt = function excerpt(_$002Dchildren) {
   return (() => {
     const children = _canonicalize$002Dchildren(_$002Dchildren);
     const render = function render(indent) {
-      return level => inline => (() => {
-        return s[Symbol.for('fold-map')](String)(child => child[Symbol.for('render')](indent)(level)(inline))(children);
-      })();
+      return level => inline => s[Symbol.for('fold-map')](String)(child => child[Symbol.for('render')](indent)(level)(inline))(children);
     };
     return {
       [Symbol.for('text')]: s[Symbol.for('chain')](child => child[Symbol.for('text')])(children),

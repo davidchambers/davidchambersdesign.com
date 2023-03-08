@@ -93,15 +93,11 @@ const _render$002Dtags = function _render$002Dtags(posts) {
   return (() => {
     const counts = s[Symbol.for('reduce')](counts => tag => ({
       ...counts,
-      [(() => {
-        return tag;
-      })()]: counts[tag] + 1
+      [tag]: counts[tag] + 1
     }))(s[Symbol.for('map')](_$005F => 0)(tags))(s[Symbol.for('chain')](post => post[Symbol.for('tags')])(posts));
     return [
       h1('Tags'),
-      _ol$0027({ [Symbol.for('id')]: 'tags' })(s[Symbol.for('map')](tag => _li$0027({ [Symbol.for('data-count')]: counts[tag] })(a((() => {
-        return '/tag/' + tag + '/';
-      })())(tags[tag])))(Object['keys'](tags))),
+      _ol$0027({ [Symbol.for('id')]: 'tags' })(s[Symbol.for('map')](tag => _li$0027({ [Symbol.for('data-count')]: counts[tag] })(a('/tag/' + tag + '/')(tags[tag])))(Object['keys'](tags))),
       div({ [Symbol.for('class')]: 'clearfix' })([])
     ];
   })();

@@ -158,6 +158,10 @@ const esFromBlockExpression = ({statements}: Serif.BlockExpression): ES.Expressi
     return Identifier('undefined' as Escaped);
   }
 
+  if (statements.length === 1 && statements[0].type === 'ExpressionStatement') {
+    return esFromExpression(statements[0].expression);
+  }
+
   const init = statements.slice(0, -1).map(statement => {
     switch (statement.type) {
       case 'ExpressionStatement': return esFromExpressionStatement(statement);

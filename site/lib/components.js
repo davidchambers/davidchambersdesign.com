@@ -125,27 +125,21 @@ const _decorative$002Dimage = function _decorative$002Dimage(src) {
   }));
 };
 const _interview$002Dlist = function _interview$002Dlist(interviewer) {
-  return interviewee => exchange => ol(s[Symbol.for('snd')](s[Symbol.for('reduce')](s[Symbol.for('pair')](name => items => quotation => (() => {
-    return name === interviewer ? (() => {
-      return s[Symbol.for('Pair')](interviewee)([
-        ...items,
-        _li$0027({ [Symbol.for('class')]: 'interviewer' })([
-          strong(interviewer + ':'),
-          ' ',
-          ...quotation
-        ])
-      ]);
-    })() : (() => {
-      return s[Symbol.for('Pair')](interviewer)([
-        ...items,
-        _li$0027({})([
-          strong(interviewee + ':'),
-          ' ',
-          ...quotation
-        ])
-      ]);
-    })();
-  })()))(s[Symbol.for('Pair')](interviewer)([]))(s[Symbol.for('map')](_canonicalize$002Dchildren)(exchange))));
+  return interviewee => exchange => ol(s[Symbol.for('snd')](s[Symbol.for('reduce')](s[Symbol.for('pair')](name => items => quotation => name === interviewer ? s[Symbol.for('Pair')](interviewee)([
+    ...items,
+    _li$0027({ [Symbol.for('class')]: 'interviewer' })([
+      strong(interviewer + ':'),
+      ' ',
+      ...quotation
+    ])
+  ]) : s[Symbol.for('Pair')](interviewer)([
+    ...items,
+    _li$0027({})([
+      strong(interviewee + ':'),
+      ' ',
+      ...quotation
+    ])
+  ])))(s[Symbol.for('Pair')](interviewer)([]))(s[Symbol.for('map')](_canonicalize$002Dchildren)(exchange))));
 };
 const _pros$002Dand$002Dcons$002Dlist = function _pros$002Dand$002Dcons$002Dlist(f) {
   return ul(f(_li$0027({ [Symbol.for('class')]: 'pro' }))(_li$0027({ [Symbol.for('class')]: 'con' })));

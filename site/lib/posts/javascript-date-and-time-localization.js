@@ -175,9 +175,7 @@ const body = [
   (() => {
     const url = 'http://bitbucket.org/davidchambers/jquery.localize';
     const link = function link(path) {
-      return a((() => {
-        return url + path;
-      })());
+      return a(url + path);
     };
     return p([
       'Date and time formats are fully customizable via ',

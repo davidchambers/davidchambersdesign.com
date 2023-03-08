@@ -1,27 +1,13 @@
 import s from './sanctuary.js';
 import screen from './css/screen.js';
 const coerce = function coerce(x) {
-  return (() => {
-    return Array['isArray'](x) ? (() => {
-      return s[Symbol.for('unwords')](s[Symbol.for('map')](coerce)(x));
-    })() : typeof x == 'symbol' ? (() => {
-      return Symbol['keyFor'](x);
-    })() : (() => {
-      return String(x);
-    })();
-  })();
+  return Array['isArray'](x) ? s[Symbol.for('unwords')](s[Symbol.for('map')](coerce)(x)) : typeof x == 'symbol' ? Symbol['keyFor'](x) : String(x);
 };
 const _split$002Devery$002D2 = function _split$002Devery$002D2(xs) {
   return s[Symbol.for('array')]([])(k => s[Symbol.for('array')]([])(v => s[Symbol.for('compose')](s[Symbol.for('prepend')](s[Symbol.for('Pair')](k)(v)))(_split$002Devery$002D2)))(xs);
 };
 const _vendor$002Dprefix = function _vendor$002Dprefix(unprefixed) {
-  return prefixed => s[Symbol.for('chain')](s[Symbol.for('pair')](k => v => (() => {
-    return k === unprefixed ? (() => {
-      return s[Symbol.for('map')]($1 => s[Symbol.for('Pair')]($1)(v))(s[Symbol.for('append')](unprefixed)(prefixed));
-    })() : (() => {
-      return [s[Symbol.for('Pair')](k)(v)];
-    })();
-  })()));
+  return prefixed => s[Symbol.for('chain')](s[Symbol.for('pair')](k => v => k === unprefixed ? s[Symbol.for('map')]($1 => s[Symbol.for('Pair')]($1)(v))(s[Symbol.for('append')](unprefixed)(prefixed)) : [s[Symbol.for('Pair')](k)(v)]));
 };
 const _vendor$002Dprefixes = s[Symbol.for('pipe')]([
   _vendor$002Dprefix(Symbol.for('border-radius'))([

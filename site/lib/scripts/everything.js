@@ -345,9 +345,7 @@ _write$002Dfile(_public([
   [Symbol.for('height')]: 16
 })(_icon$002Ftwitter));
 const _render$002Ddocument = function _render$002Ddocument(element) {
-  return (() => {
-    return '<!DOCTYPE html>\n' + element[Symbol.for('render')]('  ')(0)(false);
-  })();
+  return '<!DOCTYPE html>\n' + element[Symbol.for('render')]('  ')(0)(false);
 };
 _write$002Dfile(_public(['archives.html']))(_render$002Ddocument(_base$002Dtemplate('Archives')(_render$002Darchives(posts))));
 _write$002Dfile(_public(['tags.html']))(_render$002Ddocument(_base$002Dtemplate('Tags')(_render$002Dtags(posts))));

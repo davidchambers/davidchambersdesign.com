@@ -100,21 +100,15 @@ const _render$002Dpost = function _render$002Dpost(post) {
         ])],
       post[Symbol.for('body')],
       [_footer$0027({ [Symbol.for('class')]: 'metadata' })(s[Symbol.for('join')]([
-          [ul(_li$0027({ [Symbol.for('class')]: 'shorturl' })(a((() => {
-              return 'http://dċd.ws/' + post[Symbol.for('id')] + '/';
-            })())('Short URL')))],
+          [ul(_li$0027({ [Symbol.for('class')]: 'shorturl' })(a('http://dċd.ws/' + post[Symbol.for('id')] + '/')('Short URL')))],
           s[Symbol.for('array')]([])(head => tail => [
             h4('This post has the following tags:'),
-            ol(s[Symbol.for('map')](tag => li(a((() => {
-              return '/tag/' + tag + '/';
-            })())(tags[tag])))(s[Symbol.for('prepend')](head)(tail)))
+            ol(s[Symbol.for('map')](tag => li(a('/tag/' + tag + '/')(tags[tag])))(s[Symbol.for('prepend')](head)(tail)))
           ])(post[Symbol.for('tags')])
         ]))],
       s[Symbol.for('array')]([])(_$005F => _$005F => [
         _h3$0027({ [Symbol.for('id')]: 'related' })('Possibly related posts'),
-        ul(s[Symbol.for('map')](_related$002Dpost => li(a((() => {
-          return '/' + _related$002Dpost[Symbol.for('slug')] + '/';
-        })())(_related$002Dpost[Symbol.for('title')])))(_related$002Dposts))
+        ul(s[Symbol.for('map')](_related$002Dpost => li(a('/' + _related$002Dpost[Symbol.for('slug')] + '/')(_related$002Dpost[Symbol.for('title')])))(_related$002Dposts))
       ])(_related$002Dposts)
     ]))];
 };

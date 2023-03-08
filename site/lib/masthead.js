@@ -681,21 +681,7 @@ const update = function update(positions) {
     const x = s[Symbol.for('fst')](positions[0]);
     const y = s[Symbol.for('snd')](positions[0]);
     return [
-      dir[0] === Symbol.for('h') ? (() => {
-        return s[Symbol.for('Pair')]((() => {
-          return x + dir[1];
-        })())(y);
-      })() : dir[0] === Symbol.for('v') ? (() => {
-        return s[Symbol.for('Pair')](x)((() => {
-          return y + dir[1];
-        })());
-      })() : (() => {
-        return s[Symbol.for('Pair')]((() => {
-          return x + dir[1][0];
-        })())((() => {
-          return y + dir[1][1];
-        })());
-      })(),
+      dir[0] === Symbol.for('h') ? s[Symbol.for('Pair')](x + dir[1])(y) : dir[0] === Symbol.for('v') ? s[Symbol.for('Pair')](x)(y + dir[1]) : s[Symbol.for('Pair')](x + dir[1][0])(y + dir[1][1]),
       ...positions
     ];
   })();
