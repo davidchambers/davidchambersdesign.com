@@ -3,21 +3,30 @@ import {basename, dirname, join, relative} from 'node:path';
 
 import escodegen from 'escodegen';
 
-import serif from 'serif';
+import serif from './index.js';
+import type {Module} from './types.js';
 
 
-async function findDependencies(entryPoint) {
-  const tree = new Map([]);
+interface ResolvedModule {
+  ast: Module;
+  dependencies: ReadonlyArray<string>;
+  exportedNames: ReadonlyArray<string>;
+}
+
+type Tree = Map<string, ResolvedModule>
+
+async function findDependencies(entryPoint: string): Promise<Tree> {
+  const tree: Tree = new Map([]);
   await recur(entryPoint);
   return tree;
 
-  async function recur(filename) {
+  async function recur(filename: string): Promise<void> {
     if (tree.has(filename)) return;
     const source = await readFile(filename, 'utf8');
     let ast;
     try {
       ast = serif.parse(source, filename);
-    } catch (err) {
+    } catch (err: any) {
       const lines = (
         (await readFile(err.location.source, 'utf8'))
         .split(/^/m)
@@ -54,12 +63,13 @@ async function findDependencies(entryPoint) {
   }
 }
 
-function orderDependencies(tree) {
-  const sorted = new Set([]);
+function orderDependencies(tree: Tree): Array<string> {
+  const sorted: Set<string> = new Set([]);
   const unsorted = Array.from(tree.keys());
   while (unsorted.length > 0) {
-    const filename = unsorted.shift();
-    const {dependencies} = tree.get(filename);
+    const filename = unsorted[0];
+    unsorted.shift();
+    const {dependencies} = tree.get(filename) as ResolvedModule;
     if (dependencies.every(filename => sorted.has(filename))) {
       sorted.add(filename);
     } else {
@@ -72,7 +82,7 @@ function orderDependencies(tree) {
 {
   const cwd = process.cwd();
   const [,, src, lib, filename] = process.argv;
-  let tree;
+  let tree: Tree;
   try {
     tree = await findDependencies(filename);
   } catch (err) {
@@ -82,12 +92,12 @@ function orderDependencies(tree) {
   const filenames = await Promise.all(
     orderDependencies(tree).map(async serifFilename => {
       const serifDirname = dirname(serifFilename);
-      const serifAst = tree.get(serifFilename).ast;
+      const serifAst = (tree.get(serifFilename) as ResolvedModule).ast;
       const jsAst = await serif.trans(
         serifAst,
         importPath => {
           const importFilename = join(serifDirname, ...importPath.split('/'));
-          return tree.get(importFilename).exportedNames;
+          return (tree.get(importFilename) as ResolvedModule).exportedNames;
         }
       );
       const options = {format: {indent: {style: '  '}}};

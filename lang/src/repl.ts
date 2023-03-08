@@ -5,15 +5,15 @@ import vm           from 'node:vm';
 
 import escodegen    from 'escodegen';
 
-import serif        from 'serif';
+import serif        from './index.js';
 
 
-async function evaluateModule(source) {
+async function evaluateModule(source: string): Promise<unknown> {
   const context = vm.createContext(global);
-  const module = new vm.SourceTextModule(source, {context});
-  await module.link(async (specifier, referencingModule) => {
+  const module = new (vm as any).SourceTextModule(source, {context});
+  await module.link(async (specifier: string, referencingModule: any) => {
     const entries = Object.entries(await import(specifier));
-    const module = new vm.SyntheticModule(
+    const module = new (vm as any).SyntheticModule(
       entries.map(([name]) => name),
       () => {
         for (const [name, value] of entries) {
@@ -28,14 +28,14 @@ async function evaluateModule(source) {
   return module.namespace.default;
 }
 
-async function read(serifSource) {
-  const serifAst = serif.parse(`export default ${serifSource}`);
-  const jsAst = await serif.trans(serifAst);
+async function read(serifSource: string): Promise<unknown> {
+  const serifAst = serif.parse(`export default ${serifSource}`, '[repl]');
+  const jsAst = await serif.trans(serifAst, _importPath => []);
   const jsSource = escodegen.generate(jsAst);
   return evaluateModule(jsSource);
 }
 
-function print(x) {
+function print(x: any): string {
   switch (Object.prototype.toString.call(x)) {
     case '[object Null]':
     case '[object Undefined]':
@@ -72,20 +72,9 @@ const server = repl.start({
     try {
       callback(null, await read(code));
     } catch (err) {
-      if (err.name === 'SyntaxError') {
-        callback(new repl.Recoverable(err));
-      } else if (err.name === 'ReferenceError') {
-        err.message = err.message.replace(
-          /^_([^ ]+)/,
-          (_, encoded) => encoded.replace(
-            /[$]([0-9A-F]{4})/g,
-            (_, code) => String.fromCharCode(parseInt(code, 16))
-          )
-        );
-        console.error(err);
-        console.log();
-        server.displayPrompt(false);
-      }
+      console.error(err);
+      console.log();
+      server.displayPrompt(false);
     }
   },
   writer: value => print(value) + '\n',
