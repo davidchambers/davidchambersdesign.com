@@ -157,54 +157,19 @@ const esFromBlockExpression = ({statements}: Serif.BlockExpression): ES.Expressi
   if (statements.length === 0) {
     return Identifier('undefined' as Escaped);
   }
-  const init = statements.slice(0, -1).flatMap<ES.Statement>(statement => {
+
+  const init = statements.slice(0, -1).map(statement => {
     switch (statement.type) {
-      case 'ExpressionStatement': {
-        return [esFromExpressionStatement(statement)];
-      }
-      case 'declaration': {
-        if (statement.parameterNames.length === 0) {
-          return [es.VariableDeclaration([
-            es.VariableDeclarator(
-              Identifier(escape(statement.name)),
-              esFromExpression(statement.expression),
-            ),
-          ])];
-        } else {
-          const [param, ...params] = statement.parameterNames.map(name => Identifier(escape(name)));
-          return [es.VariableDeclaration([
-            es.VariableDeclarator(
-              Identifier(escape(statement.name)),
-              es.FunctionExpression(
-                Identifier(escape(statement.name)),
-                [param],
-                es.BlockStatement([es.ReturnStatement(params.reduceRight(
-                  (body, param) => es.ArrowFunctionExpression([param], body),
-                  esFromExpression(statement.expression)
-                ))])
-              )
-            ),
-          ])];
-        }
-      }
-      default: {
-        return [];
-      }
+      case 'ExpressionStatement': return esFromExpressionStatement(statement);
+      case 'declaration':         return esFromDeclaration(statement);
     }
   });
 
   const last = (last => {
     switch (last.type) {
-      case 'ExpressionStatement': {
-        return [es.ReturnStatement(esFromExpression(last.expression))];
-      }
-      case 'declaration': {
-        // TODO: Return function
-        return [];
-      }
-      default: {
-        return [];
-      }
+      case 'ExpressionStatement': return [es.ReturnStatement(esFromExpression(last.expression))];
+      case 'declaration':         return [esFromDeclaration(last),
+                                          es.ReturnStatement(Identifier(escape(last.name)))];
     }
   })(statements[statements.length - 1]);
 
@@ -343,7 +308,7 @@ const esFromDeclaration = ({
   name,
   parameterNames,
   expression,
-}: Serif.Declaration): ES.Declaration => (
+}: Serif.Declaration): ES.VariableDeclaration => (
   parameterNames.length === 0 ?
   es.VariableDeclaration([
     es.VariableDeclarator(
