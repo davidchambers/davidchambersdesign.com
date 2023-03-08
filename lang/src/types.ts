@@ -403,6 +403,7 @@ export type Statement =
   | ExpressionStatement
 
 export interface Module {
+  readonly type: 'Module';
   readonly imports: ReadonlyArray<ImportDeclaration>;
   readonly exports: ReadonlyArray<ExportNamedDeclaration | ExportDefaultDeclaration>;
   readonly statements: ReadonlyArray<Statement>;

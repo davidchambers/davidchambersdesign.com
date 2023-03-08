@@ -7,3 +7,8 @@ src/grammar.js: serif.pegjs
 
 lib/grammar.js: src/grammar.js
 	cp -- '$<' '$@'
+
+.PHONY: test
+test:
+	node_modules/.bin/tsc
+	node -- node_modules/.bin/oletus -- lib/test/grammar.js

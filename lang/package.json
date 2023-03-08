@@ -15,6 +15,7 @@
     "@types/escodegen": "0.0.7",
     "@types/estree": "1.0.0",
     "@types/node": "18.14.x",
+    "oletus": "3.3.x",
     "peggy": "3.0.0",
     "sanctuary-scripts": "5.0.x",
     "sanctuary-style": "6.0.x",

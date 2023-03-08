@@ -7,7 +7,7 @@ Module
       { return [head, ...tail]; }
     )?
     Separator*
-  { return {imports, exports, statements: statements ?? []}; }
+  { return {type: 'Module', imports, exports, statements: statements ?? []}; }
 
 ImportSpecifier 'import specifier'
   = local:Identifier

@@ -411,7 +411,7 @@ function peg$parse(input, options) {
   var peg$f0 = function(imports, exports, statement) { return statement; };
   var peg$f1 = function(imports, exports, head, statement) { return statement; };
   var peg$f2 = function(imports, exports, head, tail) { return [head, ...tail]; };
-  var peg$f3 = function(imports, exports, statements) { return {imports, exports, statements: statements ?? []}; };
+  var peg$f3 = function(imports, exports, statements) { return {type: 'Module', imports, exports, statements: statements ?? []}; };
   var peg$f4 = function(local) { return {type: 'ImportSpecifier', local, imported: local}; };
   var peg$f5 = function(local) { return {type: 'ImportDefaultSpecifier', local}; };
   var peg$f6 = function(specifier) { return specifier; };
