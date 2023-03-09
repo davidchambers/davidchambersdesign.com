@@ -5,7 +5,7 @@ export {render ⇦ ⇨ ⇧ ⇩ ← → ↑ ↓}
 reducer prev path curr = {
   if curr[0] === :M then {
     if {prev[0] === :M || prev[0] === :m} then {
-      (s:Pair curr path)  ; ignore previous move
+      (s:Pair curr path)  ;; ignore previous move
     } else {
       (s:Pair curr #[...path prev])
     }

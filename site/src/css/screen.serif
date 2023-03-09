@@ -1166,215 +1166,215 @@ screen coerce = {
     #[".codehilite .hll"] #[
       :background-color base2
     ]
-    ; Comment
+    ;; Comment
     #[".codehilite .c"] #[
       :font-style :italic
       :color base1
     ]
-    ; Keyword
+    ;; Keyword
     #[".codehilite .k"] #[
       :font-weight :bold
     ]
-    ; Operator
+    ;; Operator
     #[".codehilite .o"] #[
       :font-weight :bold
     ]
-    ; Comment.Multiline
+    ;; Comment.Multiline
     #[".codehilite .cm"] #[
       :font-style :italic
       :color base1
     ]
-    ; Comment.Preproc
+    ;; Comment.Preproc
     #[".codehilite .cp"] #[
       :font-weight :bold
       :color base1
     ]
-    ; Comment.Single
+    ;; Comment.Single
     #[".codehilite .c1"] #[
       :font-style :italic
       :color base1
     ]
-    ; Comment.Special
+    ;; Comment.Special
     #[".codehilite .cs"] #[
       :font-style :italic
       :font-weight :bold
       :color base1
     ]
-    ; Generic.Emph
+    ;; Generic.Emph
     #[".codehilite .ge"] #[
       :font-style :italic
     ]
-    ; Generic.Error
+    ;; Generic.Error
     #[".codehilite .gr"] #[
       :color red
     ]
-    ; Generic.Heading
+    ;; Generic.Heading
     #[".codehilite .gh"] #[
       :color base1
     ]
-    ; Generic.Output
+    ;; Generic.Output
     #[".codehilite .go"] #[
       :color base1
     ]
-    ; Generic.Prompt
+    ;; Generic.Prompt
     #[".codehilite .gp"] #[
       :color base1
     ]
-    ; Generic.Strong
+    ;; Generic.Strong
     #[".codehilite .gs"] #[
       :font-weight :bold
     ]
-    ; Generic.Subheading
+    ;; Generic.Subheading
     #[".codehilite .gu"] #[
       :color base1
     ]
-    ; Generic.Traceback
+    ;; Generic.Traceback
     #[".codehilite .gt"] #[
       :color red
     ]
-    ; Keyword.Constant
+    ;; Keyword.Constant
     #[".codehilite .kc"] #[
       :font-weight :bold
     ]
-    ; Keyword.Declaration
+    ;; Keyword.Declaration
     #[".codehilite .kd"] #[
       :font-weight :bold
     ]
-    ; Keyword.Namespace
+    ;; Keyword.Namespace
     #[".codehilite .kn"] #[
       :font-weight :bold
     ]
-    ; Keyword.Pseudo
+    ;; Keyword.Pseudo
     #[".codehilite .kp"] #[
       :font-weight :bold
     ]
-    ; Keyword.Reserved
+    ;; Keyword.Reserved
     #[".codehilite .kr"] #[
       :font-weight :bold
     ]
-    ; Keyword.Type
+    ;; Keyword.Type
     #[".codehilite .kt"] #[
       :font-weight :bold
     ]
-    ; Literal.Number
+    ;; Literal.Number
     #[".codehilite .m"] #[
       :color cyan
     ]
-    ; Literal.String
+    ;; Literal.String
     #[".codehilite .s"] #[
       :color yellow
     ]
-    ; Name.Attribute
+    ;; Name.Attribute
     #[".codehilite .na"] #[
       :color cyan
     ]
-    ; Name.Class
+    ;; Name.Class
     #[".codehilite .nc"] #[
       :font-weight :bold
     ]
-    ; Name.Constant
+    ;; Name.Constant
     #[".codehilite .no"] #[
       :color cyan
     ]
-    ; Name.Entity
+    ;; Name.Entity
     #[".codehilite .ni"] #[
       :color magenta
     ]
-    ; Name.Exception
+    ;; Name.Exception
     #[".codehilite .ne"] #[
       :font-weight :bold
       :color orange
     ]
-    ; Name.Function
+    ;; Name.Function
     #[".codehilite .nf"] #[
       :font-weight :bold
       :color orange
     ]
-    ; Name.Tag
+    ;; Name.Tag
     #[".codehilite .nt"] #[
       :color blue
     ]
-    ; Operator.Word
+    ;; Operator.Word
     #[".codehilite .ow"] #[
       :font-weight :bold
     ]
-    ; Literal.Number.Float
+    ;; Literal.Number.Float
     #[".codehilite .mf"] #[
       :color cyan
     ]
-    ; Literal.Number.Hex
+    ;; Literal.Number.Hex
     #[".codehilite .mh"] #[
       :color cyan
     ]
-    ; Literal.Number.Integer
+    ;; Literal.Number.Integer
     #[".codehilite .mi"] #[
       :color cyan
     ]
-    ; Literal.Number.Oct
+    ;; Literal.Number.Oct
     #[".codehilite .mo"] #[
       :color cyan
     ]
-    ; Literal.String.Backtick
+    ;; Literal.String.Backtick
     #[".codehilite .sb"] #[
       :color yellow
     ]
-    ; Literal.String.Char
+    ;; Literal.String.Char
     #[".codehilite .sc"] #[
       :color yellow
     ]
-    ; Literal.String.Doc
+    ;; Literal.String.Doc
     #[".codehilite .sd"] #[
       :color yellow
     ]
-    ; Literal.String.Double
+    ;; Literal.String.Double
     #[".codehilite .s2"] #[
       :color yellow
     ]
-    ; Literal.String.Escape
+    ;; Literal.String.Escape
     #[".codehilite .se"] #[
       :color yellow
     ]
-    ; Literal.String.Heredoc
+    ;; Literal.String.Heredoc
     #[".codehilite .sh"] #[
       :color yellow
     ]
-    ; Literal.String.Interpol
+    ;; Literal.String.Interpol
     #[".codehilite .si"] #[
       :color yellow
     ]
-    ; Literal.String.Other
+    ;; Literal.String.Other
     #[".codehilite .sx"] #[
       :color yellow
     ]
-    ; Literal.String.Regex
+    ;; Literal.String.Regex
     #[".codehilite .sr"] #[
       :color red
     ]
-    ; Literal.String.Single
+    ;; Literal.String.Single
     #[".codehilite .s1"] #[
       :color yellow
     ]
-    ; Literal.String.Symbol
+    ;; Literal.String.Symbol
     #[".codehilite .ss"] #[
       :color yellow
     ]
-    ; Name.Builtin.Pseudo
+    ;; Name.Builtin.Pseudo
     #[".codehilite .bp"] #[
       :color base1
     ]
-    ; Name.Variable.Class
+    ;; Name.Variable.Class
     #[".codehilite .vc"] #[
       :color cyan
     ]
-    ; Name.Variable.Global
+    ;; Name.Variable.Global
     #[".codehilite .vg"] #[
       :color cyan
     ]
-    ; Name.Variable.Instance
+    ;; Name.Variable.Instance
     #[".codehilite .vi"] #[
       :color cyan
     ]
-    ; Literal.Number.Integer.Long
+    ;; Literal.Number.Integer.Long
     #[".codehilite .il"] #[
       :color cyan
     ]

@@ -114,7 +114,7 @@ Whitespace 'whitespace'
   / '\uFEFF' // BYTE ORDER MARK
 
 Comment 'comment'
-  = ';' (!LineTerminator .)*
+  = ';;' (!LineTerminator .)*
 
 Separator 'separator'
   = Whitespace

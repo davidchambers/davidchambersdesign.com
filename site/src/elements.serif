@@ -223,11 +223,11 @@ excerpt -children = {
   }
 }
 
-; 4.1 The document element
+;; 4.1 The document element
 html' = (block-element :html)
 html = (html' #{})
 
-; 4.2 Document metadata
+;; 4.2 Document metadata
 head' = (block-element :head)
 head = (head' #{})
 title' = (inline-element :title)
@@ -237,7 +237,7 @@ link = (self-closing-element :link)
 meta = (self-closing-element :meta)
 style' = (block-element :style)
 
-; 4.3 Sections
+;; 4.3 Sections
 body' = (block-element :body)
 body = (body' #{})
 article' = (block-element :article)
@@ -266,7 +266,7 @@ footer' = (block-element :footer)
 footer = (footer' #{})
 address' = (block-element :address)
 
-; 4.4 Grouping content
+;; 4.4 Grouping content
 p' = (inline-element :p)
 p = (p' #{})
 hr' = (self-closing-element :hr)
@@ -296,14 +296,14 @@ div = (block-element :div)
 b                        = (inline-element :b #{})
 mask                     = (block-element :mask)
 rect                     = (self-closing-element :rect)
-; The opening and closing tags of each of the following elements
-; are always rendered on their own lines.
+;; The opening and closing tags of each of the following elements
+;; are always rendered on their own lines.
 linearGradient           = (block-element :linearGradient)
 object                   = (block-element :object)
 svg                      = (block-element :svg)
-; The opening and closing tags of each of the following elements
-; are rendered inline unless the element contains an element
-; whose opening and closing tags are rendered on their own lines.
+;; The opening and closing tags of each of the following elements
+;; are rendered inline unless the element contains an element
+;; whose opening and closing tags are rendered on their own lines.
 a'                      = (inline-element :a)
 a                       = (href -> (a' #{:href href}))
 code'                   = (inline-element :code)
@@ -324,7 +324,7 @@ time                    = (inline-element :time)
 var'                    = (inline-element :var)
 var                     = (inline-element :var #{})
 video                   = (inline-element :video)
-; The following self-closing elements are always rendered inline.
+;; The following self-closing elements are always rendered inline.
 embed                   = (self-closing-element :embed)
 img                     = (self-closing-element :img)
 param                   = (self-closing-element :param)
