@@ -1,7 +1,7 @@
 import type * as ES from 'estree';
 
 import * as es from './es.js';
-import type * as Serif from './types.js';
+import * as Serif from './types.js';
 
 
 type Escaped = string & {_tag: 'Escaped'}
@@ -153,32 +153,30 @@ const esFromLambda = ({parameter, body}: Serif.Lambda): ES.ArrowFunctionExpressi
   )
 );
 
+const esFromStatement = (statement: Serif.Statement): ES.ExpressionStatement | ES.VariableDeclaration => {
+  switch (statement.type) {
+    case 'ExpressionStatement': return esFromExpressionStatement(statement);
+    case 'declaration':         return esFromDeclaration(statement);
+  }
+};
+
 const esFromBlockExpression = ({statements}: Serif.BlockExpression): ES.Expression => {
   if (statements.length === 0) {
     return Identifier('undefined' as Escaped);
   }
-
   if (statements.length === 1 && statements[0].type === 'ExpressionStatement') {
     return esFromExpression(statements[0].expression);
   }
-
-  const init = statements.slice(0, -1).map(statement => {
-    switch (statement.type) {
-      case 'ExpressionStatement': return esFromExpressionStatement(statement);
-      case 'declaration':         return esFromDeclaration(statement);
-    }
-  });
-
-  const last = (last => {
-    switch (last.type) {
-      case 'ExpressionStatement': return [es.ReturnStatement(esFromExpression(last.expression))];
-      case 'declaration':         return [esFromDeclaration(last),
-                                          es.ReturnStatement(Identifier(escape(last.name)))];
-    }
-  })(statements[statements.length - 1]);
-
+  const last = statements[statements.length - 1];
   return es.CallExpression(
-    es.ArrowFunctionExpression([], es.BlockStatement([...init, ...last])),
+    es.ArrowFunctionExpression(
+      [],
+      es.BlockStatement(
+        last.type === 'declaration'
+        ? [...statements.map(esFromStatement), es.ReturnStatement(Identifier(escape(last.name)))]
+        : [...statements.slice(0, -1).map(esFromStatement), es.ReturnStatement(esFromExpression(last.expression))]
+      )
+    ),
     []
   );
 };
