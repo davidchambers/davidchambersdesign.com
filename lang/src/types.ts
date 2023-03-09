@@ -3,20 +3,48 @@ export interface Boolean {
   readonly value: boolean;
 }
 
+export const Boolean = (
+  value: boolean,
+): Boolean => ({
+  type: 'BooleanLiteral',
+  value,
+});
+
 export interface Number {
   readonly type: 'number';
   readonly value: number;
 }
+
+export const Number = (
+  value: number,
+): Number => ({
+  type: 'number',
+  value,
+});
 
 export interface String {
   readonly type: 'string';
   readonly value: string;
 }
 
+export const String = (
+  value: string,
+): String => ({
+  type: 'string',
+  value,
+});
+
 export interface Symbol {
   readonly type: 'symbol';
   readonly name: string;
 }
+
+export const Symbol = (
+  name: string,
+): Symbol => ({
+  type: 'symbol',
+  name,
+});
 
 export interface MetaProperty {
   readonly type: 'MetaProperty';
@@ -24,26 +52,65 @@ export interface MetaProperty {
   readonly property: string;
 }
 
+export const MetaProperty = (
+  meta: string,
+  property: string,
+): MetaProperty => ({
+  type: 'MetaProperty',
+  meta,
+  property,
+});
+
 export interface MemberExpression {
   readonly type: 'MemberExpression';
   readonly object: Expression;
   readonly property: Expression;
 }
 
+export const MemberExpression = (
+  object: Expression,
+  property: Expression,
+): MemberExpression => ({
+  type: 'MemberExpression',
+  object,
+  property,
+});
+
 export interface Identifier {
   readonly type: 'identifier';
   readonly name: string;
 }
+
+export const Identifier = (
+  name: string,
+): Identifier => ({
+  type: 'identifier',
+  name,
+});
 
 export interface SpreadElement {
   readonly type: 'spread-element';
   readonly argument: Expression;
 }
 
+export const SpreadElement = (
+  argument: Expression,
+): SpreadElement => ({
+  type: 'spread-element',
+  argument,
+});
+
 export interface Array {
   readonly type: 'array';
   readonly elements: ReadonlyArray<SpreadElement | Expression>;
 }
+
+export const Array = (
+  elements: ReadonlyArray<SpreadElement | Expression>,
+): Array => ({
+  type: 'array',
+  elements,
+});
 
 export interface Property {
   readonly type: 'property';
@@ -51,10 +118,26 @@ export interface Property {
   readonly value: Expression;
 }
 
+export const Property = (
+  key: Expression,
+  value: Expression,
+): Property => ({
+  type: 'property',
+  key,
+  value,
+});
+
 export interface Object {
   readonly type: 'object';
   readonly properties: ReadonlyArray<SpreadElement | Property>;
 }
+
+export const Object = (
+  properties: ReadonlyArray<SpreadElement | Property>,
+): Object => ({
+  type: 'object',
+  properties,
+});
 
 export interface Lambda {
   readonly type: 'lambda';
@@ -62,10 +145,26 @@ export interface Lambda {
   readonly body: Expression;
 }
 
+export const Lambda = (
+  parameter: Identifier,
+  body: Expression,
+): Lambda => ({
+  type: 'lambda',
+  parameter,
+  body,
+});
+
 export interface BlockExpression {
   readonly type: 'BlockExpression';
   readonly statements: ReadonlyArray<Statement>;
 }
+
+export const BlockExpression = (
+  statements: ReadonlyArray<Statement>,
+): BlockExpression => ({
+  type: 'BlockExpression',
+  statements,
+});
 
 export type PrimaryExpression =
   | Identifier
@@ -95,6 +194,15 @@ export interface UnaryExpression {
   readonly argument: UnaryOperand;
 }
 
+export const UnaryExpression = (
+  operator: UnaryOperator,
+  argument: UnaryOperand,
+): UnaryExpression => ({
+  type: 'UnaryExpression',
+  operator,
+  argument,
+});
+
 export type ExponentiationOperator =
   | '**'
 
@@ -108,6 +216,17 @@ export interface ExponentiationExpression {
   readonly left: ExponentiationOperand;
   readonly right: ExponentiationOperand;
 }
+
+export const ExponentiationExpression = (
+  operator: ExponentiationOperator,
+  left: ExponentiationOperand,
+  right: ExponentiationOperand,
+): ExponentiationExpression => ({
+  type: 'BinaryExpression',
+  operator,
+  left,
+  right,
+});
 
 export type MultiplicativeOperator =
   | '*'
@@ -125,6 +244,17 @@ export interface MultiplicativeExpression {
   readonly right: MultiplicativeOperand;
 }
 
+export const MultiplicativeExpression = (
+  operator: MultiplicativeOperator,
+  left: MultiplicativeOperand,
+  right: MultiplicativeOperand,
+): MultiplicativeExpression => ({
+  type: 'BinaryExpression',
+  operator,
+  left,
+  right,
+});
+
 export type AdditiveOperator =
   | '+'
   | '-'
@@ -139,6 +269,17 @@ export interface AdditiveExpression {
   readonly left: AdditiveOperand;
   readonly right: AdditiveOperand;
 }
+
+export const AdditiveExpression = (
+  operator: AdditiveOperator,
+  left: AdditiveOperand,
+  right: AdditiveOperand,
+): AdditiveExpression => ({
+  type: 'BinaryExpression',
+  operator,
+  left,
+  right,
+});
 
 export type ShiftOperator =
   | '<<'
@@ -155,6 +296,17 @@ export interface ShiftExpression {
   readonly left: ShiftOperand;
   readonly right: ShiftOperand;
 }
+
+export const ShiftExpression = (
+  operator: ShiftOperator,
+  left: ShiftOperand,
+  right: ShiftOperand,
+): ShiftExpression => ({
+  type: 'BinaryExpression',
+  operator,
+  left,
+  right,
+});
 
 export type RelationalOperator =
   | '<'
@@ -175,6 +327,17 @@ export interface RelationalExpression {
   readonly right: RelationalOperand;
 }
 
+export const RelationalExpression = (
+  operator: RelationalOperator,
+  left: RelationalOperand,
+  right: RelationalOperand,
+): RelationalExpression => ({
+  type: 'BinaryExpression',
+  operator,
+  left,
+  right,
+});
+
 export type EqualityOperator =
   | '=='
   | '!='
@@ -192,6 +355,17 @@ export interface EqualityExpression {
   readonly right: EqualityOperand;
 }
 
+export const EqualityExpression = (
+  operator: EqualityOperator,
+  left: EqualityOperand,
+  right: EqualityOperand,
+): EqualityExpression => ({
+  type: 'BinaryExpression',
+  operator,
+  left,
+  right,
+});
+
 export type BitwiseANDOperator =
   | '&'
 
@@ -205,6 +379,17 @@ export interface BitwiseANDExpression {
   readonly left: BitwiseANDOperand;
   readonly right: BitwiseANDOperand;
 }
+
+export const BitwiseANDExpression = (
+  operator: BitwiseANDOperator,
+  left: BitwiseANDOperand,
+  right: BitwiseANDOperand,
+): BitwiseANDExpression => ({
+  type: 'BinaryExpression',
+  operator,
+  left,
+  right,
+});
 
 export type BitwiseXOROperator =
   | '^'
@@ -220,6 +405,17 @@ export interface BitwiseXORExpression {
   readonly right: BitwiseXOROperand;
 }
 
+export const BitwiseXORExpression = (
+  operator: BitwiseXOROperator,
+  left: BitwiseXOROperand,
+  right: BitwiseXOROperand,
+): BitwiseXORExpression => ({
+  type: 'BinaryExpression',
+  operator,
+  left,
+  right,
+});
+
 export type BitwiseOROperator =
   | '|'
 
@@ -233,6 +429,17 @@ export interface BitwiseORExpression {
   readonly left: BitwiseOROperand;
   readonly right: BitwiseOROperand;
 }
+
+export const BitwiseORExpression = (
+  operator: BitwiseOROperator,
+  left: BitwiseOROperand,
+  right: BitwiseOROperand,
+): BitwiseORExpression => ({
+  type: 'BinaryExpression',
+  operator,
+  left,
+  right,
+});
 
 export type BinaryExpression =
   | ExponentiationExpression
@@ -259,6 +466,17 @@ export interface LogicalANDExpression {
   readonly right: LogicalANDOperand;
 }
 
+export const LogicalANDExpression = (
+  operator: LogicalANDOperator,
+  left: LogicalANDOperand,
+  right: LogicalANDOperand,
+): LogicalANDExpression => ({
+  type: 'LogicalExpression',
+  operator,
+  left,
+  right,
+});
+
 export type LogicalOROperator =
   | '||'
 
@@ -272,6 +490,17 @@ export interface LogicalORExpression {
   readonly left: LogicalOROperand;
   readonly right: LogicalOROperand;
 }
+
+export const LogicalORExpression = (
+  operator: LogicalOROperator,
+  left: LogicalOROperand,
+  right: LogicalOROperand,
+): LogicalORExpression => ({
+  type: 'LogicalExpression',
+  operator,
+  left,
+  right,
+});
 
 export type CoalesceOperator =
   | '??'
@@ -287,6 +516,17 @@ export interface CoalesceExpression {
   readonly right: CoalesceOperand;
 }
 
+export const CoalesceExpression = (
+  operator: CoalesceOperator,
+  left: CoalesceOperand,
+  right: CoalesceOperand,
+): CoalesceExpression => ({
+  type: 'LogicalExpression',
+  operator,
+  left,
+  right,
+});
+
 export type LogicalExpression =
   | LogicalANDExpression
   | LogicalORExpression
@@ -299,15 +539,39 @@ export interface ConditionalExpression {
   readonly alternative: Expression;
 }
 
+export const ConditionalExpression = (
+  predicate: Expression,
+  consequent: Expression,
+  alternative: Expression,
+): ConditionalExpression => ({
+  type: 'ConditionalExpression',
+  predicate,
+  consequent,
+  alternative,
+});
+
 export interface Placeholder {
   readonly type: 'placeholder';
 }
+
+export const Placeholder: Placeholder = {
+  type: 'placeholder',
+};
 
 export interface New {
   readonly type: 'new';
   readonly callee: Placeholder | Expression;
   readonly arguments: ReadonlyArray<Placeholder | Expression>;
 }
+
+export const New = (
+  callee: Placeholder | Expression,
+  args: ReadonlyArray<Placeholder | Expression>,
+): New => ({
+  type: 'new',
+  callee,
+  arguments: args,
+});
 
 export interface Invocation {
   readonly type: 'invocation';
@@ -316,11 +580,31 @@ export interface Invocation {
   readonly arguments: ReadonlyArray<Placeholder | Expression>;
 }
 
+export const Invocation = (
+  name: string,
+  object: Placeholder | Expression,
+  args: ReadonlyArray<Placeholder | Expression>,
+): Invocation => ({
+  type: 'invocation',
+  name,
+  object,
+  arguments: args,
+});
+
 export interface Application {
   readonly type: 'application';
   readonly callee: Placeholder | Expression;
   readonly arguments: ReadonlyArray<Placeholder | SpreadElement | Expression>;
 }
+
+export const Application = (
+  callee: Placeholder | Expression,
+  args: ReadonlyArray<Placeholder | Expression>,
+): Application => ({
+  type: 'application',
+  callee,
+  arguments: args,
+});
 
 export type Expression =
   | Boolean
@@ -370,21 +654,51 @@ export interface ImportDefaultSpecifier {
   readonly local: Identifier;
 }
 
+export const ImportDefaultSpecifier = (
+  local: Identifier,
+): ImportDefaultSpecifier => ({
+  type: 'ImportDefaultSpecifier',
+  local,
+});
+
 export interface ImportSpecifier {
   readonly type: 'ImportSpecifier';
   readonly local: Identifier;
   readonly imported: Identifier;
 }
 
+export const ImportSpecifier = (
+  local: Identifier,
+  imported: Identifier,
+): ImportSpecifier => ({
+  type: 'ImportSpecifier',
+  local,
+  imported,
+});
+
 export interface ExportNamedDeclaration {
   readonly type: 'ExportNamedDeclaration';
   readonly specifiers: ReadonlyArray<Identifier>;
 }
 
+export const ExportNamedDeclaration = (
+  specifiers: ReadonlyArray<Identifier>,
+): ExportNamedDeclaration => ({
+  type: 'ExportNamedDeclaration',
+  specifiers,
+});
+
 export interface ExportDefaultDeclaration {
   readonly type: 'ExportDefaultDeclaration';
   readonly declaration: Expression;
 }
+
+export const ExportDefaultDeclaration = (
+  declaration: Expression,
+): ExportDefaultDeclaration => ({
+  type: 'ExportDefaultDeclaration',
+  declaration,
+});
 
 export interface Declaration {
   readonly type: 'declaration';
@@ -393,10 +707,28 @@ export interface Declaration {
   readonly expression: Expression;
 }
 
+export const Declaration = (
+  name: string,
+  parameterNames: ReadonlyArray<string>,
+  expression: Expression,
+): Declaration => ({
+  type: 'declaration',
+  name,
+  parameterNames,
+  expression,
+});
+
 export interface ExpressionStatement {
   readonly type: 'ExpressionStatement';
   readonly expression: Expression;
 }
+
+export const ExpressionStatement = (
+  expression: Expression,
+): ExpressionStatement => ({
+  type: 'ExpressionStatement',
+  expression,
+});
 
 export type Statement =
   | Declaration
@@ -408,3 +740,14 @@ export interface Module {
   readonly exports: ReadonlyArray<ExportNamedDeclaration | ExportDefaultDeclaration>;
   readonly statements: ReadonlyArray<Statement>;
 }
+
+export const Module = (
+  imports: ReadonlyArray<ImportDeclaration>,
+  exports: ReadonlyArray<ExportNamedDeclaration | ExportDefaultDeclaration>,
+  statements: ReadonlyArray<Statement>,
+): Module => ({
+  type: 'Module',
+  imports,
+  exports,
+  statements,
+});

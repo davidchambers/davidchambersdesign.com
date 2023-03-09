@@ -1,11 +1,10 @@
 import test from 'oletus';
 
-import * as Serif from '../constructors.js';
 import serif from '../index.js';
-import type {Expression} from '../types.js';
+import * as Serif from '../types.js';
 
 
-const valid = (input: string, expected: Expression) => (
+const valid = (input: string, expected: Serif.Expression) => (
   test(`parse(${JSON.stringify(input)})`, t => {
     t.deepEqual(
       serif.parse(input, '[test]'),
