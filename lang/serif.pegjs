@@ -1,6 +1,6 @@
 Module
-  = imports:ImportDeclaration*
-    exports:(ExportNamedDeclaration / ExportDefaultDeclaration)*
+  = imports:(Separator* importDeclaration:ImportDeclaration                                   { return importDeclaration; })*
+    exports:(Separator* exportDeclaration:(ExportNamedDeclaration / ExportDefaultDeclaration) { return exportDeclaration; })*
     statements:(
       head:(Separator* statement:Statement { return statement; })
       tail:(Separator+ statement:Statement { return statement; })*
@@ -18,7 +18,7 @@ ImportDefaultSpecifier 'import default specifier'
     { return {type: 'ImportDefaultSpecifier', local}; }
 
 ImportDeclaration 'import declaration'
-  = Separator* 'import'
+  = 'import'
     Separator+ '{'
     specifiers:(
       head:(Separator* specifier:ImportSpecifier { return specifier; })
@@ -29,7 +29,7 @@ ImportDeclaration 'import declaration'
     Separator+ 'from'
     Separator+ source:String
     { return {type: 'ImportDeclaration', source, specifiers: specifiers ?? []}; }
-  / Separator* 'import'
+  / 'import'
     Separator+ '*'
     Separator+ 'from'
     Separator+ source:String
@@ -45,20 +45,20 @@ ImportDeclaration 'import declaration'
       { return hiding ?? []; }
     )?
     { return {type: 'ImportDeclaration', source, specifiers: '*', hiding: hiding ?? []}; }
-  / Separator* 'import'
+  / 'import'
     Separator+ specifier:ImportDefaultSpecifier
     Separator+ 'from'
     Separator+ source:String
     { return {type: 'ImportDeclaration', source, specifiers: [specifier]}; }
 
 ExportDefaultDeclaration 'export default declaration'
-  = Separator* 'export'
+  = 'export'
     Separator+ 'default'
     Separator+ declaration:Expression
     { return {type: 'ExportDefaultDeclaration', declaration}; }
 
 ExportNamedDeclaration 'export named declaration'
-  = Separator* 'export'
+  = 'export'
     Separator+ '{'
     specifiers:(
       head:(Separator* ident:Identifier { return ident; })
@@ -73,14 +73,14 @@ Statement
   / ExpressionStatement
 
 Declaration 'declaration'
-  = Separator* name:(ident:Identifier { return ident.name; })
+  = name:(ident:Identifier { return ident.name; })
     parameterNames:(Separator+ !'=' ident:Identifier { return ident.name; })*
     Separator+ '='
     Separator+ expression:Expression
   { return {type: 'declaration', name, parameterNames, expression}; }
 
 ExpressionStatement 'expression statement'
-  = Separator* expression:Expression
+  = expression:Expression
   { return {type: 'ExpressionStatement', expression}; }
 
 LineTerminator 'line terminator'
@@ -223,23 +223,20 @@ Identifier 'identifier'
   { return {type: 'identifier', name}; }
 
 Lambda 'lambda'
-  = Separator* '('
+  = '('
     Separator* parameters:(ident:Identifier Separator+ { return ident; })+ '->'
     Separator+ body:Expression
     Separator* ')'
     { return parameters.reduceRight((body, parameter) => ({type: 'lambda', parameter, body}), body); }
 
 BlockExpression 'block expression'
-  = Separator* '{'
-    head:(               Separator* statement:Statement { return statement; })
+  = '{' Separator* statements:BlockExpressionStatements Separator* '}' { return {type: 'BlockExpression', statements}; }
+  / '[' Separator* statements:BlockExpressionStatements Separator* ']' { return {type: 'BlockExpression', statements}; }
+
+BlockExpressionStatements
+  = head:Statement
     tail:(Separator* ';' Separator* statement:Statement { return statement; })*
-    Separator* '}'
-    { return {type: 'BlockExpression', statements: [head, ...tail]}; }
-  / Separator* '['
-    head:(               Separator* statement:Statement { return statement; })
-    tail:(Separator* ';' Separator* statement:Statement { return statement; })*
-    Separator* ']'
-    { return {type: 'BlockExpression', statements: [head, ...tail]}; }
+    { return [head, ...tail]; }
 
 PrimaryExpression
   = Boolean
@@ -268,7 +265,7 @@ UnaryOperator
   / '!'
 
 UnaryExpression
-  = Separator* operator:UnaryOperator
+  = operator:UnaryOperator
     Separator+ argument:PrimaryExpression
     { return {type: 'UnaryExpression', operator, argument}; }
   / CallExpression
@@ -277,8 +274,7 @@ ExponentiationOperator
   = '**'
 
 ExponentiationExpression
-  = Separator*
-    left:UnaryExpression
+  = left:UnaryExpression
     tail:(
       Separator+ operator:ExponentiationOperator
       Separator+ right:UnaryExpression
@@ -292,8 +288,7 @@ MultiplicativeOperator
   / '%'
 
 MultiplicativeExpression
-  = Separator*
-    left:ExponentiationExpression
+  = left:ExponentiationExpression
     tail:(
       Separator+ operator:MultiplicativeOperator
       Separator+ right:ExponentiationExpression
@@ -306,8 +301,7 @@ AdditiveOperator
   / '-'
 
 AdditiveExpression
-  = Separator*
-    left:MultiplicativeExpression
+  = left:MultiplicativeExpression
     tail:(
       Separator+ operator:AdditiveOperator
       Separator+ right:MultiplicativeExpression
@@ -321,8 +315,7 @@ ShiftOperator
   / '>>'
 
 ShiftExpression
-  = Separator*
-    left:AdditiveExpression
+  = left:AdditiveExpression
     tail:(
       Separator+ operator:ShiftOperator
       Separator+ right:AdditiveExpression
@@ -339,8 +332,7 @@ RelationalOperator
   / 'in'
 
 RelationalExpression
-  = Separator*
-    left:ShiftExpression
+  = left:ShiftExpression
     tail:(
       Separator+ operator:RelationalOperator
       Separator+ right:ShiftExpression
@@ -355,8 +347,7 @@ EqualityOperator
   / '!='
 
 EqualityExpression
-  = Separator*
-    left:RelationalExpression
+  = left:RelationalExpression
     tail:(
       Separator+ operator:EqualityOperator
       Separator+ right:RelationalExpression
@@ -368,8 +359,7 @@ BitwiseANDOperator
   = '&'
 
 BitwiseANDExpression
-  = Separator*
-    left:EqualityExpression
+  = left:EqualityExpression
     tail:(
       Separator+ operator:BitwiseANDOperator
       Separator+ right:EqualityExpression
@@ -381,8 +371,7 @@ BitwiseXOROperator
   = '^'
 
 BitwiseXORExpression
-  = Separator*
-    left:BitwiseANDExpression
+  = left:BitwiseANDExpression
     tail:(
       Separator+ oeprator:BitwiseXOROperator
       Separator+ right:BitwiseANDExpression
@@ -394,8 +383,7 @@ BitwiseOROperator
   = '|'
 
 BitwiseORExpression
-  = Separator*
-    left:BitwiseXORExpression
+  = left:BitwiseXORExpression
     tail:(
       Separator+ operator:BitwiseOROperator
       Separator+ right:BitwiseXORExpression
@@ -407,8 +395,7 @@ LogicalANDOperator
   = '&&'
 
 LogicalANDExpression
-  = Separator*
-    left:BitwiseORExpression
+  = left:BitwiseORExpression
     tail:(
       Separator+ operator:LogicalANDOperator
       Separator+ right:BitwiseORExpression
@@ -420,8 +407,7 @@ LogicalOROperator
   = '||'
 
 LogicalORExpression
-  = Separator*
-    left:LogicalANDExpression
+  = left:LogicalANDExpression
     tail:(
       Separator+ operator:LogicalOROperator
       Separator+ right:LogicalANDExpression
@@ -433,8 +419,7 @@ CoalesceOperator
   = '??'
 
 CoalesceExpression
-  = Separator*
-    left:LogicalORExpression
+  = left:LogicalORExpression
     tail:(
       Separator+ operator:CoalesceOperator
       Separator+ right:LogicalORExpression
@@ -443,7 +428,7 @@ CoalesceExpression
     { return tail.reduce((left, {operator, right}) => ({type: 'LogicalExpression', operator, left, right}), left); }
 
 ConditionalExpression
-  = Separator* 'if'
+  = 'if'
     Separator+ predicate:ConditionalExpression
     Separator+ 'then'
     Separator+ consequent:ConditionalExpression
@@ -457,7 +442,7 @@ SpreadElement 'spread element'
     { return {type: 'spread-element', argument}; }
 
 Array 'array'
-  = Separator* '#['
+  = '#['
     elements:(
       head:(Separator* element:(SpreadElement / Expression) { return element; })
       tail:(Separator+ element:(SpreadElement / Expression) { return element; })*
@@ -471,7 +456,7 @@ Property 'property'
     { return {type: 'property', key, value}; }
 
 Object 'object'
-  = Separator* '#{'
+  = '#{'
     properties:(
       head:(Separator* property:(SpreadElement / Property) { return property; })
       tail:(Separator+ property:(SpreadElement / Property) { return property; })*
@@ -485,7 +470,7 @@ Placeholder 'placeholder'
   { return {type: 'placeholder'}; }
 
 New 'new'
-  = Separator* '('
+  = '('
     Separator* 'new'
     Separator+ callee:(Placeholder / Expression)
     args:(Separator+ arg:(Placeholder / Expression) { return arg; })*
@@ -493,14 +478,14 @@ New 'new'
     { return {type: 'new', callee, arguments: args}; }
 
 Invocation 'invocation'
-  = Separator* '('
+  = '('
     Separator* '.' name:(ident:Identifier { return ident.name; })
     args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
     Separator* ')'
     { return {type: 'invocation', name, object: args.pop(), arguments: args}; }
 
 Application 'application'
-  = Separator* '('
+  = '('
     Separator* callee:(Placeholder / Expression)
     args:(Separator+ arg:(Placeholder / SpreadElement / Expression) { return arg; })+
     Separator* ')'
