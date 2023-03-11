@@ -171,6 +171,7 @@ export const BlockExpression = (
 });
 
 export type PrimaryExpression =
+  | Placeholder
   | Identifier
   | Boolean
   | Number
@@ -564,13 +565,13 @@ export const Placeholder: Placeholder = {
 
 export interface New {
   readonly type: 'new';
-  readonly callee: Placeholder | Expression;
-  readonly arguments: ReadonlyArray<Placeholder | Expression>;
+  readonly callee: Expression;
+  readonly arguments: ReadonlyArray<Expression>;
 }
 
 export const New = (
-  callee: Placeholder | Expression,
-  args: ReadonlyArray<Placeholder | Expression>,
+  callee: Expression,
+  args: ReadonlyArray<Expression>,
 ): New => ({
   type: 'new',
   callee,
@@ -580,14 +581,14 @@ export const New = (
 export interface Invocation {
   readonly type: 'invocation';
   readonly name: string;
-  readonly object: Placeholder | Expression;
-  readonly arguments: ReadonlyArray<Placeholder | Expression>;
+  readonly object: Expression;
+  readonly arguments: ReadonlyArray<Expression>;
 }
 
 export const Invocation = (
   name: string,
-  object: Placeholder | Expression,
-  args: ReadonlyArray<Placeholder | Expression>,
+  object: Expression,
+  args: ReadonlyArray<Expression>,
 ): Invocation => ({
   type: 'invocation',
   name,
@@ -597,13 +598,13 @@ export const Invocation = (
 
 export interface Application {
   readonly type: 'application';
-  readonly callee: Placeholder | Expression;
-  readonly arguments: ReadonlyArray<Placeholder | SpreadElement | Expression>;
+  readonly callee: Expression;
+  readonly arguments: ReadonlyArray<SpreadElement | Expression>;
 }
 
 export const Application = (
-  callee: Placeholder | Expression,
-  args: ReadonlyArray<Placeholder | Expression>,
+  callee: Expression,
+  args: ReadonlyArray<Expression>,
 ): Application => ({
   type: 'application',
   callee,
@@ -611,6 +612,7 @@ export const Application = (
 });
 
 export type Expression =
+  | Placeholder
   | Boolean
   | Number
   | String

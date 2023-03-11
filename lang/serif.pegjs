@@ -244,7 +244,8 @@ BlockExpressionStatements
     { return [head, ...tail]; }
 
 PrimaryExpression
-  = Boolean
+  = Placeholder
+  / Boolean
   / Number
   / String
   / Symbol

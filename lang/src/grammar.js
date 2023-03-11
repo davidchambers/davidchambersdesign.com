@@ -4274,29 +4274,32 @@ function peg$parse(input, options) {
   function peg$parsePrimaryExpression() {
     var s0;
 
-    s0 = peg$parseBoolean();
+    s0 = peg$parsePlaceholder();
     if (s0 === peg$FAILED) {
-      s0 = peg$parseNumber();
+      s0 = peg$parseBoolean();
       if (s0 === peg$FAILED) {
-        s0 = peg$parseString();
+        s0 = peg$parseNumber();
         if (s0 === peg$FAILED) {
-          s0 = peg$parseSymbol();
+          s0 = peg$parseString();
           if (s0 === peg$FAILED) {
-            s0 = peg$parseArray();
+            s0 = peg$parseSymbol();
             if (s0 === peg$FAILED) {
-              s0 = peg$parseObject();
+              s0 = peg$parseArray();
               if (s0 === peg$FAILED) {
-                s0 = peg$parseImportMeta();
+                s0 = peg$parseObject();
                 if (s0 === peg$FAILED) {
-                  s0 = peg$parseIdentifier();
+                  s0 = peg$parseImportMeta();
                   if (s0 === peg$FAILED) {
-                    s0 = peg$parseBlockExpression();
+                    s0 = peg$parseIdentifier();
                     if (s0 === peg$FAILED) {
-                      s0 = peg$parseNew();
+                      s0 = peg$parseBlockExpression();
                       if (s0 === peg$FAILED) {
-                        s0 = peg$parseInvocation();
+                        s0 = peg$parseNew();
                         if (s0 === peg$FAILED) {
-                          s0 = peg$parseApplication();
+                          s0 = peg$parseInvocation();
+                          if (s0 === peg$FAILED) {
+                            s0 = peg$parseApplication();
+                          }
                         }
                       }
                     }
