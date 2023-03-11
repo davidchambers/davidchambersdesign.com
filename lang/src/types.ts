@@ -1,3 +1,7 @@
+interface ReadonlyNonEmptyArray<A> extends ReadonlyArray<A> {
+  readonly 0: A;
+}
+
 export interface Boolean {
   readonly type: 'BooleanLiteral';
   readonly value: boolean;
@@ -156,11 +160,11 @@ export const Lambda = (
 
 export interface BlockExpression {
   readonly type: 'BlockExpression';
-  readonly statements: ReadonlyArray<Statement>;
+  readonly statements: ReadonlyNonEmptyArray<Statement>;
 }
 
 export const BlockExpression = (
-  statements: ReadonlyArray<Statement>,
+  statements: ReadonlyNonEmptyArray<Statement>,
 ): BlockExpression => ({
   type: 'BlockExpression',
   statements,

@@ -161,9 +161,6 @@ const esFromStatement = (statement: Serif.Statement): ES.ExpressionStatement | E
 };
 
 const esFromBlockExpression = ({statements}: Serif.BlockExpression): ES.Expression => {
-  if (statements.length === 0) {
-    return Identifier('undefined' as Escaped);
-  }
   if (statements.length === 1 && statements[0].type === 'ExpressionStatement') {
     return esFromExpression(statements[0].expression);
   }
