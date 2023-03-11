@@ -103,7 +103,7 @@ text value =
 
 canonicalize-attrs attrs =
   (Object.fromEntries (s:map (name -> {
-                                value = attrs[name]
+                                value = attrs[name];
                                 #[name
                                   if typeof value == "symbol" then (Symbol.keyFor value) else (String value)]
                               })
@@ -180,8 +180,8 @@ render-self-closing-element tag-name attrs indent level inline = {
 }
 
 block-element tag-name -attrs -children = {
-  attrs = (canonicalize-attrs -attrs)
-  children = (canonicalize-children -children)
+  attrs = (canonicalize-attrs -attrs);
+  children = (canonicalize-children -children);
   #{
     :format :block
     :text (s:chain (child -> child:text) children)
@@ -190,21 +190,21 @@ block-element tag-name -attrs -children = {
 }
 
 inline-element tag-name -attrs -children = {
-  attrs = (canonicalize-attrs -attrs)
-  children = (canonicalize-children -children)
-  format = if (s:any (node -> node:format === :block) children) then :block else :inline
+  attrs = (canonicalize-attrs -attrs);
+  children = (canonicalize-children -children);
+  format = if (s:any (node -> node:format === :block) children) then :block else :inline;
   #{
     :format format
     :text (s:chain (child -> child:text) children)
     :render (indent level inline -> {
-      render = if format === :inline then render-inline-element else render-block-element
+      render = if format === :inline then render-inline-element else render-block-element;
       (render tag-name attrs children indent level inline)
     })
   }
 }
 
 self-closing-element tag-name -attrs = {
-  attrs = (canonicalize-attrs -attrs)
+  attrs = (canonicalize-attrs -attrs);
   #{
     :format :inline
     :text #[]
@@ -213,10 +213,10 @@ self-closing-element tag-name -attrs = {
 }
 
 excerpt -children = {
-  children = (canonicalize-children -children)
+  children = (canonicalize-children -children);
   render indent level inline = {
     (s:fold-map String (child -> (child:render indent level inline)) children)
-  }
+  };
   #{
     :text (s:chain (child -> child:text) children)
     :render render

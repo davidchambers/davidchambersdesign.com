@@ -130,8 +130,8 @@ body = #[
      ")
 
   {
-    url = "http://bitbucket.org/davidchambers/jquery.localize"
-    link path = (a {url + path})
+    url = "http://bitbucket.org/davidchambers/jquery.localize";
+    link path = (a {url + path});
     (p
        #["Date and time formats are fully customizable via "
          (link "/src#directives" "directives") ", and there is

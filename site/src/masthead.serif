@@ -140,8 +140,8 @@ export {fill mask}
         (→  1) (↓ 20) (←  1) (↑ 20)]
 
 update positions dir = {
-  x = (s:fst positions[0])
-  y = (s:snd positions[0])
+  x = (s:fst positions[0]);
+  y = (s:snd positions[0]);
   #[
     if dir[0] === :h then {
       (s:Pair [x + dir[1]] y)
@@ -155,11 +155,11 @@ update positions dir = {
 }
 
 reset path = {
-  paths = (s:extend s:I (s:reduce update #[(s:Pair 0 0)] path))
-  xs = (s:chain (s:map s:fst) paths)
-  ys = (s:chain (s:map s:snd) paths)
-  dx = (s:reduce s:max 0 xs) - xs[0]
-  dy = 0 - ys[0]
+  paths = (s:extend s:I (s:reduce update #[(s:Pair 0 0)] path));
+  xs = (s:chain (s:map s:fst) paths);
+  ys = (s:chain (s:map s:snd) paths);
+  dx = (s:reduce s:max 0 xs) - xs[0];
+  dy = 0 - ys[0];
   #[:m #[dx dy]]
 }
 

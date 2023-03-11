@@ -230,10 +230,16 @@ Lambda 'lambda'
     { return parameters.reduceRight((body, parameter) => ({type: 'lambda', parameter, body}), body); }
 
 BlockExpression 'block expression'
-  = Separator* '{' statements:Statement* Separator* '}'
-    { return {type: 'BlockExpression', statements}; }
-  / Separator* '[' statements:Statement* Separator* ']'
-    { return {type: 'BlockExpression', statements}; }
+  = Separator* '{'
+    head:(               Separator* statement:Statement { return statement; })
+    tail:(Separator* ';' Separator* statement:Statement { return statement; })*
+    Separator* '}'
+    { return {type: 'BlockExpression', statements: [head, ...tail]}; }
+  / Separator* '['
+    head:(               Separator* statement:Statement { return statement; })
+    tail:(Separator* ';' Separator* statement:Statement { return statement; })*
+    Separator* ']'
+    { return {type: 'BlockExpression', statements: [head, ...tail]}; }
 
 PrimaryExpression
   = Boolean

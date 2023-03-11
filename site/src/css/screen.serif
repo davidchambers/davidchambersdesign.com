@@ -26,16 +26,16 @@ pink            = "#ff5e99"
 recycled-paper  = "#fef9ec"
 
 screen coerce = {
-  %  x = (coerce x) + "%"
-  em x = (coerce x) + "em"
-  px x = (coerce x) + "px"
+  %  x = (coerce x) + "%";
+  em x = (coerce x) + "em";
+  px x = (coerce x) + "px";
 
-  sans-serif names = (s:join-with ", " #[...(s:map ' names) "sans-serif"])
-  monospace  names = (s:join-with ", " #[...(s:map ' names) "monospace"])
+  sans-serif names = (s:join-with ", " #[...(s:map ' names) "sans-serif"]);
+  monospace  names = (s:join-with ", " #[...(s:map ' names) "monospace"]);
 
-  rgba r g b a = "rgba(" + r + ", " + g + ", " + b + ", " + a + ")"
+  rgba r g b a = "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
 
-  !important x = (coerce x) + " !important"
+  !important x = (coerce x) + " !important";
 
   tag-background =
     (s:pipe #[Math.log2
@@ -45,7 +45,7 @@ screen coerce = {
               (.toString 16 _)
               (.padStart 2 "0" _)
               (.repeat 3 _)
-              (s -> "#" + s)])
+              (s -> "#" + s)]);
 
   tag-color =
     (s:pipe #[Math.log2
@@ -54,7 +54,7 @@ screen coerce = {
               (.toFixed 3 _)
               (.replace (s:regex "" "0*$") "" _)
               (.replace (s:regex "" "[.]$") "" _)
-              (rgba 0 0 0)])
+              (rgba 0 0 0)]);
 
   (s:join #[#[
 

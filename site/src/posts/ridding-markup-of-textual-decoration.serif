@@ -33,8 +33,8 @@ body = #[
   (h2 "Adding decorative textual content via CSS")
 
   {
-    url = "http://reference.sitepoint.com"
-    sitepoint path text = (a {url + path} (code text))
+    url = "http://reference.sitepoint.com";
+    sitepoint path text = (a {url + path} (code text));
     (p
        #["The " (sitepoint "/css/content" "content") " property
           is extremely powerful. It's used in conjunction with

@@ -19,10 +19,10 @@ seconds-between from to =
 
 with-scores that this = {
   score = (similarity (new Set that:tags)
-                      (new Set this:tags))
-  primary = (s:negate score)
+                      (new Set this:tags));
+  primary = (s:negate score);
   secondary = (Math.abs (seconds-between that:datetime
-                                         this:datetime))
+                                         this:datetime));
   if score >= 0.5 then {
     (s:Just (s:Pair (s:Pair primary secondary) this))
   } else {
