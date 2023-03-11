@@ -1,5 +1,5 @@
-import * from "../elements.serif" hiding {body}
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import datetime from "../datetime.serif";
 
 export default #{
   :id 9
@@ -8,7 +8,7 @@ export default #{
   :datetime (datetime "2009-03-25" "16:36:00" :Pacific/Auckland)
   :tags #["keyboard-shortcuts" "mac-os-x"]
   :body body
-}
+};
 
 body = #[
 

@@ -1,7 +1,7 @@
-import {path} from "../elements.serif"
-import * from "../orthogonal.serif"
+import {path} from "../elements.serif";
+import * from "../orthogonal.serif";
 
-export default bitbucket
+export default bitbucket;
 
 bucket = #[
   (⇨  0) (⇩  0)

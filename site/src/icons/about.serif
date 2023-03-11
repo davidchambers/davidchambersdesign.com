@@ -1,7 +1,7 @@
-import {path} from "../elements.serif"
-import * from "../orthogonal.serif"
+import {path} from "../elements.serif";
+import * from "../orthogonal.serif";
 
-export default about
+export default about;
 
 skin = #[
   (⇨  3) (⇩  4)

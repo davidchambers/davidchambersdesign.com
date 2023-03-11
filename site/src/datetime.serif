@@ -1,6 +1,6 @@
-import luxon from "luxon"
+import luxon from "luxon";
 
-export default datetime
+export default datetime;
 
 datetime date time zone =
   (.fromFormat [date + " " + time + " (" + (Symbol.keyFor zone) + ")"]

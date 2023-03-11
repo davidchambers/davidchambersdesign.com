@@ -1,7 +1,7 @@
-import {path} from "../elements.serif"
-import * from "../orthogonal.serif"
+import {path} from "../elements.serif";
+import * from "../orthogonal.serif";
 
-export default flushcache
+export default flushcache;
 
 stroke = #[
   (⇨  5) (⇩  0)

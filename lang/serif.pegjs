@@ -28,6 +28,7 @@ ImportDeclaration 'import declaration'
     Separator* '}'
     Separator+ 'from'
     Separator+ source:String
+    Separator* ';'
     { return {type: 'ImportDeclaration', source, specifiers: specifiers ?? []}; }
   / 'import'
     Separator+ '*'
@@ -44,17 +45,20 @@ ImportDeclaration 'import declaration'
       Separator* '}'
       { return hiding ?? []; }
     )?
+    Separator* ';'
     { return {type: 'ImportDeclaration', source, specifiers: '*', hiding: hiding ?? []}; }
   / 'import'
     Separator+ specifier:ImportDefaultSpecifier
     Separator+ 'from'
     Separator+ source:String
+    Separator* ';'
     { return {type: 'ImportDeclaration', source, specifiers: [specifier]}; }
 
 ExportDefaultDeclaration 'export default declaration'
   = 'export'
     Separator+ 'default'
     Separator+ declaration:Expression
+    Separator* ';'
     { return {type: 'ExportDefaultDeclaration', declaration}; }
 
 ExportNamedDeclaration 'export named declaration'
@@ -66,6 +70,7 @@ ExportNamedDeclaration 'export named declaration'
       { return [head, ...tail]; }
     )?
     Separator* '}'
+    Separator* ';'
     { return {type: 'ExportNamedDeclaration', specifiers: specifiers ?? []}; }
 
 Statement

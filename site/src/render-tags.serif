@@ -1,8 +1,8 @@
-import * from "./elements.serif"
-import s from "./sanctuary.serif"
-import tags from "./tags.serif"
+import * from "./elements.serif";
+import s from "./sanctuary.serif";
+import tags from "./tags.serif";
 
-export default render-tags
+export default render-tags;
 
 render-tags posts = {
   counts = (s:reduce (counts tag -> #{...counts [tag] counts[tag] + 1})

@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {code-block uncaptioned-image} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {code-block uncaptioned-image} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 50
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2010-06-03" "02:56:00" :Pacific/Auckland)
   :tags #["django" "mango" "wordpress"]
   :body body
-}
+};
 
 body = #[
 

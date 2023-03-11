@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {caption captioned-images code-block update} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {caption captioned-images code-block update} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 15
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2009-06-04" "03:12:00" :Pacific/Auckland)
   :tags #["applescript" "javascript" "mac-os-x" "syntaxhighlighter"]
   :body body
-}
+};
 
 body = #[
 

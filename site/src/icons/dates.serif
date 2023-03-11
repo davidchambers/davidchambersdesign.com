@@ -1,8 +1,8 @@
-import {path} from "../elements.serif"
-import * from "../orthogonal.serif"
-import s from "../sanctuary.serif"
+import {path} from "../elements.serif";
+import * from "../orthogonal.serif";
+import s from "../sanctuary.serif";
 
-export default dates
+export default dates;
 
 dates =
   (s:map (d -> (path #{:fill-rule :evenodd :fill "#000" :d (render #[(⇨ 0) (⇩ 0) ...d])}))

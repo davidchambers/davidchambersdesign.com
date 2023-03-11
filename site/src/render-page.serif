@@ -1,5 +1,5 @@
-import * from "./elements.serif"
+import * from "./elements.serif";
 
-export default render-page
+export default render-page;
 
 render-page page = #[(article page:body)]

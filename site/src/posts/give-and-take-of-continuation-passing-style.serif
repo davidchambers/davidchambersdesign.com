@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {code-block} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {code-block} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 95
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2020-10-08" "10:41:26" :Europe/Berlin)
   :tags #["continuation-passing-style" "javascript" "programming"]
   :body body
-}
+};
 
 body = #[
 

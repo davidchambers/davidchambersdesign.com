@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {captioned-image} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {captioned-image} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 13
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2009-04-18" "21:44:00" :Pacific/Auckland)
   :tags #["gmail" "google-calendar" "sms"]
   :body body
-}
+};
 
 body = #[
 

@@ -1,5 +1,5 @@
-import * from "../elements.serif" hiding {body}
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import datetime from "../datetime.serif";
 
 export default #{
   :id 21
@@ -8,7 +8,7 @@ export default #{
   :datetime (datetime "2009-08-10" "10:29:00" :Pacific/Auckland)
   :tags #["art" "performance" "video"]
   :body body
-}
+};
 
 body = #[
 

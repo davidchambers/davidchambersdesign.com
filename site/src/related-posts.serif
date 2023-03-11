@@ -1,8 +1,8 @@
-import path from "node:path"
+import path from "node:path";
 
-import s from "./sanctuary.serif"
+import s from "./sanctuary.serif";
 
-export default related-posts
+export default related-posts;
 
 intersection set-1 set-2 =
   (new Set (.filter (.has _ set-1) #[...set-2]))

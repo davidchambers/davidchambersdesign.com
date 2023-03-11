@@ -1,7 +1,7 @@
-import {path} from "../elements.serif"
-import * from "../orthogonal.serif"
+import {path} from "../elements.serif";
+import * from "../orthogonal.serif";
 
-export default tags
+export default tags;
 
 stroke = #[
   (⇨  2) (⇩  0)

@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {code-block decorative-image} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {code-block decorative-image} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 48
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2010-04-10" "03:22:00" :Pacific/Auckland)
   :tags #["javascript" "php" "python" "regex" "regular-expressions"]
   :body body
-}
+};
 
 body = #[
 

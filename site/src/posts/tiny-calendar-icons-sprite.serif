@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {captioned-image code-block} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {captioned-image code-block} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 23
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2009-08-28" "18:04:00" :Pacific/Auckland)
   :tags #["css" "design" "html" "icons"]
   :body body
-}
+};
 
 body = #[
 

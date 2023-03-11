@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body excerpt}
-import {captioned-image captioned-images code-block decorative-image} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body excerpt};
+import {captioned-image captioned-images code-block decorative-image} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 39
@@ -10,7 +10,7 @@ export default #{
   :tags #["css" "css3" "html" "mac-os-x"]
   :excerpt excerpt
   :body body
-}
+};
 
 excerpt = #[
 

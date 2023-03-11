@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {code-block} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {code-block} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 60
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2010-07-19" "17:45:00" :Pacific/Auckland)
   :tags #["javascript" "mootools"]
   :body body
-}
+};
 
 body = #[
 

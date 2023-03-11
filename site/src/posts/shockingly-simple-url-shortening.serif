@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {code-block} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {code-block} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 36
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2010-01-26" "03:34:00" :Pacific/Auckland)
   :tags #[".htaccess" "twitter"]
   :body body
-}
+};
 
 body = #[
 

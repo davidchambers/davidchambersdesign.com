@@ -1,4 +1,4 @@
-import s from "./sanctuary.serif"
+import s from "./sanctuary.serif";
 
 export {
   canonicalize-children
@@ -90,7 +90,7 @@ export {
   var
   var'
   video
-}
+};
 
 escape =
   (s:pipe #[(.replace (s:regex "g" "&") "&amp;" _)

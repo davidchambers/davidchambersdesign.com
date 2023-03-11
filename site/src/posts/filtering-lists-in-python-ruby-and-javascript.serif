@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {code-block} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {code-block} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 69
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2010-09-09" "04:21:00" :Pacific/Auckland)
   :tags #["javascript" "programming" "python" "ruby"]
   :body body
-}
+};
 
 body = #[
 

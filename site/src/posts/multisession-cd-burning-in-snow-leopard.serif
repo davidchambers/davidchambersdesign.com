@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {decorative-image} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {decorative-image} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 29
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2009-10-27" "08:58:00" :Pacific/Auckland)
   :tags #["mac-os-x" "snow-leopard"]
   :body body
-}
+};
 
 body = #[
 

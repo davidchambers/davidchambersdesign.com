@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {captioned-image update} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {captioned-image update} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 11
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2009-04-16" "22:15:00" :Pacific/Auckland)
   :tags #["coda" "django" "mac-os-x"]
   :body body
-}
+};
 
 body = #[
 

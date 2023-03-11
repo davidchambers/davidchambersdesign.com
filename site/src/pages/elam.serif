@@ -1,5 +1,5 @@
-import * from "../elements.serif"
-import {uncaptioned-image} from "../components.serif"
+import * from "../elements.serif";
+import {uncaptioned-image} from "../components.serif";
 
 export default #{
 
@@ -192,4 +192,4 @@ export default #{
 
   ]
 
-}
+};

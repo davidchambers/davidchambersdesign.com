@@ -1,6 +1,6 @@
-import sanctuary from "sanctuary"
+import sanctuary from "sanctuary";
 
-export default default
+export default default;
 
 kebab-case = (.replace (new RegExp "(?!\\b)[A-Z0-9]" "g")
                        (c -> "-" + (.toLowerCase c))

@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {code-block} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {code-block} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 4
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2008-12-18" "14:50:00" :Pacific/Auckland)
   :tags #["css" "php"]
   :body body
-}
+};
 
 body = #[
 

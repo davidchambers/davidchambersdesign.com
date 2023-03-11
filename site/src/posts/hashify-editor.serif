@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {captioned-images} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {captioned-images} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 85
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2011-04-24" "06:15:00" :America/Los_Angeles)
   :tags #["hashify" "markdown" "showdown" "ux"]
   :body body
-}
+};
 
 body = #[
 

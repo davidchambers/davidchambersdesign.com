@@ -1,4 +1,4 @@
-import * from "./elements.serif"
+import * from "./elements.serif";
 
 export default
   (document-title main ->
@@ -51,4 +51,4 @@ export default
                          (a' #{:href "http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d"} "Linode")
                          (text ". Original content ")
                          (a' #{:href "/copying/"} "WTFPL-licensed")
-                         (text ".")])])])]))
+                         (text ".")])])])]));

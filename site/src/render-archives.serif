@@ -1,7 +1,7 @@
-import * from "./elements.serif"
-import s from "./sanctuary.serif"
+import * from "./elements.serif";
+import s from "./sanctuary.serif";
 
-export default render-archives
+export default render-archives;
 
 render-section section =
   (li

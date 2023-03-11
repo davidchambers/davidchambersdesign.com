@@ -1,6 +1,6 @@
-import s from "./sanctuary.serif"
+import s from "./sanctuary.serif";
 
-export {render ⇦ ⇨ ⇧ ⇩ ← → ↑ ↓}
+export {render ⇦ ⇨ ⇧ ⇩ ← → ↑ ↓};
 
 reducer prev path curr = {
   if curr[0] === :M then {

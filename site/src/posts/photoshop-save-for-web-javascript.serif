@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {code-block} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {code-block} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 20
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2009-07-28" "03:27:00" :Pacific/Auckland)
   :tags #["javascript" "mac-os-x" "photoshop"]
   :body body
-}
+};
 
 body = #[
 

@@ -1,6 +1,6 @@
-import s from "../sanctuary.serif"
+import s from "../sanctuary.serif";
 
-export default screen
+export default screen;
 
 ' text = "'" + (.replace (s:regex "g" "(?=')") "\\" text) + "'"
 

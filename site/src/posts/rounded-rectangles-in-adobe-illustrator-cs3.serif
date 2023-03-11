@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {captioned-image decorative-image interview-list} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {captioned-image decorative-image interview-list} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 3
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2008-12-03" "12:49:00" :Pacific/Auckland)
   :tags #["adobe" "cs3" "illustrator"]
   :body body
-}
+};
 
 body = #[
 

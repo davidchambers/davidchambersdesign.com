@@ -1,7 +1,7 @@
-import s from "./sanctuary.serif"
-import screen from "./css/screen.serif"
+import s from "./sanctuary.serif";
+import screen from "./css/screen.serif";
 
-export default generate-css
+export default generate-css;
 
 coerce x = {
   if (Array.isArray x) then {

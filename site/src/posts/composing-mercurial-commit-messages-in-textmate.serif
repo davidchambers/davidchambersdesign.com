@@ -1,6 +1,6 @@
-import * from "../elements.serif" hiding {body}
-import {code-block decorative-image update} from "../components.serif"
-import datetime from "../datetime.serif"
+import * from "../elements.serif" hiding {body};
+import {code-block decorative-image update} from "../components.serif";
+import datetime from "../datetime.serif";
 
 export default #{
   :id 76
@@ -9,7 +9,7 @@ export default #{
   :datetime (datetime "2011-01-10" "01:25:00" :Australia/Sydney)
   :tags #["hg" "mac-os-x" "markdown" "mercurial" "textmate"]
   :body body
-}
+};
 
 body = #[
 
