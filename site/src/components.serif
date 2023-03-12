@@ -22,8 +22,8 @@ captioned-image src alt caption =
        (dd caption)])
 
 captioned-images images =
-  (dl (s:chain (image -> #[(dt (img #{:alt image[1] :src image[0]}))
-                           (dd image[2])])
+  (dl (s:chain image => #[(dt (img #{:alt image[1] :src image[0]}))
+                          (dd image[2])]
                images))
 
 code-block language source-code = {
@@ -32,7 +32,7 @@ code-block language source-code = {
   trim-leading-spaces line =
     (s:from-maybe line
                   (s:chain (s:strip-prefix _ line)
-                           (s:map (x -> x.match)
+                           (s:map x => x.match
                                   (s:chain (s:match (new RegExp "^[ ]*" ""))
                                            (s:head lines)))));
   (pre (code (text (s:unlines (s:map trim-leading-spaces lines)))))
@@ -42,19 +42,19 @@ decorative-image src =
   (p (img #{:alt "" :src src}))
 
 interview-list interviewer interviewee exchange =
-  (ol (s:snd (s:reduce (s:pair (name items quotation -> {
-                                  if name === interviewer then {
-                                    (s:Pair interviewee
-                                            #[...items
-                                              (li' #{:class "interviewer"}
-                                                 #[(strong interviewer + ":") " " ...quotation])])
-                                  } else {
-                                    (s:Pair interviewer
-                                            #[...items
-                                              (li' #{}
-                                                 #[(strong interviewee + ":") " " ...quotation])])
-                                  }
-                                }))
+  (ol (s:snd (s:reduce (s:pair name => items => quotation => {
+                                 if name === interviewer then {
+                                   (s:Pair interviewee
+                                           #[...items
+                                             (li' #{:class "interviewer"}
+                                                #[(strong interviewer + ":") " " ...quotation])])
+                                 } else {
+                                   (s:Pair interviewer
+                                           #[...items
+                                             (li' #{}
+                                                #[(strong interviewee + ":") " " ...quotation])])
+                                 }
+                               })
                        (s:Pair interviewer #[])
                        (s:map canonicalize-children exchange))))
 

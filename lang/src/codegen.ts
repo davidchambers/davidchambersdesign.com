@@ -341,7 +341,7 @@ const esFromApplication = (expr: Serif.Application): ES.Expression => {
   );
 };
 
-const esFromCallExpression_ = (expr: Serif.CallExpression_): ES.Expression => {
+const esFromCallExpression = (expr: Serif.CallExpression): ES.Expression => {
   if (expr.callee.type === 'MemberExpression' && expr.callee.object === Serif.Placeholder) {
     const param = Identifier(prefix(String(0)));
     return es.ArrowFunctionExpression(
@@ -473,7 +473,7 @@ const esFromExpression = (expr: Serif.Expression): ES.Expression => {
     case 'ConditionalExpression':       return esFromConditionalExpression(expr);
     case 'new':                         return esFromNew(expr);
     case 'application':                 return esFromApplication(expr);
-    case 'CallExpression_':             return esFromCallExpression_(expr);
+    case 'CallExpression':              return esFromCallExpression(expr);
   }
 };
 

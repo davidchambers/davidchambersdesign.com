@@ -15,16 +15,16 @@ render-post post related-posts =
          (footer' #{:class "metadata"}
             (s:join #[#[(ul (li' #{:class "shorturl"} (a ["http://dċd.ws/" + post:id + "/"] "Short URL")))]
                       (s:array #[]
-                               (head tail ->
-                                  #[(h4 "This post has the following tags:")
-                                    (ol (s:map (tag -> (li (a ["/tag/" + tag + "/"] tags[tag])))
-                                               (s:prepend head tail)))])
+                               head => tail =>
+                                 #[(h4 "This post has the following tags:")
+                                   (ol (s:map tag => (li (a ["/tag/" + tag + "/"] tags[tag]))
+                                              #[head ...tail]))]
                                post:tags)]))
          ...{
            if related-posts.length === 0 then #[] else #[
              (h3' #{:id "related"} "Possibly related posts")
-             (ul (s:map (related-post ->
-                           (li (a ["/" + related-post:slug + "/"] related-post:title)))
+             (ul (s:map related-post =>
+                          (li (a ["/" + related-post:slug + "/"] related-post:title))
                         related-posts))
            ]
          }])]

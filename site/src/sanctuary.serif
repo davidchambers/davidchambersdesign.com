@@ -4,10 +4,10 @@ export default default;
 
 kebab-case s = s.replace(
   (new RegExp "(?!\\b)[A-Z0-9]" "g"),
-  (c -> "-" + c.toLowerCase())
+  c => "-" + c.toLowerCase()
 )
 
 prime s = s.replaceAll("_", "'")
 
 default =
-  (Object.fromEntries ((Object.entries sanctuary.unchecked).map (entry -> #[(Symbol.for (prime (kebab-case entry[0]))) entry[1]])))
+  (Object.fromEntries ((Object.entries sanctuary.unchecked).map entry => #[(Symbol.for (prime (kebab-case entry[0]))) entry[1]]))

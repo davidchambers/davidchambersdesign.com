@@ -134,6 +134,7 @@ IdentChar
     !'\u002E' // FULL STOP
     !'\u003A' // COLON
     !'\u003B' // SEMICOLON
+    !'\u003D' // EQUALS SIGN
     !'\u005B' // LEFT SQUARE BRACKET
     !'\u005D' // RIGHT SQUARE BRACKET
     !'\u005F' // LOW LINE
@@ -158,7 +159,6 @@ SymbolChar
 Expression
   = ConditionalExpression
   / Identifier
-  / Lambda
   / New
   / Application
 
@@ -228,13 +228,6 @@ Identifier
   = !'->' name:$(IdentChar)+
   { return Serif.Identifier(name); }
 
-Lambda
-  = '('
-    Separator* parameters:(ident:Identifier Separator+ { return ident; })+ '->'
-    Separator+ body:Expression
-    Separator* ')'
-    { return parameters.reduceRight((body, parameter) => Serif.Lambda(parameter, body), body); }
-
 BlockExpression
   = '{' Separator* statements:BlockExpressionStatements Separator* '}' { return Serif.BlockExpression(statements); }
   / '[' Separator* statements:BlockExpressionStatements Separator* ']' { return Serif.BlockExpression(statements); }
@@ -257,10 +250,6 @@ PrimaryExpression
   / BlockExpression
   / New
   / Application
-
-CallExpression
-  = CallExpression_
-  / Lambda
 
 UnaryOperator
   = 'typeof'
@@ -431,6 +420,11 @@ CoalesceExpression
     )*
     { return tail.reduce((left, {operator, right}) => Serif.CoalesceExpression(operator, left, right), left); }
 
+ArrowFunctionExpression
+  = parameter:Identifier Separator+ '=>' Separator+ body:Expression
+    { return Serif.Lambda(parameter, body); }
+  / CoalesceExpression
+
 ConditionalExpression
   = 'if'
     Separator+ predicate:ConditionalExpression
@@ -439,7 +433,7 @@ ConditionalExpression
     Separator+ 'else'
     Separator+ alternative:ConditionalExpression
     { return Serif.ConditionalExpression(predicate, consequent, alternative); }
-  / CoalesceExpression
+  / ArrowFunctionExpression
 
 SpreadElement
   = '...' argument:Expression
@@ -497,10 +491,10 @@ Arguments
     Separator* ')'
     { return [head, ...tail]; }
 
-CallExpression_
+CallExpression
   = head:MemberExpression
     tail:(
-        Separator* args:Arguments                         { return expr => Serif.CallExpression_(expr, args); }
+        Separator* args:Arguments                         { return expr => Serif.CallExpression(expr, args); }
       / symbol:Symbol                                     { return expr => Serif.MemberExpression(expr, symbol); }
       / '.' ident:Identifier                              { return expr => Serif.MemberExpression(expr, Serif.String(ident.name)); }
       / '[' Separator* property:Expression Separator* ']' { return expr => Serif.MemberExpression(expr, property); }

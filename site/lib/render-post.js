@@ -103,7 +103,10 @@ const _render$002Dpost = function _render$002Dpost(post) {
         [ul(_li$0027({ [Symbol.for('class')]: 'shorturl' })(a('http://dċd.ws/' + post[Symbol.for('id')] + '/')('Short URL')))],
         s[Symbol.for('array')]([])(head => tail => [
           h4('This post has the following tags:'),
-          ol(s[Symbol.for('map')](tag => li(a('/tag/' + tag + '/')(tags[tag])))(s[Symbol.for('prepend')](head)(tail)))
+          ol(s[Symbol.for('map')](tag => li(a('/tag/' + tag + '/')(tags[tag])))([
+            head,
+            ...tail
+          ]))
         ])(post[Symbol.for('tags')])
       ])),
       ..._related$002Dposts['length'] === 0 ? [] : [

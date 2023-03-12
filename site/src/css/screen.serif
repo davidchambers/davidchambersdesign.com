@@ -42,9 +42,9 @@ screen coerce = {
     _ * 5
     247 - _
     Math.floor
-    (n -> n.toString(16))
-    (s -> s.padStart(2, "0"))
-    (s -> s.repeat(3))
+    n => n.toString(16)
+    s => s.padStart(2, "0")
+    s => s.repeat(3)
     "#" + _
   ]);
 
@@ -52,9 +52,9 @@ screen coerce = {
     Math.log2
     _ * 0.1
     _ + 0.3
-    (n -> n.toFixed(3))
-    (s -> s.replace((new RegExp "0*$" ""), ""))
-    (s -> s.replace((new RegExp "[.]$" ""), ""))
+    n => n.toFixed(3)
+    s => s.replace((new RegExp "0*$" ""), "")
+    s => s.replace((new RegExp "[.]$" ""), "")
     (rgba 0 0 0)
   ]);
 
@@ -701,9 +701,9 @@ screen coerce = {
   ]
 
   (s:fold-map Array
-              (count -> #[#["#tags li[data-count='" + count + "'] a"]
-                          #[:background (tag-background count)
-                            :color (tag-color count)]])
+              count => #[#["#tags li[data-count='" + count + "'] a"]
+                         #[:background (tag-background count)
+                           :color (tag-color count)]]
               (s:range 1 20))
 
   #[

@@ -307,15 +307,15 @@ render-document element = {
             (render-document (base-template "Tags"
                                             (render-tags posts))))
 
-(s:map (page ->
-          (write-file (public #[page:slug + ".html"])
-                      (render-document (base-template page:title
-                                                      (render-page page)))))
+(s:map page =>
+         (write-file (public #[page:slug + ".html"])
+                     (render-document (base-template page:title
+                                                     (render-page page))))
        pages)
 
-(s:map (post ->
-          (write-file (public #[post:slug + ".html"])
-                      (render-document (base-template post:title
-                                                      (render-post post
-                                                                   (related-posts posts post))))))
+(s:map post =>
+         (write-file (public #[post:slug + ".html"])
+                     (render-document (base-template post:title
+                                                     (render-post post
+                                                                  (related-posts posts post)))))
        posts)

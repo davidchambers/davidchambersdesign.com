@@ -5,7 +5,7 @@ import s from "./sanctuary.serif";
 export default related-posts;
 
 intersection set-1 set-2 =
-  (new Set #[...set-2].filter((x -> set-1.has(x))))
+  (new Set #[...set-2].filter(x => set-1.has(x)))
 
 union set-1 set-2 =
   (new Set #[...set-1 ...set-2])
@@ -31,9 +31,9 @@ with-scores that this = {
 }
 
 related-posts posts post =
-  (s:pipe #[(s:reject (this -> this:slug === post:slug))
+  (s:pipe #[(s:reject this => this:slug === post:slug)
             (s:map-maybe (with-scores post))
             s:sort
             (s:map s:snd)
-            (posts -> posts.slice(0, 5))]
+            posts => posts.slice(0, 5)]
           posts)

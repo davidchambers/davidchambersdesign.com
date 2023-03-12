@@ -23,16 +23,16 @@ reducer prev path curr = {
 
 simplify =
   (s:array #[]
-           (head tail ->
-              (s:pair s:append
-                      (s:reduce (s:pair reducer)
-                                (s:Pair head #[])
-                                tail))))
+           head => tail =>
+             (s:pair s:append
+                     (s:reduce (s:pair reducer)
+                               (s:Pair head #[])
+                               tail)))
 
 render =
   (s:pipe #[simplify
             s:join
-            (s:map (x -> if typeof x === "symbol" then (Symbol.keyFor x) else (String x)))
+            (s:map x => if typeof x === "symbol" then (Symbol.keyFor x) else (String x))
             s:unwords])
 
 ⇦ x = #[:m #[{- x} 0]]

@@ -7,23 +7,23 @@ render-section section =
   (li
      #[(h2 section:heading)
        (ol
-          (s:map (post ->
-                    (li
-                       #[(a' #{:href "/" + post:slug} post:title)
-                         " "
-                         (time #{:datetime post:datetime.toISO()}
-                            post:datetime.toFormat("d MMMM y | h:mm") +
-                            post:datetime.toFormat("a").toLowerCase())]))
+          (s:map post =>
+                   (li
+                      #[(a' #{:href "/" + post:slug} post:title)
+                        " "
+                        (time #{:datetime post:datetime.toISO()}
+                           post:datetime.toFormat("d MMMM y | h:mm") +
+                           post:datetime.toFormat("a").toLowerCase())])
                  section:posts))])
 
 render-archives =
   (s:pipe #[(s:map (s:join s:Pair))
-            (s:map (s:map-left (post -> post:datetime)))
+            (s:map (s:map-left post => post:datetime))
             (s:sort-by (s:compose (s:compose s:negate Number) s:fst))
-            (s:map (s:map-left (datetime -> datetime.toFormat("MMMM y"))))
+            (s:map (s:map-left datetime => datetime.toFormat("MMMM y")))
             (s:group-by (s:on s:equals s:fst))
-            (s:chain (s:array #[] (head tail -> #[#{:heading (s:fst head) :posts (s:map s:snd (s:prepend head tail))}])))
-            (sections ->
-               #[(h1 "Archives")
-                 (ol' #{:class "archives"}
-                    (s:map render-section sections))])])
+            (s:chain (s:array #[] head => tail => #[#{:heading (s:fst head) :posts (s:map s:snd #[head ...tail])}]))
+            sections =>
+              #[(h1 "Archives")
+                (ol' #{:class "archives"}
+                   (s:map render-section sections))]])

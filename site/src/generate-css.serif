@@ -15,19 +15,19 @@ coerce x = {
 
 split-every-2 xs =
   (s:array #[]
-           (k -> (s:array #[]
-                          (v -> (s:compose (s:prepend (s:Pair k v))
-                                           split-every-2))))
+           k => (s:array #[]
+                         v => (s:compose (s:prepend (s:Pair k v))
+                                         split-every-2))
            xs)
 
 vendor-prefix unprefixed prefixed =
-  (s:chain (s:pair (k v -> {
-                      if k === unprefixed then {
-                        (s:map (s:Pair _ v) (s:append unprefixed prefixed))
-                      } else {
-                        #[(s:Pair k v)]
-                      }
-                    })))
+  (s:chain (s:pair k => v => {
+                     if k === unprefixed then {
+                       (s:map (s:Pair _ v) (s:append unprefixed prefixed))
+                     } else {
+                       #[(s:Pair k v)]
+                     }
+                   }))
 
 vendor-prefixes =
   (s:pipe #[(vendor-prefix :border-radius
@@ -48,7 +48,7 @@ vendor-prefixes =
                                   :-o-transition-timing-function])])
 
 format-block selectors =
-  (s:pipe #[(s:map (s:pair (k v -> "  " + (coerce k) + ": " + (coerce v) + ";")))
+  (s:pipe #[(s:map (s:pair k => v => "  " + (coerce k) + ": " + (coerce v) + ";"))
             (s:prepend (s:join-with ",\n" selectors) + " {")
             (s:append "}")
             s:unlines])

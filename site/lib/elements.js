@@ -40,7 +40,7 @@ const _block$002Delement = function _block$002Delement(_tag$002Dname) {
     const children = _canonicalize$002Dchildren(_$002Dchildren);
     return {
       [Symbol.for('format')]: Symbol.for('block'),
-      [Symbol.for('text')]: s[Symbol.for('chain')](child => child[Symbol.for('text')])(children),
+      [Symbol.for('text')]: children['flatMap'](child => child[Symbol.for('text')]),
       [Symbol.for('render')]: _render$002Dblock$002Delement(_tag$002Dname)(attrs)(children)
     };
   })();
@@ -49,10 +49,10 @@ const _inline$002Delement = function _inline$002Delement(_tag$002Dname) {
   return _$002Dattrs => _$002Dchildren => (() => {
     const attrs = _canonicalize$002Dattrs(_$002Dattrs);
     const children = _canonicalize$002Dchildren(_$002Dchildren);
-    const format = s[Symbol.for('any')](node => node[Symbol.for('format')] === Symbol.for('block'))(children) ? Symbol.for('block') : Symbol.for('inline');
+    const format = children['some'](node => node[Symbol.for('format')] === Symbol.for('block')) ? Symbol.for('block') : Symbol.for('inline');
     return {
       [Symbol.for('format')]: format,
-      [Symbol.for('text')]: s[Symbol.for('chain')](child => child[Symbol.for('text')])(children),
+      [Symbol.for('text')]: children['flatMap'](child => child[Symbol.for('text')]),
       [Symbol.for('render')]: indent => level => inline => (() => {
         const render = format === Symbol.for('inline') ? _render$002Dinline$002Delement : _render$002Dblock$002Delement;
         return render(_tag$002Dname)(attrs)(children)(indent)(level)(inline);
@@ -77,7 +77,7 @@ const excerpt = function excerpt(_$002Dchildren) {
       return level => inline => s[Symbol.for('fold-map')](String)(child => child[Symbol.for('render')](indent)(level)(inline))(children);
     };
     return {
-      [Symbol.for('text')]: s[Symbol.for('chain')](child => child[Symbol.for('text')])(children),
+      [Symbol.for('text')]: children['flatMap'](child => child[Symbol.for('text')]),
       [Symbol.for('render')]: render
     };
   })();
@@ -151,7 +151,9 @@ const linearGradient = _block$002Delement(Symbol.for('linearGradient'));
 const object = _block$002Delement(Symbol.for('object'));
 const svg = _block$002Delement(Symbol.for('svg'));
 const _a$0027 = _inline$002Delement(Symbol.for('a'));
-const a = href => _a$0027({ [Symbol.for('href')]: href });
+const a = function a(href) {
+  return _a$0027({ [Symbol.for('href')]: href });
+};
 const _code$0027 = _inline$002Delement(Symbol.for('code'));
 const code = _inline$002Delement(Symbol.for('code'))({});
 const _del$0027 = _inline$002Delement(Symbol.for('del'));

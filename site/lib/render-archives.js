@@ -106,7 +106,10 @@ const _render$002Darchives = s[Symbol.for('pipe')]([
   s[Symbol.for('group-by')](s[Symbol.for('on')](s[Symbol.for('equals')])(s[Symbol.for('fst')])),
   s[Symbol.for('chain')](s[Symbol.for('array')]([])(head => tail => [{
       [Symbol.for('heading')]: s[Symbol.for('fst')](head),
-      [Symbol.for('posts')]: s[Symbol.for('map')](s[Symbol.for('snd')])(s[Symbol.for('prepend')](head)(tail))
+      [Symbol.for('posts')]: s[Symbol.for('map')](s[Symbol.for('snd')])([
+        head,
+        ...tail
+      ])
     }])),
   sections => [
     h1('Archives'),

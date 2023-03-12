@@ -94,7 +94,7 @@ const _render$002Dtags = function _render$002Dtags(posts) {
     const counts = s[Symbol.for('reduce')](counts => tag => ({
       ...counts,
       [tag]: counts[tag] + 1
-    }))(s[Symbol.for('map')](x => 0)(tags))(s[Symbol.for('chain')](post => post[Symbol.for('tags')])(posts));
+    }))(s[Symbol.for('map')](x => 0)(tags))(posts['flatMap'](post => post[Symbol.for('tags')]));
     return [
       h1('Tags'),
       _ol$0027({ [Symbol.for('id')]: 'tags' })(s[Symbol.for('map')](tag => _li$0027({ [Symbol.for('data-count')]: counts[tag] })(a('/tag/' + tag + '/')(tags[tag])))(Object['keys'](tags))),

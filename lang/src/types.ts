@@ -180,9 +180,6 @@ export type PrimaryExpression =
   | Array
   | Object
 
-export type CallExpression =
-  | PrimaryExpression
-
 export type UnaryOperator =
   | 'typeof'
   | '+'
@@ -191,7 +188,7 @@ export type UnaryOperator =
   | '!'
 
 export type UnaryOperand =
-  | CallExpression
+  | PrimaryExpression
 
 export interface UnaryExpression {
   readonly type: 'UnaryExpression';
@@ -593,17 +590,17 @@ export const Application = (
   arguments: args,
 });
 
-export interface CallExpression_ {
-  readonly type: 'CallExpression_';
+export interface CallExpression {
+  readonly type: 'CallExpression';
   readonly callee: Expression;
   readonly arguments: ReadonlyArray<SpreadElement | Expression>;
 }
 
-export const CallExpression_ = (
+export const CallExpression = (
   callee: Expression,
   args: ReadonlyArray<Expression>,
-): CallExpression_ => ({
-  type: 'CallExpression_',
+): CallExpression => ({
+  type: 'CallExpression',
   callee,
   arguments: args,
 });
@@ -627,7 +624,7 @@ export type Expression =
   | ConditionalExpression
   | New
   | Application
-  | CallExpression_
+  | CallExpression
 
 interface _ImportDeclarationBase {
   readonly type: 'ImportDeclaration';
