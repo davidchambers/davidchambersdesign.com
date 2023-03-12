@@ -9,15 +9,15 @@ Module
     Separator*
   { return Serif.Module(imports, exports, statements ?? []); }
 
-ImportSpecifier 'import specifier'
+ImportSpecifier
   = local:Identifier
     { return Serif.ImportSpecifier(local, local); }
 
-ImportDefaultSpecifier 'import default specifier'
+ImportDefaultSpecifier
   = local:Identifier
     { return Serif.ImportDefaultSpecifier(local); }
 
-ImportDeclaration 'import declaration'
+ImportDeclaration
   = 'import'
     Separator+ '{'
     specifiers:(
@@ -54,14 +54,14 @@ ImportDeclaration 'import declaration'
     Separator* ';'
     { return Serif.ImportDefaultDeclaration(source, specifier); }
 
-ExportDefaultDeclaration 'export default declaration'
+ExportDefaultDeclaration
   = 'export'
     Separator+ 'default'
     Separator+ declaration:Expression
     Separator* ';'
     { return Serif.ExportDefaultDeclaration(declaration); }
 
-ExportNamedDeclaration 'export named declaration'
+ExportNamedDeclaration
   = 'export'
     Separator+ '{'
     specifiers:(
@@ -77,24 +77,24 @@ Statement
   = Declaration
   / ExpressionStatement
 
-Declaration 'declaration'
+Declaration
   = name:(ident:Identifier { return ident.name; })
     parameterNames:(Separator+ !'=' ident:Identifier { return ident.name; })*
     Separator+ '='
     Separator+ expression:Expression
   { return Serif.Declaration(name, parameterNames, expression); }
 
-ExpressionStatement 'expression statement'
+ExpressionStatement
   = expression:Expression
   { return Serif.ExpressionStatement(expression); }
 
-LineTerminator 'line terminator'
+LineTerminator
   = '\u000A' // LINE FEED (LF)
   / '\u000D' // CARRIAGE RETURN (CR)
   / '\u2028' // LINE SEPARATOR
   / '\u2029' // PARAGRAPH SEPARATOR
 
-Whitespace 'whitespace'
+Whitespace
   = LineTerminator
   / '\u0009' // CHARACTER TABULATION
   / '\u000B' // LINE TABULATION
@@ -118,14 +118,14 @@ Whitespace 'whitespace'
   / '\u3000' // IDEOGRAPHIC SPACE
   / '\uFEFF' // BYTE ORDER MARK
 
-Comment 'comment'
+Comment
   = ';;' (!LineTerminator .)*
 
-Separator 'separator'
+Separator
   = Whitespace
   / Comment
 
-IdentChar 'identifier character'
+IdentChar
   = !Whitespace
     !'\u0022' // QUOTATION MARK
     !'\u0028' // LEFT PARENTHESIS
@@ -139,7 +139,7 @@ IdentChar 'identifier character'
     !'\u007D' // RIGHT CURLY BRACKET
     .
 
-SymbolChar 'symbol character'
+SymbolChar
   = !Whitespace
     !'\u0022' // QUOTATION MARK
     !'\u0028' // LEFT PARENTHESIS
@@ -153,7 +153,7 @@ SymbolChar 'symbol character'
     !'\u007D' // RIGHT CURLY BRACKET
     .
 
-Expression 'expression'
+Expression
   = ConditionalExpression
   / Identifier
   / Lambda
@@ -161,39 +161,39 @@ Expression 'expression'
   / Invocation
   / Application
 
-Boolean 'Boolean'
+Boolean
   = 'true'  { return Serif.Boolean(true); }
   / 'false' { return Serif.Boolean(false); }
 
-Number 'number'
+Number
   = BinaryNumber
   / OctalNumber
   / HexadecimalNumber
   / DecimalNumber
 
-BinaryNumber 'binary number'
+BinaryNumber
   = '0' 'b' digits:$([0-1])+
   { return Serif.Number(parseInt(digits, 2)); }
 
-OctalNumber 'octal number'
+OctalNumber
   = '0' 'o' digits:$([0-7])+
   { return Serif.Number(parseInt(digits, 8)); }
 
-HexadecimalNumber 'hexadecimal number'
+HexadecimalNumber
   = '0' 'x' digits:$([0-9A-F])+
   { return Serif.Number(parseInt(digits, 16)); }
 
-DecimalNumber 'decimal number'
+DecimalNumber
   = ('-' / '+')?
     ('0' / ([1-9] [0-9]*))
     ('.' [0-9]+)?
   { return Serif.Number(parseFloat(text())); }
 
-String 'string'
+String
   = '"' chars:Char* '"'
   { return Serif.String(chars.join('')); }
 
-Char 'char'
+Char
   = '\\' '"'  { return '"'; }
   / '\\' '\\' { return '\\'; }
   / '\\' 'b'  { return '\b'; }
@@ -206,15 +206,15 @@ Char 'char'
   / '\\'      { expected('valid escape sequence'); }
   / [^"]
 
-Symbol 'symbol'
+Symbol
   = ':' name:$(SymbolChar)+
   { return Serif.Symbol(name); }
 
-ImportMeta 'import.meta'
+ImportMeta
   = meta:'import' '.' property:'meta'
   { return Serif.MetaProperty(meta, property); }
 
-MemberExpression 'member expression'
+MemberExpression
   = object:PrimaryExpression
     properties:(
         Symbol
@@ -223,18 +223,18 @@ MemberExpression 'member expression'
     )*
     { return properties.reduce(Serif.MemberExpression, object); }
 
-Identifier 'identifier'
+Identifier
   = !'->' name:$(IdentChar)+
   { return Serif.Identifier(name); }
 
-Lambda 'lambda'
+Lambda
   = '('
     Separator* parameters:(ident:Identifier Separator+ { return ident; })+ '->'
     Separator+ body:Expression
     Separator* ')'
     { return parameters.reduceRight((body, parameter) => Serif.Lambda(parameter, body), body); }
 
-BlockExpression 'block expression'
+BlockExpression
   = '{' Separator* statements:BlockExpressionStatements Separator* '}' { return Serif.BlockExpression(statements); }
   / '[' Separator* statements:BlockExpressionStatements Separator* ']' { return Serif.BlockExpression(statements); }
 
@@ -442,11 +442,11 @@ ConditionalExpression
     { return Serif.ConditionalExpression(predicate, consequent, alternative); }
   / CoalesceExpression
 
-SpreadElement 'spread element'
+SpreadElement
   = '...' argument:Expression
     { return Serif.SpreadElement(argument); }
 
-Array 'array'
+Array
   = '#['
     elements:(
       head:(Separator* element:(SpreadElement / Expression) { return element; })
@@ -456,11 +456,11 @@ Array 'array'
     Separator* ']'
     { return Serif.Array(elements ?? []); }
 
-Property 'property'
+Property
   = key:Expression Separator+ value:Expression
     { return Serif.Property(key, value); }
 
-Object 'object'
+Object
   = '#{'
     properties:(
       head:(Separator* property:(SpreadElement / Property) { return property; })
@@ -470,11 +470,11 @@ Object 'object'
     Separator* '}'
     { return Serif.Object(properties ?? []); }
 
-Placeholder 'placeholder'
+Placeholder
   = '_' !IdentChar
   { return Serif.Placeholder; }
 
-New 'new'
+New
   = '('
     Separator* 'new'
     Separator+ callee:(Placeholder / Expression)
@@ -482,14 +482,14 @@ New 'new'
     Separator* ')'
     { return Serif.New(callee, args); }
 
-Invocation 'invocation'
+Invocation
   = '('
     Separator* '.' name:(ident:Identifier { return ident.name; })
     args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
     Separator* ')'
     { return Serif.Invocation(name, args.pop(), args); }
 
-Application 'application'
+Application
   = '('
     Separator* callee:(Placeholder / Expression)
     args:(Separator+ arg:(Placeholder / SpreadElement / Expression) { return arg; })+
