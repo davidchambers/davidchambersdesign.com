@@ -641,14 +641,42 @@ interface _ImportDefaultDeclaration extends _ImportDeclarationBase {
   readonly specifiers: ReadonlyArray<ImportDefaultSpecifier>
 }
 
+export const ImportDefaultDeclaration = (
+  source: String,
+  specifier: ImportDefaultSpecifier,
+): _ImportDefaultDeclaration => ({
+  type: 'ImportDeclaration',
+  source,
+  specifiers: [specifier],
+});
+
 interface _ImportDeclaration extends _ImportDeclarationBase {
   readonly specifiers: ReadonlyArray<ImportSpecifier>
 }
+
+export const ImportDeclaration = (
+  source: String,
+  specifiers: ReadonlyArray<ImportSpecifier>,
+): _ImportDeclaration => ({
+  type: 'ImportDeclaration',
+  source,
+  specifiers,
+});
 
 interface _ImportEverythingDeclaration extends _ImportDeclarationBase {
   readonly specifiers: '*';
   readonly hiding: ReadonlyArray<Identifier>
 }
+
+export const ImportEverythingDeclaration = (
+  source: String,
+  hiding: ReadonlyArray<Identifier>,
+): _ImportEverythingDeclaration => ({
+  type: 'ImportDeclaration',
+  source,
+  specifiers: '*',
+  hiding,
+});
 
 export type ImportDeclaration =
   | _ImportDefaultDeclaration
