@@ -6,7 +6,7 @@ export default render-tags;
 
 render-tags posts = {
   counts = (s:reduce (counts tag -> #{...counts [tag] counts[tag] + 1})
-                     (s:map (_ -> 0) tags)
+                     (s:map (x -> 0) tags)
                      (s:chain (post -> post:tags) posts));
   #[(h1 "Tags")
     (ol' #{:id "tags"}

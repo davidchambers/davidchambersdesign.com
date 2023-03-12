@@ -38,7 +38,7 @@ import post/sms-event-reminders-from-google-calendar from "../posts/sms-event-re
 import post/tiny-calendar-icon-set from "../posts/tiny-calendar-icon-set.serif";
 import post/applescript-syntax-highlighting from "../posts/applescript-syntax-highlighting.serif";
 import post/php-brush-for-syntaxhighlighter from "../posts/php-brush-for-syntaxhighlighter.serif";
-import post/php-print_filesize-function from "../posts/php-print_filesize-function.serif";
+import post/php-print-filesize-function from "../posts/php-print_filesize-function.serif";
 import post/prototype-loader-for-syntaxhighlighter from "../posts/prototype-loader-for-syntaxhighlighter.serif";
 import post/associative-arrays-in-javascript from "../posts/associative-arrays-in-javascript.serif";
 import post/photoshop-save-for-web-javascript from "../posts/photoshop-save-for-web-javascript.serif";
@@ -118,7 +118,7 @@ import post/itunes-is-surprisingly-useful-when-learning-a-foreign-language from 
 import post/the-perils-of-using-javascript-objects-as-sets from "../posts/the-perils-of-using-javascript-objects-as-sets.serif";
 import post/give-and-take-of-continuation-passing-style from "../posts/give-and-take-of-continuation-passing-style.serif";
 
-__dirname = (path.dirname (url.fileURLToPath import.meta.url))
+dirname = (path.dirname (url.fileURLToPath import.meta.url))
 
 pages = #[
   page/about
@@ -142,7 +142,7 @@ posts = #[
   post/tiny-calendar-icon-set
   post/applescript-syntax-highlighting
   post/php-brush-for-syntaxhighlighter
-  post/php-print_filesize-function
+  post/php-print-filesize-function
   post/prototype-loader-for-syntaxhighlighter
   post/associative-arrays-in-javascript
   post/photoshop-save-for-web-javascript
@@ -224,7 +224,7 @@ posts = #[
 ]
 
 public components =
-  (path.join ...#[__dirname ".." ".." "public" ...components])
+  (path.join ...#[dirname ".." ".." "public" ...components])
 
 write-file filename data =
   (fs.writeFileSync ...#[filename data])

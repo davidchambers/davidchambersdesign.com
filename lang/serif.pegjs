@@ -135,6 +135,7 @@ IdentChar
     !'\u003B' // SEMICOLON
     !'\u005B' // LEFT SQUARE BRACKET
     !'\u005D' // RIGHT SQUARE BRACKET
+    !'\u005F' // LOW LINE
     !'\u007B' // LEFT CURLY BRACKET
     !'\u007D' // RIGHT CURLY BRACKET
     .
@@ -471,7 +472,7 @@ Object
     { return Serif.Object(properties ?? []); }
 
 Placeholder
-  = '_' !IdentChar
+  = '_'
   { return Serif.Placeholder; }
 
 New

@@ -7,23 +7,24 @@ export default render-post;
 render-post post related-posts =
   #[(article'
        (s:maybe #{} (s:singleton :id) (s:value :article-id post))
-       (s:join #[#[(header
-                      #[(h1 post:title)
-                        (time #{:datetime (.toFormat "yyyy-MM-dd'T'HH:mm:ssZZ" post:datetime) :pubdate "pubdate"}
-                           (.toFormat "d MMMM y" post:datetime))])]
-                 post:body
-                 #[(footer' #{:class "metadata"}
-                      (s:join #[#[(ul (li' #{:class "shorturl"} (a ["http://dċd.ws/" + post:id + "/"] "Short URL")))]
-                                (s:array #[]
-                                         (head tail ->
-                                            #[(h4 "This post has the following tags:")
-                                              (ol (s:map (tag -> (li (a ["/tag/" + tag + "/"] tags[tag])))
-                                                         (s:prepend head tail)))])
-                                         post:tags)]))]
-                 (s:array #[]
-                          (_ _ ->
-                             #[(h3' #{:id "related"} "Possibly related posts")
-                               (ul (s:map (related-post ->
-                                             (li (a ["/" + related-post:slug + "/"] related-post:title)))
-                                          related-posts))])
-                          related-posts)]))]
+       #[(header
+            #[(h1 post:title)
+              (time #{:datetime (.toFormat "yyyy-MM-dd'T'HH:mm:ssZZ" post:datetime) :pubdate "pubdate"}
+                 (.toFormat "d MMMM y" post:datetime))])
+         ...post:body
+         (footer' #{:class "metadata"}
+            (s:join #[#[(ul (li' #{:class "shorturl"} (a ["http://dċd.ws/" + post:id + "/"] "Short URL")))]
+                      (s:array #[]
+                               (head tail ->
+                                  #[(h4 "This post has the following tags:")
+                                    (ol (s:map (tag -> (li (a ["/tag/" + tag + "/"] tags[tag])))
+                                               (s:prepend head tail)))])
+                               post:tags)]))
+         ...{
+           if related-posts.length === 0 then #[] else #[
+             (h3' #{:id "related"} "Possibly related posts")
+             (ul (s:map (related-post ->
+                           (li (a ["/" + related-post:slug + "/"] related-post:title)))
+                        related-posts))
+           ]
+         }])]

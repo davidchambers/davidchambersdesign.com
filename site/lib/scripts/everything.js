@@ -37,7 +37,7 @@ import _post$002Fsms$002Devent$002Dreminders$002Dfrom$002Dgoogle$002Dcalendar fr
 import _post$002Ftiny$002Dcalendar$002Dicon$002Dset from '../posts/tiny-calendar-icon-set.js';
 import _post$002Fapplescript$002Dsyntax$002Dhighlighting from '../posts/applescript-syntax-highlighting.js';
 import _post$002Fphp$002Dbrush$002Dfor$002Dsyntaxhighlighter from '../posts/php-brush-for-syntaxhighlighter.js';
-import _post$002Fphp$002Dprint$005Ffilesize$002Dfunction from '../posts/php-print_filesize-function.js';
+import _post$002Fphp$002Dprint$002Dfilesize$002Dfunction from '../posts/php-print_filesize-function.js';
 import _post$002Fprototype$002Dloader$002Dfor$002Dsyntaxhighlighter from '../posts/prototype-loader-for-syntaxhighlighter.js';
 import _post$002Fassociative$002Darrays$002Din$002Djavascript from '../posts/associative-arrays-in-javascript.js';
 import _post$002Fphotoshop$002Dsave$002Dfor$002Dweb$002Djavascript from '../posts/photoshop-save-for-web-javascript.js';
@@ -116,7 +116,7 @@ import _post$002Fhelveticards from '../posts/helveticards.js';
 import _post$002Fitunes$002Dis$002Dsurprisingly$002Duseful$002Dwhen$002Dlearning$002Da$002Dforeign$002Dlanguage from '../posts/itunes-is-surprisingly-useful-when-learning-a-foreign-language.js';
 import _post$002Fthe$002Dperils$002Dof$002Dusing$002Djavascript$002Dobjects$002Das$002Dsets from '../posts/the-perils-of-using-javascript-objects-as-sets.js';
 import _post$002Fgive$002Dand$002Dtake$002Dof$002Dcontinuation$002Dpassing$002Dstyle from '../posts/give-and-take-of-continuation-passing-style.js';
-const _$005F$005Fdirname = path['dirname'](url['fileURLToPath'](import.meta['url']));
+const dirname = path['dirname'](url['fileURLToPath'](import.meta['url']));
 const pages = [
   _page$002Fabout,
   _page$002Felam
@@ -138,7 +138,7 @@ const posts = [
   _post$002Ftiny$002Dcalendar$002Dicon$002Dset,
   _post$002Fapplescript$002Dsyntax$002Dhighlighting,
   _post$002Fphp$002Dbrush$002Dfor$002Dsyntaxhighlighter,
-  _post$002Fphp$002Dprint$005Ffilesize$002Dfunction,
+  _post$002Fphp$002Dprint$002Dfilesize$002Dfunction,
   _post$002Fprototype$002Dloader$002Dfor$002Dsyntaxhighlighter,
   _post$002Fassociative$002Darrays$002Din$002Djavascript,
   _post$002Fphotoshop$002Dsave$002Dfor$002Dweb$002Djavascript,
@@ -220,7 +220,7 @@ const posts = [
 ];
 const _public = function _public(components) {
   return path['join'](...[
-    _$005F$005Fdirname,
+    dirname,
     '..',
     '..',
     'public',

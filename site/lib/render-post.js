@@ -90,26 +90,26 @@ import {
 import s from './sanctuary.js';
 import tags from './tags.js';
 const _render$002Dpost = function _render$002Dpost(post) {
-  return _related$002Dposts => [_article$0027(s[Symbol.for('maybe')]({})(s[Symbol.for('singleton')](Symbol.for('id')))(s[Symbol.for('value')](Symbol.for('article-id'))(post)))(s[Symbol.for('join')]([
-      [header([
-          h1(post[Symbol.for('title')]),
-          time({
-            [Symbol.for('datetime')]: post[Symbol.for('datetime')]['toFormat']('yyyy-MM-dd\'T\'HH:mm:ssZZ'),
-            [Symbol.for('pubdate')]: 'pubdate'
-          })(post[Symbol.for('datetime')]['toFormat']('d MMMM y'))
-        ])],
-      post[Symbol.for('body')],
-      [_footer$0027({ [Symbol.for('class')]: 'metadata' })(s[Symbol.for('join')]([
-          [ul(_li$0027({ [Symbol.for('class')]: 'shorturl' })(a('http://dċd.ws/' + post[Symbol.for('id')] + '/')('Short URL')))],
-          s[Symbol.for('array')]([])(head => tail => [
-            h4('This post has the following tags:'),
-            ol(s[Symbol.for('map')](tag => li(a('/tag/' + tag + '/')(tags[tag])))(s[Symbol.for('prepend')](head)(tail)))
-          ])(post[Symbol.for('tags')])
-        ]))],
-      s[Symbol.for('array')]([])(_$005F => _$005F => [
+  return _related$002Dposts => [_article$0027(s[Symbol.for('maybe')]({})(s[Symbol.for('singleton')](Symbol.for('id')))(s[Symbol.for('value')](Symbol.for('article-id'))(post)))([
+      header([
+        h1(post[Symbol.for('title')]),
+        time({
+          [Symbol.for('datetime')]: post[Symbol.for('datetime')]['toFormat']('yyyy-MM-dd\'T\'HH:mm:ssZZ'),
+          [Symbol.for('pubdate')]: 'pubdate'
+        })(post[Symbol.for('datetime')]['toFormat']('d MMMM y'))
+      ]),
+      ...post[Symbol.for('body')],
+      _footer$0027({ [Symbol.for('class')]: 'metadata' })(s[Symbol.for('join')]([
+        [ul(_li$0027({ [Symbol.for('class')]: 'shorturl' })(a('http://dċd.ws/' + post[Symbol.for('id')] + '/')('Short URL')))],
+        s[Symbol.for('array')]([])(head => tail => [
+          h4('This post has the following tags:'),
+          ol(s[Symbol.for('map')](tag => li(a('/tag/' + tag + '/')(tags[tag])))(s[Symbol.for('prepend')](head)(tail)))
+        ])(post[Symbol.for('tags')])
+      ])),
+      ..._related$002Dposts['length'] === 0 ? [] : [
         _h3$0027({ [Symbol.for('id')]: 'related' })('Possibly related posts'),
         ul(s[Symbol.for('map')](_related$002Dpost => li(a('/' + _related$002Dpost[Symbol.for('slug')] + '/')(_related$002Dpost[Symbol.for('title')])))(_related$002Dposts))
-      ])(_related$002Dposts)
-    ]))];
+      ]
+    ])];
 };
 export default _render$002Dpost;
