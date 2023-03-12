@@ -37,24 +37,26 @@ screen coerce = {
 
   !important x = (coerce x) + " !important";
 
-  tag-background =
-    (s:pipe #[Math.log2
-              (x -> x * 5)
-              (x -> 247 - x)
-              Math.floor
-              (.toString 16 _)
-              (.padStart 2 "0" _)
-              (.repeat 3 _)
-              (s -> "#" + s)]);
+  tag-background = (s:pipe #[
+    Math.log2
+    _ * 5
+    247 - _
+    Math.floor
+    (.toString 16 _)
+    (.padStart 2 "0" _)
+    (.repeat 3 _)
+    "#" + _
+  ]);
 
-  tag-color =
-    (s:pipe #[Math.log2
-              (x -> x * 0.1)
-              (x -> x + 0.3)
-              (.toFixed 3 _)
-              (.replace (s:regex "" "0*$") "" _)
-              (.replace (s:regex "" "[.]$") "" _)
-              (rgba 0 0 0)]);
+  tag-color = (s:pipe #[
+    Math.log2
+    _ * 0.1
+    _ + 0.3
+    (.toFixed 3 _)
+    (.replace (s:regex "" "0*$") "" _)
+    (.replace (s:regex "" "[.]$") "" _)
+    (rgba 0 0 0)
+  ]);
 
   (s:join #[#[
 
