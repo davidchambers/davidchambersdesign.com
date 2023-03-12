@@ -114,7 +114,7 @@ const esFromMemberExpression = ({
   object,
   property,
 }: Serif.MemberExpression): ES.MemberExpression | ES.ArrowFunctionExpression => {
-  if (object.type === 'placeholder') {
+  if (object === Serif.Placeholder) {
     const param = Identifier(prefix(String(1)));
     return es.ArrowFunctionExpression(
       [param],
@@ -157,12 +157,12 @@ const esFromObject = ({properties}: Serif.Object): ES.ObjectExpression | ES.Arro
       case 'property': {
         const {key, value} = property;
         const key$ = (
-          key.type === 'placeholder'
+          key === Serif.Placeholder
           ? (params[params.length] = Identifier(prefix(String(params.length + 1))))
           : esFromExpression(key)
         );
         const value$ = (
-          value.type === 'placeholder'
+          value === Serif.Placeholder
           ? (params[params.length] = Identifier(prefix(String(params.length + 1))))
           : esFromExpression(value)
         );
@@ -214,7 +214,7 @@ const esFromUnaryExpression = ({
 }: Serif.UnaryExpression): ES.UnaryExpression | ES.ArrowFunctionExpression => {
   const params: Array<ES.Identifier> = [];
   const argument$ = (
-    argument.type === 'placeholder'
+    argument === Serif.Placeholder
     ? (params[params.length] = Identifier(prefix(String(params.length + 1))))
     : esFromExpression(argument)
   );
@@ -231,12 +231,12 @@ const esFromBinaryExpression = ({
 }: Serif.BinaryExpression): ES.BinaryExpression | ES.ArrowFunctionExpression => {
   const params: Array<ES.Identifier> = [];
   const left$ = (
-    left.type === 'placeholder'
+    left === Serif.Placeholder
     ? (params[params.length] = Identifier(prefix(String(params.length + 1))))
     : esFromExpression(left)
   );
   const right$ = (
-    right.type === 'placeholder'
+    right === Serif.Placeholder
     ? (params[params.length] = Identifier(prefix(String(params.length + 1))))
     : esFromExpression(right)
   );
@@ -272,19 +272,19 @@ const esFromConditionalExpression = ({
 
 const esFromNew = (expr: Serif.New): ES.NewExpression | ES.ArrowFunctionExpression => (
   [
-    ...[expr.callee].flatMap(({type}) =>
-      type === 'placeholder' ? [$callee] : []
+    ...[expr.callee].flatMap(callee =>
+      callee === Serif.Placeholder ? [$callee] : []
     ),
-    ...expr.arguments.flatMap(({type}, idx) =>
-      type === 'placeholder' ? [Identifier(prefix(String(idx + 1)))] : []
+    ...expr.arguments.flatMap((argument, idx) =>
+      argument === Serif.Placeholder ? [Identifier(prefix(String(idx + 1)))] : []
     ),
   ]
   .reduceRight<ES.NewExpression | ES.ArrowFunctionExpression>(
     (body, param) => es.ArrowFunctionExpression([param], body),
     es.NewExpression(
-      expr.callee.type === 'placeholder' ? $callee : esFromExpression(expr.callee),
+      expr.callee === Serif.Placeholder ? $callee : esFromExpression(expr.callee),
       expr.arguments.map((argument, idx) =>
-        argument.type === 'placeholder'
+        argument === Serif.Placeholder
         ? Identifier(prefix(String(idx + 1)))
         : esFromExpression(argument)
       ),
@@ -293,20 +293,20 @@ const esFromNew = (expr: Serif.New): ES.NewExpression | ES.ArrowFunctionExpressi
 );
 
 const esFromApplication = (expr: Serif.Application): ES.Expression => {
-  if (expr.callee.type === 'MemberExpression' && expr.callee.object.type === 'placeholder') {
+  if (expr.callee.type === 'MemberExpression' && expr.callee.object === Serif.Placeholder) {
     const param = Identifier(prefix(String(0)));
     return es.ArrowFunctionExpression(
       [param],
       expr.arguments.reduceRight(
         (body, argument, idx) => (
-          argument.type === 'placeholder'
+          argument === Serif.Placeholder
           ? es.ArrowFunctionExpression([Identifier(prefix(String(idx + 1)))], body)
           : body
         ),
         expr.arguments.reduce<ES.Expression>(
           (callee, argument, idx) => es.CallExpression(
             callee,
-            argument.type === 'placeholder' ?
+            argument === Serif.Placeholder ?
               [Identifier(prefix(String(idx + 1)))] :
             argument.type === 'spread-element' ?
               [es.SpreadElement(esFromExpression(argument.argument))] :
@@ -320,21 +320,21 @@ const esFromApplication = (expr: Serif.Application): ES.Expression => {
   }
   return expr.arguments.reduceRight(
     (body, argument, idx) => (
-      argument.type === 'placeholder'
+      argument === Serif.Placeholder
       ? es.ArrowFunctionExpression([Identifier(prefix(String(idx + 1)))], body)
       : body
     ),
     expr.arguments.reduce(
       (callee, argument, idx) => es.CallExpression(
         callee,
-        argument.type === 'placeholder' ?
+        argument === Serif.Placeholder ?
           [Identifier(prefix(String(idx + 1)))] :
         argument.type === 'spread-element' ?
           [es.SpreadElement(esFromExpression(argument.argument))] :
         // else
           [esFromExpression(argument)]
       ),
-      expr.callee.type === 'placeholder'
+      expr.callee === Serif.Placeholder
       ? (param => es.ArrowFunctionExpression([param], param))(Identifier(prefix('0')))
       : esFromExpression(expr.callee)
     )
@@ -342,13 +342,13 @@ const esFromApplication = (expr: Serif.Application): ES.Expression => {
 };
 
 const esFromCallExpression_ = (expr: Serif.CallExpression_): ES.Expression => {
-  if (expr.callee.type === 'MemberExpression' && expr.callee.object.type === 'placeholder') {
+  if (expr.callee.type === 'MemberExpression' && expr.callee.object === Serif.Placeholder) {
     const param = Identifier(prefix(String(0)));
     return es.ArrowFunctionExpression(
       [param],
       expr.arguments.reduceRight<ES.Expression>(
         (body, argument, idx) => (
-          argument.type === 'placeholder'
+          argument === Serif.Placeholder
           ? es.ArrowFunctionExpression([Identifier(prefix(String(idx + 1)))], body)
           : body
         ),
@@ -371,11 +371,11 @@ const esFromCallExpression_ = (expr: Serif.CallExpression_): ES.Expression => {
       )
     );
   }
-  if (expr.callee.type === 'placeholder') {
+  if (expr.callee === Serif.Placeholder) {
     const param = Identifier(prefix(String(0)));
     return expr.arguments.reduceRight<ES.Expression>(
       (body, argument, idx) => (
-        argument.type === 'placeholder'
+        argument === Serif.Placeholder
         ? es.ArrowFunctionExpression([Identifier(prefix(String(idx + 1)))], body)
         : body
       ),
@@ -399,7 +399,7 @@ const esFromCallExpression_ = (expr: Serif.CallExpression_): ES.Expression => {
   }
   return expr.arguments.reduceRight<ES.Expression>(
     (body, argument, idx) => (
-      argument.type === 'placeholder'
+      argument === Serif.Placeholder
       ? es.ArrowFunctionExpression([Identifier(prefix(String(idx + 1)))], body)
       : body
     ),
