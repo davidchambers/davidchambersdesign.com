@@ -55,18 +55,18 @@ const screen = function screen(coerce) {
       $1 => $1 * 5,
       $1 => 247 - $1,
       Math['floor'],
-      $0 => $0['toString'](16),
-      $0 => $0['padStart'](2, '0'),
-      $0 => $0['repeat'](3),
+      n => n['toString'](16),
+      s => s['padStart'](2, '0'),
+      s => s['repeat'](3),
       $1 => '#' + $1
     ]);
     const _tag$002Dcolor = s[Symbol.for('pipe')]([
       Math['log2'],
       $1 => $1 * 0.1,
       $1 => $1 + 0.3,
-      $0 => $0['toFixed'](3),
-      $0 => $0['replace'](new RegExp('0*$', ''), ''),
-      $0 => $0['replace'](new RegExp('[.]$', ''), ''),
+      n => n['toFixed'](3),
+      s => s['replace'](new RegExp('0*$', ''), ''),
+      s => s['replace'](new RegExp('[.]$', ''), ''),
       rgba(0)(0)(0)
     ]);
     return s[Symbol.for('join')]([

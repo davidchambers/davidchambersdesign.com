@@ -68,6 +68,6 @@ uncaptioned-image src alt =
 update datetime body =
   (div #{:class "update"}
      (s:prepend (h4 #["Update \u2014 "
-                      (time #{:datetime ,(datetime.toISO)}
-                         ,(datetime.toFormat "d MMMM y"))])
+                      (time #{:datetime datetime.toISO()}
+                         datetime.toFormat("d MMMM y"))])
                 (canonicalize-children body)))

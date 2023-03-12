@@ -9,8 +9,8 @@ render-post post related-posts =
        (s:maybe #{} (s:singleton :id) (s:value :article-id post))
        #[(header
             #[(h1 post:title)
-              (time #{:datetime ,(post:datetime.toFormat "yyyy-MM-dd'T'HH:mm:ssZZ") :pubdate "pubdate"}
-                 ,(post:datetime.toFormat "d MMMM y"))])
+              (time #{:datetime post:datetime.toFormat("yyyy-MM-dd'T'HH:mm:ssZZ") :pubdate "pubdate"}
+                 post:datetime.toFormat("d MMMM y"))])
          ...post:body
          (footer' #{:class "metadata"}
             (s:join #[#[(ul (li' #{:class "shorturl"} (a ["http://dċd.ws/" + post:id + "/"] "Short URL")))]

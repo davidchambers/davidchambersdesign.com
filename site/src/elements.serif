@@ -93,9 +93,9 @@ export {
 };
 
 escape =
-  (s:pipe #[,(_.replaceAll "&" "&amp;")
-            ,(_.replaceAll "<" "&lt;")
-            ,(_.replaceAll ">" "&gt;")])
+  (s:pipe #[(s -> s.replaceAll("&", "&amp;"))
+            (s -> s.replaceAll("<", "&lt;"))
+            (s -> s.replaceAll(">", "&gt;"))])
 
 text value =
   #{:text #[value]
@@ -113,9 +113,9 @@ canonicalize-children =
   (s:compose (s:map (child -> {
                        if typeof child == "string" then {
                          (s:pipe #[
-                           ,(_.replace (new RegExp "^[ ]+" "gm") " ")
-                           ,(_.replaceAll "\n" "")
-                           ,(_.replaceAll " -- " "\u2009\u2014\u2009")
+                           (s -> s.replace((new RegExp "^[ ]+" "gm"), " "))
+                           (s -> s.replaceAll("\n", ""))
+                           (s -> s.replaceAll(" -- ", "\u2009\u2014\u2009"))
                            text
                          ] child)
                        } else {
@@ -125,7 +125,7 @@ canonicalize-children =
              (s:unless Array.isArray Array.of))
 
 render-block-element tag-name attrs children indent level -inline = {
-  ,(indent.repeat level)
+  indent.repeat(level)
   + "<"
   + (Symbol.keyFor tag-name)
   + (s:fold-map String
@@ -138,14 +138,14 @@ render-block-element tag-name attrs children indent level -inline = {
                 (Object.getOwnPropertySymbols attrs))
   + ">\n"
   + (s:fold-map String (child -> (child:render indent {level + 1} false)) children)
-  + ,(indent.repeat level)
+  + indent.repeat(level)
   + "</"
   + (Symbol.keyFor tag-name)
   + ">\n"
 }
 
 render-inline-element tag-name attrs children indent level inline = {
-  ,(indent.repeat level)
+  indent.repeat(level)
   + "<"
   + (Symbol.keyFor tag-name)
   + (s:fold-map String
@@ -165,7 +165,7 @@ render-inline-element tag-name attrs children indent level inline = {
 }
 
 render-self-closing-element tag-name attrs indent level inline = {
-  ,(indent.repeat level)
+  indent.repeat(level)
   + "<"
   + (Symbol.keyFor tag-name)
   + (s:fold-map String

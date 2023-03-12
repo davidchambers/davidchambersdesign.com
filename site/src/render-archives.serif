@@ -11,16 +11,16 @@ render-section section =
                     (li
                        #[(a' #{:href "/" + post:slug} post:title)
                          " "
-                         (time #{:datetime ,(post:datetime.toISO)}
-                            ,(post:datetime.toFormat "d MMMM y | h:mm")
-                            + (s:to-lower ,(post:datetime.toFormat "a")))]))
+                         (time #{:datetime post:datetime.toISO()}
+                            post:datetime.toFormat("d MMMM y | h:mm") +
+                            post:datetime.toFormat("a").toLowerCase())]))
                  section:posts))])
 
 render-archives =
   (s:pipe #[(s:map (s:join s:Pair))
             (s:map (s:map-left (post -> post:datetime)))
             (s:sort-by (s:compose (s:compose s:negate Number) s:fst))
-            (s:map (s:map-left ,(_.toFormat "MMMM y")))
+            (s:map (s:map-left (datetime -> datetime.toFormat("MMMM y"))))
             (s:group-by (s:on s:equals s:fst))
             (s:chain (s:array #[] (head tail -> #[#{:heading (s:fst head) :posts (s:map s:snd (s:prepend head tail))}])))
             (sections ->

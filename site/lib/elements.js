@@ -1,8 +1,8 @@
 import s from './sanctuary.js';
 const escape = s[Symbol.for('pipe')]([
-  $0 => $0['replaceAll']('&', '&amp;'),
-  $0 => $0['replaceAll']('<', '&lt;'),
-  $0 => $0['replaceAll']('>', '&gt;')
+  s => s['replaceAll']('&', '&amp;'),
+  s => s['replaceAll']('<', '&lt;'),
+  s => s['replaceAll']('>', '&gt;')
 ]);
 const text = function text(value) {
   return {
@@ -20,9 +20,9 @@ const _canonicalize$002Dattrs = function _canonicalize$002Dattrs(attrs) {
   })())(Object['getOwnPropertySymbols'](attrs)));
 };
 const _canonicalize$002Dchildren = s[Symbol.for('compose')](s[Symbol.for('map')](child => typeof child == 'string' ? s[Symbol.for('pipe')]([
-  $0 => $0['replace'](new RegExp('^[ ]+', 'gm'), ' '),
-  $0 => $0['replaceAll']('\n', ''),
-  $0 => $0['replaceAll'](' -- ', '\u2009\u2014\u2009'),
+  s => s['replace'](new RegExp('^[ ]+', 'gm'), ' '),
+  s => s['replaceAll']('\n', ''),
+  s => s['replaceAll'](' -- ', '\u2009\u2014\u2009'),
   text
 ])(child) : child))(s[Symbol.for('unless')](Array['isArray'])(Array['of']));
 const _render$002Dblock$002Delement = function _render$002Dblock$002Delement(_tag$002Dname) {

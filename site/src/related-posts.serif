@@ -5,7 +5,7 @@ import s from "./sanctuary.serif";
 export default related-posts;
 
 intersection set-1 set-2 =
-  (new Set ,(#[...set-2].filter ,(set-1.has _)))
+  (new Set #[...set-2].filter((x -> set-1.has(x))))
 
 union set-1 set-2 =
   (new Set #[...set-1 ...set-2])
@@ -15,7 +15,7 @@ similarity set-1 set-2 = {
 }
 
 seconds-between from to =
-  ,(to.diff from "seconds").seconds
+  to.diff(from, "seconds").seconds
 
 with-scores that this = {
   score = (similarity (new Set that:tags)
@@ -35,5 +35,5 @@ related-posts posts post =
             (s:map-maybe (with-scores post))
             s:sort
             (s:map s:snd)
-            ,(_.slice 0 5)]
+            (posts -> posts.slice(0, 5))]
           posts)

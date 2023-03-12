@@ -1,7 +1,7 @@
 import path from 'node:path';
 import s from './sanctuary.js';
 const intersection = function intersection(_set$002D1) {
-  return _set$002D2 => new Set([..._set$002D2]['filter']($1 => _set$002D1['has']($1)));
+  return _set$002D2 => new Set([..._set$002D2]['filter'](x => _set$002D1['has'](x)));
 };
 const union = function union(_set$002D1) {
   return _set$002D2 => new Set([
@@ -29,7 +29,7 @@ const _related$002Dposts = function _related$002Dposts(posts) {
     s[Symbol.for('map-maybe')](_with$002Dscores(post)),
     s[Symbol.for('sort')],
     s[Symbol.for('map')](s[Symbol.for('snd')]),
-    $0 => $0['slice'](0, 5)
+    posts => posts['slice'](0, 5)
   ])(posts);
 };
 export default _related$002Dposts;

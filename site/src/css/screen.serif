@@ -2,7 +2,7 @@ import s from "../sanctuary.serif";
 
 export default screen;
 
-' text = "'" + ,(text.replace (new RegExp "(?=')" "g") "\\") + "'"
+' text = "'" + text.replace((new RegExp "(?=')" "g"), "\\") + "'"
 
 base03          = "#002b36"
 base02          = "#073642"
@@ -42,9 +42,9 @@ screen coerce = {
     _ * 5
     247 - _
     Math.floor
-    ,(_.toString 16)
-    ,(_.padStart 2 "0")
-    ,(_.repeat 3)
+    (n -> n.toString(16))
+    (s -> s.padStart(2, "0"))
+    (s -> s.repeat(3))
     "#" + _
   ]);
 
@@ -52,9 +52,9 @@ screen coerce = {
     Math.log2
     _ * 0.1
     _ + 0.3
-    ,(_.toFixed 3)
-    ,(_.replace (new RegExp "0*$" "") "")
-    ,(_.replace (new RegExp "[.]$" "") "")
+    (n -> n.toFixed(3))
+    (s -> s.replace((new RegExp "0*$" ""), ""))
+    (s -> s.replace((new RegExp "[.]$" ""), ""))
     (rgba 0 0 0)
   ]);
 

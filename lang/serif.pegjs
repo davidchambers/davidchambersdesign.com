@@ -161,7 +161,6 @@ Expression
   / Lambda
   / New
   / Application
-  / CallExpression_
 
 Boolean
   = 'true'  { return Serif.Boolean(true); }
@@ -258,12 +257,10 @@ PrimaryExpression
   / BlockExpression
   / New
   / Application
-  / CallExpression_
 
 CallExpression
-  = MemberExpression
+  = CallExpression_
   / Lambda
-  / PrimaryExpression
 
 UnaryOperator
   = 'typeof'
@@ -491,9 +488,21 @@ Application
     Separator* ')'
     { return Serif.Application(callee, args); }
 
-CallExpression_
-  = ',('
-    Separator* callee:Expression
-    args:(Separator+ arg:(SpreadElement / Expression) { return arg; })*
+Arguments
+  = '(' Separator* ')'
+    { return []; }
+  / '(' Separator*
+    head:ConditionalExpression
+    tail:(Separator* ',' Separator* argument:ConditionalExpression { return argument; })*
     Separator* ')'
-    { return Serif.CallExpression_(callee, args); }
+    { return [head, ...tail]; }
+
+CallExpression_
+  = head:MemberExpression
+    tail:(
+        Separator* args:Arguments                         { return expr => Serif.CallExpression_(expr, args); }
+      / symbol:Symbol                                     { return expr => Serif.MemberExpression(expr, symbol); }
+      / '.' ident:Identifier                              { return expr => Serif.MemberExpression(expr, Serif.String(ident.name)); }
+      / '[' Separator* property:Expression Separator* ']' { return expr => Serif.MemberExpression(expr, property); }
+    )*
+    { return tail.reduce((expr, wrap) => wrap(expr), head); }

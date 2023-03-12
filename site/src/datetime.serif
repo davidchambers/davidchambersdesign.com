@@ -2,7 +2,10 @@ import luxon from "luxon";
 
 export default datetime;
 
-datetime date time zone =
-  ,(luxon.DateTime.fromFormat date + " " + time + " (" + (Symbol.keyFor zone) + ")"
-                              "yyyy-MM-dd HH:mm:ss (z)"
-                              #{"setZone" true})
+datetime date time zone = {
+  luxon.DateTime.fromFormat(
+    date + " " + time + " (" + (Symbol.keyFor zone) + ")",
+    "yyyy-MM-dd HH:mm:ss (z)",
+    #{"setZone" true}
+  )
+}
