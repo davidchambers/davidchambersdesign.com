@@ -33,7 +33,7 @@ code-block language source-code = {
     (s:from-maybe line
                   (s:chain (s:strip-prefix _ line)
                            (s:map (x -> x.match)
-                                  (s:chain (s:match (s:regex "" "^[ ]*"))
+                                  (s:chain (s:match (new RegExp "^[ ]*" ""))
                                            (s:head lines)))));
   (pre (code (text (s:unlines (s:map trim-leading-spaces lines)))))
 }
@@ -68,6 +68,6 @@ uncaptioned-image src alt =
 update datetime body =
   (div #{:class "update"}
      (s:prepend (h4 #["Update \u2014 "
-                      (time #{:datetime (.toISO datetime)}
-                         (.toFormat "d MMMM y" datetime))])
+                      (time #{:datetime ,(datetime.toISO)}
+                         ,(datetime.toFormat "d MMMM y"))])
                 (canonicalize-children body)))

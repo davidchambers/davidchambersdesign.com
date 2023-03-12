@@ -113,7 +113,7 @@ const _code$002Dblock = function _code$002Dblock(language) {
   return _source$002Dcode => (() => {
     const lines = s[Symbol.for('from-maybe')]([])(s[Symbol.for('chain')](s[Symbol.for('init')])(s[Symbol.for('tail')](s[Symbol.for('lines')](_source$002Dcode))));
     const _trim$002Dleading$002Dspaces = function _trim$002Dleading$002Dspaces(line) {
-      return s[Symbol.for('from-maybe')](line)(s[Symbol.for('chain')]($1 => s[Symbol.for('strip-prefix')]($1)(line))(s[Symbol.for('map')](x => x['match'])(s[Symbol.for('chain')](s[Symbol.for('match')](s[Symbol.for('regex')]('')('^[ ]*')))(s[Symbol.for('head')](lines)))));
+      return s[Symbol.for('from-maybe')](line)(s[Symbol.for('chain')]($1 => s[Symbol.for('strip-prefix')]($1)(line))(s[Symbol.for('map')](x => x['match'])(s[Symbol.for('chain')](s[Symbol.for('match')](new RegExp('^[ ]*', '')))(s[Symbol.for('head')](lines)))));
     };
     return pre(code(text(s[Symbol.for('unlines')](s[Symbol.for('map')](_trim$002Dleading$002Dspaces)(lines)))));
   })();

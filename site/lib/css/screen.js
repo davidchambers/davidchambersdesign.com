@@ -1,6 +1,6 @@
 import s from '../sanctuary.js';
 const _$0027 = function _$0027(text) {
-  return '\'' + text['replace'](s[Symbol.for('regex')]('g')('(?=\')'), '\\') + '\'';
+  return '\'' + text['replace'](new RegExp('(?=\')', 'g'), '\\') + '\'';
 };
 const base03 = '#002b36';
 const base02 = '#073642';
@@ -55,18 +55,18 @@ const screen = function screen(coerce) {
       $1 => $1 * 5,
       $1 => 247 - $1,
       Math['floor'],
-      $object => $object['toString'](16),
-      $object => $object['padStart'](2, '0'),
-      $object => $object['repeat'](3),
+      $0 => $0['toString'](16),
+      $0 => $0['padStart'](2, '0'),
+      $0 => $0['repeat'](3),
       $1 => '#' + $1
     ]);
     const _tag$002Dcolor = s[Symbol.for('pipe')]([
       Math['log2'],
       $1 => $1 * 0.1,
       $1 => $1 + 0.3,
-      $object => $object['toFixed'](3),
-      $object => $object['replace'](s[Symbol.for('regex')]('')('0*$'), ''),
-      $object => $object['replace'](s[Symbol.for('regex')]('')('[.]$'), ''),
+      $0 => $0['toFixed'](3),
+      $0 => $0['replace'](new RegExp('0*$', ''), ''),
+      $0 => $0['replace'](new RegExp('[.]$', ''), ''),
       rgba(0)(0)(0)
     ]);
     return s[Symbol.for('join')]([

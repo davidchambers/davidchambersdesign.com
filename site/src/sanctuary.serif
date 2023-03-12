@@ -2,12 +2,10 @@ import sanctuary from "sanctuary";
 
 export default default;
 
-kebab-case = (.replace (new RegExp "(?!\\b)[A-Z0-9]" "g")
-                       (c -> "-" + (.toLowerCase c))
-                       _)
+kebab-case = ,(_.replace (new RegExp "(?!\\b)[A-Z0-9]" "g")
+                         (c -> "-" + ,(c.toLowerCase)))
 
-prime = (.replace "_" "'" _)
+prime = ,(_.replaceAll "_" "'")
 
 default =
-  (Object.fromEntries (.map (entry -> #[(Symbol.for (prime (kebab-case entry[0]))) entry[1]])
-                            (Object.entries sanctuary.unchecked)))
+  (Object.fromEntries ((Object.entries sanctuary.unchecked).map (entry -> #[(Symbol.for (prime (kebab-case entry[0]))) entry[1]])))

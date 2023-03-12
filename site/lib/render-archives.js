@@ -102,7 +102,7 @@ const _render$002Darchives = s[Symbol.for('pipe')]([
   s[Symbol.for('map')](s[Symbol.for('join')](s[Symbol.for('Pair')])),
   s[Symbol.for('map')](s[Symbol.for('map-left')](post => post[Symbol.for('datetime')])),
   s[Symbol.for('sort-by')](s[Symbol.for('compose')](s[Symbol.for('compose')](s[Symbol.for('negate')])(Number))(s[Symbol.for('fst')])),
-  s[Symbol.for('map')](s[Symbol.for('map-left')]($object => $object['toFormat']('MMMM y'))),
+  s[Symbol.for('map')](s[Symbol.for('map-left')]($0 => $0['toFormat']('MMMM y'))),
   s[Symbol.for('group-by')](s[Symbol.for('on')](s[Symbol.for('equals')])(s[Symbol.for('fst')])),
   s[Symbol.for('chain')](s[Symbol.for('array')]([])(head => tail => [{
       [Symbol.for('heading')]: s[Symbol.for('fst')](head),

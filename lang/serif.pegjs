@@ -130,6 +130,7 @@ IdentChar
     !'\u0022' // QUOTATION MARK
     !'\u0028' // LEFT PARENTHESIS
     !'\u0029' // RIGHT PARENTHESIS
+    !'\u002C' // COMMA
     !'\u002E' // FULL STOP
     !'\u003A' // COLON
     !'\u003B' // SEMICOLON
@@ -159,8 +160,8 @@ Expression
   / Identifier
   / Lambda
   / New
-  / Invocation
   / Application
+  / CallExpression_
 
 Boolean
   = 'true'  { return Serif.Boolean(true); }
@@ -256,8 +257,8 @@ PrimaryExpression
   / Identifier
   / BlockExpression
   / New
-  / Invocation
   / Application
+  / CallExpression_
 
 CallExpression
   = MemberExpression
@@ -478,21 +479,21 @@ Placeholder
 New
   = '('
     Separator* 'new'
-    Separator+ callee:(Placeholder / Expression)
-    args:(Separator+ arg:(Placeholder / Expression) { return arg; })*
+    Separator+ callee:Expression
+    args:(Separator+ arg:Expression { return arg; })*
     Separator* ')'
     { return Serif.New(callee, args); }
 
-Invocation
-  = '('
-    Separator* '.' name:(ident:Identifier { return ident.name; })
-    args:(Separator+ arg:(Placeholder / Expression) { return arg; })+
-    Separator* ')'
-    { return Serif.Invocation(name, args.pop(), args); }
-
 Application
   = '('
-    Separator* callee:(Placeholder / Expression)
-    args:(Separator+ arg:(Placeholder / SpreadElement / Expression) { return arg; })+
+    Separator* callee:Expression
+    args:(Separator+ arg:(SpreadElement / Expression) { return arg; })+
     Separator* ')'
     { return Serif.Application(callee, args); }
+
+CallExpression_
+  = ',('
+    Separator* callee:Expression
+    args:(Separator+ arg:(SpreadElement / Expression) { return arg; })*
+    Separator* ')'
+    { return Serif.CallExpression_(callee, args); }

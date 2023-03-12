@@ -93,9 +93,9 @@ export {
 };
 
 escape =
-  (s:pipe #[(.replace (s:regex "g" "&") "&amp;" _)
-            (.replace (s:regex "g" "<") "&lt;" _)
-            (.replace (s:regex "g" ">") "&gt;" _)])
+  (s:pipe #[,(_.replaceAll "&" "&amp;")
+            ,(_.replaceAll "<" "&lt;")
+            ,(_.replaceAll ">" "&gt;")])
 
 text value =
   #{:text #[value]
@@ -112,11 +112,12 @@ canonicalize-attrs attrs =
 canonicalize-children =
   (s:compose (s:map (child -> {
                        if typeof child == "string" then {
-                         (text (.replace (s:regex "g" " -- ")
-                                         "\u2009\u2014\u2009"
-                                         (s:fold-map String
-                                                     (.replace (s:regex "" "^[ ]+") " " _)
-                                                     (s:lines child))))
+                         (s:pipe #[
+                           ,(_.replace (new RegExp "^[ ]+" "gm") " ")
+                           ,(_.replaceAll "\n" "")
+                           ,(_.replaceAll " -- " "\u2009\u2014\u2009")
+                           text
+                         ] child)
                        } else {
                          child
                        }
@@ -124,7 +125,7 @@ canonicalize-children =
              (s:unless Array.isArray Array.of))
 
 render-block-element tag-name attrs children indent level -inline = {
-  (.repeat level indent)
+  ,(indent.repeat level)
   + "<"
   + (Symbol.keyFor tag-name)
   + (s:fold-map String
@@ -137,14 +138,14 @@ render-block-element tag-name attrs children indent level -inline = {
                 (Object.getOwnPropertySymbols attrs))
   + ">\n"
   + (s:fold-map String (child -> (child:render indent {level + 1} false)) children)
-  + (.repeat level indent)
+  + ,(indent.repeat level)
   + "</"
   + (Symbol.keyFor tag-name)
   + ">\n"
 }
 
 render-inline-element tag-name attrs children indent level inline = {
-  (.repeat level indent)
+  ,(indent.repeat level)
   + "<"
   + (Symbol.keyFor tag-name)
   + (s:fold-map String
@@ -164,7 +165,7 @@ render-inline-element tag-name attrs children indent level inline = {
 }
 
 render-self-closing-element tag-name attrs indent level inline = {
-  (.repeat level indent)
+  ,(indent.repeat level)
   + "<"
   + (Symbol.keyFor tag-name)
   + (s:fold-map String

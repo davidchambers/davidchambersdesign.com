@@ -1,8 +1,8 @@
 import s from './sanctuary.js';
 const escape = s[Symbol.for('pipe')]([
-  $object => $object['replace'](s[Symbol.for('regex')]('g')('&'), '&amp;'),
-  $object => $object['replace'](s[Symbol.for('regex')]('g')('<'), '&lt;'),
-  $object => $object['replace'](s[Symbol.for('regex')]('g')('>'), '&gt;')
+  $0 => $0['replaceAll']('&', '&amp;'),
+  $0 => $0['replaceAll']('<', '&lt;'),
+  $0 => $0['replaceAll']('>', '&gt;')
 ]);
 const text = function text(value) {
   return {
@@ -19,7 +19,12 @@ const _canonicalize$002Dattrs = function _canonicalize$002Dattrs(attrs) {
     ];
   })())(Object['getOwnPropertySymbols'](attrs)));
 };
-const _canonicalize$002Dchildren = s[Symbol.for('compose')](s[Symbol.for('map')](child => typeof child == 'string' ? text(s[Symbol.for('fold-map')](String)($object => $object['replace'](s[Symbol.for('regex')]('')('^[ ]+'), ' '))(s[Symbol.for('lines')](child))['replace'](s[Symbol.for('regex')]('g')(' -- '), '\u2009\u2014\u2009')) : child))(s[Symbol.for('unless')](Array['isArray'])(Array['of']));
+const _canonicalize$002Dchildren = s[Symbol.for('compose')](s[Symbol.for('map')](child => typeof child == 'string' ? s[Symbol.for('pipe')]([
+  $0 => $0['replace'](new RegExp('^[ ]+', 'gm'), ' '),
+  $0 => $0['replaceAll']('\n', ''),
+  $0 => $0['replaceAll'](' -- ', '\u2009\u2014\u2009'),
+  text
+])(child) : child))(s[Symbol.for('unless')](Array['isArray'])(Array['of']));
 const _render$002Dblock$002Delement = function _render$002Dblock$002Delement(_tag$002Dname) {
   return attrs => children => indent => level => _$002Dinline => indent['repeat'](level) + '<' + Symbol['keyFor'](_tag$002Dname) + s[Symbol.for('fold-map')](String)(sym => ' ' + Symbol['keyFor'](sym) + '="' + escape(s[Symbol.for('unwords')](s[Symbol.for('map')](s[Symbol.for('trim')])(s[Symbol.for('lines')](attrs[sym])))) + '"')(Object['getOwnPropertySymbols'](attrs)) + '>\n' + s[Symbol.for('fold-map')](String)(child => child[Symbol.for('render')](indent)(level + 1)(false))(children) + indent['repeat'](level) + '</' + Symbol['keyFor'](_tag$002Dname) + '>\n';
 };

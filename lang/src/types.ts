@@ -578,24 +578,6 @@ export const New = (
   arguments: args,
 });
 
-export interface Invocation {
-  readonly type: 'invocation';
-  readonly name: string;
-  readonly object: Expression;
-  readonly arguments: ReadonlyArray<Expression>;
-}
-
-export const Invocation = (
-  name: string,
-  object: Expression,
-  args: ReadonlyArray<Expression>,
-): Invocation => ({
-  type: 'invocation',
-  name,
-  object,
-  arguments: args,
-});
-
 export interface Application {
   readonly type: 'application';
   readonly callee: Expression;
@@ -607,6 +589,21 @@ export const Application = (
   args: ReadonlyArray<Expression>,
 ): Application => ({
   type: 'application',
+  callee,
+  arguments: args,
+});
+
+export interface CallExpression_ {
+  readonly type: 'CallExpression_';
+  readonly callee: Expression;
+  readonly arguments: ReadonlyArray<SpreadElement | Expression>;
+}
+
+export const CallExpression_ = (
+  callee: Expression,
+  args: ReadonlyArray<Expression>,
+): CallExpression_ => ({
+  type: 'CallExpression_',
   callee,
   arguments: args,
 });
@@ -629,8 +626,8 @@ export type Expression =
   | LogicalExpression
   | ConditionalExpression
   | New
-  | Invocation
   | Application
+  | CallExpression_
 
 interface _ImportDeclarationBase {
   readonly type: 'ImportDeclaration';
