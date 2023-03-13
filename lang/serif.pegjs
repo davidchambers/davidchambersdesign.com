@@ -7,7 +7,7 @@ Module
       { return [head, ...tail]; }
     )?
     Separator*
-  { return Serif.Module([...imports, ...(statements ?? []), ...exports]); }
+    { return Serif.Module([...imports, ...(statements ?? []), ...exports]); }
 
 ImportSpecifier
   = local:Identifier
@@ -73,69 +73,74 @@ ExportNamedDeclaration
     Separator* ';'
     { return Serif.ExportNamedDeclaration(specifiers ?? []); }
 
-Statement
-  = Declaration
-  / ExpressionStatement
+BooleanLiteral
+  = 'true'  { return Serif.BooleanLiteral(true); }
+  / 'false' { return Serif.BooleanLiteral(false); }
 
-Declaration
-  = VariableDeclaration
-  / FunctionDeclaration
+NumberLiteral
+  = BinaryNumber
+  / OctalNumber
+  / HexadecimalNumber
+  / DecimalNumber
 
-VariableDeclaration
-  = name:(ident:Identifier { return ident.name; })
-    Separator+ '='
-    Separator+ expression:Expression
-  { return Serif.VariableDeclaration(name, expression); }
+BinaryNumber
+  = '0' 'b' digits:$([0-1])+
+    { return Serif.NumberLiteral(parseInt(digits, 2)); }
 
-FunctionDeclaration
-  = name:(ident:Identifier { return ident.name; })
-    parameterNames:(Separator+ ident:Identifier { return ident.name; })*
-    Separator+ '='
-    Separator+ body:Expression
-  { return Serif.FunctionDeclaration(name, parameterNames, body); }
+OctalNumber
+  = '0' 'o' digits:$([0-7])+
+    { return Serif.NumberLiteral(parseInt(digits, 8)); }
 
-ExpressionStatement
-  = expression:Expression
-  { return Serif.ExpressionStatement(expression); }
+HexadecimalNumber
+  = '0' 'x' digits:$([0-9A-F])+
+    { return Serif.NumberLiteral(parseInt(digits, 16)); }
 
-LineTerminator
-  = '\u000A' // LINE FEED (LF)
-  / '\u000D' // CARRIAGE RETURN (CR)
-  / '\u2028' // LINE SEPARATOR
-  / '\u2029' // PARAGRAPH SEPARATOR
+DecimalNumber
+  = ('-' / '+')?
+    ('0' / ([1-9] [0-9]*))
+    ('.' [0-9]+)?
+    { return Serif.NumberLiteral(parseFloat(text())); }
 
-Whitespace
-  = LineTerminator
-  / '\u0009' // CHARACTER TABULATION
-  / '\u000B' // LINE TABULATION
-  / '\u000C' // FORM FEED (FF)
-  / '\u0020' // SPACE
-  / '\u00A0' // NO-BREAK SPACE
-  / '\u1680' // OGHAM SPACE MARK
-  / '\u2000' // EN QUAD
-  / '\u2001' // EM QUAD
-  / '\u2002' // EN SPACE
-  / '\u2003' // EM SPACE
-  / '\u2004' // THREE-PER-EM SPACE
-  / '\u2005' // FOUR-PER-EM SPACE
-  / '\u2006' // SIX-PER-EM SPACE
-  / '\u2007' // FIGURE SPACE
-  / '\u2008' // PUNCTUATION SPACE
-  / '\u2009' // THIN SPACE
-  / '\u200A' // HAIR SPACE
-  / '\u202F' // NARROW NO-BREAK SPACE
-  / '\u205F' // MEDIUM MATHEMATICAL SPACE
-  / '\u3000' // IDEOGRAPHIC SPACE
-  / '\uFEFF' // BYTE ORDER MARK
+StringLiteral
+  = '"' chars:StringChar* '"'
+    { return Serif.StringLiteral(chars.join('')); }
 
-Comment
-  = ';;' (!LineTerminator .)*
+StringChar
+  = '\\' '"'  { return '"'; }
+  / '\\' '\\' { return '\\'; }
+  / '\\' 'b'  { return '\b'; }
+  / '\\' 'f'  { return '\f'; }
+  / '\\' 'n'  { return '\n'; }
+  / '\\' 'r'  { return '\r'; }
+  / '\\' 't'  { return '\t'; }
+  / '\\' 'u' digits:$([0-9A-F] [0-9A-F] [0-9A-F] [0-9A-F])
+              { return String.fromCharCode(parseInt(digits, 16)); }
+  / '\\'      { expected('valid escape sequence'); }
+  / [^"]
 
-Separator
-  = Whitespace
-  / Comment
+SymbolLiteral
+  = ':' name:$(SymbolChar)+
+    { return Serif.SymbolLiteral(name); }
 
-IdentChar
+SymbolChar
+  = !Whitespace
+    !'\u0022' // QUOTATION MARK
+    !'\u0028' // LEFT PARENTHESIS
+    !'\u0029' // RIGHT PARENTHESIS
+    !'\u002E' // FULL STOP
+    !'\u003A' // COLON
+    !'\u003B' // SEMICOLON
+    !'\u005B' // LEFT SQUARE BRACKET
+    !'\u005D' // RIGHT SQUARE BRACKET
+    !'\u007B' // LEFT CURLY BRACKET
+    !'\u007D' // RIGHT CURLY BRACKET
+    .
+
+Identifier
+  = name:$(IdentifierChar)+
+    { return Serif.Identifier(name); }
+
+IdentifierChar
   = !Whitespace
     !'\u0022' // QUOTATION MARK
     !'\u0028' // LEFT PARENTHESIS
@@ -152,78 +157,33 @@ IdentChar
     !'\u007D' // RIGHT CURLY BRACKET
     .
 
-SymbolChar
-  = !Whitespace
-    !'\u0022' // QUOTATION MARK
-    !'\u0028' // LEFT PARENTHESIS
-    !'\u0029' // RIGHT PARENTHESIS
-    !'\u002E' // FULL STOP
-    !'\u003A' // COLON
-    !'\u003B' // SEMICOLON
-    !'\u005B' // LEFT SQUARE BRACKET
-    !'\u005D' // RIGHT SQUARE BRACKET
-    !'\u007B' // LEFT CURLY BRACKET
-    !'\u007D' // RIGHT CURLY BRACKET
-    .
+ArrayExpression
+  = '#['
+    elements:(
+      head:(Separator* element:(SpreadElement / Expression) { return element; })
+      tail:(Separator+ element:(SpreadElement / Expression) { return element; })*
+      { return [head, ...tail]; }
+    )?
+    Separator* ']'
+    { return Serif.ArrayExpression(elements ?? []); }
 
-Expression
-  = ConditionalExpression
-  / Identifier
-  / NewExpression
-  / Application
+ObjectExpression
+  = '#{'
+    properties:(
+      head:(Separator* property:(SpreadElement / Property) { return property; })
+      tail:(Separator+ property:(SpreadElement / Property) { return property; })*
+      { return [head, ...tail]; }
+    )?
+    Separator* '}'
+    { return Serif.ObjectExpression(properties ?? []); }
 
-BooleanLiteral
-  = 'true'  { return Serif.BooleanLiteral(true); }
-  / 'false' { return Serif.BooleanLiteral(false); }
-
-NumberLiteral
-  = BinaryNumber
-  / OctalNumber
-  / HexadecimalNumber
-  / DecimalNumber
-
-BinaryNumber
-  = '0' 'b' digits:$([0-1])+
-  { return Serif.NumberLiteral(parseInt(digits, 2)); }
-
-OctalNumber
-  = '0' 'o' digits:$([0-7])+
-  { return Serif.NumberLiteral(parseInt(digits, 8)); }
-
-HexadecimalNumber
-  = '0' 'x' digits:$([0-9A-F])+
-  { return Serif.NumberLiteral(parseInt(digits, 16)); }
-
-DecimalNumber
-  = ('-' / '+')?
-    ('0' / ([1-9] [0-9]*))
-    ('.' [0-9]+)?
-  { return Serif.NumberLiteral(parseFloat(text())); }
-
-StringLiteral
-  = '"' chars:Char* '"'
-  { return Serif.StringLiteral(chars.join('')); }
-
-Char
-  = '\\' '"'  { return '"'; }
-  / '\\' '\\' { return '\\'; }
-  / '\\' 'b'  { return '\b'; }
-  / '\\' 'f'  { return '\f'; }
-  / '\\' 'n'  { return '\n'; }
-  / '\\' 'r'  { return '\r'; }
-  / '\\' 't'  { return '\t'; }
-  / '\\' 'u' digits:$([0-9A-F] [0-9A-F] [0-9A-F] [0-9A-F])
-              { return String.fromCharCode(parseInt(digits, 16)); }
-  / '\\'      { expected('valid escape sequence'); }
-  / [^"]
-
-SymbolLiteral
-  = ':' name:$(SymbolChar)+
-  { return Serif.SymbolLiteral(name); }
+Property
+  = key:Expression Separator+ value:Expression
+    { return Serif.Property(key, value); }
 
 ImportMeta
   = meta:'import' '.' property:'meta'
-  { return Serif.MetaProperty(meta, property); }
+    { return Serif.MetaProperty(meta, property); }
 
 MemberExpression
   = object:PrimaryExpression
@@ -234,31 +194,39 @@ MemberExpression
     )*
     { return properties.reduce(Serif.MemberExpression, object); }
 
-Identifier
-  = !'->' name:$(IdentChar)+
-  { return Serif.Identifier(name); }
+CallExpression
+  = head:MemberExpression
+    tail:(
+        Separator* args:Arguments                         { return expr => Serif.CallExpression(expr, args); }
+      / symbol:SymbolLiteral                              { return expr => Serif.MemberExpression(expr, symbol); }
+      / '.' ident:Identifier                              { return expr => Serif.MemberExpression(expr, Serif.StringLiteral(ident.name)); }
+      / '[' Separator* property:Expression Separator* ']' { return expr => Serif.MemberExpression(expr, property); }
+    )*
+    { return tail.reduce((expr, wrap) => wrap(expr), head); }
 
-BlockExpression
-  = '{' Separator* statements:BlockExpressionStatements Separator* '}' { return Serif.BlockExpression(statements); }
-  / '[' Separator* statements:BlockExpressionStatements Separator* ']' { return Serif.BlockExpression(statements); }
-
-BlockExpressionStatements
-  = head:Statement
-    tail:(Separator* ';' Separator* statement:Statement { return statement; })*
+Arguments
+  = '(' Separator* ')'
+    { return []; }
+  / '(' Separator*
+    head:ConditionalExpression
+    tail:(Separator* ',' Separator* argument:ConditionalExpression { return argument; })*
+    Separator* ')'
     { return [head, ...tail]; }
 
-PrimaryExpression
-  = BooleanLiteral
-  / NumberLiteral
-  / StringLiteral
-  / SymbolLiteral
-  / ArrayExpression
-  / ObjectExpression
-  / ImportMeta
-  / Identifier
-  / BlockExpression
-  / NewExpression
-  / Application
+NewExpression
+  = '('
+    Separator* 'new'
+    Separator+ callee:Expression
+    args:(Separator+ arg:Expression { return arg; })*
+    Separator* ')'
+    { return Serif.NewExpression(callee, args); }
+
+Application
+  = '('
+    Separator* callee:Expression
+    args:(Separator+ arg:(SpreadElement / Expression) { return arg; })+
+    Separator* ')'
+    { return Serif.Application(callee, args); }
 
 UnaryOperator
   = 'typeof'
@@ -444,64 +412,90 @@ ConditionalExpression
     { return Serif.ConditionalExpression(predicate, consequent, alternative); }
   / ArrowFunctionExpression
 
+BlockExpression
+  = '{' Separator* statements:BlockExpressionStatements Separator* '}' { return Serif.BlockExpression(statements); }
+  / '[' Separator* statements:BlockExpressionStatements Separator* ']' { return Serif.BlockExpression(statements); }
+
+BlockExpressionStatements
+  = head:Statement
+    tail:(Separator* ';' Separator* statement:Statement { return statement; })*
+    { return [head, ...tail]; }
+
+Statement
+  = VariableDeclaration
+  / FunctionDeclaration
+  / ExpressionStatement
+
+VariableDeclaration
+  = name:(ident:Identifier { return ident.name; })
+    Separator+ '='
+    Separator+ expression:Expression
+    { return Serif.VariableDeclaration(name, expression); }
+
+FunctionDeclaration
+  = name:(ident:Identifier { return ident.name; })
+    parameterNames:(Separator+ ident:Identifier { return ident.name; })+
+    Separator+ '='
+    Separator+ body:Expression
+    { return Serif.FunctionDeclaration(name, parameterNames, body); }
+
+ExpressionStatement
+  = expression:Expression
+    { return Serif.ExpressionStatement(expression); }
+
 SpreadElement
   = '...' argument:Expression
     { return Serif.SpreadElement(argument); }
 
-ArrayExpression
-  = '#['
-    elements:(
-      head:(Separator* element:(SpreadElement / Expression) { return element; })
-      tail:(Separator+ element:(SpreadElement / Expression) { return element; })*
-      { return [head, ...tail]; }
-    )?
-    Separator* ']'
-    { return Serif.ArrayExpression(elements ?? []); }
+LineTerminator
+  = '\u000A' // LINE FEED (LF)
+  / '\u000D' // CARRIAGE RETURN (CR)
+  / '\u2028' // LINE SEPARATOR
+  / '\u2029' // PARAGRAPH SEPARATOR
 
-Property
-  = key:Expression Separator+ value:Expression
-    { return Serif.Property(key, value); }
+Whitespace
+  = LineTerminator
+  / '\u0009' // CHARACTER TABULATION
+  / '\u000B' // LINE TABULATION
+  / '\u000C' // FORM FEED (FF)
+  / '\u0020' // SPACE
+  / '\u00A0' // NO-BREAK SPACE
+  / '\u1680' // OGHAM SPACE MARK
+  / '\u2000' // EN QUAD
+  / '\u2001' // EM QUAD
+  / '\u2002' // EN SPACE
+  / '\u2003' // EM SPACE
+  / '\u2004' // THREE-PER-EM SPACE
+  / '\u2005' // FOUR-PER-EM SPACE
+  / '\u2006' // SIX-PER-EM SPACE
+  / '\u2007' // FIGURE SPACE
+  / '\u2008' // PUNCTUATION SPACE
+  / '\u2009' // THIN SPACE
+  / '\u200A' // HAIR SPACE
+  / '\u202F' // NARROW NO-BREAK SPACE
+  / '\u205F' // MEDIUM MATHEMATICAL SPACE
+  / '\u3000' // IDEOGRAPHIC SPACE
+  / '\uFEFF' // BYTE ORDER MARK
 
-ObjectExpression
-  = '#{'
-    properties:(
-      head:(Separator* property:(SpreadElement / Property) { return property; })
-      tail:(Separator+ property:(SpreadElement / Property) { return property; })*
-      { return [head, ...tail]; }
-    )?
-    Separator* '}'
-    { return Serif.ObjectExpression(properties ?? []); }
+Comment
+  = ';;' (!LineTerminator .)*
 
-NewExpression
-  = '('
-    Separator* 'new'
-    Separator+ callee:Expression
-    args:(Separator+ arg:Expression { return arg; })*
-    Separator* ')'
-    { return Serif.NewExpression(callee, args); }
+Separator
+  = Whitespace
+  / Comment
 
-Application
-  = '('
-    Separator* callee:Expression
-    args:(Separator+ arg:(SpreadElement / Expression) { return arg; })+
-    Separator* ')'
-    { return Serif.Application(callee, args); }
+Expression
+  = ConditionalExpression
 
-Arguments
-  = '(' Separator* ')'
-    { return []; }
-  / '(' Separator*
-    head:ConditionalExpression
-    tail:(Separator* ',' Separator* argument:ConditionalExpression { return argument; })*
-    Separator* ')'
-    { return [head, ...tail]; }
-
-CallExpression
-  = head:MemberExpression
-    tail:(
-        Separator* args:Arguments                         { return expr => Serif.CallExpression(expr, args); }
-      / symbol:SymbolLiteral                              { return expr => Serif.MemberExpression(expr, symbol); }
-      / '.' ident:Identifier                              { return expr => Serif.MemberExpression(expr, Serif.StringLiteral(ident.name)); }
-      / '[' Separator* property:Expression Separator* ']' { return expr => Serif.MemberExpression(expr, property); }
-    )*
-    { return tail.reduce((expr, wrap) => wrap(expr), head); }
+PrimaryExpression
+  = BooleanLiteral
+  / NumberLiteral
+  / StringLiteral
+  / SymbolLiteral
+  / ArrayExpression
+  / ObjectExpression
+  / ImportMeta
+  / Identifier
+  / BlockExpression
+  / NewExpression
+  / Application
