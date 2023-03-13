@@ -718,23 +718,42 @@ export const ExportDefaultDeclaration = (
   declaration,
 });
 
-export interface Declaration {
-  readonly type: 'Declaration';
+export interface VariableDeclaration {
+  readonly type: 'VariableDeclaration';
   readonly name: string;
-  readonly parameterNames: ReadonlyArray<string>;
   readonly expression: Expression;
 }
 
-export const Declaration = (
+export const VariableDeclaration = (
   name: string,
-  parameterNames: ReadonlyArray<string>,
   expression: Expression,
-): Declaration => ({
-  type: 'Declaration',
+): VariableDeclaration => ({
+  type: 'VariableDeclaration',
   name,
-  parameterNames,
   expression,
 });
+
+export interface FunctionDeclaration {
+  readonly type: 'FunctionDeclaration';
+  readonly name: string;
+  readonly parameterNames: ReadonlyNonEmptyArray<string>;
+  readonly body: Expression;
+}
+
+export const FunctionDeclaration = (
+  name: string,
+  parameterNames: ReadonlyNonEmptyArray<string>,
+  body: Expression,
+): FunctionDeclaration => ({
+  type: 'FunctionDeclaration',
+  name,
+  parameterNames,
+  body,
+});
+
+export type Declaration =
+  | VariableDeclaration
+  | FunctionDeclaration
 
 export interface ExpressionStatement {
   readonly type: 'ExpressionStatement';

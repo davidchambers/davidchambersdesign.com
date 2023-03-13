@@ -78,11 +78,21 @@ Statement
   / ExpressionStatement
 
 Declaration
+  = VariableDeclaration
+  / FunctionDeclaration
+
+VariableDeclaration
   = name:(ident:Identifier { return ident.name; })
-    parameterNames:(Separator+ !'=' ident:Identifier { return ident.name; })*
     Separator+ '='
     Separator+ expression:Expression
-  { return Serif.Declaration(name, parameterNames, expression); }
+  { return Serif.VariableDeclaration(name, expression); }
+
+FunctionDeclaration
+  = name:(ident:Identifier { return ident.name; })
+    parameterNames:(Separator+ ident:Identifier { return ident.name; })*
+    Separator+ '='
+    Separator+ body:Expression
+  { return Serif.FunctionDeclaration(name, parameterNames, body); }
 
 ExpressionStatement
   = expression:Expression

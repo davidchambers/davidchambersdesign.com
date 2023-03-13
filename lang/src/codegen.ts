@@ -105,7 +105,8 @@ const esFromArrowFunctionExpression = (arrowFunctionExpression: Serif.ArrowFunct
 const esFromStatement = (statement: Serif.Statement): ES.ExpressionStatement | ES.VariableDeclaration => {
   switch (statement.type) {
     case 'ExpressionStatement': return esFromExpressionStatement(statement);
-    case 'Declaration':         return esFromDeclaration(statement);
+    case 'VariableDeclaration': return esFromVariableDeclaration(statement);
+    case 'FunctionDeclaration': return esFromFunctionDeclaration(statement);
   }
 };
 
@@ -119,7 +120,7 @@ const esFromBlockExpression = (blockExpression: Serif.BlockExpression): ES.Expre
     ES.ArrowFunctionExpression(
       [],
       ES.BlockStatement(
-        last.type === 'Declaration'
+        last.type !== 'ExpressionStatement'
         ? [...blockExpression.statements.map(esFromStatement), ES.ReturnStatement(esFromIdentifierName(last.name))]
         : [...blockExpression.statements.slice(0, -1).map(esFromStatement), ES.ReturnStatement(esFromExpression(last.expression))]
       )
@@ -189,22 +190,24 @@ const esFromCallExpression = (callExpression: Serif.CallExpression): ES.Expressi
   )
 );
 
-const esFromDeclaration = (declaration: Serif.Declaration): ES.VariableDeclaration => (
-  declaration.parameterNames.length === 0 ?
+const esFromVariableDeclaration = (variableDeclaration: Serif.VariableDeclaration): ES.VariableDeclaration => (
   ES.VariableDeclaration([
     ES.VariableDeclarator(
-      esFromIdentifierName(declaration.name),
-      esFromExpression(declaration.expression),
+      esFromIdentifierName(variableDeclaration.name),
+      esFromExpression(variableDeclaration.expression),
     ),
-  ]) :
+  ])
+);
+
+const esFromFunctionDeclaration = (functionDeclaration: Serif.FunctionDeclaration): ES.VariableDeclaration => (
   ES.VariableDeclaration([
     ES.VariableDeclarator(
-      esFromIdentifierName(declaration.name),
+      esFromIdentifierName(functionDeclaration.name),
       ES.ArrowFunctionExpression(
-        declaration.parameterNames.slice(0, 1).map(esFromIdentifierName),
-        ES.BlockStatement([ES.ReturnStatement(declaration.parameterNames.slice(1).reduceRight(
+        functionDeclaration.parameterNames.slice(0, 1).map(esFromIdentifierName),
+        ES.BlockStatement([ES.ReturnStatement(functionDeclaration.parameterNames.slice(1).reduceRight(
           (body, name) => ES.ArrowFunctionExpression([esFromIdentifierName(name)], body),
-          esFromExpression(declaration.expression)
+          esFromExpression(functionDeclaration.body)
         ))]),
       ),
     ),
@@ -285,7 +288,8 @@ export async function toModule(
               esFromExpression(statement.declaration)
             );
           }
-          case 'Declaration':
+          case 'VariableDeclaration':
+          case 'FunctionDeclaration':
           case 'ExpressionStatement': {
             return esFromStatement(statement);
           }
