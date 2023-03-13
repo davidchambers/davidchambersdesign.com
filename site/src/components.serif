@@ -31,7 +31,7 @@ code-block language source-code = {
     (s:from-maybe #[] (s:chain s:init (s:tail (s:lines source-code))));
   trim-leading-spaces line =
     (s:from-maybe line
-                  (s:chain (s:strip-prefix _ line)
+                  (s:chain prefix => (s:strip-prefix prefix line)
                            (s:map x => x.match
                                   (s:chain (s:match (new RegExp "^[ ]*" ""))
                                            (s:head lines)))));

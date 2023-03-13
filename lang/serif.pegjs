@@ -238,8 +238,7 @@ BlockExpressionStatements
     { return [head, ...tail]; }
 
 PrimaryExpression
-  = Placeholder
-  / Boolean
+  = Boolean
   / Number
   / String
   / Symbol
@@ -462,10 +461,6 @@ Object
     )?
     Separator* '}'
     { return Serif.Object(properties ?? []); }
-
-Placeholder
-  = '_'
-  { return Serif.Placeholder; }
 
 New
   = '('

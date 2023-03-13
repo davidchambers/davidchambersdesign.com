@@ -171,7 +171,6 @@ export const BlockExpression = (
 });
 
 export type PrimaryExpression =
-  | Placeholder
   | Identifier
   | Boolean
   | Number
@@ -552,14 +551,6 @@ export const ConditionalExpression = (
   alternative,
 });
 
-export interface Placeholder {
-  readonly type: 'placeholder';
-}
-
-export const Placeholder: Placeholder = {
-  type: 'placeholder',
-};
-
 export interface New {
   readonly type: 'new';
   readonly callee: Expression;
@@ -606,7 +597,6 @@ export const CallExpression = (
 });
 
 export type Expression =
-  | Placeholder
   | Boolean
   | Number
   | String

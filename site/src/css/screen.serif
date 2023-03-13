@@ -39,19 +39,19 @@ screen coerce = {
 
   tag-background = (s:pipe #[
     Math.log2
-    _ * 5
-    247 - _
+    n => n * 5
+    n => 247 - n
     Math.floor
     n => n.toString(16)
     s => s.padStart(2, "0")
     s => s.repeat(3)
-    "#" + _
+    s => "#" + s
   ]);
 
   tag-color = (s:pipe #[
     Math.log2
-    _ * 0.1
-    _ + 0.3
+    n => n * 0.1
+    n => n + 0.3
     n => n.toFixed(3)
     s => s.replace((new RegExp "0*$" ""), "")
     s => s.replace((new RegExp "[.]$" ""), "")

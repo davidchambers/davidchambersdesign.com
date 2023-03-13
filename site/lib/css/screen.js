@@ -52,18 +52,18 @@ const screen = function screen(coerce) {
     };
     const _tag$002Dbackground = s[Symbol.for('pipe')]([
       Math['log2'],
-      $1 => $1 * 5,
-      $1 => 247 - $1,
+      n => n * 5,
+      n => 247 - n,
       Math['floor'],
       n => n['toString'](16),
       s => s['padStart'](2, '0'),
       s => s['repeat'](3),
-      $1 => '#' + $1
+      s => '#' + s
     ]);
     const _tag$002Dcolor = s[Symbol.for('pipe')]([
       Math['log2'],
-      $1 => $1 * 0.1,
-      $1 => $1 + 0.3,
+      n => n * 0.1,
+      n => n + 0.3,
       n => n['toFixed'](3),
       s => s['replace'](new RegExp('0*$', ''), ''),
       s => s['replace'](new RegExp('[.]$', ''), ''),

@@ -23,7 +23,7 @@ split-every-2 xs =
 vendor-prefix unprefixed prefixed =
   (s:chain (s:pair k => v => {
                      if k === unprefixed then {
-                       (s:map (s:Pair _ v) (s:append unprefixed prefixed))
+                       #[...prefixed unprefixed].map(k => (s:Pair k v))
                      } else {
                        #[(s:Pair k v)]
                      }

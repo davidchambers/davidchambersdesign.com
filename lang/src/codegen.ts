@@ -67,19 +67,7 @@ const escape = (name: string): Escaped => (
   : '_' + name.replace(/[^a-z0-9]/gi, escapeChar) as Escaped
 );
 
-const prefix = (name: string): Escaped => (
-  '$' + name as Escaped
-);
-
 const Identifier = (name: Escaped): ES.Identifier => ({type: 'Identifier', name});
-
-const $callee = Identifier(prefix('callee'));
-const $object = Identifier(prefix('object'));
-
-const esFromPlaceholder = ({}: Serif.Placeholder): ES.ArrowFunctionExpression => {
-  const param = Identifier(prefix(String(1)));
-  return es.ArrowFunctionExpression([param], param);
-};
 
 const esFromBooleanLiteral = ({value}: Serif.Boolean): ES.Literal => (
   es.Literal(value)
@@ -113,68 +101,47 @@ const esFromMetaProperty = ({meta, property}: Serif.MetaProperty): ES.MetaProper
 const esFromMemberExpression = ({
   object,
   property,
-}: Serif.MemberExpression): ES.MemberExpression | ES.ArrowFunctionExpression => {
-  if (object === Serif.Placeholder) {
-    const param = Identifier(prefix(String(1)));
-    return es.ArrowFunctionExpression(
-      [param],
-      es.MemberExpression(param, esFromExpression(property), {computed: true})
-    );
-  }
-  return es.MemberExpression(
+}: Serif.MemberExpression): ES.MemberExpression => (
+  es.MemberExpression(
     esFromExpression(object),
     esFromExpression(property),
     {computed: true}
-  );
-};
+  )
+);
 
 const esFromIdentifier = ({name}: Serif.Identifier): ES.Identifier => (
   Identifier(escape(name))
 );
 
-const esFromArray = ({elements}: Serif.Array): ES.ArrayExpression | ES.ArrowFunctionExpression => {
-  const params: Array<ES.Identifier> = [];
-  const elements$ = elements.map(element => {
-    switch (element.type) {
-      case 'placeholder':     return params[params.length] = Identifier(prefix(String(params.length)));
-      case 'spread-element':  return es.SpreadElement(esFromExpression(element.argument));
-      default:                return esFromExpression(element);
-    }
-  });
-  return params.reduceRight<ES.ArrayExpression | ES.ArrowFunctionExpression>(
-    (body, param) => es.ArrowFunctionExpression([param], body),
-    es.ArrayExpression(elements$)
-  );
-};
+const esFromArray = ({elements}: Serif.Array): ES.ArrayExpression => (
+  es.ArrayExpression(
+    elements.map(element => {
+      switch (element.type) {
+        case 'spread-element':  return es.SpreadElement(esFromExpression(element.argument));
+        default:                return esFromExpression(element);
+      }
+    })
+  )
+);
 
-const esFromObject = ({properties}: Serif.Object): ES.ObjectExpression | ES.ArrowFunctionExpression => {;
-  const params: Array<ES.Identifier> = [];
-  const properties$ = properties.map(property => {
-    switch (property.type) {
-      case 'spread-element': {
-        return es.SpreadElement(esFromExpression(property.argument));
+const esFromObject = ({properties}: Serif.Object): ES.ObjectExpression => (
+  es.ObjectExpression(
+    properties.map(property => {
+      switch (property.type) {
+        case 'spread-element': {
+          return es.SpreadElement(esFromExpression(property.argument));
+        }
+        case 'property': {
+          return es.Property(
+            esFromExpression(property.key),
+            esFromExpression(property.value),
+            {computed: true}
+          );
+        }
       }
-      case 'property': {
-        const {key, value} = property;
-        const key$ = (
-          key === Serif.Placeholder
-          ? (params[params.length] = Identifier(prefix(String(params.length + 1))))
-          : esFromExpression(key)
-        );
-        const value$ = (
-          value === Serif.Placeholder
-          ? (params[params.length] = Identifier(prefix(String(params.length + 1))))
-          : esFromExpression(value)
-        );
-        return es.Property(key$, value$, {computed: true});
-      }
-    }
-  });
-  return params.reduceRight<ES.ObjectExpression | ES.ArrowFunctionExpression>(
-    (body, param) => es.ArrowFunctionExpression([param], body),
-    es.ObjectExpression(properties$)
-  );
-};
+    })
+  )
+);
 
 const esFromLambda = ({parameter, body}: Serif.Lambda): ES.ArrowFunctionExpression => (
   es.ArrowFunctionExpression(
@@ -211,40 +178,21 @@ const esFromBlockExpression = ({statements}: Serif.BlockExpression): ES.Expressi
 const esFromUnaryExpression = ({
   operator,
   argument,
-}: Serif.UnaryExpression): ES.UnaryExpression | ES.ArrowFunctionExpression => {
-  const params: Array<ES.Identifier> = [];
-  const argument$ = (
-    argument === Serif.Placeholder
-    ? (params[params.length] = Identifier(prefix(String(params.length + 1))))
-    : esFromExpression(argument)
-  );
-  return params.reduceRight<ES.UnaryExpression | ES.ArrowFunctionExpression>(
-    (body, param) => es.ArrowFunctionExpression([param], body),
-    es.UnaryExpression(operator, argument$)
-  );
-};
+}: Serif.UnaryExpression): ES.UnaryExpression => (
+  es.UnaryExpression(operator, esFromExpression(argument))
+);
 
 const esFromBinaryExpression = ({
   operator,
   left,
   right,
-}: Serif.BinaryExpression): ES.BinaryExpression | ES.ArrowFunctionExpression => {
-  const params: Array<ES.Identifier> = [];
-  const left$ = (
-    left === Serif.Placeholder
-    ? (params[params.length] = Identifier(prefix(String(params.length + 1))))
-    : esFromExpression(left)
-  );
-  const right$ = (
-    right === Serif.Placeholder
-    ? (params[params.length] = Identifier(prefix(String(params.length + 1))))
-    : esFromExpression(right)
-  );
-  return params.reduceRight<ES.BinaryExpression | ES.ArrowFunctionExpression>(
-    (body, param) => es.ArrowFunctionExpression([param], body),
-    es.BinaryExpression(operator, left$, right$)
-  );
-};
+}: Serif.BinaryExpression): ES.BinaryExpression => (
+  es.BinaryExpression(
+    operator,
+    esFromExpression(left),
+    esFromExpression(right)
+  )
+);
 
 const esFromLogicalExpression = ({
   operator,
@@ -271,156 +219,40 @@ const esFromConditionalExpression = ({
 );
 
 const esFromNew = (expr: Serif.New): ES.NewExpression | ES.ArrowFunctionExpression => (
-  [
-    ...[expr.callee].flatMap(callee =>
-      callee === Serif.Placeholder ? [$callee] : []
-    ),
-    ...expr.arguments.flatMap((argument, idx) =>
-      argument === Serif.Placeholder ? [Identifier(prefix(String(idx + 1)))] : []
-    ),
-  ]
-  .reduceRight<ES.NewExpression | ES.ArrowFunctionExpression>(
-    (body, param) => es.ArrowFunctionExpression([param], body),
-    es.NewExpression(
-      expr.callee === Serif.Placeholder ? $callee : esFromExpression(expr.callee),
-      expr.arguments.map((argument, idx) =>
-        argument === Serif.Placeholder
-        ? Identifier(prefix(String(idx + 1)))
-        : esFromExpression(argument)
-      ),
-    )
+  es.NewExpression(
+    esFromExpression(expr.callee),
+    expr.arguments.map(esFromExpression),
   )
 );
 
-const esFromApplication = (expr: Serif.Application): ES.Expression => {
-  if (expr.callee.type === 'MemberExpression' && expr.callee.object === Serif.Placeholder) {
-    const param = Identifier(prefix(String(0)));
-    return es.ArrowFunctionExpression(
-      [param],
-      expr.arguments.reduceRight(
-        (body, argument, idx) => (
-          argument === Serif.Placeholder
-          ? es.ArrowFunctionExpression([Identifier(prefix(String(idx + 1)))], body)
-          : body
-        ),
-        expr.arguments.reduce<ES.Expression>(
-          (callee, argument, idx) => es.CallExpression(
-            callee,
-            argument === Serif.Placeholder ?
-              [Identifier(prefix(String(idx + 1)))] :
-            argument.type === 'spread-element' ?
-              [es.SpreadElement(esFromExpression(argument.argument))] :
-            // else
-              [esFromExpression(argument)]
-          ),
-          es.MemberExpression(param, esFromExpression(expr.callee.property), {computed: true})
-        )
-      )
-    );
-  }
-  return expr.arguments.reduceRight(
-    (body, argument, idx) => (
-      argument === Serif.Placeholder
-      ? es.ArrowFunctionExpression([Identifier(prefix(String(idx + 1)))], body)
-      : body
+const esFromApplication = (expr: Serif.Application): ES.Expression => (
+  expr.arguments.reduce(
+    (callee, argument) => es.CallExpression(
+      callee,
+      argument.type === 'spread-element' ?
+        [es.SpreadElement(esFromExpression(argument.argument))] :
+      // else
+        [esFromExpression(argument)]
     ),
-    expr.arguments.reduce(
-      (callee, argument, idx) => es.CallExpression(
-        callee,
-        argument === Serif.Placeholder ?
-          [Identifier(prefix(String(idx + 1)))] :
-        argument.type === 'spread-element' ?
-          [es.SpreadElement(esFromExpression(argument.argument))] :
-        // else
-          [esFromExpression(argument)]
-      ),
-      expr.callee === Serif.Placeholder
-      ? (param => es.ArrowFunctionExpression([param], param))(Identifier(prefix('0')))
-      : esFromExpression(expr.callee)
-    )
-  );
-};
+    esFromExpression(expr.callee)
+  )
+);
 
-const esFromCallExpression = (expr: Serif.CallExpression): ES.Expression => {
-  if (expr.callee.type === 'MemberExpression' && expr.callee.object === Serif.Placeholder) {
-    const param = Identifier(prefix(String(0)));
-    return es.ArrowFunctionExpression(
-      [param],
-      expr.arguments.reduceRight<ES.Expression>(
-        (body, argument, idx) => (
-          argument === Serif.Placeholder
-          ? es.ArrowFunctionExpression([Identifier(prefix(String(idx + 1)))], body)
-          : body
-        ),
-        es.CallExpression(
-          es.MemberExpression(param, esFromExpression(expr.callee.property), {computed: true}),
-          expr.arguments.map((argument, idx) => {
-            switch (argument.type) {
-              case 'placeholder': {
-                return Identifier(prefix(String(idx + 1)));
-              }
-              case 'spread-element': {
-                return es.SpreadElement(esFromExpression(argument.argument));
-              }
-              default: {
-                return esFromExpression(argument);
-              }
-            }
-          })
-        )
-      )
-    );
-  }
-  if (expr.callee === Serif.Placeholder) {
-    const param = Identifier(prefix(String(0)));
-    return expr.arguments.reduceRight<ES.Expression>(
-      (body, argument, idx) => (
-        argument === Serif.Placeholder
-        ? es.ArrowFunctionExpression([Identifier(prefix(String(idx + 1)))], body)
-        : body
-      ),
-      es.CallExpression(
-        param,
-        expr.arguments.map((argument, idx) => {
-          switch (argument.type) {
-            case 'placeholder': {
-              return Identifier(prefix(String(idx + 1)));
-            }
-            case 'spread-element': {
-              return es.SpreadElement(esFromExpression(argument.argument));
-            }
-            default: {
-              return esFromExpression(argument);
-            }
-          }
-        })
-      )
-    );
-  }
-  return expr.arguments.reduceRight<ES.Expression>(
-    (body, argument, idx) => (
-      argument === Serif.Placeholder
-      ? es.ArrowFunctionExpression([Identifier(prefix(String(idx + 1)))], body)
-      : body
-    ),
-    es.CallExpression(
-      esFromExpression(expr.callee),
-      expr.arguments.map((argument, idx) => {
-        switch (argument.type) {
-          case 'placeholder': {
-            return Identifier(prefix(String(idx + 1)));
-          }
-          case 'spread-element': {
-            return es.SpreadElement(esFromExpression(argument.argument));
-          }
-          default: {
-            return esFromExpression(argument);
-          }
+const esFromCallExpression = (expr: Serif.CallExpression): ES.Expression => (
+  es.CallExpression(
+    esFromExpression(expr.callee),
+    expr.arguments.map(argument => {
+      switch (argument.type) {
+        case 'spread-element': {
+          return es.SpreadElement(esFromExpression(argument.argument));
         }
-      })
-    )
-  );
-};
+        default: {
+          return esFromExpression(argument);
+        }
+      }
+    })
+  )
+);
 
 const esFromDeclaration = ({
   name,
@@ -455,7 +287,6 @@ const esFromExpressionStatement = ({expression}: Serif.ExpressionStatement): ES.
 
 const esFromExpression = (expr: Serif.Expression): ES.Expression => {
   switch (expr.type) {
-    case 'placeholder':                 return esFromPlaceholder(expr);
     case 'BooleanLiteral':              return esFromBooleanLiteral(expr);
     case 'number':                      return esFromNumber(expr);
     case 'string':                      return esFromString(expr);
