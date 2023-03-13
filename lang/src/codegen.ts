@@ -25,24 +25,24 @@ const esFromEscapedIdentifierName = (name: Escaped): ES.Identifier => ({
   name,
 });
 
-const esFromBooleanLiteral = (boolean: Serif.Boolean): ES.Literal => (
-  ES.Literal(boolean.value)
+const esFromBooleanLiteral = (booleanLiteral: Serif.BooleanLiteral): ES.Literal => (
+  ES.Literal(booleanLiteral.value)
 );
 
-const esFromNumber = (number: Serif.Number): ES.UnaryExpression | ES.Literal => (
-  number.value < 0
-  ? ES.UnaryExpression('-', ES.Literal(-number.value))
-  : ES.Literal(number.value)
+const esFromNumberLiteral = (numberLiteral: Serif.NumberLiteral): ES.UnaryExpression | ES.Literal => (
+  numberLiteral.value < 0
+  ? ES.UnaryExpression('-', ES.Literal(-numberLiteral.value))
+  : ES.Literal(numberLiteral.value)
 );
 
-const esFromString = (string: Serif.String): ES.Literal => (
-  ES.Literal(string.value)
+const esFromStringLiteral = (stringLiteral: Serif.StringLiteral): ES.Literal => (
+  ES.Literal(stringLiteral.value)
 );
 
-const esFromSymbol = (symbol: Serif.Symbol): ES.CallExpression => (
+const esFromSymbolLiteral = (symbolLiteral: Serif.SymbolLiteral): ES.CallExpression => (
   ES.CallExpression(
-    esFromMemberExpression(Serif.MemberExpression(Serif.Identifier('Symbol'), Serif.String('for'))),
-    [ES.Literal(symbol.name)],
+    esFromMemberExpression(Serif.MemberExpression(Serif.Identifier('Symbol'), Serif.StringLiteral('for'))),
+    [ES.Literal(symbolLiteral.name)],
   )
 );
 
@@ -54,7 +54,7 @@ const esFromMetaProperty = (metaProperty: Serif.MetaProperty): ES.MetaProperty =
 );
 
 const esFromMemberExpression = (memberExpression: Serif.MemberExpression): ES.MemberExpression => (
-  memberExpression.property.type === 'string' && validEsIdentifierName(memberExpression.property.value) ?
+  memberExpression.property.type === 'StringLiteral' && validEsIdentifierName(memberExpression.property.value) ?
   ES.MemberExpression(
     esFromExpression(memberExpression.object),
     esFromEscapedIdentifierName(memberExpression.property.value as Escaped),
@@ -75,9 +75,9 @@ const esFromSpreadElement = (spreadElement: Serif.SpreadElement): ES.SpreadEleme
   ES.SpreadElement(esFromExpression(spreadElement.argument))
 );
 
-const esFromArray = (array: Serif.Array): ES.ArrayExpression => (
+const esFromArrayExpression = (arrayExpression: Serif.ArrayExpression): ES.ArrayExpression => (
   ES.ArrayExpression(
-    array.elements.map(element =>
+    arrayExpression.elements.map(element =>
       element.type === 'SpreadElement'
       ? esFromSpreadElement(element)
       : esFromExpression(element)
@@ -85,9 +85,9 @@ const esFromArray = (array: Serif.Array): ES.ArrayExpression => (
   )
 );
 
-const esFromObject = (object: Serif.Object): ES.ObjectExpression => (
+const esFromObjectExpression = (objectExpression: Serif.ObjectExpression): ES.ObjectExpression => (
   ES.ObjectExpression(
-    object.properties.map(property =>
+    objectExpression.properties.map(property =>
       property.type === 'SpreadElement'
       ? esFromSpreadElement(property)
       : ES.Property(esFromExpression(property.key), esFromExpression(property.value), {computed: true})
@@ -95,17 +95,17 @@ const esFromObject = (object: Serif.Object): ES.ObjectExpression => (
   )
 );
 
-const esFromLambda = (lambda: Serif.Lambda): ES.ArrowFunctionExpression => (
+const esFromArrowFunctionExpression = (arrowFunctionExpression: Serif.ArrowFunctionExpression): ES.ArrowFunctionExpression => (
   ES.ArrowFunctionExpression(
-    [esFromIdentifier(lambda.parameter)],
-    esFromExpression(lambda.body),
+    [esFromIdentifier(arrowFunctionExpression.parameter)],
+    esFromExpression(arrowFunctionExpression.body),
   )
 );
 
 const esFromStatement = (statement: Serif.Statement): ES.ExpressionStatement | ES.VariableDeclaration => {
   switch (statement.type) {
     case 'ExpressionStatement': return esFromExpressionStatement(statement);
-    case 'declaration':         return esFromDeclaration(statement);
+    case 'Declaration':         return esFromDeclaration(statement);
   }
 };
 
@@ -119,7 +119,7 @@ const esFromBlockExpression = (blockExpression: Serif.BlockExpression): ES.Expre
     ES.ArrowFunctionExpression(
       [],
       ES.BlockStatement(
-        last.type === 'declaration'
+        last.type === 'Declaration'
         ? [...blockExpression.statements.map(esFromStatement), ES.ReturnStatement(esFromIdentifierName(last.name))]
         : [...blockExpression.statements.slice(0, -1).map(esFromStatement), ES.ReturnStatement(esFromExpression(last.expression))]
       )
@@ -159,10 +159,10 @@ const esFromConditionalExpression = (conditionalExpression: Serif.ConditionalExp
   )
 );
 
-const esFromNew = (new_: Serif.New): ES.NewExpression => (
+const esFromNewExpression = (newExpression: Serif.NewExpression): ES.NewExpression => (
   ES.NewExpression(
-    esFromExpression(new_.callee),
-    new_.arguments.map(esFromExpression),
+    esFromExpression(newExpression.callee),
+    newExpression.arguments.map(esFromExpression),
   )
 );
 
@@ -219,22 +219,22 @@ const esFromExpressionStatement = (expressionStatement: Serif.ExpressionStatemen
 const esFromExpression = (expr: Serif.Expression): ES.Expression => {
   switch (expr.type) {
     case 'BooleanLiteral':              return esFromBooleanLiteral(expr);
-    case 'number':                      return esFromNumber(expr);
-    case 'string':                      return esFromString(expr);
-    case 'symbol':                      return esFromSymbol(expr);
+    case 'NumberLiteral':               return esFromNumberLiteral(expr);
+    case 'StringLiteral':               return esFromStringLiteral(expr);
+    case 'SymbolLiteral':               return esFromSymbolLiteral(expr);
     case 'MetaProperty':                return esFromMetaProperty(expr);
     case 'MemberExpression':            return esFromMemberExpression(expr);
-    case 'identifier':                  return esFromIdentifier(expr);
-    case 'array':                       return esFromArray(expr);
-    case 'object':                      return esFromObject(expr);
-    case 'lambda':                      return esFromLambda(expr);
+    case 'Identifier':                  return esFromIdentifier(expr);
+    case 'ArrayExpression':             return esFromArrayExpression(expr);
+    case 'ObjectExpression':            return esFromObjectExpression(expr);
+    case 'ArrowFunctionExpression':     return esFromArrowFunctionExpression(expr);
     case 'BlockExpression':             return esFromBlockExpression(expr);
     case 'UnaryExpression':             return esFromUnaryExpression(expr);
     case 'BinaryExpression':            return esFromBinaryExpression(expr);
     case 'LogicalExpression':           return esFromLogicalExpression(expr);
     case 'ConditionalExpression':       return esFromConditionalExpression(expr);
-    case 'new':                         return esFromNew(expr);
-    case 'application':                 return esFromApplication(expr);
+    case 'NewExpression':               return esFromNewExpression(expr);
+    case 'Application':                 return esFromApplication(expr);
     case 'CallExpression':              return esFromCallExpression(expr);
   }
 };
@@ -274,7 +274,7 @@ export async function toModule(
   );
   const statements = module.statements.map(statement => {
     switch (statement.type) {
-      case 'declaration':         return esFromDeclaration(statement);
+      case 'Declaration':         return esFromDeclaration(statement);
       case 'ExpressionStatement': return esFromExpressionStatement(statement);
     }
   });

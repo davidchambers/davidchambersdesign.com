@@ -2,51 +2,51 @@ interface ReadonlyNonEmptyArray<A> extends ReadonlyArray<A> {
   readonly 0: A;
 }
 
-export interface Boolean {
+export interface BooleanLiteral {
   readonly type: 'BooleanLiteral';
   readonly value: boolean;
 }
 
-export const Boolean = (
+export const BooleanLiteral = (
   value: boolean,
-): Boolean => ({
+): BooleanLiteral => ({
   type: 'BooleanLiteral',
   value,
 });
 
-export interface Number {
-  readonly type: 'number';
+export interface NumberLiteral {
+  readonly type: 'NumberLiteral';
   readonly value: number;
 }
 
-export const Number = (
+export const NumberLiteral = (
   value: number,
-): Number => ({
-  type: 'number',
+): NumberLiteral => ({
+  type: 'NumberLiteral',
   value,
 });
 
-export interface String {
-  readonly type: 'string';
+export interface StringLiteral {
+  readonly type: 'StringLiteral';
   readonly value: string;
 }
 
-export const String = (
+export const StringLiteral = (
   value: string,
-): String => ({
-  type: 'string',
+): StringLiteral => ({
+  type: 'StringLiteral',
   value,
 });
 
-export interface Symbol {
-  readonly type: 'symbol';
+export interface SymbolLiteral {
+  readonly type: 'SymbolLiteral';
   readonly name: string;
 }
 
-export const Symbol = (
+export const SymbolLiteral = (
   name: string,
-): Symbol => ({
-  type: 'symbol',
+): SymbolLiteral => ({
+  type: 'SymbolLiteral',
   name,
 });
 
@@ -81,14 +81,14 @@ export const MemberExpression = (
 });
 
 export interface Identifier {
-  readonly type: 'identifier';
+  readonly type: 'Identifier';
   readonly name: string;
 }
 
 export const Identifier = (
   name: string,
 ): Identifier => ({
-  type: 'identifier',
+  type: 'Identifier',
   name,
 });
 
@@ -104,15 +104,15 @@ export const SpreadElement = (
   argument,
 });
 
-export interface Array {
-  readonly type: 'array';
+export interface ArrayExpression {
+  readonly type: 'ArrayExpression';
   readonly elements: ReadonlyArray<SpreadElement | Expression>;
 }
 
-export const Array = (
+export const ArrayExpression = (
   elements: ReadonlyArray<SpreadElement | Expression>,
-): Array => ({
-  type: 'array',
+): ArrayExpression => ({
+  type: 'ArrayExpression',
   elements,
 });
 
@@ -131,29 +131,29 @@ export const Property = (
   value,
 });
 
-export interface Object {
-  readonly type: 'object';
+export interface ObjectExpression {
+  readonly type: 'ObjectExpression';
   readonly properties: ReadonlyArray<SpreadElement | Property>;
 }
 
-export const Object = (
+export const ObjectExpression = (
   properties: ReadonlyArray<SpreadElement | Property>,
-): Object => ({
-  type: 'object',
+): ObjectExpression => ({
+  type: 'ObjectExpression',
   properties,
 });
 
-export interface Lambda {
-  readonly type: 'lambda';
+export interface ArrowFunctionExpression {
+  readonly type: 'ArrowFunctionExpression';
   readonly parameter: Identifier;
   readonly body: Expression;
 }
 
-export const Lambda = (
+export const ArrowFunctionExpression = (
   parameter: Identifier,
   body: Expression,
-): Lambda => ({
-  type: 'lambda',
+): ArrowFunctionExpression => ({
+  type: 'ArrowFunctionExpression',
   parameter,
   body,
 });
@@ -172,12 +172,12 @@ export const BlockExpression = (
 
 export type PrimaryExpression =
   | Identifier
-  | Boolean
-  | Number
-  | String
-  | Symbol
-  | Array
-  | Object
+  | BooleanLiteral
+  | NumberLiteral
+  | StringLiteral
+  | SymbolLiteral
+  | ArrayExpression
+  | ObjectExpression
 
 export type UnaryOperator =
   | 'typeof'
@@ -551,23 +551,23 @@ export const ConditionalExpression = (
   alternative,
 });
 
-export interface New {
-  readonly type: 'new';
+export interface NewExpression {
+  readonly type: 'NewExpression';
   readonly callee: Expression;
   readonly arguments: ReadonlyArray<Expression>;
 }
 
-export const New = (
+export const NewExpression = (
   callee: Expression,
   args: ReadonlyArray<Expression>,
-): New => ({
-  type: 'new',
+): NewExpression => ({
+  type: 'NewExpression',
   callee,
   arguments: args,
 });
 
 export interface Application {
-  readonly type: 'application';
+  readonly type: 'Application';
   readonly callee: Expression;
   readonly arguments: ReadonlyArray<SpreadElement | Expression>;
 }
@@ -576,7 +576,7 @@ export const Application = (
   callee: Expression,
   args: ReadonlyArray<Expression>,
 ): Application => ({
-  type: 'application',
+  type: 'Application',
   callee,
   arguments: args,
 });
@@ -597,28 +597,28 @@ export const CallExpression = (
 });
 
 export type Expression =
-  | Boolean
-  | Number
-  | String
-  | Symbol
+  | BooleanLiteral
+  | NumberLiteral
+  | StringLiteral
+  | SymbolLiteral
   | MetaProperty
   | MemberExpression
   | Identifier
-  | Array
-  | Object
-  | Lambda
+  | ArrayExpression
+  | ObjectExpression
+  | ArrowFunctionExpression
   | BlockExpression
   | UnaryExpression
   | BinaryExpression
   | LogicalExpression
   | ConditionalExpression
-  | New
+  | NewExpression
   | Application
   | CallExpression
 
 interface _ImportDeclarationBase {
   readonly type: 'ImportDeclaration';
-  readonly source: String;
+  readonly source: StringLiteral;
 }
 
 interface _ImportDefaultDeclaration extends _ImportDeclarationBase {
@@ -626,7 +626,7 @@ interface _ImportDefaultDeclaration extends _ImportDeclarationBase {
 }
 
 export const ImportDefaultDeclaration = (
-  source: String,
+  source: StringLiteral,
   specifier: ImportDefaultSpecifier,
 ): _ImportDefaultDeclaration => ({
   type: 'ImportDeclaration',
@@ -639,7 +639,7 @@ interface _ImportDeclaration extends _ImportDeclarationBase {
 }
 
 export const ImportDeclaration = (
-  source: String,
+  source: StringLiteral,
   specifiers: ReadonlyArray<ImportSpecifier>,
 ): _ImportDeclaration => ({
   type: 'ImportDeclaration',
@@ -653,7 +653,7 @@ interface _ImportEverythingDeclaration extends _ImportDeclarationBase {
 }
 
 export const ImportEverythingDeclaration = (
-  source: String,
+  source: StringLiteral,
   hiding: ReadonlyArray<Identifier>,
 ): _ImportEverythingDeclaration => ({
   type: 'ImportDeclaration',
@@ -719,7 +719,7 @@ export const ExportDefaultDeclaration = (
 });
 
 export interface Declaration {
-  readonly type: 'declaration';
+  readonly type: 'Declaration';
   readonly name: string;
   readonly parameterNames: ReadonlyArray<string>;
   readonly expression: Expression;
@@ -730,7 +730,7 @@ export const Declaration = (
   parameterNames: ReadonlyArray<string>,
   expression: Expression,
 ): Declaration => ({
-  type: 'declaration',
+  type: 'Declaration',
   name,
   parameterNames,
   expression,

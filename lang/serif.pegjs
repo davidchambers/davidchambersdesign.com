@@ -27,13 +27,13 @@ ImportDeclaration
     )?
     Separator* '}'
     Separator+ 'from'
-    Separator+ source:String
+    Separator+ source:StringLiteral
     Separator* ';'
     { return Serif.ImportDeclaration(source, specifiers ?? []); }
   / 'import'
     Separator+ '*'
     Separator+ 'from'
-    Separator+ source:String
+    Separator+ source:StringLiteral
     hiding:(
       Separator+ 'hiding'
       Separator+ '{'
@@ -50,7 +50,7 @@ ImportDeclaration
   / 'import'
     Separator+ specifier:ImportDefaultSpecifier
     Separator+ 'from'
-    Separator+ source:String
+    Separator+ source:StringLiteral
     Separator* ';'
     { return Serif.ImportDefaultDeclaration(source, specifier); }
 
@@ -159,14 +159,14 @@ SymbolChar
 Expression
   = ConditionalExpression
   / Identifier
-  / New
+  / NewExpression
   / Application
 
-Boolean
-  = 'true'  { return Serif.Boolean(true); }
-  / 'false' { return Serif.Boolean(false); }
+BooleanLiteral
+  = 'true'  { return Serif.BooleanLiteral(true); }
+  / 'false' { return Serif.BooleanLiteral(false); }
 
-Number
+NumberLiteral
   = BinaryNumber
   / OctalNumber
   / HexadecimalNumber
@@ -174,25 +174,25 @@ Number
 
 BinaryNumber
   = '0' 'b' digits:$([0-1])+
-  { return Serif.Number(parseInt(digits, 2)); }
+  { return Serif.NumberLiteral(parseInt(digits, 2)); }
 
 OctalNumber
   = '0' 'o' digits:$([0-7])+
-  { return Serif.Number(parseInt(digits, 8)); }
+  { return Serif.NumberLiteral(parseInt(digits, 8)); }
 
 HexadecimalNumber
   = '0' 'x' digits:$([0-9A-F])+
-  { return Serif.Number(parseInt(digits, 16)); }
+  { return Serif.NumberLiteral(parseInt(digits, 16)); }
 
 DecimalNumber
   = ('-' / '+')?
     ('0' / ([1-9] [0-9]*))
     ('.' [0-9]+)?
-  { return Serif.Number(parseFloat(text())); }
+  { return Serif.NumberLiteral(parseFloat(text())); }
 
-String
+StringLiteral
   = '"' chars:Char* '"'
-  { return Serif.String(chars.join('')); }
+  { return Serif.StringLiteral(chars.join('')); }
 
 Char
   = '\\' '"'  { return '"'; }
@@ -207,9 +207,9 @@ Char
   / '\\'      { expected('valid escape sequence'); }
   / [^"]
 
-Symbol
+SymbolLiteral
   = ':' name:$(SymbolChar)+
-  { return Serif.Symbol(name); }
+  { return Serif.SymbolLiteral(name); }
 
 ImportMeta
   = meta:'import' '.' property:'meta'
@@ -218,8 +218,8 @@ ImportMeta
 MemberExpression
   = object:PrimaryExpression
     properties:(
-        Symbol
-      / '.' ident:Identifier                              { return Serif.String(ident.name); }
+        SymbolLiteral
+      / '.' ident:Identifier                              { return Serif.StringLiteral(ident.name); }
       / '[' Separator* property:Expression Separator* ']' { return property; }
     )*
     { return properties.reduce(Serif.MemberExpression, object); }
@@ -238,16 +238,16 @@ BlockExpressionStatements
     { return [head, ...tail]; }
 
 PrimaryExpression
-  = Boolean
-  / Number
-  / String
-  / Symbol
-  / Array
-  / Object
+  = BooleanLiteral
+  / NumberLiteral
+  / StringLiteral
+  / SymbolLiteral
+  / ArrayExpression
+  / ObjectExpression
   / ImportMeta
   / Identifier
   / BlockExpression
-  / New
+  / NewExpression
   / Application
 
 UnaryOperator
@@ -421,7 +421,7 @@ CoalesceExpression
 
 ArrowFunctionExpression
   = parameter:Identifier Separator+ '=>' Separator+ body:Expression
-    { return Serif.Lambda(parameter, body); }
+    { return Serif.ArrowFunctionExpression(parameter, body); }
   / CoalesceExpression
 
 ConditionalExpression
@@ -438,7 +438,7 @@ SpreadElement
   = '...' argument:Expression
     { return Serif.SpreadElement(argument); }
 
-Array
+ArrayExpression
   = '#['
     elements:(
       head:(Separator* element:(SpreadElement / Expression) { return element; })
@@ -446,13 +446,13 @@ Array
       { return [head, ...tail]; }
     )?
     Separator* ']'
-    { return Serif.Array(elements ?? []); }
+    { return Serif.ArrayExpression(elements ?? []); }
 
 Property
   = key:Expression Separator+ value:Expression
     { return Serif.Property(key, value); }
 
-Object
+ObjectExpression
   = '#{'
     properties:(
       head:(Separator* property:(SpreadElement / Property) { return property; })
@@ -460,15 +460,15 @@ Object
       { return [head, ...tail]; }
     )?
     Separator* '}'
-    { return Serif.Object(properties ?? []); }
+    { return Serif.ObjectExpression(properties ?? []); }
 
-New
+NewExpression
   = '('
     Separator* 'new'
     Separator+ callee:Expression
     args:(Separator+ arg:Expression { return arg; })*
     Separator* ')'
-    { return Serif.New(callee, args); }
+    { return Serif.NewExpression(callee, args); }
 
 Application
   = '('
@@ -490,8 +490,8 @@ CallExpression
   = head:MemberExpression
     tail:(
         Separator* args:Arguments                         { return expr => Serif.CallExpression(expr, args); }
-      / symbol:Symbol                                     { return expr => Serif.MemberExpression(expr, symbol); }
-      / '.' ident:Identifier                              { return expr => Serif.MemberExpression(expr, Serif.String(ident.name)); }
+      / symbol:SymbolLiteral                              { return expr => Serif.MemberExpression(expr, symbol); }
+      / '.' ident:Identifier                              { return expr => Serif.MemberExpression(expr, Serif.StringLiteral(ident.name)); }
       / '[' Separator* property:Expression Separator* ']' { return expr => Serif.MemberExpression(expr, property); }
     )*
     { return tail.reduce((expr, wrap) => wrap(expr), head); }

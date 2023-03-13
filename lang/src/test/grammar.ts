@@ -15,91 +15,91 @@ const valid = (input: string, expected: Serif.Expression) => (
 
 valid(
   'true',
-  Serif.Boolean(true)
+  Serif.BooleanLiteral(true)
 );
 
 valid(
   'false',
-  Serif.Boolean(false)
+  Serif.BooleanLiteral(false)
 );
 
 valid(
   '0',
-  Serif.Number(0)
+  Serif.NumberLiteral(0)
 );
 
 valid(
   '12.34',
-  Serif.Number(12.34)
+  Serif.NumberLiteral(12.34)
 );
 
 valid(
   '-56.78',
-  Serif.Number(-56.78)
+  Serif.NumberLiteral(-56.78)
 );
 
 valid(
   '0b1010',
-  Serif.Number(0b1010)
+  Serif.NumberLiteral(0b1010)
 );
 
 valid(
   '0o777',
-  Serif.Number(0o777)
+  Serif.NumberLiteral(0o777)
 );
 
 valid(
   '0xFF',
-  Serif.Number(0xFF)
+  Serif.NumberLiteral(0xFF)
 );
 
 valid(
   '""',
-  Serif.String('')
+  Serif.StringLiteral('')
 );
 
 valid(
   '"foo"',
-  Serif.String('foo')
+  Serif.StringLiteral('foo')
 );
 
 valid(
   '"\\n"',
-  Serif.String('\n')
+  Serif.StringLiteral('\n')
 );
 
 valid(
   ':foo',
-  Serif.Symbol('foo')
+  Serif.SymbolLiteral('foo')
 );
 
 valid(
   ':foo-bar',
-  Serif.Symbol('foo-bar')
+  Serif.SymbolLiteral('foo-bar')
 );
 
 valid(
   '#[]',
-  Serif.Array([])
+  Serif.ArrayExpression([])
 );
 
 valid(
   '#[1 2 3]',
-  Serif.Array([
-    Serif.Number(1),
-    Serif.Number(2),
-    Serif.Number(3),
+  Serif.ArrayExpression([
+    Serif.NumberLiteral(1),
+    Serif.NumberLiteral(2),
+    Serif.NumberLiteral(3),
   ])
 );
 
 valid(
   '#[#[#[:foo :bar :baz]]]',
-  Serif.Array([
-    Serif.Array([
-      Serif.Array([
-        Serif.Symbol('foo'),
-        Serif.Symbol('bar'),
-        Serif.Symbol('baz'),
+  Serif.ArrayExpression([
+    Serif.ArrayExpression([
+      Serif.ArrayExpression([
+        Serif.SymbolLiteral('foo'),
+        Serif.SymbolLiteral('bar'),
+        Serif.SymbolLiteral('baz'),
       ]),
     ]),
   ])
@@ -107,30 +107,30 @@ valid(
 
 valid(
   '#{}',
-  Serif.Object([])
+  Serif.ObjectExpression([])
 );
 
 valid(
   '#{:foo 1 :bar 2 :baz 3}',
-  Serif.Object([
-    Serif.Property(Serif.Symbol('foo'), Serif.Number(1)),
-    Serif.Property(Serif.Symbol('bar'), Serif.Number(2)),
-    Serif.Property(Serif.Symbol('baz'), Serif.Number(3)),
+  Serif.ObjectExpression([
+    Serif.Property(Serif.SymbolLiteral('foo'), Serif.NumberLiteral(1)),
+    Serif.Property(Serif.SymbolLiteral('bar'), Serif.NumberLiteral(2)),
+    Serif.Property(Serif.SymbolLiteral('baz'), Serif.NumberLiteral(3)),
   ])
 );
 
 valid(
   '#{:foo #{:bar #{:baz 8}}}',
-  Serif.Object([
+  Serif.ObjectExpression([
     Serif.Property(
-      Serif.Symbol('foo'),
-      Serif.Object([
+      Serif.SymbolLiteral('foo'),
+      Serif.ObjectExpression([
         Serif.Property(
-          Serif.Symbol('bar'),
-          Serif.Object([
+          Serif.SymbolLiteral('bar'),
+          Serif.ObjectExpression([
             Serif.Property(
-              Serif.Symbol('baz'),
-              Serif.Number(8),
+              Serif.SymbolLiteral('baz'),
+              Serif.NumberLiteral(8),
             ),
           ])
         ),
