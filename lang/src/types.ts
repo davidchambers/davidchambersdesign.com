@@ -754,18 +754,22 @@ export type Statement =
 
 export interface Module {
   readonly type: 'Module';
-  readonly imports: ReadonlyArray<ImportDeclaration>;
-  readonly exports: ReadonlyArray<ExportNamedDeclaration | ExportDefaultDeclaration>;
-  readonly statements: ReadonlyArray<Statement>;
+  readonly statements: ReadonlyArray<
+    | ImportDeclaration
+    | ExportNamedDeclaration
+    | ExportDefaultDeclaration
+    | Statement
+  >;
 }
 
 export const Module = (
-  imports: ReadonlyArray<ImportDeclaration>,
-  exports: ReadonlyArray<ExportNamedDeclaration | ExportDefaultDeclaration>,
-  statements: ReadonlyArray<Statement>,
+  statements: ReadonlyArray<
+    | ImportDeclaration
+    | ExportNamedDeclaration
+    | ExportDefaultDeclaration
+    | Statement
+  >,
 ): Module => ({
   type: 'Module',
-  imports,
-  exports,
   statements,
 });

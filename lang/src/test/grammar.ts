@@ -8,7 +8,7 @@ const valid = (input: string, expected: Serif.Expression) => (
   test(`parse(${JSON.stringify(input)})`, t => {
     t.deepEqual(
       serif.parse(input, '[test]'),
-      Serif.Module([], [], [Serif.ExpressionStatement(expected)])
+      Serif.Module([Serif.ExpressionStatement(expected)])
     );
   })
 );

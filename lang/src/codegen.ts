@@ -243,49 +243,55 @@ export async function toModule(
   module: Serif.Module,
   exportedNames: (source: string) => ReadonlyArray<string>,
 ): Promise<ES.Program> {
-  const imports = await Promise.all(
-    module.imports.map(async importDeclaration => ES.ImportDeclaration(
-      importDeclaration.specifiers === '*' ?
-      (importDeclaration.source.value.endsWith('.serif')
-       ? (hiding => exportedNames(importDeclaration.source.value)
-                    .filter(name => !hiding.has(name))
-                    .map(esFromIdentifierName))
-         (new Set(importDeclaration.hiding.map(ident => ident.name)))
-       : (Object.keys(await import(importDeclaration.source.value)) as Array<Escaped>)
-         .map(esFromEscapedIdentifierName))
-      .map(local => ES.ImportSpecifier(local, local)) :
-      importDeclaration.specifiers.map(specifier => {
-        switch (specifier.type) {
-          case 'ImportDefaultSpecifier': {
-            return ES.ImportDefaultSpecifier(
-              esFromIdentifier(specifier.local)
+  return ES.Program(
+    await Promise.all(
+      module.statements.map(async statement => {
+        switch (statement.type) {
+          case 'ImportDeclaration': {
+            return ES.ImportDeclaration(
+              statement.specifiers === '*' ?
+              (statement.source.value.endsWith('.serif')
+               ? (hiding => exportedNames(statement.source.value)
+                            .filter(name => !hiding.has(name))
+                            .map(esFromIdentifierName))
+                 (new Set(statement.hiding.map(ident => ident.name)))
+               : (Object.keys(await import(statement.source.value)) as Array<Escaped>)
+                 .map(esFromEscapedIdentifierName))
+              .map(local => ES.ImportSpecifier(local, local)) :
+              statement.specifiers.map(specifier => {
+                switch (specifier.type) {
+                  case 'ImportDefaultSpecifier': {
+                    return ES.ImportDefaultSpecifier(
+                      esFromIdentifier(specifier.local)
+                    );
+                  }
+                  case 'ImportSpecifier': {
+                    return ES.ImportSpecifier(
+                      esFromIdentifier(specifier.local),
+                      esFromIdentifier(specifier.imported)
+                    );
+                  }
+                }
+              }),
+              statement.source.value.replace(/[.]serif$/, '.js')
             );
           }
-          case 'ImportSpecifier': {
-            return ES.ImportSpecifier(
-              esFromIdentifier(specifier.local),
-              esFromIdentifier(specifier.imported)
+          case 'ExportNamedDeclaration': {
+            return ES.ExportNamedDeclaration(
+              statement.specifiers.map(specifier => ES.ExportSpecifier(esFromIdentifier(specifier)))
             );
+          }
+          case 'ExportDefaultDeclaration': {
+            return ES.ExportDefaultDeclaration(
+              esFromExpression(statement.declaration)
+            );
+          }
+          case 'Declaration':
+          case 'ExpressionStatement': {
+            return esFromStatement(statement);
           }
         }
-      }),
-      importDeclaration.source.value.replace(/[.]serif$/, '.js')
-    ))
+      })
+    )
   );
-  const statements = module.statements.map(esFromStatement);
-  const exports = module.exports.map(exportDeclaration => {
-    switch (exportDeclaration.type) {
-      case 'ExportNamedDeclaration': {
-        return ES.ExportNamedDeclaration(
-          exportDeclaration.specifiers.map(specifier => ES.ExportSpecifier(esFromIdentifier(specifier)))
-        );
-      }
-      case 'ExportDefaultDeclaration': {
-        return ES.ExportDefaultDeclaration(
-          esFromExpression(exportDeclaration.declaration)
-        );
-      }
-    }
-  });
-  return ES.Program([...imports, ...statements, ...exports]);
 }

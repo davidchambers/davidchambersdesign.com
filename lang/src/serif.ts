@@ -47,13 +47,16 @@ async function findDependencies(entryPoint: string): Promise<Tree> {
       }\n`);
       throw err;
     }
-    const dependencies = (
-      ast.imports
-      .map(importDeclaration => importDeclaration.source.value)
-      .filter(source => source.startsWith('/') || source.startsWith('.'))
-      .map(source => join(filename, '..', source))
-    );
-    const exportedNames = ast.exports.flatMap(exportDeclaration =>
+    const dependencies = ast.statements.flatMap(statement => {
+      if (statement.type === 'ImportDeclaration') {
+        const source = statement.source.value;
+        if (source.startsWith('/') || source.startsWith('.')) {
+          return [join(filename, '..', source)];
+        }
+      }
+      return [];
+    });
+    const exportedNames = ast.statements.flatMap(exportDeclaration =>
       exportDeclaration.type === 'ExportNamedDeclaration'
       ? exportDeclaration.specifiers.map(specifier => specifier.name)
       : []

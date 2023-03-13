@@ -7,7 +7,7 @@ Module
       { return [head, ...tail]; }
     )?
     Separator*
-  { return Serif.Module(imports, exports, statements ?? []); }
+  { return Serif.Module([...imports, ...(statements ?? []), ...exports]); }
 
 ImportSpecifier
   = local:Identifier
