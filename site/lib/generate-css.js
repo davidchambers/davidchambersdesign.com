@@ -1,12 +1,12 @@
 import S from 'sanctuary';
 import screen from './css/screen.js';
-const coerce = function coerce(x) {
+const coerce = x => {
   return Array.isArray(x) ? S.unwords(S.map(coerce)(x)) : typeof x == 'symbol' ? Symbol.keyFor(x) : String(x);
 };
-const split$002Devery$002D2 = function split$002Devery$002D2(xs) {
+const split$002Devery$002D2 = xs => {
   return S.array([])(k => S.array([])(v => S.compose(S.prepend(S.Pair(k)(v)))(split$002Devery$002D2)))(xs);
 };
-const vendor$002Dprefix = function vendor$002Dprefix(unprefixed) {
+const vendor$002Dprefix = unprefixed => {
   return prefixed => S.chain(S.pair(k => v => k === unprefixed ? [
     ...prefixed,
     unprefixed
@@ -34,7 +34,7 @@ const vendor$002Dprefixes = S.pipe([
     Symbol.for('-o-transition-timing-function')
   ])
 ]);
-const format$002Dblock = function format$002Dblock(selectors) {
+const format$002Dblock = selectors => {
   return properties => selectors.join(',\n') + ' {\n' + properties.map(S.pair(k => v => '  ' + coerce(k) + ': ' + coerce(v) + ';\n')).join('') + '}\n';
 };
 const generate$002Dcss = S.pipe([

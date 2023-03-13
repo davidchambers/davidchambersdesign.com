@@ -87,7 +87,7 @@ import {
   var$0027,
   video
 } from './elements.js';
-const base$002Dtemplate = function base$002Dtemplate(document$002Dtitle) {
+const base$002Dtemplate = document$002Dtitle => {
   return main => html([
     head([
       meta({ [Symbol.for('charset')]: 'utf-8' }),

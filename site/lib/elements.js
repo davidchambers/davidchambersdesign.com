@@ -4,13 +4,13 @@ const escape = S.pipe([
   s => s.replaceAll('<', '&lt;'),
   s => s.replaceAll('>', '&gt;')
 ]);
-const text = function text(value) {
+const text = value => {
   return {
     [Symbol.for('text')]: [value],
     [Symbol.for('render')]: indent => level => inline => escape(value)
   };
 };
-const canonicalize$002Dattrs = function canonicalize$002Dattrs(attrs) {
+const canonicalize$002Dattrs = attrs => {
   return Object.fromEntries(S.map(name => (() => {
     const value = attrs[name];
     return [
@@ -25,16 +25,16 @@ const canonicalize$002Dchildren = S.compose(S.map(child => typeof child == 'stri
   s => s.replaceAll(' -- ', '\u2009\u2014\u2009'),
   text
 ])(child) : child))(S.unless(Array.isArray)(Array.of));
-const render$002Dblock$002Delement = function render$002Dblock$002Delement(tag$002Dname) {
+const render$002Dblock$002Delement = tag$002Dname => {
   return attrs => children => indent => level => $002Dinline => indent.repeat(level) + '<' + Symbol.keyFor(tag$002Dname) + S.foldMap(String)(sym => ' ' + Symbol.keyFor(sym) + '="' + escape(S.unwords(S.map(S.trim)(S.lines(attrs[sym])))) + '"')(Object.getOwnPropertySymbols(attrs)) + '>\n' + S.foldMap(String)(child => child[Symbol.for('render')](indent)(level + 1)(false))(children) + indent.repeat(level) + '</' + Symbol.keyFor(tag$002Dname) + '>\n';
 };
-const render$002Dinline$002Delement = function render$002Dinline$002Delement(tag$002Dname) {
+const render$002Dinline$002Delement = tag$002Dname => {
   return attrs => children => indent => level => inline => indent.repeat(level) + '<' + Symbol.keyFor(tag$002Dname) + S.foldMap(String)(sym => ' ' + Symbol.keyFor(sym) + '="' + escape(S.unwords(S.map(S.trim)(S.lines(attrs[sym])))) + '"')(Object.getOwnPropertySymbols(attrs)) + '>' + S.foldMap(String)(child => child[Symbol.for('render')](indent)(0)(true))(children) + '</' + Symbol.keyFor(tag$002Dname) + '>' + (inline ? '' : '\n');
 };
-const render$002Dself$002Dclosing$002Delement = function render$002Dself$002Dclosing$002Delement(tag$002Dname) {
+const render$002Dself$002Dclosing$002Delement = tag$002Dname => {
   return attrs => indent => level => inline => indent.repeat(level) + '<' + Symbol.keyFor(tag$002Dname) + S.foldMap(String)(sym => ' ' + Symbol.keyFor(sym) + '="' + escape(S.unwords(S.map(S.trim)(S.lines(attrs[sym])))) + '"')(Object.getOwnPropertySymbols(attrs)) + ' />' + (inline ? '' : '\n');
 };
-const block$002Delement = function block$002Delement(tag$002Dname) {
+const block$002Delement = tag$002Dname => {
   return $002Dattrs => $002Dchildren => (() => {
     const attrs = canonicalize$002Dattrs($002Dattrs);
     const children = canonicalize$002Dchildren($002Dchildren);
@@ -45,7 +45,7 @@ const block$002Delement = function block$002Delement(tag$002Dname) {
     };
   })();
 };
-const inline$002Delement = function inline$002Delement(tag$002Dname) {
+const inline$002Delement = tag$002Dname => {
   return $002Dattrs => $002Dchildren => (() => {
     const attrs = canonicalize$002Dattrs($002Dattrs);
     const children = canonicalize$002Dchildren($002Dchildren);
@@ -60,7 +60,7 @@ const inline$002Delement = function inline$002Delement(tag$002Dname) {
     };
   })();
 };
-const self$002Dclosing$002Delement = function self$002Dclosing$002Delement(tag$002Dname) {
+const self$002Dclosing$002Delement = tag$002Dname => {
   return $002Dattrs => (() => {
     const attrs = canonicalize$002Dattrs($002Dattrs);
     return {
@@ -70,10 +70,10 @@ const self$002Dclosing$002Delement = function self$002Dclosing$002Delement(tag$0
     };
   })();
 };
-const excerpt = function excerpt($002Dchildren) {
+const excerpt = $002Dchildren => {
   return (() => {
     const children = canonicalize$002Dchildren($002Dchildren);
-    const render = function render(indent) {
+    const render = indent => {
       return level => inline => S.foldMap(String)(child => child[Symbol.for('render')](indent)(level)(inline))(children);
     };
     return {
@@ -151,7 +151,7 @@ const linearGradient = block$002Delement(Symbol.for('linearGradient'));
 const object = block$002Delement(Symbol.for('object'));
 const svg = block$002Delement(Symbol.for('svg'));
 const a$0027 = inline$002Delement(Symbol.for('a'));
-const a = function a(href) {
+const a = href => {
   return a$0027({ [Symbol.for('href')]: href });
 };
 const code$0027 = inline$002Delement(Symbol.for('code'));

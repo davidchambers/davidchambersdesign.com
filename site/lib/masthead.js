@@ -676,7 +676,7 @@ const $007EV$007E = [
   $2190(1),
   $2191(20)
 ];
-const update = function update(positions) {
+const update = positions => {
   return dir => (() => {
     const x = S.fst(positions[0]);
     const y = S.snd(positions[0]);
@@ -686,7 +686,7 @@ const update = function update(positions) {
     ];
   })();
 };
-const reset = function reset(path) {
+const reset = path => {
   return (() => {
     const paths = S.extend(S.I)(S.reduce(update)([S.Pair(0)(0)])(path));
     const xs = S.chain(S.map(S.fst))(paths);

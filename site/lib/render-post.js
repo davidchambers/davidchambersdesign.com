@@ -89,7 +89,7 @@ import {
   video
 } from './elements.js';
 import tags from './tags.js';
-const render$002Dpost = function render$002Dpost(post) {
+const render$002Dpost = post => {
   return related$002Dposts => [article$0027(S.maybe({})(S.singleton(Symbol.for('id')))(S.value(Symbol.for('article-id'))(post)))([
       header([
         h1(post[Symbol.for('title')]),

@@ -218,7 +218,7 @@ const posts = [
   post$002Fthe$002Dperils$002Dof$002Dusing$002Djavascript$002Dobjects$002Das$002Dsets,
   post$002Fgive$002Dand$002Dtake$002Dof$002Dcontinuation$002Dpassing$002Dstyle
 ];
-const public_ = function public_(components) {
+const public_ = components => {
   return path.join(...[
     dirname,
     '..',
@@ -227,7 +227,7 @@ const public_ = function public_(components) {
     ...components
   ]);
 };
-const write$002Dfile = function write$002Dfile(filename) {
+const write$002Dfile = filename => {
   return data => fs.writeFileSync(...[
     filename,
     data
@@ -237,7 +237,7 @@ write$002Dfile(public_([
   'css',
   'screen.css'
 ]))(generate$002Dcss);
-const render$002Dsvg = function render$002Dsvg(attrs) {
+const render$002Dsvg = attrs => {
   return paths => (() => {
     const attrs$0027 = {
       [Symbol.for('xmlns')]: 'http://www.w3.org/2000/svg',
@@ -344,7 +344,7 @@ write$002Dfile(public_([
   [Symbol.for('width')]: 16,
   [Symbol.for('height')]: 16
 })(icon$002Ftwitter));
-const render$002Ddocument = function render$002Ddocument(element) {
+const render$002Ddocument = element => {
   return '<!DOCTYPE html>\n' + element[Symbol.for('render')]('  ')(0)(false);
 };
 write$002Dfile(public_(['archives.html']))(render$002Ddocument(base$002Dtemplate('Archives')(render$002Darchives(posts))));

@@ -200,8 +200,7 @@ const esFromDeclaration = (declaration: Serif.Declaration): ES.VariableDeclarati
   ES.VariableDeclaration([
     ES.VariableDeclarator(
       esFromIdentifierName(declaration.name),
-      ES.FunctionExpression(
-        esFromIdentifierName(declaration.name),
+      ES.ArrowFunctionExpression(
         declaration.parameterNames.slice(0, 1).map(esFromIdentifierName),
         ES.BlockStatement([ES.ReturnStatement(declaration.parameterNames.slice(1).reduceRight(
           (body, name) => ES.ArrowFunctionExpression([esFromIdentifierName(name)], body),

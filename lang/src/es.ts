@@ -300,21 +300,6 @@ export const ReturnStatement = (
   argument,
 });
 
-// 15.2 Function Definitions
-
-export type FunctionExpression = ES.FunctionExpression;
-
-export const FunctionExpression = (
-  id: Identifier,
-  params: Array<Pattern>,
-  body: BlockStatement,
-): FunctionExpression => ({
-  type: 'FunctionExpression',
-  id,
-  params,
-  body,
-});
-
 // 15.3 Arrow Function Definitions
 
 export type ArrowFunctionExpression = ES.ArrowFunctionExpression;

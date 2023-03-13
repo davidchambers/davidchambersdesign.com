@@ -88,7 +88,7 @@ import {
   var$0027,
   video
 } from './elements.js';
-const render$002Dsection = function render$002Dsection(section) {
+const render$002Dsection = section => {
   return li([
     h2(section[Symbol.for('heading')]),
     ol(S.map(post => li([

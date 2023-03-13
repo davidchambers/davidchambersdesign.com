@@ -103,7 +103,7 @@ const body = [
   h2('Adding decorative textual content via CSS'),
   (() => {
     const url = 'http://reference.sitepoint.com';
-    const sitepoint = function sitepoint(path) {
+    const sitepoint = path => {
       return text => a(url + path)(code(text));
     };
     return p([

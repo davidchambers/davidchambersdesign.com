@@ -174,7 +174,7 @@ const body = [
   code$002Dblock(Symbol.for('html'))('\n     <time datetime="2010-11-28T00:30+11:00">28 November 2010</time>\n     '),
   (() => {
     const url = 'http://bitbucket.org/davidchambers/jquery.localize';
-    const link = function link(path) {
+    const link = path => {
       return a(url + path);
     };
     return p([

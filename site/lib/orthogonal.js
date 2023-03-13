@@ -1,5 +1,5 @@
 import S from 'sanctuary';
-const reducer = function reducer(prev) {
+const reducer = prev => {
   return path => curr => curr[0] === Symbol.for('M') ? prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m') ? S.Pair(curr)(path) : S.Pair(curr)([
     ...path,
     prev
@@ -21,7 +21,7 @@ const render = S.pipe([
   S.map(x => typeof x === 'symbol' ? Symbol.keyFor(x) : String(x)),
   S.unwords
 ]);
-const $21E6 = function $21E6(x) {
+const $21E6 = x => {
   return [
     Symbol.for('m'),
     [
@@ -30,7 +30,7 @@ const $21E6 = function $21E6(x) {
     ]
   ];
 };
-const $21E8 = function $21E8(x) {
+const $21E8 = x => {
   return [
     Symbol.for('m'),
     [
@@ -39,7 +39,7 @@ const $21E8 = function $21E8(x) {
     ]
   ];
 };
-const $21E7 = function $21E7(y) {
+const $21E7 = y => {
   return [
     Symbol.for('m'),
     [
@@ -48,7 +48,7 @@ const $21E7 = function $21E7(y) {
     ]
   ];
 };
-const $21E9 = function $21E9(y) {
+const $21E9 = y => {
   return [
     Symbol.for('m'),
     [
@@ -57,25 +57,25 @@ const $21E9 = function $21E9(y) {
     ]
   ];
 };
-const $2190 = function $2190(x) {
+const $2190 = x => {
   return [
     Symbol.for('h'),
     -x
   ];
 };
-const $2192 = function $2192(x) {
+const $2192 = x => {
   return [
     Symbol.for('h'),
     +x
   ];
 };
-const $2191 = function $2191(y) {
+const $2191 = y => {
   return [
     Symbol.for('v'),
     -y
   ];
 };
-const $2193 = function $2193(y) {
+const $2193 = y => {
   return [
     Symbol.for('v'),
     +y

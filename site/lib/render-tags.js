@@ -89,7 +89,7 @@ import {
   video
 } from './elements.js';
 import tags from './tags.js';
-const render$002Dtags = function render$002Dtags(posts) {
+const render$002Dtags = posts => {
   return (() => {
     const counts = S.reduce(counts => tag => ({
       ...counts,

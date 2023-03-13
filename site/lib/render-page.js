@@ -87,7 +87,7 @@ import {
   var$0027,
   video
 } from './elements.js';
-const render$002Dpage = function render$002Dpage(page) {
+const render$002Dpage = page => {
   return [article(page[Symbol.for('body')])];
 };
 export default render$002Dpage;

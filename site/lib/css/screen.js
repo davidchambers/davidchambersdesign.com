@@ -1,5 +1,5 @@
 import S from 'sanctuary';
-const $0027 = function $0027(text) {
+const $0027 = text => {
   return '\'' + text.replace(new RegExp('(?=\')', 'g'), '\\') + '\'';
 };
 const base03 = '#002b36';
@@ -21,33 +21,33 @@ const green = '#859900';
 const mid$002Dgray = '#a9a9a9';
 const pink = '#ff5e99';
 const recycled$002Dpaper = '#fef9ec';
-const screen = function screen(coerce) {
+const screen = coerce => {
   return (() => {
-    const $0025 = function $0025(x) {
+    const $0025 = x => {
       return coerce(x) + '%';
     };
-    const em = function em(x) {
+    const em = x => {
       return coerce(x) + 'em';
     };
-    const px = function px(x) {
+    const px = x => {
       return coerce(x) + 'px';
     };
-    const sans$002Dserif = function sans$002Dserif(names) {
+    const sans$002Dserif = names => {
       return [
         ...names.map($0027),
         'sans-serif'
       ].join(', ');
     };
-    const monospace = function monospace(names) {
+    const monospace = names => {
       return [
         ...names.map($0027),
         'monospace'
       ].join(', ');
     };
-    const rgba = function rgba(r) {
+    const rgba = r => {
       return g => b => a => 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
     };
-    const $0021important = function $0021important(x) {
+    const $0021important = x => {
       return coerce(x) + ' !important';
     };
     const tag$002Dbackground = S.pipe([
