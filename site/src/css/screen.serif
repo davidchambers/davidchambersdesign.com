@@ -2,7 +2,7 @@ import S from "sanctuary";
 
 export default screen;
 
-' text = "'" + text.replace((new RegExp "(?=')" "g"), "\\") + "'"
+' text = "'" + text.replace(new RegExp("(?=')", "g"), "\\") + "'"
 
 base03          = "#002b36"
 base02          = "#073642"
@@ -53,8 +53,8 @@ screen coerce = {
     n => n * 0.1
     n => n + 0.3
     n => n.toFixed(3)
-    s => s.replace((new RegExp "0*$" ""), "")
-    s => s.replace((new RegExp "[.]$" ""), "")
+    s => s.replace(new RegExp("0*$", ""), "")
+    s => s.replace(new RegExp("[.]$", ""), "")
     (rgba 0 0 0)
   ]);
 

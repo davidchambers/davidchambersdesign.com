@@ -5,10 +5,10 @@ import S from "sanctuary";
 export default related-posts;
 
 intersection set-1 set-2 =
-  (new Set #[...set-2].filter(x => set-1.has(x)))
+  new Set(#[...set-2].filter(x => set-1.has(x)))
 
 union set-1 set-2 =
-  (new Set #[...set-1 ...set-2])
+  new Set(#[...set-1 ...set-2])
 
 similarity set-1 set-2 = {
   (intersection set-1 set-2).size / (Math.sqrt (union set-1 set-2).size)
@@ -18,8 +18,8 @@ seconds-between from to =
   to.diff(from, "seconds").seconds
 
 with-scores that this = {
-  score = (similarity (new Set that:tags)
-                      (new Set this:tags));
+  score = (similarity new Set(that:tags)
+                      new Set(this:tags));
   primary = (S.negate score);
   secondary = (Math.abs (seconds-between that:datetime
                                          this:datetime));

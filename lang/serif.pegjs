@@ -186,7 +186,11 @@ ImportMeta
     { return Serif.MetaProperty(meta, property); }
 
 MemberExpression
-  = object:PrimaryExpression
+  = object:(
+        'new' Separator+ callee:MemberExpression Separator* args:Arguments
+        { return Serif.NewExpression(callee, args); }
+      / PrimaryExpression
+    )
     properties:(
         SymbolLiteral
       / '.' ident:Identifier                              { return Serif.StringLiteral(ident.name); }
@@ -212,14 +216,6 @@ Arguments
     tail:(Separator* ',' Separator* argument:ConditionalExpression { return argument; })*
     Separator* ')'
     { return [head, ...tail]; }
-
-NewExpression
-  = '('
-    Separator* 'new'
-    Separator+ callee:Expression
-    args:(Separator+ arg:Expression { return arg; })*
-    Separator* ')'
-    { return Serif.NewExpression(callee, args); }
 
 Application
   = '('
@@ -497,5 +493,4 @@ PrimaryExpression
   / ImportMeta
   / Identifier
   / BlockExpression
-  / NewExpression
   / Application

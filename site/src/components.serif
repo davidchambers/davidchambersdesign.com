@@ -34,7 +34,7 @@ code-block language source-code = {
     (S.fromMaybe line
                  (S.chain prefix => (S.stripPrefix prefix line)
                           (S.map x => x.match
-                                 (S.chain (S.match (new RegExp "^[ ]*" ""))
+                                 (S.chain (S.match new RegExp("^[ ]*", ""))
                                           (S.head lines)))));
   (pre (code (text (S.unlines (S.map trim-leading-spaces lines)))))
 }

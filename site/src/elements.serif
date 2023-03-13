@@ -113,7 +113,7 @@ canonicalize-children =
   (S.compose (S.map child => {
                       if typeof child == "string" then {
                         (S.pipe #[
-                          s => s.replace((new RegExp "^[ ]+" "gm"), " ")
+                          s => s.replace(new RegExp("^[ ]+", "gm"), " ")
                           s => s.replaceAll("\n", "")
                           s => s.replaceAll(" -- ", "\u2009\u2014\u2009")
                           text

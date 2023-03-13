@@ -48,19 +48,17 @@ function print(x: any): string {
     case '[object Symbol]':
       return `\x1B[36m:${Symbol.keyFor(x)}\x1B[0m`;
     case '[object Date]':
-      return `(\x1B[1mnew\x1B[0m Date ${print(Number(x))})`;
+      return `\x1B[1mnew\x1B[0m Date(${print(Number(x))})`;
     case '[object RegExp]':
-      return `(\x1B[1mnew\x1B[0m RegExp ${print(x.source)} ${print(x.flags)})`;
+      return `\x1B[1mnew\x1B[0m RegExp(${print(x.source)}, ${print(x.flags)})`;
     case '[object Set]':
-      return `(\x1B[1mnew\x1B[0m Set ${print(Array.from(x))})`;
+      return `\x1B[1mnew\x1B[0m Set(${print(Array.from(x))})`;
     case '[object Map]':
-      return `(\x1B[1mnew\x1B[0m Map ${print(Array.from(x))})`;
+      return `\x1B[1mnew\x1B[0m Map(${print(Array.from(x))})`;
     case '[object Array]':
       return '#[' + x.map(print).join(' ') + ']';
     case '[object Object]':
-      return '#{' + (
-        Reflect.ownKeys(x).map(k => print(k) + ' ' + print(x[k])).join(' ')
-      ) + '}';
+      return '#{' + Reflect.ownKeys(x).map(k => print(k) + ' ' + print(x[k])).join(' ') + '}';
     default:
       return `${x}`;
   }
