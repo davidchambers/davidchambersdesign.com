@@ -249,30 +249,6 @@ export const ReturnStatement = (
   argument,
 });
 
-// 14.12 The switch Statement
-
-export type SwitchStatement = ES.SwitchStatement;
-
-export const SwitchStatement = (
-  discriminant: Expression,
-  cases: Array<SwitchCase>,
-): SwitchStatement => ({
-  type: 'SwitchStatement',
-  discriminant,
-  cases,
-});
-
-export type SwitchCase = ES.SwitchCase;
-
-export const SwitchCase = (
-  test: Expression | null,
-  consequent: Array<Statement>,
-): SwitchCase => ({
-  type: 'SwitchCase',
-  test,
-  consequent,
-});
-
 // 15.2 Function Definitions
 
 export type FunctionExpression = ES.FunctionExpression;
