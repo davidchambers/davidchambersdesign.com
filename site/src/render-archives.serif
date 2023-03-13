@@ -1,5 +1,6 @@
+import S from "sanctuary";
+
 import * from "./elements.serif";
-import s from "./sanctuary.serif";
 
 export default render-archives;
 
@@ -7,7 +8,7 @@ render-section section =
   (li
      #[(h2 section:heading)
        (ol
-          (s.map post =>
+          (S.map post =>
                    (li
                       #[(a' #{:href "/" + post:slug} post:title)
                         " "
@@ -17,13 +18,13 @@ render-section section =
                  section:posts))])
 
 render-archives =
-  (s.pipe #[(s.map (s.join s.Pair))
-            (s.map (s.map-left post => post:datetime))
-            (s.sort-by (s.compose (s.compose s.negate Number) s.fst))
-            (s.map (s.map-left datetime => datetime.toFormat("MMMM y")))
-            (s.group-by (s.on s.equals s.fst))
-            (s.chain (s.array #[] head => tail => #[#{:heading (s.fst head) :posts (s.map s.snd #[head ...tail])}]))
+  (S.pipe #[(S.map (S.join S.Pair))
+            (S.map (S.mapLeft post => post:datetime))
+            (S.sortBy (S.compose (S.compose S.negate Number) S.fst))
+            (S.map (S.mapLeft datetime => datetime.toFormat("MMMM y")))
+            (S.groupBy (S.on S.equals S.fst))
+            (S.chain (S.array #[] head => tail => #[#{:heading (S.fst head) :posts (S.map S.snd #[head ...tail])}]))
             sections =>
               #[(h1 "Archives")
                 (ol' #{:class "archives"}
-                   (s.map render-section sections))]])
+                   (S.map render-section sections))]])

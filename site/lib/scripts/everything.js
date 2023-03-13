@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import S from 'sanctuary';
 import { svg } from '../elements.js';
 import _base$002Dtemplate from '../base-template.js';
 import _generate$002Dcss from '../generate-css.js';
@@ -10,7 +11,6 @@ import _render$002Darchives from '../render-archives.js';
 import _render$002Dpage from '../render-page.js';
 import _render$002Dpost from '../render-post.js';
 import _render$002Dtags from '../render-tags.js';
-import s from '../sanctuary.js';
 import _icon$002Fabout from '../icons/about.js';
 import _icon$002Farchives from '../icons/archives.js';
 import _icon$002Fbitbucket from '../icons/bitbucket.js';
@@ -349,5 +349,5 @@ const _render$002Ddocument = function _render$002Ddocument(element) {
 };
 _write$002Dfile(_public(['archives.html']))(_render$002Ddocument(_base$002Dtemplate('Archives')(_render$002Darchives(posts))));
 _write$002Dfile(_public(['tags.html']))(_render$002Ddocument(_base$002Dtemplate('Tags')(_render$002Dtags(posts))));
-s['map'](page => _write$002Dfile(_public([page[Symbol.for('slug')] + '.html']))(_render$002Ddocument(_base$002Dtemplate(page[Symbol.for('title')])(_render$002Dpage(page)))))(pages);
-s['map'](post => _write$002Dfile(_public([post[Symbol.for('slug')] + '.html']))(_render$002Ddocument(_base$002Dtemplate(post[Symbol.for('title')])(_render$002Dpost(post)(_related$002Dposts(posts)(post))))))(posts);
+S['map'](page => _write$002Dfile(_public([page[Symbol.for('slug')] + '.html']))(_render$002Ddocument(_base$002Dtemplate(page[Symbol.for('title')])(_render$002Dpage(page)))))(pages);
+S['map'](post => _write$002Dfile(_public([post[Symbol.for('slug')] + '.html']))(_render$002Ddocument(_base$002Dtemplate(post[Symbol.for('title')])(_render$002Dpost(post)(_related$002Dposts(posts)(post))))))(posts);

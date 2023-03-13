@@ -1,11 +1,12 @@
-import s from "./sanctuary.serif";
+import S from "sanctuary";
+
 import screen from "./css/screen.serif";
 
 export default generate-css;
 
 coerce x = {
   if (Array.isArray x) then {
-    (s.unwords (s.map coerce x))
+    (S.unwords (S.map coerce x))
   } else if typeof x == "symbol" then {
     (Symbol.keyFor x)
   } else {
@@ -14,23 +15,23 @@ coerce x = {
 }
 
 split-every-2 xs =
-  (s.array #[]
-           k => (s.array #[]
-                         v => (s.compose (s.prepend (s.Pair k v))
+  (S.array #[]
+           k => (S.array #[]
+                         v => (S.compose (S.prepend (S.Pair k v))
                                          split-every-2))
            xs)
 
 vendor-prefix unprefixed prefixed =
-  (s.chain (s.pair k => v => {
+  (S.chain (S.pair k => v => {
                      if k === unprefixed then {
-                       #[...prefixed unprefixed].map(k => (s.Pair k v))
+                       #[...prefixed unprefixed].map(k => (S.Pair k v))
                      } else {
-                       #[(s.Pair k v)]
+                       #[(S.Pair k v)]
                      }
                    }))
 
 vendor-prefixes =
-  (s.pipe #[(vendor-prefix :border-radius
+  (S.pipe #[(vendor-prefix :border-radius
                            #[:-webkit-border-radius
                                 :-moz-border-radius
                                  :-ms-border-radius
@@ -47,17 +48,18 @@ vendor-prefixes =
                                 :-moz-transition-timing-function
                                   :-o-transition-timing-function])])
 
-format-block selectors =
-  (s.pipe #[(s.map (s.pair k => v => "  " + (coerce k) + ": " + (coerce v) + ";"))
-            (s.prepend (s.join-with ",\n" selectors) + " {")
-            (s.append "}")
-            s.unlines])
+format-block selectors properties = {
+  selectors.join(",\n")
+  + " {\n"
+  + properties.map((S.pair k => v => "  " + (coerce k) + ": " + (coerce v) + ";\n")).join("")
+  + "}\n"
+}
 
 generate-css =
-  (s.pipe #[screen
+  (S.pipe #[screen
             split-every-2
-            (s.map (s.map split-every-2))
-            (s.map (s.map vendor-prefixes))
-            (s.map (s.pair format-block))
-            (s.join-with "\n")]
+            (S.map (S.map split-every-2))
+            (S.map (S.map vendor-prefixes))
+            (S.map (S.pair format-block))
+            (S.joinWith "\n")]
           coerce)

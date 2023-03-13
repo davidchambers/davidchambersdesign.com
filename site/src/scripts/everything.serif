@@ -2,6 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import url from "node:url";
 
+import S from "sanctuary";
+
 import {svg} from "../elements.serif";
 import base-template from "../base-template.serif";
 import generate-css from "../generate-css.serif";
@@ -11,7 +13,6 @@ import render-archives from "../render-archives.serif";
 import render-page from "../render-page.serif";
 import render-post from "../render-post.serif";
 import render-tags from "../render-tags.serif";
-import s from "../sanctuary.serif";
 import icon/about from "../icons/about.serif";
 import icon/archives from "../icons/archives.serif";
 import icon/bitbucket from "../icons/bitbucket.serif";
@@ -307,13 +308,13 @@ render-document element = {
             (render-document (base-template "Tags"
                                             (render-tags posts))))
 
-(s.map page =>
+(S.map page =>
          (write-file (public #[page:slug + ".html"])
                      (render-document (base-template page:title
                                                      (render-page page))))
        pages)
 
-(s.map post =>
+(S.map post =>
          (write-file (public #[post:slug + ".html"])
                      (render-document (base-template post:title
                                                      (render-post post

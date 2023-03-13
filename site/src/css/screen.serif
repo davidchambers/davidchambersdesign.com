@@ -1,4 +1,4 @@
-import s from "../sanctuary.serif";
+import S from "sanctuary";
 
 export default screen;
 
@@ -30,14 +30,14 @@ screen coerce = {
   em x = (coerce x) + "em";
   px x = (coerce x) + "px";
 
-  sans-serif names = (s.join-with ", " #[...(s.map ' names) "sans-serif"]);
-  monospace  names = (s.join-with ", " #[...(s.map ' names) "monospace"]);
+  sans-serif names = #[...names.map(') "sans-serif"].join(", ");
+  monospace  names = #[...names.map(') "monospace"].join(", ");
 
   rgba r g b a = "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
 
   !important x = (coerce x) + " !important";
 
-  tag-background = (s.pipe #[
+  tag-background = (S.pipe #[
     Math.log2
     n => n * 5
     n => 247 - n
@@ -48,7 +48,7 @@ screen coerce = {
     s => "#" + s
   ]);
 
-  tag-color = (s.pipe #[
+  tag-color = (S.pipe #[
     Math.log2
     n => n * 0.1
     n => n + 0.3
@@ -58,7 +58,7 @@ screen coerce = {
     (rgba 0 0 0)
   ]);
 
-  (s.join #[#[
+  (S.join #[#[
 
     #["html"] #[
       :height (% 100)
@@ -700,11 +700,11 @@ screen coerce = {
 
   ]
 
-  (s.fold-map Array
-              count => #[#["#tags li[data-count='" + count + "'] a"]
-                         #[:background (tag-background count)
-                           :color (tag-color count)]]
-              (s.range 1 20))
+  (S.foldMap Array
+             count => #[#["#tags li[data-count='" + count + "'] a"]
+                        #[:background (tag-background count)
+                          :color (tag-color count)]]
+             (S.range 1 20))
 
   #[
 

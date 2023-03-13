@@ -1,3 +1,4 @@
+import S from 'sanctuary';
 import { path } from '../elements.js';
 import {
   render,
@@ -10,8 +11,7 @@ import {
   _$2191,
   _$2193
 } from '../orthogonal.js';
-import s from '../sanctuary.js';
-const dates = s['map'](d => path({
+const dates = S['map'](d => path({
   [Symbol.for('fill-rule')]: Symbol.for('evenodd'),
   [Symbol.for('fill')]: '#000',
   [Symbol.for('d')]: render([

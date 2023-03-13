@@ -1,25 +1,25 @@
-import s from './sanctuary.js';
+import S from 'sanctuary';
 const reducer = function reducer(prev) {
-  return path => curr => curr[0] === Symbol.for('M') ? prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m') ? s['Pair'](curr)(path) : s['Pair'](curr)([
+  return path => curr => curr[0] === Symbol.for('M') ? prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m') ? S['Pair'](curr)(path) : S['Pair'](curr)([
     ...path,
     prev
-  ]) : (prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m')) && curr[0] === Symbol.for('m') ? s['Pair']([
+  ]) : (prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m')) && curr[0] === Symbol.for('m') ? S['Pair']([
     prev[0],
     [
       prev[1][0] + curr[1][0],
       prev[1][1] + curr[1][1]
     ]
-  ])(path) : s['Pair'](curr)([
+  ])(path) : S['Pair'](curr)([
     ...path,
     prev
   ]);
 };
-const simplify = s['array']([])(head => tail => s['pair'](s['append'])(s['reduce'](s['pair'](reducer))(s['Pair'](head)([]))(tail)));
-const render = s['pipe']([
+const simplify = S['array']([])(head => tail => S['pair'](S['append'])(S['reduce'](S['pair'](reducer))(S['Pair'](head)([]))(tail)));
+const render = S['pipe']([
   simplify,
-  s['join'],
-  s['map'](x => typeof x === 'symbol' ? Symbol['keyFor'](x) : String(x)),
-  s['unwords']
+  S['join'],
+  S['map'](x => typeof x === 'symbol' ? Symbol['keyFor'](x) : String(x)),
+  S['unwords']
 ]);
 const _$21E6 = function _$21E6(x) {
   return [

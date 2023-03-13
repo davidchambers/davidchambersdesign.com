@@ -1,18 +1,18 @@
-import s from './sanctuary.js';
+import S from 'sanctuary';
 import screen from './css/screen.js';
 const coerce = function coerce(x) {
-  return Array['isArray'](x) ? s['unwords'](s['map'](coerce)(x)) : typeof x == 'symbol' ? Symbol['keyFor'](x) : String(x);
+  return Array['isArray'](x) ? S['unwords'](S['map'](coerce)(x)) : typeof x == 'symbol' ? Symbol['keyFor'](x) : String(x);
 };
 const _split$002Devery$002D2 = function _split$002Devery$002D2(xs) {
-  return s['array']([])(k => s['array']([])(v => s['compose'](s['prepend'](s['Pair'](k)(v)))(_split$002Devery$002D2)))(xs);
+  return S['array']([])(k => S['array']([])(v => S['compose'](S['prepend'](S['Pair'](k)(v)))(_split$002Devery$002D2)))(xs);
 };
 const _vendor$002Dprefix = function _vendor$002Dprefix(unprefixed) {
-  return prefixed => s['chain'](s['pair'](k => v => k === unprefixed ? [
+  return prefixed => S['chain'](S['pair'](k => v => k === unprefixed ? [
     ...prefixed,
     unprefixed
-  ]['map'](k => s['Pair'](k)(v)) : [s['Pair'](k)(v)]));
+  ]['map'](k => S['Pair'](k)(v)) : [S['Pair'](k)(v)]));
 };
-const _vendor$002Dprefixes = s['pipe']([
+const _vendor$002Dprefixes = S['pipe']([
   _vendor$002Dprefix(Symbol.for('border-radius'))([
     Symbol.for('-webkit-border-radius'),
     Symbol.for('-moz-border-radius'),
@@ -35,19 +35,14 @@ const _vendor$002Dprefixes = s['pipe']([
   ])
 ]);
 const _format$002Dblock = function _format$002Dblock(selectors) {
-  return s['pipe']([
-    s['map'](s['pair'](k => v => '  ' + coerce(k) + ': ' + coerce(v) + ';')),
-    s['prepend'](s['join-with'](',\n')(selectors) + ' {'),
-    s['append']('}'),
-    s['unlines']
-  ]);
+  return properties => selectors['join'](',\n') + ' {\n' + properties['map'](S['pair'](k => v => '  ' + coerce(k) + ': ' + coerce(v) + ';\n'))['join']('') + '}\n';
 };
-const _generate$002Dcss = s['pipe']([
+const _generate$002Dcss = S['pipe']([
   screen,
   _split$002Devery$002D2,
-  s['map'](s['map'](_split$002Devery$002D2)),
-  s['map'](s['map'](_vendor$002Dprefixes)),
-  s['map'](s['pair'](_format$002Dblock)),
-  s['join-with']('\n')
+  S['map'](S['map'](_split$002Devery$002D2)),
+  S['map'](S['map'](_vendor$002Dprefixes)),
+  S['map'](S['pair'](_format$002Dblock)),
+  S['joinWith']('\n')
 ])(coerce);
 export default _generate$002Dcss;

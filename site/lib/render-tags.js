@@ -1,3 +1,4 @@
+import S from 'sanctuary';
 import {
   _canonicalize$002Dchildren,
   text,
@@ -87,17 +88,16 @@ import {
   _var$0027,
   video
 } from './elements.js';
-import s from './sanctuary.js';
 import tags from './tags.js';
 const _render$002Dtags = function _render$002Dtags(posts) {
   return (() => {
-    const counts = s['reduce'](counts => tag => ({
+    const counts = S['reduce'](counts => tag => ({
       ...counts,
       [tag]: counts[tag] + 1
-    }))(s['map'](x => 0)(tags))(posts['flatMap'](post => post[Symbol.for('tags')]));
+    }))(S['map'](x => 0)(tags))(posts['flatMap'](post => post[Symbol.for('tags')]));
     return [
       h1('Tags'),
-      _ol$0027({ [Symbol.for('id')]: 'tags' })(s['map'](tag => _li$0027({ [Symbol.for('data-count')]: counts[tag] })(a('/tag/' + tag + '/')(tags[tag])))(Object['keys'](tags))),
+      _ol$0027({ [Symbol.for('id')]: 'tags' })(S['map'](tag => _li$0027({ [Symbol.for('data-count')]: counts[tag] })(a('/tag/' + tag + '/')(tags[tag])))(Object['keys'](tags))),
       div({ [Symbol.for('class')]: 'clearfix' })([])
     ];
   })();

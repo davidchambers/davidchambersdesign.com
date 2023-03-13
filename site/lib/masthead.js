@@ -1,3 +1,4 @@
+import S from 'sanctuary';
 import { path } from './elements.js';
 import {
   render,
@@ -10,7 +11,6 @@ import {
   _$2191,
   _$2193
 } from './orthogonal.js';
-import s from './sanctuary.js';
 const _$003CA$003E = [
   _$2192(14),
   _$2193(24),
@@ -678,20 +678,20 @@ const _$007EV$007E = [
 ];
 const update = function update(positions) {
   return dir => (() => {
-    const x = s['fst'](positions[0]);
-    const y = s['snd'](positions[0]);
+    const x = S['fst'](positions[0]);
+    const y = S['snd'](positions[0]);
     return [
-      dir[0] === Symbol.for('h') ? s['Pair'](x + dir[1])(y) : dir[0] === Symbol.for('v') ? s['Pair'](x)(y + dir[1]) : s['Pair'](x + dir[1][0])(y + dir[1][1]),
+      dir[0] === Symbol.for('h') ? S['Pair'](x + dir[1])(y) : dir[0] === Symbol.for('v') ? S['Pair'](x)(y + dir[1]) : S['Pair'](x + dir[1][0])(y + dir[1][1]),
       ...positions
     ];
   })();
 };
 const reset = function reset(path) {
   return (() => {
-    const paths = s['extend'](s['I'])(s['reduce'](update)([s['Pair'](0)(0)])(path));
-    const xs = s['chain'](s['map'](s['fst']))(paths);
-    const ys = s['chain'](s['map'](s['snd']))(paths);
-    const dx = s['reduce'](s['max'])(0)(xs) - xs[0];
+    const paths = S['extend'](S['I'])(S['reduce'](update)([S['Pair'](0)(0)])(path));
+    const xs = S['chain'](S['map'](S['fst']))(paths);
+    const ys = S['chain'](S['map'](S['snd']))(paths);
+    const dx = S['reduce'](S['max'])(0)(xs) - xs[0];
     const dy = 0 - ys[0];
     return [
       Symbol.for('m'),
@@ -702,19 +702,19 @@ const reset = function reset(path) {
     ];
   })();
 };
-const paths = s['pipe']([
-  s['map'](char => [
+const paths = S['pipe']([
+  S['map'](char => [
     ...char,
     reset(char)
   ]),
-  s['intercalate']([[
+  S['intercalate']([[
       Symbol.for('m'),
       [
         6,
         0
       ]
     ]]),
-  s['prepend']([
+  S['prepend']([
     Symbol.for('M'),
     [
       0,

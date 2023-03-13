@@ -1,6 +1,7 @@
+import S from "sanctuary";
+
 import {path} from "./elements.serif";
 import * from "./orthogonal.serif";
-import s from "./sanctuary.serif";
 
 export default default;
 export {fill mask};
@@ -140,32 +141,32 @@ export {fill mask};
         (→  1) (↓ 20) (←  1) (↑ 20)]
 
 update positions dir = {
-  x = (s.fst positions[0]);
-  y = (s.snd positions[0]);
+  x = (S.fst positions[0]);
+  y = (S.snd positions[0]);
   #[
     if dir[0] === :h then {
-      (s.Pair [x + dir[1]] y)
+      (S.Pair [x + dir[1]] y)
     } else if dir[0] === :v then {
-      (s.Pair x [y + dir[1]])
+      (S.Pair x [y + dir[1]])
     } else {
-      (s.Pair [x + dir[1][0]] [y + dir[1][1]])
+      (S.Pair [x + dir[1][0]] [y + dir[1][1]])
     }
     ...positions
   ]
 }
 
 reset path = {
-  paths = (s.extend s.I (s.reduce update #[(s.Pair 0 0)] path));
-  xs = (s.chain (s.map s.fst) paths);
-  ys = (s.chain (s.map s.snd) paths);
-  dx = (s.reduce s.max 0 xs) - xs[0];
+  paths = (S.extend S.I (S.reduce update #[(S.Pair 0 0)] path));
+  xs = (S.chain (S.map S.fst) paths);
+  ys = (S.chain (S.map S.snd) paths);
+  dx = (S.reduce S.max 0 xs) - xs[0];
   dy = 0 - ys[0];
   #[:m #[dx dy]]
 }
 
-paths = (s.pipe #[(s.map char => #[...char (reset char)])
-                  (s.intercalate #[#[:m #[6 0]]])
-                  (s.prepend #[:M #[0 0]])])
+paths = (S.pipe #[(S.map char => #[...char (reset char)])
+                  (S.intercalate #[#[:m #[6 0]]])
+                  (S.prepend #[:M #[0 0]])])
 
 <chars> = (paths #[<D> <A> <V> <I> <D> <C> <H> <A> <M> <B> <E> <R> <S> <D> <E> <S> <I> <G> <N>])
 -chars- = (paths #[-D- -A- -V- -I- -D- -C- -H- -A- -M- -B- -E- -R- -S- -D- -E- -S- -I- -G- -N-])

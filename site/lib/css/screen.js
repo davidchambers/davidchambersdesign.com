@@ -1,4 +1,4 @@
-import s from '../sanctuary.js';
+import S from 'sanctuary';
 const _$0027 = function _$0027(text) {
   return '\'' + text['replace'](new RegExp('(?=\')', 'g'), '\\') + '\'';
 };
@@ -33,16 +33,16 @@ const screen = function screen(coerce) {
       return coerce(x) + 'px';
     };
     const _sans$002Dserif = function _sans$002Dserif(names) {
-      return s['join-with'](', ')([
-        ...s['map'](_$0027)(names),
+      return [
+        ...names['map'](_$0027),
         'sans-serif'
-      ]);
+      ]['join'](', ');
     };
     const monospace = function monospace(names) {
-      return s['join-with'](', ')([
-        ...s['map'](_$0027)(names),
+      return [
+        ...names['map'](_$0027),
         'monospace'
-      ]);
+      ]['join'](', ');
     };
     const rgba = function rgba(r) {
       return g => b => a => 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
@@ -50,7 +50,7 @@ const screen = function screen(coerce) {
     const _$0021important = function _$0021important(x) {
       return coerce(x) + ' !important';
     };
-    const _tag$002Dbackground = s['pipe']([
+    const _tag$002Dbackground = S['pipe']([
       Math['log2'],
       n => n * 5,
       n => 247 - n,
@@ -60,7 +60,7 @@ const screen = function screen(coerce) {
       s => s['repeat'](3),
       s => '#' + s
     ]);
-    const _tag$002Dcolor = s['pipe']([
+    const _tag$002Dcolor = S['pipe']([
       Math['log2'],
       n => n * 0.1,
       n => n + 0.3,
@@ -69,7 +69,7 @@ const screen = function screen(coerce) {
       s => s['replace'](new RegExp('[.]$', ''), ''),
       rgba(0)(0)(0)
     ]);
-    return s['join']([
+    return S['join']([
       [
         ['html'],
         [
@@ -1465,7 +1465,7 @@ const screen = function screen(coerce) {
           99
         ]
       ],
-      s['fold-map'](Array)(count => [
+      S['foldMap'](Array)(count => [
         ['#tags li[data-count=\'' + count + '\'] a'],
         [
           Symbol.for('background'),
@@ -1473,7 +1473,7 @@ const screen = function screen(coerce) {
           Symbol.for('color'),
           _tag$002Dcolor(count)
         ]
-      ])(s['range'](1)(20)),
+      ])(S['range'](1)(20)),
       [
         ['.hashify-editor'],
         [

@@ -1,39 +1,39 @@
-import s from "./sanctuary.serif";
+import S from "sanctuary";
 
 export {render ⇦ ⇨ ⇧ ⇩ ← → ↑ ↓};
 
 reducer prev path curr = {
   if curr[0] === :M then {
     if {prev[0] === :M || prev[0] === :m} then {
-      (s.Pair curr path)  ;; ignore previous move
+      (S.Pair curr path)  ;; ignore previous move
     } else {
-      (s.Pair curr #[...path prev])
+      (S.Pair curr #[...path prev])
     }
   } else {
     if {prev[0] === :M || prev[0] === :m} && curr[0] === :m then {
-      (s.Pair #[prev[0]
+      (S.Pair #[prev[0]
                 #[prev[1][0] + curr[1][0]
                   prev[1][1] + curr[1][1]]]
               path)
     } else {
-      (s.Pair curr #[...path prev])
+      (S.Pair curr #[...path prev])
     }
   }
 }
 
 simplify =
-  (s.array #[]
+  (S.array #[]
            head => tail =>
-             (s.pair s.append
-                     (s.reduce (s.pair reducer)
-                               (s.Pair head #[])
+             (S.pair S.append
+                     (S.reduce (S.pair reducer)
+                               (S.Pair head #[])
                                tail)))
 
 render =
-  (s.pipe #[simplify
-            s.join
-            (s.map x => if typeof x === "symbol" then (Symbol.keyFor x) else (String x))
-            s.unwords])
+  (S.pipe #[simplify
+            S.join
+            (S.map x => if typeof x === "symbol" then (Symbol.keyFor x) else (String x))
+            S.unwords])
 
 ⇦ x = #[:m #[{- x} 0]]
 ⇨ x = #[:m #[{+ x} 0]]
