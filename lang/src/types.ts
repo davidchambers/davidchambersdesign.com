@@ -93,14 +93,14 @@ export const Identifier = (
 });
 
 export interface SpreadElement {
-  readonly type: 'spread-element';
+  readonly type: 'SpreadElement';
   readonly argument: Expression;
 }
 
 export const SpreadElement = (
   argument: Expression,
 ): SpreadElement => ({
-  type: 'spread-element',
+  type: 'SpreadElement',
   argument,
 });
 

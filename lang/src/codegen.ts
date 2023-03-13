@@ -112,33 +112,27 @@ const esFromIdentifier = (identifier: Serif.Identifier): ES.Identifier => (
   Identifier(escape(identifier.name))
 );
 
+const esFromSpreadElement = (spreadElement: Serif.SpreadElement): ES.SpreadElement => (
+  es.SpreadElement(esFromExpression(spreadElement.argument))
+);
+
 const esFromArray = (array: Serif.Array): ES.ArrayExpression => (
   es.ArrayExpression(
-    array.elements.map(element => {
-      switch (element.type) {
-        case 'spread-element':  return es.SpreadElement(esFromExpression(element.argument));
-        default:                return esFromExpression(element);
-      }
-    })
+    array.elements.map(element =>
+      element.type === 'SpreadElement'
+      ? esFromSpreadElement(element)
+      : esFromExpression(element)
+    )
   )
 );
 
 const esFromObject = (object: Serif.Object): ES.ObjectExpression => (
   es.ObjectExpression(
-    object.properties.map(property => {
-      switch (property.type) {
-        case 'spread-element': {
-          return es.SpreadElement(esFromExpression(property.argument));
-        }
-        case 'property': {
-          return es.Property(
-            esFromExpression(property.key),
-            esFromExpression(property.value),
-            {computed: true}
-          );
-        }
-      }
-    })
+    object.properties.map(property =>
+      property.type === 'SpreadElement'
+      ? esFromSpreadElement(property)
+      : es.Property(esFromExpression(property.key), esFromExpression(property.value), {computed: true})
+    )
   )
 );
 
@@ -217,10 +211,9 @@ const esFromApplication = (application: Serif.Application): ES.Expression => (
   application.arguments.reduce(
     (callee, argument) => es.CallExpression(
       callee,
-      argument.type === 'spread-element' ?
-        [es.SpreadElement(esFromExpression(argument.argument))] :
-      // else
-        [esFromExpression(argument)]
+      argument.type === 'SpreadElement'
+      ? [esFromSpreadElement(argument)]
+      : [esFromExpression(argument)]
     ),
     esFromExpression(application.callee)
   )
@@ -229,16 +222,11 @@ const esFromApplication = (application: Serif.Application): ES.Expression => (
 const esFromCallExpression = (callExpression: Serif.CallExpression): ES.Expression => (
   es.CallExpression(
     esFromExpression(callExpression.callee),
-    callExpression.arguments.map(argument => {
-      switch (argument.type) {
-        case 'spread-element': {
-          return es.SpreadElement(esFromExpression(argument.argument));
-        }
-        default: {
-          return esFromExpression(argument);
-        }
-      }
-    })
+    callExpression.arguments.map(argument =>
+      argument.type === 'SpreadElement'
+      ? esFromSpreadElement(argument)
+      : esFromExpression(argument)
+    )
   )
 );
 
