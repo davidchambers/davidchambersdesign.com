@@ -1,47 +1,64 @@
 import type * as ES from 'estree';
 
 
+export type Declaration = ES.Declaration;
+export type Expression = ES.Expression;
+export type Pattern = ES.Pattern;
+export type Statement = ES.Statement;
+
+export type SpreadElement = ES.SpreadElement;
+
 export const SpreadElement = (
-  argument: ES.Expression,
-): ES.SpreadElement => ({
+  argument: Expression,
+): SpreadElement => ({
   type: 'SpreadElement',
   argument,
 });
 
 // 13.1 Identifiers
 
+export type Identifier = ES.Identifier;
+
 // 13.2.3 Literals
+
+export type Literal = ES.Literal;
 
 export const Literal = (
   value: null | boolean | number | string,
-): ES.Literal => ({
+): Literal => ({
   type: 'Literal',
   value,
 });
 
 // 13.2.4 Array Initializer
 
+export type ArrayExpression = ES.ArrayExpression;
+
 export const ArrayExpression = (
-  elements: Array<ES.Expression | ES.SpreadElement>,
-): ES.ArrayExpression => ({
+  elements: Array<Expression | SpreadElement>,
+): ArrayExpression => ({
   type: 'ArrayExpression',
   elements,
 });
 
 // 13.2.5 Object Initializer
 
+export type ObjectExpression = ES.ObjectExpression;
+
 export const ObjectExpression = (
-  properties: Array<ES.Property | ES.SpreadElement>,
-): ES.ObjectExpression => ({
+  properties: Array<Property | SpreadElement>,
+): ObjectExpression => ({
   type: 'ObjectExpression',
   properties,
 });
 
+export type Property = ES.Property;
+
 export const Property = (
-  key: ES.Expression,
-  value: ES.Expression,
+  key: Expression,
+  value: Expression,
   options?: {method?: boolean; shorthand?: boolean; computed?: boolean}
-): ES.Property => ({
+): Property => ({
   type: 'Property',
   key,
   value,
@@ -53,11 +70,13 @@ export const Property = (
 
 // 13.3.2 Property Accessors
 
+export type MemberExpression = ES.MemberExpression;
+
 export const MemberExpression = (
-  object: ES.Expression,
-  property: ES.Expression,
+  object: Expression,
+  property: Expression,
   options?: {computed?: boolean; optional?: boolean}
-): ES.MemberExpression => ({
+): MemberExpression => ({
   type: 'MemberExpression',
   object,
   property,
@@ -67,10 +86,12 @@ export const MemberExpression = (
 
 // 13.3.5 The new Operator
 
+export type NewExpression = ES.NewExpression;
+
 export const NewExpression = (
-  callee: ES.Expression,
-  args: Array<ES.Expression | ES.SpreadElement>,
-): ES.NewExpression => ({
+  callee: Expression,
+  args: Array<Expression | SpreadElement>,
+): NewExpression => ({
   type: 'NewExpression',
   callee,
   arguments: args,
@@ -78,11 +99,13 @@ export const NewExpression = (
 
 // 13.3.6 Function Calls
 
+export type CallExpression = ES.CallExpression;
+
 export const CallExpression = (
-  callee: ES.Expression,
-  args: Array<ES.Expression | ES.SpreadElement>,
+  callee: Expression,
+  args: Array<Expression | SpreadElement>,
   options?: {optional?: boolean}
-): ES.CallExpression => ({
+): CallExpression => ({
   type: 'CallExpression',
   callee,
   arguments: args,
@@ -91,10 +114,12 @@ export const CallExpression = (
 
 // 13.3.12 Meta Properties
 
+export type MetaProperty = ES.MetaProperty;
+
 export const MetaProperty = (
-  meta: ES.Identifier,
-  property: ES.Identifier,
-): ES.MetaProperty => ({
+  meta: Identifier,
+  property: Identifier,
+): MetaProperty => ({
   type: 'MetaProperty',
   meta,
   property,
@@ -102,10 +127,13 @@ export const MetaProperty = (
 
 // 13.5 Unary Operators
 
+export type UnaryOperator = ES.UnaryOperator;
+export type UnaryExpression = ES.UnaryExpression;
+
 export const UnaryExpression = (
-  operator: ES.UnaryOperator,
-  argument: ES.Expression,
-): ES.UnaryExpression => ({
+  operator: UnaryOperator,
+  argument: Expression,
+): UnaryExpression => ({
   type: 'UnaryExpression',
   operator,
   argument,
@@ -120,11 +148,14 @@ export const UnaryExpression = (
 // 13.11 Equality Operators
 // 13.12 Binary Bitwise Operators
 
+export type BinaryOperator = ES.BinaryOperator;
+export type BinaryExpression = ES.BinaryExpression;
+
 export const BinaryExpression = (
-  operator: ES.BinaryOperator,
-  left: ES.Expression,
-  right: ES.Expression,
-): ES.BinaryExpression => ({
+  operator: BinaryOperator,
+  left: Expression,
+  right: Expression,
+): BinaryExpression => ({
   type: 'BinaryExpression',
   operator,
   left,
@@ -133,11 +164,14 @@ export const BinaryExpression = (
 
 // 13.13 Binary Logical Operators
 
+export type LogicalOperator = ES.LogicalOperator;
+export type LogicalExpression = ES.LogicalExpression;
+
 export const LogicalExpression = (
-  operator: ES.LogicalOperator,
-  left: ES.Expression,
-  right: ES.Expression,
-): ES.LogicalExpression => ({
+  operator: LogicalOperator,
+  left: Expression,
+  right: Expression,
+): LogicalExpression => ({
   type: 'LogicalExpression',
   operator,
   left,
@@ -146,11 +180,13 @@ export const LogicalExpression = (
 
 // 13.14 Conditional Operator
 
+export type ConditionalExpression = ES.ConditionalExpression;
+
 export const ConditionalExpression = (
-  test: ES.Expression,
-  consequent: ES.Expression,
-  alternate: ES.Expression,
-): ES.ConditionalExpression => ({
+  test: Expression,
+  consequent: Expression,
+  alternate: Expression,
+): ConditionalExpression => ({
   type: 'ConditionalExpression',
   test,
   consequent,
@@ -159,27 +195,33 @@ export const ConditionalExpression = (
 
 // 14.2 Block
 
+export type BlockStatement = ES.BlockStatement;
+
 export const BlockStatement = (
-  body: Array<ES.Statement>,
-): ES.BlockStatement => ({
+  body: Array<Statement>,
+): BlockStatement => ({
   type: 'BlockStatement',
   body,
 });
 
 // 14.3 Declarations and the Variable Statement
 
+export type VariableDeclaration = ES.VariableDeclaration;
+
 export const VariableDeclaration = (
-  declarations: Array<ES.VariableDeclarator>,
-): ES.VariableDeclaration => ({
+  declarations: Array<VariableDeclarator>,
+): VariableDeclaration => ({
   type: 'VariableDeclaration',
   kind: 'const',
   declarations,
 });
 
+export type VariableDeclarator = ES.VariableDeclarator;
+
 export const VariableDeclarator = (
-  id: ES.Pattern,
-  init: ES.Expression,
-): ES.VariableDeclarator => ({
+  id: Pattern,
+  init: Expression,
+): VariableDeclarator => ({
   type: 'VariableDeclarator',
   id,
   init,
@@ -187,37 +229,45 @@ export const VariableDeclarator = (
 
 // 14.5 Expression Statement
 
+export type ExpressionStatement = ES.ExpressionStatement;
+
 export const ExpressionStatement = (
-  expression: ES.Expression,
-): ES.ExpressionStatement => ({
+  expression: Expression,
+): ExpressionStatement => ({
   type: 'ExpressionStatement',
   expression,
 });
 
 // 14.10 The return Statement
 
+export type ReturnStatement = ES.ReturnStatement;
+
 export const ReturnStatement = (
-  argument: ES.Expression,
-): ES.ReturnStatement => ({
+  argument: Expression,
+): ReturnStatement => ({
   type: 'ReturnStatement',
   argument,
 });
 
 // 14.12 The switch Statement
 
+export type SwitchStatement = ES.SwitchStatement;
+
 export const SwitchStatement = (
-  discriminant: ES.Expression,
-  cases: Array<ES.SwitchCase>,
-): ES.SwitchStatement => ({
+  discriminant: Expression,
+  cases: Array<SwitchCase>,
+): SwitchStatement => ({
   type: 'SwitchStatement',
   discriminant,
   cases,
 });
 
+export type SwitchCase = ES.SwitchCase;
+
 export const SwitchCase = (
-  test: ES.Expression | null,
-  consequent: Array<ES.Statement>,
-): ES.SwitchCase => ({
+  test: Expression | null,
+  consequent: Array<Statement>,
+): SwitchCase => ({
   type: 'SwitchCase',
   test,
   consequent,
@@ -225,11 +275,13 @@ export const SwitchCase = (
 
 // 15.2 Function Definitions
 
+export type FunctionExpression = ES.FunctionExpression;
+
 export const FunctionExpression = (
-  id: ES.Identifier,
-  params: Array<ES.Pattern>,
-  body: ES.BlockStatement,
-): ES.FunctionExpression => ({
+  id: Identifier,
+  params: Array<Pattern>,
+  body: BlockStatement,
+): FunctionExpression => ({
   type: 'FunctionExpression',
   id,
   params,
@@ -238,10 +290,12 @@ export const FunctionExpression = (
 
 // 15.3 Arrow Function Definitions
 
+export type ArrowFunctionExpression = ES.ArrowFunctionExpression;
+
 export const ArrowFunctionExpression = (
-  params: Array<ES.Pattern>,
-  body: ES.BlockStatement | ES.Expression,
-): ES.ArrowFunctionExpression => ({
+  params: Array<Pattern>,
+  body: BlockStatement | Expression,
+): ArrowFunctionExpression => ({
   type: 'ArrowFunctionExpression',
   params,
   body,
@@ -250,15 +304,20 @@ export const ArrowFunctionExpression = (
 
 // 16.2 Modules
 
+export type ModuleDeclaration = ES.ModuleDeclaration;
+export type Program = ES.Program;
+
 export const Program = (
-  body: Array<ES.ModuleDeclaration | ES.Statement>,
-): ES.Program => ({
+  body: Array<ModuleDeclaration | Statement>,
+): Program => ({
   type: 'Program',
   sourceType: 'module',
   body,
 });
 
 // 16.2.2 Imports
+
+export type ImportDeclaration = ES.ImportDeclaration;
 
 export const ImportDeclaration = (
   specifiers: Array<
@@ -267,23 +326,27 @@ export const ImportDeclaration = (
     | ES.ImportSpecifier
   >,
   source: string,
-): ES.ImportDeclaration => ({
+): ImportDeclaration => ({
   type: 'ImportDeclaration',
   specifiers,
   source: Literal(source),
 });
 
+export type ImportDefaultSpecifier = ES.ImportDefaultSpecifier;
+
 export const ImportDefaultSpecifier = (
-  local: ES.Identifier,
-): ES.ImportDefaultSpecifier => ({
+  local: Identifier,
+): ImportDefaultSpecifier => ({
   type: 'ImportDefaultSpecifier',
   local,
 });
 
+export type ImportSpecifier = ES.ImportSpecifier;
+
 export const ImportSpecifier = (
-  local: ES.Identifier,
-  imported: ES.Identifier,
-): ES.ImportSpecifier => ({
+  local: Identifier,
+  imported: Identifier,
+): ImportSpecifier => ({
   type: 'ImportSpecifier',
   local,
   imported,
@@ -291,25 +354,31 @@ export const ImportSpecifier = (
 
 // 16.2.3 Exports
 
+export type ExportNamedDeclaration = ES.ExportNamedDeclaration;
+
 export const ExportNamedDeclaration = (
-  specifiers: Array<ES.ExportSpecifier>,
-): ES.ExportNamedDeclaration => ({
+  specifiers: Array<ExportSpecifier>,
+): ExportNamedDeclaration => ({
   type: 'ExportNamedDeclaration',
   specifiers,
 });
 
+export type ExportSpecifier = ES.ExportSpecifier;
+
 export const ExportSpecifier = (
-  local: ES.Identifier,
-  exported: ES.Identifier = local,
-): ES.ExportSpecifier => ({
+  local: Identifier,
+  exported: Identifier = local,
+): ExportSpecifier => ({
   type: 'ExportSpecifier',
   local,
   exported,
 });
 
+export type ExportDefaultDeclaration = ES.ExportDefaultDeclaration;
+
 export const ExportDefaultDeclaration = (
-  declaration: ES.Declaration | ES.Expression,
-): ES.ExportDefaultDeclaration => ({
+  declaration: Declaration | Expression,
+): ExportDefaultDeclaration => ({
   type: 'ExportDefaultDeclaration',
   declaration,
 });

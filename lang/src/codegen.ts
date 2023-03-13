@@ -1,6 +1,4 @@
-import type * as ES from 'estree';
-
-import * as es from './es.js';
+import * as ES from './es.js';
 import * as Serif from './types.js';
 
 
@@ -70,38 +68,38 @@ const escape = (name: string): Escaped => (
 const Identifier = (name: Escaped): ES.Identifier => ({type: 'Identifier', name});
 
 const esFromBooleanLiteral = (boolean: Serif.Boolean): ES.Literal => (
-  es.Literal(boolean.value)
+  ES.Literal(boolean.value)
 );
 
 const esFromNumber = (number: Serif.Number): ES.UnaryExpression | ES.Literal => (
   number.value < 0
-  ? es.UnaryExpression('-', es.Literal(-number.value))
-  : es.Literal(number.value)
+  ? ES.UnaryExpression('-', ES.Literal(-number.value))
+  : ES.Literal(number.value)
 );
 
 const esFromString = (string: Serif.String): ES.Literal => (
-  es.Literal(string.value)
+  ES.Literal(string.value)
 );
 
 const esFromSymbol = (symbol: Serif.Symbol): ES.CallExpression => (
-  es.CallExpression(
-    es.MemberExpression(
+  ES.CallExpression(
+    ES.MemberExpression(
       Identifier('Symbol' as Escaped),
       Identifier('for' as Escaped),
     ),
-    [es.Literal(symbol.name)],
+    [ES.Literal(symbol.name)],
   )
 );
 
 const esFromMetaProperty = (metaProperty: Serif.MetaProperty): ES.MetaProperty => (
-  es.MetaProperty(
+  ES.MetaProperty(
     Identifier(metaProperty.meta as Escaped),
     Identifier(metaProperty.property as Escaped),
   )
 );
 
 const esFromMemberExpression = (memberExpression: Serif.MemberExpression): ES.MemberExpression => (
-  es.MemberExpression(
+  ES.MemberExpression(
     esFromExpression(memberExpression.object),
     esFromExpression(memberExpression.property),
     {computed: true}
@@ -113,11 +111,11 @@ const esFromIdentifier = (identifier: Serif.Identifier): ES.Identifier => (
 );
 
 const esFromSpreadElement = (spreadElement: Serif.SpreadElement): ES.SpreadElement => (
-  es.SpreadElement(esFromExpression(spreadElement.argument))
+  ES.SpreadElement(esFromExpression(spreadElement.argument))
 );
 
 const esFromArray = (array: Serif.Array): ES.ArrayExpression => (
-  es.ArrayExpression(
+  ES.ArrayExpression(
     array.elements.map(element =>
       element.type === 'SpreadElement'
       ? esFromSpreadElement(element)
@@ -127,17 +125,17 @@ const esFromArray = (array: Serif.Array): ES.ArrayExpression => (
 );
 
 const esFromObject = (object: Serif.Object): ES.ObjectExpression => (
-  es.ObjectExpression(
+  ES.ObjectExpression(
     object.properties.map(property =>
       property.type === 'SpreadElement'
       ? esFromSpreadElement(property)
-      : es.Property(esFromExpression(property.key), esFromExpression(property.value), {computed: true})
+      : ES.Property(esFromExpression(property.key), esFromExpression(property.value), {computed: true})
     )
   )
 );
 
 const esFromLambda = (lambda: Serif.Lambda): ES.ArrowFunctionExpression => (
-  es.ArrowFunctionExpression(
+  ES.ArrowFunctionExpression(
     [esFromIdentifier(lambda.parameter)],
     esFromExpression(lambda.body),
   )
@@ -156,13 +154,13 @@ const esFromBlockExpression = (blockExpression: Serif.BlockExpression): ES.Expre
     return esFromExpression(blockExpression.statements[0].expression);
   }
   const last = blockExpression.statements[blockExpression.statements.length - 1];
-  return es.CallExpression(
-    es.ArrowFunctionExpression(
+  return ES.CallExpression(
+    ES.ArrowFunctionExpression(
       [],
-      es.BlockStatement(
+      ES.BlockStatement(
         last.type === 'declaration'
-        ? [...blockExpression.statements.map(esFromStatement), es.ReturnStatement(Identifier(escape(last.name)))]
-        : [...blockExpression.statements.slice(0, -1).map(esFromStatement), es.ReturnStatement(esFromExpression(last.expression))]
+        ? [...blockExpression.statements.map(esFromStatement), ES.ReturnStatement(Identifier(escape(last.name)))]
+        : [...blockExpression.statements.slice(0, -1).map(esFromStatement), ES.ReturnStatement(esFromExpression(last.expression))]
       )
     ),
     []
@@ -170,14 +168,14 @@ const esFromBlockExpression = (blockExpression: Serif.BlockExpression): ES.Expre
 };
 
 const esFromUnaryExpression = (unaryExpression: Serif.UnaryExpression): ES.UnaryExpression => (
-  es.UnaryExpression(
+  ES.UnaryExpression(
     unaryExpression.operator,
     esFromExpression(unaryExpression.argument)
   )
 );
 
 const esFromBinaryExpression = (binaryExpression: Serif.BinaryExpression): ES.BinaryExpression => (
-  es.BinaryExpression(
+  ES.BinaryExpression(
     binaryExpression.operator,
     esFromExpression(binaryExpression.left),
     esFromExpression(binaryExpression.right)
@@ -185,7 +183,7 @@ const esFromBinaryExpression = (binaryExpression: Serif.BinaryExpression): ES.Bi
 );
 
 const esFromLogicalExpression = (logicalExpression: Serif.LogicalExpression): ES.LogicalExpression => (
-  es.LogicalExpression(
+  ES.LogicalExpression(
     logicalExpression.operator,
     esFromExpression(logicalExpression.left),
     esFromExpression(logicalExpression.right),
@@ -193,7 +191,7 @@ const esFromLogicalExpression = (logicalExpression: Serif.LogicalExpression): ES
 );
 
 const esFromConditionalExpression = (conditionalExpression: Serif.ConditionalExpression): ES.ConditionalExpression => (
-  es.ConditionalExpression(
+  ES.ConditionalExpression(
     esFromExpression(conditionalExpression.predicate),
     esFromExpression(conditionalExpression.consequent),
     esFromExpression(conditionalExpression.alternative),
@@ -201,7 +199,7 @@ const esFromConditionalExpression = (conditionalExpression: Serif.ConditionalExp
 );
 
 const esFromNew = (new_: Serif.New): ES.NewExpression => (
-  es.NewExpression(
+  ES.NewExpression(
     esFromExpression(new_.callee),
     new_.arguments.map(esFromExpression),
   )
@@ -209,7 +207,7 @@ const esFromNew = (new_: Serif.New): ES.NewExpression => (
 
 const esFromApplication = (application: Serif.Application): ES.Expression => (
   application.arguments.reduce(
-    (callee, argument) => es.CallExpression(
+    (callee, argument) => ES.CallExpression(
       callee,
       argument.type === 'SpreadElement'
       ? [esFromSpreadElement(argument)]
@@ -220,7 +218,7 @@ const esFromApplication = (application: Serif.Application): ES.Expression => (
 );
 
 const esFromCallExpression = (callExpression: Serif.CallExpression): ES.Expression => (
-  es.CallExpression(
+  ES.CallExpression(
     esFromExpression(callExpression.callee),
     callExpression.arguments.map(argument =>
       argument.type === 'SpreadElement'
@@ -232,20 +230,20 @@ const esFromCallExpression = (callExpression: Serif.CallExpression): ES.Expressi
 
 const esFromDeclaration = (declaration: Serif.Declaration): ES.VariableDeclaration => (
   declaration.parameterNames.length === 0 ?
-  es.VariableDeclaration([
-    es.VariableDeclarator(
+  ES.VariableDeclaration([
+    ES.VariableDeclarator(
       Identifier(escape(declaration.name)),
       esFromExpression(declaration.expression),
     ),
   ]) :
-  es.VariableDeclaration([
-    es.VariableDeclarator(
+  ES.VariableDeclaration([
+    ES.VariableDeclarator(
       Identifier(escape(declaration.name)),
-      es.FunctionExpression(
+      ES.FunctionExpression(
         Identifier(escape(declaration.name)),
         declaration.parameterNames.slice(0, 1).map(name => Identifier(escape(name))),
-        es.BlockStatement([es.ReturnStatement(declaration.parameterNames.slice(1).reduceRight(
-          (body, name) => es.ArrowFunctionExpression([Identifier(escape(name))], body),
+        ES.BlockStatement([ES.ReturnStatement(declaration.parameterNames.slice(1).reduceRight(
+          (body, name) => ES.ArrowFunctionExpression([Identifier(escape(name))], body),
           esFromExpression(declaration.expression)
         ))]),
       ),
@@ -254,7 +252,7 @@ const esFromDeclaration = (declaration: Serif.Declaration): ES.VariableDeclarati
 );
 
 const esFromExpressionStatement = (expressionStatement: Serif.ExpressionStatement): ES.ExpressionStatement => (
-  es.ExpressionStatement(esFromExpression(expressionStatement.expression))
+  ES.ExpressionStatement(esFromExpression(expressionStatement.expression))
 );
 
 const esFromExpression = (expr: Serif.Expression): ES.Expression => {
@@ -285,7 +283,7 @@ export async function toModule(
   exportedNames: (source: string) => ReadonlyArray<string>,
 ): Promise<ES.Program> {
   const imports = await Promise.all(
-    module.imports.map(async importDeclaration => es.ImportDeclaration(
+    module.imports.map(async importDeclaration => ES.ImportDeclaration(
       importDeclaration.specifiers === '*' ?
       (importDeclaration.source.value.endsWith('.serif')
        ? (hiding => exportedNames(importDeclaration.source.value)
@@ -293,16 +291,16 @@ export async function toModule(
                     .map(escape))
          (new Set(importDeclaration.hiding.map(ident => ident.name)))
        : Object.keys(await import(importDeclaration.source.value)) as Array<Escaped>)
-      .map(name => es.ImportSpecifier(Identifier(name), Identifier(name))) :
+      .map(name => ES.ImportSpecifier(Identifier(name), Identifier(name))) :
       importDeclaration.specifiers.map(specifier => {
         switch (specifier.type) {
           case 'ImportDefaultSpecifier': {
-            return es.ImportDefaultSpecifier(
+            return ES.ImportDefaultSpecifier(
               esFromIdentifier(specifier.local)
             );
           }
           case 'ImportSpecifier': {
-            return es.ImportSpecifier(
+            return ES.ImportSpecifier(
               esFromIdentifier(specifier.local),
               esFromIdentifier(specifier.imported)
             );
@@ -321,16 +319,16 @@ export async function toModule(
   const exports = module.exports.map(exportDeclaration => {
     switch (exportDeclaration.type) {
       case 'ExportNamedDeclaration': {
-        return es.ExportNamedDeclaration(
-          exportDeclaration.specifiers.map(specifier => es.ExportSpecifier(esFromIdentifier(specifier)))
+        return ES.ExportNamedDeclaration(
+          exportDeclaration.specifiers.map(specifier => ES.ExportSpecifier(esFromIdentifier(specifier)))
         );
       }
       case 'ExportDefaultDeclaration': {
-        return es.ExportDefaultDeclaration(
+        return ES.ExportDefaultDeclaration(
           esFromExpression(exportDeclaration.declaration)
         );
       }
     }
   });
-  return es.Program([...imports, ...statements, ...exports]);
+  return ES.Program([...imports, ...statements, ...exports]);
 }
