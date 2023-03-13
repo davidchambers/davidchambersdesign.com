@@ -57,7 +57,7 @@ const esReservedWords = new Set([
   'public',
 ]);
 
-const escapeChar = (c: string) => (
+const escapeChar = (c: string): string => (
   '$' + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')
 );
 
