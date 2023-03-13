@@ -93,7 +93,7 @@ export {
 };
 
 escape =
-  (s:pipe #[s => s.replaceAll("&", "&amp;")
+  (s.pipe #[s => s.replaceAll("&", "&amp;")
             s => s.replaceAll("<", "&lt;")
             s => s.replaceAll(">", "&gt;")])
 
@@ -102,7 +102,7 @@ text value =
     :render indent => level => inline => (escape value)}
 
 canonicalize-attrs attrs =
-  (Object.fromEntries (s:map name => {
+  (Object.fromEntries (s.map name => {
                                value = attrs[name];
                                #[name
                                  if typeof value == "symbol" then (Symbol.keyFor value) else (String value)]
@@ -110,9 +110,9 @@ canonicalize-attrs attrs =
                              (Object.getOwnPropertySymbols attrs)))
 
 canonicalize-children =
-  (s:compose (s:map child => {
+  (s.compose (s.map child => {
                       if typeof child == "string" then {
-                        (s:pipe #[
+                        (s.pipe #[
                           s => s.replace((new RegExp "^[ ]+" "gm"), " ")
                           s => s.replaceAll("\n", "")
                           s => s.replaceAll(" -- ", "\u2009\u2014\u2009")
@@ -122,22 +122,22 @@ canonicalize-children =
                         child
                       }
                     })
-             (s:unless Array.isArray Array.of))
+             (s.unless Array.isArray Array.of))
 
 render-block-element tag-name attrs children indent level -inline = {
   indent.repeat(level)
   + "<"
   + (Symbol.keyFor tag-name)
-  + (s:fold-map String
+  + (s.fold-map String
                 sym =>
                   " "
                   + (Symbol.keyFor sym)
                   + "=\""
-                  + (escape (s:unwords (s:map s:trim (s:lines attrs[sym]))))
+                  + (escape (s.unwords (s.map s.trim (s.lines attrs[sym]))))
                   + "\""
                 (Object.getOwnPropertySymbols attrs))
   + ">\n"
-  + (s:fold-map String
+  + (s.fold-map String
                 child => (child:render indent {level + 1} false)
                 children)
   + indent.repeat(level)
@@ -150,16 +150,16 @@ render-inline-element tag-name attrs children indent level inline = {
   indent.repeat(level)
   + "<"
   + (Symbol.keyFor tag-name)
-  + (s:fold-map String
+  + (s.fold-map String
                 sym =>
                   " "
                   + (Symbol.keyFor sym)
                   + "=\""
-                  + (escape (s:unwords (s:map s:trim (s:lines attrs[sym]))))
+                  + (escape (s.unwords (s.map s.trim (s.lines attrs[sym]))))
                   + "\""
                 (Object.getOwnPropertySymbols attrs))
   + ">"
-  + (s:fold-map String
+  + (s.fold-map String
                 child => (child:render indent 0 true)
                 children)
   + "</"
@@ -172,12 +172,12 @@ render-self-closing-element tag-name attrs indent level inline = {
   indent.repeat(level)
   + "<"
   + (Symbol.keyFor tag-name)
-  + (s:fold-map String
+  + (s.fold-map String
                 sym =>
                   " "
                   + (Symbol.keyFor sym)
                   + "=\""
-                  + (escape (s:unwords (s:map s:trim (s:lines attrs[sym]))))
+                  + (escape (s.unwords (s.map s.trim (s.lines attrs[sym]))))
                   + "\""
                 (Object.getOwnPropertySymbols attrs))
   + " />"
@@ -220,7 +220,7 @@ self-closing-element tag-name -attrs = {
 excerpt -children = {
   children = (canonicalize-children -children);
   render indent level inline = {
-    (s:fold-map String
+    (s.fold-map String
                 child => (child:render indent level inline)
                 children)
   };

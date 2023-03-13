@@ -6,7 +6,7 @@ const prime = function prime(s) {
   return s['replaceAll']('_', '\'');
 };
 const _default = Object['fromEntries'](Object['entries'](sanctuary['unchecked'])['map'](entry => [
-  Symbol['for'](prime(_kebab$002Dcase(entry[0]))),
+  prime(_kebab$002Dcase(entry[0])),
   entry[1]
 ]));
 export default _default;

@@ -33,14 +33,14 @@ const screen = function screen(coerce) {
       return coerce(x) + 'px';
     };
     const _sans$002Dserif = function _sans$002Dserif(names) {
-      return s[Symbol.for('join-with')](', ')([
-        ...s[Symbol.for('map')](_$0027)(names),
+      return s['join-with'](', ')([
+        ...s['map'](_$0027)(names),
         'sans-serif'
       ]);
     };
     const monospace = function monospace(names) {
-      return s[Symbol.for('join-with')](', ')([
-        ...s[Symbol.for('map')](_$0027)(names),
+      return s['join-with'](', ')([
+        ...s['map'](_$0027)(names),
         'monospace'
       ]);
     };
@@ -50,7 +50,7 @@ const screen = function screen(coerce) {
     const _$0021important = function _$0021important(x) {
       return coerce(x) + ' !important';
     };
-    const _tag$002Dbackground = s[Symbol.for('pipe')]([
+    const _tag$002Dbackground = s['pipe']([
       Math['log2'],
       n => n * 5,
       n => 247 - n,
@@ -60,7 +60,7 @@ const screen = function screen(coerce) {
       s => s['repeat'](3),
       s => '#' + s
     ]);
-    const _tag$002Dcolor = s[Symbol.for('pipe')]([
+    const _tag$002Dcolor = s['pipe']([
       Math['log2'],
       n => n * 0.1,
       n => n + 0.3,
@@ -69,7 +69,7 @@ const screen = function screen(coerce) {
       s => s['replace'](new RegExp('[.]$', ''), ''),
       rgba(0)(0)(0)
     ]);
-    return s[Symbol.for('join')]([
+    return s['join']([
       [
         ['html'],
         [
@@ -1465,7 +1465,7 @@ const screen = function screen(coerce) {
           99
         ]
       ],
-      s[Symbol.for('fold-map')](Array)(count => [
+      s['fold-map'](Array)(count => [
         ['#tags li[data-count=\'' + count + '\'] a'],
         [
           Symbol.for('background'),
@@ -1473,7 +1473,7 @@ const screen = function screen(coerce) {
           Symbol.for('color'),
           _tag$002Dcolor(count)
         ]
-      ])(s[Symbol.for('range')](1)(20)),
+      ])(s['range'](1)(20)),
       [
         ['.hashify-editor'],
         [

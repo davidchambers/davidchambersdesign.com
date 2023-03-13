@@ -1,18 +1,18 @@
 import s from './sanctuary.js';
 import screen from './css/screen.js';
 const coerce = function coerce(x) {
-  return Array['isArray'](x) ? s[Symbol.for('unwords')](s[Symbol.for('map')](coerce)(x)) : typeof x == 'symbol' ? Symbol['keyFor'](x) : String(x);
+  return Array['isArray'](x) ? s['unwords'](s['map'](coerce)(x)) : typeof x == 'symbol' ? Symbol['keyFor'](x) : String(x);
 };
 const _split$002Devery$002D2 = function _split$002Devery$002D2(xs) {
-  return s[Symbol.for('array')]([])(k => s[Symbol.for('array')]([])(v => s[Symbol.for('compose')](s[Symbol.for('prepend')](s[Symbol.for('Pair')](k)(v)))(_split$002Devery$002D2)))(xs);
+  return s['array']([])(k => s['array']([])(v => s['compose'](s['prepend'](s['Pair'](k)(v)))(_split$002Devery$002D2)))(xs);
 };
 const _vendor$002Dprefix = function _vendor$002Dprefix(unprefixed) {
-  return prefixed => s[Symbol.for('chain')](s[Symbol.for('pair')](k => v => k === unprefixed ? [
+  return prefixed => s['chain'](s['pair'](k => v => k === unprefixed ? [
     ...prefixed,
     unprefixed
-  ]['map'](k => s[Symbol.for('Pair')](k)(v)) : [s[Symbol.for('Pair')](k)(v)]));
+  ]['map'](k => s['Pair'](k)(v)) : [s['Pair'](k)(v)]));
 };
-const _vendor$002Dprefixes = s[Symbol.for('pipe')]([
+const _vendor$002Dprefixes = s['pipe']([
   _vendor$002Dprefix(Symbol.for('border-radius'))([
     Symbol.for('-webkit-border-radius'),
     Symbol.for('-moz-border-radius'),
@@ -35,19 +35,19 @@ const _vendor$002Dprefixes = s[Symbol.for('pipe')]([
   ])
 ]);
 const _format$002Dblock = function _format$002Dblock(selectors) {
-  return s[Symbol.for('pipe')]([
-    s[Symbol.for('map')](s[Symbol.for('pair')](k => v => '  ' + coerce(k) + ': ' + coerce(v) + ';')),
-    s[Symbol.for('prepend')](s[Symbol.for('join-with')](',\n')(selectors) + ' {'),
-    s[Symbol.for('append')]('}'),
-    s[Symbol.for('unlines')]
+  return s['pipe']([
+    s['map'](s['pair'](k => v => '  ' + coerce(k) + ': ' + coerce(v) + ';')),
+    s['prepend'](s['join-with'](',\n')(selectors) + ' {'),
+    s['append']('}'),
+    s['unlines']
   ]);
 };
-const _generate$002Dcss = s[Symbol.for('pipe')]([
+const _generate$002Dcss = s['pipe']([
   screen,
   _split$002Devery$002D2,
-  s[Symbol.for('map')](s[Symbol.for('map')](_split$002Devery$002D2)),
-  s[Symbol.for('map')](s[Symbol.for('map')](_vendor$002Dprefixes)),
-  s[Symbol.for('map')](s[Symbol.for('pair')](_format$002Dblock)),
-  s[Symbol.for('join-with')]('\n')
+  s['map'](s['map'](_split$002Devery$002D2)),
+  s['map'](s['map'](_vendor$002Dprefixes)),
+  s['map'](s['pair'](_format$002Dblock)),
+  s['join-with']('\n')
 ])(coerce);
 export default _generate$002Dcss;

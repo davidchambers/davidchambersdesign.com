@@ -91,29 +91,29 @@ import s from './sanctuary.js';
 const _render$002Dsection = function _render$002Dsection(section) {
   return li([
     h2(section[Symbol.for('heading')]),
-    ol(s[Symbol.for('map')](post => li([
+    ol(s['map'](post => li([
       _a$0027({ [Symbol.for('href')]: '/' + post[Symbol.for('slug')] })(post[Symbol.for('title')]),
       ' ',
       time({ [Symbol.for('datetime')]: post[Symbol.for('datetime')]['toISO']() })(post[Symbol.for('datetime')]['toFormat']('d MMMM y | h:mm') + post[Symbol.for('datetime')]['toFormat']('a')['toLowerCase']())
     ]))(section[Symbol.for('posts')]))
   ]);
 };
-const _render$002Darchives = s[Symbol.for('pipe')]([
-  s[Symbol.for('map')](s[Symbol.for('join')](s[Symbol.for('Pair')])),
-  s[Symbol.for('map')](s[Symbol.for('map-left')](post => post[Symbol.for('datetime')])),
-  s[Symbol.for('sort-by')](s[Symbol.for('compose')](s[Symbol.for('compose')](s[Symbol.for('negate')])(Number))(s[Symbol.for('fst')])),
-  s[Symbol.for('map')](s[Symbol.for('map-left')](datetime => datetime['toFormat']('MMMM y'))),
-  s[Symbol.for('group-by')](s[Symbol.for('on')](s[Symbol.for('equals')])(s[Symbol.for('fst')])),
-  s[Symbol.for('chain')](s[Symbol.for('array')]([])(head => tail => [{
-      [Symbol.for('heading')]: s[Symbol.for('fst')](head),
-      [Symbol.for('posts')]: s[Symbol.for('map')](s[Symbol.for('snd')])([
+const _render$002Darchives = s['pipe']([
+  s['map'](s['join'](s['Pair'])),
+  s['map'](s['map-left'](post => post[Symbol.for('datetime')])),
+  s['sort-by'](s['compose'](s['compose'](s['negate'])(Number))(s['fst'])),
+  s['map'](s['map-left'](datetime => datetime['toFormat']('MMMM y'))),
+  s['group-by'](s['on'](s['equals'])(s['fst'])),
+  s['chain'](s['array']([])(head => tail => [{
+      [Symbol.for('heading')]: s['fst'](head),
+      [Symbol.for('posts')]: s['map'](s['snd'])([
         head,
         ...tail
       ])
     }])),
   sections => [
     h1('Archives'),
-    _ol$0027({ [Symbol.for('class')]: 'archives' })(s[Symbol.for('map')](_render$002Dsection)(sections))
+    _ol$0027({ [Symbol.for('class')]: 'archives' })(s['map'](_render$002Dsection)(sections))
   ]
 ]);
 export default _render$002Darchives;

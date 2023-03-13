@@ -101,7 +101,7 @@ const _captioned$002Dimage = function _captioned$002Dimage(src) {
   ]);
 };
 const _captioned$002Dimages = function _captioned$002Dimages(images) {
-  return dl(s[Symbol.for('chain')](image => [
+  return dl(s['chain'](image => [
     dt(img({
       [Symbol.for('alt')]: image[1],
       [Symbol.for('src')]: image[0]
@@ -111,11 +111,11 @@ const _captioned$002Dimages = function _captioned$002Dimages(images) {
 };
 const _code$002Dblock = function _code$002Dblock(language) {
   return _source$002Dcode => (() => {
-    const lines = s[Symbol.for('from-maybe')]([])(s[Symbol.for('chain')](s[Symbol.for('init')])(s[Symbol.for('tail')](s[Symbol.for('lines')](_source$002Dcode))));
+    const lines = s['from-maybe']([])(s['chain'](s['init'])(s['tail'](s['lines'](_source$002Dcode))));
     const _trim$002Dleading$002Dspaces = function _trim$002Dleading$002Dspaces(line) {
-      return s[Symbol.for('from-maybe')](line)(s[Symbol.for('chain')](prefix => s[Symbol.for('strip-prefix')](prefix)(line))(s[Symbol.for('map')](x => x['match'])(s[Symbol.for('chain')](s[Symbol.for('match')](new RegExp('^[ ]*', '')))(s[Symbol.for('head')](lines)))));
+      return s['from-maybe'](line)(s['chain'](prefix => s['strip-prefix'](prefix)(line))(s['map'](x => x['match'])(s['chain'](s['match'](new RegExp('^[ ]*', '')))(s['head'](lines)))));
     };
-    return pre(code(text(s[Symbol.for('unlines')](s[Symbol.for('map')](_trim$002Dleading$002Dspaces)(lines)))));
+    return pre(code(text(s['unlines'](s['map'](_trim$002Dleading$002Dspaces)(lines)))));
   })();
 };
 const _decorative$002Dimage = function _decorative$002Dimage(src) {
@@ -125,21 +125,21 @@ const _decorative$002Dimage = function _decorative$002Dimage(src) {
   }));
 };
 const _interview$002Dlist = function _interview$002Dlist(interviewer) {
-  return interviewee => exchange => ol(s[Symbol.for('snd')](s[Symbol.for('reduce')](s[Symbol.for('pair')](name => items => quotation => name === interviewer ? s[Symbol.for('Pair')](interviewee)([
+  return interviewee => exchange => ol(s['snd'](s['reduce'](s['pair'](name => items => quotation => name === interviewer ? s['Pair'](interviewee)([
     ...items,
     _li$0027({ [Symbol.for('class')]: 'interviewer' })([
       strong(interviewer + ':'),
       ' ',
       ...quotation
     ])
-  ]) : s[Symbol.for('Pair')](interviewer)([
+  ]) : s['Pair'](interviewer)([
     ...items,
     _li$0027({})([
       strong(interviewee + ':'),
       ' ',
       ...quotation
     ])
-  ])))(s[Symbol.for('Pair')](interviewer)([]))(s[Symbol.for('map')](_canonicalize$002Dchildren)(exchange))));
+  ])))(s['Pair'](interviewer)([]))(s['map'](_canonicalize$002Dchildren)(exchange))));
 };
 const _pros$002Dand$002Dcons$002Dlist = function _pros$002Dand$002Dcons$002Dlist(f) {
   return ul(f(_li$0027({ [Symbol.for('class')]: 'pro' }))(_li$0027({ [Symbol.for('class')]: 'con' })));
@@ -151,7 +151,7 @@ const _uncaptioned$002Dimage = function _uncaptioned$002Dimage(src) {
   }));
 };
 const update = function update(datetime) {
-  return body => div({ [Symbol.for('class')]: 'update' })(s[Symbol.for('prepend')](h4([
+  return body => div({ [Symbol.for('class')]: 'update' })(s['prepend'](h4([
     'Update \u2014 ',
     time({ [Symbol.for('datetime')]: datetime['toISO']() })(datetime['toFormat']('d MMMM y'))
   ]))(_canonicalize$002Dchildren(body)));

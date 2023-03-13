@@ -90,7 +90,7 @@ import {
 import s from './sanctuary.js';
 import tags from './tags.js';
 const _render$002Dpost = function _render$002Dpost(post) {
-  return _related$002Dposts => [_article$0027(s[Symbol.for('maybe')]({})(s[Symbol.for('singleton')](Symbol.for('id')))(s[Symbol.for('value')](Symbol.for('article-id'))(post)))([
+  return _related$002Dposts => [_article$0027(s['maybe']({})(s['singleton'](Symbol.for('id')))(s['value'](Symbol.for('article-id'))(post)))([
       header([
         h1(post[Symbol.for('title')]),
         time({
@@ -99,11 +99,11 @@ const _render$002Dpost = function _render$002Dpost(post) {
         })(post[Symbol.for('datetime')]['toFormat']('d MMMM y'))
       ]),
       ...post[Symbol.for('body')],
-      _footer$0027({ [Symbol.for('class')]: 'metadata' })(s[Symbol.for('join')]([
+      _footer$0027({ [Symbol.for('class')]: 'metadata' })(s['join']([
         [ul(_li$0027({ [Symbol.for('class')]: 'shorturl' })(a('http://dċd.ws/' + post[Symbol.for('id')] + '/')('Short URL')))],
-        s[Symbol.for('array')]([])(head => tail => [
+        s['array']([])(head => tail => [
           h4('This post has the following tags:'),
-          ol(s[Symbol.for('map')](tag => li(a('/tag/' + tag + '/')(tags[tag])))([
+          ol(s['map'](tag => li(a('/tag/' + tag + '/')(tags[tag])))([
             head,
             ...tail
           ]))
@@ -111,7 +111,7 @@ const _render$002Dpost = function _render$002Dpost(post) {
       ])),
       ..._related$002Dposts['length'] === 0 ? [] : [
         _h3$0027({ [Symbol.for('id')]: 'related' })('Possibly related posts'),
-        ul(s[Symbol.for('map')](_related$002Dpost => li(a('/' + _related$002Dpost[Symbol.for('slug')] + '/')(_related$002Dpost[Symbol.for('title')])))(_related$002Dposts))
+        ul(s['map'](_related$002Dpost => li(a('/' + _related$002Dpost[Symbol.for('slug')] + '/')(_related$002Dpost[Symbol.for('title')])))(_related$002Dposts))
       ]
     ])];
 };

@@ -349,5 +349,5 @@ const _render$002Ddocument = function _render$002Ddocument(element) {
 };
 _write$002Dfile(_public(['archives.html']))(_render$002Ddocument(_base$002Dtemplate('Archives')(_render$002Darchives(posts))));
 _write$002Dfile(_public(['tags.html']))(_render$002Ddocument(_base$002Dtemplate('Tags')(_render$002Dtags(posts))));
-s[Symbol.for('map')](page => _write$002Dfile(_public([page[Symbol.for('slug')] + '.html']))(_render$002Ddocument(_base$002Dtemplate(page[Symbol.for('title')])(_render$002Dpage(page)))))(pages);
-s[Symbol.for('map')](post => _write$002Dfile(_public([post[Symbol.for('slug')] + '.html']))(_render$002Ddocument(_base$002Dtemplate(post[Symbol.for('title')])(_render$002Dpost(post)(_related$002Dposts(posts)(post))))))(posts);
+s['map'](page => _write$002Dfile(_public([page[Symbol.for('slug')] + '.html']))(_render$002Ddocument(_base$002Dtemplate(page[Symbol.for('title')])(_render$002Dpage(page)))))(pages);
+s['map'](post => _write$002Dfile(_public([post[Symbol.for('slug')] + '.html']))(_render$002Ddocument(_base$002Dtemplate(post[Symbol.for('title')])(_render$002Dpost(post)(_related$002Dposts(posts)(post))))))(posts);

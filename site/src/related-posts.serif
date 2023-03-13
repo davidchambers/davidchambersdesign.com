@@ -20,20 +20,20 @@ seconds-between from to =
 with-scores that this = {
   score = (similarity (new Set that:tags)
                       (new Set this:tags));
-  primary = (s:negate score);
+  primary = (s.negate score);
   secondary = (Math.abs (seconds-between that:datetime
                                          this:datetime));
   if score >= 0.5 then {
-    (s:Just (s:Pair (s:Pair primary secondary) this))
+    (s.Just (s.Pair (s.Pair primary secondary) this))
   } else {
-    s:Nothing
+    s.Nothing
   }
 }
 
 related-posts posts post =
-  (s:pipe #[(s:reject this => this:slug === post:slug)
-            (s:map-maybe (with-scores post))
-            s:sort
-            (s:map s:snd)
+  (s.pipe #[(s.reject this => this:slug === post:slug)
+            (s.map-maybe (with-scores post))
+            s.sort
+            (s.map s.snd)
             posts => posts.slice(0, 5)]
           posts)

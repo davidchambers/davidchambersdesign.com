@@ -5,7 +5,7 @@ export default generate-css;
 
 coerce x = {
   if (Array.isArray x) then {
-    (s:unwords (s:map coerce x))
+    (s.unwords (s.map coerce x))
   } else if typeof x == "symbol" then {
     (Symbol.keyFor x)
   } else {
@@ -14,23 +14,23 @@ coerce x = {
 }
 
 split-every-2 xs =
-  (s:array #[]
-           k => (s:array #[]
-                         v => (s:compose (s:prepend (s:Pair k v))
+  (s.array #[]
+           k => (s.array #[]
+                         v => (s.compose (s.prepend (s.Pair k v))
                                          split-every-2))
            xs)
 
 vendor-prefix unprefixed prefixed =
-  (s:chain (s:pair k => v => {
+  (s.chain (s.pair k => v => {
                      if k === unprefixed then {
-                       #[...prefixed unprefixed].map(k => (s:Pair k v))
+                       #[...prefixed unprefixed].map(k => (s.Pair k v))
                      } else {
-                       #[(s:Pair k v)]
+                       #[(s.Pair k v)]
                      }
                    }))
 
 vendor-prefixes =
-  (s:pipe #[(vendor-prefix :border-radius
+  (s.pipe #[(vendor-prefix :border-radius
                            #[:-webkit-border-radius
                                 :-moz-border-radius
                                  :-ms-border-radius
@@ -48,16 +48,16 @@ vendor-prefixes =
                                   :-o-transition-timing-function])])
 
 format-block selectors =
-  (s:pipe #[(s:map (s:pair k => v => "  " + (coerce k) + ": " + (coerce v) + ";"))
-            (s:prepend (s:join-with ",\n" selectors) + " {")
-            (s:append "}")
-            s:unlines])
+  (s.pipe #[(s.map (s.pair k => v => "  " + (coerce k) + ": " + (coerce v) + ";"))
+            (s.prepend (s.join-with ",\n" selectors) + " {")
+            (s.append "}")
+            s.unlines])
 
 generate-css =
-  (s:pipe #[screen
+  (s.pipe #[screen
             split-every-2
-            (s:map (s:map split-every-2))
-            (s:map (s:map vendor-prefixes))
-            (s:map (s:pair format-block))
-            (s:join-with "\n")]
+            (s.map (s.map split-every-2))
+            (s.map (s.map vendor-prefixes))
+            (s.map (s.pair format-block))
+            (s.join-with "\n")]
           coerce)

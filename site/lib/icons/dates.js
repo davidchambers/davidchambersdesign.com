@@ -11,7 +11,7 @@ import {
   _$2193
 } from '../orthogonal.js';
 import s from '../sanctuary.js';
-const dates = s[Symbol.for('map')](d => path({
+const dates = s['map'](d => path({
   [Symbol.for('fill-rule')]: Symbol.for('evenodd'),
   [Symbol.for('fill')]: '#000',
   [Symbol.for('d')]: render([

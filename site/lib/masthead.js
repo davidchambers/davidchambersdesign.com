@@ -678,20 +678,20 @@ const _$007EV$007E = [
 ];
 const update = function update(positions) {
   return dir => (() => {
-    const x = s[Symbol.for('fst')](positions[0]);
-    const y = s[Symbol.for('snd')](positions[0]);
+    const x = s['fst'](positions[0]);
+    const y = s['snd'](positions[0]);
     return [
-      dir[0] === Symbol.for('h') ? s[Symbol.for('Pair')](x + dir[1])(y) : dir[0] === Symbol.for('v') ? s[Symbol.for('Pair')](x)(y + dir[1]) : s[Symbol.for('Pair')](x + dir[1][0])(y + dir[1][1]),
+      dir[0] === Symbol.for('h') ? s['Pair'](x + dir[1])(y) : dir[0] === Symbol.for('v') ? s['Pair'](x)(y + dir[1]) : s['Pair'](x + dir[1][0])(y + dir[1][1]),
       ...positions
     ];
   })();
 };
 const reset = function reset(path) {
   return (() => {
-    const paths = s[Symbol.for('extend')](s[Symbol.for('I')])(s[Symbol.for('reduce')](update)([s[Symbol.for('Pair')](0)(0)])(path));
-    const xs = s[Symbol.for('chain')](s[Symbol.for('map')](s[Symbol.for('fst')]))(paths);
-    const ys = s[Symbol.for('chain')](s[Symbol.for('map')](s[Symbol.for('snd')]))(paths);
-    const dx = s[Symbol.for('reduce')](s[Symbol.for('max')])(0)(xs) - xs[0];
+    const paths = s['extend'](s['I'])(s['reduce'](update)([s['Pair'](0)(0)])(path));
+    const xs = s['chain'](s['map'](s['fst']))(paths);
+    const ys = s['chain'](s['map'](s['snd']))(paths);
+    const dx = s['reduce'](s['max'])(0)(xs) - xs[0];
     const dy = 0 - ys[0];
     return [
       Symbol.for('m'),
@@ -702,19 +702,19 @@ const reset = function reset(path) {
     ];
   })();
 };
-const paths = s[Symbol.for('pipe')]([
-  s[Symbol.for('map')](char => [
+const paths = s['pipe']([
+  s['map'](char => [
     ...char,
     reset(char)
   ]),
-  s[Symbol.for('intercalate')]([[
+  s['intercalate']([[
       Symbol.for('m'),
       [
         6,
         0
       ]
     ]]),
-  s[Symbol.for('prepend')]([
+  s['prepend']([
     Symbol.for('M'),
     [
       0,

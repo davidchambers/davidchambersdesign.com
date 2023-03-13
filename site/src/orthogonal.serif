@@ -5,35 +5,35 @@ export {render ⇦ ⇨ ⇧ ⇩ ← → ↑ ↓};
 reducer prev path curr = {
   if curr[0] === :M then {
     if {prev[0] === :M || prev[0] === :m} then {
-      (s:Pair curr path)  ;; ignore previous move
+      (s.Pair curr path)  ;; ignore previous move
     } else {
-      (s:Pair curr #[...path prev])
+      (s.Pair curr #[...path prev])
     }
   } else {
     if {prev[0] === :M || prev[0] === :m} && curr[0] === :m then {
-      (s:Pair #[prev[0]
+      (s.Pair #[prev[0]
                 #[prev[1][0] + curr[1][0]
                   prev[1][1] + curr[1][1]]]
               path)
     } else {
-      (s:Pair curr #[...path prev])
+      (s.Pair curr #[...path prev])
     }
   }
 }
 
 simplify =
-  (s:array #[]
+  (s.array #[]
            head => tail =>
-             (s:pair s:append
-                     (s:reduce (s:pair reducer)
-                               (s:Pair head #[])
+             (s.pair s.append
+                     (s.reduce (s.pair reducer)
+                               (s.Pair head #[])
                                tail)))
 
 render =
-  (s:pipe #[simplify
-            s:join
-            (s:map x => if typeof x === "symbol" then (Symbol.keyFor x) else (String x))
-            s:unwords])
+  (s.pipe #[simplify
+            s.join
+            (s.map x => if typeof x === "symbol" then (Symbol.keyFor x) else (String x))
+            s.unwords])
 
 ⇦ x = #[:m #[{- x} 0]]
 ⇨ x = #[:m #[{+ x} 0]]
