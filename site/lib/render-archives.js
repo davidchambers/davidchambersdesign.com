@@ -91,29 +91,29 @@ import {
 const render$002Dsection = function render$002Dsection(section) {
   return li([
     h2(section[Symbol.for('heading')]),
-    ol(S['map'](post => li([
+    ol(S.map(post => li([
       a$0027({ [Symbol.for('href')]: '/' + post[Symbol.for('slug')] })(post[Symbol.for('title')]),
       ' ',
-      time({ [Symbol.for('datetime')]: post[Symbol.for('datetime')]['toISO']() })(post[Symbol.for('datetime')]['toFormat']('d MMMM y | h:mm') + post[Symbol.for('datetime')]['toFormat']('a')['toLowerCase']())
+      time({ [Symbol.for('datetime')]: post[Symbol.for('datetime')].toISO() })(post[Symbol.for('datetime')].toFormat('d MMMM y | h:mm') + post[Symbol.for('datetime')].toFormat('a').toLowerCase())
     ]))(section[Symbol.for('posts')]))
   ]);
 };
-const render$002Darchives = S['pipe']([
-  S['map'](S['join'](S['Pair'])),
-  S['map'](S['mapLeft'](post => post[Symbol.for('datetime')])),
-  S['sortBy'](S['compose'](S['compose'](S['negate'])(Number))(S['fst'])),
-  S['map'](S['mapLeft'](datetime => datetime['toFormat']('MMMM y'))),
-  S['groupBy'](S['on'](S['equals'])(S['fst'])),
-  S['chain'](S['array']([])(head => tail => [{
-      [Symbol.for('heading')]: S['fst'](head),
-      [Symbol.for('posts')]: S['map'](S['snd'])([
+const render$002Darchives = S.pipe([
+  S.map(S.join(S.Pair)),
+  S.map(S.mapLeft(post => post[Symbol.for('datetime')])),
+  S.sortBy(S.compose(S.compose(S.negate)(Number))(S.fst)),
+  S.map(S.mapLeft(datetime => datetime.toFormat('MMMM y'))),
+  S.groupBy(S.on(S.equals)(S.fst)),
+  S.chain(S.array([])(head => tail => [{
+      [Symbol.for('heading')]: S.fst(head),
+      [Symbol.for('posts')]: S.map(S.snd)([
         head,
         ...tail
       ])
     }])),
   sections => [
     h1('Archives'),
-    ol$0027({ [Symbol.for('class')]: 'archives' })(S['map'](render$002Dsection)(sections))
+    ol$0027({ [Symbol.for('class')]: 'archives' })(S.map(render$002Dsection)(sections))
   ]
 ]);
 export default render$002Darchives;

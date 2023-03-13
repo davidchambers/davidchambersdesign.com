@@ -91,7 +91,7 @@ const base$002Dtemplate = function base$002Dtemplate(document$002Dtitle) {
   return main => html([
     head([
       meta({ [Symbol.for('charset')]: 'utf-8' }),
-      title(canonicalize$002Dchildren(document$002Dtitle)['flatMap'](child => child[Symbol.for('text')])),
+      title(canonicalize$002Dchildren(document$002Dtitle).flatMap(child => child[Symbol.for('text')])),
       link({
         [Symbol.for('rel')]: 'alternate',
         [Symbol.for('type')]: 'application/atom+xml',

@@ -4,14 +4,18 @@ import * as Serif from './types.js';
 
 type Escaped = string & {_tag: 'Escaped'}
 
+const validEsIdentifierName = (name: string): boolean => (
+  /^[a-z][a-z0-9]*$/i.test(name)
+);
+
 const esFromIdentifierName = (name: string): ES.Identifier => {
   const escapeChar = (c: string): string => (
     '$' + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')
   );
   const escape = (name: string): Escaped => (
-    ES.RESERVED_WORDS.has(name)     ? name + '_' :
-    /^[a-z][a-z0-9]*$/i.test(name)  ? name :
-    /* else */                        name.replace(/[^a-z0-9]/gi, escapeChar)
+    ES.RESERVED_WORDS.has(name) ? name + '_' :
+    validEsIdentifierName(name) ? name :
+    /* else */                    name.replace(/[^a-z0-9]/gi, escapeChar)
   ) as Escaped;
   return esFromEscapedIdentifierName(escape(name));
 };
@@ -37,10 +41,7 @@ const esFromString = (string: Serif.String): ES.Literal => (
 
 const esFromSymbol = (symbol: Serif.Symbol): ES.CallExpression => (
   ES.CallExpression(
-    ES.MemberExpression(
-      esFromEscapedIdentifierName('Symbol' as Escaped),
-      esFromEscapedIdentifierName('for' as Escaped),
-    ),
+    esFromMemberExpression(Serif.MemberExpression(Serif.Identifier('Symbol'), Serif.String('for'))),
     [ES.Literal(symbol.name)],
   )
 );
@@ -53,6 +54,12 @@ const esFromMetaProperty = (metaProperty: Serif.MetaProperty): ES.MetaProperty =
 );
 
 const esFromMemberExpression = (memberExpression: Serif.MemberExpression): ES.MemberExpression => (
+  memberExpression.property.type === 'string' && validEsIdentifierName(memberExpression.property.value) ?
+  ES.MemberExpression(
+    esFromExpression(memberExpression.object),
+    esFromEscapedIdentifierName(memberExpression.property.value as Escaped),
+    {computed: false}
+  ) :
   ES.MemberExpression(
     esFromExpression(memberExpression.object),
     esFromExpression(memberExpression.property),

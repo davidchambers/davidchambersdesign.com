@@ -1,6 +1,6 @@
 import S from 'sanctuary';
 const $0027 = function $0027(text) {
-  return '\'' + text['replace'](new RegExp('(?=\')', 'g'), '\\') + '\'';
+  return '\'' + text.replace(new RegExp('(?=\')', 'g'), '\\') + '\'';
 };
 const base03 = '#002b36';
 const base02 = '#073642';
@@ -34,15 +34,15 @@ const screen = function screen(coerce) {
     };
     const sans$002Dserif = function sans$002Dserif(names) {
       return [
-        ...names['map']($0027),
+        ...names.map($0027),
         'sans-serif'
-      ]['join'](', ');
+      ].join(', ');
     };
     const monospace = function monospace(names) {
       return [
-        ...names['map']($0027),
+        ...names.map($0027),
         'monospace'
-      ]['join'](', ');
+      ].join(', ');
     };
     const rgba = function rgba(r) {
       return g => b => a => 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
@@ -50,26 +50,26 @@ const screen = function screen(coerce) {
     const $0021important = function $0021important(x) {
       return coerce(x) + ' !important';
     };
-    const tag$002Dbackground = S['pipe']([
-      Math['log2'],
+    const tag$002Dbackground = S.pipe([
+      Math.log2,
       n => n * 5,
       n => 247 - n,
-      Math['floor'],
-      n => n['toString'](16),
-      s => s['padStart'](2, '0'),
-      s => s['repeat'](3),
+      Math.floor,
+      n => n.toString(16),
+      s => s.padStart(2, '0'),
+      s => s.repeat(3),
       s => '#' + s
     ]);
-    const tag$002Dcolor = S['pipe']([
-      Math['log2'],
+    const tag$002Dcolor = S.pipe([
+      Math.log2,
       n => n * 0.1,
       n => n + 0.3,
-      n => n['toFixed'](3),
-      s => s['replace'](new RegExp('0*$', ''), ''),
-      s => s['replace'](new RegExp('[.]$', ''), ''),
+      n => n.toFixed(3),
+      s => s.replace(new RegExp('0*$', ''), ''),
+      s => s.replace(new RegExp('[.]$', ''), ''),
       rgba(0)(0)(0)
     ]);
-    return S['join']([
+    return S.join([
       [
         ['html'],
         [
@@ -1465,7 +1465,7 @@ const screen = function screen(coerce) {
           99
         ]
       ],
-      S['foldMap'](Array)(count => [
+      S.foldMap(Array)(count => [
         ['#tags li[data-count=\'' + count + '\'] a'],
         [
           Symbol.for('background'),
@@ -1473,7 +1473,7 @@ const screen = function screen(coerce) {
           Symbol.for('color'),
           tag$002Dcolor(count)
         ]
-      ])(S['range'](1)(20)),
+      ])(S.range(1)(20)),
       [
         ['.hashify-editor'],
         [

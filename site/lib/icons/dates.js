@@ -11,7 +11,7 @@ import {
   $2191,
   $2193
 } from '../orthogonal.js';
-const dates = S['map'](d => path({
+const dates = S.map(d => path({
   [Symbol.for('fill-rule')]: Symbol.for('evenodd'),
   [Symbol.for('fill')]: '#000',
   [Symbol.for('d')]: render([

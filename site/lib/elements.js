@@ -1,8 +1,8 @@
 import S from 'sanctuary';
-const escape = S['pipe']([
-  s => s['replaceAll']('&', '&amp;'),
-  s => s['replaceAll']('<', '&lt;'),
-  s => s['replaceAll']('>', '&gt;')
+const escape = S.pipe([
+  s => s.replaceAll('&', '&amp;'),
+  s => s.replaceAll('<', '&lt;'),
+  s => s.replaceAll('>', '&gt;')
 ]);
 const text = function text(value) {
   return {
@@ -11,28 +11,28 @@ const text = function text(value) {
   };
 };
 const canonicalize$002Dattrs = function canonicalize$002Dattrs(attrs) {
-  return Object['fromEntries'](S['map'](name => (() => {
+  return Object.fromEntries(S.map(name => (() => {
     const value = attrs[name];
     return [
       name,
-      typeof value == 'symbol' ? Symbol['keyFor'](value) : String(value)
+      typeof value == 'symbol' ? Symbol.keyFor(value) : String(value)
     ];
-  })())(Object['getOwnPropertySymbols'](attrs)));
+  })())(Object.getOwnPropertySymbols(attrs)));
 };
-const canonicalize$002Dchildren = S['compose'](S['map'](child => typeof child == 'string' ? S['pipe']([
-  s => s['replace'](new RegExp('^[ ]+', 'gm'), ' '),
-  s => s['replaceAll']('\n', ''),
-  s => s['replaceAll'](' -- ', '\u2009\u2014\u2009'),
+const canonicalize$002Dchildren = S.compose(S.map(child => typeof child == 'string' ? S.pipe([
+  s => s.replace(new RegExp('^[ ]+', 'gm'), ' '),
+  s => s.replaceAll('\n', ''),
+  s => s.replaceAll(' -- ', '\u2009\u2014\u2009'),
   text
-])(child) : child))(S['unless'](Array['isArray'])(Array['of']));
+])(child) : child))(S.unless(Array.isArray)(Array.of));
 const render$002Dblock$002Delement = function render$002Dblock$002Delement(tag$002Dname) {
-  return attrs => children => indent => level => $002Dinline => indent['repeat'](level) + '<' + Symbol['keyFor'](tag$002Dname) + S['foldMap'](String)(sym => ' ' + Symbol['keyFor'](sym) + '="' + escape(S['unwords'](S['map'](S['trim'])(S['lines'](attrs[sym])))) + '"')(Object['getOwnPropertySymbols'](attrs)) + '>\n' + S['foldMap'](String)(child => child[Symbol.for('render')](indent)(level + 1)(false))(children) + indent['repeat'](level) + '</' + Symbol['keyFor'](tag$002Dname) + '>\n';
+  return attrs => children => indent => level => $002Dinline => indent.repeat(level) + '<' + Symbol.keyFor(tag$002Dname) + S.foldMap(String)(sym => ' ' + Symbol.keyFor(sym) + '="' + escape(S.unwords(S.map(S.trim)(S.lines(attrs[sym])))) + '"')(Object.getOwnPropertySymbols(attrs)) + '>\n' + S.foldMap(String)(child => child[Symbol.for('render')](indent)(level + 1)(false))(children) + indent.repeat(level) + '</' + Symbol.keyFor(tag$002Dname) + '>\n';
 };
 const render$002Dinline$002Delement = function render$002Dinline$002Delement(tag$002Dname) {
-  return attrs => children => indent => level => inline => indent['repeat'](level) + '<' + Symbol['keyFor'](tag$002Dname) + S['foldMap'](String)(sym => ' ' + Symbol['keyFor'](sym) + '="' + escape(S['unwords'](S['map'](S['trim'])(S['lines'](attrs[sym])))) + '"')(Object['getOwnPropertySymbols'](attrs)) + '>' + S['foldMap'](String)(child => child[Symbol.for('render')](indent)(0)(true))(children) + '</' + Symbol['keyFor'](tag$002Dname) + '>' + (inline ? '' : '\n');
+  return attrs => children => indent => level => inline => indent.repeat(level) + '<' + Symbol.keyFor(tag$002Dname) + S.foldMap(String)(sym => ' ' + Symbol.keyFor(sym) + '="' + escape(S.unwords(S.map(S.trim)(S.lines(attrs[sym])))) + '"')(Object.getOwnPropertySymbols(attrs)) + '>' + S.foldMap(String)(child => child[Symbol.for('render')](indent)(0)(true))(children) + '</' + Symbol.keyFor(tag$002Dname) + '>' + (inline ? '' : '\n');
 };
 const render$002Dself$002Dclosing$002Delement = function render$002Dself$002Dclosing$002Delement(tag$002Dname) {
-  return attrs => indent => level => inline => indent['repeat'](level) + '<' + Symbol['keyFor'](tag$002Dname) + S['foldMap'](String)(sym => ' ' + Symbol['keyFor'](sym) + '="' + escape(S['unwords'](S['map'](S['trim'])(S['lines'](attrs[sym])))) + '"')(Object['getOwnPropertySymbols'](attrs)) + ' />' + (inline ? '' : '\n');
+  return attrs => indent => level => inline => indent.repeat(level) + '<' + Symbol.keyFor(tag$002Dname) + S.foldMap(String)(sym => ' ' + Symbol.keyFor(sym) + '="' + escape(S.unwords(S.map(S.trim)(S.lines(attrs[sym])))) + '"')(Object.getOwnPropertySymbols(attrs)) + ' />' + (inline ? '' : '\n');
 };
 const block$002Delement = function block$002Delement(tag$002Dname) {
   return $002Dattrs => $002Dchildren => (() => {
@@ -40,7 +40,7 @@ const block$002Delement = function block$002Delement(tag$002Dname) {
     const children = canonicalize$002Dchildren($002Dchildren);
     return {
       [Symbol.for('format')]: Symbol.for('block'),
-      [Symbol.for('text')]: children['flatMap'](child => child[Symbol.for('text')]),
+      [Symbol.for('text')]: children.flatMap(child => child[Symbol.for('text')]),
       [Symbol.for('render')]: render$002Dblock$002Delement(tag$002Dname)(attrs)(children)
     };
   })();
@@ -49,10 +49,10 @@ const inline$002Delement = function inline$002Delement(tag$002Dname) {
   return $002Dattrs => $002Dchildren => (() => {
     const attrs = canonicalize$002Dattrs($002Dattrs);
     const children = canonicalize$002Dchildren($002Dchildren);
-    const format = children['some'](node => node[Symbol.for('format')] === Symbol.for('block')) ? Symbol.for('block') : Symbol.for('inline');
+    const format = children.some(node => node[Symbol.for('format')] === Symbol.for('block')) ? Symbol.for('block') : Symbol.for('inline');
     return {
       [Symbol.for('format')]: format,
-      [Symbol.for('text')]: children['flatMap'](child => child[Symbol.for('text')]),
+      [Symbol.for('text')]: children.flatMap(child => child[Symbol.for('text')]),
       [Symbol.for('render')]: indent => level => inline => (() => {
         const render = format === Symbol.for('inline') ? render$002Dinline$002Delement : render$002Dblock$002Delement;
         return render(tag$002Dname)(attrs)(children)(indent)(level)(inline);
@@ -74,10 +74,10 @@ const excerpt = function excerpt($002Dchildren) {
   return (() => {
     const children = canonicalize$002Dchildren($002Dchildren);
     const render = function render(indent) {
-      return level => inline => S['foldMap'](String)(child => child[Symbol.for('render')](indent)(level)(inline))(children);
+      return level => inline => S.foldMap(String)(child => child[Symbol.for('render')](indent)(level)(inline))(children);
     };
     return {
-      [Symbol.for('text')]: children['flatMap'](child => child[Symbol.for('text')]),
+      [Symbol.for('text')]: children.flatMap(child => child[Symbol.for('text')]),
       [Symbol.for('render')]: render
     };
   })();

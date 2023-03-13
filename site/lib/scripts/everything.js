@@ -116,7 +116,7 @@ import post$002Fhelveticards from '../posts/helveticards.js';
 import post$002Fitunes$002Dis$002Dsurprisingly$002Duseful$002Dwhen$002Dlearning$002Da$002Dforeign$002Dlanguage from '../posts/itunes-is-surprisingly-useful-when-learning-a-foreign-language.js';
 import post$002Fthe$002Dperils$002Dof$002Dusing$002Djavascript$002Dobjects$002Das$002Dsets from '../posts/the-perils-of-using-javascript-objects-as-sets.js';
 import post$002Fgive$002Dand$002Dtake$002Dof$002Dcontinuation$002Dpassing$002Dstyle from '../posts/give-and-take-of-continuation-passing-style.js';
-const dirname = path['dirname'](url['fileURLToPath'](import.meta['url']));
+const dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const pages = [
   page$002Fabout,
   page$002Felam
@@ -219,7 +219,7 @@ const posts = [
   post$002Fgive$002Dand$002Dtake$002Dof$002Dcontinuation$002Dpassing$002Dstyle
 ];
 const public_ = function public_(components) {
-  return path['join'](...[
+  return path.join(...[
     dirname,
     '..',
     '..',
@@ -228,7 +228,7 @@ const public_ = function public_(components) {
   ]);
 };
 const write$002Dfile = function write$002Dfile(filename) {
-  return data => fs['writeFileSync'](...[
+  return data => fs.writeFileSync(...[
     filename,
     data
   ]);
@@ -349,5 +349,5 @@ const render$002Ddocument = function render$002Ddocument(element) {
 };
 write$002Dfile(public_(['archives.html']))(render$002Ddocument(base$002Dtemplate('Archives')(render$002Darchives(posts))));
 write$002Dfile(public_(['tags.html']))(render$002Ddocument(base$002Dtemplate('Tags')(render$002Dtags(posts))));
-S['map'](page => write$002Dfile(public_([page[Symbol.for('slug')] + '.html']))(render$002Ddocument(base$002Dtemplate(page[Symbol.for('title')])(render$002Dpage(page)))))(pages);
-S['map'](post => write$002Dfile(public_([post[Symbol.for('slug')] + '.html']))(render$002Ddocument(base$002Dtemplate(post[Symbol.for('title')])(render$002Dpost(post)(related$002Dposts(posts)(post))))))(posts);
+S.map(page => write$002Dfile(public_([page[Symbol.for('slug')] + '.html']))(render$002Ddocument(base$002Dtemplate(page[Symbol.for('title')])(render$002Dpage(page)))))(pages);
+S.map(post => write$002Dfile(public_([post[Symbol.for('slug')] + '.html']))(render$002Ddocument(base$002Dtemplate(post[Symbol.for('title')])(render$002Dpost(post)(related$002Dposts(posts)(post))))))(posts);
