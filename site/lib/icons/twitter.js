@@ -5,23 +5,23 @@ import {
 } from '../elements.js';
 import {
   render,
-  _$21E6,
-  _$21E8,
-  _$21E7,
-  _$21E9,
-  _$2190,
-  _$2192,
-  _$2191,
-  _$2193
+  $21E6,
+  $21E8,
+  $21E7,
+  $21E9,
+  $2190,
+  $2192,
+  $2191,
+  $2193
 } from '../orthogonal.js';
-const a = function a(_rx$002Dry) {
-  return angle => _large$002Darc$002Dflag => _sweep$002Dflag => _dx$002Ddy => [
+const a = function a(rx$002Dry) {
+  return angle => large$002Darc$002Dflag => sweep$002Dflag => dx$002Ddy => [
     Symbol.for('a'),
-    _rx$002Dry,
+    rx$002Dry,
     angle,
-    _large$002Darc$002Dflag,
-    _sweep$002Dflag,
-    _dx$002Ddy
+    large$002Darc$002Dflag,
+    sweep$002Dflag,
+    dx$002Ddy
   ];
 };
 const twitter = [
@@ -46,8 +46,8 @@ const twitter = [
     [Symbol.for('stroke-width')]: 1,
     [Symbol.for('fill')]: 'url(#gradient)',
     [Symbol.for('d')]: render([
-      _$21E8(3),
-      _$21E9(3),
+      $21E8(3),
+      $21E9(3),
       a([
         2,
         2
@@ -55,8 +55,8 @@ const twitter = [
         4,
         0
       ]),
-      _$2193(1),
-      _$2192(4),
+      $2193(1),
+      $2192(4),
       a([
         2,
         2
@@ -64,8 +64,8 @@ const twitter = [
         0,
         4
       ]),
-      _$2190(4),
-      _$2193(2),
+      $2190(4),
+      $2193(2),
       a([
         1,
         1
@@ -73,7 +73,7 @@ const twitter = [
         1,
         1
       ]),
-      _$2192(3),
+      $2192(3),
       a([
         2,
         2
@@ -81,7 +81,7 @@ const twitter = [
         0,
         4
       ]),
-      _$2190(4),
+      $2190(4),
       a([
         4,
         4
@@ -89,7 +89,7 @@ const twitter = [
         -4,
         -4
       ]),
-      _$2191(8)
+      $2191(8)
     ])
   })
 ];

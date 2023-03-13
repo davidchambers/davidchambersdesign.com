@@ -1,97 +1,97 @@
 import S from 'sanctuary';
 import {
-  _canonicalize$002Dchildren,
+  canonicalize$002Dchildren,
   text,
   excerpt,
   a,
-  _a$0027,
+  a$0027,
   article,
-  _article$0027,
+  article$0027,
   aside,
-  _aside$0027,
+  aside$0027,
   b,
   blockquote,
-  _blockquote$0027,
+  blockquote$0027,
   body,
-  _body$0027,
+  body$0027,
   code,
-  _code$0027,
+  code$0027,
   dd,
-  _dd$0027,
+  dd$0027,
   del,
-  _del$0027,
+  del$0027,
   div,
   dl,
-  _dl$0027,
+  dl$0027,
   dt,
-  _dt$0027,
+  dt$0027,
   em,
-  _em$0027,
+  em$0027,
   embed,
   footer,
-  _footer$0027,
+  footer$0027,
   h1,
-  _h1$0027,
+  h1$0027,
   h2,
-  _h2$0027,
+  h2$0027,
   h3,
-  _h3$0027,
+  h3$0027,
   h4,
-  _h4$0027,
+  h4$0027,
   h5,
-  _h5$0027,
+  h5$0027,
   h6,
-  _h6$0027,
+  h6$0027,
   head,
-  _head$0027,
+  head$0027,
   header,
-  _header$0027,
+  header$0027,
   hr,
-  _hr$0027,
+  hr$0027,
   html,
-  _html$0027,
+  html$0027,
   i,
-  _i$0027,
+  i$0027,
   img,
   ins,
-  _ins$0027,
+  ins$0027,
   li,
-  _li$0027,
+  li$0027,
   linearGradient,
   link,
   mask,
   meta,
   nav,
-  _nav$0027,
+  nav$0027,
   object,
   ol,
-  _ol$0027,
+  ol$0027,
   p,
-  _p$0027,
+  p$0027,
   param,
   path,
   pre,
-  _pre$0027,
+  pre$0027,
   rect,
   script,
   span,
   stop,
   strong,
-  _strong$0027,
+  strong$0027,
   svg,
   time,
   title,
-  _title$0027,
+  title$0027,
   ul,
-  _ul$0027,
-  _var,
-  _var$0027,
+  ul$0027,
+  var_,
+  var$0027,
   video
 } from './elements.js';
 const caption = function caption(caption) {
-  return _p$0027({ [Symbol.for('class')]: 'caption' })(caption);
+  return p$0027({ [Symbol.for('class')]: 'caption' })(caption);
 };
-const _captioned$002Dimage = function _captioned$002Dimage(src) {
+const captioned$002Dimage = function captioned$002Dimage(src) {
   return alt => caption => dl([
     dt(img({
       [Symbol.for('alt')]: alt,
@@ -100,7 +100,7 @@ const _captioned$002Dimage = function _captioned$002Dimage(src) {
     dd(caption)
   ]);
 };
-const _captioned$002Dimages = function _captioned$002Dimages(images) {
+const captioned$002Dimages = function captioned$002Dimages(images) {
   return dl(S['chain'](image => [
     dt(img({
       [Symbol.for('alt')]: image[1],
@@ -109,42 +109,42 @@ const _captioned$002Dimages = function _captioned$002Dimages(images) {
     dd(image[2])
   ])(images));
 };
-const _code$002Dblock = function _code$002Dblock(language) {
-  return _source$002Dcode => (() => {
-    const lines = S['fromMaybe']([])(S['chain'](S['init'])(S['tail'](S['lines'](_source$002Dcode))));
-    const _trim$002Dleading$002Dspaces = function _trim$002Dleading$002Dspaces(line) {
+const code$002Dblock = function code$002Dblock(language) {
+  return source$002Dcode => (() => {
+    const lines = S['fromMaybe']([])(S['chain'](S['init'])(S['tail'](S['lines'](source$002Dcode))));
+    const trim$002Dleading$002Dspaces = function trim$002Dleading$002Dspaces(line) {
       return S['fromMaybe'](line)(S['chain'](prefix => S['stripPrefix'](prefix)(line))(S['map'](x => x['match'])(S['chain'](S['match'](new RegExp('^[ ]*', '')))(S['head'](lines)))));
     };
-    return pre(code(text(S['unlines'](S['map'](_trim$002Dleading$002Dspaces)(lines)))));
+    return pre(code(text(S['unlines'](S['map'](trim$002Dleading$002Dspaces)(lines)))));
   })();
 };
-const _decorative$002Dimage = function _decorative$002Dimage(src) {
+const decorative$002Dimage = function decorative$002Dimage(src) {
   return p(img({
     [Symbol.for('alt')]: '',
     [Symbol.for('src')]: src
   }));
 };
-const _interview$002Dlist = function _interview$002Dlist(interviewer) {
+const interview$002Dlist = function interview$002Dlist(interviewer) {
   return interviewee => exchange => ol(S['snd'](S['reduce'](S['pair'](name => items => quotation => name === interviewer ? S['Pair'](interviewee)([
     ...items,
-    _li$0027({ [Symbol.for('class')]: 'interviewer' })([
+    li$0027({ [Symbol.for('class')]: 'interviewer' })([
       strong(interviewer + ':'),
       ' ',
       ...quotation
     ])
   ]) : S['Pair'](interviewer)([
     ...items,
-    _li$0027({})([
+    li$0027({})([
       strong(interviewee + ':'),
       ' ',
       ...quotation
     ])
-  ])))(S['Pair'](interviewer)([]))(S['map'](_canonicalize$002Dchildren)(exchange))));
+  ])))(S['Pair'](interviewer)([]))(S['map'](canonicalize$002Dchildren)(exchange))));
 };
-const _pros$002Dand$002Dcons$002Dlist = function _pros$002Dand$002Dcons$002Dlist(f) {
-  return ul(f(_li$0027({ [Symbol.for('class')]: 'pro' }))(_li$0027({ [Symbol.for('class')]: 'con' })));
+const pros$002Dand$002Dcons$002Dlist = function pros$002Dand$002Dcons$002Dlist(f) {
+  return ul(f(li$0027({ [Symbol.for('class')]: 'pro' }))(li$0027({ [Symbol.for('class')]: 'con' })));
 };
-const _uncaptioned$002Dimage = function _uncaptioned$002Dimage(src) {
+const uncaptioned$002Dimage = function uncaptioned$002Dimage(src) {
   return alt => p(img({
     [Symbol.for('alt')]: alt,
     [Symbol.for('src')]: src
@@ -154,16 +154,16 @@ const update = function update(datetime) {
   return body => div({ [Symbol.for('class')]: 'update' })(S['prepend'](h4([
     'Update \u2014 ',
     time({ [Symbol.for('datetime')]: datetime['toISO']() })(datetime['toFormat']('d MMMM y'))
-  ]))(_canonicalize$002Dchildren(body)));
+  ]))(canonicalize$002Dchildren(body)));
 };
 export {
   caption,
-  _captioned$002Dimage,
-  _captioned$002Dimages,
-  _code$002Dblock,
-  _decorative$002Dimage,
-  _interview$002Dlist,
-  _pros$002Dand$002Dcons$002Dlist,
-  _uncaptioned$002Dimage,
+  captioned$002Dimage,
+  captioned$002Dimages,
+  code$002Dblock,
+  decorative$002Dimage,
+  interview$002Dlist,
+  pros$002Dand$002Dcons$002Dlist,
+  uncaptioned$002Dimage,
   update
 };

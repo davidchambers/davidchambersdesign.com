@@ -1,5 +1,5 @@
 import S from 'sanctuary';
-const _$0027 = function _$0027(text) {
+const $0027 = function $0027(text) {
   return '\'' + text['replace'](new RegExp('(?=\')', 'g'), '\\') + '\'';
 };
 const base03 = '#002b36';
@@ -18,12 +18,12 @@ const violet = '#6c71c4';
 const blue = '#268bd2';
 const cyan = '#2aa198';
 const green = '#859900';
-const _mid$002Dgray = '#a9a9a9';
+const mid$002Dgray = '#a9a9a9';
 const pink = '#ff5e99';
-const _recycled$002Dpaper = '#fef9ec';
+const recycled$002Dpaper = '#fef9ec';
 const screen = function screen(coerce) {
   return (() => {
-    const _$0025 = function _$0025(x) {
+    const $0025 = function $0025(x) {
       return coerce(x) + '%';
     };
     const em = function em(x) {
@@ -32,25 +32,25 @@ const screen = function screen(coerce) {
     const px = function px(x) {
       return coerce(x) + 'px';
     };
-    const _sans$002Dserif = function _sans$002Dserif(names) {
+    const sans$002Dserif = function sans$002Dserif(names) {
       return [
-        ...names['map'](_$0027),
+        ...names['map']($0027),
         'sans-serif'
       ]['join'](', ');
     };
     const monospace = function monospace(names) {
       return [
-        ...names['map'](_$0027),
+        ...names['map']($0027),
         'monospace'
       ]['join'](', ');
     };
     const rgba = function rgba(r) {
       return g => b => a => 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
     };
-    const _$0021important = function _$0021important(x) {
+    const $0021important = function $0021important(x) {
       return coerce(x) + ' !important';
     };
-    const _tag$002Dbackground = S['pipe']([
+    const tag$002Dbackground = S['pipe']([
       Math['log2'],
       n => n * 5,
       n => 247 - n,
@@ -60,7 +60,7 @@ const screen = function screen(coerce) {
       s => s['repeat'](3),
       s => '#' + s
     ]);
-    const _tag$002Dcolor = S['pipe']([
+    const tag$002Dcolor = S['pipe']([
       Math['log2'],
       n => n * 0.1,
       n => n + 0.3,
@@ -74,7 +74,7 @@ const screen = function screen(coerce) {
         ['html'],
         [
           Symbol.for('height'),
-          _$0025(100),
+          $0025(100),
           Symbol.for('background-color'),
           base3
         ],
@@ -90,13 +90,13 @@ const screen = function screen(coerce) {
           Symbol.for('min-width'),
           px(675),
           Symbol.for('height'),
-          _$0025(100),
+          $0025(100),
           Symbol.for('background-color'),
           base3,
           Symbol.for('font-size'),
-          _$0025(75),
+          $0025(75),
           Symbol.for('font-family'),
-          _sans$002Dserif([
+          sans$002Dserif([
             'Lucida Grande',
             'Lucida Sans Unicode',
             'Helvetica',
@@ -121,7 +121,7 @@ const screen = function screen(coerce) {
           Symbol.for('height'),
           Symbol.for('auto'),
           Symbol.for('min-height'),
-          _$0025(100),
+          $0025(100),
           Symbol.for('font-size'),
           em(1),
           Symbol.for('line-height'),
@@ -138,7 +138,7 @@ const screen = function screen(coerce) {
           Symbol.for('top'),
           0,
           Symbol.for('width'),
-          _$0025(100),
+          $0025(100),
           Symbol.for('height'),
           px(160),
           Symbol.for('background'),
@@ -159,7 +159,7 @@ const screen = function screen(coerce) {
             Symbol.for('auto')
           ],
           Symbol.for('width'),
-          _$0025(65),
+          $0025(65),
           Symbol.for('min-width'),
           px(615),
           Symbol.for('max-width'),
@@ -267,7 +267,7 @@ const screen = function screen(coerce) {
           [
             'url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABtklEQVRIx7WUsWrCUBSGMzt1dHAWhG5eFQyEFJwsSBxcSlsqYhwcKnYolIB3qZRSXESKYye7+AgpqQUnX8FH8Bluzx+OEIpWb5oGPg9E7/mu/z2JoZQy/pPwI5/PRxGEJAJiwwR8T0R/G0fQKZVKn/V6/X0ymTyv12tJDMbj8RPdm+E7/CauoGOa5tcLXXRPEh5xT9wRPeJ2OBw+lsvlxVaiIxDYXaT5A9EnukSbaBI3qFLKQbFYRGRCRyARS6Q5duwSV0SDcIga10a1Wn3DGh1BgMw5lj43v+CmFcIiTK4Vz/N6WKMj2OBAOfMu7xzNbQJRnBI5rmK5XJ5jja5gwAfa5lgq3DxLZIg016zv+2e6ggCjyNk3OWuLd4ymJ0SKa6bVal3rRoRDnmEUeVpqnHmOd57isYQkbVnWq+4hh2OKOT/0DxzHuRRCfOiOafig4SHCnO87AzQvFAr+fD5XPAD6rwo8RJhzjCKmBQeKzBELdj4ajdT2MgxDJv6ym06n9mq1Uq7rKtRDknivYFpGsqMkcQX2LkloTkiwV5Kk4CjJXwUHJUkIfpUkJdgpSVrwU2LHFujwDcrfprHNIpr7AAAAAElFTkSuQmCC\')',
             Symbol.for('no-repeat'),
-            _$0025(100)
+            $0025(100)
           ],
           Symbol.for('padding'),
           [
@@ -350,7 +350,7 @@ const screen = function screen(coerce) {
           Symbol.for('background'),
           [
             Symbol.for('no-repeat'),
-            _$0025(50)
+            $0025(50)
           ]
         ],
         ['#nav a:focus'],
@@ -486,7 +486,7 @@ const screen = function screen(coerce) {
             Symbol.for('auto')
           ],
           Symbol.for('width'),
-          _$0025(65),
+          $0025(65),
           Symbol.for('min-width'),
           px(615),
           Symbol.for('max-width'),
@@ -509,7 +509,7 @@ const screen = function screen(coerce) {
             0
           ],
           Symbol.for('width'),
-          _$0025(65),
+          $0025(65),
           Symbol.for('min-width'),
           px(615),
           Symbol.for('max-width'),
@@ -646,7 +646,7 @@ const screen = function screen(coerce) {
             base2
           ],
           Symbol.for('background'),
-          _recycled$002Dpaper,
+          recycled$002Dpaper,
           Symbol.for('padding'),
           [
             px(1),
@@ -797,7 +797,7 @@ const screen = function screen(coerce) {
           [
             Symbol.for('bold'),
             '1.667em/1.05',
-            _sans$002Dserif([
+            sans$002Dserif([
               'proxima-nova-1',
               'proxima-nova-2',
               'Helvetica',
@@ -888,7 +888,7 @@ const screen = function screen(coerce) {
             0
           ],
           Symbol.for('width'),
-          _$0025(100),
+          $0025(100),
           Symbol.for('height'),
           px(385)
         ],
@@ -916,7 +916,7 @@ const screen = function screen(coerce) {
             0
           ],
           Symbol.for('border'),
-          _$0021important(Symbol.for('none'))
+          $0021important(Symbol.for('none'))
         ],
         ['img[src*=\'/decorative/right/\']'],
         [
@@ -930,7 +930,7 @@ const screen = function screen(coerce) {
             em(1)
           ],
           Symbol.for('border'),
-          _$0021important(Symbol.for('none'))
+          $0021important(Symbol.for('none'))
         ],
         [
           'img[src*=\'/elam/\']',
@@ -964,9 +964,9 @@ const screen = function screen(coerce) {
             px(-29)
           ],
           Symbol.for('max-width'),
-          _$0021important(Symbol.for('none')),
+          $0021important(Symbol.for('none')),
           Symbol.for('border'),
-          _$0021important(Symbol.for('none'))
+          $0021important(Symbol.for('none'))
         ],
         ['img[src*=\'/windows/lion/\']'],
         [
@@ -1045,7 +1045,7 @@ const screen = function screen(coerce) {
             '#cccccc'
           ],
           Symbol.for('background'),
-          _recycled$002Dpaper,
+          recycled$002Dpaper,
           Symbol.for('padding'),
           [
             px(3),
@@ -1069,7 +1069,7 @@ const screen = function screen(coerce) {
         ['input.placeholder'],
         [
           Symbol.for('color'),
-          _$0021important(_mid$002Dgray)
+          $0021important(mid$002Dgray)
         ],
         ['ins'],
         [
@@ -1105,7 +1105,7 @@ const screen = function screen(coerce) {
         ['object.video'],
         [
           Symbol.for('width'),
-          _$0025(100),
+          $0025(100),
           Symbol.for('height'),
           px(385)
         ],
@@ -1160,7 +1160,7 @@ const screen = function screen(coerce) {
             base2
           ],
           Symbol.for('background-color'),
-          _recycled$002Dpaper,
+          recycled$002Dpaper,
           Symbol.for('padding'),
           [
             em(0.143),
@@ -1200,7 +1200,7 @@ const screen = function screen(coerce) {
           Symbol.for('display'),
           Symbol.for('block'),
           Symbol.for('width'),
-          _$0025(98),
+          $0025(98),
           Symbol.for('height'),
           em(15),
           Symbol.for('border'),
@@ -1210,7 +1210,7 @@ const screen = function screen(coerce) {
             '#cccccc'
           ],
           Symbol.for('background'),
-          _recycled$002Dpaper,
+          recycled$002Dpaper,
           Symbol.for('padding'),
           [
             em(0.333),
@@ -1376,7 +1376,7 @@ const screen = function screen(coerce) {
             0
           ],
           Symbol.for('width'),
-          _$0025(24.5),
+          $0025(24.5),
           Symbol.for('height'),
           em(3.5)
         ],
@@ -1396,7 +1396,7 @@ const screen = function screen(coerce) {
           Symbol.for('display'),
           Symbol.for('block'),
           Symbol.for('width'),
-          _$0025(100),
+          $0025(100),
           Symbol.for('border'),
           [
             px(1),
@@ -1431,9 +1431,9 @@ const screen = function screen(coerce) {
           Symbol.for('transition-timing-function'),
           Symbol.for('ease'),
           Symbol.for('background'),
-          _tag$002Dbackground(20),
+          tag$002Dbackground(20),
           Symbol.for('color'),
-          _tag$002Dcolor(20)
+          tag$002Dcolor(20)
         ],
         [
           '#tags li a:focus',
@@ -1446,7 +1446,7 @@ const screen = function screen(coerce) {
           Symbol.for('top'),
           px(-6),
           Symbol.for('width'),
-          _$0025(100),
+          $0025(100),
           Symbol.for('padding'),
           [
             px(16),
@@ -1469,9 +1469,9 @@ const screen = function screen(coerce) {
         ['#tags li[data-count=\'' + count + '\'] a'],
         [
           Symbol.for('background'),
-          _tag$002Dbackground(count),
+          tag$002Dbackground(count),
           Symbol.for('color'),
-          _tag$002Dcolor(count)
+          tag$002Dcolor(count)
         ]
       ])(S['range'](1)(20)),
       [
@@ -1483,7 +1483,7 @@ const screen = function screen(coerce) {
         ['div.syntaxhighlighter'],
         [
           Symbol.for('margin'),
-          _$0021important([
+          $0021important([
             em(1.75),
             0,
             px(-1)
@@ -1513,9 +1513,9 @@ const screen = function screen(coerce) {
         ['.structural'],
         [
           Symbol.for('position'),
-          _$0021important(Symbol.for('absolute')),
+          $0021important(Symbol.for('absolute')),
           Symbol.for('left'),
-          _$0021important(px(-9999))
+          $0021important(px(-9999))
         ],
         ['ol li.interviewer'],
         [
@@ -1605,7 +1605,7 @@ const screen = function screen(coerce) {
         ['#main img'],
         [
           Symbol.for('max-width'),
-          _$0025(100)
+          $0025(100)
         ],
         ['#main article header'],
         [
@@ -1630,7 +1630,7 @@ const screen = function screen(coerce) {
           [
             Symbol.for('bold'),
             '1.667em/1.05',
-            _sans$002Dserif([
+            sans$002Dserif([
               'proxima-nova-1',
               'proxima-nova-2',
               'Helvetica',
@@ -1655,7 +1655,7 @@ const screen = function screen(coerce) {
           [
             Symbol.for('bold'),
             '1.667em/1.05',
-            _sans$002Dserif([
+            sans$002Dserif([
               'proxima-nova-1',
               'proxima-nova-2',
               'Helvetica',
@@ -1829,7 +1829,7 @@ const screen = function screen(coerce) {
           Symbol.for('float'),
           Symbol.for('left'),
           Symbol.for('width'),
-          _$0025(65)
+          $0025(65)
         ],
         ['article article > div > p:first-child'],
         [
@@ -1839,7 +1839,7 @@ const screen = function screen(coerce) {
         ['article article > div > blockquote:first-child > p:first-child'],
         [
           Symbol.for('margin'),
-          _$0021important(0)
+          $0021important(0)
         ],
         ['article article footer'],
         [
@@ -1848,7 +1848,7 @@ const screen = function screen(coerce) {
           Symbol.for('float'),
           Symbol.for('right'),
           Symbol.for('width'),
-          _$0025(30),
+          $0025(30),
           Symbol.for('padding'),
           0,
           Symbol.for('color'),
@@ -2049,7 +2049,7 @@ const screen = function screen(coerce) {
           Symbol.for('font'),
           [
             '1.167em/30px',
-            _sans$002Dserif([
+            sans$002Dserif([
               'proxima-nova-1',
               'proxima-nova-2',
               'Lucida Grande',
@@ -2161,7 +2161,7 @@ const screen = function screen(coerce) {
           [
             Symbol.for('bold'),
             '1em/1.75',
-            _sans$002Dserif([
+            sans$002Dserif([
               'Lucida Grande',
               'Lucida Sans Unicode',
               'Helvetica',

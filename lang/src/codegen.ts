@@ -9,10 +9,10 @@ const esFromIdentifierName = (name: string): ES.Identifier => {
     '$' + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')
   );
   const escape = (name: string): Escaped => (
-    /^[a-z][a-z0-9]*$/i.test(name) && !ES.RESERVED_WORDS.has(name)
-    ? name as Escaped
-    : '_' + name.replace(/[^a-z0-9]/gi, escapeChar) as Escaped
-  );
+    ES.RESERVED_WORDS.has(name)     ? name + '_' :
+    /^[a-z][a-z0-9]*$/i.test(name)  ? name :
+    /* else */                        name.replace(/[^a-z0-9]/gi, escapeChar)
+  ) as Escaped;
   return esFromEscapedIdentifierName(escape(name));
 };
 
