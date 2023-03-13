@@ -4,17 +4,22 @@ import * as Serif from './types.js';
 
 type Escaped = string & {_tag: 'Escaped'}
 
-const escapeChar = (c: string): string => (
-  '$' + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')
-);
+const esFromIdentifierName = (name: string): ES.Identifier => {
+  const escapeChar = (c: string): string => (
+    '$' + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')
+  );
+  const escape = (name: string): Escaped => (
+    /^[a-z][a-z0-9]*$/i.test(name) && !ES.RESERVED_WORDS.has(name)
+    ? name as Escaped
+    : '_' + name.replace(/[^a-z0-9]/gi, escapeChar) as Escaped
+  );
+  return esFromEscapedIdentifierName(escape(name));
+};
 
-const escape = (name: string): Escaped => (
-  /^[a-z][a-z0-9]*$/i.test(name) && !ES.RESERVED_WORDS.has(name)
-  ? name as Escaped
-  : '_' + name.replace(/[^a-z0-9]/gi, escapeChar) as Escaped
-);
-
-const Identifier = (name: Escaped): ES.Identifier => ({type: 'Identifier', name});
+const esFromEscapedIdentifierName = (name: Escaped): ES.Identifier => ({
+  type: 'Identifier',
+  name,
+});
 
 const esFromBooleanLiteral = (boolean: Serif.Boolean): ES.Literal => (
   ES.Literal(boolean.value)
@@ -33,8 +38,8 @@ const esFromString = (string: Serif.String): ES.Literal => (
 const esFromSymbol = (symbol: Serif.Symbol): ES.CallExpression => (
   ES.CallExpression(
     ES.MemberExpression(
-      Identifier('Symbol' as Escaped),
-      Identifier('for' as Escaped),
+      esFromEscapedIdentifierName('Symbol' as Escaped),
+      esFromEscapedIdentifierName('for' as Escaped),
     ),
     [ES.Literal(symbol.name)],
   )
@@ -42,8 +47,8 @@ const esFromSymbol = (symbol: Serif.Symbol): ES.CallExpression => (
 
 const esFromMetaProperty = (metaProperty: Serif.MetaProperty): ES.MetaProperty => (
   ES.MetaProperty(
-    Identifier(metaProperty.meta as Escaped),
-    Identifier(metaProperty.property as Escaped),
+    esFromEscapedIdentifierName(metaProperty.meta as Escaped),
+    esFromEscapedIdentifierName(metaProperty.property as Escaped),
   )
 );
 
@@ -56,7 +61,7 @@ const esFromMemberExpression = (memberExpression: Serif.MemberExpression): ES.Me
 );
 
 const esFromIdentifier = (identifier: Serif.Identifier): ES.Identifier => (
-  Identifier(escape(identifier.name))
+  esFromIdentifierName(identifier.name)
 );
 
 const esFromSpreadElement = (spreadElement: Serif.SpreadElement): ES.SpreadElement => (
@@ -108,7 +113,7 @@ const esFromBlockExpression = (blockExpression: Serif.BlockExpression): ES.Expre
       [],
       ES.BlockStatement(
         last.type === 'declaration'
-        ? [...blockExpression.statements.map(esFromStatement), ES.ReturnStatement(Identifier(escape(last.name)))]
+        ? [...blockExpression.statements.map(esFromStatement), ES.ReturnStatement(esFromIdentifierName(last.name))]
         : [...blockExpression.statements.slice(0, -1).map(esFromStatement), ES.ReturnStatement(esFromExpression(last.expression))]
       )
     ),
@@ -181,18 +186,18 @@ const esFromDeclaration = (declaration: Serif.Declaration): ES.VariableDeclarati
   declaration.parameterNames.length === 0 ?
   ES.VariableDeclaration([
     ES.VariableDeclarator(
-      Identifier(escape(declaration.name)),
+      esFromIdentifierName(declaration.name),
       esFromExpression(declaration.expression),
     ),
   ]) :
   ES.VariableDeclaration([
     ES.VariableDeclarator(
-      Identifier(escape(declaration.name)),
+      esFromIdentifierName(declaration.name),
       ES.FunctionExpression(
-        Identifier(escape(declaration.name)),
-        declaration.parameterNames.slice(0, 1).map(name => Identifier(escape(name))),
+        esFromIdentifierName(declaration.name),
+        declaration.parameterNames.slice(0, 1).map(esFromIdentifierName),
         ES.BlockStatement([ES.ReturnStatement(declaration.parameterNames.slice(1).reduceRight(
-          (body, name) => ES.ArrowFunctionExpression([Identifier(escape(name))], body),
+          (body, name) => ES.ArrowFunctionExpression([esFromIdentifierName(name)], body),
           esFromExpression(declaration.expression)
         ))]),
       ),
@@ -237,10 +242,11 @@ export async function toModule(
       (importDeclaration.source.value.endsWith('.serif')
        ? (hiding => exportedNames(importDeclaration.source.value)
                     .filter(name => !hiding.has(name))
-                    .map(escape))
+                    .map(esFromIdentifierName))
          (new Set(importDeclaration.hiding.map(ident => ident.name)))
-       : Object.keys(await import(importDeclaration.source.value)) as Array<Escaped>)
-      .map(name => ES.ImportSpecifier(Identifier(name), Identifier(name))) :
+       : (Object.keys(await import(importDeclaration.source.value)) as Array<Escaped>)
+         .map(esFromEscapedIdentifierName))
+      .map(local => ES.ImportSpecifier(local, local)) :
       importDeclaration.specifiers.map(specifier => {
         switch (specifier.type) {
           case 'ImportDefaultSpecifier': {
