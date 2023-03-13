@@ -272,12 +272,7 @@ export async function toModule(
       importDeclaration.source.value.replace(/[.]serif$/, '.js')
     ))
   );
-  const statements = module.statements.map(statement => {
-    switch (statement.type) {
-      case 'Declaration':         return esFromDeclaration(statement);
-      case 'ExpressionStatement': return esFromExpressionStatement(statement);
-    }
-  });
+  const statements = module.statements.map(esFromStatement);
   const exports = module.exports.map(exportDeclaration => {
     switch (exportDeclaration.type) {
       case 'ExportNamedDeclaration': {
