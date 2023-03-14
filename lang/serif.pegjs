@@ -227,14 +227,14 @@ Arguments
     { return []; }
   / '(' Separator*
     head:ConditionalExpression
-    tail:(Separator* ',' Separator* argument:ConditionalExpression { return argument; })*
+    tail:(Separator* ',' Separator* argument:(SpreadElement / ConditionalExpression) { return argument; })*
     Separator* ')'
     { return [head, ...tail]; }
 
 Application
   = '('
     Separator* callee:Expression
-    args:(Separator+ arg:(SpreadElement / Expression) { return arg; })+
+    args:(Separator+ arg:Expression { return arg; })+
     Separator* ')'
     { return Serif.Application(callee, args); }
 

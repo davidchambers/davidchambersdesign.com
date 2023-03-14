@@ -4059,7 +4059,10 @@ function peg$parse(input, options) {
               s8.push(s9);
               s9 = peg$parseSeparator();
             }
-            s9 = peg$parseConditionalExpression();
+            s9 = peg$parseSpreadElement();
+            if (s9 === peg$FAILED) {
+              s9 = peg$parseConditionalExpression();
+            }
             if (s9 !== peg$FAILED) {
               peg$savedPos = s5;
               s5 = peg$f61(s3, s9);
@@ -4094,7 +4097,10 @@ function peg$parse(input, options) {
                 s8.push(s9);
                 s9 = peg$parseSeparator();
               }
-              s9 = peg$parseConditionalExpression();
+              s9 = peg$parseSpreadElement();
+              if (s9 === peg$FAILED) {
+                s9 = peg$parseConditionalExpression();
+              }
               if (s9 !== peg$FAILED) {
                 peg$savedPos = s5;
                 s5 = peg$f61(s3, s9);
@@ -4173,10 +4179,7 @@ function peg$parse(input, options) {
           s6 = peg$FAILED;
         }
         if (s6 !== peg$FAILED) {
-          s7 = peg$parseSpreadElement();
-          if (s7 === peg$FAILED) {
-            s7 = peg$parseConditionalExpression();
-          }
+          s7 = peg$parseConditionalExpression();
           if (s7 !== peg$FAILED) {
             peg$savedPos = s5;
             s5 = peg$f63(s3, s7);
@@ -4203,10 +4206,7 @@ function peg$parse(input, options) {
               s6 = peg$FAILED;
             }
             if (s6 !== peg$FAILED) {
-              s7 = peg$parseSpreadElement();
-              if (s7 === peg$FAILED) {
-                s7 = peg$parseConditionalExpression();
-              }
+              s7 = peg$parseConditionalExpression();
               if (s7 !== peg$FAILED) {
                 peg$savedPos = s5;
                 s5 = peg$f63(s3, s7);

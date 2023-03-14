@@ -219,13 +219,7 @@ const posts = [
   post$002Fgive$002Dand$002Dtake$002Dof$002Dcontinuation$002Dpassing$002Dstyle
 ];
 const public_ = components => {
-  return path.join(...[
-    dirname,
-    '..',
-    '..',
-    'public',
-    ...components
-  ]);
+  return path.join(dirname, '..', '..', 'public', ...components);
 };
 const write$002Dfile = filename => {
   return data => fs.writeFileSync(filename, data);

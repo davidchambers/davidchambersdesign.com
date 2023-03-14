@@ -225,7 +225,7 @@ posts = [
 ]
 
 public components =
-  (path.join ...[dirname, "..", "..", "public", ...components])
+  path.join(dirname, "..", "..", "public", ...components)
 
 write-file filename data =
   fs.writeFileSync(filename, data)
