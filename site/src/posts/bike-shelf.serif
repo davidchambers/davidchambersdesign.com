@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {uncaptioned-image} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 71,
   slug: "bike-shelf",
   title: "Bike shelf",

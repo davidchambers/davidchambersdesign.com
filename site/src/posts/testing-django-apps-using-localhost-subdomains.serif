@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block uncaptioned-image} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 56,
   slug: "testing-django-apps-using-localhost-subdomains",
   title: "Testing Django apps using localhost subdomains",

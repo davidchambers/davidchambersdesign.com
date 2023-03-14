@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 90,
   slug: "getting-started-with-socket.io",
   title: "Getting started with Socket.IO",

@@ -98,8 +98,8 @@ escape =
            s => s.replaceAll(">", "&gt;")])
 
 text value =
-  #{[:text]: [value],
-    [:render]: indent => level => inline => (escape value)}
+  {[:text]: [value],
+   [:render]: indent => level => inline => (escape value)}
 
 canonicalize-attrs attrs =
   (Object.fromEntries (S.map name => {
@@ -187,7 +187,7 @@ render-self-closing-element tag-name attrs indent level inline = {
 block-element tag-name -attrs -children = {
   attrs = (canonicalize-attrs -attrs);
   children = (canonicalize-children -children);
-  #{
+  {
     [:format]: :block,
     [:text]: children.flatMap(child => child:text),
     [:render]: (render-block-element tag-name attrs children),
@@ -198,7 +198,7 @@ inline-element tag-name -attrs -children = {
   attrs = (canonicalize-attrs -attrs);
   children = (canonicalize-children -children);
   format = if children.some(node => node:format === :block) then :block else :inline;
-  #{
+  {
     [:format]: format,
     [:text]: children.flatMap(child => child:text),
     [:render]: indent => level => inline => {
@@ -210,7 +210,7 @@ inline-element tag-name -attrs -children = {
 
 self-closing-element tag-name -attrs = {
   attrs = (canonicalize-attrs -attrs);
-  #{
+  {
     [:format]: :inline,
     [:text]: [],
     [:render]: (render-self-closing-element tag-name attrs),
@@ -224,7 +224,7 @@ excerpt -children = {
                child => (child:render indent level inline)
                children)
   };
-  #{
+  {
     [:text]: children.flatMap(child => child:text),
     [:render]: render,
   }
@@ -232,13 +232,13 @@ excerpt -children = {
 
 ;; 4.1 The document element
 html' = (block-element :html)
-html = (html' #{})
+html = (html' {})
 
 ;; 4.2 Document metadata
 head' = (block-element :head)
-head = (head' #{})
+head = (head' {})
 title' = (inline-element :title)
-title = (title' #{})
+title = (title' {})
 base = (self-closing-element :base)
 link = (self-closing-element :link)
 meta = (self-closing-element :meta)
@@ -246,61 +246,61 @@ style' = (block-element :style)
 
 ;; 4.3 Sections
 body' = (block-element :body)
-body = (body' #{})
+body = (body' {})
 article' = (block-element :article)
-article = (article' #{})
+article = (article' {})
 section' = (block-element :section)
 nav' = (block-element :nav)
-nav = (nav' #{})
+nav = (nav' {})
 aside' = (inline-element :aside)
-aside = (aside' #{})
+aside = (aside' {})
 h1' = (inline-element :h1)
-h1 = (h1' #{})
+h1 = (h1' {})
 h2' = (inline-element :h2)
-h2 = (h2' #{})
+h2 = (h2' {})
 h3' = (inline-element :h3)
-h3 = (h3' #{})
+h3 = (h3' {})
 h4' = (inline-element :h4)
-h4 = (h4' #{})
+h4 = (h4' {})
 h5' = (inline-element :h5)
-h5 = (h5' #{})
+h5 = (h5' {})
 h6' = (inline-element :h6)
-h6 = (h6' #{})
+h6 = (h6' {})
 hgroup' = (block-element :hgroup)
 header' = (block-element :header)
-header = (header' #{})
+header = (header' {})
 footer' = (block-element :footer)
-footer = (footer' #{})
+footer = (footer' {})
 address' = (block-element :address)
 
 ;; 4.4 Grouping content
 p' = (inline-element :p)
-p = (p' #{})
+p = (p' {})
 hr' = (self-closing-element :hr)
-hr = (hr' #{})
+hr = (hr' {})
 pre' = (inline-element :pre)
-pre = (pre' #{})
+pre = (pre' {})
 blockquote' = (block-element :blockquote)
-blockquote = (blockquote' #{})
+blockquote = (blockquote' {})
 ol' = (block-element :ol)
-ol = (ol' #{})
+ol = (ol' {})
 ul' = (block-element :ul)
-ul = (ul' #{})
+ul = (ul' {})
 menu' = (block-element :menu)
 li' = (inline-element :li)
-li = (li' #{})
+li = (li' {})
 dl' = (block-element :dl)
-dl = (dl' #{})
+dl = (dl' {})
 dt' = (inline-element :dt)
-dt = (dt' #{})
+dt = (dt' {})
 dd' = (inline-element :dd)
-dd = (dd' #{})
+dd = (dd' {})
 figure' = (block-element :figure)
 figcaption' = (block-element :figcaption)
 main' = (block-element :main)
 div = (block-element :div)
 
-b                        = (inline-element :b #{})
+b                        = (inline-element :b {})
 mask                     = (block-element :mask)
 rect                     = (self-closing-element :rect)
 ;; The opening and closing tags of each of the following elements
@@ -312,24 +312,24 @@ svg                      = (block-element :svg)
 ;; are rendered inline unless the element contains an element
 ;; whose opening and closing tags are rendered on their own lines.
 a'                      = (inline-element :a)
-a href                  = (a' #{[:href]: href})
+a href                  = (a' {[:href]: href})
 code'                   = (inline-element :code)
-code                    = (inline-element :code #{})
+code                    = (inline-element :code {})
 del'                    = (inline-element :del)
-del                     = (inline-element :del #{})
+del                     = (inline-element :del {})
 em'                     = (inline-element :em)
-em                      = (inline-element :em #{})
+em                      = (inline-element :em {})
 i'                      = (inline-element :i)
-i                       = (inline-element :i #{})
+i                       = (inline-element :i {})
 ins'                    = (inline-element :ins)
-ins                     = (inline-element :ins #{})
+ins                     = (inline-element :ins {})
 script                  = (inline-element :script)
 span                    = (inline-element :span)
 strong'                 = (inline-element :strong)
-strong                  = (inline-element :strong #{})
+strong                  = (inline-element :strong {})
 time                    = (inline-element :time)
 var'                    = (inline-element :var)
-var                     = (inline-element :var #{})
+var                     = (inline-element :var {})
 video                   = (inline-element :video)
 ;; The following self-closing elements are always rendered inline.
 embed                   = (self-closing-element :embed)

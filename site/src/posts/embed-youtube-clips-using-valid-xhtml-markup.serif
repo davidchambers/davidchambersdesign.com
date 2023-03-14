@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 25,
   slug: "embed-youtube-clips-using-valid-xhtml-markup",
   title: "Embed YouTube clips using valid XHTML markup",

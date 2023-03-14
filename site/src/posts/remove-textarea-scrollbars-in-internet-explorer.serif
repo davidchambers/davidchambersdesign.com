@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 59,
   slug: "remove-textarea-scrollbars-in-internet-explorer",
   title: "Remove textarea scrollbars in Internet Explorer",

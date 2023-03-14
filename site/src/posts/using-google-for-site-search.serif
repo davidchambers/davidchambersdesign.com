@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 45,
   slug: "using-google-for-site-search",
   title: "Using Google for site search",
@@ -41,7 +41,7 @@ body = [
        Here's a breakdown of the various query parameters I included:"]),
 
   (dl
-     [(dt' #{[:class]: "textual"} "q"),
+     [(dt' {[:class]: "textual"} "q"),
       (dd "Search query as entered by the user."),
 
       (dt "ie"),

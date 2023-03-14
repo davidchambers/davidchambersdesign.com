@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 36,
   slug: "shockingly-simple-url-shortening",
   title: "Shockingly simple URL shortening",

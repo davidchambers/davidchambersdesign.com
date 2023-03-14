@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block update} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 22,
   slug: "coda-theme-for-syntaxhighlighter",
   title: "Coda theme for SyntaxHighlighter",
@@ -163,7 +163,7 @@ body = [
      ["The Coda theme, like Coda itself, can handle non-HTML code inside
        HTML snippets."]),
 
-  (h4' #{[:id]: "css-inside-html"} "CSS inside HTML"),
+  (h4' {[:id]: "css-inside-html"} "CSS inside HTML"),
 
   (p
      ["For HTML snippets that contain some CSS, use ",
@@ -192,7 +192,7 @@ body = [
      </head>
      "),
 
-  (h4' #{[:id]: "javascript-inside-html"} "JavaScript inside HTML"),
+  (h4' {[:id]: "javascript-inside-html"} "JavaScript inside HTML"),
 
   (p
      ["For HTML snippets that contain some JavaScript, use ",
@@ -220,7 +220,7 @@ body = [
      </body>
      "),
 
-  (h4' #{[:id]: "php-inside-html"} "PHP inside HTML"),
+  (h4' {[:id]: "php-inside-html"} "PHP inside HTML"),
 
   (p
      ["For HTML snippets that contain some PHP, use ",
@@ -274,7 +274,7 @@ body = [
              </script>
              ")])]),
 
-  (h3' #{[:id]: "setup"} "Setup"),
+  (h3' {[:id]: "setup"} "Setup"),
 
   (ol
      [(li

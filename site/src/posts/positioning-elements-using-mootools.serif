@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 60,
   slug: "positioning-elements-using-mootools",
   title: "Positioning elements using MooTools",

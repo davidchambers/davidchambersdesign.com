@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {captioned-image update} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 11,
   slug: "django-syntax-highlighting-for-coda",
   title: "Django syntax highlighting for Coda",

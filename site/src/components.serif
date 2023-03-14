@@ -15,15 +15,15 @@ export {
 };
 
 caption caption =
-  (p' #{[:class]: "caption"} caption)
+  (p' {[:class]: "caption"} caption)
 
 captioned-image src alt caption =
   (dl
-     [(dt (img #{[:alt]: alt, [:src]: src})),
+     [(dt (img {[:alt]: alt, [:src]: src})),
       (dd caption)])
 
 captioned-images images =
-  (dl (S.chain image => [(dt (img #{[:alt]: image[1], [:src]: image[0]})),
+  (dl (S.chain image => [(dt (img {[:alt]: image[1], [:src]: image[0]})),
                          (dd image[2])]
                images))
 
@@ -40,19 +40,19 @@ code-block language source-code = {
 }
 
 decorative-image src =
-  (p (img #{[:alt]: "", [:src]: src}))
+  (p (img {[:alt]: "", [:src]: src}))
 
 interview-list interviewer interviewee exchange =
   (ol (S.snd (S.reduce (S.pair name => items => quotation => {
                                  if name === interviewer then {
                                    (S.Pair interviewee
                                            [...items,
-                                            (li' #{[:class]: "interviewer"}
+                                            (li' {[:class]: "interviewer"}
                                                [(strong interviewer + ":"), " ", ...quotation])])
                                  } else {
                                    (S.Pair interviewer
                                            [...items,
-                                            (li' #{}
+                                            (li' {}
                                                [(strong interviewee + ":"), " ", ...quotation])])
                                  }
                                })
@@ -60,15 +60,15 @@ interview-list interviewer interviewee exchange =
                        (S.map canonicalize-children exchange))))
 
 pros-and-cons-list f =
-  (ul (f (li' #{[:class]: "pro"})
-         (li' #{[:class]: "con"})))
+  (ul (f (li' {[:class]: "pro"})
+         (li' {[:class]: "con"})))
 
 uncaptioned-image src alt =
-  (p (img #{[:alt]: alt, [:src]: src}))
+  (p (img {[:alt]: alt, [:src]: src}))
 
 update datetime body =
-  (div #{[:class]: "update"}
+  (div {[:class]: "update"}
      (S.prepend (h4 ["Update \u2014 ",
-                     (time #{[:datetime]: datetime.toISO()}
+                     (time {[:datetime]: datetime.toISO()}
                         datetime.toFormat("d MMMM y"))])
                 (canonicalize-children body)))

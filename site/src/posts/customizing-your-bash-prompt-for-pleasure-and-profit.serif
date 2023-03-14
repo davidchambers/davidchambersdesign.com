@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {captioned-image code-block update} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 80,
   slug: "customizing-your-bash-prompt-for-pleasure-and-profit",
   title: "Customizing your bash prompt for pleasure and profit",

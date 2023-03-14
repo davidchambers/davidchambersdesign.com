@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 46,
   slug: "extra-comma-considered-harmful",
   title: "Extra comma considered harmful",
@@ -14,7 +14,7 @@ export default #{
 body = [
 
   (p
-     ["On ", (time #{[:datetime]: "2010-03-19T13:58-00:00"} "19 March 2010"), ",
+     ["On ", (time {[:datetime]: "2010-03-19T13:58-00:00"} "19 March 2010"), ",
        David Chambers wrote:"]),
 
   (blockquote
@@ -66,7 +66,7 @@ body = [
          ["David Chambers"])]),
 
   (p
-     ["On ", (time #{[:datetime]: "2010-03-19T15:13-00:00"} "19 March 2010"), ",
+     ["On ", (time {[:datetime]: "2010-03-19T15:13-00:00"} "19 March 2010"), ",
        Douglas Crockford wrote:"]),
 
   (blockquote

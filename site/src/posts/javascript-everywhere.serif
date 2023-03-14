@@ -1,7 +1,7 @@
 import * from "../elements.serif" hiding {body};
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 61,
   slug: "javascript-everywhere",
   title: "JavaScript, JavaScript, everywhere",
@@ -69,12 +69,12 @@ body = [
 
   (dl
      [(dt
-         (embed #{[:type]: "application/x-shockwave-flash",
-                  [:src]: "http://blip.tv/play/g_MngZaxYQI",
-                  [:width]: 480,
-                  [:height]: 300,
-                  [:allowscriptaccess]: :always,
-                  [:allowfullscreen]: true})),
+         (embed {[:type]: "application/x-shockwave-flash",
+                 [:src]: "http://blip.tv/play/g_MngZaxYQI",
+                 [:width]: 480,
+                 [:height]: 300,
+                 [:allowscriptaccess]: :always,
+                 [:allowfullscreen]: true})),
       (dd
          ["Mike Subelsky introducing SproutCore at JSConf Washington,
            April 2009"])]),
@@ -87,12 +87,12 @@ body = [
 
   (dl
      [(dt
-         (embed #{[:type]: "application/x-shockwave-flash",
-                  [:src]: "http://blip.tv/play/AYGylE4C",
-                  [:width]: 480,
-                  [:height]: 300,
-                  [:allowscriptaccess]: :always,
-                  [:allowfullscreen]: true})),
+         (embed {[:type]: "application/x-shockwave-flash",
+                 [:src]: "http://blip.tv/play/AYGylE4C",
+                 [:width]: 480,
+                 [:height]: 300,
+                 [:allowscriptaccess]: :always,
+                 [:allowfullscreen]: true})),
       (dd
          ["Ryan Dahl introducing Node.js at JSConf Berlin, November 2009"])]),
 

@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {captioned-images update} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 14,
   slug: "tiny-calendar-icon-set",
   title: "Tiny calendar icon set",

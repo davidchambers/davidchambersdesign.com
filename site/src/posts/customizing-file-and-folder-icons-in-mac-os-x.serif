@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {captioned-image code-block decorative-image uncaptioned-image} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 72,
   slug: "customizing-file-and-folder-icons-in-mac-os-x",
   title: "Customizing file and folder icons in Mac OS X",

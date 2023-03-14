@@ -1,7 +1,7 @@
 import * from "../elements.serif" hiding {body};
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 64,
   slug: "man-after-my-own-heart",
   title: "Man after my own heart",

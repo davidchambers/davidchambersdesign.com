@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block pros-and-cons-list} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 30,
   slug: "css-fixed-position-headers",
   title: "CSS fixed-position headers",

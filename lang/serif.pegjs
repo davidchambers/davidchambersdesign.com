@@ -173,9 +173,9 @@ ArrayElement
   / Expression
 
 ObjectExpression
-  = '#{' Separator* '}'
+  = '{' Separator* '}'
     { return Serif.ObjectExpression([]); }
-  / '#{' Separator*
+  / '{' Separator*
     head:ObjectElement
     tail:(Separator* ',' Separator* element:ObjectElement { return element; })*
     Separator* ','?

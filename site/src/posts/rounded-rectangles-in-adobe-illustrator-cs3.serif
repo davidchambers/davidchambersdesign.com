@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {captioned-image decorative-image interview-list} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 3,
   slug: "rounded-rectangles-in-adobe-illustrator-cs3",
   title: "Rounded rectangles in Adobe Illustrator CS3",

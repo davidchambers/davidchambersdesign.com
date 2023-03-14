@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 82,
   slug: "repeating-strings-in-javascript",
   title: "Repeating strings in JavaScript",
@@ -17,7 +17,7 @@ body = [
      ["Python and Ruby share beautiful syntax for repeating strings;
        PHP's syntax is characteristically ugly."]),
 
-  (h3' #{[:id]: "python"} "Python"),
+  (h3' {[:id]: "python"} "Python"),
 
   (code-block :python
 
@@ -25,7 +25,7 @@ body = [
      '=' * 5
      "),
 
-  (h3' #{[:id]: "ruby"} "Ruby"),
+  (h3' {[:id]: "ruby"} "Ruby"),
 
   (code-block :ruby
 
@@ -33,7 +33,7 @@ body = [
      '=' * 5
      "),
 
-  (h3' #{[:id]: "php"} "PHP"),
+  (h3' {[:id]: "php"} "PHP"),
 
   (code-block :php
 
@@ -41,7 +41,7 @@ body = [
      str_repeat('=', 5)
      "),
 
-  (h3' #{[:id]: "javascript"} "JavaScript?"),
+  (h3' {[:id]: "javascript"} "JavaScript?"),
 
   (p
      ["True to form, repeating strings in JavaScript is ugly and

@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 69,
   slug: "filtering-lists-in-python-ruby-and-javascript",
   title: "Filtering lists in Python, Ruby, and JavaScript",

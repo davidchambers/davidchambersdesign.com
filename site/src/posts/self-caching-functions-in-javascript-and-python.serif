@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 67,
   slug: "self-caching-functions-in-javascript-and-python",
   title: "Self-caching functions in JavaScript and Python",

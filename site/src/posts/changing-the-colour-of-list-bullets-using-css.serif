@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 83,
   slug: "changing-the-colour-of-list-bullets-using-css",
   title: "Changing the colour of list bullets using CSS",
@@ -49,7 +49,7 @@ body = [
        does one target the bullets and only the bullets? As far as I know
        it's not possible."]),
 
-  (h3' #{[:id]: "conventional-hack"} "Conventional hack"),
+  (h3' {[:id]: "conventional-hack"} "Conventional hack"),
 
   (code-block :html
 
@@ -78,7 +78,7 @@ body = [
        there are ways to achieve the desired visual effect without
        hacking the markup."]),
 
-  (h3' #{[:id]: "background-image-technique"} "Background image technique"),
+  (h3' {[:id]: "background-image-technique"} "Background image technique"),
 
   (code-block :css
 
@@ -98,7 +98,7 @@ body = [
        of an extra HTTP request, one could Base64-encode the image in a ",
       (a "http://en.wikipedia.org/wiki/Data_URI_scheme#CSS" "data URI"), "."]),
 
-  (h3' #{[:id]: "pseudo-element-technique"} "Pseudo-element technique"),
+  (h3' {[:id]: "pseudo-element-technique"} "Pseudo-element technique"),
 
   (code-block :css
 

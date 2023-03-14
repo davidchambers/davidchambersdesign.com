@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {captioned-image code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 81,
   slug: "mapping-file-extensions-to-emacs-syntax-modes",
   title: "Mapping file extensions to Emacs syntax modes",

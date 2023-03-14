@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 20,
   slug: "photoshop-save-for-web-javascript",
   title: "Photoshop \"save for web\" JavaScript",

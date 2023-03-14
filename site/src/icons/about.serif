@@ -44,8 +44,8 @@ hat-stripes-light = [
 ]
 
 about = [
-  (path #{[:fill]: "#edb", [:d]: (render skin)}),
-  (path #{[:fill]: "#963", [:d]: (render features)}),
-  (path #{[:fill]: "#432", [:d]: (render hat-stripes-dark)}),
-  (path #{[:fill]: "#ccc", [:d]: (render hat-stripes-light)}),
+  (path {[:fill]: "#edb", [:d]: (render skin)}),
+  (path {[:fill]: "#963", [:d]: (render features)}),
+  (path {[:fill]: "#432", [:d]: (render hat-stripes-dark)}),
+  (path {[:fill]: "#ccc", [:d]: (render hat-stripes-light)}),
 ]

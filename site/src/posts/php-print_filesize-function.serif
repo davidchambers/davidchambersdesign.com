@@ -2,7 +2,7 @@ import * from "../elements.serif" hiding {body};
 import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
-export default #{
+export default {
   id: 17,
   slug: "php-print_filesize-function",
   title: "PHP print_filesize function",
@@ -85,7 +85,7 @@ body = [
 
   (p
      ["This gives: ", (a "/favicon.ico" "favicon.ico"), " ",
-      (span #{[:class]: "filesize"} "(≈1.1 kB)"), ". By default, the function
+      (span {[:class]: "filesize"} "(≈1.1 kB)"), ". By default, the function
        wraps the file's size in a ", (code "span"), " element with ",
       (code "class=\"filesize\""), ", to provide a hook for styling
        if required."]),
