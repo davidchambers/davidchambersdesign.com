@@ -90,9 +90,9 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
-    'This is a JavaScript function for Photoshop which saves\n        the active document as a 24-bit PNG file. It is equivalent to\n        manually selecting ',
+    'This is a JavaScript function for Photoshop which saves\n       the active document as a 24-bit PNG file. It is equivalent to\n       manually selecting ',
     strong('File > Save for Web & Devices...'),
-    '\n        which means that the file size of the resulting PNG will be smaller\n        than would be the case using ',
+    '\n       which means that the file size of the resulting PNG will be smaller\n       than would be the case using ',
     code('PNGSaveOptions()'),
     '.'
   ]),
@@ -100,7 +100,7 @@ const body = [
   p([
     'Photoshop on Mac limits the length of a ',
     code('File'),
-    '\n        object\'s file name to 31 characters. Credit for the rename\n        workaround should go to Mark Walsh who posted the solution\n        on the Adobe forums in a thread titled ',
+    '\n       object\'s file name to 31 characters. Credit for the rename\n       workaround should go to Mark Walsh who posted the solution\n       on the Adobe forums in a thread titled ',
     a('http://forums.adobe.com/thread/290409')('Save for web filename problems'),
     '.'
   ])

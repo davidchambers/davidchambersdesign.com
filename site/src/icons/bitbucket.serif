@@ -3,7 +3,7 @@ import * from "../orthogonal.serif";
 
 export default bitbucket;
 
-bucket = #[
+bucket = [
   (⇨  0), (⇩  0),
   (↓  2), (→  1), (↓  6), (→  1),
   (↓  6), (→  1), (↓  1), (→  2),
@@ -12,12 +12,12 @@ bucket = #[
   (↑  6), (→  1), (↑  2), (← 16),
 ]
 
-sticky-note = #[
+sticky-note = [
   (⇨  4), (⇩  1),
   (→  8), (↓  7), (←  8), (↑  7),
 ]
 
-symbol = #[
+symbol = [
   (⇨  6), (⇩  2),
   (→  1), (↓  5), (→  2), (↑  5),
   (→  1), (↓  1), (←  4), (↑  1),
@@ -25,12 +25,12 @@ symbol = #[
   (→  4), (↓  2), (←  4), (↑  2),
 ]
 
-sticky-tape = #[
+sticky-tape = [
   (⇨  7), (⇩  0),
   (→  2), (↓  3), (←  2), (↑  3),
 ]
 
-bitbucket = #[
+bitbucket = [
   (path #{[:fill]: "#27c", [:d]: (render bucket)}),
   (path #{[:fill]: "#ee7", [:d]: (render sticky-note)}),
   (path #{[:fill]: "#a7a", [:d]: (render symbol)}),

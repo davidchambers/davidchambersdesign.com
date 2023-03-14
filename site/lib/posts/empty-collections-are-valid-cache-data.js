@@ -90,19 +90,19 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
-    'When using Django\'s cache, ensure that empty collections\n        (',
+    'When using Django\'s cache, ensure that empty collections\n       (',
     code('[]'),
     ', ',
     code('()'),
     ', ',
     code('{}'),
-    ') are\n        treated as valid cache data.'
+    ') are\n       treated as valid cache data.'
   ]),
   code$002Dblock(Symbol.for('python'))('\n     cached = cache.get(cache_key)\n     if cached:\n         return cached\n\n     # perform expensive operation\n     '),
   p([
     'In the above snippet, if the call to ',
     code('get'),
-    '\n        returns an empty collection the cached result is ignored\n        and the value is recalculated unnecessarily.'
+    '\n       returns an empty collection the cached result is ignored\n       and the value is recalculated unnecessarily.'
   ]),
   p([
     'Avoid this by explicitly comparing the return value to ',
@@ -111,13 +111,13 @@ const body = [
   ]),
   code$002Dblock(Symbol.for('python'))('\n     cached = cache.get(cache_key)\n     if cached is not None: # much better!\n         return cached\n     '),
   p([
-    'Django\'s documentation wisely advises against caching the\n        literal value ',
+    'Django\'s documentation wisely advises against caching the\n       literal value ',
     code('None'),
-    ', and the above snippet makes\n        it clear why this is good advice \u2013 the ',
+    ', and the above snippet makes\n       it clear why this is good advice \u2013 the ',
     code('get'),
-    ' method\n        returns ',
+    ' method\n       returns ',
     code('None'),
-    ' when the cache does not contain an\n        entry for the supplied key.'
+    ' when the cache does not contain an\n       entry for the supplied key.'
   ])
 ];
 export default {

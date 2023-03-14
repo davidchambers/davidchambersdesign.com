@@ -5,10 +5,10 @@ import S from "sanctuary";
 export default related-posts;
 
 intersection set-1 set-2 =
-  new Set(#[...set-2].filter(x => set-1.has(x)))
+  new Set([...set-2].filter(x => set-1.has(x)))
 
 union set-1 set-2 =
-  new Set(#[...set-1, ...set-2])
+  new Set([...set-1, ...set-2])
 
 similarity set-1 set-2 = {
   (intersection set-1 set-2).size / (Math.sqrt (union set-1 set-2).size)
@@ -31,9 +31,9 @@ with-scores that this = {
 }
 
 related-posts posts post =
-  (S.pipe #[(S.reject this => this.slug === post.slug),
-            (S.mapMaybe (with-scores post)),
-            S.sort,
-            (S.map S.snd),
-            posts => posts.slice(0, 5)]
+  (S.pipe [(S.reject this => this.slug === post.slug),
+           (S.mapMaybe (with-scores post)),
+           S.sort,
+           (S.map S.snd),
+           posts => posts.slice(0, 5)]
           posts)

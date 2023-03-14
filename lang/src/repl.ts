@@ -56,7 +56,7 @@ function print(x: any): string {
     case '[object Map]':
       return `\x1B[1mnew\x1B[0m Map(${print(Array.from(x))})`;
     case '[object Array]':
-      return '#[' + x.map(print).join(', ') + ']';
+      return '[' + x.map(print).join(', ') + ']';
     case '[object Object]':
       return '#{' + Reflect.ownKeys(x).map(k => `[${print(k)}]: ${print(x[k])}`).join(', ') + '}';
     default:

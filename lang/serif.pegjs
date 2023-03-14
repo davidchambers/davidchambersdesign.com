@@ -159,9 +159,9 @@ IdentifierChar
     .
 
 ArrayExpression
-  = '#[' Separator* ']'
+  = '[' Separator* ']'
     { return Serif.ArrayExpression([]); }
-  / '#[' Separator*
+  / '[' Separator*
     head:ArrayElement
     tail:(Separator* ',' Separator* element:ArrayElement { return element; })*
     Separator* ','?

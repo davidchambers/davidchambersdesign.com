@@ -90,15 +90,15 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
-    'Many of those who write JavaScript do not come from programming\n        backgrounds (while I\'ve written plenty of PHP, Python, and\n        JavaScript, I don\'t have much experience with "real" programming\n        languages',
+    'Many of those who write JavaScript do not come from programming\n       backgrounds (while I\'ve written plenty of PHP, Python, and\n       JavaScript, I don\'t have much experience with "real" programming\n       languages',
     a('#footnote')('*'),
-    '). As a result, a significant\n        portion of JavaScript coders do not think of variables as pointers\n        to memory addresses. This leads to confusion in cases such as this:'
+    '). As a result, a significant\n       portion of JavaScript coders do not think of variables as pointers\n       to memory addresses. This leads to confusion in cases such as this:'
   ]),
   code$002Dblock(Symbol.for('javascript'))('\n     var fruits = [\'orange\', \'lime\'];\n     var colours = fruits; // naïve attempt to duplicate array\n     colours.push(\'yellow\');\n     '),
   p([
     'One might be surprised to learn that ',
     code('fruits'),
-    ' now contains\n        not just "orange" and "lime" but also "yellow". Oops! Here\'s how\n        it went wrong:'
+    ' now contains\n       not just "orange" and "lime" but also "yellow". Oops! Here\'s how\n       it went wrong:'
   ]),
   code$002Dblock(Symbol.for('javascript'))('\n     var fruits = [\'orange\', \'lime\'];\n     // fruits points to array containing "orange" and "lime"\n\n     var colours = fruits;\n     // colours now points to that same array!\n     '),
   p([
@@ -107,9 +107,9 @@ const body = [
   ]),
   code$002Dblock(Symbol.for('javascript'))('\n     var colours = fruits.slice();\n     '),
   aside$0027({ [Symbol.for('id')]: 'footnote' })([
-    '* Languages such as C.\n        Like ',
+    '* Languages such as C.\n       Like ',
     a('http://www.quirksmode.org/about/')('ppk'),
-    ',\n        I take care to include quotation marks. ;)'
+    ',\n       I take care to include quotation marks. ;)'
   ])
 ];
 export default {

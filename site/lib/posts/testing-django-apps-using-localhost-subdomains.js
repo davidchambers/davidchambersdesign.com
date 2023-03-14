@@ -92,17 +92,17 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  p(['This turned out to be quite a bit easier than I\'d imagined.\n        Here are the things I did:']),
+  p(['This turned out to be quite a bit easier than I\'d imagined.\n       Here are the things I did:']),
   ol([
     li([
       p([
         'I saved ',
         a('http://thingsilearned.com/2009/01/05/using-subdomains-in-django/')('Dave Fowler\'s subdomain middleware'),
-        '\n                  as ',
+        '\n               as ',
         code('middleware.py'),
         ' in my project directory:'
       ]),
-      code$002Dblock(Symbol.for('python'))('\n               class SubdomainMiddleware:\n                   def process_request(self, request):\n                       \'\'\'Parse out the subdomain from the request\'\'\'\n                       request.subdomain = None\n                       host = request.META.get(\'HTTP_HOST\', \'\')\n                       host_s = host.replace(\'www.\', \'\').split(\'.\')\n                       if len(host_s) > 2:\n                           request.subdomain = \'\'.join(host_s[:-2])\n               ')
+      code$002Dblock(Symbol.for('python'))('\n             class SubdomainMiddleware:\n                 def process_request(self, request):\n                     \'\'\'Parse out the subdomain from the request\'\'\'\n                     request.subdomain = None\n                     host = request.META.get(\'HTTP_HOST\', \'\')\n                     host_s = host.replace(\'www.\', \'\').split(\'.\')\n                     if len(host_s) > 2:\n                         request.subdomain = \'\'.join(host_s[:-2])\n             ')
     ]),
     li([
       p([
@@ -110,29 +110,29 @@ const body = [
         code('MIDDLEWARE_CLASSES'),
         ':'
       ]),
-      code$002Dblock(Symbol.for('python'))('\n               MIDDLEWARE_CLASSES = (\n                   ...,\n                   \'middleware.SubdomainMiddleware\',\n               )\n               ')
+      code$002Dblock(Symbol.for('python'))('\n             MIDDLEWARE_CLASSES = (\n                 ...,\n                 \'middleware.SubdomainMiddleware\',\n             )\n             ')
     ]),
     li([
       p([
         'I edited my ',
         code('/etc/hosts'),
-        '\n                  file as per Dave\'s suggestion:'
+        '\n               file as per Dave\'s suggestion:'
       ]),
-      code$002Dblock(Symbol.for('plain-text'))('\n               127.0.0.1 test.com\n               127.0.0.1 blog.test.com\n               127.0.0.1 search.test.com\n               '),
+      code$002Dblock(Symbol.for('plain-text'))('\n             127.0.0.1 test.com\n             127.0.0.1 blog.test.com\n             127.0.0.1 search.test.com\n             '),
       p([
         'Initially I replaced ',
         code('test.com'),
-        ' with the\n                  site\'s domain name, but I decided that it\'s useful to\n                  be able to access both the live site and the test site\n                  without editing the ',
+        ' with the\n               site\'s domain name, but I decided that it\'s useful to\n               be able to access both the live site and the test site\n               without editing the ',
         code('/etc/hosts'),
         ' file.'
       ]),
-      p(['At this point I expected everything to work as advertised.\n                  Instead, I got this:']),
+      p(['At this point I expected everything to work as advertised.\n               Instead, I got this:']),
       uncaptioned$002Dimage('/images/posts/windows/it-works!.png')('It works!'),
-      p(['That would depend on one\'s definition of "works".\n                  I wanted my Django site to appear, which required a\n                  very simple tweak...'])
+      p(['That would depend on one\'s definition of "works".\n               I wanted my Django site to appear, which required a\n               very simple tweak...'])
     ]),
     li([
       p(['I added the port number to the address:']),
-      code$002Dblock(Symbol.for('plain-text'))('\n               http://test.com:8000/\n               '),
+      code$002Dblock(Symbol.for('plain-text'))('\n             http://test.com:8000/\n             '),
       p([
         'This ',
         em('actually'),

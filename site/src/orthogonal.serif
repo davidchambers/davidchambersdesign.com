@@ -7,40 +7,40 @@ reducer prev path curr = {
     if {prev[0] === :M || prev[0] === :m} then {
       (S.Pair curr path)  ;; ignore previous move
     } else {
-      (S.Pair curr #[...path, prev])
+      (S.Pair curr [...path, prev])
     }
   } else {
     if {prev[0] === :M || prev[0] === :m} && curr[0] === :m then {
-      (S.Pair #[prev[0],
-                #[prev[1][0] + curr[1][0],
-                  prev[1][1] + curr[1][1]]]
+      (S.Pair [prev[0],
+               [prev[1][0] + curr[1][0],
+                prev[1][1] + curr[1][1]]]
               path)
     } else {
-      (S.Pair curr #[...path, prev])
+      (S.Pair curr [...path, prev])
     }
   }
 }
 
 simplify =
-  (S.array #[]
+  (S.array []
            head => tail =>
              (S.pair S.append
                      (S.reduce (S.pair reducer)
-                               (S.Pair head #[])
+                               (S.Pair head [])
                                tail)))
 
 render =
-  (S.pipe #[simplify,
-            S.join,
-            (S.map x => if typeof x === "symbol" then (Symbol.keyFor x) else (String x)),
-            S.unwords])
+  (S.pipe [simplify,
+           S.join,
+           (S.map x => if typeof x === "symbol" then (Symbol.keyFor x) else (String x)),
+           S.unwords])
 
-⇦ x = #[:m, #[{- x}, 0]]
-⇨ x = #[:m, #[{+ x}, 0]]
-⇧ y = #[:m, #[0, {- y}]]
-⇩ y = #[:m, #[0, {+ y}]]
+⇦ x = [:m, [{- x}, 0]]
+⇨ x = [:m, [{+ x}, 0]]
+⇧ y = [:m, [0, {- y}]]
+⇩ y = [:m, [0, {+ y}]]
 
-← x = #[:h, {- x}]
-→ x = #[:h, {+ x}]
-↑ y = #[:v, {- y}]
-↓ y = #[:v, {+ y}]
+← x = [:h, {- x}]
+→ x = [:h, {+ x}]
+↑ y = [:v, {- y}]
+↓ y = [:v, {+ y}]

@@ -89,19 +89,19 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  p(['A decorator is a function which takes a function and returns\n        a function:']),
+  p(['A decorator is a function which takes a function and returns\n       a function:']),
   code$002Dblock(Symbol.for('coffeescript'))('\n     decorator = (fn) -> fn\n     '),
   p([
-    'Obviously, this doesn\'t do anything useful. It\'s the fact that a\n        decorator can return a function which behaves ',
+    'Obviously, this doesn\'t do anything useful. It\'s the fact that a\n       decorator can return a function which behaves ',
     em('similarly'),
-    '\n        to the function passed to it that makes the pattern interesting.\n        Commonly a decorator will simply wrap a function invocation in a\n        check of some sort:'
+    '\n       to the function passed to it that makes the pattern interesting.\n       Commonly a decorator will simply wrap a function invocation in a\n       check of some sort:'
   ]),
   code$002Dblock(Symbol.for('javascript'))('\n     var loginRequired = function (fn) {\n       return function () {\n         if (!user.authenticated) {\n           return window.location.replace(\'/login\');\n         }\n         fn.apply(null, [].slice.apply(arguments));\n       };\n     };\n     '),
-  p(['The above decorator could be used to "guard" actions that only\n        authenticated users are permitted to perform:']),
+  p(['The above decorator could be used to "guard" actions that only\n       authenticated users are permitted to perform:']),
   code$002Dblock(Symbol.for('javascript'))('\n     var changeUsername = loginRequired(function (username) {\n       $.ajax({\n         type: \'PUT\',\n         url: \'/api/1.0/users/\' + user.id,\n         data: {username: username}\n       })});\n\n     var changePassword = loginRequired(function (password) {\n       $.ajax({\n         type: \'PUT\',\n         url: \'/api/1.0/users/\' + user.id,\n         data: {password: password}\n       })});\n\n     var deleteAccount = loginRequired(function () {\n       $.ajax({\n         type: \'DELETE\',\n         url: \'/api/1.0/users/\' + user.id\n       })});\n     '),
   p(['The CoffeeScript equivalent is quite a bit clearer:']),
   code$002Dblock(Symbol.for('coffeescript'))('\n     changeUsername = loginRequired (username) ->\n       $.ajax\n         type: \'PUT\'\n         url: "/api/1.0/users/#{user.id}"\n         data: {username}\n\n     changePassword = loginRequired (password) ->\n       $.ajax\n         type: \'PUT\'\n         url: "/api/1.0/users/#{user.id}"\n         data: {password}\n\n     deleteAccount = loginRequired ->\n       $.ajax\n         type: \'DELETE\'\n         url: "/api/1.0/users/#{user.id}"\n     '),
-  p(['Decorators are commonly used in Python -- which provides special\n        syntax for "decorating" functions -- but are rarely seen in\n        JavaScript code. This despite the fact that JavaScript\'s first-class\n        functions are ideally suited to the task. Perhaps CoffeeScript\'s\n        lighter-weight function syntax will result in decorators making\n        more frequent appearances in JavaScript code.'])
+  p(['Decorators are commonly used in Python -- which provides special\n       syntax for "decorating" functions -- but are rarely seen in\n       JavaScript code. This despite the fact that JavaScript\'s first-class\n       functions are ideally suited to the task. Perhaps CoffeeScript\'s\n       lighter-weight function syntax will result in decorators making\n       more frequent appearances in JavaScript code.'])
 ];
 export default {
   ['id']: 89,

@@ -94,26 +94,26 @@ import datetime from '../datetime.js';
 const body = [
   excerpt([
     p([
-      'Recently I\'ve been on a mission to minimize the number\n             of HTTP requests made while loading pages on this site.\n             Until yesterday, the ',
+      'Recently I\'ve been on a mission to minimize the number\n           of HTTP requests made while loading pages on this site.\n           Until yesterday, the ',
       a('/archives/')('archives'),
-      '\n             page was making an HTTP request for each of the ',
+      '\n           page was making an HTTP request for each of the ',
       a('/tiny-calendar-icon-set/')('tiny calendar icons'),
-      '\n             used on the page. Therefore, up to 31 HTTP requests were\n             required just to retrieve the calendar icons. Not good.'
+      '\n           used on the page. Therefore, up to 31 HTTP requests were\n           required just to retrieve the calendar icons. Not good.'
     ]),
-    p(['The same result can be achieved with a single HTTP request\n             through the use of a sprite:']),
+    p(['The same result can be achieved with a single HTTP request\n           through the use of a sprite:']),
     captioned$002Dimage('/images/posts/23/calendar.png')('Tiny calendar icons sprite')('Tiny calendar icons sprite, which you\'re welcome to save and use')
   ]),
-  p(['One uses a sprite by applying a background image to an element\n        using CSS. One could start with an empty span element:']),
+  p(['One uses a sprite by applying a background image to an element\n       using CSS. One could start with an empty span element:']),
   code$002Dblock(Symbol.for('html'))('\n     <span class="day-1"></span>\n     '),
-  p(['The following CSS sets the width and height of the element and\n        sets the sprite as its background image:']),
+  p(['The following CSS sets the width and height of the element and\n       sets the sprite as its background image:']),
   code$002Dblock(Symbol.for('css'))('\n     span.day-1\n     {\n         display: block;\n         width: 16px;\n         height: 16px;\n         background-image: url(/path/to/images/calendar.png);\n         background-repeat: no-repeat;\n     }\n     '),
-  p(['By default the top left corner of an element\'s background image\n        is aligned with the element\'s top left corner, so at this stage\n        all that\'s displayed is a 16px by 16px white box:']),
+  p(['By default the top left corner of an element\'s background image\n       is aligned with the element\'s top left corner, so at this stage\n       all that\'s displayed is a 16px by 16px white box:']),
   captioned$002Dimage('/images/posts/23/calendar-span-default-bg-pos.png')('Calendar sprite applied as background image using default positioning')([
     'Calendar sprite applied as background image using ',
     strong('default'),
     ' positioning'
   ]),
-  p(['To have the "1" icon displayed, the element\'s background position\n        is specified:']),
+  p(['To have the "1" icon displayed, the element\'s background position\n       is specified:']),
   code$002Dblock(Symbol.for('css'))('\n     span.day-1\n     {\n         display: block;\n         width: 16px;\n         height: 16px;\n         background-image: url(/path/to/images/calendar.png);\n         background-repeat: no-repeat;\n         background-position: -60px -20px;\n     }\n     '),
   p(['This drags the background image 60px to the left, and lifts it 20px:']),
   captioned$002Dimage('/images/posts/23/calendar-span-specified-bg-pos.png')('Calendar sprite applied as background image using correct positioning')('Calendar sprite applied as background image using correct positioning'),
@@ -122,7 +122,7 @@ const body = [
   p([
     'Note that I introduced the class name ',
     strong('day'),
-    ' to streamline\n        the CSS. This must appear in the HTML, as in this example:'
+    ' to streamline\n       the CSS. This must appear in the HTML, as in this example:'
   ]),
   code$002Dblock(Symbol.for('html'))('\n     <span class="day day-31"></span>\n     ')
 ];

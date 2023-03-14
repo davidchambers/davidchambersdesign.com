@@ -7,17 +7,17 @@ export default #{
   slug: "converting-integers-to-ordinals",
   title: "Converting integers to ordinals",
   datetime: (datetime "2010-09-16" "13:00:00" :Pacific/Auckland),
-  tags: #["javascript", "programming", "python"],
+  tags: ["javascript", "programming", "python"],
   body: body,
 };
 
-body = #[
+body = [
 
   (p
-     #["When dealing with dates, it's not uncommon to need to convert an
-        integer into an ordinal number (1st, 2nd, 3rd, etc.). While making
-        improvements to ", (a "http://mango.io/wtf?" "Mango"), " recently I
-        wrote a function to do this, first in Python, later in JavaScript."]),
+     ["When dealing with dates, it's not uncommon to need to convert an
+       integer into an ordinal number (1st, 2nd, 3rd, etc.). While making
+       improvements to ", (a "http://mango.io/wtf?" "Mango"), " recently I
+       wrote a function to do this, first in Python, later in JavaScript."]),
 
   (h3 "Python"),
 
@@ -49,16 +49,16 @@ body = #[
      "),
 
   (p
-     #["By special-casing 11, 12, and 13, the function becomes incredibly
-        simple."]),
+     ["By special-casing 11, 12, and 13, the function becomes incredibly
+       simple."]),
 
   (p
-     #["I'm pleased to have found a context in which JavaScript's ",
-       (code "switch"), " statement is almost ", (em "elegant"), ".
-        The problem, usually, is the need to ", (code "break"), "
-        to prevent fall-through. When used within a function,
-        though, the ", (code "return"), " statement is able to
-        perform this role, making the JavaScript code almost
-        as readable as the Python equivalent."]),
+     ["I'm pleased to have found a context in which JavaScript's ",
+      (code "switch"), " statement is almost ", (em "elegant"), ".
+       The problem, usually, is the need to ", (code "break"), "
+       to prevent fall-through. When used within a function,
+       though, the ", (code "return"), " statement is able to
+       perform this role, making the JavaScript code almost
+       as readable as the Python equivalent."]),
 
 ]

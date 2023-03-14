@@ -91,20 +91,20 @@ import datetime from '../datetime.js';
 const body = [
   excerpt([
     p([
-      'I tend to forget things. Until recently, I had no system to\n             keep track of appointments. I began using Google Calendar,\n             but soon realised that I did not want ',
+      'I tend to forget things. Until recently, I had no system to\n           keep track of appointments. I began using Google Calendar,\n           but soon realised that I did not want ',
       em('another'),
-      '\n             thing to check each day.'
+      '\n           thing to check each day.'
     ]),
     p([
       strong('Enter event reminders.'),
-      ' With Google Calendar sending\n             event reminders to my inbox, I no longer had to check my calendar\n             each day. Google Calendar can now send event reminders via text\n             message. ',
-      strong('Below is a walk through of the steps involved\n             in setting up SMS event reminders in Google Calendar.')
+      ' With Google Calendar sending\n           event reminders to my inbox, I no longer had to check my calendar\n           each day. Google Calendar can now send event reminders via text\n           message. ',
+      strong('Below is a walk through of the steps involved\n           in setting up SMS event reminders in Google Calendar.')
     ])
   ]),
   p([
     'The first step is to open ',
     a('http://calendar.google.com/')('Google Calendar'),
-    '.\n        Once you have signed in, you will see several links at the\n        top right of the page. Click on ',
+    '.\n       Once you have signed in, you will see several links at the\n       top right of the page. Click on ',
     strong('Settings'),
     '.'
   ]),
@@ -124,7 +124,7 @@ const body = [
   p([
     'Enter your cell phone number and click ',
     strong('Send Verification Code'),
-    '. In a matter of seconds you should\n        receive a text message from Google containing the verification code.\n        Enter the code and click ',
+    '. In a matter of seconds you should\n       receive a text message from Google containing the verification code.\n       Enter the code and click ',
     strong('Finish setup'),
     '.'
   ]),
@@ -143,9 +143,9 @@ const body = [
   captioned$002Dimage('/images/posts/13/event-reminders-in-google-calendar.png')('Event reminders in Google Calendar')([
     'Google Calendar\'s ',
     strong('Notifications'),
-    ' pane,\n        where default event reminders are set'
+    ' pane,\n       where default event reminders are set'
   ]),
-  p(['You\'re then able to set default event reminders, which may include\n        one or more text messages. You\'ll also be able to add SMS reminders\n        against individual calendar events.'])
+  p(['You\'re then able to set default event reminders, which may include\n       one or more text messages. You\'ll also be able to add SMS reminders\n       against individual calendar events.'])
 ];
 export default {
   ['id']: 13,

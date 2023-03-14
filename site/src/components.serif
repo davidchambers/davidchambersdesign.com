@@ -19,17 +19,17 @@ caption caption =
 
 captioned-image src alt caption =
   (dl
-     #[(dt (img #{[:alt]: alt, [:src]: src})),
-       (dd caption)])
+     [(dt (img #{[:alt]: alt, [:src]: src})),
+      (dd caption)])
 
 captioned-images images =
-  (dl (S.chain image => #[(dt (img #{[:alt]: image[1], [:src]: image[0]})),
-                          (dd image[2])]
+  (dl (S.chain image => [(dt (img #{[:alt]: image[1], [:src]: image[0]})),
+                         (dd image[2])]
                images))
 
 code-block language source-code = {
   lines =
-    (S.fromMaybe #[] (S.chain S.init (S.tail (S.lines source-code))));
+    (S.fromMaybe [] (S.chain S.init (S.tail (S.lines source-code))));
   trim-leading-spaces line =
     (S.fromMaybe line
                  (S.chain prefix => (S.stripPrefix prefix line)
@@ -46,17 +46,17 @@ interview-list interviewer interviewee exchange =
   (ol (S.snd (S.reduce (S.pair name => items => quotation => {
                                  if name === interviewer then {
                                    (S.Pair interviewee
-                                           #[...items,
-                                             (li' #{[:class]: "interviewer"}
-                                                #[(strong interviewer + ":"), " ", ...quotation])])
+                                           [...items,
+                                            (li' #{[:class]: "interviewer"}
+                                               [(strong interviewer + ":"), " ", ...quotation])])
                                  } else {
                                    (S.Pair interviewer
-                                           #[...items,
-                                             (li' #{}
-                                                #[(strong interviewee + ":"), " ", ...quotation])])
+                                           [...items,
+                                            (li' #{}
+                                               [(strong interviewee + ":"), " ", ...quotation])])
                                  }
                                })
-                       (S.Pair interviewer #[])
+                       (S.Pair interviewer [])
                        (S.map canonicalize-children exchange))))
 
 pros-and-cons-list f =
@@ -68,7 +68,7 @@ uncaptioned-image src alt =
 
 update datetime body =
   (div #{[:class]: "update"}
-     (S.prepend (h4 #["Update \u2014 ",
-                      (time #{[:datetime]: datetime.toISO()}
-                         datetime.toFormat("d MMMM y"))])
+     (S.prepend (h4 ["Update \u2014 ",
+                     (time #{[:datetime]: datetime.toISO()}
+                        datetime.toFormat("d MMMM y"))])
                 (canonicalize-children body)))

@@ -92,7 +92,7 @@ const body = [
   p([
     'While creating documentation for ',
     i('Dice Cricket'),
-    ',\n        a game a friend and I designed many years ago, I produced\n        a set of diagrams which represent the segments of a cricket\n        field. The isolated nature of this small design challenge\n        provided a refreshing break from the various and interrelated\n        considerations involved in designing for the Web.'
+    ',\n       a game a friend and I designed many years ago, I produced\n       a set of diagrams which represent the segments of a cricket\n       field. The isolated nature of this small design challenge\n       provided a refreshing break from the various and interrelated\n       considerations involved in designing for the Web.'
   ]),
   captioned$002Dimages([
     [
@@ -126,7 +126,7 @@ const body = [
       'Behind square'
     ]
   ]),
-  p(['You\'re free to make use of these images (they\'re transparent PNGs).\n        Attribution is appreciated but not required. :)'])
+  p(['You\'re free to make use of these images (they\'re transparent PNGs).\n       Attribution is appreciated but not required. :)'])
 ];
 export default {
   ['id']: 40,

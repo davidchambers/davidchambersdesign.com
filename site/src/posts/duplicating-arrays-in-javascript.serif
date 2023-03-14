@@ -7,19 +7,19 @@ export default #{
   slug: "duplicating-arrays-in-javascript",
   title: "Duplicating arrays in JavaScript",
   datetime: (datetime "2010-01-09" "19:26:00" :Pacific/Auckland),
-  tags: #["javascript"],
+  tags: ["javascript"],
   body: body,
 };
 
-body = #[
+body = [
 
   (p
-     #["Many of those who write JavaScript do not come from programming
-        backgrounds (while I've written plenty of PHP, Python, and
-        JavaScript, I don't have much experience with \"real\" programming
-        languages", (a "#footnote" "*"), "). As a result, a significant
-        portion of JavaScript coders do not think of variables as pointers
-        to memory addresses. This leads to confusion in cases such as this:"]),
+     ["Many of those who write JavaScript do not come from programming
+       backgrounds (while I've written plenty of PHP, Python, and
+       JavaScript, I don't have much experience with \"real\" programming
+       languages", (a "#footnote" "*"), "). As a result, a significant
+       portion of JavaScript coders do not think of variables as pointers
+       to memory addresses. This leads to confusion in cases such as this:"]),
 
   (code-block :javascript
 
@@ -30,9 +30,9 @@ body = #[
      "),
 
   (p
-     #["One might be surprised to learn that ", (code "fruits"), " now contains
-        not just \"orange\" and \"lime\" but also \"yellow\". Oops! Here's how
-        it went wrong:"]),
+     ["One might be surprised to learn that ", (code "fruits"), " now contains
+       not just \"orange\" and \"lime\" but also \"yellow\". Oops! Here's how
+       it went wrong:"]),
 
   (code-block :javascript
 
@@ -45,8 +45,8 @@ body = #[
      "),
 
   (p
-     #["How, then, does one create a copy of the original array? ",
-       (em "Slice!")]),
+     ["How, then, does one create a copy of the original array? ",
+      (em "Slice!")]),
 
   (code-block :javascript
 
@@ -55,8 +55,8 @@ body = #[
      "),
 
   (aside' #{[:id]: "footnote"}
-     #["* Languages such as C.
-        Like ", (a "http://www.quirksmode.org/about/" "ppk"), ",
-        I take care to include quotation marks. ;)"]),
+     ["* Languages such as C.
+       Like ", (a "http://www.quirksmode.org/about/" "ppk"), ",
+       I take care to include quotation marks. ;)"]),
 
 ]

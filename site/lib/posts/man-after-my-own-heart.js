@@ -93,13 +93,13 @@ const body = [
     a('http://en.wikipedia.org/wiki/Seagram_Building')('Seagram Building'),
     ':'
   ]),
-  blockquote([p(['[An] interesting feature of the Seagram Building is the\n             window blinds. As was common with International Style\n             architects, Mies wanted the building to have a uniform\n             appearance. One aspect of a façade which Mies disliked,\n             was the disordered irregularity when window blinds are\n             drawn. Inevitably, people using different windows will\n             draw blinds to different heights, making the building\n             appear disorganized. To reduce this disproportionate\n             appearance, Mies specified window blinds which only\n             operated in three positions \u2013 fully open, halfway\n             open/closed, or fully closed.'])]),
+  blockquote([p(['[An] interesting feature of the Seagram Building is the\n           window blinds. As was common with International Style\n           architects, Mies wanted the building to have a uniform\n           appearance. One aspect of a façade which Mies disliked,\n           was the disordered irregularity when window blinds are\n           drawn. Inevitably, people using different windows will\n           draw blinds to different heights, making the building\n           appear disorganized. To reduce this disproportionate\n           appearance, Mies specified window blinds which only\n           operated in three positions \u2013 fully open, halfway\n           open/closed, or fully closed.'])]),
   p([
     'This, taken from Werner Blaser\'s ',
     i('Mies van der Rohe'),
-    ',\n        is also brilliant:'
+    ',\n       is also brilliant:'
   ]),
-  blockquote([p(['The plan of the brick villa is a good example of the\n             way in which Mies van der Rohe developed the art of\n             structure from the very beginning. The structure of\n             a brick wall begins with the smallest unit into which\n             the whole can be divided: the brick. The dimensions are\n             calculated in terms of the basic unit of the brick.'])])
+  blockquote([p(['The plan of the brick villa is a good example of the\n           way in which Mies van der Rohe developed the art of\n           structure from the very beginning. The structure of\n           a brick wall begins with the smallest unit into which\n           the whole can be divided: the brick. The dimensions are\n           calculated in terms of the basic unit of the brick.'])])
 ];
 export default {
   ['id']: 64,

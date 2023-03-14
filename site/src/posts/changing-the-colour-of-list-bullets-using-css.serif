@@ -7,14 +7,14 @@ export default #{
   slug: "changing-the-colour-of-list-bullets-using-css",
   title: "Changing the colour of list bullets using CSS",
   datetime: (datetime "2011-04-13" "17:30:00" :America/Los_Angeles),
-  tags: #["css", "meaningful-markup"],
+  tags: ["css", "meaningful-markup"],
   body: body,
 };
 
-body = #[
+body = [
 
   (p
-     #["So, you're about to style an unordered list of some sort..."]),
+     ["So, you're about to style an unordered list of some sort..."]),
 
   (code-block :html
 
@@ -29,8 +29,8 @@ body = #[
      "),
 
   (p
-     #["You've decided upon hanging square bullets in a light grey –
-        nothing too distracting..."]),
+     ["You've decided upon hanging square bullets in a light grey –
+       nothing too distracting..."]),
 
   (code-block :css
 
@@ -45,9 +45,9 @@ body = #[
      "),
 
   (p
-     #["This should do the trick, but doesn't for some reason! How the heck
-        does one target the bullets and only the bullets? As far as I know
-        it's not possible."]),
+     ["This should do the trick, but doesn't for some reason! How the heck
+       does one target the bullets and only the bullets? As far as I know
+       it's not possible."]),
 
   (h3' #{[:id]: "conventional-hack"} "Conventional hack"),
 
@@ -74,9 +74,9 @@ body = #[
      "),
 
   (p
-     #["This gets the job done, but those ", (code "span"), "s are ugly –
-        there are ways to achieve the desired visual effect without
-        hacking the markup."]),
+     ["This gets the job done, but those ", (code "span"), "s are ugly –
+       there are ways to achieve the desired visual effect without
+       hacking the markup."]),
 
   (h3' #{[:id]: "background-image-technique"} "Background image technique"),
 
@@ -94,9 +94,9 @@ body = #[
      "),
 
   (p
-     #["This requires very little CSS. To avoid incurring the overhead
-        of an extra HTTP request, one could Base64-encode the image in a ",
-       (a "http://en.wikipedia.org/wiki/Data_URI_scheme#CSS" "data URI"), "."]),
+     ["This requires very little CSS. To avoid incurring the overhead
+       of an extra HTTP request, one could Base64-encode the image in a ",
+      (a "http://en.wikipedia.org/wiki/Data_URI_scheme#CSS" "data URI"), "."]),
 
   (h3' #{[:id]: "pseudo-element-technique"} "Pseudo-element technique"),
 
@@ -124,11 +124,11 @@ body = #[
      "),
 
   (p
-     #["So it's possible to fashion square bullets of any colour
-        with just a handful of straightforward declarations. Nice!"]),
+     ["So it's possible to fashion square bullets of any colour
+       with just a handful of straightforward declarations. Nice!"]),
 
   (p
-     #["Prefer round bullets? No problem. :)"]),
+     ["Prefer round bullets? No problem. :)"]),
 
   (code-block :css
 

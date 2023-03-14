@@ -89,7 +89,7 @@ import {
 import datetime from '../datetime.js';
 const body = [
   p([a('http://www.youtube.com/watch?v=A6-wA-7QIeE')('Dieter Rams \u2013 Gestalten')]),
-  blockquote([p(['The media have to learn [...] that the spectacular things are not\n             the important things \u2013 the unspectacular things are the important\n             things, especially in the future.'])]),
+  blockquote([p(['The media have to learn [...] that the spectacular things are not\n           the important things \u2013 the unspectacular things are the important\n           things, especially in the future.'])]),
   p([
     'via ',
     a('http://kottke.org/')('kottke')

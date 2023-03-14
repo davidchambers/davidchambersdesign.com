@@ -102,9 +102,9 @@ const body = [
       [Symbol.for('id')]: 'transition-example-1',
       [Symbol.for('style')]: 'position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;'
     })(['Click to animate']),
-    script({})('(function () {\n               var element = document.getElementById(\'transition-example-1\');\n               element.style.webkitTransitionProperty = \'left\';\n               element.style.webkitTransitionDuration = \'2s\';\n               element.addEventListener(\'click\', function () {\n                   this.style.left = \'100px\';\n                   this.addEventListener(\'webkitTransitionEnd\', function () {\n                       this.style.left = 0;\n                   });\n               });\n           })();'),
+    script({})('(function () {\n              var element = document.getElementById(\'transition-example-1\');\n              element.style.webkitTransitionProperty = \'left\';\n              element.style.webkitTransitionDuration = \'2s\';\n              element.addEventListener(\'click\', function () {\n                  this.style.left = \'100px\';\n                  this.addEventListener(\'webkitTransitionEnd\', function () {\n                      this.style.left = 0;\n                  });\n              });\n          })();'),
     p(['The code behind this example is not complicated:']),
-    code$002Dblock(Symbol.for('javascript'))('\n          element.style.webkitTransitionProperty = \'left\';\n          element.style.webkitTransitionDuration = \'2s\';\n          element.addEventListener(\'click\', function () {\n              this.style.left = \'100px\';\n              this.addEventListener(\'webkitTransitionEnd\', function () {\n                  this.style.left = 0;\n              });\n          });\n          ')
+    code$002Dblock(Symbol.for('javascript'))('\n         element.style.webkitTransitionProperty = \'left\';\n         element.style.webkitTransitionDuration = \'2s\';\n         element.addEventListener(\'click\', function () {\n             this.style.left = \'100px\';\n             this.addEventListener(\'webkitTransitionEnd\', function () {\n                 this.style.left = 0;\n             });\n         });\n         ')
   ]),
   p(['The following example, though, does not act as one might expect!']),
   p$0027({
@@ -119,7 +119,7 @@ const body = [
     li([
       'Set the element\'s ',
       code('left'),
-      ' value to \'100px\'\n             (the page should immediately be redrawn).'
+      ' value to \'100px\'\n           (the page should immediately be redrawn).'
     ]),
     li([
       'Set ',
@@ -133,7 +133,7 @@ const body = [
       '.'
     ])
   ]),
-  p(['What actually happens -- as you\'ll have seen if you\'re viewing\n        this page in a recent version of Safari or Chrome -- is that the\n        transition is applied to the preceding update. This behaviour\n        strikes me as strange, but I have very little understanding of\n        how these transitions are meant to be effected by the browser.']),
+  p(['What actually happens -- as you\'ll have seen if you\'re viewing\n       this page in a recent version of Safari or Chrome -- is that the\n       transition is applied to the preceding update. This behaviour\n       strikes me as strange, but I have very little understanding of\n       how these transitions are meant to be effected by the browser.']),
   p(['I did manage to get the element to behave as I had intended:']),
   p$0027({
     [Symbol.for('id')]: 'transition-example-3',
@@ -145,22 +145,22 @@ const body = [
   p([
     'For some reason wrapping the ',
     code('webkitTransition*'),
-    '\n        declarations in an anonymous function passed to ',
+    '\n       declarations in an anonymous function passed to ',
     code('setTimeout'),
-    ' with no delay prevents the transition\n        from being applied retroactively. I wondered whether closure\n        would be sufficient, but no, ',
+    ' with no delay prevents the transition\n       from being applied retroactively. I wondered whether closure\n       would be sufficient, but no, ',
     code('setTimeout'),
-    ' seems\n        to be the remedy for this "quirk".'
+    ' seems\n       to be the remedy for this "quirk".'
   ]),
-  p(['I\'d love to know whether the behaviour described here\n        is correct behaviour. If I manage to find the answer to\n        this I\'ll post an update. If you are able to enlighten me,\n        please do so by leaving a comment!']),
+  p(['I\'d love to know whether the behaviour described here\n       is correct behaviour. If I manage to find the answer to\n       this I\'ll post an update. If you are able to enlighten me,\n       please do so by leaving a comment!']),
   update(datetime('2010-06-02')('00:15:00')(Symbol.for('Pacific/Auckland')))([
     p([
       'I\'ve just been watching one of the ',
       a('http://developer.apple.com/videos/wwdc/2010/')('WWDC 2010 session videos'),
-      ', and it turns out the fix\n             I stumbled upon is actually the "correct" solution.'
+      ', and it turns out the fix\n           I stumbled upon is actually the "correct" solution.'
     ]),
     p([
       'From ',
-      i('Session 504 \u2013 CSS Effects,\n             Part 2: Galleries and 3D Effects'),
+      i('Session 504 \u2013 CSS Effects,\n           Part 2: Galleries and 3D Effects'),
       ':'
     ]),
     h3('Aside: How Browsers Apply CSS Styles'),
@@ -168,7 +168,7 @@ const body = [
       li('Browsers optimize away redundant style changes'),
       li('This matters with transitions, because they are temporal')
     ]),
-    code$002Dblock(Symbol.for('javascript'))('\n          var box = document.getElementById(\'box\');\n          box.style.backgroundColor = \'red\';\n          box.style.webkitTransition = \'background-color 2s\';\n          window.setTimeout(function() {\n            box.style.backgroundColor = \'blue\';\n          }, 0);\n          ')
+    code$002Dblock(Symbol.for('javascript'))('\n         var box = document.getElementById(\'box\');\n         box.style.backgroundColor = \'red\';\n         box.style.webkitTransition = \'background-color 2s\';\n         window.setTimeout(function() {\n           box.style.backgroundColor = \'blue\';\n         }, 0);\n         ')
   ])
 ];
 export default {

@@ -7,37 +7,37 @@ export default #{
   slug: "the-perils-of-using-javascript-objects-as-sets",
   title: "The perils of using JavaScript objects as sets",
   datetime: (datetime "2012-09-03" "20:00:00" :America/Los_Angeles),
-  tags: #["best-practice", "data-structures", "javascript", "programming", "python"],
+  tags: ["best-practice", "data-structures", "javascript", "programming", "python"],
   body: body,
 };
 
-body = #[
+body = [
 
   (excerpt
 
-     #[(p
-          #["One question I'm fond of asking in interviews is how to create
-             a set of strings to which values may be added in an efficient
-             manner. Furthermore, membership checks must be reliable and as
-             fast as possible. This post can be considered the model answer.
-             ;)"])]),
+     [(p
+         ["One question I'm fond of asking in interviews is how to create
+           a set of strings to which values may be added in an efficient
+           manner. Furthermore, membership checks must be reliable and as
+           fast as possible. This post can be considered the model answer.
+           ;)"])]),
 
   hr,
 
   (p
-     #["JavaScript is a small language. So small, in fact, that
-        several useful constructs are entirely absent. Just two
-        types of collection are provided: arrays and objects
-        (and even these are less different than they appear).
-        Sets (collections of unique values) and dictionaries
-        (collections which map unique values to other values)
-        are the most glaring omissions."]),
+     ["JavaScript is a small language. So small, in fact, that
+       several useful constructs are entirely absent. Just two
+       types of collection are provided: arrays and objects
+       (and even these are less different than they appear).
+       Sets (collections of unique values) and dictionaries
+       (collections which map unique values to other values)
+       are the most glaring omissions."]),
 
   (h3 "How does Python do it?"),
 
   (p
-     #["Python has literal syntax for sets, and supports
-        membership checks via the ", (code "in"), " keyword:"]),
+     ["Python has literal syntax for sets, and supports
+       membership checks via the ", (code "in"), " keyword:"]),
 
   (code-block :python
 
@@ -50,10 +50,10 @@ body = #[
      "),
 
   (p
-     #["Incidentally, since sets are essentially dictionaries
-        without values, it's unsurprising that the same form
-        can be used to determine whether a value is among a
-        dictionary's keys:"]),
+     ["Incidentally, since sets are essentially dictionaries
+       without values, it's unsurprising that the same form
+       can be used to determine whether a value is among a
+       dictionary's keys:"]),
 
   (code-block :python
 
@@ -69,9 +69,9 @@ body = #[
        JavaScript provides"),
 
   (p
-     #["How might one create a set of strings in JavaScript given the
-        limited, ahem, ", (em "set"), " of data structures at our disposal?
-        One could use a string:"]),
+     ["How might one create a set of strings in JavaScript given the
+       limited, ahem, ", (em "set"), " of data structures at our disposal?
+       One could use a string:"]),
 
   (code-block :javascript
 
@@ -84,14 +84,14 @@ body = #[
      "),
 
   (p
-     #["This approach is problematic for several reasons: it assumes
-        that \",\" won't appear in a username, membership checks are
-        inefficient, inserting an existing member will cause the
-        string to grow unless an expensive membership check is
-        performed, and the separators make things awkward."]),
+     ["This approach is problematic for several reasons: it assumes
+       that \",\" won't appear in a username, membership checks are
+       inefficient, inserting an existing member will cause the
+       string to grow unless an expensive membership check is
+       performed, and the separators make things awkward."]),
 
   (p
-     #["An array is clearly a better choice:"]),
+     ["An array is clearly a better choice:"]),
 
   (code-block :javascript
 
@@ -104,15 +104,15 @@ body = #[
      "),
 
   (p
-     #["Though this is an improvement, membership checks are still
-        inefficient, and each insert still requires a member check if
-        we're to avoid having the array grow needlessly. If we kept the
-        array ordered we could use binary search, but inserts would be
-        even slower as each member would need to be inserted in the
-        correct position."]),
+     ["Though this is an improvement, membership checks are still
+       inefficient, and each insert still requires a member check if
+       we're to avoid having the array grow needlessly. If we kept the
+       array ordered we could use binary search, but inserts would be
+       even slower as each member would need to be inserted in the
+       correct position."]),
 
   (p
-     #["An object, then, is the ", (em "best"), " choice:"]),
+     ["An object, then, is the ", (em "best"), " choice:"]),
 
   (code-block :javascript
 
@@ -125,11 +125,11 @@ body = #[
      "),
 
   (p
-     #["This addresses the outstanding problems, and the ", (code "in"), "
-        keyword makes the intent of these expressions clear."]),
+     ["This addresses the outstanding problems, and the ", (code "in"), "
+       keyword makes the intent of these expressions clear."]),
 
   (p
-     #["But it also introduces a subtle bug:"]),
+     ["But it also introduces a subtle bug:"]),
 
   (code-block :javascript
 
@@ -143,12 +143,12 @@ body = #[
      "),
 
   (p
-     #["The ", (code "in"), " check tells us whether the property exists on
-        the object ", (em "or anywhere in its prototype chain"), ". Ugh."]),
+     ["The ", (code "in"), " check tells us whether the property exists on
+       the object ", (em "or anywhere in its prototype chain"), ". Ugh."]),
 
   (p
-     #[(code "in"), " is out, then, but there is a way to ask whether a
-        property exists on the object itself:"]),
+     [(code "in"), " is out, then, but there is a way to ask whether a
+       property exists on the object itself:"]),
 
   (code-block :javascript
 
@@ -160,8 +160,8 @@ body = #[
      "),
 
   (p
-     #["This fixes the unwanted inheritance problem, but introduces
-        another subtle error:"]),
+     ["This fixes the unwanted inheritance problem, but introduces
+       another subtle error:"]),
 
   (code-block :javascript
 
@@ -175,10 +175,10 @@ body = #[
      "),
 
   (p
-     #["If we rely on ", (code "usernames.hasOwnProperty"), " we lose
-        the ability to perform membership checks as soon as we add
-        \"hasOwnProperty\" as a member. The solution is to grab the
-        function from a reliable source (", (code "Object.prototype"), "):"]),
+     ["If we rely on ", (code "usernames.hasOwnProperty"), " we lose
+       the ability to perform membership checks as soon as we add
+       \"hasOwnProperty\" as a member. The solution is to grab the
+       function from a reliable source (", (code "Object.prototype"), "):"]),
 
   (code-block :javascript
 
@@ -188,16 +188,16 @@ body = #[
      "),
 
   (p
-     #["What a mouthful! This is, though, the correct way to maintain
-        a collection of unique strings in JavaScript. It's efficient,
-        and avoids the pitfalls of the aforementioned approaches."]),
+     ["What a mouthful! This is, though, the correct way to maintain
+       a collection of unique strings in JavaScript. It's efficient,
+       and avoids the pitfalls of the aforementioned approaches."]),
 
   (h3 "Bonus section"),
 
   (p
-     #["In working through this question with a candidate I realized
-        there's another solution, though I can't think of a compelling
-        reason to favour it:"]),
+     ["In working through this question with a candidate I realized
+       there's another solution, though I can't think of a compelling
+       reason to favour it:"]),
 
   (code-block :javascript
 

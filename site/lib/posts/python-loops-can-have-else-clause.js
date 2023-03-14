@@ -92,12 +92,12 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  p(['I write a lot of Python. I also write a lot of JavaScript.\n        As I switch between the two (often several times in a day)\n        I sometimes find myself trying to do something in one using\n        the syntax of the other. The most common example is joining\n        a list.']),
+  p(['I write a lot of Python. I also write a lot of JavaScript.\n       As I switch between the two (often several times in a day)\n       I sometimes find myself trying to do something in one using\n       the syntax of the other. The most common example is joining\n       a list.']),
   p(['Python:']),
   code$002Dblock(Symbol.for('python'))('\n     \' \'.join([\'foo\', \'bar\'])\n     '),
   p(['JavaScript:']),
   code$002Dblock(Symbol.for('javascript'))('\n     [\'foo\', \'bar\'].join(\' \')\n     '),
-  p(['Often -- as is the case above -- the syntactical differences are\n        minor, but there are times when there\'s no direct translation.']),
+  p(['Often -- as is the case above -- the syntactical differences are\n       minor, but there are times when there\'s no direct translation.']),
   p([
     a('http://mootools.net/')('MooTools'),
     ', for example, adds the ',
@@ -107,13 +107,13 @@ const body = [
     ]),
     ' to the ',
     code('Array'),
-    ' object.\n        This makes it possible to write some rather terse conditional\n        statements.'
+    ' object.\n       This makes it possible to write some rather terse conditional\n       statements.'
   ]),
   code$002Dblock(Symbol.for('javascript'))('\n     var numbers = [87, 33, 21, 75];\n     if (numbers.every(function (n) { return n % 3 == 0; })) {\n         window.alert(\'The numbers are all divisible by 3.\');\n     }\n     '),
-  p(['Python lists have no comparable method, so how would one write\n        this in Python?']),
+  p(['Python lists have no comparable method, so how would one write\n       this in Python?']),
   code$002Dblock(Symbol.for('python'))('\n     numbers = [87, 33, 21, 75]\n     if [n for n in numbers if n % 3 == 0] == numbers:\n         print \'The numbers are all divisible by 3.\'\n     '),
   p([
-    'This approach involves using a list comprehension to create a\n        list of numbers which are divisible by 3, and comparing this list\n        to ',
+    'This approach involves using a list comprehension to create a\n       list of numbers which are divisible by 3, and comparing this list\n       to ',
     code('numbers'),
     '. If the lists are equal, everything in ',
     code('numbers'),
@@ -125,30 +125,30 @@ const body = [
       a('https://twitter.com/rafael_ab/status/215428832872771584')('Rafael Almeida pointed out on Twitter'),
       ', there ',
       em('is'),
-      ' an\n             elegant way to express this in Python:'
+      ' an\n           elegant way to express this in Python:'
     ]),
-    code$002Dblock(Symbol.for('python'))('\n          if all((n % 3 == 0 for n in numbers)):\n               print \'The numbers are all divisible by 3.\'\n          ')
+    code$002Dblock(Symbol.for('python'))('\n         if all((n % 3 == 0 for n in numbers)):\n              print \'The numbers are all divisible by 3.\'\n         ')
   ]),
   h3('Now for something a bit more challenging'),
-  p(['Assume that we have a list of documents, and we want to know which\n        of the documents contain all the terms in a list of search terms.']),
+  p(['Assume that we have a list of documents, and we want to know which\n       of the documents contain all the terms in a list of search terms.']),
   code$002Dblock(Symbol.for('javascript'))('\n     // (MooTools) JavaScript\n\n     var terms = [\'python\', \'list\', \'methods\'], matches = [];\n     documents.each(function (document) {\n         if (terms.every(function (term) {\n             return document.body.indexOf(term) != -1;\n         })) matches.append(document);\n     });\n     '),
   p([
     'Here, we ',
     em('could'),
-    ' use the list comprehension approach\n        as before.'
+    ' use the list comprehension approach\n       as before.'
   ]),
   code$002Dblock(Symbol.for('python'))('\n     # Python\n\n     terms = [\'python\', \'list\', \'methods\']\n     matches = []\n     for document in documents:\n         if [t for t in terms if document.body.find(t) != -1] == terms:\n             matches.append(document)\n     '),
   p([
-    'This is reasonably succinct, but not terribly efficient since\n        each document is checked for ',
+    'This is reasonably succinct, but not terribly efficient since\n       each document is checked for ',
     em('every'),
-    ' search term. Given\n        that we\'re not interested in documents that lack even a single\n        search term, it should be possible to rewrite this code so that\n        we don\'t waste time on lost causes.'
+    ' search term. Given\n       that we\'re not interested in documents that lack even a single\n       search term, it should be possible to rewrite this code so that\n       we don\'t waste time on lost causes.'
   ]),
   p([
     'It turns out that Python has just the thing for the job: ',
     strong([
       'in Python, a loop statements may have an ',
       code('else'),
-      '\n        clause!'
+      '\n       clause!'
     ])
   ]),
   code$002Dblock(Symbol.for('python'))('\n     terms = [\'python\', \'list\', \'methods\']\n     matches = []\n     for document in documents:\n         for term in terms:\n             if document.body.find(term) == -1:\n                 break\n         else: # every term was found\n             matches.append(document)\n     '),
@@ -160,17 +160,17 @@ const body = [
   blockquote([p([
       'Loop statements may have an ',
       code('else'),
-      ' clause; it is\n             executed when the loop terminates through exhaustion of the\n             list (with ',
+      ' clause; it is\n           executed when the loop terminates through exhaustion of the\n           list (with ',
       code('for'),
-      ') or when the condition becomes\n             false (with ',
+      ') or when the condition becomes\n           false (with ',
       code('while'),
-      '), but not when the loop is\n             terminated by a ',
+      '), but not when the loop is\n           terminated by a ',
       code('break'),
       ' statement.'
     ])]),
   p([
     strong([
-      'I\'m looking forward to finding more good spots to make\n        use of ',
+      'I\'m looking forward to finding more good spots to make\n       use of ',
       code('else'),
       ' clauses with my Python loops.'
     ]),

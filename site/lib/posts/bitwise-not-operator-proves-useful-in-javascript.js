@@ -89,26 +89,26 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  p(['JavaScript is a wonderful language. Its syntax, though, leaves a\n        lot to be desired at times. String pattern matching, for example,\n        is rather ugly.']),
+  p(['JavaScript is a wonderful language. Its syntax, though, leaves a\n       lot to be desired at times. String pattern matching, for example,\n       is rather ugly.']),
   code$002Dblock(Symbol.for('javascript'))('\n     // ugly option 1\n     if (text.indexOf(\'\u2708\') != -1)\n\n     // ugly option 2\n     if (text.indexOf(\'\u2708\') >= 0)\n\n     // ugly option 3\n     if (text.indexOf(\'\u2708\') > -1)\n     '),
   p([
     'It\'d be nice to be able to write ',
     code('text.contains(\'\u2708\')'),
-    ',\n        which is both intuitive and self-documenting. The language does\n        provide a way to make such expressions terser, but it\'s far from\n        obvious.'
+    ',\n       which is both intuitive and self-documenting. The language does\n       provide a way to make such expressions terser, but it\'s far from\n       obvious.'
   ]),
   code$002Dblock(Symbol.for('javascript'))('\n     // bitwise NOT\n     if (~text.indexOf(\'\u2708\'))\n     '),
   p([
     a('https://developer.mozilla.org/en/JavaScript/Reference/Operators/Bitwise_Operators')('Bitwise operators'),
-    ' make my head spin, but the Perl\n        programmer in me thinks they\'re awesome. I don\'t profess to\n        understand ',
+    ' make my head spin, but the Perl\n       programmer in me thinks they\'re awesome. I don\'t profess to\n       understand ',
     em('why'),
-    ' exactly the bitwise NOT operator\n        does what it does, but I\'ve played with it enough to know\n        how it behaves. It\'s equivalent to the following function,\n        at least for the values that can be returned by ',
+    ' exactly the bitwise NOT operator\n       does what it does, but I\'ve played with it enough to know\n       how it behaves. It\'s equivalent to the following function,\n       at least for the values that can be returned by ',
     a('https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/indexOf')(code('indexOf')),
     '.'
   ]),
   code$002Dblock(Symbol.for('javascript'))('\n     function bitwiseNot(n) {\n         return -n - 1;\n     }\n     '),
   p([
     code('indexOf'),
-    ' returns -1, 0, 1, 2, 3, or some other positive\n        integer. When these values are used as operands for the bitwise\n        NOT operator, the results are 0, -1, -2, -3, -4, and so on.\n        Therefore, ',
+    ' returns -1, 0, 1, 2, 3, or some other positive\n       integer. When these values are used as operands for the bitwise\n       NOT operator, the results are 0, -1, -2, -3, -4, and so on.\n       Therefore, ',
     code('~text.indexOf(\'\u2708\')'),
     ' is equivalent to ',
     code('text.contains(\'\u2708\')'),

@@ -91,13 +91,13 @@ import datetime from '../datetime.js';
 const body = [
   excerpt([
     p([
-      'On the Web it\'s not uncommon to see characters with\n             no inherent meaning used for stylistic reasons. A good\n             example is the ',
+      'On the Web it\'s not uncommon to see characters with\n           no inherent meaning used for stylistic reasons. A good\n           example is the ',
       a('#')('Read more \xBB'),
-      ' link. Perhaps the\n             directionality of the "\xBB" is suggestive of travelling to\n             another page, or perhaps the letterform is included solely\n             for its aesthetic appeal. Whatever the case, one thing is\n             certain: links do not require right-pointing double angle\n             quotation marks in order to function.'
+      ' link. Perhaps the\n           directionality of the "\xBB" is suggestive of travelling to\n           another page, or perhaps the letterform is included solely\n           for its aesthetic appeal. Whatever the case, one thing is\n           certain: links do not require right-pointing double angle\n           quotation marks in order to function.'
     ]),
     p([
-      strong('The inclusion of such a character is therefore\n             a design decision.'),
-      ' It is decoration, not content.\n             It belongs in a style sheet, not in a page\'s markup.'
+      strong('The inclusion of such a character is therefore\n           a design decision.'),
+      ' It is decoration, not content.\n           It belongs in a style sheet, not in a page\'s markup.'
     ])
   ]),
   h2('Adding decorative textual content via CSS'),
@@ -109,11 +109,11 @@ const body = [
     return p([
       'The ',
       sitepoint('/css/content')('content'),
-      ' property\n          is extremely powerful. It\'s used in conjunction with\n          the ',
+      ' property\n         is extremely powerful. It\'s used in conjunction with\n         the ',
       sitepoint('/css/pseudoelement-before')(':before'),
-      '\n          and ',
+      '\n         and ',
       sitepoint('/css/pseudoelement-after')(':after'),
-      '\n          pseudo-elements.'
+      '\n         pseudo-elements.'
     ]);
   })(),
   code$002Dblock(Symbol.for('plain-text'))('\n     <a class="more" href="/meaningful-markup/">Read more</a>\n\n     .more:after {\n         content: " \xBB";\n     }\n     '),
@@ -124,17 +124,17 @@ const body = [
     code(':after'),
     ' and ',
     code('content'),
-    ' can team up to great\n        effect. Often sites have footer links separated by "pipes".\n        These pipes commonly appear in the site\'s markup. ',
+    ' can team up to great\n       effect. Often sites have footer links separated by "pipes".\n       These pipes commonly appear in the site\'s markup. ',
     strong('This is wrong!'),
-    ' Last week I was horrified to\n        discover that ',
+    ' Last week I was horrified to\n       discover that ',
     a('http://bitbucket.org/')('Bitbucket'),
-    '\n        is guilty of this. I\'ve since rectified the situation\n        (although the change is yet to go live).'
+    '\n       is guilty of this. I\'ve since rectified the situation\n       (although the change is yet to go live).'
   ]),
   code$002Dblock(Symbol.for('css'))('\n     .footer-nav li {\n         display: inline;\n         list-type: none;\n     }\n     .footer-nav li+li:before {\n         content: " | ";\n     }\n     '),
   p([
-    'The second selector above may look strange unless you\'re\n        familiar with this approach. By using ',
+    'The second selector above may look strange unless you\'re\n       familiar with this approach. By using ',
     code('li+li'),
-    ' we\n        target every ',
+    ' we\n       target every ',
     code('li'),
     ' inside ',
     code('.footer-nav'),
@@ -142,18 +142,18 @@ const body = [
     em('except the first'),
     '.'
   ]),
-  p(['Another case in which there\'s a temptation to mark up content in\n        a certain way in order to achieve a certain visual appearance is\n        the comma-separated list.']),
+  p(['Another case in which there\'s a temptation to mark up content in\n       a certain way in order to achieve a certain visual appearance is\n       the comma-separated list.']),
   code$002Dblock(Symbol.for('html'))('\n     <p><strong>Tags:</strong> Apple, iOS, iPad</p>\n     '),
-  p(['This approach is inflexible. Displaying the tags as Twitter-style\n        hashtags, for example, would require fiddling with the markup.\n        Adding a tag icon beside each tag would require rewriting the\n        markup completely.']),
+  p(['This approach is inflexible. Displaying the tags as Twitter-style\n       hashtags, for example, would require fiddling with the markup.\n       Adding a tag icon beside each tag would require rewriting the\n       markup completely.']),
   p([
     'A better approach would be to let the ',
     em('content'),
-    ' dictate\n        the markup used. Since we have a ',
+    ' dictate\n       the markup used. Since we have a ',
     em('list'),
-    ' of tags, we should\n        use a list of some sort. Since the list is in non-arbitrary order\n        (alphabetical), an ordered list is probably appropriate. "Tags"\n        is a heading that relates to the list of tags.'
+    ' of tags, we should\n       use a list of some sort. Since the list is in non-arbitrary order\n       (alphabetical), an ordered list is probably appropriate. "Tags"\n       is a heading that relates to the list of tags.'
   ]),
   code$002Dblock(Symbol.for('html'))('\n     <h4>Tags</h4>\n     <ol>\n         <li>Apple</li>\n         <li>iOS</li>\n         <li>iPad</li>\n     </ol>\n     '),
-  p(['It takes a bit of work to display this markup as a simple\n        comma-separated list, but it gives us the freedom to dramatically\n        alter the list\'s appearance without touching the markup.']),
+  p(['It takes a bit of work to display this markup as a simple\n       comma-separated list, but it gives us the freedom to dramatically\n       alter the list\'s appearance without touching the markup.']),
   code$002Dblock(Symbol.for('css'))('\n     h4, ol, li {\n         display: inline;\n     }\n     h4:after {\n         content: ":";\n     }\n     li:after {\n         content: ",";\n     }\n     li:last-child:after {\n         content: "";\n     }\n     '),
   h2('Summary'),
   p([
@@ -161,13 +161,13 @@ const body = [
     em('describe'),
     ' that content. ',
     em('Styling'),
-    ' content is a\n        separate (though not unrelated) issue. With ',
+    ' content is a\n       separate (though not unrelated) issue. With ',
     code(':before'),
     ', ',
     code(':after'),
     ', and ',
     code('content'),
-    ' at our disposal, let us bid\n        farewell to ',
+    ' at our disposal, let us bid\n       farewell to ',
     code('<span class="pipe">|</span>'),
     ' and friends.'
   ])

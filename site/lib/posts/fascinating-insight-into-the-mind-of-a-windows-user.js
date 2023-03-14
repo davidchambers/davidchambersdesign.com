@@ -94,20 +94,20 @@ import {
 import datetime from '../datetime.js';
 const body = [
   decorative$002Dimage('/images/posts/decorative/right/no-apple.png'),
-  p(['The following conversation took place a couple of days ago in\n        my apartment. Matt\'s my flatmate, Doug\'s one of Matt\'s friends.\n        I was in the room at the time.']),
+  p(['The following conversation took place a couple of days ago in\n       my apartment. Matt\'s my flatmate, Doug\'s one of Matt\'s friends.\n       I was in the room at the time.']),
   interview$002Dlist('Matt')('Doug')([
     'So, Doug, do you think you could go the way of Mac?',
     'I already have, really, but I\'d never buy one.',
     'Why\'s that?',
-    'Well -- no offense, David -- if I were to buy one I\'d be getting\n        something a retard could use, and I\'m not a retard.'
+    'Well -- no offense, David -- if I were to buy one I\'d be getting\n       something a retard could use, and I\'m not a retard.'
   ]),
   p([
-    'I found this exchange both entertaining and enlightening. Never had\n        I considered the possibility that certain individuals use Windows ',
+    'I found this exchange both entertaining and enlightening. Never had\n       I considered the possibility that certain individuals use Windows ',
     em('because'),
     ' it\'s poorly designed and difficult to use!'
   ]),
-  p(['There\'s certainly some sound reasoning behind Doug\'s stance: Doug\n        is proficient in Windows; gaining proficiency in Windows requires\n        a certain level of intelligence; Doug\'s proficiency in Windows is\n        therefore indicative of his intelligence.']),
-  p(['Why, then, does Doug say that he\'s switched camps? He\'s using one\n        of these at school:']),
+  p(['There\'s certainly some sound reasoning behind Doug\'s stance: Doug\n       is proficient in Windows; gaining proficiency in Windows requires\n       a certain level of intelligence; Doug\'s proficiency in Windows is\n       therefore indicative of his intelligence.']),
+  p(['Why, then, does Doug say that he\'s switched camps? He\'s using one\n       of these at school:']),
   captioned$002Dimage('/images/posts/44/27-inch-imac.jpg')('27-inch iMac')('27-inch iMac'),
   p(['Talk about having one\'s cake and eating it, too.'])
 ];

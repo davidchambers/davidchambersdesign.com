@@ -92,7 +92,7 @@ const body = [
   p([
     'So you have some number, ',
     code('x'),
-    ', which you want to round\n        to the nearest integer. Easy, right?'
+    ', which you want to round\n       to the nearest integer. Easy, right?'
   ]),
   code$002Dblock(Symbol.for('javascript'))('\n     x = Math.round(x);\n     '),
   p(['Sure, but is this the fastest option? I think not.']),
@@ -100,11 +100,11 @@ const body = [
   p([
     'What the heck\'s going on here? ',
     code('>>'),
-    ' is JavaScript\'s\n        right shift operator. It shifts a number\'s binary representation ',
+    ' is JavaScript\'s\n       right shift operator. It shifts a number\'s binary representation ',
     code('n'),
     ' bits to the right, where ',
     code('n'),
-    ' is the\n        value to the right of the operator. Since ',
+    ' is the\n       value to the right of the operator. Since ',
     code('n'),
     ' is ',
     code('0'),
@@ -115,19 +115,19 @@ const body = [
   p([
     'Note that this approach results in ',
     code('-82.5'),
-    ' being\n        rounded to ',
+    ' being\n       rounded to ',
     code('-83'),
     '.'
   ]),
   p([
     'If, for some reason, your code calls ',
     code('Math.round()'),
-    '\n        millions of times, it may be worth investigating the bitwise\n        approach to avoid the overhead of all those function calls.'
+    '\n       millions of times, it may be worth investigating the bitwise\n       approach to avoid the overhead of all those function calls.'
   ]),
   p([
     'Stick to ',
     code('Math.round()'),
-    ' the rest of the\n        time, though, as it makes for much clearer code. ',
+    ' the rest of the\n       time, though, as it makes for much clearer code. ',
     strong('Never optimize prematurely.')
   ])
 ];

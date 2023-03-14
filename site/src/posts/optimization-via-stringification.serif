@@ -7,22 +7,22 @@ export default #{
   slug: "optimization-via-stringification",
   title: "Optimization via stringification",
   datetime: (datetime "2010-06-03" "14:28:00" :Pacific/Auckland),
-  tags: #["css", "optimization", "python"],
+  tags: ["css", "optimization", "python"],
   body: body,
 };
 
-body = #[
+body = [
 
   (excerpt
 
-     #[(p
-          #["One way to reduce the number of HTTP requests a page requires
-             is to group (non-content) images into sprites. An even better
-             way is to remove these images from the server altogether;
-             instead include them as encoded strings in your style sheet."])]),
+     [(p
+         ["One way to reduce the number of HTTP requests a page requires
+           is to group (non-content) images into sprites. An even better
+           way is to remove these images from the server altogether;
+           instead include them as encoded strings in your style sheet."])]),
 
   (p
-     #["Instead of..."]),
+     ["Instead of..."]),
 
   (code-block :css
 
@@ -33,7 +33,7 @@ body = #[
      "),
 
   (p
-     #["use something like..."]),
+     ["use something like..."]),
 
   (code-block :css
 
@@ -44,8 +44,8 @@ body = #[
      "),
 
   (p
-     #["I threw together a Python script which converts images to encoded
-        strings."]),
+     ["I threw together a Python script which converts images to encoded
+       strings."]),
 
   (code-block :python
 

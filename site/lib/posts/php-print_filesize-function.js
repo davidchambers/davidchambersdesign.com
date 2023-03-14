@@ -91,14 +91,14 @@ import datetime from '../datetime.js';
 const body = [
   excerpt([
     p([
-      'Recently I\'ve been on a drive to eliminate dependencies from my\n             code and other areas, such as blog posts. For those who create\n             content for the Web, a reasonably common task is to provide links\n             to files that can be downloaded. It is considered good practice\n             to include an indication of a file\'s size; for example: ',
+      'Recently I\'ve been on a drive to eliminate dependencies from my\n           code and other areas, such as blog posts. For those who create\n           content for the Web, a reasonably common task is to provide links\n           to files that can be downloaded. It is considered good practice\n           to include an indication of a file\'s size; for example: ',
       a('/favicon.ico')('favicon.ico'),
       ' (3 KB).'
     ]),
     p([
-      'As I was about to hard-code a file\'s size into a blog post\n             recently, I thought to myself: ',
-      strong('Will I remember to\n             update this if the file\'s size changes?'),
-      ' More importantly,\n             should I be required to remember such things? The answer,\n             of course, is no. I set about writing a function that would\n             allow the file\'s size to be displayed dynamically.'
+      'As I was about to hard-code a file\'s size into a blog post\n           recently, I thought to myself: ',
+      strong('Will I remember to\n           update this if the file\'s size changes?'),
+      ' More importantly,\n           should I be required to remember such things? The answer,\n           of course, is no. I set about writing a function that would\n           allow the file\'s size to be displayed dynamically.'
     ])
   ]),
   code$002Dblock(Symbol.for('php'))('\n     <?php\n\n     /**\n      * echoes nicely formatted filesize\n      * @param string $filename\n      * @param string $before\n      * @param string $after\n      */\n     function print_filesize($filename, $before = \' <span class="filesize">(\', $after = \')</span>\')\n     {\n         if (file_exists($filename))\n         {\n             $size = filesize($filename);\n             $unit = \'B\';\n\n             if (intval($size/(1024*1024*1024)))\n             {\n                 $size = number_format(($size/(1024*1024*1024)), 1);\n                 $unit = \'GB\';\n             }\n             elseif (intval($size/(1024*1024)))\n             {\n                 $size = number_format(($size/(1024*1024)), 1);\n                 $unit = \'MB\';\n             }\n             elseif (intval($size/1024))\n             {\n                 $size = number_format(($size/1024), 1);\n                 $unit = \'KB\';\n             }\n\n             $approx = $unit == \'B\' ? \'\' : \'\u2248\' ;\n\n             echo "{$before}{$approx}{$size} {$unit}{$after}";\n         }\n     }\n\n     ?>\n     '),
@@ -109,11 +109,11 @@ const body = [
     a('/favicon.ico')('favicon.ico'),
     ' ',
     span({ [Symbol.for('class')]: 'filesize' })('(\u22481.1 kB)'),
-    '. By default, the function\n        wraps the file\'s size in a ',
+    '. By default, the function\n       wraps the file\'s size in a ',
     code('span'),
     ' element with ',
     code('class="filesize"'),
-    ', to provide a hook for styling\n        if required.'
+    ', to provide a hook for styling\n       if required.'
   ])
 ];
 export default {

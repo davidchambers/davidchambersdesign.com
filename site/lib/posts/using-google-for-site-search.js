@@ -90,10 +90,10 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
-    p(['WordPress is a great piece of software, although I\'ve never been\n             satisfied with its search functionality. Last night I decided to\n             switch to a very simple solution:']),
-    code$002Dblock(Symbol.for('html'))('\n          <form action="http://www.google.com/search" method="get">\n              <div>\n                  <label for="q">Search davidchambersdesign.com</label>\n                  <input type="search" name="q" id="q" maxlength="256" placeholder="search..." />\n                  <input type="hidden" name="ie" value="UTF-8" />\n                  <input type="hidden" name="hl" value="en" />\n                  <input type="hidden" name="as_sitesearch" value="davidchambersdesign.com" />\n                  <input type="submit" value="Search" />\n              </div>\n          </form>\n          ')
+    p(['WordPress is a great piece of software, although I\'ve never been\n           satisfied with its search functionality. Last night I decided to\n           switch to a very simple solution:']),
+    code$002Dblock(Symbol.for('html'))('\n         <form action="http://www.google.com/search" method="get">\n             <div>\n                 <label for="q">Search davidchambersdesign.com</label>\n                 <input type="search" name="q" id="q" maxlength="256" placeholder="search..." />\n                 <input type="hidden" name="ie" value="UTF-8" />\n                 <input type="hidden" name="hl" value="en" />\n                 <input type="hidden" name="as_sitesearch" value="davidchambersdesign.com" />\n                 <input type="submit" value="Search" />\n             </div>\n         </form>\n         ')
   ]),
-  p(['Search queries on this site are now submitted to Google with the\n        specification that only results from this domain are to be returned.\n        Here\'s a breakdown of the various query parameters I included:']),
+  p(['Search queries on this site are now submitted to Google with the\n       specification that only results from this domain are to be returned.\n       Here\'s a breakdown of the various query parameters I included:']),
   dl([
     dt$0027({ [Symbol.for('class')]: 'textual' })('q'),
     dd('Search query as entered by the user.'),

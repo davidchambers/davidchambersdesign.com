@@ -97,7 +97,7 @@ const body = [
   p([
     'Using the ',
     code('-m'),
-    ' flag can be a timesaver, but for several\n        reasons I prefer to write my commit messages in a text editor:'
+    ' flag can be a timesaver, but for several\n       reasons I prefer to write my commit messages in a text editor:'
   ]),
   ul([
     li('Spell-checking'),
@@ -106,16 +106,16 @@ const body = [
   ]),
   p([
     a('http://macromates.com/')('TextMate'),
-    '\n        is particularly well suited to my needs due to its built-in ',
+    '\n       is particularly well suited to my needs due to its built-in ',
     a('http://daringfireball.net/projects/markdown/syntax')('Markdown'),
-    '\n        highlighting and previewing \u2013 yes, I write commit messages in\n        Markdown!'
+    '\n       highlighting and previewing \u2013 yes, I write commit messages in\n       Markdown!'
   ]),
   p([strong([
       'To set TextMate as Mercurial\'s editor, add ',
       code('editor = mate -w'),
       ' to the ',
       code('[ui]'),
-      '\n             section of your ',
+      '\n           section of your ',
       code('~/.hgrc'),
       ' file.'
     ])]),
@@ -126,21 +126,21 @@ const body = [
   blockquote([p([
       'Next time you do ',
       code('hg commit'),
-      ' TextMate will open a\n             temporary file you write your commit message into. Type your\n             message, save the file and then close the window to finish\n             the commit. The ',
+      ' TextMate will open a\n           temporary file you write your commit message into. Type your\n           message, save the file and then close the window to finish\n           the commit. The ',
       code('-w'),
       ' flag on the ',
       code('mate'),
-      '\n             command tells TextMate not to return control to the command\n             line until the editor window has been closed.'
+      '\n           command tells TextMate not to return control to the command\n           line until the editor window has been closed.'
     ])]),
   update(datetime('2011-01-22')('15:20:00')(Symbol.for('Australia/Sydney')))([
     p(['To use TextMate as your git editor, run the following command:']),
-    code$002Dblock(Symbol.for('console'))('\n          git config --global core.editor "mate -w"\n          '),
+    code$002Dblock(Symbol.for('console'))('\n         git config --global core.editor "mate -w"\n         '),
     p([
       'This adds ',
       code('editor = mate -w'),
       ' to the ',
       code('[core]'),
-      '\n            section of your ',
+      '\n           section of your ',
       code('~/.gitconfig'),
       ' file.'
     ])

@@ -94,19 +94,19 @@ const body = [
     a('http://wonko.com/')('wonko.com'),
     ' on ',
     a('http://wonko.com/post/html-escaping')('HTML escaping'),
-    ',\n        which provoked me to rewrite Bitbucket\'s escape function\n        (invoked from within Underscore templates):'
+    ',\n       which provoked me to rewrite Bitbucket\'s escape function\n       (invoked from within Underscore templates):'
   ]),
   code$002Dblock(Symbol.for('javascript'))('\n     function makeSafe(text) {\n       return text.replace(/[&<>"\'`]/g, function (chr) {\n         return \'&#\' + chr.charCodeAt(0) + \';\';\n       });\n     };\n     '),
-  p(['This ensures that inserted content cannot escape the confines of a\n        quoted attribute value. Unquoted attributes are more problematic:']),
-  blockquote([p(['Unquoted attribute values are one of the single biggest XSS\n             vectors there is. If you don\u2019t quote your attribute values,\n             you\u2019re essentially leaving the door wide open for naughty\n             people to inject naughty things into your HTML. Very few\n             escaper implementations cover all the edge cases necessary to\n             prevent unquoted attribute values from becoming XSS vectors.'])]),
-  p(['To accommodate unquoted attribute values, the following function\n        could be used instead:']),
+  p(['This ensures that inserted content cannot escape the confines of a\n       quoted attribute value. Unquoted attributes are more problematic:']),
+  blockquote([p(['Unquoted attribute values are one of the single biggest XSS\n           vectors there is. If you don\u2019t quote your attribute values,\n           you\u2019re essentially leaving the door wide open for naughty\n           people to inject naughty things into your HTML. Very few\n           escaper implementations cover all the edge cases necessary to\n           prevent unquoted attribute values from becoming XSS vectors.'])]),
+  p(['To accommodate unquoted attribute values, the following function\n       could be used instead:']),
   code$002Dblock(Symbol.for('javascript'))('\n     function makeSafe(text) {\n       return text.replace(/\\W/g, function (chr) {\n         return \'&#\' + chr.charCodeAt(0) + \';\';\n       });\n     };\n     '),
   p([
     'I created a ',
     a('http://jsperf.com/html-escaping-perf')('jsPerf test case'),
-    '\n        which confirms that there\'s a performance hit associated with using\n        this more liberal regular expression. Keep in mind, though, that if\n        \u201CA\u201D takes 1ms to execute and \u201CB\u201D takes ten times as long, \u201CB\u201D still\n        only takes 10ms. Quite often a significant ',
+    '\n       which confirms that there\'s a performance hit associated with using\n       this more liberal regular expression. Keep in mind, though, that if\n       \u201CA\u201D takes 1ms to execute and \u201CB\u201D takes ten times as long, \u201CB\u201D still\n       only takes 10ms. Quite often a significant ',
     em('comparative'),
-    '\n        speed difference is insignificant in absolute terms; I\'d argue that\n        this is the case here.'
+    '\n       speed difference is insignificant in absolute terms; I\'d argue that\n       this is the case here.'
   ])
 ];
 export default {

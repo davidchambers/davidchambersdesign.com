@@ -89,24 +89,24 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  p(['There are blog posts all over the Web explaining how to\n        write valid XHTML markup to embed YouTube videos. There\n        are also a number of online converters that generate this\n        markup automatically.']),
+  p(['There are blog posts all over the Web explaining how to\n       write valid XHTML markup to embed YouTube videos. There\n       are also a number of online converters that generate this\n       markup automatically.']),
   p([
-    'I\'ve always found it easier to write the markup myself, as\n        there\'s really nothing to it. Simply replace both instances\n        of ',
+    'I\'ve always found it easier to write the markup myself, as\n       there\'s really nothing to it. Simply replace both instances\n       of ',
     code('video_id'),
-    ' in the following code with -- you\n        guessed it -- the video\'s ID.'
+    ' in the following code with -- you\n       guessed it -- the video\'s ID.'
   ]),
   code$002Dblock(Symbol.for('html'))('\n     <object class="youtube"\n             type="application/x-shockwave-flash"\n             data="http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0">\n         <param name="movie" value="http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0" />\n         <param name="allowFullScreen" value="true" />\n     </object>\n     '),
   p([
     code('rel=0'),
-    ' is often useful to include (as I\'ve done\n        in the example above) as it prevents thumbnails for related\n        videos from being displayed at the end of the clip.'
+    ' is often useful to include (as I\'ve done\n       in the example above) as it prevents thumbnails for related\n       videos from being displayed at the end of the clip.'
   ]),
   p([
-    'One important point to remember when you\'re "rolling your own"\n        markup is that the character entity ',
+    'One important point to remember when you\'re "rolling your own"\n       markup is that the character entity ',
     code('&amp;'),
-    ' must be\n        used for all ampersands.'
+    ' must be\n       used for all ampersands.'
   ]),
   p([
-    'Finally, be aware of the fact that it\'s possible to change the size\n        of the YouTube object using CSS. There\'s no need to include the ',
+    'Finally, be aware of the fact that it\'s possible to change the size\n       of the YouTube object using CSS. There\'s no need to include the ',
     code('width'),
     ' and ',
     code('height'),

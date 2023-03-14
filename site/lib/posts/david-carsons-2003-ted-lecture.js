@@ -91,7 +91,7 @@ const body = [
   p([
     'One of my flatmates linked me to this clip recently. It\'s titled ',
     a('http://www.ted.com/index.php/talks/david_carson_on_design.html')('Design, discovery and humor'),
-    ' and certainly delivers the\n        entertainment it promises. It\'s well worth a look.'
+    ' and certainly delivers the\n       entertainment it promises. It\'s well worth a look.'
   ]),
   dl([
     dt(object({
@@ -120,7 +120,7 @@ const body = [
     dd(p([
       'David Carson presents ',
       strong('Design, discovery and humor'),
-      '\n                at TED, February 2003'
+      '\n              at TED, February 2003'
     ]))
   ])
 ];

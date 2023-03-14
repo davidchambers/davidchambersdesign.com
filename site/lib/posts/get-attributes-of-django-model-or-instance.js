@@ -89,7 +89,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  p(['What is the best way to get the attributes of a Django model\n        or instance?']),
+  p(['What is the best way to get the attributes of a Django model\n       or instance?']),
   code$002Dblock(Symbol.for('python'))('\n     from django.db import models\n\n     class Musician(models.Model):\n         first_name = models.CharField()\n         last_name  = models.CharField()\n         instrument = models.CharField()\n     '),
   p([
     'One option is to use ',
@@ -119,9 +119,9 @@ const body = [
     ])
   ]),
   p([
-    'The fact that only fields are returned is extremely useful.\n        Django appears to add its own attributes to instances in\n        certain circumstances; using ',
+    'The fact that only fields are returned is extremely useful.\n       Django appears to add its own attributes to instances in\n       certain circumstances; using ',
     code('_meta.fields'),
-    '\n        prevents these from interfering with one\'s own code.'
+    '\n       prevents these from interfering with one\'s own code.'
   ])
 ];
 export default {

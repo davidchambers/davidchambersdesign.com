@@ -90,20 +90,20 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
-    'Generally speaking browsers rerender elements as required \u2013\n        in response to DOM changes effected via JavaScript, for instance.\n        There are times, though, when the browser ',
-    em('Internet Explorer,\n        I\'m looking at you!'),
+    'Generally speaking browsers rerender elements as required \u2013\n       in response to DOM changes effected via JavaScript, for instance.\n       There are times, though, when the browser ',
+    em('Internet Explorer,\n       I\'m looking at you!'),
     ' needs a gentle nudge.'
   ]),
   p([
     a('http://ajaxian.com/archives/forcing-a-ui-redraw-from-javascript')('Forcing a UI redraw from JavaScript'),
-    ' highlights the solution\n        employed by Thomas Fuchs, creator of the popular JavaScript library ',
+    ' highlights the solution\n       employed by Thomas Fuchs, creator of the popular JavaScript library ',
     a('http://script.aculo.us/')('script.aculo.us'),
     ':'
   ]),
   code$002Dblock(Symbol.for('javascript'))('\n     Element.addMethods({\n         redraw: function (element) {\n             element = $(element);\n             var n = document.createTextNode(\' \');\n             element.appendChild(n);\n             (function () { n.parentNode.removeChild(n); }).defer();\n             return element;\n         }\n     });\n     '),
   p(['The post\'s first comment includes an alternative approach:']),
   code$002Dblock(Symbol.for('javascript'))('\n     element.className = element.className;\n     '),
-  p(['I gather that there are situations in which this simple solution\n        fails -- it\'s no silver bullet -- but it fixed a problem I encountered\n        in IE8 earlier this evening so I\'m pleased to have discovered it!'])
+  p(['I gather that there are situations in which this simple solution\n       fails -- it\'s no silver bullet -- but it fixed a problem I encountered\n       in IE8 earlier this evening so I\'m pleased to have discovered it!'])
 ];
 export default {
   ['id']: 42,
