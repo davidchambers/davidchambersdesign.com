@@ -2,4 +2,4 @@ import * from "./elements.serif";
 
 export default render-page;
 
-render-page page = [(article page.body)]
+render-page page = [(article page.body)];

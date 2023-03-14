@@ -47,4 +47,4 @@ body = [
       (code "visible"), " was selected as the default ", (code "overflow"), "
        value – it seems inferior to ", (code "auto"), " in most use cases."]),
 
-]
+];

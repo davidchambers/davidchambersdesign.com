@@ -78,4 +78,4 @@ body = [
       (strong "Shape Options"), " dialog can be accessed by double-clicking on ",
       (strong "Rounded Rectangle"), " in the ", (strong "Appearance"), " palette."]),
 
-]
+];

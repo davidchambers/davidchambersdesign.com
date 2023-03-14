@@ -73,4 +73,4 @@ body = [
      <time datetime=\"<?php comment_datetime(); ?>\">
      "),
 
-]
+];

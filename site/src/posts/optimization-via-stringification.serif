@@ -74,4 +74,4 @@ body = [
      $ python stringify.py /path/to/image.png
      "),
 
-]
+];

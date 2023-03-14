@@ -12,16 +12,17 @@ coerce x = {
   } else {
     (String x)
   }
-}
+};
 
-split-every-2 xs =
+split-every-2 xs = {
   (S.array []
            k => (S.array []
                          v => (S.compose (S.prepend (S.Pair k v))
                                          split-every-2))
            xs)
+};
 
-vendor-prefix unprefixed prefixed =
+vendor-prefix unprefixed prefixed = {
   (S.chain (S.pair k => v => {
                      if k === unprefixed then {
                        [...prefixed, unprefixed].map(k => (S.Pair k v))
@@ -29,8 +30,9 @@ vendor-prefix unprefixed prefixed =
                        [(S.Pair k v)]
                      }
                    }))
+};
 
-vendor-prefixes =
+vendor-prefixes = {
   (S.pipe [(vendor-prefix :border-radius
                           [:-webkit-border-radius,
                               :-moz-border-radius,
@@ -47,15 +49,16 @@ vendor-prefixes =
                           [:-webkit-transition-timing-function,
                               :-moz-transition-timing-function,
                                 :-o-transition-timing-function])])
+};
 
 format-block selectors properties = {
   selectors.join(",\n")
   + " {\n"
   + properties.map((S.pair k => v => "  " + (coerce k) + ": " + (coerce v) + ";\n")).join("")
   + "}\n"
-}
+};
 
-generate-css =
+generate-css = {
   (S.pipe [screen,
            split-every-2,
            (S.map (S.map split-every-2)),
@@ -63,3 +66,4 @@ generate-css =
            (S.map (S.pair format-block)),
            (S.joinWith "\n")]
           coerce)
+};

@@ -122,4 +122,4 @@ body = [
      ["This is terser than is possible with vanilla JavaScript.
        It reads better too, in my opinion!"]),
 
-]
+];

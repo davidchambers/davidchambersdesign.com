@@ -1,13 +1,9 @@
 Module
   = imports:(Separator* importDeclaration:ImportDeclaration                                   { return importDeclaration; })*
     exports:(Separator* exportDeclaration:(ExportNamedDeclaration / ExportDefaultDeclaration) { return exportDeclaration; })*
-    statements:(
-      head:(Separator* statement:Statement { return statement; })
-      tail:(Separator+ statement:Statement { return statement; })*
-      { return [head, ...tail]; }
-    )?
+    statements:(Separator* statement:Statement Separator* ';' { return statement; })*
     Separator*
-    { return Serif.Module([...imports, ...(statements ?? []), ...exports]); }
+    { return Serif.Module([...imports, ...statements, ...exports]); }
 
 ImportSpecifier
   = local:Identifier

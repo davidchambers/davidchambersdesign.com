@@ -3,8 +3,9 @@ import * from "../orthogonal.serif";
 
 export default twitter;
 
-a rx-ry angle large-arc-flag sweep-flag dx-dy =
+a rx-ry angle large-arc-flag sweep-flag dx-dy = {
   [:a, rx-ry, angle, large-arc-flag, sweep-flag, dx-dy]
+};
 
 twitter = [
   (linearGradient {[:id]: "gradient", [:x1]: "50%", [:y1]: "0%", [:x2]: "50%", [:y2]: "100%"}
@@ -27,4 +28,4 @@ twitter = [
                         (← 4),
                         (a [4, 4] 0 0 1 [-4, -4]),
                         (↑ 8)])}),
-]
+];

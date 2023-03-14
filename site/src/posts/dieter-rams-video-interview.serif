@@ -25,4 +25,4 @@ body = [
   (p
      ["via ", (a "http://kottke.org/" "kottke")]),
 
-]
+];

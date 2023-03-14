@@ -200,4 +200,4 @@ body = [
              ["a pre element to be highlighted has ",
               (code "html-script: true"), " in its class name"])])]),
 
-]
+];

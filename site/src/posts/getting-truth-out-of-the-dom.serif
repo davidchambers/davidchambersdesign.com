@@ -25,4 +25,4 @@ body = [
        The approach comes unstuck as soon as one wishes to display an entity
        more than once in a view (such as in a list–details split view)."]),
 
-]
+];

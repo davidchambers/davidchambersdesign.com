@@ -103,4 +103,4 @@ body = [
        lighter-weight function syntax will result in decorators making
        more frequent appearances in JavaScript code."]),
 
-]
+];

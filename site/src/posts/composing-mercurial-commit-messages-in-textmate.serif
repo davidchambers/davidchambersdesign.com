@@ -66,4 +66,4 @@ body = [
          ["This adds ", (code "editor = mate -w"), " to the ", (code "[core]"), "
            section of your ", (code "~/.gitconfig"), " file."])]),
 
-]
+];

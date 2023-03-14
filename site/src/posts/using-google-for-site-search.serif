@@ -58,4 +58,4 @@ body = [
       (a "http://www.google.com/cse/docs/resultsxml.html#wsRequestParameters"
          "Google custom search request parameters"), " useful."]),
 
-]
+];

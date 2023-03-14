@@ -23,7 +23,7 @@ excerpt = [
 
   (decorative-image "/images/posts/39/start-game-hyperlink-and-button.png"),
 
-]
+];
 
 body = [
 
@@ -239,4 +239,4 @@ body = [
       (a "/examples/hyperlinks-as-buttons/" "Hyperlinks as buttons"), "
        demo page."]),
 
-]
+];

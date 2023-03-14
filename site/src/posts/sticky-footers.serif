@@ -105,4 +105,4 @@ body = [
           (a "/examples/sticky-footers/" "sticky footer demo"), "
            to see all this theory in action."])]),
 
-]
+];

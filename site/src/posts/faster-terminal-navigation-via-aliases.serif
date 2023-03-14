@@ -81,4 +81,4 @@ body = [
        right-clicking and selecting \"Open\", making the change in
        Coda, and saving to have the updated file sent back via FTP."]),
 
-]
+];

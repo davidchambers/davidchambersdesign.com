@@ -39,4 +39,4 @@ body = [
      "Emacs syntax highlighting"
      "HTML in Emacs with and without syntax highlighting"),
 
-]
+];

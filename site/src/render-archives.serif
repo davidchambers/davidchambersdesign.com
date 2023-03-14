@@ -4,7 +4,7 @@ import * from "./elements.serif";
 
 export default render-archives;
 
-render-section section =
+render-section section = {
   (li
      [(h2 section:heading),
       (ol
@@ -16,8 +16,9 @@ render-section section =
                          post.datetime.toFormat("d MMMM y | h:mm") +
                          post.datetime.toFormat("a").toLowerCase())])
                 section:posts))])
+};
 
-render-archives =
+render-archives = {
   (S.pipe [(S.map (S.join S.Pair)),
            (S.map (S.mapLeft post => post.datetime)),
            (S.sortBy (S.compose (S.compose S.negate Number) S.fst)),
@@ -28,3 +29,4 @@ render-archives =
              [(h1 "Archives"),
               (ol' {[:class]: "archives"}
                  (S.map render-section sections))]])
+};

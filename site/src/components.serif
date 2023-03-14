@@ -14,18 +14,21 @@ export {
   update
 };
 
-caption caption =
+caption caption = {
   (p' {[:class]: "caption"} caption)
+};
 
-captioned-image src alt caption =
+captioned-image src alt caption = {
   (dl
      [(dt (img {[:alt]: alt, [:src]: src})),
       (dd caption)])
+};
 
-captioned-images images =
+captioned-images images = {
   (dl (S.chain image => [(dt (img {[:alt]: image[1], [:src]: image[0]})),
                          (dd image[2])]
                images))
+};
 
 code-block language source-code = {
   lines =
@@ -37,12 +40,13 @@ code-block language source-code = {
                                  (S.chain (S.match new RegExp("^[ ]*", ""))
                                           (S.head lines)))));
   (pre (code (text (S.unlines (S.map trim-leading-spaces lines)))))
-}
+};
 
-decorative-image src =
+decorative-image src = {
   (p (img {[:alt]: "", [:src]: src}))
+};
 
-interview-list interviewer interviewee exchange =
+interview-list interviewer interviewee exchange = {
   (ol (S.snd (S.reduce (S.pair name => items => quotation => {
                                  if name === interviewer then {
                                    (S.Pair interviewee
@@ -58,17 +62,21 @@ interview-list interviewer interviewee exchange =
                                })
                        (S.Pair interviewer [])
                        (S.map canonicalize-children exchange))))
+};
 
-pros-and-cons-list f =
+pros-and-cons-list f = {
   (ul (f (li' {[:class]: "pro"})
          (li' {[:class]: "con"})))
+};
 
-uncaptioned-image src alt =
+uncaptioned-image src alt = {
   (p (img {[:alt]: alt, [:src]: src}))
+};
 
-update datetime body =
+update datetime body = {
   (div {[:class]: "update"}
      (S.prepend (h4 ["Update \u2014 ",
                      (time {[:datetime]: datetime.toISO()}
                         datetime.toFormat("d MMMM y"))])
                 (canonicalize-children body)))
+};

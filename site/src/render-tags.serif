@@ -16,4 +16,4 @@ render-tags posts = {
                   (a {"/tag/" + tag + "/"} tags[tag]))
              (Object.keys tags))),
    (div {[:class]: "clearfix"} [])]
-}
+};

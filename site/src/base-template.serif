@@ -53,4 +53,4 @@ base-template document-title main = {
                   (text ". Original content "),
                   (a' {[:href]: "/copying/"} "WTFPL-licensed"),
                   (text ".")])])])])
-}
+};

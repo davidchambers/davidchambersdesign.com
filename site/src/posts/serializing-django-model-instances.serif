@@ -64,4 +64,4 @@ body = [
        is one of the few features not covered in Django's excellent
        documentation."]),
 
-]
+];

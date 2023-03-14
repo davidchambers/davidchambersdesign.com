@@ -46,4 +46,4 @@ body = [
             \"OK\" button to save the new shortcut."]),
       (li ["You may now relaunch <application>."])]),
 
-]
+];

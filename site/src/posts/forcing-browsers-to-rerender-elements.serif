@@ -53,4 +53,4 @@ body = [
        fails -- it's no silver bullet -- but it fixed a problem I encountered
        in IE8 earlier this evening so I'm pleased to have discovered it!"]),
 
-]
+];

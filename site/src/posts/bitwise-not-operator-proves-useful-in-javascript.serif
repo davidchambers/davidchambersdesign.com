@@ -70,4 +70,4 @@ body = [
        Therefore, ", (code "~text.indexOf('✈')"), " is equivalent to ",
       (code "text.contains('✈')"), " in Boolean contexts."]),
 
-]
+];

@@ -90,4 +90,4 @@ body = [
       (code "class=\"filesize\""), ", to provide a hook for styling
        if required."]),
 
-]
+];

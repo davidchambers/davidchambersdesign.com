@@ -158,4 +158,4 @@ body = [
        in Safari or Google Chrome, as these WebKit-based browsers fail
        to handle the ", (code "dt+dd:hover~dt"), " selector."]),
 
-]
+];

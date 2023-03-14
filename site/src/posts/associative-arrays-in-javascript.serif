@@ -34,4 +34,4 @@ body = [
       (a "http://andrewdupont.net/2006/05/18/javascript-associative-arrays-considered-harmful/"
          "JavaScript \"Associative Arrays\" Considered Harmful"), "."]),
 
-]
+];

@@ -19,28 +19,30 @@ reducer prev path curr = {
       (S.Pair curr [...path, prev])
     }
   }
-}
+};
 
-simplify =
+simplify = {
   (S.array []
            head => tail =>
              (S.pair S.append
                      (S.reduce (S.pair reducer)
                                (S.Pair head [])
                                tail)))
+};
 
-render =
+render = {
   (S.pipe [simplify,
            S.join,
            (S.map x => if typeof x === "symbol" then (Symbol.keyFor x) else (String x)),
            S.unwords])
+};
 
-⇦ x = [:m, [{- x}, 0]]
-⇨ x = [:m, [{+ x}, 0]]
-⇧ y = [:m, [0, {- y}]]
-⇩ y = [:m, [0, {+ y}]]
+⇦ x = [:m, [{- x}, 0]];
+⇨ x = [:m, [{+ x}, 0]];
+⇧ y = [:m, [0, {- y}]];
+⇩ y = [:m, [0, {+ y}]];
 
-← x = [:h, {- x}]
-→ x = [:h, {+ x}]
-↑ y = [:v, {- y}]
-↓ y = [:v, {+ y}]
+← x = [:h, {- x}];
+→ x = [:h, {+ x}];
+↑ y = [:v, {- y}];
+↓ y = [:v, {+ y}];

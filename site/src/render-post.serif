@@ -5,7 +5,7 @@ import tags from "./tags.serif";
 
 export default render-post;
 
-render-post post related-posts =
+render-post post related-posts = {
   [(article'
       (S.maybe {} (S.singleton :id) (S.value "article-id" post))
       [(header
@@ -29,3 +29,4 @@ render-post post related-posts =
                       related-posts)),
          ]
        }])]
+};

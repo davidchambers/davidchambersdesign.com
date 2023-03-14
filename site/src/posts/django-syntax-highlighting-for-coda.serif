@@ -39,4 +39,4 @@ body = [
           (a "https://github.com/jbergantine/Django-Template"
              "jbergantine's Django-Template"), "."])]),
 
-]
+];
