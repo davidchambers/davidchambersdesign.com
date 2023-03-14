@@ -37,6 +37,6 @@ fill = #[
 ]
 
 flushcache = #[
-  (path #{:fill: "#391", :d: (render stroke)}),
-  (path #{:fill: "#6c4", :d: (render fill)}),
+  (path #{[:fill]: "#391", [:d]: (render stroke)}),
+  (path #{[:fill]: "#6c4", [:d]: (render fill)}),
 ]

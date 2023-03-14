@@ -3,13 +3,13 @@ import {captioned-image captioned-images code-block decorative-image} from "../c
 import datetime from "../datetime.serif";
 
 export default #{
-  "id": 39,
-  "slug": "gorgeous-css3-buttons-inspired-by-aqua",
-  "title": "Gorgeous CSS3 buttons inspired by Aqua",
-  "datetime": (datetime "2010-03-08" "12:39:00" :Pacific/Auckland),
-  "tags": #["css", "css3", "html", "mac-os-x"],
-  "excerpt": excerpt,
-  "body": body,
+  id: 39,
+  slug: "gorgeous-css3-buttons-inspired-by-aqua",
+  title: "Gorgeous CSS3 buttons inspired by Aqua",
+  datetime: (datetime "2010-03-08" "12:39:00" :Pacific/Auckland),
+  tags: #["css", "css3", "html", "mac-os-x"],
+  excerpt: excerpt,
+  body: body,
 };
 
 excerpt = #[

@@ -10,9 +10,9 @@ render-section section =
        (ol
           (S.map post =>
                    (li
-                      #[(a' #{:href: "/" + post.slug} post.title),
+                      #[(a' #{[:href]: "/" + post.slug} post.title),
                         " ",
-                        (time #{:datetime: post.datetime.toISO()}
+                        (time #{[:datetime]: post.datetime.toISO()}
                            post.datetime.toFormat("d MMMM y | h:mm") +
                            post.datetime.toFormat("a").toLowerCase())])
                  section:posts))])
@@ -23,8 +23,8 @@ render-archives =
             (S.sortBy (S.compose (S.compose S.negate Number) S.fst)),
             (S.map (S.mapLeft datetime => datetime.toFormat("MMMM y"))),
             (S.groupBy (S.on S.equals S.fst)),
-            (S.chain (S.array #[] head => tail => #[#{:heading: (S.fst head), :posts: (S.map S.snd #[head, ...tail])}])),
+            (S.chain (S.array #[] head => tail => #[#{[:heading]: (S.fst head), [:posts]: (S.map S.snd #[head, ...tail])}])),
             sections =>
               #[(h1 "Archives"),
-                (ol' #{:class: "archives"}
+                (ol' #{[:class]: "archives"}
                    (S.map render-section sections))]])

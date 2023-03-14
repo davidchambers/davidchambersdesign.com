@@ -3,12 +3,12 @@ import {caption captioned-images code-block update} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default #{
-  "id": 15,
-  "slug": "applescript-syntax-highlighting",
-  "title": "AppleScript syntax highlighting",
-  "datetime": (datetime "2009-06-04" "03:12:00" :Pacific/Auckland),
-  "tags": #["applescript", "javascript", "mac-os-x", "syntaxhighlighter"],
-  "body": body,
+  id: 15,
+  slug: "applescript-syntax-highlighting",
+  title: "AppleScript syntax highlighting",
+  datetime: (datetime "2009-06-04" "03:12:00" :Pacific/Auckland),
+  tags: #["applescript", "javascript", "mac-os-x", "syntaxhighlighter"],
+  body: body,
 };
 
 body = #[
@@ -103,7 +103,7 @@ body = #[
   (caption
      #["Live rendering of AppleScript snippet"]),
 
-  (h3' #{:id: "setup"} "Setup"),
+  (h3' #{[:id]: "setup"} "Setup"),
 
   (p
      #["To add AppleScript syntax highlighting to your own site or blog,
@@ -139,7 +139,7 @@ body = #[
                <script>SyntaxHighlighter.all()</script>
                ")])]),
 
-  (h3' #{:id: "usage"} "Usage"),
+  (h3' #{[:id]: "usage"} "Usage"),
 
   (p
      #["To have SyntaxHighlighter parse a block of AppleScript,

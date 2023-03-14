@@ -187,7 +187,12 @@ ObjectElement
   / Property
 
 Property
-  = key:Expression Separator* ':' Separator* value:Expression
+  = key:(
+        ident:Identifier { return Serif.StringLiteral(ident.name); }
+      / '[' Separator* expression:Expression Separator* ']' { return expression; }
+    )
+    Separator* ':'
+    Separator* value:Expression
     { return Serif.Property(key, value); }
 
 ImportMeta
@@ -418,13 +423,11 @@ ConditionalExpression
   / ArrowFunctionExpression
 
 BlockExpression
-  = '{' Separator* statements:BlockExpressionStatements Separator* '}' { return Serif.BlockExpression(statements); }
-  / '[' Separator* statements:BlockExpressionStatements Separator* ']' { return Serif.BlockExpression(statements); }
-
-BlockExpressionStatements
-  = head:Statement
+  = '{' Separator*
+    head:Statement
     tail:(Separator* ';' Separator* statement:Statement { return statement; })*
-    { return [head, ...tail]; }
+    Separator* '}'
+    { return Serif.BlockExpression([head, ...tail]); }
 
 Statement
   = VariableDeclaration

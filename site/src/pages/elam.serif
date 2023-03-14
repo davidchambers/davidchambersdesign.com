@@ -3,11 +3,11 @@ import {uncaptioned-image} from "../components.serif";
 
 export default #{
 
-  "slug": "elam",
+  slug: "elam",
 
-  "title": "Elam",
+  title: "Elam",
 
-  "body": #[
+  body: #[
 
     (p
        #["I attended Elam School of Fine Arts in Auckland between 2002 and 2005.
@@ -19,7 +19,7 @@ export default #{
          (li (a "#2004" "2004")),
          (li (a "#2005" "2005"))]),
 
-    (h3' #{:id: "2003"} "2003"),
+    (h3' #{[:id]: "2003"} "2003"),
 
     (h4 "Design philosophies poster"),
 
@@ -50,7 +50,7 @@ export default #{
        "/images/elam/sugar-billboards/plane-crash.jpg"
        "Excessive sugar consumption can impair concentration"),
 
-    (h3' #{:id: "2004"} "2004"),
+    (h3' #{[:id]: "2004"} "2004"),
 
     (h4 #[(i "Caligula"), " poster"]),
 
@@ -101,7 +101,7 @@ export default #{
        "/images/elam/lightbox/panprint-poster.jpg"
        "Panprint poster"),
 
-    (h3' #{:id: "2005"} "2005"),
+    (h3' #{[:id]: "2005"} "2005"),
 
     (h4 "Gameplayer brand identity"),
 

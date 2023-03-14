@@ -3,12 +3,12 @@ import {uncaptioned-image} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default #{
-  "id": 65,
-  "slug": "digitalcolor-meter",
-  "title": "DigitalColor Meter",
-  "datetime": (datetime "2010-07-23" "01:45:00" :Pacific/Auckland),
-  "tags": #["mac-os-x", "photoshop"],
-  "body": body,
+  id: 65,
+  slug: "digitalcolor-meter",
+  title: "DigitalColor Meter",
+  datetime: (datetime "2010-07-23" "01:45:00" :Pacific/Auckland),
+  tags: #["mac-os-x", "photoshop"],
+  body: body,
 };
 
 body = #[

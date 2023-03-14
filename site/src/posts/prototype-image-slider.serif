@@ -3,12 +3,12 @@ import {code-block update} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default #{
-  "id": 26,
-  "slug": "prototype-image-slider",
-  "title": "Prototype image slider",
-  "datetime": (datetime "2009-09-16" "23:43:00" :Pacific/Auckland),
-  "tags": #["css", "html", "javascript", "meaningful-markup", "prototype"],
-  "body": body,
+  id: 26,
+  slug: "prototype-image-slider",
+  title: "Prototype image slider",
+  datetime: (datetime "2009-09-16" "23:43:00" :Pacific/Auckland),
+  tags: #["css", "html", "javascript", "meaningful-markup", "prototype"],
+  body: body,
 };
 
 body = #[
@@ -53,7 +53,7 @@ body = #[
             (a "http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777"
                "recommendation by Tobie Langel"), " did the trick!"])]),
 
-  (h3' #{:id: "usage"} "Usage"),
+  (h3' #{[:id]: "usage"} "Usage"),
 
   (p
      #["First, you'll need to save a copy of ",

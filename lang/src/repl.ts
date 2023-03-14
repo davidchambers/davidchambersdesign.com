@@ -58,7 +58,7 @@ function print(x: any): string {
     case '[object Array]':
       return '#[' + x.map(print).join(', ') + ']';
     case '[object Object]':
-      return '#{' + Reflect.ownKeys(x).map(k => print(k) + ': ' + print(x[k])).join(', ') + '}';
+      return '#{' + Reflect.ownKeys(x).map(k => `[${print(k)}]: ${print(x[k])}`).join(', ') + '}';
     default:
       return `${x}`;
   }

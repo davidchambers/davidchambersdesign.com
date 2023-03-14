@@ -2,12 +2,12 @@ import * from "../elements.serif" hiding {body};
 import datetime from "../datetime.serif";
 
 export default #{
-  "id": 53,
-  "slug": "wmd-ftw",
-  "title": "wmd ftw!",
-  "datetime": (datetime "2010-06-13" "11:25:00" :Pacific/Auckland),
-  "tags": #["javascript", "markdown", "ux", "wmd"],
-  "body": body,
+  id: 53,
+  slug: "wmd-ftw",
+  title: "wmd ftw!",
+  datetime: (datetime "2010-06-13" "11:25:00" :Pacific/Auckland),
+  tags: #["javascript", "markdown", "ux", "wmd"],
+  body: body,
 };
 
 body = #[
@@ -36,7 +36,7 @@ body = #[
         response to changes to \"name\", \"e-mail\", and \"website\"
         as well as to changes to the comment itself."]),
 
-  (video #{:src: "/images/posts/53/wmd.mp4", :controls: "controls"}
+  (video #{[:src]: "/images/posts/53/wmd.mp4", [:controls]: "controls"}
 
      #[(p
           #["Get with the programme; this video's in an HTML5 ",
