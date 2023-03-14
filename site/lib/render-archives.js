@@ -92,15 +92,15 @@ const render$002Dsection = section => {
   return li([
     h2(section[Symbol.for('heading')]),
     ol(S.map(post => li([
-      a$0027({ [Symbol.for('href')]: '/' + post[Symbol.for('slug')] })(post[Symbol.for('title')]),
+      a$0027({ [Symbol.for('href')]: '/' + post.slug })(post.title),
       ' ',
-      time({ [Symbol.for('datetime')]: post[Symbol.for('datetime')].toISO() })(post[Symbol.for('datetime')].toFormat('d MMMM y | h:mm') + post[Symbol.for('datetime')].toFormat('a').toLowerCase())
+      time({ [Symbol.for('datetime')]: post.datetime.toISO() })(post.datetime.toFormat('d MMMM y | h:mm') + post.datetime.toFormat('a').toLowerCase())
     ]))(section[Symbol.for('posts')]))
   ]);
 };
 const render$002Darchives = S.pipe([
   S.map(S.join(S.Pair)),
-  S.map(S.mapLeft(post => post[Symbol.for('datetime')])),
+  S.map(S.mapLeft(post => post.datetime)),
   S.sortBy(S.compose(S.compose(S.negate)(Number))(S.fst)),
   S.map(S.mapLeft(datetime => datetime.toFormat('MMMM y'))),
   S.groupBy(S.on(S.equals)(S.fst)),

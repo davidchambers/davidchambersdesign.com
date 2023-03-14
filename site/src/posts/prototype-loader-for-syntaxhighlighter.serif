@@ -3,12 +3,12 @@ import {code-block update} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default #{
-  :id 18
-  :slug "prototype-loader-for-syntaxhighlighter"
-  :title "Prototype loader for SyntaxHighlighter"
-  :datetime (datetime "2009-06-22" "01:04:00" :Pacific/Auckland)
-  :tags #["javascript", "optimization", "prototype", "syntaxhighlighter"]
-  :body body
+  "id": 18,
+  "slug": "prototype-loader-for-syntaxhighlighter",
+  "title": "Prototype loader for SyntaxHighlighter",
+  "datetime": (datetime "2009-06-22" "01:04:00" :Pacific/Auckland),
+  "tags": #["javascript", "optimization", "prototype", "syntaxhighlighter"],
+  "body": body,
 };
 
 body = #[
@@ -44,7 +44,7 @@ body = #[
              more reliable. Additionally, style sheets are now also
              retrieved on demand."])]),
 
-  (h3' #{:id "setup"} "Setup"),
+  (h3' #{:id: "setup"} "Setup"),
 
   (p
      #[(strong "Requires Prototype!")]),
@@ -110,7 +110,7 @@ body = #[
                   in the above snippet with the path to your ",
                  (strong "SyntaxHighlighter"), " directory."])])]),
 
-  (h3' #{:id "usage"} "Usage"),
+  (h3' #{:id: "usage"} "Usage"),
 
   (p
      #["The ", (code "settings"), " object provides flexibility by allowing

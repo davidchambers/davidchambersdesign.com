@@ -116,13 +116,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 75,
-  [Symbol.for('slug')]: 'bitwise-not-operator-proves-useful-in-javascript',
-  [Symbol.for('title')]: 'Bitwise NOT operator proves useful in JavaScript',
-  [Symbol.for('datetime')]: datetime('2010-12-11')('15:00:00')(Symbol.for('Australia/Sydney')),
-  [Symbol.for('tags')]: [
+  ['id']: 75,
+  ['slug']: 'bitwise-not-operator-proves-useful-in-javascript',
+  ['title']: 'Bitwise NOT operator proves useful in JavaScript',
+  ['datetime']: datetime('2010-12-11')('15:00:00')(Symbol.for('Australia/Sydney')),
+  ['tags']: [
     'javascript',
     'programming'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

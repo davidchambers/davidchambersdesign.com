@@ -104,14 +104,14 @@ const body = [
   code$002Dblock(Symbol.for('php'))('\n     <time datetime="<?php comment_datetime(); ?>">\n     ')
 ];
 export default {
-  [Symbol.for('id')]: 31,
-  [Symbol.for('slug')]: 'using-html5-time-element-in-wordpress-themes',
-  [Symbol.for('title')]: 'Using HTML5 time element in WordPress themes',
-  [Symbol.for('datetime')]: datetime('2009-11-02')('02:04:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 31,
+  ['slug']: 'using-html5-time-element-in-wordpress-themes',
+  ['title']: 'Using HTML5 time element in WordPress themes',
+  ['datetime']: datetime('2009-11-02')('02:04:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'html5',
     'php',
     'wordpress'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

@@ -168,15 +168,15 @@ const body = [
   p(['I have implemented the JavaScript approach, and it works nicely.\n        I am still hopeful that there exists a simpler and/or more universal\n        solution to the problem posed by fixed-position headers. Please let\n        me know if you have any ideas or suggestions.'])
 ];
 export default {
-  [Symbol.for('id')]: 30,
-  [Symbol.for('slug')]: 'css-fixed-position-headers',
-  [Symbol.for('title')]: 'CSS fixed-position headers',
-  [Symbol.for('datetime')]: datetime('2009-10-30')('18:25:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 30,
+  ['slug']: 'css-fixed-position-headers',
+  ['title']: 'CSS fixed-position headers',
+  ['datetime']: datetime('2009-10-30')('18:25:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'css',
     'html',
     'javascript',
     'prototype'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

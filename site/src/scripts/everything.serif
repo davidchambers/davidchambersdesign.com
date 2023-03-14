@@ -234,7 +234,7 @@ write-file filename data =
             generate-css)
 
 render-svg attrs paths = {
-  attrs' = #{:xmlns "http://www.w3.org/2000/svg" :version "1.1" ...attrs};
+  attrs' = #{:xmlns: "http://www.w3.org/2000/svg", :version: "1.1", ...attrs};
   "<?xml version=\"1.0\" standalone=\"no\"?>\n"
   + ((svg attrs' paths):render "  " 0 false)
 }
@@ -246,13 +246,13 @@ render-svg attrs paths = {
             (render-svg #{} masthead:mask))
 
 (write-file (public #["svg", "about.svg"])
-            (render-svg #{:width 16 :height 16} icon/about))
+            (render-svg #{:width: 16, :height: 16} icon/about))
 
 (write-file (public #["svg", "archives.svg"])
-            (render-svg #{:width 16 :height 16} icon/archives))
+            (render-svg #{:width: 16, :height: 16} icon/archives))
 
 (write-file (public #["svg", "bitbucket.svg"])
-            (render-svg #{:width 16 :height 16} icon/bitbucket))
+            (render-svg #{:width: 16, :height: 16} icon/bitbucket))
 
 (write-file (public #["svg", "dates-0.svg"])
             (render-svg #{} dates[0]))
@@ -285,16 +285,16 @@ render-svg attrs paths = {
             (render-svg #{} dates[9]))
 
 (write-file (public #["svg", "contact.svg"])
-            (render-svg #{:width 16 :height 16} icon/contact))
+            (render-svg #{:width: 16, :height: 16} icon/contact))
 
 (write-file (public #["svg", "flushcache.svg"])
-            (render-svg #{:width 16 :height 16} icon/flushcache))
+            (render-svg #{:width: 16, :height: 16} icon/flushcache))
 
 (write-file (public #["svg", "tags.svg"])
-            (render-svg #{:width 16 :height 16} icon/tags))
+            (render-svg #{:width: 16, :height: 16} icon/tags))
 
 (write-file (public #["svg", "twitter.svg"])
-            (render-svg #{:width 16 :height 16} icon/twitter))
+            (render-svg #{:width: 16, :height: 16} icon/twitter))
 
 render-document element = {
   "<!DOCTYPE html>\n" + (element:render "  " 0 false)
@@ -309,14 +309,14 @@ render-document element = {
                                             (render-tags posts))))
 
 (S.map page =>
-         (write-file (public #[page:slug + ".html"])
-                     (render-document (base-template page:title
+         (write-file (public #[page.slug + ".html"])
+                     (render-document (base-template page.title
                                                      (render-page page))))
        pages)
 
 (S.map post =>
-         (write-file (public #[post:slug + ".html"])
-                     (render-document (base-template post:title
+         (write-file (public #[post.slug + ".html"])
+                     (render-document (base-template post.title
                                                      (render-post post
                                                                   (related-posts posts post)))))
        posts)

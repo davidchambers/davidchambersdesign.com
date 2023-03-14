@@ -38,9 +38,9 @@ async function findDependencies(entryPoint: string): Promise<Tree> {
         })
       );
       const renderLineNumber = (number: number): string => number.toString().padStart(4);
-      console.error(`\n${
-        source
-      }\n\n${
+      console.error(`\n\x1B[1m${
+        relative(process.cwd(), source)
+      }\x1B[0m\n\n${
         lines
         .map((line, idx, lines) =>
           `\x1B[7m${

@@ -163,15 +163,15 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 33,
-  [Symbol.for('slug')]: 'autopopulating-input-fields-with-prototype',
-  [Symbol.for('title')]: 'Auto-populating input fields with Prototype',
-  [Symbol.for('datetime')]: datetime('2010-01-07')('22:03:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 33,
+  ['slug']: 'autopopulating-input-fields-with-prototype',
+  ['title']: 'Auto-populating input fields with Prototype',
+  ['datetime']: datetime('2010-01-07')('22:03:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'html5',
     'javascript',
     'prototype',
     'ux'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

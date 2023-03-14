@@ -172,8 +172,8 @@ paths = (S.pipe #[(S.map char => #[...char, (reset char)]),
 -chars- = (paths #[-D-, -A-, -V-, -I-, -D-, -C-, -H-, -A-, -M-, -B-, -E-, -R-, -S-, -D-, -E-, -S-, -I-, -G-, -N-])
 ~chars~ = (paths #[~D~, ~A~, ~V~, ~I~, ~D~, ~C~, ~H~, ~A~, ~M~, ~B~, ~E~, ~R~, ~S~, ~D~, ~E~, ~S~, ~I~, ~G~, ~N~])
 
-mask = #[(path #{:d (render <chars>) :fill "#000" :fill-rule :evenodd})]
-fill = #[(path #{:d (render -chars-) :fill "#999"}),
-         (path #{:d (render ~chars~) :fill "#666"})]
+mask = #[(path #{:d: (render <chars>), :fill: "#000", :fill-rule: :evenodd})]
+fill = #[(path #{:d: (render -chars-), :fill: "#999"}),
+         (path #{:d: (render ~chars~), :fill: "#666"})]
 
-default = #{:mask mask :fill fill}
+default = #{:mask: mask, :fill: fill}

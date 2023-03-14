@@ -119,15 +119,15 @@ const body = [
   p(['This was a great deal of fun to implement!'])
 ];
 export default {
-  [Symbol.for('id')]: 53,
-  [Symbol.for('slug')]: 'wmd-ftw',
-  [Symbol.for('title')]: 'wmd ftw!',
-  [Symbol.for('datetime')]: datetime('2010-06-13')('11:25:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 53,
+  ['slug']: 'wmd-ftw',
+  ['title']: 'wmd ftw!',
+  ['datetime']: datetime('2010-06-13')('11:25:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'javascript',
     'markdown',
     'ux',
     'wmd'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

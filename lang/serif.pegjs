@@ -173,17 +173,21 @@ ArrayElement
   / Expression
 
 ObjectExpression
-  = '#{'
-    properties:(
-      head:(Separator* property:(SpreadElement / Property) { return property; })
-      tail:(Separator+ property:(SpreadElement / Property) { return property; })*
-      { return [head, ...tail]; }
-    )?
+  = '#{' Separator* '}'
+    { return Serif.ObjectExpression([]); }
+  / '#{' Separator*
+    head:ObjectElement
+    tail:(Separator* ',' Separator* element:ObjectElement { return element; })*
+    Separator* ','?
     Separator* '}'
-    { return Serif.ObjectExpression(properties ?? []); }
+    { return Serif.ObjectExpression([head, ...tail]); }
+
+ObjectElement
+  = SpreadElement
+  / Property
 
 Property
-  = key:Expression Separator+ value:Expression
+  = key:Expression Separator* ':' Separator* value:Expression
     { return Serif.Property(key, value); }
 
 ImportMeta

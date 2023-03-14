@@ -112,13 +112,13 @@ const body = [
   p(['Talk about having one\'s cake and eating it, too.'])
 ];
 export default {
-  [Symbol.for('id')]: 44,
-  [Symbol.for('slug')]: 'fascinating-insight-into-the-mind-of-a-windows-user',
-  [Symbol.for('title')]: 'Fascinating insight into the mind of a Windows user',
-  [Symbol.for('datetime')]: datetime('2010-03-25')('15:06:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 44,
+  ['slug']: 'fascinating-insight-into-the-mind-of-a-windows-user',
+  ['title']: 'Fascinating insight into the mind of a Windows user',
+  ['datetime']: datetime('2010-03-25')('15:06:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'mac-os-x',
     'windows'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

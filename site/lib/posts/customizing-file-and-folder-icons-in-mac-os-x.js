@@ -180,14 +180,14 @@ const body = [
   captioned$002Dimage('/images/posts/72/icons-in-situ.png')('Icons in situ')('Icons in situ (note the 16x16 icon in the sidebar)')
 ];
 export default {
-  [Symbol.for('id')]: 72,
-  [Symbol.for('slug')]: 'customizing-file-and-folder-icons-in-mac-os-x',
-  [Symbol.for('title')]: 'Customizing file and folder icons in Mac OS X',
-  [Symbol.for('datetime')]: datetime('2010-09-29')('00:00:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 72,
+  ['slug']: 'customizing-file-and-folder-icons-in-mac-os-x',
+  ['title']: 'Customizing file and folder icons in Mac OS X',
+  ['datetime']: datetime('2010-09-29')('00:00:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'icons',
     'mac-os-x',
     'terminal.app'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

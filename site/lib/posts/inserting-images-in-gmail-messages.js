@@ -97,13 +97,13 @@ const body = [
   captioned$002Dimage('/images/posts/10/gmail-insert-image-icon.png')('Gmail insert image icon')('Gmail\'s insert image icon, visible in rich formatting mode')
 ];
 export default {
-  [Symbol.for('id')]: 10,
-  [Symbol.for('slug')]: 'inserting-images-in-gmail-messages',
-  [Symbol.for('title')]: 'Inserting images in Gmail messages',
-  [Symbol.for('datetime')]: datetime('2009-04-15')('20:27:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 10,
+  ['slug']: 'inserting-images-in-gmail-messages',
+  ['title']: 'Inserting images in Gmail messages',
+  ['datetime']: datetime('2009-04-15')('20:27:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'gmail',
     'html'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

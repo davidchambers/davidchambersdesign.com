@@ -129,14 +129,14 @@ const body = [
   p(['You\'re free to make use of these images (they\'re transparent PNGs).\n        Attribution is appreciated but not required. :)'])
 ];
 export default {
-  [Symbol.for('id')]: 40,
-  [Symbol.for('slug')]: 'cricket-field-diagrams',
-  [Symbol.for('title')]: 'Cricket field diagrams',
-  [Symbol.for('datetime')]: datetime('2010-03-15')('00:58:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 40,
+  ['slug']: 'cricket-field-diagrams',
+  ['title']: 'Cricket field diagrams',
+  ['datetime']: datetime('2010-03-15')('00:58:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'design',
     'icons'
   ],
-  [Symbol.for('article-id')]: 'cricket-field-diagrams',
-  [Symbol.for('body')]: body
+  ['article-id']: 'cricket-field-diagrams',
+  ['body']: body
 };

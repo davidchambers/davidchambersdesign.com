@@ -147,16 +147,16 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 76,
-  [Symbol.for('slug')]: 'composing-mercurial-commit-messages-in-textmate',
-  [Symbol.for('title')]: 'Composing Mercurial commit messages in TextMate',
-  [Symbol.for('datetime')]: datetime('2011-01-10')('01:25:00')(Symbol.for('Australia/Sydney')),
-  [Symbol.for('tags')]: [
+  ['id']: 76,
+  ['slug']: 'composing-mercurial-commit-messages-in-textmate',
+  ['title']: 'Composing Mercurial commit messages in TextMate',
+  ['datetime']: datetime('2011-01-10')('01:25:00')(Symbol.for('Australia/Sydney')),
+  ['tags']: [
     'hg',
     'mac-os-x',
     'markdown',
     'mercurial',
     'textmate'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

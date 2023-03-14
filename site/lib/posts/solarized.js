@@ -109,15 +109,15 @@ const body = [
   p(['* Blue escape sequences within red regular expression literals\n        are too striking for my liking!'])
 ];
 export default {
-  [Symbol.for('id')]: 84,
-  [Symbol.for('slug')]: 'solarized',
-  [Symbol.for('title')]: 'Solarized',
-  [Symbol.for('datetime')]: datetime('2011-04-23')('02:20:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 84,
+  ['slug']: 'solarized',
+  ['title']: 'Solarized',
+  ['datetime']: datetime('2011-04-23')('02:20:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'coda',
     'design',
     'programming',
     'solarized'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

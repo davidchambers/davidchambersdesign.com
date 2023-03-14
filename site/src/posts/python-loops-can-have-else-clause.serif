@@ -3,12 +3,12 @@ import {code-block update} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default #{
-  :id 66
-  :slug "python-loops-can-have-else-clause"
-  :title "Python loops can have else clause?!"
-  :datetime (datetime "2010-07-25" "18:11:00" :Pacific/Auckland)
-  :tags #["javascript", "mootools", "programming", "python"]
-  :body body
+  "id": 66,
+  "slug": "python-loops-can-have-else-clause",
+  "title": "Python loops can have else clause?!",
+  "datetime": (datetime "2010-07-25" "18:11:00" :Pacific/Auckland),
+  "tags": #["javascript", "mootools", "programming", "python"],
+  "body": body,
 };
 
 body = #[

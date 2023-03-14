@@ -129,10 +129,10 @@ const body = [
   code$002Dblock(Symbol.for('console'))('\n     killall Finder\n     ')
 ];
 export default {
-  [Symbol.for('id')]: 2,
-  [Symbol.for('slug')]: 'show-full-directory-path-in-finder-window-title-bar',
-  [Symbol.for('title')]: 'Show full directory path in Finder window title bar',
-  [Symbol.for('datetime')]: datetime('2008-11-29')('19:07:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: ['mac-os-x'],
-  [Symbol.for('body')]: body
+  ['id']: 2,
+  ['slug']: 'show-full-directory-path-in-finder-window-title-bar',
+  ['title']: 'Show full directory path in Finder window title bar',
+  ['datetime']: datetime('2008-11-29')('19:07:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: ['mac-os-x'],
+  ['body']: body
 };

@@ -104,13 +104,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 12,
-  [Symbol.for('slug')]: 'looping-more-than-once-with-the-wordpress-loop',
-  [Symbol.for('title')]: 'Looping more than once with the WordPress loop',
-  [Symbol.for('datetime')]: datetime('2009-04-17')('00:34:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 12,
+  ['slug']: 'looping-more-than-once-with-the-wordpress-loop',
+  ['title']: 'Looping more than once with the WordPress loop',
+  ['datetime']: datetime('2009-04-17')('00:34:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'php',
     'wordpress'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

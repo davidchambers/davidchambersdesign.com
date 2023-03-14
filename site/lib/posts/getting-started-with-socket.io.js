@@ -182,16 +182,16 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 90,
-  [Symbol.for('slug')]: 'getting-started-with-socket.io',
-  [Symbol.for('title')]: 'Getting started with Socket.IO',
-  [Symbol.for('datetime')]: datetime('2011-08-07')('00:15:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 90,
+  ['slug']: 'getting-started-with-socket.io',
+  ['title']: 'Getting started with Socket.IO',
+  ['datetime']: datetime('2011-08-07')('00:15:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'coffeescript',
     'html5',
     'node.js',
     'socket.io',
     'websockets'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

@@ -3,12 +3,12 @@ import {captioned-image} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default #{
-  :id 58
-  :slug "-webkit-box-sizing"
-  :title "-webkit-box-sizing"
-  :datetime (datetime "2010-07-18" "21:30:00" :Pacific/Auckland)
-  :tags #["css", "webkit"]
-  :body body
+  "id": 58,
+  "slug": "-webkit-box-sizing",
+  "title": "-webkit-box-sizing",
+  "datetime": (datetime "2010-07-18" "21:30:00" :Pacific/Auckland),
+  "tags": #["css", "webkit"],
+  "body": body,
 };
 
 body = #[

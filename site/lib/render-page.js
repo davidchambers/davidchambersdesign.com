@@ -88,6 +88,6 @@ import {
   video
 } from './elements.js';
 const render$002Dpage = page => {
-  return [article(page[Symbol.for('body')])];
+  return [article(page.body)];
 };
 export default render$002Dpage;

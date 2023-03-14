@@ -104,15 +104,15 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 52,
-  [Symbol.for('slug')]: 'autopopulating-input-fields-with-mootools',
-  [Symbol.for('title')]: 'Auto-populating input fields with MooTools',
-  [Symbol.for('datetime')]: datetime('2010-06-09')('23:23:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 52,
+  ['slug']: 'autopopulating-input-fields-with-mootools',
+  ['title']: 'Auto-populating input fields with MooTools',
+  ['datetime']: datetime('2010-06-09')('23:23:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'html5',
     'javascript',
     'mootools',
     'ux'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

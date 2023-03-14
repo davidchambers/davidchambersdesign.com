@@ -147,14 +147,14 @@ const body = [
   p(['JavaScript is at last recieving the attention and respect it\n        has long deserved. I\'m greatly looking forward to building an\n        application using non-blocking, event-driven JavaScript on both\n        sides of the wire.'])
 ];
 export default {
-  [Symbol.for('id')]: 61,
-  [Symbol.for('slug')]: 'javascript-everywhere',
-  [Symbol.for('title')]: 'JavaScript, JavaScript, everywhere',
-  [Symbol.for('datetime')]: datetime('2010-07-20')('19:05:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 61,
+  ['slug']: 'javascript-everywhere',
+  ['title']: 'JavaScript, JavaScript, everywhere',
+  ['datetime']: datetime('2010-07-20')('19:05:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'javascript',
     'node.js',
     'sproutcore'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

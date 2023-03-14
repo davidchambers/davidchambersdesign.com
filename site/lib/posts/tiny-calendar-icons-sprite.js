@@ -127,15 +127,15 @@ const body = [
   code$002Dblock(Symbol.for('html'))('\n     <span class="day day-31"></span>\n     ')
 ];
 export default {
-  [Symbol.for('id')]: 23,
-  [Symbol.for('slug')]: 'tiny-calendar-icons-sprite',
-  [Symbol.for('title')]: 'Tiny calendar icons sprite',
-  [Symbol.for('datetime')]: datetime('2009-08-28')('18:04:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 23,
+  ['slug']: 'tiny-calendar-icons-sprite',
+  ['title']: 'Tiny calendar icons sprite',
+  ['datetime']: datetime('2009-08-28')('18:04:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'css',
     'design',
     'html',
     'icons'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

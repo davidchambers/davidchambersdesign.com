@@ -108,13 +108,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 92,
-  [Symbol.for('slug')]: 'helveticards',
-  [Symbol.for('title')]: 'Helveticards',
-  [Symbol.for('datetime')]: datetime('2011-11-20')('22:00:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 92,
+  ['slug']: 'helveticards',
+  ['title']: 'Helveticards',
+  ['datetime']: datetime('2011-11-20')('22:00:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'design',
     'typography'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

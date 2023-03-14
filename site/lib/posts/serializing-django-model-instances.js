@@ -107,13 +107,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 49,
-  [Symbol.for('slug')]: 'serializing-django-model-instances',
-  [Symbol.for('title')]: 'Serializing Django model instances',
-  [Symbol.for('datetime')]: datetime('2010-04-13')('08:16:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 49,
+  ['slug']: 'serializing-django-model-instances',
+  ['title']: 'Serializing Django model instances',
+  ['datetime']: datetime('2010-04-13')('08:16:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'django',
     'python'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

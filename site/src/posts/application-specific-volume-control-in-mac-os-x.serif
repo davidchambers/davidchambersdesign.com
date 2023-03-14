@@ -3,12 +3,12 @@ import {uncaptioned-image update} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default #{
-  :id 47
-  :slug "application-specific-volume-control-in-mac-os-x"
-  :title "Application-specific volume control in Mac OS X?"
-  :datetime (datetime "2010-04-07" "02:04:00" :Pacific/Auckland)
-  :tags #["mac-os-x", "ux"]
-  :body body
+  "id": 47,
+  "slug": "application-specific-volume-control-in-mac-os-x",
+  "title": "Application-specific volume control in Mac OS X?",
+  "datetime": (datetime "2010-04-07" "02:04:00" :Pacific/Auckland),
+  "tags": #["mac-os-x", "ux"],
+  "body": body,
 };
 
 body = #[
@@ -80,7 +80,7 @@ body = #[
      "Photoshop's drop shadow dialog"),
 
   (dl
-     #[(dt' #{:class "textual"} "shadow color"),
+     #[(dt' #{:class: "textual"} "shadow color"),
        (dd "#000000 (black)"),
 
        (dt "opacity"),

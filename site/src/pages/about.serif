@@ -3,11 +3,11 @@ import {captioned-image} from "../components.serif";
 
 export default #{
 
-  :slug "about"
+  "slug": "about",
 
-  :title "About"
+  "title": "About",
 
-  :body #[
+  "body": #[
 
     (p
        #[(b "Greetings! My name is David Chambers and I'm a software developer
@@ -38,6 +38,6 @@ export default #{
          (a "http://twitter.com/davidchambers" "follow me on Twitter"), ".
           I tweet sporadically and infrequently."]),
 
-  ]
+  ],
 
 };

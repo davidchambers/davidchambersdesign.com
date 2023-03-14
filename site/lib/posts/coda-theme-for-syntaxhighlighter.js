@@ -213,16 +213,16 @@ const body = [
   update(datetime('2009-08-24')('22:51:00')(Symbol.for('Pacific/Auckland')))([p(['Coda theme has been updated so that comments are now italicized\n             (as they are in Coda). XML brush for Coda theme now applies the\n             correct class name ("xml-comment") to HTML comments.'])])
 ];
 export default {
-  [Symbol.for('id')]: 22,
-  [Symbol.for('slug')]: 'coda-theme-for-syntaxhighlighter',
-  [Symbol.for('title')]: 'Coda theme for SyntaxHighlighter',
-  [Symbol.for('datetime')]: datetime('2009-08-16')('08:53:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 22,
+  ['slug']: 'coda-theme-for-syntaxhighlighter',
+  ['title']: 'Coda theme for SyntaxHighlighter',
+  ['datetime']: datetime('2009-08-16')('08:53:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'coda',
     'css',
     'javascript',
     'prototype',
     'syntaxhighlighter'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

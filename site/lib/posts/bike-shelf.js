@@ -100,10 +100,10 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 71,
-  [Symbol.for('slug')]: 'bike-shelf',
-  [Symbol.for('title')]: 'Bike shelf',
-  [Symbol.for('datetime')]: datetime('2010-09-20')('19:53:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: ['design'],
-  [Symbol.for('body')]: body
+  ['id']: 71,
+  ['slug']: 'bike-shelf',
+  ['title']: 'Bike shelf',
+  ['datetime']: datetime('2010-09-20')('19:53:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: ['design'],
+  ['body']: body
 };

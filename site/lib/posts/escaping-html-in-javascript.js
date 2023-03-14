@@ -110,14 +110,14 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 88,
-  [Symbol.for('slug')]: 'escaping-html-in-javascript',
-  [Symbol.for('title')]: 'Escaping HTML in JavaScript',
-  [Symbol.for('datetime')]: datetime('2011-05-30')('15:00:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 88,
+  ['slug']: 'escaping-html-in-javascript',
+  ['title']: 'Escaping HTML in JavaScript',
+  ['datetime']: datetime('2011-05-30')('15:00:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'best-practice',
     'javascript',
     'security'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

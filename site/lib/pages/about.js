@@ -89,9 +89,9 @@ import {
 } from '../elements.js';
 import { captioned$002Dimage } from '../components.js';
 export default {
-  [Symbol.for('slug')]: 'about',
-  [Symbol.for('title')]: 'About',
-  [Symbol.for('body')]: [
+  ['slug']: 'about',
+  ['title']: 'About',
+  ['body']: [
     p([b('Greetings! My name is David Chambers and I\'m a software developer\n          based in San Francisco.')]),
     p([
       'I work at ',

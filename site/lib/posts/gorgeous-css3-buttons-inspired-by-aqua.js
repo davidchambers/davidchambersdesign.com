@@ -205,16 +205,16 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 39,
-  [Symbol.for('slug')]: 'gorgeous-css3-buttons-inspired-by-aqua',
-  [Symbol.for('title')]: 'Gorgeous CSS3 buttons inspired by Aqua',
-  [Symbol.for('datetime')]: datetime('2010-03-08')('12:39:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 39,
+  ['slug']: 'gorgeous-css3-buttons-inspired-by-aqua',
+  ['title']: 'Gorgeous CSS3 buttons inspired by Aqua',
+  ['datetime']: datetime('2010-03-08')('12:39:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'css',
     'css3',
     'html',
     'mac-os-x'
   ],
-  [Symbol.for('excerpt')]: excerpt,
-  [Symbol.for('body')]: body
+  ['excerpt']: excerpt,
+  ['body']: body
 };

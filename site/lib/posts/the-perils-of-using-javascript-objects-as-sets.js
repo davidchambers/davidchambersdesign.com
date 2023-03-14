@@ -153,16 +153,16 @@ const body = [
   code$002Dblock(Symbol.for('javascript'))('\n     > sentinel = {}\n     > usernames = {\'brodie\': sentinel, \'jespern\': sentinel, \'nvenegas\': sentinel}\n     > usernames[\'brodie\'] === sentinel\n     true\n     > usernames[\'davidchambers\'] === sentinel\n     false\n     > usernames[\'constructor\'] === sentinel\n     false\n     ')
 ];
 export default {
-  [Symbol.for('id')]: 94,
-  [Symbol.for('slug')]: 'the-perils-of-using-javascript-objects-as-sets',
-  [Symbol.for('title')]: 'The perils of using JavaScript objects as sets',
-  [Symbol.for('datetime')]: datetime('2012-09-03')('20:00:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 94,
+  ['slug']: 'the-perils-of-using-javascript-objects-as-sets',
+  ['title']: 'The perils of using JavaScript objects as sets',
+  ['datetime']: datetime('2012-09-03')('20:00:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'best-practice',
     'data-structures',
     'javascript',
     'programming',
     'python'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

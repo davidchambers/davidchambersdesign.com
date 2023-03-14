@@ -95,10 +95,10 @@ const body = [
   p(['Carefully written passwords wrapping personal information\n        in programming syntax should be both strong and memorable.\n        I\'m sure Perl programmers could write some concise, cryptic\n        passwords using this approach. ;)'])
 ];
 export default {
-  [Symbol.for('id')]: 28,
-  [Symbol.for('slug')]: 'memorable-passwords-for-programmers',
-  [Symbol.for('title')]: 'Memorable passwords for programmers',
-  [Symbol.for('datetime')]: datetime('2009-10-21')('00:42:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: ['security'],
-  [Symbol.for('body')]: body
+  ['id']: 28,
+  ['slug']: 'memorable-passwords-for-programmers',
+  ['title']: 'Memorable passwords for programmers',
+  ['datetime']: datetime('2009-10-21')('00:42:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: ['security'],
+  ['body']: body
 };

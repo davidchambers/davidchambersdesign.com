@@ -175,14 +175,14 @@ const body = [
   caption(['Live rendering of improved PHP brush'])
 ];
 export default {
-  [Symbol.for('id')]: 16,
-  [Symbol.for('slug')]: 'php-brush-for-syntaxhighlighter',
-  [Symbol.for('title')]: 'PHP brush for SyntaxHighlighter',
-  [Symbol.for('datetime')]: datetime('2009-06-08')('17:00:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 16,
+  ['slug']: 'php-brush-for-syntaxhighlighter',
+  ['title']: 'PHP brush for SyntaxHighlighter',
+  ['datetime']: datetime('2009-06-08')('17:00:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'javascript',
     'php',
     'syntaxhighlighter'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

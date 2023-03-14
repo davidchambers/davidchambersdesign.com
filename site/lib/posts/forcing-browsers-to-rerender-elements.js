@@ -106,14 +106,14 @@ const body = [
   p(['I gather that there are situations in which this simple solution\n        fails -- it\'s no silver bullet -- but it fixed a problem I encountered\n        in IE8 earlier this evening so I\'m pleased to have discovered it!'])
 ];
 export default {
-  [Symbol.for('id')]: 42,
-  [Symbol.for('slug')]: 'forcing-browsers-to-rerender-elements',
-  [Symbol.for('title')]: 'Forcing browsers to rerender elements',
-  [Symbol.for('datetime')]: datetime('2010-03-22')('19:40:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 42,
+  ['slug']: 'forcing-browsers-to-rerender-elements',
+  ['title']: 'Forcing browsers to rerender elements',
+  ['datetime']: datetime('2010-03-22')('19:40:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'dom',
     'ie',
     'javascript'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

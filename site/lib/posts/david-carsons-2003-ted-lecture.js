@@ -125,14 +125,14 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 6,
-  [Symbol.for('slug')]: 'david-carsons-2003-ted-lecture',
-  [Symbol.for('title')]: 'David Carson\'s 2003 TED lecture',
-  [Symbol.for('datetime')]: datetime('2009-02-10')('11:21:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 6,
+  ['slug']: 'david-carsons-2003-ted-lecture',
+  ['title']: 'David Carson\'s 2003 TED lecture',
+  ['datetime']: datetime('2009-02-10')('11:21:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'design',
     'typography',
     'video'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

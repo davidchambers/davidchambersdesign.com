@@ -113,10 +113,10 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 35,
-  [Symbol.for('slug')]: 'duplicating-arrays-in-javascript',
-  [Symbol.for('title')]: 'Duplicating arrays in JavaScript',
-  [Symbol.for('datetime')]: datetime('2010-01-09')('19:26:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: ['javascript'],
-  [Symbol.for('body')]: body
+  ['id']: 35,
+  ['slug']: 'duplicating-arrays-in-javascript',
+  ['title']: 'Duplicating arrays in JavaScript',
+  ['datetime']: datetime('2010-01-09')('19:26:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: ['javascript'],
+  ['body']: body
 };

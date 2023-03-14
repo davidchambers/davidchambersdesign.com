@@ -118,13 +118,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 14,
-  [Symbol.for('slug')]: 'tiny-calendar-icon-set',
-  [Symbol.for('title')]: 'Tiny calendar icon set',
-  [Symbol.for('datetime')]: datetime('2009-04-24')('21:24:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 14,
+  ['slug']: 'tiny-calendar-icon-set',
+  ['title']: 'Tiny calendar icon set',
+  ['datetime']: datetime('2009-04-24')('21:24:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'design',
     'icons'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

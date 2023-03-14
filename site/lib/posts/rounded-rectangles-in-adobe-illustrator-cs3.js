@@ -144,14 +144,14 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 3,
-  [Symbol.for('slug')]: 'rounded-rectangles-in-adobe-illustrator-cs3',
-  [Symbol.for('title')]: 'Rounded rectangles in Adobe Illustrator CS3',
-  [Symbol.for('datetime')]: datetime('2008-12-03')('12:49:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 3,
+  ['slug']: 'rounded-rectangles-in-adobe-illustrator-cs3',
+  ['title']: 'Rounded rectangles in Adobe Illustrator CS3',
+  ['datetime']: datetime('2008-12-03')('12:49:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'adobe',
     'cs3',
     'illustrator'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

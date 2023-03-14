@@ -173,13 +173,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 36,
-  [Symbol.for('slug')]: 'shockingly-simple-url-shortening',
-  [Symbol.for('title')]: 'Shockingly simple URL shortening',
-  [Symbol.for('datetime')]: datetime('2010-01-26')('03:34:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 36,
+  ['slug']: 'shockingly-simple-url-shortening',
+  ['title']: 'Shockingly simple URL shortening',
+  ['datetime']: datetime('2010-01-26')('03:34:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     '.htaccess',
     'twitter'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

@@ -173,14 +173,14 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 73,
-  [Symbol.for('slug')]: 'ridding-markup-of-textual-decoration',
-  [Symbol.for('title')]: 'Ridding markup of textual decoration',
-  [Symbol.for('datetime')]: datetime('2010-11-15')('01:00:00')(Symbol.for('Australia/Sydney')),
-  [Symbol.for('tags')]: [
+  ['id']: 73,
+  ['slug']: 'ridding-markup-of-textual-decoration',
+  ['title']: 'Ridding markup of textual decoration',
+  ['datetime']: datetime('2010-11-15')('01:00:00')(Symbol.for('Australia/Sydney')),
+  ['tags']: [
     'css',
     'html',
     'meaningful-markup'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

@@ -89,9 +89,9 @@ import {
 } from '../elements.js';
 import { uncaptioned$002Dimage } from '../components.js';
 export default {
-  [Symbol.for('slug')]: 'elam',
-  [Symbol.for('title')]: 'Elam',
-  [Symbol.for('body')]: [
+  ['slug']: 'elam',
+  ['title']: 'Elam',
+  ['body']: [
     p(['I attended Elam School of Fine Arts in Auckland between 2002 and 2005.\n          After the general first-year course I majored in graphic design. Below\n          are examples of the work I produced as part of that programme.']),
     ul([
       li(a('#2003')('2003')),

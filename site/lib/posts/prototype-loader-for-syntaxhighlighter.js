@@ -227,15 +227,15 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 18,
-  [Symbol.for('slug')]: 'prototype-loader-for-syntaxhighlighter',
-  [Symbol.for('title')]: 'Prototype loader for SyntaxHighlighter',
-  [Symbol.for('datetime')]: datetime('2009-06-22')('01:04:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 18,
+  ['slug']: 'prototype-loader-for-syntaxhighlighter',
+  ['title']: 'Prototype loader for SyntaxHighlighter',
+  ['datetime']: datetime('2009-06-22')('01:04:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'javascript',
     'optimization',
     'prototype',
     'syntaxhighlighter'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

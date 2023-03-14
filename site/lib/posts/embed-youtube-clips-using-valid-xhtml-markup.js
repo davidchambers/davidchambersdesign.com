@@ -115,14 +115,14 @@ const body = [
   code$002Dblock(Symbol.for('css'))('\n     object.youtube\n     {\n         width: 100%;\n         height: 385px;\n     }\n     ')
 ];
 export default {
-  [Symbol.for('id')]: 25,
-  [Symbol.for('slug')]: 'embed-youtube-clips-using-valid-xhtml-markup',
-  [Symbol.for('title')]: 'Embed YouTube clips using valid XHTML markup',
-  [Symbol.for('datetime')]: datetime('2009-09-14')('14:17:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 25,
+  ['slug']: 'embed-youtube-clips-using-valid-xhtml-markup',
+  ['title']: 'Embed YouTube clips using valid XHTML markup',
+  ['datetime']: datetime('2009-09-14')('14:17:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'css',
     'html',
     'video'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

@@ -103,13 +103,13 @@ const body = [
   captioned$002Dimage('/images/posts/81/emacs-syntax-highlighting.png')('Emacs syntax highlighting')('HTML in Emacs with and without syntax highlighting')
 ];
 export default {
-  [Symbol.for('id')]: 81,
-  [Symbol.for('slug')]: 'mapping-file-extensions-to-emacs-syntax-modes',
-  [Symbol.for('title')]: 'Mapping file extensions to Emacs syntax modes',
-  [Symbol.for('datetime')]: datetime('2011-02-18')('23:15:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 81,
+  ['slug']: 'mapping-file-extensions-to-emacs-syntax-modes',
+  ['title']: 'Mapping file extensions to Emacs syntax modes',
+  ['datetime']: datetime('2011-02-18')('23:15:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'emacs',
     'syntax-highlighting'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

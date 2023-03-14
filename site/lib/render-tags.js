@@ -94,7 +94,7 @@ const render$002Dtags = posts => {
     const counts = S.reduce(counts => tag => ({
       ...counts,
       [tag]: counts[tag] + 1
-    }))(S.map(x => 0)(tags))(posts.flatMap(post => post[Symbol.for('tags')]));
+    }))(S.map(x => 0)(tags))(posts.flatMap(post => post.tags));
     return [
       h1('Tags'),
       ol$0027({ [Symbol.for('id')]: 'tags' })(S.map(tag => li$0027({ [Symbol.for('data-count')]: counts[tag] })(a('/tag/' + tag + '/')(tags[tag])))(Object.keys(tags))),

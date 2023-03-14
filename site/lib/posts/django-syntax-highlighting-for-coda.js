@@ -114,14 +114,14 @@ const body = [
     ])])
 ];
 export default {
-  [Symbol.for('id')]: 11,
-  [Symbol.for('slug')]: 'django-syntax-highlighting-for-coda',
-  [Symbol.for('title')]: 'Django syntax highlighting for Coda',
-  [Symbol.for('datetime')]: datetime('2009-04-16')('22:15:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 11,
+  ['slug']: 'django-syntax-highlighting-for-coda',
+  ['title']: 'Django syntax highlighting for Coda',
+  ['datetime']: datetime('2009-04-16')('22:15:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'coda',
     'django',
     'mac-os-x'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

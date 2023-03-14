@@ -140,11 +140,11 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 24,
-  [Symbol.for('slug')]: 'captions-over-images',
-  [Symbol.for('title')]: 'Captions over images',
-  [Symbol.for('datetime')]: datetime('2009-08-31')('03:36:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 24,
+  ['slug']: 'captions-over-images',
+  ['title']: 'Captions over images',
+  ['datetime']: datetime('2009-08-31')('03:36:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'best-practice',
     'css',
     'html',
@@ -152,5 +152,5 @@ export default {
     'jquery',
     'meaningful-markup'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

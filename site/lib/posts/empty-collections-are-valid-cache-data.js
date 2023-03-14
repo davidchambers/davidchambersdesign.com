@@ -121,10 +121,10 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 57,
-  [Symbol.for('slug')]: 'empty-collections-are-valid-cache-data',
-  [Symbol.for('title')]: 'Empty collections are valid cache data',
-  [Symbol.for('datetime')]: datetime('2010-07-06')('09:34:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: ['django'],
-  [Symbol.for('body')]: body
+  ['id']: 57,
+  ['slug']: 'empty-collections-are-valid-cache-data',
+  ['title']: 'Empty collections are valid cache data',
+  ['datetime']: datetime('2010-07-06')('09:34:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: ['django'],
+  ['body']: body
 };

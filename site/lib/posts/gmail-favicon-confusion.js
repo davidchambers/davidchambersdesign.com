@@ -106,13 +106,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 63,
-  [Symbol.for('slug')]: 'gmail-favicon-confusion',
-  [Symbol.for('title')]: 'Gmail\'s favicon confusion',
-  [Symbol.for('datetime')]: datetime('2010-07-21')('10:56:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 63,
+  ['slug']: 'gmail-favicon-confusion',
+  ['title']: 'Gmail\'s favicon confusion',
+  ['datetime']: datetime('2010-07-21')('10:56:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'design',
     'gmail'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

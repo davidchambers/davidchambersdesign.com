@@ -129,14 +129,14 @@ const body = [
   p(['It appears that I need to rework this site\'s style sheet\n        to better present content in these smaller viewports!'])
 ];
 export default {
-  [Symbol.for('id')]: 37,
-  [Symbol.for('slug')]: 'resize-browser-window-to-match-iphone-viewport-dimensions',
-  [Symbol.for('title')]: 'Resize browser window to match iPhone viewport dimensions',
-  [Symbol.for('datetime')]: datetime('2010-02-16')('03:20:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 37,
+  ['slug']: 'resize-browser-window-to-match-iphone-viewport-dimensions',
+  ['title']: 'Resize browser window to match iPhone viewport dimensions',
+  ['datetime']: datetime('2010-02-16')('03:20:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'bookmarklets',
     'iphone',
     'javascript'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

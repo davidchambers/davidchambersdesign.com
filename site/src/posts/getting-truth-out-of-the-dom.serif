@@ -2,12 +2,12 @@ import * from "../elements.serif" hiding {body};
 import datetime from "../datetime.serif";
 
 export default #{
-  :id 87
-  :slug "getting-truth-out-of-the-dom"
-  :title "Getting truth out of the DOM – Yehuda Katz"
-  :datetime (datetime "2011-05-24" "22:15:00" :America/Los_Angeles)
-  :tags #["best-practice", "javascript", "mvc", "video"]
-  :body body
+  "id": 87,
+  "slug": "getting-truth-out-of-the-dom",
+  "title": "Getting truth out of the DOM – Yehuda Katz",
+  "datetime": (datetime "2011-05-24" "22:15:00" :America/Los_Angeles),
+  "tags": #["best-practice", "javascript", "mvc", "video"],
+  "body": body,
 };
 
 body = #[

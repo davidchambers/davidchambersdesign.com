@@ -149,14 +149,14 @@ const body = [
   p(['Having a dialog comprised of many short clips is very useful.\n        It enables one to listen to a clip repeatedly to practise a\n        difficult word or phrase, or to say each sentence aloud before\n        listening to the "answer". And since the clips are contiguous\n        one can still listen to the dialog from beginning to end.'])
 ];
 export default {
-  [Symbol.for('id')]: 93,
-  [Symbol.for('slug')]: 'itunes-is-surprisingly-useful-when-learning-a-foreign-language',
-  [Symbol.for('title')]: 'iTunes: Surprisingly useful when learning a foreign language',
-  [Symbol.for('datetime')]: datetime('2012-01-29')('19:20:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 93,
+  ['slug']: 'itunes-is-surprisingly-useful-when-learning-a-foreign-language',
+  ['title']: 'iTunes: Surprisingly useful when learning a foreign language',
+  ['datetime']: datetime('2012-01-29')('19:20:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'itunes',
     'language',
     'mac-os-x'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

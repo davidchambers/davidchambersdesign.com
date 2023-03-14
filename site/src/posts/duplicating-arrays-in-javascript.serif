@@ -3,12 +3,12 @@ import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default #{
-  :id 35
-  :slug "duplicating-arrays-in-javascript"
-  :title "Duplicating arrays in JavaScript"
-  :datetime (datetime "2010-01-09" "19:26:00" :Pacific/Auckland)
-  :tags #["javascript"]
-  :body body
+  "id": 35,
+  "slug": "duplicating-arrays-in-javascript",
+  "title": "Duplicating arrays in JavaScript",
+  "datetime": (datetime "2010-01-09" "19:26:00" :Pacific/Auckland),
+  "tags": #["javascript"],
+  "body": body,
 };
 
 body = #[
@@ -54,7 +54,7 @@ body = #[
      var colours = fruits.slice();
      "),
 
-  (aside' #{:id "footnote"}
+  (aside' #{:id: "footnote"}
      #["* Languages such as C.
         Like ", (a "http://www.quirksmode.org/about/" "ppk"), ",
         I take care to include quotation marks. ;)"]),

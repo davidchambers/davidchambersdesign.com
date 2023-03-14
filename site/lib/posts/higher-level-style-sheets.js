@@ -194,16 +194,16 @@ const body = [
   p(['I\'m hopeful that Sass and its kin will do for CSS what jQuery has\n        done for the DOM (and what CoffeeScript is doing for JavaScript).\n        My first taste of higher-level CSS tasted very good indeed.'])
 ];
 export default {
-  [Symbol.for('id')]: 91,
-  [Symbol.for('slug')]: 'higher-level-style-sheets',
-  [Symbol.for('title')]: 'Higher-level style sheets',
-  [Symbol.for('datetime')]: datetime('2011-10-02')('23:00:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 91,
+  ['slug']: 'higher-level-style-sheets',
+  ['title']: 'Higher-level style sheets',
+  ['datetime']: datetime('2011-10-02')('23:00:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'best-practice',
     'compass',
     'css',
     'ruby',
     'sass'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

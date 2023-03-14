@@ -126,16 +126,16 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 48,
-  [Symbol.for('slug')]: 'linkify-tweets-with-regex',
-  [Symbol.for('title')]: 'Linkify tweets with regex',
-  [Symbol.for('datetime')]: datetime('2010-04-10')('03:22:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 48,
+  ['slug']: 'linkify-tweets-with-regex',
+  ['title']: 'Linkify tweets with regex',
+  ['datetime']: datetime('2010-04-10')('03:22:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'javascript',
     'php',
     'python',
     'regex',
     'regular-expressions'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

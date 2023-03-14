@@ -3,12 +3,12 @@ import {code-block pros-and-cons-list} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default #{
-  :id 30
-  :slug "css-fixed-position-headers"
-  :title "CSS fixed-position headers"
-  :datetime (datetime "2009-10-30" "18:25:00" :Pacific/Auckland)
-  :tags #["css", "html", "javascript", "prototype"]
-  :body body
+  "id": 30,
+  "slug": "css-fixed-position-headers",
+  "title": "CSS fixed-position headers",
+  "datetime": (datetime "2009-10-30" "18:25:00" :Pacific/Auckland),
+  "tags": #["css", "html", "javascript", "prototype"],
+  "body": body,
 };
 
 body = #[

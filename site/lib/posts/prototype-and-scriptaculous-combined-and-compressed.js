@@ -113,15 +113,15 @@ const body = [
   p(['This prevents caching issues that might otherwise arise\n        upon updating to a newer version of prototype+scriptaculous\n        (I\'ll update the three files -- and this post -- each time\n        a new version of Prototype is released).'])
 ];
 export default {
-  [Symbol.for('id')]: 32,
-  [Symbol.for('slug')]: 'prototype-and-scriptaculous-combined-and-compressed',
-  [Symbol.for('title')]: 'Prototype and script.aculo.us, combined and compressed',
-  [Symbol.for('datetime')]: datetime('2009-11-09')('23:14:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 32,
+  ['slug']: 'prototype-and-scriptaculous-combined-and-compressed',
+  ['title']: 'Prototype and script.aculo.us, combined and compressed',
+  ['datetime']: datetime('2009-11-09')('23:14:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'javascript',
     'optimization',
     'prototype',
     'script.aculo.us'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

@@ -172,13 +172,13 @@ const body = [
   p(['This is terser than is possible with vanilla JavaScript.\n        It reads better too, in my opinion!'])
 ];
 export default {
-  [Symbol.for('id')]: 41,
-  [Symbol.for('slug')]: 'mootools-every-method',
-  [Symbol.for('title')]: 'MooTools every method',
-  [Symbol.for('datetime')]: datetime('2010-03-18')('00:40:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 41,
+  ['slug']: 'mootools-every-method',
+  ['title']: 'MooTools every method',
+  ['datetime']: datetime('2010-03-18')('00:40:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'javascript',
     'mootools'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

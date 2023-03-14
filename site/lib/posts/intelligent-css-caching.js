@@ -122,13 +122,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 4,
-  [Symbol.for('slug')]: 'intelligent-css-caching',
-  [Symbol.for('title')]: 'Intelligent CSS caching',
-  [Symbol.for('datetime')]: datetime('2008-12-18')('14:50:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 4,
+  ['slug']: 'intelligent-css-caching',
+  ['title']: 'Intelligent CSS caching',
+  ['datetime']: datetime('2008-12-18')('14:50:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'css',
     'php'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

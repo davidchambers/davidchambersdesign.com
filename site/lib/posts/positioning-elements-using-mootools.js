@@ -104,13 +104,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 60,
-  [Symbol.for('slug')]: 'positioning-elements-using-mootools',
-  [Symbol.for('title')]: 'Positioning elements using MooTools',
-  [Symbol.for('datetime')]: datetime('2010-07-19')('17:45:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 60,
+  ['slug']: 'positioning-elements-using-mootools',
+  ['title']: 'Positioning elements using MooTools',
+  ['datetime']: datetime('2010-07-19')('17:45:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'javascript',
     'mootools'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

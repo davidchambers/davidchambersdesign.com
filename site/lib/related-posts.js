@@ -17,15 +17,15 @@ const seconds$002Dbetween = from => {
 };
 const with$002Dscores = that => {
   return this_ => (() => {
-    const score = similarity(new Set(that[Symbol.for('tags')]))(new Set(this_[Symbol.for('tags')]));
+    const score = similarity(new Set(that.tags))(new Set(this_.tags));
     const primary = S.negate(score);
-    const secondary = Math.abs(seconds$002Dbetween(that[Symbol.for('datetime')])(this_[Symbol.for('datetime')]));
+    const secondary = Math.abs(seconds$002Dbetween(that.datetime)(this_.datetime));
     return score >= 0.5 ? S.Just(S.Pair(S.Pair(primary)(secondary))(this_)) : S.Nothing;
   })();
 };
 const related$002Dposts = posts => {
   return post => S.pipe([
-    S.reject(this_ => this_[Symbol.for('slug')] === post[Symbol.for('slug')]),
+    S.reject(this_ => this_.slug === post.slug),
     S.mapMaybe(with$002Dscores(post)),
     S.sort,
     S.map(S.snd),

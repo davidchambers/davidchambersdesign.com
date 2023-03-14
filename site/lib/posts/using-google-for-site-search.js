@@ -111,13 +111,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 45,
-  [Symbol.for('slug')]: 'using-google-for-site-search',
-  [Symbol.for('title')]: 'Using Google for site search',
-  [Symbol.for('datetime')]: datetime('2010-03-25')('22:06:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 45,
+  ['slug']: 'using-google-for-site-search',
+  ['title']: 'Using Google for site search',
+  ['datetime']: datetime('2010-03-25')('22:06:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'google',
     'search'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

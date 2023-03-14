@@ -148,14 +148,14 @@ const body = [
   p(['You\'re then able to set default event reminders, which may include\n        one or more text messages. You\'ll also be able to add SMS reminders\n        against individual calendar events.'])
 ];
 export default {
-  [Symbol.for('id')]: 13,
-  [Symbol.for('slug')]: 'sms-event-reminders-from-google-calendar',
-  [Symbol.for('title')]: 'SMS event reminders from Google Calendar',
-  [Symbol.for('datetime')]: datetime('2009-04-18')('21:44:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 13,
+  ['slug']: 'sms-event-reminders-from-google-calendar',
+  ['title']: 'SMS event reminders from Google Calendar',
+  ['datetime']: datetime('2009-04-18')('21:44:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'gmail',
     'google-calendar',
     'sms'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

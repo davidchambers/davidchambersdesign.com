@@ -190,11 +190,11 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 43,
-  [Symbol.for('slug')]: 'css-image-switcher-done-the-right-way',
-  [Symbol.for('title')]: 'CSS image switcher (done the right way)',
-  [Symbol.for('datetime')]: datetime('2010-03-24')('12:47:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 43,
+  ['slug']: 'css-image-switcher-done-the-right-way',
+  ['title']: 'CSS image switcher (done the right way)',
+  ['datetime']: datetime('2010-03-24')('12:47:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'accessibility',
     'best-practice',
     'css',
@@ -202,5 +202,5 @@ export default {
     'seo',
     'ux'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

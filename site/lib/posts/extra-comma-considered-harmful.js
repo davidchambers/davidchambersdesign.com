@@ -124,13 +124,13 @@ const body = [
   blockquote(p(['Your awareness is incorrect. Have you tested on IE6?']))
 ];
 export default {
-  [Symbol.for('id')]: 46,
-  [Symbol.for('slug')]: 'extra-comma-considered-harmful',
-  [Symbol.for('title')]: 'Extra comma considered harmful',
-  [Symbol.for('datetime')]: datetime('2010-03-29')('15:30:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 46,
+  ['slug']: 'extra-comma-considered-harmful',
+  ['title']: 'Extra comma considered harmful',
+  ['datetime']: datetime('2010-03-29')('15:30:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'best-practice',
     'javascript'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

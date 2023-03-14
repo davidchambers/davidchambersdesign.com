@@ -189,11 +189,11 @@ const body = [
   })()
 ];
 export default {
-  [Symbol.for('id')]: 74,
-  [Symbol.for('slug')]: 'javascript-date-and-time-localization',
-  [Symbol.for('title')]: 'JavaScript date and time localization',
-  [Symbol.for('datetime')]: datetime('2010-11-28')('01:45:00')(Symbol.for('Australia/Sydney')),
-  [Symbol.for('tags')]: [
+  ['id']: 74,
+  ['slug']: 'javascript-date-and-time-localization',
+  ['title']: 'JavaScript date and time localization',
+  ['datetime']: datetime('2010-11-28')('01:45:00')(Symbol.for('Australia/Sydney')),
+  ['tags']: [
     'html5',
     'i18n',
     'javascript',
@@ -201,5 +201,5 @@ export default {
     'localization',
     'meaningful-markup'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

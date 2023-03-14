@@ -145,13 +145,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 47,
-  [Symbol.for('slug')]: 'application-specific-volume-control-in-mac-os-x',
-  [Symbol.for('title')]: 'Application-specific volume control in Mac OS X?',
-  [Symbol.for('datetime')]: datetime('2010-04-07')('02:04:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 47,
+  ['slug']: 'application-specific-volume-control-in-mac-os-x',
+  ['title']: 'Application-specific volume control in Mac OS X?',
+  ['datetime']: datetime('2010-04-07')('02:04:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'mac-os-x',
     'ux'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

@@ -172,13 +172,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 55,
-  [Symbol.for('slug')]: 'settimeout-fix-for-webkit-transition',
-  [Symbol.for('title')]: 'setTimeout fix for -webkit-transition',
-  [Symbol.for('datetime')]: datetime('2010-06-18')('03:12:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 55,
+  ['slug']: 'settimeout-fix-for-webkit-transition',
+  ['title']: 'setTimeout fix for -webkit-transition',
+  ['datetime']: datetime('2010-06-18')('03:12:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'css3',
     'javascript'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

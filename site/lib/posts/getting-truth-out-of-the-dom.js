@@ -97,15 +97,15 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 87,
-  [Symbol.for('slug')]: 'getting-truth-out-of-the-dom',
-  [Symbol.for('title')]: 'Getting truth out of the DOM \u2013 Yehuda Katz',
-  [Symbol.for('datetime')]: datetime('2011-05-24')('22:15:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 87,
+  ['slug']: 'getting-truth-out-of-the-dom',
+  ['title']: 'Getting truth out of the DOM \u2013 Yehuda Katz',
+  ['datetime']: datetime('2011-05-24')('22:15:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'best-practice',
     'javascript',
     'mvc',
     'video'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

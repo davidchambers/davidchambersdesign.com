@@ -112,14 +112,14 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 70,
-  [Symbol.for('slug')]: 'converting-integers-to-ordinals',
-  [Symbol.for('title')]: 'Converting integers to ordinals',
-  [Symbol.for('datetime')]: datetime('2010-09-16')('13:00:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 70,
+  ['slug']: 'converting-integers-to-ordinals',
+  ['title']: 'Converting integers to ordinals',
+  ['datetime']: datetime('2010-09-16')('13:00:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'javascript',
     'programming',
     'python'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

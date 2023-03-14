@@ -104,14 +104,14 @@ const body = [
   p(['Decorators are commonly used in Python -- which provides special\n        syntax for "decorating" functions -- but are rarely seen in\n        JavaScript code. This despite the fact that JavaScript\'s first-class\n        functions are ideally suited to the task. Perhaps CoffeeScript\'s\n        lighter-weight function syntax will result in decorators making\n        more frequent appearances in JavaScript code.'])
 ];
 export default {
-  [Symbol.for('id')]: 89,
-  [Symbol.for('slug')]: 'decorators-in-javascript',
-  [Symbol.for('title')]: 'Decorators in JavaScript',
-  [Symbol.for('datetime')]: datetime('2011-07-26')('22:00:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 89,
+  ['slug']: 'decorators-in-javascript',
+  ['title']: 'Decorators in JavaScript',
+  ['datetime']: datetime('2011-07-26')('22:00:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'coffeescript',
     'javascript',
     'programming'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

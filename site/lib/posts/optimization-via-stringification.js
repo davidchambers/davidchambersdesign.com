@@ -100,14 +100,14 @@ const body = [
   code$002Dblock(Symbol.for('console'))('\n     $ python stringify.py /path/to/image.png\n     ')
 ];
 export default {
-  [Symbol.for('id')]: 51,
-  [Symbol.for('slug')]: 'optimization-via-stringification',
-  [Symbol.for('title')]: 'Optimization via stringification',
-  [Symbol.for('datetime')]: datetime('2010-06-03')('14:28:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 51,
+  ['slug']: 'optimization-via-stringification',
+  ['title']: 'Optimization via stringification',
+  ['datetime']: datetime('2010-06-03')('14:28:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'css',
     'optimization',
     'python'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

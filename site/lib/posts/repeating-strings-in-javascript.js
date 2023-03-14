@@ -101,13 +101,13 @@ const body = [
   code$002Dblock(Symbol.for('javascript'))('\n     new Array(5 + 1).join(\'=\')\n     ')
 ];
 export default {
-  [Symbol.for('id')]: 82,
-  [Symbol.for('slug')]: 'repeating-strings-in-javascript',
-  [Symbol.for('title')]: 'Repeating strings in JavaScript',
-  [Symbol.for('datetime')]: datetime('2011-03-31')('17:30:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 82,
+  ['slug']: 'repeating-strings-in-javascript',
+  ['title']: 'Repeating strings in JavaScript',
+  ['datetime']: datetime('2011-03-31')('17:30:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'javascript',
     'programming'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

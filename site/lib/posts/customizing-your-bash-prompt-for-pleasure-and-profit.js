@@ -192,14 +192,14 @@ const body = [
   code$002Dblock(Symbol.for('bash'))('\n     if [ -f ~/.bashrc ]; then\n       source ~/.bashrc\n     fi\n     ')
 ];
 export default {
-  [Symbol.for('id')]: 80,
-  [Symbol.for('slug')]: 'customizing-your-bash-prompt-for-pleasure-and-profit',
-  [Symbol.for('title')]: 'Customizing your bash prompt for pleasure and profit',
-  [Symbol.for('datetime')]: datetime('2011-02-13')('01:30:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 80,
+  ['slug']: 'customizing-your-bash-prompt-for-pleasure-and-profit',
+  ['title']: 'Customizing your bash prompt for pleasure and profit',
+  ['datetime']: datetime('2011-02-13')('01:30:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'mac-os-x',
     'productivity',
     'terminal.app'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

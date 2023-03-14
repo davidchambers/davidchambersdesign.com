@@ -110,16 +110,16 @@ const body = [
   code$002Dblock(Symbol.for('css'))('\n     del { text-decoration: line-through; }\n     ins { text-decoration: underline; }\n     ')
 ];
 export default {
-  [Symbol.for('id')]: 8,
-  [Symbol.for('slug')]: 'valid-xhtml-alternative-to-strike',
-  [Symbol.for('title')]: [
+  ['id']: 8,
+  ['slug']: 'valid-xhtml-alternative-to-strike',
+  ['title']: [
     'Valid XHTML alternative to ',
     code('<strike>')
   ],
-  [Symbol.for('datetime')]: datetime('2009-03-17')('21:53:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['datetime']: datetime('2009-03-17')('21:53:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'css',
     'html'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

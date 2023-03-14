@@ -184,14 +184,14 @@ const body = [
   uncaptioned$002Dimage('/images/posts/50/publish.png')('Publish a post from Coda')
 ];
 export default {
-  [Symbol.for('id')]: 50,
-  [Symbol.for('slug')]: 'freeing-myself-of-wordpress',
-  [Symbol.for('title')]: 'Freeing myself of WordPress',
-  [Symbol.for('datetime')]: datetime('2010-06-03')('02:56:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 50,
+  ['slug']: 'freeing-myself-of-wordpress',
+  ['title']: 'Freeing myself of WordPress',
+  ['datetime']: datetime('2010-06-03')('02:56:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'django',
     'mango',
     'wordpress'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

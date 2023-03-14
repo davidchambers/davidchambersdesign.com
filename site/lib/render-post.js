@@ -90,28 +90,28 @@ import {
 } from './elements.js';
 import tags from './tags.js';
 const render$002Dpost = post => {
-  return related$002Dposts => [article$0027(S.maybe({})(S.singleton(Symbol.for('id')))(S.value(Symbol.for('article-id'))(post)))([
+  return related$002Dposts => [article$0027(S.maybe({})(S.singleton(Symbol.for('id')))(S.value('article-id')(post)))([
       header([
-        h1(post[Symbol.for('title')]),
+        h1(post.title),
         time({
-          [Symbol.for('datetime')]: post[Symbol.for('datetime')].toFormat('yyyy-MM-dd\'T\'HH:mm:ssZZ'),
+          [Symbol.for('datetime')]: post.datetime.toFormat('yyyy-MM-dd\'T\'HH:mm:ssZZ'),
           [Symbol.for('pubdate')]: 'pubdate'
-        })(post[Symbol.for('datetime')].toFormat('d MMMM y'))
+        })(post.datetime.toFormat('d MMMM y'))
       ]),
-      ...post[Symbol.for('body')],
+      ...post.body,
       footer$0027({ [Symbol.for('class')]: 'metadata' })(S.join([
-        [ul(li$0027({ [Symbol.for('class')]: 'shorturl' })(a('http://dċd.ws/' + post[Symbol.for('id')] + '/')('Short URL')))],
+        [ul(li$0027({ [Symbol.for('class')]: 'shorturl' })(a('http://dċd.ws/' + post.id + '/')('Short URL')))],
         S.array([])(head => tail => [
           h4('This post has the following tags:'),
           ol(S.map(tag => li(a('/tag/' + tag + '/')(tags[tag])))([
             head,
             ...tail
           ]))
-        ])(post[Symbol.for('tags')])
+        ])(post.tags)
       ])),
       ...related$002Dposts.length === 0 ? [] : [
         h3$0027({ [Symbol.for('id')]: 'related' })('Possibly related posts'),
-        ul(S.map(related$002Dpost => li(a('/' + related$002Dpost[Symbol.for('slug')] + '/')(related$002Dpost[Symbol.for('title')])))(related$002Dposts))
+        ul(S.map(related$002Dpost => li(a('/' + related$002Dpost.slug + '/')(related$002Dpost.title)))(related$002Dposts))
       ]
     ])];
 };

@@ -160,18 +160,18 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 78,
-  [Symbol.for('slug')]: 'simulating-nonlocal-in-python-2.x',
-  [Symbol.for('title')]: [
+  ['id']: 78,
+  ['slug']: 'simulating-nonlocal-in-python-2.x',
+  ['title']: [
     'Simulating ',
     code('nonlocal'),
     ' in Python 2.x'
   ],
-  [Symbol.for('datetime')]: datetime('2011-02-05')('19:30:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['datetime']: datetime('2011-02-05')('19:30:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'hacks',
     'programming',
     'python'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

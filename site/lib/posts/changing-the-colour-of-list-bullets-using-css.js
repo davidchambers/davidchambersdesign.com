@@ -115,13 +115,13 @@ const body = [
   code$002Dblock(Symbol.for('css'))('\n     ...\n     -webkit-border-radius: 2px;\n     -moz-border-radius: 2px;\n     border-radius: 2px;\n     ...\n     ')
 ];
 export default {
-  [Symbol.for('id')]: 83,
-  [Symbol.for('slug')]: 'changing-the-colour-of-list-bullets-using-css',
-  [Symbol.for('title')]: 'Changing the colour of list bullets using CSS',
-  [Symbol.for('datetime')]: datetime('2011-04-13')('17:30:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 83,
+  ['slug']: 'changing-the-colour-of-list-bullets-using-css',
+  ['title']: 'Changing the colour of list bullets using CSS',
+  ['datetime']: datetime('2011-04-13')('17:30:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'css',
     'meaningful-markup'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

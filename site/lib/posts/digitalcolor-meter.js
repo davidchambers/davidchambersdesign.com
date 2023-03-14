@@ -125,13 +125,13 @@ const body = [
   p(['I don\'t think I\'ll miss this process, somehow, although my\n        flatmate\'ll miss the camera shutter sound that accompanies\n        screen captures on OS X (he really likes it, for some reason).'])
 ];
 export default {
-  [Symbol.for('id')]: 65,
-  [Symbol.for('slug')]: 'digitalcolor-meter',
-  [Symbol.for('title')]: 'DigitalColor Meter',
-  [Symbol.for('datetime')]: datetime('2010-07-23')('01:45:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 65,
+  ['slug']: 'digitalcolor-meter',
+  ['title']: 'DigitalColor Meter',
+  ['datetime']: datetime('2010-07-23')('01:45:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'mac-os-x',
     'photoshop'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

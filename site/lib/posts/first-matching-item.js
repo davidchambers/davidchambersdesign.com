@@ -112,10 +112,10 @@ const body = [
   p(['I think I\'ll use this approach from time to time.\n        Let me know if you\'re aware of another option.'])
 ];
 export default {
-  [Symbol.for('id')]: 54,
-  [Symbol.for('slug')]: 'first-matching-item',
-  [Symbol.for('title')]: 'First matching item',
-  [Symbol.for('datetime')]: datetime('2010-06-17')('23:17:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: ['programming'],
-  [Symbol.for('body')]: body
+  ['id']: 54,
+  ['slug']: 'first-matching-item',
+  ['title']: 'First matching item',
+  ['datetime']: datetime('2010-06-17')('23:17:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: ['programming'],
+  ['body']: body
 };

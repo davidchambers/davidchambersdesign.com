@@ -119,13 +119,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 58,
-  [Symbol.for('slug')]: '-webkit-box-sizing',
-  [Symbol.for('title')]: '-webkit-box-sizing',
-  [Symbol.for('datetime')]: datetime('2010-07-18')('21:30:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 58,
+  ['slug']: '-webkit-box-sizing',
+  ['title']: '-webkit-box-sizing',
+  ['datetime']: datetime('2010-07-18')('21:30:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'css',
     'webkit'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

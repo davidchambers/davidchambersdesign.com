@@ -98,8 +98,8 @@ escape =
             s => s.replaceAll(">", "&gt;")])
 
 text value =
-  #{:text #[value]
-    :render indent => level => inline => (escape value)}
+  #{:text: #[value],
+    :render: indent => level => inline => (escape value)}
 
 canonicalize-attrs attrs =
   (Object.fromEntries (S.map name => {
@@ -188,9 +188,9 @@ block-element tag-name -attrs -children = {
   attrs = (canonicalize-attrs -attrs);
   children = (canonicalize-children -children);
   #{
-    :format :block
-    :text children.flatMap(child => child:text)
-    :render (render-block-element tag-name attrs children)
+    :format: :block,
+    :text: children.flatMap(child => child:text),
+    :render: (render-block-element tag-name attrs children),
   }
 }
 
@@ -199,21 +199,21 @@ inline-element tag-name -attrs -children = {
   children = (canonicalize-children -children);
   format = if children.some(node => node:format === :block) then :block else :inline;
   #{
-    :format format
-    :text children.flatMap(child => child:text)
-    :render indent => level => inline => {
+    :format: format,
+    :text: children.flatMap(child => child:text),
+    :render: indent => level => inline => {
       render = if format === :inline then render-inline-element else render-block-element;
       (render tag-name attrs children indent level inline)
-    }
+    },
   }
 }
 
 self-closing-element tag-name -attrs = {
   attrs = (canonicalize-attrs -attrs);
   #{
-    :format :inline
-    :text #[]
-    :render (render-self-closing-element tag-name attrs)
+    :format: :inline,
+    :text: #[],
+    :render: (render-self-closing-element tag-name attrs),
   }
 }
 
@@ -225,8 +225,8 @@ excerpt -children = {
                children)
   };
   #{
-    :text children.flatMap(child => child:text)
-    :render render
+    :text: children.flatMap(child => child:text),
+    :render: render,
   }
 }
 
@@ -312,7 +312,7 @@ svg                      = (block-element :svg)
 ;; are rendered inline unless the element contains an element
 ;; whose opening and closing tags are rendered on their own lines.
 a'                      = (inline-element :a)
-a href                  = (a' #{:href href})
+a href                  = (a' #{:href: href})
 code'                   = (inline-element :code)
 code                    = (inline-element :code #{})
 del'                    = (inline-element :del)

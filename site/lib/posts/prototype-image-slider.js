@@ -146,16 +146,16 @@ const body = [
     ])])
 ];
 export default {
-  [Symbol.for('id')]: 26,
-  [Symbol.for('slug')]: 'prototype-image-slider',
-  [Symbol.for('title')]: 'Prototype image slider',
-  [Symbol.for('datetime')]: datetime('2009-09-16')('23:43:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 26,
+  ['slug']: 'prototype-image-slider',
+  ['title']: 'Prototype image slider',
+  ['datetime']: datetime('2009-09-16')('23:43:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'css',
     'html',
     'javascript',
     'meaningful-markup',
     'prototype'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

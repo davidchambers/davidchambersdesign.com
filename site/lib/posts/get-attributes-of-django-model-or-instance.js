@@ -125,13 +125,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 38,
-  [Symbol.for('slug')]: 'get-attributes-of-django-model-or-instance',
-  [Symbol.for('title')]: 'Get attributes of Django model or instance',
-  [Symbol.for('datetime')]: datetime('2010-02-22')('20:24:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 38,
+  ['slug']: 'get-attributes-of-django-model-or-instance',
+  ['title']: 'Get attributes of Django model or instance',
+  ['datetime']: datetime('2010-02-22')('20:24:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'django',
     'python'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

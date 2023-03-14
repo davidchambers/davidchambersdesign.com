@@ -35,8 +35,8 @@ paper = #[
 ]
 
 archives = #[
-  (path #{:fill "#da5" :d (render base)}),
-  (path #{:fill "#333" :d (render spiral)}),
-  (path #{:fill "#b00" :d (render header)}),
-  (path #{:fill "#fff" :d (render paper)}),
+  (path #{:fill: "#da5", :d: (render base)}),
+  (path #{:fill: "#333", :d: (render spiral)}),
+  (path #{:fill: "#b00", :d: (render header)}),
+  (path #{:fill: "#fff", :d: (render paper)}),
 ]

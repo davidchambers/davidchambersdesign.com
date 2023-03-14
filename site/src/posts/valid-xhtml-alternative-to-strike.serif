@@ -3,12 +3,12 @@ import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default #{
-  :id 8
-  :slug "valid-xhtml-alternative-to-strike"
-  :title #["Valid XHTML alternative to ", (code "<strike>")]
-  :datetime (datetime "2009-03-17" "21:53:00" :Pacific/Auckland)
-  :tags #["css", "html"]
-  :body body
+  "id": 8,
+  "slug": "valid-xhtml-alternative-to-strike",
+  "title": #["Valid XHTML alternative to ", (code "<strike>")],
+  "datetime": (datetime "2009-03-17" "21:53:00" :Pacific/Auckland),
+  "tags": #["css", "html"],
+  "body": body,
 };
 
 body = #[

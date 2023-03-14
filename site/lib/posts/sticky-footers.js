@@ -121,13 +121,13 @@ const body = [
     ])])
 ];
 export default {
-  [Symbol.for('id')]: 27,
-  [Symbol.for('slug')]: 'sticky-footers',
-  [Symbol.for('title')]: 'Sticky footers',
-  [Symbol.for('datetime')]: datetime('2009-09-20')('01:08:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 27,
+  ['slug']: 'sticky-footers',
+  ['title']: 'Sticky footers',
+  ['datetime']: datetime('2009-09-20')('01:08:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'css',
     'html'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

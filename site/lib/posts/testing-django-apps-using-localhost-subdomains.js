@@ -142,13 +142,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 56,
-  [Symbol.for('slug')]: 'testing-django-apps-using-localhost-subdomains',
-  [Symbol.for('title')]: 'Testing Django apps using localhost subdomains',
-  [Symbol.for('datetime')]: datetime('2010-07-04')('08:23:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 56,
+  ['slug']: 'testing-django-apps-using-localhost-subdomains',
+  ['title']: 'Testing Django apps using localhost subdomains',
+  ['datetime']: datetime('2010-07-04')('08:23:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'django',
     'mac-os-x'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

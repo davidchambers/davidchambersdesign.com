@@ -178,15 +178,15 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 66,
-  [Symbol.for('slug')]: 'python-loops-can-have-else-clause',
-  [Symbol.for('title')]: 'Python loops can have else clause?!',
-  [Symbol.for('datetime')]: datetime('2010-07-25')('18:11:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 66,
+  ['slug']: 'python-loops-can-have-else-clause',
+  ['title']: 'Python loops can have else clause?!',
+  ['datetime']: datetime('2010-07-25')('18:11:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'javascript',
     'mootools',
     'programming',
     'python'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

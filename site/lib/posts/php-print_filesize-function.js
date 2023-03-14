@@ -117,13 +117,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 17,
-  [Symbol.for('slug')]: 'php-print_filesize-function',
-  [Symbol.for('title')]: 'PHP print_filesize function',
-  [Symbol.for('datetime')]: datetime('2009-06-10')('21:17:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 17,
+  ['slug']: 'php-print_filesize-function',
+  ['title']: 'PHP print_filesize function',
+  ['datetime']: datetime('2009-06-10')('21:17:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'best-practice',
     'php'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

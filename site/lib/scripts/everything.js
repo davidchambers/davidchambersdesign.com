@@ -346,5 +346,5 @@ const render$002Ddocument = element => {
 };
 write$002Dfile(public_(['archives.html']))(render$002Ddocument(base$002Dtemplate('Archives')(render$002Darchives(posts))));
 write$002Dfile(public_(['tags.html']))(render$002Ddocument(base$002Dtemplate('Tags')(render$002Dtags(posts))));
-S.map(page => write$002Dfile(public_([page[Symbol.for('slug')] + '.html']))(render$002Ddocument(base$002Dtemplate(page[Symbol.for('title')])(render$002Dpage(page)))))(pages);
-S.map(post => write$002Dfile(public_([post[Symbol.for('slug')] + '.html']))(render$002Ddocument(base$002Dtemplate(post[Symbol.for('title')])(render$002Dpost(post)(related$002Dposts(posts)(post))))))(posts);
+S.map(page => write$002Dfile(public_([page.slug + '.html']))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))))(pages);
+S.map(post => write$002Dfile(public_([post.slug + '.html']))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post))))))(posts);

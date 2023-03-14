@@ -188,15 +188,15 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 15,
-  [Symbol.for('slug')]: 'applescript-syntax-highlighting',
-  [Symbol.for('title')]: 'AppleScript syntax highlighting',
-  [Symbol.for('datetime')]: datetime('2009-06-04')('03:12:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 15,
+  ['slug']: 'applescript-syntax-highlighting',
+  ['title']: 'AppleScript syntax highlighting',
+  ['datetime']: datetime('2009-06-04')('03:12:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'applescript',
     'javascript',
     'mac-os-x',
     'syntaxhighlighter'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

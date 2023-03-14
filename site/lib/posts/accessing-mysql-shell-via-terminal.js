@@ -103,14 +103,14 @@ const body = [
   code$002Dblock(Symbol.for('console'))('\n     mysql -u root -p mysql\n     ')
 ];
 export default {
-  [Symbol.for('id')]: 34,
-  [Symbol.for('slug')]: 'accessing-mysql-shell-via-terminal',
-  [Symbol.for('title')]: 'Accessing MySQL shell via Terminal',
-  [Symbol.for('datetime')]: datetime('2010-01-08')('13:49:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 34,
+  ['slug']: 'accessing-mysql-shell-via-terminal',
+  ['title']: 'Accessing MySQL shell via Terminal',
+  ['datetime']: datetime('2010-01-08')('13:49:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'mac-os-x',
     'mysql',
     'terminal.app'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

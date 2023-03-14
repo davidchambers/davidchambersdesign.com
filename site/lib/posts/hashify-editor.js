@@ -153,15 +153,15 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 85,
-  [Symbol.for('slug')]: 'hashify-editor',
-  [Symbol.for('title')]: 'Hashify Editor',
-  [Symbol.for('datetime')]: datetime('2011-04-24')('06:15:00')(Symbol.for('America/Los_Angeles')),
-  [Symbol.for('tags')]: [
+  ['id']: 85,
+  ['slug']: 'hashify-editor',
+  ['title']: 'Hashify Editor',
+  ['datetime']: datetime('2011-04-24')('06:15:00')(Symbol.for('America/Los_Angeles')),
+  ['tags']: [
     'hashify',
     'markdown',
     'showdown',
     'ux'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

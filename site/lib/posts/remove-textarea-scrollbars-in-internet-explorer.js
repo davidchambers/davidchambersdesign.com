@@ -127,10 +127,10 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 59,
-  [Symbol.for('slug')]: 'remove-textarea-scrollbars-in-internet-explorer',
-  [Symbol.for('title')]: 'Remove textarea scrollbars in Internet Explorer',
-  [Symbol.for('datetime')]: datetime('2010-07-18')('22:00:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: ['css'],
-  [Symbol.for('body')]: body
+  ['id']: 59,
+  ['slug']: 'remove-textarea-scrollbars-in-internet-explorer',
+  ['title']: 'Remove textarea scrollbars in Internet Explorer',
+  ['datetime']: datetime('2010-07-18')('22:00:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: ['css'],
+  ['body']: body
 };

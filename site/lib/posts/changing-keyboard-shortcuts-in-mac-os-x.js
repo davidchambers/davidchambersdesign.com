@@ -120,13 +120,13 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 9,
-  [Symbol.for('slug')]: 'changing-keyboard-shortcuts-in-mac-os-x',
-  [Symbol.for('title')]: 'Changing keyboard shortcuts in Mac OS X',
-  [Symbol.for('datetime')]: datetime('2009-03-25')('16:36:00')(Symbol.for('Pacific/Auckland')),
-  [Symbol.for('tags')]: [
+  ['id']: 9,
+  ['slug']: 'changing-keyboard-shortcuts-in-mac-os-x',
+  ['title']: 'Changing keyboard shortcuts in Mac OS X',
+  ['datetime']: datetime('2009-03-25')('16:36:00')(Symbol.for('Pacific/Auckland')),
+  ['tags']: [
     'keyboard-shortcuts',
     'mac-os-x'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };

@@ -193,20 +193,20 @@ const body = [
   ])
 ];
 export default {
-  [Symbol.for('id')]: 95,
-  [Symbol.for('slug')]: 'give-and-take-of-continuation-passing-style',
-  [Symbol.for('title')]: [
+  ['id']: 95,
+  ['slug']: 'give-and-take-of-continuation-passing-style',
+  ['title']: [
     'The ',
     code('give'),
     ' and ',
     code('take'),
     ' of continuation-passing style'
   ],
-  [Symbol.for('datetime')]: datetime('2020-10-08')('10:41:26')(Symbol.for('Europe/Berlin')),
-  [Symbol.for('tags')]: [
+  ['datetime']: datetime('2020-10-08')('10:41:26')(Symbol.for('Europe/Berlin')),
+  ['tags']: [
     'continuation-passing-style',
     'javascript',
     'programming'
   ],
-  [Symbol.for('body')]: body
+  ['body']: body
 };
