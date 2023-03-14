@@ -127,6 +127,7 @@ SymbolChar
     !'\u0022' // QUOTATION MARK
     !'\u0028' // LEFT PARENTHESIS
     !'\u0029' // RIGHT PARENTHESIS
+    !'\u002C' // COMMA
     !'\u002E' // FULL STOP
     !'\u003A' // COLON
     !'\u003B' // SEMICOLON
@@ -158,14 +159,18 @@ IdentifierChar
     .
 
 ArrayExpression
-  = '#['
-    elements:(
-      head:(Separator* element:(SpreadElement / Expression) { return element; })
-      tail:(Separator+ element:(SpreadElement / Expression) { return element; })*
-      { return [head, ...tail]; }
-    )?
+  = '#[' Separator* ']'
+    { return Serif.ArrayExpression([]); }
+  / '#[' Separator*
+    head:ArrayElement
+    tail:(Separator* ',' Separator* element:ArrayElement { return element; })*
+    Separator* ','?
     Separator* ']'
-    { return Serif.ArrayExpression(elements ?? []); }
+    { return Serif.ArrayExpression([head, ...tail]); }
+
+ArrayElement
+  = SpreadElement
+  / Expression
 
 ObjectExpression
   = '#{'

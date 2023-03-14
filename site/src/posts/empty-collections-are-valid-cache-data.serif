@@ -15,8 +15,8 @@ body = #[
 
   (p
      #["When using Django's cache, ensure that empty collections
-        (" (code "[]") ", " (code "()") ", " (code "{}") ") are
-        treated as valid cache data."])
+        (", (code "[]"), ", ", (code "()"), ", ", (code "{}"), ") are
+        treated as valid cache data."]),
 
   (code-block :python
 
@@ -26,16 +26,16 @@ body = #[
          return cached
 
      # perform expensive operation
-     ")
+     "),
 
   (p
-     #["In the above snippet, if the call to " (code "get") "
+     #["In the above snippet, if the call to ", (code "get"), "
         returns an empty collection the cached result is ignored
-        and the value is recalculated unnecessarily."])
+        and the value is recalculated unnecessarily."]),
 
   (p
-     #["Avoid this by explicitly comparing the return value to "
-       (code "None") ":"])
+     #["Avoid this by explicitly comparing the return value to ",
+       (code "None"), ":"]),
 
   (code-block :python
 
@@ -43,13 +43,13 @@ body = #[
      cached = cache.get(cache_key)
      if cached is not None: # much better!
          return cached
-     ")
+     "),
 
   (p
      #["Django's documentation wisely advises against caching the
-        literal value " (code "None") ", and the above snippet makes
-        it clear why this is good advice – the " (code "get") " method
-        returns " (code "None") " when the cache does not contain an
-        entry for the supplied key."])
+        literal value ", (code "None"), ", and the above snippet makes
+        it clear why this is good advice – the ", (code "get"), " method
+        returns ", (code "None"), " when the cache does not contain an
+        entry for the supplied key."]),
 
 ]

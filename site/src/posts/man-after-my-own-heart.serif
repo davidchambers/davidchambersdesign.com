@@ -6,16 +6,16 @@ export default #{
   :slug "man-after-my-own-heart"
   :title "Man after my own heart"
   :datetime (datetime "2010-07-23" "00:07:00" :Pacific/Auckland)
-  :tags #["architecture" "design"]
+  :tags #["architecture", "design"]
   :body body
 };
 
 body = #[
 
   (p
-     #["From Wikipedia on Mies van der Rohe's "
+     #["From Wikipedia on Mies van der Rohe's ",
        (a "http://en.wikipedia.org/wiki/Seagram_Building"
-          "Seagram Building") ":"])
+          "Seagram Building"), ":"]),
 
   (blockquote
      #[(p
@@ -29,11 +29,11 @@ body = #[
              appear disorganized. To reduce this disproportionate
              appearance, Mies specified window blinds which only
              operated in three positions – fully open, halfway
-             open/closed, or fully closed."])])
+             open/closed, or fully closed."])]),
 
   (p
-     #["This, taken from Werner Blaser's " (i "Mies van der Rohe") ",
-        is also brilliant:"])
+     #["This, taken from Werner Blaser's ", (i "Mies van der Rohe"), ",
+        is also brilliant:"]),
 
   (blockquote
      #[(p
@@ -42,6 +42,6 @@ body = #[
              structure from the very beginning. The structure of
              a brick wall begins with the smallest unit into which
              the whole can be divided: the brick. The dimensions are
-             calculated in terms of the basic unit of the brick."])])
+             calculated in terms of the basic unit of the brick."])]),
 
 ]

@@ -93,8 +93,8 @@ export {
 };
 
 escape =
-  (S.pipe #[s => s.replaceAll("&", "&amp;")
-            s => s.replaceAll("<", "&lt;")
+  (S.pipe #[s => s.replaceAll("&", "&amp;"),
+            s => s.replaceAll("<", "&lt;"),
             s => s.replaceAll(">", "&gt;")])
 
 text value =
@@ -104,7 +104,7 @@ text value =
 canonicalize-attrs attrs =
   (Object.fromEntries (S.map name => {
                                value = attrs[name];
-                               #[name
+                               #[name,
                                  if typeof value == "symbol" then (Symbol.keyFor value) else (String value)]
                              }
                              (Object.getOwnPropertySymbols attrs)))
@@ -113,10 +113,10 @@ canonicalize-children =
   (S.compose (S.map child => {
                       if typeof child == "string" then {
                         (S.pipe #[
-                          s => s.replace(new RegExp("^[ ]+", "gm"), " ")
-                          s => s.replaceAll("\n", "")
-                          s => s.replaceAll(" -- ", "\u2009\u2014\u2009")
-                          text
+                          s => s.replace(new RegExp("^[ ]+", "gm"), " "),
+                          s => s.replaceAll("\n", ""),
+                          s => s.replaceAll(" -- ", "\u2009\u2014\u2009"),
+                          text,
                         ] child)
                       } else {
                         child

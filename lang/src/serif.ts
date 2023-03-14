@@ -27,21 +27,39 @@ async function findDependencies(entryPoint: string): Promise<Tree> {
     try {
       ast = serif.parse(source, filename);
     } catch (err: any) {
+      const {source, start} = err.location;
       const lines = (
-        (await readFile(err.location.source, 'utf8'))
+        (await readFile(source, 'utf8'))
         .split(/^/m)
         .map((text, idx) => ({number: idx + 1, text: text.trimEnd()}))
         .filter(line => {
-          const offset = line.number - err.location.start.line;
+          const offset = line.number - start.line;
           return offset > -5 && offset <= 0;
         })
       );
+      const renderLineNumber = (number: number): string => number.toString().padStart(4);
       console.error(`\n${
-        err.location.source
+        source
       }\n\n${
-        lines.map(line => line.text + '\n').join('')
+        lines
+        .map((line, idx, lines) =>
+          `\x1B[7m${
+            renderLineNumber(line.number)
+          }\x1B[0m${
+            idx === lines.length - 1 ?
+            `${
+              line.text.slice(0, start.column - 1)
+            }\x1B[7m${
+              line.text.charAt(start.column - 1)
+            }\x1B[0m${
+              line.text.slice(start.column)
+            }` :
+            line.text
+          }\n`
+        )
+        .join('')
       }${
-        ' '.repeat(err.location.start.column - 1)
+        ' '.repeat(renderLineNumber(lines[lines.length - 1].number).length + start.column - 1)
       }^\n${
         err.message
       }\n`);

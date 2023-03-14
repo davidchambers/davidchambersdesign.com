@@ -122,115 +122,115 @@ import post/give-and-take-of-continuation-passing-style from "../posts/give-and-
 dirname = (path.dirname (url.fileURLToPath import.meta.url))
 
 pages = #[
-  page/about
-  page/elam
+  page/about,
+  page/elam,
 ]
 
 posts = #[
-  post/beautiful-painted-alphabet
-  post/show-full-directory-path-in-finder-window-title-bar
-  post/rounded-rectangles-in-adobe-illustrator-cs3
-  post/intelligent-css-caching
-  post/escape-special-characters-for-sql-regexp
-  post/david-carsons-2003-ted-lecture
-  post/wordpress-login-redirect
-  post/valid-xhtml-alternative-to-strike
-  post/changing-keyboard-shortcuts-in-mac-os-x
-  post/inserting-images-in-gmail-messages
-  post/django-syntax-highlighting-for-coda
-  post/looping-more-than-once-with-the-wordpress-loop
-  post/sms-event-reminders-from-google-calendar
-  post/tiny-calendar-icon-set
-  post/applescript-syntax-highlighting
-  post/php-brush-for-syntaxhighlighter
-  post/php-print-filesize-function
-  post/prototype-loader-for-syntaxhighlighter
-  post/associative-arrays-in-javascript
-  post/photoshop-save-for-web-javascript
-  post/incredible-performance-by-kseniya-simonova
-  post/coda-theme-for-syntaxhighlighter
-  post/tiny-calendar-icons-sprite
-  post/captions-over-images
-  post/embed-youtube-clips-using-valid-xhtml-markup
-  post/prototype-image-slider
-  post/sticky-footers
-  post/memorable-passwords-for-programmers
-  post/multisession-cd-burning-in-snow-leopard
-  post/css-fixed-position-headers
-  post/using-html5-time-element-in-wordpress-themes
-  post/prototype-and-scriptaculous-combined-and-compressed
-  post/autopopulating-input-fields-with-prototype
-  post/accessing-mysql-shell-via-terminal
-  post/duplicating-arrays-in-javascript
-  post/shockingly-simple-url-shortening
-  post/resize-browser-window-to-match-iphone-viewport-dimensions
-  post/get-attributes-of-django-model-or-instance
-  post/gorgeous-css3-buttons-inspired-by-aqua
-  post/cricket-field-diagrams
-  post/mootools-every-method
-  post/forcing-browsers-to-rerender-elements
-  post/css-image-switcher-done-the-right-way
-  post/fascinating-insight-into-the-mind-of-a-windows-user
-  post/using-google-for-site-search
-  post/extra-comma-considered-harmful
-  post/application-specific-volume-control-in-mac-os-x
-  post/linkify-tweets-with-regex
-  post/serializing-django-model-instances
-  post/freeing-myself-of-wordpress
-  post/optimization-via-stringification
-  post/autopopulating-input-fields-with-mootools
-  post/wmd-ftw
-  post/first-matching-item
-  post/settimeout-fix-for-webkit-transition
-  post/testing-django-apps-using-localhost-subdomains
-  post/empty-collections-are-valid-cache-data
-  post/-webkit-box-sizing
-  post/remove-textarea-scrollbars-in-internet-explorer
-  post/positioning-elements-using-mootools
-  post/javascript-everywhere
-  post/dieter-rams-video-interview
-  post/gmail-favicon-confusion
-  post/man-after-my-own-heart
-  post/digitalcolor-meter
-  post/python-loops-can-have-else-clause
-  post/self-caching-functions-in-javascript-and-python
-  post/efficient-rounding-in-javascript
-  post/filtering-lists-in-python-ruby-and-javascript
-  post/converting-integers-to-ordinals
-  post/bike-shelf
-  post/customizing-file-and-folder-icons-in-mac-os-x
-  post/ridding-markup-of-textual-decoration
-  post/javascript-date-and-time-localization
-  post/bitwise-not-operator-proves-useful-in-javascript
-  post/composing-mercurial-commit-messages-in-textmate
-  post/safari-keyboard-shortcut-to-open-current-page-in-google-chrome
-  post/simulating-nonlocal-in-python-2-x
-  post/faster-terminal-navigation-via-aliases
-  post/customizing-your-bash-prompt-for-pleasure-and-profit
-  post/mapping-file-extensions-to-emacs-syntax-modes
-  post/repeating-strings-in-javascript
-  post/changing-the-colour-of-list-bullets-using-css
-  post/solarized
-  post/hashify-editor
-  post/end-of-string-anchor-in-javascript-regular-expressions
-  post/getting-truth-out-of-the-dom
-  post/escaping-html-in-javascript
-  post/decorators-in-javascript
-  post/getting-started-with-socket-io
-  post/higher-level-style-sheets
-  post/helveticards
-  post/itunes-is-surprisingly-useful-when-learning-a-foreign-language
-  post/the-perils-of-using-javascript-objects-as-sets
-  post/give-and-take-of-continuation-passing-style
+  post/beautiful-painted-alphabet,
+  post/show-full-directory-path-in-finder-window-title-bar,
+  post/rounded-rectangles-in-adobe-illustrator-cs3,
+  post/intelligent-css-caching,
+  post/escape-special-characters-for-sql-regexp,
+  post/david-carsons-2003-ted-lecture,
+  post/wordpress-login-redirect,
+  post/valid-xhtml-alternative-to-strike,
+  post/changing-keyboard-shortcuts-in-mac-os-x,
+  post/inserting-images-in-gmail-messages,
+  post/django-syntax-highlighting-for-coda,
+  post/looping-more-than-once-with-the-wordpress-loop,
+  post/sms-event-reminders-from-google-calendar,
+  post/tiny-calendar-icon-set,
+  post/applescript-syntax-highlighting,
+  post/php-brush-for-syntaxhighlighter,
+  post/php-print-filesize-function,
+  post/prototype-loader-for-syntaxhighlighter,
+  post/associative-arrays-in-javascript,
+  post/photoshop-save-for-web-javascript,
+  post/incredible-performance-by-kseniya-simonova,
+  post/coda-theme-for-syntaxhighlighter,
+  post/tiny-calendar-icons-sprite,
+  post/captions-over-images,
+  post/embed-youtube-clips-using-valid-xhtml-markup,
+  post/prototype-image-slider,
+  post/sticky-footers,
+  post/memorable-passwords-for-programmers,
+  post/multisession-cd-burning-in-snow-leopard,
+  post/css-fixed-position-headers,
+  post/using-html5-time-element-in-wordpress-themes,
+  post/prototype-and-scriptaculous-combined-and-compressed,
+  post/autopopulating-input-fields-with-prototype,
+  post/accessing-mysql-shell-via-terminal,
+  post/duplicating-arrays-in-javascript,
+  post/shockingly-simple-url-shortening,
+  post/resize-browser-window-to-match-iphone-viewport-dimensions,
+  post/get-attributes-of-django-model-or-instance,
+  post/gorgeous-css3-buttons-inspired-by-aqua,
+  post/cricket-field-diagrams,
+  post/mootools-every-method,
+  post/forcing-browsers-to-rerender-elements,
+  post/css-image-switcher-done-the-right-way,
+  post/fascinating-insight-into-the-mind-of-a-windows-user,
+  post/using-google-for-site-search,
+  post/extra-comma-considered-harmful,
+  post/application-specific-volume-control-in-mac-os-x,
+  post/linkify-tweets-with-regex,
+  post/serializing-django-model-instances,
+  post/freeing-myself-of-wordpress,
+  post/optimization-via-stringification,
+  post/autopopulating-input-fields-with-mootools,
+  post/wmd-ftw,
+  post/first-matching-item,
+  post/settimeout-fix-for-webkit-transition,
+  post/testing-django-apps-using-localhost-subdomains,
+  post/empty-collections-are-valid-cache-data,
+  post/-webkit-box-sizing,
+  post/remove-textarea-scrollbars-in-internet-explorer,
+  post/positioning-elements-using-mootools,
+  post/javascript-everywhere,
+  post/dieter-rams-video-interview,
+  post/gmail-favicon-confusion,
+  post/man-after-my-own-heart,
+  post/digitalcolor-meter,
+  post/python-loops-can-have-else-clause,
+  post/self-caching-functions-in-javascript-and-python,
+  post/efficient-rounding-in-javascript,
+  post/filtering-lists-in-python-ruby-and-javascript,
+  post/converting-integers-to-ordinals,
+  post/bike-shelf,
+  post/customizing-file-and-folder-icons-in-mac-os-x,
+  post/ridding-markup-of-textual-decoration,
+  post/javascript-date-and-time-localization,
+  post/bitwise-not-operator-proves-useful-in-javascript,
+  post/composing-mercurial-commit-messages-in-textmate,
+  post/safari-keyboard-shortcut-to-open-current-page-in-google-chrome,
+  post/simulating-nonlocal-in-python-2-x,
+  post/faster-terminal-navigation-via-aliases,
+  post/customizing-your-bash-prompt-for-pleasure-and-profit,
+  post/mapping-file-extensions-to-emacs-syntax-modes,
+  post/repeating-strings-in-javascript,
+  post/changing-the-colour-of-list-bullets-using-css,
+  post/solarized,
+  post/hashify-editor,
+  post/end-of-string-anchor-in-javascript-regular-expressions,
+  post/getting-truth-out-of-the-dom,
+  post/escaping-html-in-javascript,
+  post/decorators-in-javascript,
+  post/getting-started-with-socket-io,
+  post/higher-level-style-sheets,
+  post/helveticards,
+  post/itunes-is-surprisingly-useful-when-learning-a-foreign-language,
+  post/the-perils-of-using-javascript-objects-as-sets,
+  post/give-and-take-of-continuation-passing-style,
 ]
 
 public components =
-  (path.join ...#[dirname ".." ".." "public" ...components])
+  (path.join ...#[dirname, "..", "..", "public", ...components])
 
 write-file filename data =
-  (fs.writeFileSync ...#[filename data])
+  fs.writeFileSync(filename, data)
 
-(write-file (public #["css" "screen.css"])
+(write-file (public #["css", "screen.css"])
             generate-css)
 
 render-svg attrs paths = {
@@ -239,61 +239,61 @@ render-svg attrs paths = {
   + ((svg attrs' paths):render "  " 0 false)
 }
 
-(write-file (public #["svg" "masthead.svg"])
+(write-file (public #["svg", "masthead.svg"])
             (render-svg #{} masthead:fill))
 
-(write-file (public #["svg" "masthead-mask.svg"])
+(write-file (public #["svg", "masthead-mask.svg"])
             (render-svg #{} masthead:mask))
 
-(write-file (public #["svg" "about.svg"])
+(write-file (public #["svg", "about.svg"])
             (render-svg #{:width 16 :height 16} icon/about))
 
-(write-file (public #["svg" "archives.svg"])
+(write-file (public #["svg", "archives.svg"])
             (render-svg #{:width 16 :height 16} icon/archives))
 
-(write-file (public #["svg" "bitbucket.svg"])
+(write-file (public #["svg", "bitbucket.svg"])
             (render-svg #{:width 16 :height 16} icon/bitbucket))
 
-(write-file (public #["svg" "dates-0.svg"])
+(write-file (public #["svg", "dates-0.svg"])
             (render-svg #{} dates[0]))
 
-(write-file (public #["svg" "dates-1.svg"])
+(write-file (public #["svg", "dates-1.svg"])
             (render-svg #{} dates[1]))
 
-(write-file (public #["svg" "dates-2.svg"])
+(write-file (public #["svg", "dates-2.svg"])
             (render-svg #{} dates[2]))
 
-(write-file (public #["svg" "dates-3.svg"])
+(write-file (public #["svg", "dates-3.svg"])
             (render-svg #{} dates[3]))
 
-(write-file (public #["svg" "dates-4.svg"])
+(write-file (public #["svg", "dates-4.svg"])
             (render-svg #{} dates[4]))
 
-(write-file (public #["svg" "dates-5.svg"])
+(write-file (public #["svg", "dates-5.svg"])
             (render-svg #{} dates[5]))
 
-(write-file (public #["svg" "dates-6.svg"])
+(write-file (public #["svg", "dates-6.svg"])
             (render-svg #{} dates[6]))
 
-(write-file (public #["svg" "dates-7.svg"])
+(write-file (public #["svg", "dates-7.svg"])
             (render-svg #{} dates[7]))
 
-(write-file (public #["svg" "dates-8.svg"])
+(write-file (public #["svg", "dates-8.svg"])
             (render-svg #{} dates[8]))
 
-(write-file (public #["svg" "dates-9.svg"])
+(write-file (public #["svg", "dates-9.svg"])
             (render-svg #{} dates[9]))
 
-(write-file (public #["svg" "contact.svg"])
+(write-file (public #["svg", "contact.svg"])
             (render-svg #{:width 16 :height 16} icon/contact))
 
-(write-file (public #["svg" "flushcache.svg"])
+(write-file (public #["svg", "flushcache.svg"])
             (render-svg #{:width 16 :height 16} icon/flushcache))
 
-(write-file (public #["svg" "tags.svg"])
+(write-file (public #["svg", "tags.svg"])
             (render-svg #{:width 16 :height 16} icon/tags))
 
-(write-file (public #["svg" "twitter.svg"])
+(write-file (public #["svg", "twitter.svg"])
             (render-svg #{:width 16 :height 16} icon/twitter))
 
 render-document element = {

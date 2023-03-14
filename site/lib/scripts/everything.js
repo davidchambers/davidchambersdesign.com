@@ -228,10 +228,7 @@ const public_ = components => {
   ]);
 };
 const write$002Dfile = filename => {
-  return data => fs.writeFileSync(...[
-    filename,
-    data
-  ]);
+  return data => fs.writeFileSync(filename, data);
 };
 write$002Dfile(public_([
   'css',

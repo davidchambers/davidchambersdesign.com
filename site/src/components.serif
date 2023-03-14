@@ -19,11 +19,11 @@ caption caption =
 
 captioned-image src alt caption =
   (dl
-     #[(dt (img #{:alt alt :src src}))
+     #[(dt (img #{:alt alt :src src})),
        (dd caption)])
 
 captioned-images images =
-  (dl (S.chain image => #[(dt (img #{:alt image[1] :src image[0]}))
+  (dl (S.chain image => #[(dt (img #{:alt image[1] :src image[0]})),
                           (dd image[2])]
                images))
 
@@ -46,14 +46,14 @@ interview-list interviewer interviewee exchange =
   (ol (S.snd (S.reduce (S.pair name => items => quotation => {
                                  if name === interviewer then {
                                    (S.Pair interviewee
-                                           #[...items
+                                           #[...items,
                                              (li' #{:class "interviewer"}
-                                                #[(strong interviewer + ":") " " ...quotation])])
+                                                #[(strong interviewer + ":"), " ", ...quotation])])
                                  } else {
                                    (S.Pair interviewer
-                                           #[...items
+                                           #[...items,
                                              (li' #{}
-                                                #[(strong interviewee + ":") " " ...quotation])])
+                                                #[(strong interviewee + ":"), " ", ...quotation])])
                                  }
                                })
                        (S.Pair interviewer #[])
@@ -68,7 +68,7 @@ uncaptioned-image src alt =
 
 update datetime body =
   (div #{:class "update"}
-     (S.prepend (h4 #["Update \u2014 "
+     (S.prepend (h4 #["Update \u2014 ",
                       (time #{:datetime datetime.toISO()}
                          datetime.toFormat("d MMMM y"))])
                 (canonicalize-children body)))

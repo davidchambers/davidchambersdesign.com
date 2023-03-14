@@ -7,28 +7,28 @@ export default #{
   :slug "coda-theme-for-syntaxhighlighter"
   :title "Coda theme for SyntaxHighlighter"
   :datetime (datetime "2009-08-16" "08:53:00" :Pacific/Auckland)
-  :tags #["coda" "css" "javascript" "prototype" "syntaxhighlighter"]
+  :tags #["coda", "css", "javascript", "prototype", "syntaxhighlighter"]
   :body body
 };
 
 body = #[
 
   (p
-     #[(a "#setup" "Skip to setup instructions")])
+     #[(a "#setup" "Skip to setup instructions")]),
 
   (excerpt
 
      #[(p
-          #["It's no secret – I love " (a "http://www.panic.com/coda/" "Coda") "!
-             It's a pleasure to use. " (strong "It looks so damn good.") " When I
-             started using " (a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
-             "SyntaxHighlighter") " I set out to create a Coda theme. Thankfully,
+          #["It's no secret – I love ", (a "http://www.panic.com/coda/" "Coda"), "!
+             It's a pleasure to use. ", (strong "It looks so damn good."), " When I
+             started using ", (a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
+             "SyntaxHighlighter"), " I set out to create a Coda theme. Thankfully,
              the good folks at Panic had done the ground work for me. All I had
              to do was create a style sheet that would make my code snippets look
-             as sexy online as they do in my text editor."])
+             as sexy online as they do in my text editor."]),
 
        (p
-          #["Or so I thought."])])
+          #["Or so I thought."])]),
 
   (p
      #["As I delved deeper, it became apparent that realising my goal would
@@ -40,24 +40,24 @@ body = #[
         output is displayed. At first glance, brushes and themes appear to
         be loosely coupled, allowing programmers to create language-specific
         brushes, and designers to create themes that can work with any number
-        of brushes."])
+        of brushes."]),
 
   (p
      #["It soon became apparent that brushes and themes are not so loosely
         coupled after all. For example, the bundled HTML brush does not
-        include the angled brackets when highlighting a tag. Coda does. "
+        include the angled brackets when highlighting a tag. Coda does. ",
        (strong "So, the theme itself is accompanied by a number of customized
-        brushes.")])
+        brushes.")]),
 
-  (h3 "Supported languages")
+  (h3 "Supported languages"),
 
   (p
      #["The theme currently supports a handful of languages: CSS, HTML/XML,
         JavaScript, PHP, and Python. These are the languages with which I'm
-        familiar. " (strong "If you'd like to see another language supported,
-        please let me know.")])
+        familiar. ", (strong "If you'd like to see another language supported,
+        please let me know.")]),
 
-  (h4 "CSS")
+  (h4 "CSS"),
 
   (code-block :css
 
@@ -65,9 +65,9 @@ body = #[
      p.error.message   { border: 1px solid #c00; background-color: #fcc; }
      p.info.message    { border: 1px solid #fc3; background-color: #ffc; }
      p.success.message { border: 1px solid #0b0; background-color: #cfc; }
-     ")
+     "),
 
-  (h4 "HTML")
+  (h4 "HTML"),
 
   (code-block :html
 
@@ -79,9 +79,9 @@ body = #[
              <input type=\"submit\" id=\"searchsubmit\" value=\"Search\" />
          </div>
      </form><!--/searchform-->
-     ")
+     "),
 
-  (h4 "JavaScript")
+  (h4 "JavaScript"),
 
   (code-block :javascript
 
@@ -97,9 +97,9 @@ body = #[
              });
          });
      });
-     ")
+     "),
 
-  (h4 "PHP")
+  (h4 "PHP"),
 
   (code-block :php
 
@@ -138,13 +138,13 @@ body = #[
              echo \"{$before}{$approx}{$size} {$unit}{$after}\";
          }
      }
-     ")
+     "),
 
   (p
      #["Note that the variable names in the double-quoted string above are
-        a different colour from the rest of the string. Nice!"])
+        a different colour from the rest of the string. Nice!"]),
 
-  (h4 "Python")
+  (h4 "Python"),
 
   (code-block :python
 
@@ -155,19 +155,19 @@ body = #[
          for each_sale in all_sales:
              total += float(each_sale)
          return total
-     ")
+     "),
 
-  (h3 "Including non-HTML code in HTML snippets")
+  (h3 "Including non-HTML code in HTML snippets"),
 
   (p
      #["The Coda theme, like Coda itself, can handle non-HTML code inside
-        HTML snippets."])
+        HTML snippets."]),
 
-  (h4' #{:id "css-inside-html"} "CSS inside HTML")
+  (h4' #{:id "css-inside-html"} "CSS inside HTML"),
 
   (p
-     #["For HTML snippets that contain some CSS, use "
-       (code "<pre class=\"brush: css; html-script: true;\"></pre>") "."])
+     #["For HTML snippets that contain some CSS, use ",
+       (code "<pre class=\"brush: css; html-script: true;\"></pre>"), "."]),
 
   (code-block :html
 
@@ -190,13 +190,13 @@ body = #[
              }
          </style>
      </head>
-     ")
+     "),
 
-  (h4' #{:id "javascript-inside-html"} "JavaScript inside HTML")
+  (h4' #{:id "javascript-inside-html"} "JavaScript inside HTML"),
 
   (p
-     #["For HTML snippets that contain some JavaScript, use "
-       (code "<pre class=\"brush: javascript; html-script: true;\"></pre>") "."])
+     #["For HTML snippets that contain some JavaScript, use ",
+       (code "<pre class=\"brush: javascript; html-script: true;\"></pre>"), "."]),
 
   (code-block :html
 
@@ -218,13 +218,13 @@ body = #[
              });
          </script>
      </body>
-     ")
+     "),
 
-  (h4' #{:id "php-inside-html"} "PHP inside HTML")
+  (h4' #{:id "php-inside-html"} "PHP inside HTML"),
 
   (p
-     #["For HTML snippets that contain some PHP, use "
-       (code "<pre class=\"brush: php; html-script: true;\"></pre>") "."])
+     #["For HTML snippets that contain some PHP, use ",
+       (code "<pre class=\"brush: php; html-script: true;\"></pre>"), "."]),
 
   (code-block :php
 
@@ -234,22 +234,22 @@ body = #[
          <li><?php echo $name; ?></li>
      <?php endforeach; ?>
      </ul>
-     ")
+     "),
 
-  (h3 "Limitations and known issues")
+  (h3 "Limitations and known issues"),
 
   (p
      #["Unfortunately, the Coda brush does not perform quite as well as the
-        text editor from which it gets its name. The failings are as follows:"])
+        text editor from which it gets its name. The failings are as follows:"]),
 
   (ul
      #[(li
           #[(p
                #["It is not possible to mix more than one additional language
-                  with HTML. While it " (em "is") " possible to mix CSS with
+                  with HTML. While it ", (em "is"), " possible to mix CSS with
                   HTML, or JavaScript with HTML, it is not possible to mix
-                  both CSS " (em "and") " JavaScript with HTML. This is a
-                  limitation of SyntaxHighlighter itself."])])
+                  both CSS ", (em "and"), " JavaScript with HTML. This is a
+                  limitation of SyntaxHighlighter itself."])]),
        (li
           #[(p
                #["When mixing CSS or JavaScript with HTML, the style/script
@@ -258,13 +258,13 @@ body = #[
                   As a result these tags appear in red, the colour used for
                   PHP tags. (If no workaround exists I'm going to suggest that
                   Alex make the necessary changes to ensure that style/script
-                  opening tags are treated normally.)"])])
+                  opening tags are treated normally.)"])]),
        (li
           #[(p
-               #["In order to correctly colour all HTML tags, each " (code "<") "
+               #["In order to correctly colour all HTML tags, each ", (code "<"), "
                   that is not part of a string is considered to be part of a tag.
                   This causes incorrect highlighting, as can be seen in this
-                  example:"])
+                  example:"]),
             (code-block :html
                "
                <script type=\"text/javascript\">
@@ -272,41 +272,41 @@ body = #[
                        return (x > y);
                    }
                </script>
-               ")])])
+               ")])]),
 
-  (h3' #{:id "setup"} "Setup")
+  (h3' #{:id "setup"} "Setup"),
 
   (ol
      #[(li
-          #["Download and unzip "
+          #["Download and unzip ",
             (a "/downloads/coda-theme-for-syntaxhighlighter.zip"
-               "coda-theme-for-syntaxhighlighter.zip") "."])
+               "coda-theme-for-syntaxhighlighter.zip"), "."]),
        (li
-          #["Open " (strong "example.html") " to confirm that everything
-             is working correctly."])
+          #["Open ", (strong "example.html"), " to confirm that everything
+             is working correctly."]),
        (li
-          #["Upload " (strong "styles/shThemeCoda.css") " to your
-             SyntaxHighlighter " (strong "styles") " directory."])
+          #["Upload ", (strong "styles/shThemeCoda.css"), " to your
+             SyntaxHighlighter ", (strong "styles"), " directory."]),
        (li
-          #["Upload " (strong "styles/bg.png") " to your SyntaxHighlighter "
-            (strong "styles") " directory."])
+          #["Upload ", (strong "styles/bg.png"), " to your SyntaxHighlighter ",
+            (strong "styles"), " directory."]),
        (li
-          #["Upload the brushes in " (strong "scripts/") " to your
-             SyntaxHighlighter " (strong "scripts") " directory, replacing
+          #["Upload the brushes in ", (strong "scripts/"), " to your
+             SyntaxHighlighter ", (strong "scripts"), " directory, replacing
              the existing CSS, JavaScript, PHP, Python, and XML brushes.
-             Three versions of each brush are included: " (strong ".js") ", "
-            (strong ".min.js") " (minified), and " (strong ".min.js.gz") "
-             (minified and gzipped). Use whichever version suits you best."])
+             Three versions of each brush are included: ", (strong ".js"), ", ",
+            (strong ".min.js"), " (minified), and ", (strong ".min.js.gz"), "
+             (minified and gzipped). Use whichever version suits you best."]),
        (li
           #["Add a link to the Coda theme wherever you link to shCore.css.
              If you're using the standard setup, this will be in the head
-             section of the document."])])
+             section of the document."])]),
 
   (update (datetime "2009-08-24" "22:51:00" :Pacific/Auckland)
 
      #[(p
           #["Coda theme has been updated so that comments are now italicized
              (as they are in Coda). XML brush for Coda theme now applies the
-             correct class name (\"xml-comment\") to HTML comments."])])
+             correct class name (\"xml-comment\") to HTML comments."])]),
 
 ]
