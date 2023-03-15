@@ -26,18 +26,18 @@ pink            = "#ff5e99";
 recycled-paper  = "#fef9ec";
 
 screen coerce = {
-  %  x = (coerce x) + "%";
-  em x = (coerce x) + "em";
-  px x = (coerce x) + "px";
+  pc x = coerce x + "%";
+  em x = coerce x + "em";
+  px x = coerce x + "px";
 
   sans-serif names = [...names.map('), "sans-serif"].join(", ");
   monospace  names = [...names.map('), "monospace"].join(", ");
 
   rgba r g b a = "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
 
-  !important x = (coerce x) + " !important";
+  important! x = coerce x + " !important";
 
-  tag-background = (S.pipe [
+  tag-background = S.pipe [
     Math.log2,
     n => n * 5,
     n => 247 - n,
@@ -46,49 +46,49 @@ screen coerce = {
     s => s.padStart(2, "0"),
     s => s.repeat(3),
     s => "#" + s,
-  ]);
+  ];
 
-  tag-color = (S.pipe [
+  tag-color = S.pipe [
     Math.log2,
     n => n * 0.1,
     n => n + 0.3,
     n => n.toFixed(3),
     s => s.replace(new RegExp("0*$", ""), ""),
     s => s.replace(new RegExp("[.]$", ""), ""),
-    (rgba 0 0 0),
-  ]);
+    rgba 0 0 0,
+  ];
 
-  (S.join [[
+  S.join [[
 
     ["html"], [
-      :height, (% 100),
+      :height, pc 100,
       :background-color, base3,
     ],
     ["html > body"], [
-      :font-size, (px 12),
+      :font-size, px 12,
     ],
 
     ["body"], [
       :position, :relative,
-      :min-width, (px 675),
-      :height, (% 100),
+      :min-width, px 675,
+      :height, pc 100,
       :background-color, base3,
-      :font-size, (% 75),
-      :font-family, (sans-serif ["Lucida Grande", "Lucida Sans Unicode", "Helvetica", "Arial"]),
+      :font-size, pc 75,
+      :font-family, sans-serif ["Lucida Grande", "Lucida Sans Unicode", "Helvetica", "Arial"],
       :color, base00,
       :cursor, :default,
     ],
 
     ["#skip"], [
       :position, :absolute,
-      :left, (px -9999),
+      :left, px -9999,
     ],
 
     ["#wrap"], [
       :position, :relative,
       :height, :auto,
-      :min-height, (% 100),
-      :font-size, (em 1),
+      :min-height, pc 100,
+      :font-size, em 1,
       :line-height, 1.75,
       :overflow, :hidden,
     ],
@@ -97,54 +97,54 @@ screen coerce = {
       :position, :fixed,
       :left, 0,
       :top, 0,
-      :width, (% 100),
-      :height, (px 160),
+      :width, pc 100,
+      :height, px 160,
       :background, ["url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAACgCAYAAADNVQbCAAAAUElEQVQoke3JsQ0CQRAEwd5+EPlniYE3J+E8NxhEgfROOcXn/awAFxd/xsxEILYsZ4jQCMZ2r98yE+leUiMSnUZ6xLPn8rYbOe6RB5EXC4AvwzcoH+3LgngAAAAASUVORK5CYII=')", :repeat-x],
       :z-index, 10,
     ],
     ["#header header"], [
       :position, :relative,
       :margin, [0, :auto],
-      :width, (% 65),
-      :min-width, (px 615),
-      :max-width, (em 60),
-      :padding, [(px 24), (px 30), 0],
+      :width, pc 65,
+      :min-width, px 615,
+      :max-width, em 60,
+      :padding, [px 24, px 30, 0],
     ],
     ["#header header hr"], [
-      :margin, [(px 6), :auto, 0, 0],
-      :width, (px 354),
+      :margin, [px 6, :auto, 0, 0],
+      :width, px 354,
       :text-align, :left,
     ],
     ["#header header p"], [
       :margin, 0,
-      :height, (px 21),
+      :height, px 21,
       :background, ["url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAAAQCAYAAAAswXUEAAAByElEQVR42u2aO3bDMAwEef8b6LRwkyIvzw7xWZASPcUUiWwaWgJLGPIwswEAAPtABAAAjBgAACMGAACMGAAAIwYAgF1GfF2X/TB+4f2fis61O2Mgbn3sd8wzW6TZrlpcvQ+nekg6Hoz4DEMbBxkxWmHEGPGf0//d5ni6hE9rev6erTlLGgu8LyKcPSTuWUyeeNSxWiDPFBpn8tKjhwX3p1IHXo08BZ/Z887czmgRvY+oJlbMa28z+/b9I7lIxRxmCdeVsCNYNJ5rFiyKFXFbwGDGAo2juqpzY4dWKiP2GNIoHgbZz8jmi/qQUuZBd3wf189+LVF0akPYMXs2u9IRW6EgLWBiirirhafWOFKMuwtQbcTVOuj+fNU+ZEcbWW1Wa6K4/q+nKET03KyJjLjasVZmOrbw1K7EreqAlBpbkwE8zYjtQCO2Kz8jzWhTuc9sA1XxP9drqoP6ardWLZDoukOYOCuMOBO3qvDUGn+rESv2/e4dcWZ8qa6JVZpkrk9j6RxNKI04MxhXPqxbPZpQPazLjhmUGnePJiIPalZpdScjzsxru2uyeqh0PazL6lb+RvG0n10BnPqTQvjinGET4KRCwoThkTnzAjIvgGm0M2OfAAAAAElFTkSuQmCC')", :no-repeat],
       :line-height, 10,
       :overflow, :hidden,
     ],
     ["#header header form"], [
       :position, :absolute,
-      :right, (px 27),
-      :top, (px 24),
-      :width, (px 27),
+      :right, px 27,
+      :top, px 24,
+      :width, px 27,
     ],
     ["#header header form div"], [
       :position, :relative,
     ],
     ["#header header form div label"], [
       :position, :absolute,
-      :left, (px -9999),
+      :left, px -9999,
     ],
     ["#header header form div input[type='search']"], [
       :position, :absolute,
-      :right, (px 27),
+      :right, px 27,
       :top, 0,
       :display, :block,
       :float, :left,
-      :width, (em 12.5),
-      :max-width, (px 200),
-      :height, (px 16),
-      :font-size, (em 1.083),
+      :width, em 12.5,
+      :max-width, px 200,
+      :height, px 16,
+      :font-size, em 1.083,
     ],
     ["#header header form div input[type='submit']"], [
       :position, :absolute,
@@ -155,15 +155,15 @@ screen coerce = {
       :width, 0,
       :height, 0,
       :border, :none,
-      :background, ["url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABtklEQVRIx7WUsWrCUBSGMzt1dHAWhG5eFQyEFJwsSBxcSlsqYhwcKnYolIB3qZRSXESKYye7+AgpqQUnX8FH8Bluzx+OEIpWb5oGPg9E7/mu/z2JoZQy/pPwI5/PRxGEJAJiwwR8T0R/G0fQKZVKn/V6/X0ymTyv12tJDMbj8RPdm+E7/CauoGOa5tcLXXRPEh5xT9wRPeJ2OBw+lsvlxVaiIxDYXaT5A9EnukSbaBI3qFLKQbFYRGRCRyARS6Q5duwSV0SDcIga10a1Wn3DGh1BgMw5lj43v+CmFcIiTK4Vz/N6WKMj2OBAOfMu7xzNbQJRnBI5rmK5XJ5jja5gwAfa5lgq3DxLZIg016zv+2e6ggCjyNk3OWuLd4ymJ0SKa6bVal3rRoRDnmEUeVpqnHmOd57isYQkbVnWq+4hh2OKOT/0DxzHuRRCfOiOafig4SHCnO87AzQvFAr+fD5XPAD6rwo8RJhzjCKmBQeKzBELdj4ajdT2MgxDJv6ym06n9mq1Uq7rKtRDknivYFpGsqMkcQX2LkloTkiwV5Kk4CjJXwUHJUkIfpUkJdgpSVrwU2LHFujwDcrfprHNIpr7AAAAAElFTkSuQmCC')", :no-repeat, (% 100)],
-      :padding, [(px 24), 0, 0, (px 27)],
+      :background, ["url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABtklEQVRIx7WUsWrCUBSGMzt1dHAWhG5eFQyEFJwsSBxcSlsqYhwcKnYolIB3qZRSXESKYye7+AgpqQUnX8FH8Bluzx+OEIpWb5oGPg9E7/mu/z2JoZQy/pPwI5/PRxGEJAJiwwR8T0R/G0fQKZVKn/V6/X0ymTyv12tJDMbj8RPdm+E7/CauoGOa5tcLXXRPEh5xT9wRPeJ2OBw+lsvlxVaiIxDYXaT5A9EnukSbaBI3qFLKQbFYRGRCRyARS6Q5duwSV0SDcIga10a1Wn3DGh1BgMw5lj43v+CmFcIiTK4Vz/N6WKMj2OBAOfMu7xzNbQJRnBI5rmK5XJ5jja5gwAfa5lgq3DxLZIg016zv+2e6ggCjyNk3OWuLd4ymJ0SKa6bVal3rRoRDnmEUeVpqnHmOd57isYQkbVnWq+4hh2OKOT/0DxzHuRRCfOiOafig4SHCnO87AzQvFAr+fD5XPAD6rwo8RJhzjCKmBQeKzBELdj4ajdT2MgxDJv6ym06n9mq1Uq7rKtRDknivYFpGsqMkcQX2LkloTkiwV5Kk4CjJXwUHJUkIfpUkJdgpSVrwU2LHFujwDcrfprHNIpr7AAAAAElFTkSuQmCC')", :no-repeat, pc 100],
+      :padding, [px 24, 0, 0, px 27],
       :cursor, :pointer,
     ],
 
     ["#title"], [
       :display, :block,
-      :width, (px 354),
-      :height, (px 24),
+      :width, px 354,
+      :height, px 24,
       :mask-image, "url(/svg/masthead-mask.svg)",
       :background, ["url(/svg/masthead.svg)", :no-repeat],
       :line-height, 10,
@@ -178,19 +178,19 @@ screen coerce = {
 
     ["#nav > ul"], [
       :position, :relative,
-      :margin, [(px 12), 0, 0],
+      :margin, [px 12, 0, 0],
     ],
     ["#nav > ul > li"], [
       :float, :left,
-      :margin, [0, (px 6), 0, 0],
+      :margin, [0, px 6, 0, 0],
     ],
     ["#nav a"], [
       :display, :block,
-      :width, (px 28),
-      :height, (px 28),
-      :border-radius, (px 4),
-      :border, [(px 1), :solid, "#999999"],
-      :background, [:no-repeat, (% 50)],
+      :width, px 28,
+      :height, px 28,
+      :border-radius, px 4,
+      :border, [px 1, :solid, "#999999"],
+      :background, [:no-repeat, pc 50],
     ],
     ["#nav a:focus"], [
       :border-color, orange,
@@ -212,10 +212,10 @@ screen coerce = {
     ["#nav a > span"], [
       :position, :absolute,
       :left, 0,
-      :top, (px 36),
+      :top, px 36,
       :display, :block,
-      :width, (px 354),
-      :height, (px 10),
+      :width, px 354,
+      :height, px 10,
       :background, base3,
       :line-height, 10,
       :overflow, :hidden,
@@ -267,25 +267,25 @@ screen coerce = {
 
     ["#main"], [
       :margin, [0, :auto],
-      :width, (% 65),
-      :min-width, (px 615),
-      :max-width, (em 60),
-      :padding, [(px 159), 0, (em 10)],
+      :width, pc 65,
+      :min-width, px 615,
+      :max-width, em 60,
+      :padding, [px 159, 0, em 10],
     ],
 
     ["#wrap + footer"], [
       :position, :relative,
-      :margin, [(em -5.25), :auto, 0],
-      :width, (% 65),
-      :min-width, (px 615),
-      :max-width, (em 60),
-      :border-top, [(px 1), :solid, "#cccccc"],
-      :padding, [(em 0.5), 0, (em 1.25)],
+      :margin, [em -5.25, :auto, 0],
+      :width, pc 65,
+      :min-width, px 615,
+      :max-width, em 60,
+      :border-top, [px 1, :solid, "#cccccc"],
+      :padding, [em 0.5, 0, em 1.25],
       :line-height, 1.75,
       :z-index, 20,
     ],
     ["#wrap + footer > :first-child"], [
-      :margin, [(px -1), 0, 0],
+      :margin, [px -1, 0, 0],
       :color, base1,
     ],
 
@@ -319,14 +319,14 @@ screen coerce = {
     ],
 
     ["aside"], [
-      :margin, [(em 1.75), 0, 0],
+      :margin, [em 1.75, 0, 0],
       :font-style, :italic,
       :color, base1,
     ],
 
     ["blockquote"], [
-      :border-left, [(em 0.5), :solid, base2],
-      :padding, [0, (em 2.25), 0, (em 1.75)],
+      :border-left, [em 0.5, :solid, base2],
+      :padding, [0, em 2.25, 0, em 1.75],
       :font-style, :italic,
       :color, base1,
     ],
@@ -341,10 +341,10 @@ screen coerce = {
 
     ["code",
      "var"], [
-      :border, [(px 1), :solid, base2],
+      :border, [px 1, :solid, base2],
       :background, recycled-paper,
-      :padding, [(px 1), (px 4)],
-      :font, [:normal, "120%/1", (monospace ["Courier", "Courier New"])],
+      :padding, [px 1, px 4],
+      :font, [:normal, "120%/1", monospace ["Courier", "Courier New"]],
       :color, base01,
     ],
 
@@ -353,7 +353,7 @@ screen coerce = {
       :border, :none,
       :background, :none,
       :padding, 0,
-      :font-size, (em 1),
+      :font-size, em 1,
       :line-height, 1.5,
       :color, :inherit,
     ],
@@ -367,15 +367,15 @@ screen coerce = {
     ],
     ["dl dt"], [
       :clear, :left,
-      :margin, [(em 1.75), 0, 0],
-      :padding, [(em 0.5), 0],
+      :margin, [em 1.75, 0, 0],
+      :padding, [em 0.5, 0],
       :font-weight, :bold,
     ],
     ["dl dt.textual",
      "dl dt.textual ~ dt"], [
       :float, :left,
       :margin, 0,
-      :padding, [(em 1.75), (em 0.5), 0, 0],
+      :padding, [em 1.75, em 0.5, 0, 0],
     ],
     ["dl dt.textual:after",
      "dl dt.textual ~ dt:after"], [
@@ -384,17 +384,17 @@ screen coerce = {
     ["dl dt.textual ~ dd"], [
       :font-style, :normal,
       :color, :inherit,
-      :padding, [(em 1.75), 0, 0],
+      :padding, [em 1.75, 0, 0],
     ],
     ["dl dt embed",
      "dl dt img",
      "dl dt object"], [
       :display, :block,
-      :margin, [0, 0, (px -1)],
+      :margin, [0, 0, px -1],
     ],
     ["dl dt embed",
      "dl dt img"], [
-      :border, [(px 1), :solid, "#cccccc"],
+      :border, [px 1, :solid, "#cccccc"],
     ],
     ["dl dd"], [
       :font-style, :italic,
@@ -409,27 +409,27 @@ screen coerce = {
      "h2",
      "h3",
      "h4"], [
-      :font, [:bold, "1.667em/1.05", (sans-serif ["proxima-nova-1", "proxima-nova-2", "Helvetica", "Arial"])],
+      :font, [:bold, "1.667em/1.05", sans-serif ["proxima-nova-1", "proxima-nova-2", "Helvetica", "Arial"]],
       :color, base01,
-      :text-shadow, [0, (px 1), 0, :white],
+      :text-shadow, [0, px 1, 0, :white],
     ],
 
     ["h2",
      "h3"], [
-      :margin, [(em 1.312), 0, 0],
-      :font-size, (em 1.334),
+      :margin, [em 1.312, 0, 0],
+      :font-size, em 1.334,
       :line-height, 1.312,
     ],
 
     ["h4"], [
-      :margin, [(em 1.5), 0, 0],
-      :font-size, (em 1.167),
+      :margin, [em 1.5, 0, 0],
+      :font-size, em 1.167,
       :line-height, 1.5,
     ],
 
     [".unidentified span"], [
       :float, :left,
-      :margin, [(px -159), 0, 0],
+      :margin, [px -159, 0, 0],
     ],
     [".unidentified a"], [
       :visibility, :hidden,
@@ -441,14 +441,14 @@ screen coerce = {
     ["hr"], [
       :height, 0,
       :border, :none,
-      :border-bottom, [(px 1), :solid, "#999999"],
+      :border-bottom, [px 1, :solid, "#999999"],
     ],
 
     ["iframe.video"], [
       :display, :block,
-      :margin, [(em 1.75), 0, 0],
-      :width, (% 100),
-      :height, (px 385),
+      :margin, [em 1.75, 0, 0],
+      :width, pc 100,
+      :height, px 385,
     ],
     ["dt > iframe.video"], [
       :margin, 0,
@@ -460,47 +460,47 @@ screen coerce = {
     ],
     ["img[src*='/decorative/left/']"], [
       :float, :left,
-      :margin, [0, (em 1), 0, 0],
-      :border, (!important :none),
+      :margin, [0, em 1, 0, 0],
+      :border, important! :none,
     ],
     ["img[src*='/decorative/right/']"], [
       :float, :right,
-      :margin, [0, 0, 0, (em 1)],
-      :border, (!important :none),
+      :margin, [0, 0, 0, em 1],
+      :border, important! :none,
     ],
     ["img[src*='/elam/']",
      "img[src*='/lightbox/']"], [
-      :margin, [(em 1.75), 0, (px -1)],
-      :border, [(px 1), :solid, "#cccccc"],
+      :margin, [em 1.75, 0, px -1],
+      :border, [px 1, :solid, "#cccccc"],
     ],
     ["img[src*='/lightbox/large/']"], [
       :margin, 0,
     ],
     ["img[src*='/windows/']"], [
-      :margin, [(px 3), (px -40), (px -29)],
-      :max-width, (!important :none),
-      :border, (!important :none),
+      :margin, [px 3, px -40, px -29],
+      :max-width, important! :none,
+      :border, important! :none,
     ],
     ["img[src*='/windows/lion/']"], [
-      :margin, [(px -6), (px -56), (px -52)],
+      :margin, [px -6, px -56, px -52],
     ],
     ["dt > img[src*='/windows/']"], [
-      :margin, [(px -24), (px -40), (px -35)],
+      :margin, [px -24, px -40, px -35],
     ],
     ["dt > img[src*='/windows/lion/']"], [
-      :margin, [(px -33), (px -56), (px -58)],
+      :margin, [px -33, px -56, px -58],
     ],
     ["p > img[src*='/windows/']"], [
-      :margin, [(px -18), (px -40), (px -29)],
+      :margin, [px -18, px -40, px -29],
     ],
     ["p > img[src*='/windows/lion/']"], [
-      :margin, [(px -27), (px -56), (px -52)],
+      :margin, [px -27, px -56, px -52],
     ],
     ["p > img:only-child"], [
-      :border, [(px 1), :solid, "#cccccc"],
+      :border, [px 1, :solid, "#cccccc"],
     ],
     ["img.margin-top"], [
-      :margin-top, (em 1.75),
+      :margin-top, em 1.75,
     ],
 
     ["input[type='url']",
@@ -508,11 +508,11 @@ screen coerce = {
      "input[type='email']",
      "input[type='search']"], [
       :-webkit-box-sizing, :content-box,
-      :height, (px 15),
-      :border, [(px 1), :solid, "#cccccc"],
+      :height, px 15,
+      :border, [px 1, :solid, "#cccccc"],
       :background, recycled-paper,
-      :padding, [(px 3), (em 0.5)],
-      :font-size, (em 1),
+      :padding, [px 3, em 0.5],
+      :font-size, em 1,
     ],
     ["input[type='url']:focus",
      "input[type='text']:focus",
@@ -522,7 +522,7 @@ screen coerce = {
       :outline, :none,
     ],
     ["input.placeholder"], [
-      :color, (!important mid-gray),
+      :color, important! mid-gray,
     ],
 
     ["ins"], [
@@ -532,9 +532,9 @@ screen coerce = {
 
     ["label"], [
       :position, :absolute,
-      :left, [(em 19.833)],
+      :left, [em 19.833],
       :top, 0,
-      :margin, [(px 1), 0, 0],
+      :margin, [px 1, 0, 0],
       :color, base1,
     ],
     ["label.required:after"], [
@@ -543,38 +543,38 @@ screen coerce = {
     ],
 
     ["object.video"], [
-      :width, (% 100),
-      :height, (px 385),
+      :width, pc 100,
+      :height, px 385,
     ],
 
     ["ol"], [
-      :margin, [(em 1.75), 0, 0],
+      :margin, [em 1.75, 0, 0],
       :list-style, [:decimal, :outside],
     ],
 
     ["p"], [
-      :margin, [(em 1.75), 0, 0],
+      :margin, [em 1.75, 0, 0],
     ],
     ["p.caption"], [
-      :margin, [(em 0.5), 0, 0],
+      :margin, [em 0.5, 0, 0],
       :font-style, :italic,
       :color, base1,
     ],
 
     ["pre"], [
-      :margin, [(em 1.286), 0, (em -0.214)],
-      :border, [(px 1), :solid, base2],
+      :margin, [em 1.286, 0, em -0.214],
+      :border, [px 1, :solid, base2],
       :background-color, recycled-paper,
-      :padding, [(em 0.143), (em 0.714)],
-      :font, ["1.167em/1.5", (monospace ["Courier", "Courier New"])],
+      :padding, [em 0.143, em 0.714],
+      :font, ["1.167em/1.5", monospace ["Courier", "Courier New"]],
       :overflow, :auto,
     ],
     ["li pre"], [
-      :margin, [(em 1.286), 0],
+      :margin, [em 1.286, 0],
     ],
 
     ["select"], [
-      :min-width, (px 150),
+      :min-width, px 150,
     ],
 
     ["strong"], [
@@ -583,12 +583,12 @@ screen coerce = {
 
     ["textarea"], [
       :display, :block,
-      :width, (% 98),
-      :height, (em 15),
-      :border, [(px 1), :solid, "#cccccc"],
+      :width, pc 98,
+      :height, em 15,
+      :border, [px 1, :solid, "#cccccc"],
       :background, recycled-paper,
-      :padding, [(em 0.333), (em 0.5)],
-      :font, ["1em/1.25", (monospace ["Monaco"])],
+      :padding, [em 0.333, em 0.5],
+      :font, ["1em/1.25", monospace ["Monaco"]],
       :outline, :none,
       :overflow, :auto,
     ],
@@ -605,15 +605,15 @@ screen coerce = {
     ],
 
     ["ul"], [
-      :margin, [(em 1.75), 0, 0],
+      :margin, [em 1.75, 0, 0],
       :list-style, [:square, :outside, "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAGElEQVQI12OYOXPmf3QMBAwM9JAAEdgwAMpjZprFgxhUAAAAAElFTkSuQmCC')"],
     ],
     ["ul li.pro",
      "ul li.con"], [
       :margin, 0,
-      :margin-left, (px -21),
-      :background, [:no-repeat, 0, (em 0.25)],
-      :padding, [0, 0, 0, (px 21)],
+      :margin-left, px -21,
+      :background, [:no-repeat, 0, em 0.25],
+      :padding, [0, 0, 0, px 21],
       :list-style, :none,
     ],
     ["ul li.pro"], [
@@ -624,19 +624,19 @@ screen coerce = {
     ],
 
     ["video"], [
-      :border, [(px 1), :solid, "#cccccc"],
+      :border, [px 1, :solid, "#cccccc"],
     ],
 
     ["article > header > dl"], [
-      :margin, [(em 1.571), 0, (em -0.071)],
-      :font, ["1.167em/1.5", (monospace ["Courier", "Courier New"])],
+      :margin, [em 1.571, 0, em -0.071],
+      :font, ["1.167em/1.5", monospace ["Courier", "Courier New"]],
       :color, base1,
       :overflow, :auto,
     ],
     ["article > header > dl > dt"], [
       :float, :left,
       :margin, 0,
-      :min-width, (em 7),
+      :min-width, em 7,
       :padding, 0,
       :font-weight, :normal,
     ],
@@ -651,15 +651,15 @@ screen coerce = {
     ],
 
     ["#tags"], [
-      :margin, [(em 1.75), 0, 0],
+      :margin, [em 1.75, 0, 0],
       :list-style, :none,
     ],
     ["#tags li"], [
       :position, :relative,
       :float, :left,
-      :margin, [0, (px 1), 0, 0],
-      :width, (% 24.5),
-      :height, (em 3.5),
+      :margin, [0, px 1, 0, 0],
+      :width, pc 24.5,
+      :height, em 3.5,
     ],
     ["#tags li:hover"], [
       :z-index, 100,
@@ -669,9 +669,9 @@ screen coerce = {
       :left, 0,
       :top, 0,
       :display, :block,
-      :width, (% 100),
-      :border, [(px 1), :solid, "#cccccc"],
-      :padding, [(px 10), 0],
+      :width, pc 100,
+      :border, [px 1, :solid, "#cccccc"],
+      :padding, [px 10, 0],
       :text-align, :center,
       :-moz-transition-property,    "top, left, -moz-box-shadow, padding, font-size, z-index",
       :-webkit-transition-property, "top, left, -webkit-box-shadow, padding, font-size, z-index",
@@ -683,37 +683,37 @@ screen coerce = {
       :transition-property,         "top, left, box-shadow, padding, font-size, z-index",
       :transition-duration, "0.2s, 0.2s, 0.2s, 0.2s, 0.167s, 0.2s",
       :transition-timing-function, :ease,
-      :background, (tag-background 20),
-      :color, (tag-color 20),
+      :background, tag-background 20,
+      :color, tag-color 20,
     ],
     ["#tags li a:focus",
      "#tags li a:hover",
      "#tags li a.hover"], [
-      :left, (px -21),
-      :top, (px -6),
-      :width, (% 100),
-      :padding, [(px 16), (px 21)],
-      :box-shadow, [0, (px 1), (px 3), (rgba 0 0 0 0.2)],
-      :font-size, (em 1.167),
+      :left, px -21,
+      :top, px -6,
+      :width, pc 100,
+      :padding, [px 16, px 21],
+      :box-shadow, [0, px 1, px 3, rgba 0 0 0 0.2],
+      :font-size, em 1.167,
       :z-index, 99,
     ],
 
   ],
 
-  (S.foldMap Array
-             count => [["#tags li[data-count='" + count + "'] a"],
-                       [:background, (tag-background count),
-                        :color, (tag-color count)]]
-             (S.range 1 20)),
+  S.foldMap Array
+            {count => [["#tags li[data-count='" + count + "'] a"],
+                       [:background, tag-background count,
+                        :color, tag-color count]]}
+            {S.range 1 20},
 
   [
 
     [".hashify-editor"], [
-      :margin-top, (px 2),
+      :margin-top, px 2,
     ],
 
     ["div.syntaxhighlighter"], [
-      :margin, (!important [(em 1.75), 0, (px -1)]),
+      :margin, important! [em 1.75, 0, px -1],
     ],
     ["div.syntaxhighlighter code"], [
       :border, :none,
@@ -731,8 +731,8 @@ screen coerce = {
     ],
 
     [".structural"], [
-      :position, (!important :absolute),
-      :left, (!important (px -9999)),
+      :position, important! :absolute,
+      :left, important! {px -9999},
     ],
 
     ["ol li.interviewer"], [
@@ -740,7 +740,7 @@ screen coerce = {
     ],
     ["ol li.interviewer ~ li"], [
       :list-style, :none,
-      :margin-top, (em 1.75),
+      :margin-top, em 1.75,
     ],
     ["ol li.interviewer:nth-child(1)",
      "ol li.interviewer ~ li:nth-child(odd)"], [
@@ -750,13 +750,13 @@ screen coerce = {
     ["#comments",
      "#related",
      "#respond"], [
-      :margin, [(em 2.625), 0, 0],
+      :margin, [em 2.625, 0, 0],
     ],
 
     [".unidentified.comments",
      ".unidentified.related",
      ".unidentified.respond"], [
-      :margin, [(em 2.625), 0, 0],
+      :margin, [em 2.625, 0, 0],
     ],
 
     ["#main h2.unidentified a",
@@ -770,13 +770,13 @@ screen coerce = {
     ],
     ["#main > article + article",
      "#main > h1 + article"], [
-      :margin, [(em 3.5), 0, 0],
+      :margin, [em 3.5, 0, 0],
     ],
     ["#main > article + h2"], [
-      :margin, [(em 2.625), 0, 0],
+      :margin, [em 2.625, 0, 0],
     ],
     ["#main img"], [
-      :max-width, (% 100),
+      :max-width, pc 100,
     ],
     ["#main article header"], [
       :line-height, 1,
@@ -784,27 +784,27 @@ screen coerce = {
     ["#main article header h1",
      "#main article header h2"], [
       :display, :inline,
-      :margin, [0, (em 0.25), 0, 0],
-      :font, [:bold, "1.667em/1.05", (sans-serif ["proxima-nova-1", "proxima-nova-2", "Helvetica", "Arial"])],
+      :margin, [0, em 0.25, 0, 0],
+      :font, [:bold, "1.667em/1.05", sans-serif ["proxima-nova-1", "proxima-nova-2", "Helvetica", "Arial"]],
       :color, base01,
-      :text-shadow, [0, (px 1), 0, :white],
+      :text-shadow, [0, px 1, 0, :white],
     ],
     ["#main article header time"], [
       :display, :inline,
-      :font, [:bold, "1.667em/1.05", (sans-serif ["proxima-nova-1", "proxima-nova-2", "Helvetica", "Arial"])],
+      :font, [:bold, "1.667em/1.05", sans-serif ["proxima-nova-1", "proxima-nova-2", "Helvetica", "Arial"]],
       :color, base01,
-      :text-shadow, [0, (px 1), 0, :white],
+      :text-shadow, [0, px 1, 0, :white],
       :font-weight, :normal,
       :color, base1,
       :white-space, :nowrap,
     ],
 
     [".update"], [
-      :margin, [(em 1.75), 0, (px -1)],
-      :border-width, [(px 1), 0],
+      :margin, [em 1.75, 0, px -1],
+      :border-width, [px 1, 0],
       :border-style, :solid,
       :border-color, base1,
-      :padding, [(em 1.667), 0, (em 1.75)],
+      :padding, [em 1.667, 0, em 1.75],
     ],
     [".update + .update"], [
       :margin-top, 0,
@@ -814,22 +814,22 @@ screen coerce = {
     ],
 
     ["footer.metadata"], [
-      :margin-left, (em -1),
-      :padding, [(em 1.75), 0, 0, (em 1)],
+      :margin-left, em -1,
+      :padding, [em 1.75, 0, 0, em 1],
       :overflow, :hidden,
     ],
     ["footer.metadata a"], [
       :float, :left,
-      :margin, [0, (em 0.5), 0, 0],
+      :margin, [0, em 0.5, 0, 0],
     ],
     ["footer.metadata ul"], [
       :list-style, :none,
     ],
     ["footer.metadata ul a"], [
-      :margin-left, (em -0.833),
-      :border-radius, (em 0.875),
+      :margin-left, em -0.833,
+      :border-radius, em 0.875,
       :background, blue,
-      :padding, [0, (em 0.667), 0, (em 0.833)],
+      :padding, [0, em 0.667, 0, em 0.833],
       :color, :white,
     ],
     ["footer.metadata ul a:focus",
@@ -838,7 +838,7 @@ screen coerce = {
     ],
     ["footer.metadata h4"], [
       :position, :absolute,
-      :left, (px -9999),
+      :left, px -9999,
     ],
     ["footer.metadata ol"], [
       :margin, 0,
@@ -846,74 +846,74 @@ screen coerce = {
     ],
     ["footer.metadata ol a"], [
       :background, ["url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAiklEQVQoz5WR4RGAIAhGWaEVXKEVWsFZmsVZWqFZWsGA0yKUFO4++9N7CEIIIe/bApisAqPwQYJ8HZ/MCLgj/cwCKofggam8ghcuAn39KsDvABY509oIYoztwrSAwJq/EaTJLdBzuAS9LU4LGrhsdbg8rG5nKFu1nw1BE7ZGkKA1c1cgQQ8MumPNDbT9z/qqMmCfAAAAAElFTkSuQmCC')", :no-repeat, 0],
-      :padding, [0, 0, 0, (px 20)],
+      :padding, [0, 0, 0, px 20],
     ],
 
     ["article article"], [
-      :margin, [0, 0, 0, (px -30)],
-      :border-bottom, [(px 1), :solid, "#cccccc"],
-      :padding, [(em 0.417), 0, (em 1.25), (px 30)],
+      :margin, [0, 0, 0, px -30],
+      :border-bottom, [px 1, :solid, "#cccccc"],
+      :padding, [em 0.417, 0, em 1.25, px 30],
       :overflow, :auto,
     ],
     ["article article > div"], [
       :float, :left,
-      :width, (% 65),
+      :width, pc 65,
     ],
     ["article article > div > p:first-child"], [
       :margin, 0,
     ],
     ["article article > div > blockquote:first-child > p:first-child"], [
-      :margin, (!important 0),
+      :margin, important! 0,
     ],
     ["article article footer"], [
       :position, :relative,
       :float, :right,
-      :width, (% 30),
+      :width, pc 30,
       :padding, 0,
       :color, :black,
     ],
     ["article article footer img"], [
       :position, :absolute,
       :left, 0,
-      :top, (em 0.417),
+      :top, em 0.417,
       :display, :block,
     ],
     ["article article footer strong",
      "article article footer time"], [
       :display, :block,
-      :margin, [0, 0, 0, (px 32)],
-      :padding, [0, 0, 0, (em 1)],
+      :margin, [0, 0, 0, px 32],
+      :padding, [0, 0, 0, em 1],
     ],
     ["article h2 + article"], [
-      :margin, [(em 1.25), 0, 0, (px -30)],
-      :border-top, [(px 1), :solid, "#cccccc"],
+      :margin, [em 1.25, 0, 0, px -30],
+      :border-top, [px 1, :solid, "#cccccc"],
     ],
 
     ["form[action='comment/'] fieldset"], [
-      :margin, [(em 1), 0, 0],
+      :margin, [em 1, 0, 0],
     ],
     ["fieldset#author-details"], [
-      :margin, [(em 1.75), 0, 0],
-      :padding, [0, 0, (em 0.083)],
+      :margin, [em 1.75, 0, 0],
+      :padding, [0, 0, em 0.083],
     ],
     ["fieldset#author-details + div + div"], [
-      :height, (em 1.75),
+      :height, em 1.75,
     ],
     ["fieldset#author-details + div + div + div"], [
-      :height, (em 3.5),
+      :height, em 3.5,
     ],
     ["fieldset#author-details ~ div:last-child"], [
-      :padding, [0, 0, (px 1)],
+      :padding, [0, 0, px 1],
     ],
 
     ["form div"], [
       :position, :relative,
     ],
     ["form > fieldset"], [
-      :margin, [(em 1.75), 0, 0],
+      :margin, [em 1.75, 0, 0],
     ],
     ["form > fieldset > div"], [
-      :height, (em 2.25),
+      :height, em 2.25,
     ],
     ["form > fieldset > div > label"], [
       :text-transform, :lowercase,
@@ -924,35 +924,35 @@ screen coerce = {
       :position, :absolute,
       :left, 0,
       :top, 0,
-      :margin, [0, (em 0.75), 0, 0],
-      :width, (em 18),
-      :max-width, (px 300),
+      :margin, [0, em 0.75, 0, 0],
+      :width, em 18,
+      :max-width, px 300,
     ],
     ["form > fieldset + div > label"], [
       :position, :absolute,
-      :left, (px -9999),
+      :left, px -9999,
     ],
     ["form > fieldset + div + div > label"], [
-      :left, (em 1.75),
+      :left, em 1.75,
     ],
     ["form > fieldset + div + div > input[type='checkbox']"], [
       :margin, 0,
     ],
 
     ["input[type='submit']"], [
-      :margin, [(px 20), 0, 0],
-      :height, (px 30),
-      :border-radius, (px 4),
-      :border, [(px 1), :solid, "#999999"],
+      :margin, [px 20, 0, 0],
+      :height, px 30,
+      :border-radius, px 4,
+      :border, [px 1, :solid, "#999999"],
       :background, "#dddddd",
       :background-image, "-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eeeeee), color-stop(100%, #cccccc))",
       :background-image, "-webkit-linear-gradient(#eeeeee, #cccccc)",
       :background-image, "-moz-linear-gradient(#eeeeee, #cccccc)",
       :background-image, "-o-linear-gradient(#eeeeee, #cccccc)",
       :background-image, "linear-gradient(#eeeeee, #cccccc)",
-      :padding, [0, (px 10)],
-      :font, ["1.167em/30px", (sans-serif ["proxima-nova-1", "proxima-nova-2", "Lucida Grande", "Lucida Sans Unicode"])],
-      :text-shadow, [0, (px 1), 0, :white],
+      :padding, [0, px 10],
+      :font, ["1.167em/30px", sans-serif ["proxima-nova-1", "proxima-nova-2", "Lucida Grande", "Lucida Sans Unicode"]],
+      :text-shadow, [0, px 1, 0, :white],
     ],
     ["input[type='submit']:focus"], [
       :border-color, blue,
@@ -978,7 +978,7 @@ screen coerce = {
     ["label[for='cc_sender']",
      "label[for='subscribe']"], [
       :position, :relative,
-      :top, (px 5),
+      :top, px 5,
       :margin, 0,
     ],
 
@@ -986,7 +986,7 @@ screen coerce = {
      "#subscribe"], [
       :position, :absolute,
       :left, 0,
-      :top, (px 10),
+      :top, px 10,
     ],
 
     ["ol.pages"], [
@@ -1000,13 +1000,13 @@ screen coerce = {
 
     ["ol.archives"], [
       :margin, 0,
-      :margin-left, (px -21),
+      :margin-left, px -21,
       :list-style, :none,
     ],
     ["ol.archives li h2"], [
-      :margin, [(em 1.75), 0, 0, (px 21)],
+      :margin, [em 1.75, 0, 0, px 21],
       :padding, 0,
-      :font, [:bold, "1em/1.75", (sans-serif ["Lucida Grande", "Lucida Sans Unicode", "Helvetica", "Arial"])],
+      :font, [:bold, "1em/1.75", sans-serif ["Lucida Grande", "Lucida Sans Unicode", "Helvetica", "Arial"]],
       :color, base1,
     ],
     ["ol.archives li ol"], [
@@ -1017,9 +1017,9 @@ screen coerce = {
       :position, :relative,
       :display, :block,
       :float, :left,
-      :margin, [(em 0.167), (em 0.5), 0, 0],
-      :width, (px 16),
-      :height, (px 16),
+      :margin, [em 0.167, em 0.5, 0, 0],
+      :width, px 16,
+      :height, px 16,
       :background-image, "url(../svg/archives.svg)",
       :background-repeat, :no-repeat,
       :line-height, 10,
@@ -1033,7 +1033,7 @@ screen coerce = {
       :right, 0,
       :bottom, 0,
       :display, :block,
-      :background-position-y, (px 6),
+      :background-position-y, px 6,
       :content, "''",
     ],
     ["ol.archives time[datetime*='10T']:before",
@@ -1074,94 +1074,94 @@ screen coerce = {
     ["ol.archives time[datetime*='7T']:after"], [:background-image, "url(../svg/dates-7.svg)"],
     ["ol.archives time[datetime*='8T']:after"], [:background-image, "url(../svg/dates-8.svg)"],
     ["ol.archives time[datetime*='9T']:after"], [:background-image, "url(../svg/dates-9.svg)"],
-    ["ol.archives time[datetime*='01T']:after"], [:background-position-x, (px  7)],
-    ["ol.archives time[datetime*='02T']:after"], [:background-position-x, (px  6)],
-    ["ol.archives time[datetime*='03T']:after"], [:background-position-x, (px  6)],
-    ["ol.archives time[datetime*='04T']:after"], [:background-position-x, (px  6)],
-    ["ol.archives time[datetime*='05T']:after"], [:background-position-x, (px  6)],
-    ["ol.archives time[datetime*='06T']:after"], [:background-position-x, (px  6)],
-    ["ol.archives time[datetime*='07T']:after"], [:background-position-x, (px  6)],
-    ["ol.archives time[datetime*='08T']:after"], [:background-position-x, (px  6)],
-    ["ol.archives time[datetime*='09T']:after"], [:background-position-x, (px  6)],
-    ["ol.archives time[datetime*='10T']:after"], [:background-position-x, (px  8)],
-    ["ol.archives time[datetime*='11T']:after"], [:background-position-x, (px  9)],
-    ["ol.archives time[datetime*='12T']:after"], [:background-position-x, (px  8)],
-    ["ol.archives time[datetime*='13T']:after"], [:background-position-x, (px  8)],
-    ["ol.archives time[datetime*='14T']:after"], [:background-position-x, (px  8)],
-    ["ol.archives time[datetime*='15T']:after"], [:background-position-x, (px  8)],
-    ["ol.archives time[datetime*='16T']:after"], [:background-position-x, (px  8)],
-    ["ol.archives time[datetime*='17T']:after"], [:background-position-x, (px  8)],
-    ["ol.archives time[datetime*='18T']:after"], [:background-position-x, (px  8)],
-    ["ol.archives time[datetime*='19T']:after"], [:background-position-x, (px  8)],
-    ["ol.archives time[datetime*='20T']:after"], [:background-position-x, (px  9)],
-    ["ol.archives time[datetime*='21T']:after"], [:background-position-x, (px 10)],
-    ["ol.archives time[datetime*='22T']:after"], [:background-position-x, (px  9)],
-    ["ol.archives time[datetime*='23T']:after"], [:background-position-x, (px  9)],
-    ["ol.archives time[datetime*='24T']:after"], [:background-position-x, (px  9)],
-    ["ol.archives time[datetime*='25T']:after"], [:background-position-x, (px  9)],
-    ["ol.archives time[datetime*='26T']:after"], [:background-position-x, (px  9)],
-    ["ol.archives time[datetime*='27T']:after"], [:background-position-x, (px  9)],
-    ["ol.archives time[datetime*='28T']:after"], [:background-position-x, (px  9)],
-    ["ol.archives time[datetime*='29T']:after"], [:background-position-x, (px  9)],
-    ["ol.archives time[datetime*='30T']:after"], [:background-position-x, (px  9)],
-    ["ol.archives time[datetime*='31T']:after"], [:background-position-x, (px 10)],
+    ["ol.archives time[datetime*='01T']:after"], [:background-position-x, px  7],
+    ["ol.archives time[datetime*='02T']:after"], [:background-position-x, px  6],
+    ["ol.archives time[datetime*='03T']:after"], [:background-position-x, px  6],
+    ["ol.archives time[datetime*='04T']:after"], [:background-position-x, px  6],
+    ["ol.archives time[datetime*='05T']:after"], [:background-position-x, px  6],
+    ["ol.archives time[datetime*='06T']:after"], [:background-position-x, px  6],
+    ["ol.archives time[datetime*='07T']:after"], [:background-position-x, px  6],
+    ["ol.archives time[datetime*='08T']:after"], [:background-position-x, px  6],
+    ["ol.archives time[datetime*='09T']:after"], [:background-position-x, px  6],
+    ["ol.archives time[datetime*='10T']:after"], [:background-position-x, px  8],
+    ["ol.archives time[datetime*='11T']:after"], [:background-position-x, px  9],
+    ["ol.archives time[datetime*='12T']:after"], [:background-position-x, px  8],
+    ["ol.archives time[datetime*='13T']:after"], [:background-position-x, px  8],
+    ["ol.archives time[datetime*='14T']:after"], [:background-position-x, px  8],
+    ["ol.archives time[datetime*='15T']:after"], [:background-position-x, px  8],
+    ["ol.archives time[datetime*='16T']:after"], [:background-position-x, px  8],
+    ["ol.archives time[datetime*='17T']:after"], [:background-position-x, px  8],
+    ["ol.archives time[datetime*='18T']:after"], [:background-position-x, px  8],
+    ["ol.archives time[datetime*='19T']:after"], [:background-position-x, px  8],
+    ["ol.archives time[datetime*='20T']:after"], [:background-position-x, px  9],
+    ["ol.archives time[datetime*='21T']:after"], [:background-position-x, px 10],
+    ["ol.archives time[datetime*='22T']:after"], [:background-position-x, px  9],
+    ["ol.archives time[datetime*='23T']:after"], [:background-position-x, px  9],
+    ["ol.archives time[datetime*='24T']:after"], [:background-position-x, px  9],
+    ["ol.archives time[datetime*='25T']:after"], [:background-position-x, px  9],
+    ["ol.archives time[datetime*='26T']:after"], [:background-position-x, px  9],
+    ["ol.archives time[datetime*='27T']:after"], [:background-position-x, px  9],
+    ["ol.archives time[datetime*='28T']:after"], [:background-position-x, px  9],
+    ["ol.archives time[datetime*='29T']:after"], [:background-position-x, px  9],
+    ["ol.archives time[datetime*='30T']:after"], [:background-position-x, px  9],
+    ["ol.archives time[datetime*='31T']:after"], [:background-position-x, px 10],
 
     ["#cricket-field-diagrams dl"], [
-      :margin, [(em 2.25), 0, 0],
-      :height, (px 367),
+      :margin, [em 2.25, 0, 0],
+      :height, px 367,
     ],
     ["#cricket-field-diagrams dl dt"], [
       :position, :absolute,
-      :left, (px 0),
+      :left, px 0,
       :top, 0,
       :margin, 0,
-      :width, (px 148),
-      :height, (px 148),
-      :border, [(px 1), :solid, "#cccccc"],
+      :width, px 148,
+      :height, px 148,
+      :border, [px 1, :solid, "#cccccc"],
       :background-color, :white,
       :padding, 0,
     ],
     ["#cricket-field-diagrams dl dt ~ dt"], [
-      :left, (px 170),
+      :left, px 170,
     ],
     ["#cricket-field-diagrams dl dt ~ dt ~ dt"], [
-      :left, (px 340),
+      :left, px 340,
     ],
     ["#cricket-field-diagrams dl dt ~ dt ~ dt ~ dt"], [
-      :left, (px 0),
-      :top, (px 191),
+      :left, px 0,
+      :top, px 191,
     ],
     ["#cricket-field-diagrams dl dt ~ dt ~ dt ~ dt ~ dt"], [
-      :left, (px 170),
+      :left, px 170,
     ],
     ["#cricket-field-diagrams dl dt ~ dt ~ dt ~ dt ~ dt ~ dt"], [
-      :left, (px 340),
+      :left, px 340,
     ],
     ["#cricket-field-diagrams dl dt ~ dd"], [
       :position, :absolute,
-      :left, (px 0),
-      :top, (px 155),
-      :width, (px 150),
+      :left, px 0,
+      :top, px 155,
+      :width, px 150,
       :text-align, :center,
     ],
     ["#cricket-field-diagrams dl dt ~ dd ~ dd"], [
-      :left, (px 170),
+      :left, px 170,
     ],
     ["#cricket-field-diagrams dl dt ~ dd ~ dd ~ dd"], [
-      :left, (px 340),
+      :left, px 340,
     ],
     ["#cricket-field-diagrams dl dt ~ dd ~ dd ~ dd ~ dd"], [
-      :left, (px 0),
-      :top, (px 346),
+      :left, px 0,
+      :top, px 346,
     ],
     ["#cricket-field-diagrams dl dt ~ dd ~ dd ~ dd ~ dd ~ dd"], [
-      :left, (px 170),
+      :left, px 170,
     ],
     ["#cricket-field-diagrams dl dt ~ dd ~ dd ~ dd ~ dd ~ dd ~ dd"], [
-      :left, (px 340),
+      :left, px 340,
     ],
     ["#cricket-field-diagrams dl dt img"], [
-      :margin, (px -1),
+      :margin, px -1,
       :border, :none,
     ],
 
@@ -1381,5 +1381,5 @@ screen coerce = {
       :color, cyan,
     ],
 
-  ]])
+  ]]
 };

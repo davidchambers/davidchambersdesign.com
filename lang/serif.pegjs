@@ -133,26 +133,59 @@ SymbolChar
     !'\u007D' // RIGHT CURLY BRACKET
     .
 
+ElseToken           = 'else'            !IdentifierPart     { return text(); }
+IfToken             = 'if'              !IdentifierPart     { return text(); }
+InToken             = 'in'              !IdentifierPart     { return text(); }
+InstanceofToken     = 'instanceof'      !IdentifierPart     { return text(); }
+NewToken            = 'new'             !IdentifierPart     { return text(); }
+ThenToken           = 'then'            !IdentifierPart     { return text(); }
+TypeofToken         = 'typeof'          !IdentifierPart     { return text(); }
+
+ReservedWord
+  = UnaryOperator
+  / ExponentiationOperator
+  / MultiplicativeOperator
+  / AdditiveOperator
+  / ShiftOperator
+  / RelationalOperator
+  / EqualityOperator
+  / BitwiseANDOperator
+  / BitwiseXOROperator
+  / BitwiseOROperator
+  / LogicalANDOperator
+  / LogicalOROperator
+  / CoalesceOperator
+  / IfToken
+  / ThenToken
+  / ElseToken
+
 Identifier
-  = name:$(IdentifierChar)+
+  = !ReservedWord name:$(IdentifierStart IdentifierPart*)
     { return Serif.Identifier(name); }
 
-IdentifierChar
-  = !Whitespace
-    !'\u0022' // QUOTATION MARK
-    !'\u0028' // LEFT PARENTHESIS
-    !'\u0029' // RIGHT PARENTHESIS
-    !'\u002C' // COMMA
-    !'\u002E' // FULL STOP
-    !'\u003A' // COLON
-    !'\u003B' // SEMICOLON
-    !'\u003D' // EQUALS SIGN
-    !'\u005B' // LEFT SQUARE BRACKET
-    !'\u005D' // RIGHT SQUARE BRACKET
-    !'\u005F' // LOW LINE
-    !'\u007B' // LEFT CURLY BRACKET
-    !'\u007D' // RIGHT CURLY BRACKET
-    .
+IdentifierStart
+  = 'A' / 'B' / 'C' / 'D' / 'E' / 'F' / 'G' / 'H' / 'I' / 'J' / 'K' / 'L' / 'M' / 'N' / 'O' / 'P' / 'Q' / 'R' / 'S' / 'T' / 'U' / 'V' / 'W' / 'X' / 'Y' / 'Z'
+  / 'a' / 'b' / 'c' / 'd' / 'e' / 'f' / 'g' / 'h' / 'i' / 'j' / 'k' / 'l' / 'm' / 'n' / 'o' / 'p' / 'q' / 'r' / 's' / 't' / 'u' / 'v' / 'w' / 'x' / 'y' / 'z'
+  / "'"
+  / '%'
+  / '!'
+  / '~'
+  / '<'
+  / '>'
+  / '↑'
+  / '↓'
+  / '←'
+  / '→'
+  / '⇧'
+  / '⇩'
+  / '⇦'
+  / '⇨'
+
+IdentifierPart
+  = IdentifierStart
+  / '0' / '1' / '2' / '3' / '4' / '5' / '6' / '7' / '8' / '9'
+  / '-'
+  / '/'
 
 ArrayExpression
   = '[' Separator* ']'
@@ -197,9 +230,16 @@ ImportMeta
 
 MemberExpression
   = object:(
-        'new' Separator+ callee:MemberExpression Separator* args:Arguments
-        { return Serif.NewExpression(callee, args); }
-      / PrimaryExpression
+        BooleanLiteral
+      / NumberLiteral
+      / StringLiteral
+      / SymbolLiteral
+      / ArrayExpression
+      / ObjectExpression
+      / ImportMeta
+      / NewExpression
+      / Identifier
+      / BlockExpression
     )
     properties:(
         SymbolLiteral
@@ -207,6 +247,10 @@ MemberExpression
       / '[' Separator* property:Expression Separator* ']' { return property; }
     )*
     { return properties.reduce(Serif.MemberExpression, object); }
+
+NewExpression
+  = NewToken Separator+ callee:MemberExpression Separator* args:Arguments
+    { return Serif.NewExpression(callee, args); }
 
 CallExpression
   = head:MemberExpression
@@ -222,29 +266,32 @@ Arguments
   = '(' Separator* ')'
     { return []; }
   / '(' Separator*
-    head:ConditionalExpression
-    tail:(Separator* ',' Separator* argument:(SpreadElement / ConditionalExpression) { return argument; })*
+    head:Expression
+    tail:(Separator* ',' Separator* argument:(SpreadElement / Expression) { return argument; })*
     Separator* ')'
     { return [head, ...tail]; }
 
+ArrowFunctionExpression
+  = parameter:Identifier Separator+ '=>' Separator+ body:Expression
+    { return Serif.ArrowFunctionExpression(parameter, body); }
+  / CallExpression
+
 Application
-  = '('
-    Separator* callee:Expression
-    args:(Separator+ arg:Expression { return arg; })+
-    Separator* ')'
+  = callee:ArrowFunctionExpression
+    args:(Separator+ arg:ArrowFunctionExpression { return arg; })*
     { return Serif.Application(callee, args); }
 
 UnaryOperator
-  = 'typeof'
+  = TypeofToken
   / '+'
   / '-'
   / '~'
   / '!'
 
 UnaryExpression
-  = operator:UnaryOperator Separator+ argument:PrimaryExpression
+  = operator:UnaryOperator Separator+ argument:Application
     { return Serif.UnaryExpression(operator, argument); }
-  / CallExpression
+  / Application
 
 ExponentiationOperator
   = '**'
@@ -304,8 +351,8 @@ RelationalOperator
   / '<'
   / '>='
   / '>'
-  / 'instanceof'
-  / 'in'
+  / InstanceofToken
+  / InToken
 
 RelationalExpression
   = left:ShiftExpression
@@ -403,20 +450,15 @@ CoalesceExpression
     )*
     { return tail.reduce((left, {operator, right}) => Serif.CoalesceExpression(operator, left, right), left); }
 
-ArrowFunctionExpression
-  = parameter:Identifier Separator+ '=>' Separator+ body:Expression
-    { return Serif.ArrowFunctionExpression(parameter, body); }
-  / CoalesceExpression
-
 ConditionalExpression
-  = 'if'
+  = IfToken
     Separator+ predicate:ConditionalExpression
-    Separator+ 'then'
+    Separator+ ThenToken
     Separator+ consequent:ConditionalExpression
-    Separator+ 'else'
+    Separator+ ElseToken
     Separator+ alternative:ConditionalExpression
     { return Serif.ConditionalExpression(predicate, consequent, alternative); }
-  / ArrowFunctionExpression
+  / CoalesceExpression
 
 BlockExpression
   = '{' Separator*
@@ -426,15 +468,9 @@ BlockExpression
     { return Serif.BlockExpression([head, ...tail]); }
 
 Statement
-  = VariableDeclaration
-  / FunctionDeclaration
+  = FunctionDeclaration
+  / VariableDeclaration
   / ExpressionStatement
-
-VariableDeclaration
-  = name:(ident:Identifier { return ident.name; })
-    Separator+ '='
-    Separator+ expression:Expression
-    { return Serif.VariableDeclaration(name, expression); }
 
 FunctionDeclaration
   = name:(ident:Identifier { return ident.name; })
@@ -442,6 +478,12 @@ FunctionDeclaration
     Separator+ '='
     Separator+ body:Expression
     { return Serif.FunctionDeclaration(name, parameterNames, body); }
+
+VariableDeclaration
+  = name:(ident:Identifier { return ident.name; })
+    Separator+ '='
+    Separator+ expression:Expression
+    { return Serif.VariableDeclaration(name, expression); }
 
 ExpressionStatement
   = expression:Expression
@@ -490,15 +532,3 @@ Separator
 
 Expression
   = ConditionalExpression
-
-PrimaryExpression
-  = BooleanLiteral
-  / NumberLiteral
-  / StringLiteral
-  / SymbolLiteral
-  / ArrayExpression
-  / ObjectExpression
-  / ImportMeta
-  / Identifier
-  / BlockExpression
-  / Application

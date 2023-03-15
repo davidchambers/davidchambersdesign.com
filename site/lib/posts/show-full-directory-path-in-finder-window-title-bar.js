@@ -93,11 +93,11 @@ import {
 import datetime from '../datetime.js';
 const body = [
   excerpt([p([
-      'If you have ever found yourself command-clicking the\n           title of a Finder window to find out where you are (',
+      'If you have ever found yourself command-clicking the\n      title of a Finder window to find out where you are (',
       strong('/Library/Fonts'),
       ' or ',
       strong('~/Library/Fonts'),
-      '\n           is one I\'ve double-checked many times), you\'ll understand how\n           pleased I was to discover that there is a command which can be\n           entered in Terminal to ',
+      '\n      is one I\'ve double-checked many times), you\'ll understand how\n      pleased I was to discover that there is a command which can be\n      entered in Terminal to ',
       a('http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/')('show full directory paths in Finder window title bars'),
       '.'
     ])]),
@@ -105,15 +105,15 @@ const body = [
     strong('Before:'),
     ' Finder windows with directory name only in title bar'
   ]),
-  p(['In the screenshot above, it is clear that the two Finder windows are\n       displaying different Fonts folders, but it is unclear which is which.']),
+  p(['In the screenshot above, it is clear that the two Finder windows are\n    displaying different Fonts folders, but it is unclear which is which.']),
   p([
-    'To display the full path, copy and paste the following into Terminal\n       and hit ',
+    'To display the full path, copy and paste the following into Terminal\n    and hit ',
     strong('return'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('console'))('\n     defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES\n     '),
+  code$002Dblock(Symbol.for('console'))('\n    defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES\n  '),
   p(['For the changes to take effect, you will need to restart Finder:']),
-  code$002Dblock(Symbol.for('console'))('\n     killall Finder\n     '),
+  code$002Dblock(Symbol.for('console'))('\n    killall Finder\n  '),
   captioned$002Dimage('/images/posts/2/finder-windows-with-paths.png')('Finder windows with paths')([
     strong('After:'),
     ' Finder windows with full directory path in title bar'
@@ -124,9 +124,9 @@ const body = [
     ' users.'
   ]),
   p(['To revert to the default title bar treatment, simply enter:']),
-  code$002Dblock(Symbol.for('console'))('\n     defaults write com.apple.finder _FXShowPosixPathInTitle -bool NO\n     '),
+  code$002Dblock(Symbol.for('console'))('\n    defaults write com.apple.finder _FXShowPosixPathInTitle -bool NO\n  '),
   p(['Then, restart Finder once again:']),
-  code$002Dblock(Symbol.for('console'))('\n     killall Finder\n     ')
+  code$002Dblock(Symbol.for('console'))('\n    killall Finder\n  ')
 ];
 export default {
   ['id']: 2,

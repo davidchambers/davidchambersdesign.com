@@ -88,11 +88,11 @@ import {
 } from '../elements.js';
 import datetime from '../datetime.js';
 const body = [
-  excerpt([p(['I\'ve been using OS X almost exclusively for the last three\n           or four years, but it was only recently that I discovered the\n           system-wide method for changing keyboard shortcuts. I think\n           the reason that this feature eluded me for so long is that so\n           many of the hours I\'ve spent on OS X have involved the use of\n           the Adobe applications Photoshop, Illustrator, and InDesign,\n           which provide their own means of changing keyboard shortcuts.\n           I assumed that since application developers sometimes provide\n           their own interfaces for changing keyboard shortcuts, the\n           operating system must lack this functionality. I was wrong.'])]),
+  excerpt([p(['I\'ve been using OS X almost exclusively for the last three\n      or four years, but it was only recently that I discovered the\n      system-wide method for changing keyboard shortcuts. I think\n      the reason that this feature eluded me for so long is that so\n      many of the hours I\'ve spent on OS X have involved the use of\n      the Adobe applications Photoshop, Illustrator, and InDesign,\n      which provide their own means of changing keyboard shortcuts.\n      I assumed that since application developers sometimes provide\n      their own interfaces for changing keyboard shortcuts, the\n      operating system must lack this functionality. I was wrong.'])]),
   p([
     'I stumbled upon this useful information while reading ',
     a('http://caminobrowser.org/documentation/faq/#cust_change')('Camino\'s FAQ'),
-    '. I have reproduced its step-by-step instructions\n       below, since they are right on the money.'
+    '. I have reproduced its step-by-step instructions\n    below, since they are right on the money.'
   ]),
   ul([
     li(['First, quit \xABapplication\xBB; if it is running.']),
@@ -115,7 +115,7 @@ const body = [
       strong('<application>'),
       '.'
     ]),
-    li(['In the "Menu Title" field, type the exact name of the menu\n            item you want to change, and in the "Keyboard Shortcut" field,\n            type the new shortcut you want that menu item to have. Press the\n            "OK" button to save the new shortcut.']),
+    li(['In the "Menu Title" field, type the exact name of the menu\n         item you want to change, and in the "Keyboard Shortcut" field,\n         type the new shortcut you want that menu item to have. Press the\n         "OK" button to save the new shortcut.']),
     li(['You may now relaunch <application>.'])
   ])
 ];

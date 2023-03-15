@@ -6,72 +6,68 @@ export default {
   id: 51,
   slug: "optimization-via-stringification",
   title: "Optimization via stringification",
-  datetime: (datetime "2010-06-03" "14:28:00" :Pacific/Auckland),
+  datetime: datetime "2010-06-03" "14:28:00" :Pacific/Auckland,
   tags: ["css", "optimization", "python"],
   body: body,
 };
 
 body = [
 
-  (excerpt
+  excerpt [
+    p [
+     "One way to reduce the number of HTTP requests a page requires
+      is to group (non-content) images into sprites. An even better
+      way is to remove these images from the server altogether;
+      instead include them as encoded strings in your style sheet.",
+    ],
+  ],
 
-     [(p
-         ["One way to reduce the number of HTTP requests a page requires
-           is to group (non-content) images into sprites. An even better
-           way is to remove these images from the server altogether;
-           instead include them as encoded strings in your style sheet."])]),
+  p [
+   "Instead of...",
+  ],
 
-  (p
-     ["Instead of..."]),
+  code-block :css "
+    a[href=\"/contact/\"] {
+        background: url(/images/sprite.png) no-repeat 0 -30px;
+    }
+  ",
 
-  (code-block :css
+  p [
+   "use something like...",
+  ],
 
-     "
-     a[href=\"/contact/\"] {
-         background: url(/images/sprite.png) no-repeat 0 -30px;
-     }
-     "),
+  code-block :css "
+    a[href=\"/contact/\"] {
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALJJREFUeNrs1eEJgzAQBWATHKkjZAZHiCtkhKxgRnAGR+gMWSVypflRQfOeSgvlDgTxjvuSC0RTSul+EUZhhRX+bziNj0ur8tPT7OV6qEGMFJhCaNZYBA3DAKNSiyzUIs3iPEO41EgtEhbdSQtnUAo+wlmUhiWccx+4vMs3NnqmeEmpc96/norXndbc7fC28Xa0kmNwewbdPYY3fgvMjhDFm6POOUM3kf6dFFZY4a/FKsAADsZ+Lb8VFH4AAAAASUVORK5CYII=) no-repeat;
+    }
+  ",
 
-  (p
-     ["use something like..."]),
+  p [
+   "I threw together a Python script which converts images to encoded
+    strings.",
+  ],
 
-  (code-block :css
+  code-block :python "
+    #stringify.py
+    import base64
+    import sys
 
-     "
-     a[href=\"/contact/\"] {
-         background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALJJREFUeNrs1eEJgzAQBWATHKkjZAZHiCtkhKxgRnAGR+gMWSVypflRQfOeSgvlDgTxjvuSC0RTSul+EUZhhRX+bziNj0ur8tPT7OV6qEGMFJhCaNZYBA3DAKNSiyzUIs3iPEO41EgtEhbdSQtnUAo+wlmUhiWccx+4vMs3NnqmeEmpc96/norXndbc7fC28Xa0kmNwewbdPYY3fgvMjhDFm6POOUM3kf6dFFZY4a/FKsAADsZ+Lb8VFH4AAAAASUVORK5CYII=) no-repeat;
-     }
-     "),
+    f = open(sys.argv[1], 'rb')
+    s = f.read()
+    f.close()
 
-  (p
-     ["I threw together a Python script which converts images to encoded
-       strings."]),
+    try:
+        altchars = sys.argv[2]
+    except IndexError:
+        altchars = None
 
-  (code-block :python
+    print base64.b64encode(s, altchars)
+  ",
 
-     "
-     #stringify.py
-     import base64
-     import sys
+  h4 "Usage",
 
-     f = open(sys.argv[1], 'rb')
-     s = f.read()
-     f.close()
-
-     try:
-         altchars = sys.argv[2]
-     except IndexError:
-         altchars = None
-
-     print base64.b64encode(s, altchars)
-     "),
-
-  (h4 "Usage"),
-
-  (code-block :console
-
-     "
-     $ python stringify.py /path/to/image.png
-     "),
+  code-block :console "
+    $ python stringify.py /path/to/image.png
+  ",
 
 ];

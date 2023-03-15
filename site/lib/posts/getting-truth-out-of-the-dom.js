@@ -88,12 +88,12 @@ import {
 } from '../elements.js';
 import datetime from '../datetime.js';
 const body = [
-  p(['Recording of Yehuda Katz\'s presentation from Bay Area\n       jQuery Conf 2011.']),
+  p(['Recording of Yehuda Katz\'s presentation from Bay Area jQuery Conf 2011.']),
   p([a('http://vimeo.com/22687694')('Getting truth out of the DOM')]),
   p([
     'While watching this it ',
     em('finally'),
-    ' became clear to me why\n       storing state in the DOM is a terrible idea for complex applications.\n       The approach comes unstuck as soon as one wishes to display an entity\n       more than once in a view (such as in a list\u2013details split view).'
+    ' became clear to me why\n    storing state in the DOM is a terrible idea for complex applications.\n    The approach comes unstuck as soon as one wishes to display an entity\n    more than once in a view (such as in a list\u2013details split view).'
   ])
 ];
 export default {

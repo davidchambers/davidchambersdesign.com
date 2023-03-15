@@ -98,12 +98,12 @@ const body = [
     p([
       'Alex Gorbatchev\'s ',
       a('http://alexgorbatchev.com/wiki/SyntaxHighlighter')('SyntaxHighlighter'),
-      '\n           is a well-written bundle which enables syntax highlighting of\n           code via JavaScript. More than twenty languages are supported\n           "out of the box", and brushes (JavaScript files containing\n           language-specific regular expressions) can be created to\n           support additional languages.'
+      '\n      is a well-written bundle which enables syntax highlighting of\n      code via JavaScript. More than twenty languages are supported\n      "out of the box", and brushes (JavaScript files containing\n      language-specific regular expressions) can be created to\n      support additional languages.'
     ]),
-    p(['Unfortunately, however, several of the brushes that come bundled\n           with SyntaxHighlighter are far from perfect. Have a look at the\n           bundled PHP brush in action below.']),
+    p(['Unfortunately, however, several of the brushes that come bundled\n      with SyntaxHighlighter are far from perfect. Have a look at the\n      bundled PHP brush in action below.']),
     captioned$002Dimage('/images/posts/16/bundled-php-brush-in-action.png')('Screenshot of PHP code highlighted by SyntaxHighlighter\'s PHP brush')('Screenshot of bundled PHP brush in action')
   ]),
-  p(['I would give this brush 6/10. Here are its deficiencies,\n       as I see them:']),
+  p(['I would give this brush 6/10. Here are its deficiencies,\n    as I see them:']),
   ul([
     li('PHP opening and closing tags are not captured'),
     li('Variables within double-quoted strings are not captured'),
@@ -114,9 +114,9 @@ const body = [
   p([
     'I\'ve created an ',
     a('/downloads/shBrushPhp.js')('improved PHP brush'),
-    '\n       which remedies these deficiencies. It uses the following class names: ',
+    '\n    which remedies these deficiencies. It uses the following class names: ',
     strong('phptag'),
-    ' for opening and closing PHP tags, including short\n       tags; ',
+    ' for opening and closing PHP tags, including short\n    tags; ',
     strong('comments'),
     ' for both single- and multi-line comments; ',
     strong('string'),
@@ -139,13 +139,13 @@ const body = [
     ' for exactly what you\'d expect.'
   ]),
   update(datetime('2009-08-16')('02:33:00')(Symbol.for('Pacific/Auckland')))([
-    p(['Until this point I have had a class name added to each\n           div.syntaxhighlighter element to allow code to be coloured\n           in a language-specific manner. This approach fails, however,\n           when a highlighted block features two languages (PHP and HTML,\n           for example). CSS selectors cannot differentiate between\n           two code elements with the same class name in the same\n           div.syntaxhighlighter element.']),
+    p(['Until this point I have had a class name added to each\n      div.syntaxhighlighter element to allow code to be coloured\n      in a language-specific manner. This approach fails, however,\n      when a highlighted block features two languages (PHP and HTML,\n      for example). CSS selectors cannot differentiate between\n      two code elements with the same class name in the same\n      div.syntaxhighlighter element.']),
     p([
-      'Each language, therefore, needs to use its own class names.\n           It is easy to differentiate ',
+      'Each language, therefore, needs to use its own class names.\n      It is easy to differentiate ',
       code('code.php-comment'),
       ' from ',
       code('code.xml-comment'),
-      ', allowing PHP comments to be styled\n           differently from XML comments if desired.'
+      ', allowing PHP comments to be styled\n      differently from XML comments if desired.'
     ]),
     p([
       'The updated class names are ',
@@ -171,7 +171,7 @@ const body = [
       '.'
     ])
   ]),
-  code$002Dblock(Symbol.for('php'))('\n     <?php\n\n     \'single-quoted string\';\n\n     "double-quoted string";\n\n     // single-quoted string with literal dollar sign\n     \'fruit smoothie: $5.50\';\n\n     // double-quoted string containing a variable\n     "fruit smoothie: $cost";\n\n     // numerical value\n     $cost = 5.50;\n\n     // a few common function calls\n     empty($variable);\n     isset($variable);\n     strlen($variable);\n     strrev($variable);\n\n     // a call to a custom function\n     is_ready_to_order($customer);\n\n     ?>\n     '),
+  code$002Dblock(Symbol.for('php'))('\n    <?php\n\n    \'single-quoted string\';\n\n    "double-quoted string";\n\n    // single-quoted string with literal dollar sign\n    \'fruit smoothie: $5.50\';\n\n    // double-quoted string containing a variable\n    "fruit smoothie: $cost";\n\n    // numerical value\n    $cost = 5.50;\n\n    // a few common function calls\n    empty($variable);\n    isset($variable);\n    strlen($variable);\n    strrev($variable);\n\n    // a call to a custom function\n    is_ready_to_order($customer);\n\n    ?>\n  '),
   caption(['Live rendering of improved PHP brush'])
 ];
 export default {

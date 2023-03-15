@@ -4,7 +4,7 @@ export default datetime;
 
 datetime date time zone = {
   luxon.DateTime.fromFormat(
-    date + " " + time + " (" + (Symbol.keyFor zone) + ")",
+    date + " " + time + " (" + Symbol.keyFor zone + ")",
     "yyyy-MM-dd HH:mm:ss (z)",
     {setZone: true}
   )

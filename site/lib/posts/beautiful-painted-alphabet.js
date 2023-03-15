@@ -91,14 +91,14 @@ const body = [
   p([
     'I came across this recently while browsing ',
     a('http://markboulton.co.uk/')('Mark Boulton\'s site'),
-    '. The style\n       and control of Job\'s hand is played off against the exuberance of his\n       son\'s approach. An upbeat soundtrack accompanies the performance.'
+    '. The style\n    and control of Job\'s hand is played off against the exuberance of his\n    son\'s approach. An upbeat soundtrack accompanies the performance.'
   ]),
   dl([
     dt(a('http://www.youtube.com/watch?v=ajjg3faIQ5A')('abcdefghijklmnopqrstuvwxyz')),
     dd('Video by Job & Roel Wouters')
   ]),
   p(['From the director:']),
-  blockquote(p(['Job and Gradus are both ambitious concerning letters.\n          Spontaneous jam sessions in our studio inspired us to\n          make this film about the fun [of] drawing letters.']))
+  blockquote([p(['Job and Gradus are both ambitious concerning letters.\n      Spontaneous jam sessions in our studio inspired us to\n      make this film about the fun [of] drawing letters.'])])
 ];
 export default {
   ['id']: 1,

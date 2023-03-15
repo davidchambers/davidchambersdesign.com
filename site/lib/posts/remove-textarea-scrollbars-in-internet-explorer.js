@@ -90,38 +90,38 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
-    'I was delighted to discover this "trick" over on CSS-Tricks\n       in a post titled ',
+    'I was delighted to discover this "trick" over on CSS-Tricks\n    in a post titled ',
     a('http://css-tricks.com/textarea-tricks/')('Textarea Tricks'),
     '. (See, Chris, I ',
     em('do'),
     ' like you!)'
   ]),
   p([
-    'Internet Explorer displays a (completely pointless) inactive\n       scrollbar in empty ',
+    'Internet Explorer displays a (completely pointless) inactive\n    scrollbar in empty ',
     code('textarea'),
-    ' elements, unlike other\n       browsers which wait until a scrollbar is actually ',
+    ' elements, unlike other\n    browsers which wait until a scrollbar is actually ',
     em('required'),
-    '\n       before displaying it.'
+    '\n    before displaying it.'
   ]),
   p([
-    'As it turns out, there\'s a dead simple way to prevent this,\n       and once again its everybody\'s friend ',
+    'As it turns out, there\'s a dead simple way to prevent this,\n    and once again its everybody\'s friend ',
     code('overflow'),
-    '\n       to the rescue.'
+    '\n    to the rescue.'
   ]),
-  code$002Dblock(Symbol.for('css'))('\n     textarea { overflow: auto; }\n     '),
+  code$002Dblock(Symbol.for('css'))('\n    textarea { overflow: auto; }\n  '),
   p([
     'The ',
     code('overflow'),
-    ' property seems to be a magical remedy\n       for a variety of different ailments, most significant of which\n       is the collapsing of an element whose children are all floated.\n       Applying ',
+    ' property seems to be a magical remedy\n    for a variety of different ailments, most significant of which\n    is the collapsing of an element whose children are all floated.\n    Applying ',
     code('overflow: auto'),
-    ' makes the element wrap its\n       children rather than letting them "hang".'
+    ' makes the element wrap its\n    children rather than letting them "hang".'
   ]),
   p([
     'One thing that I sometimes ponder, though, is why ',
     code('visible'),
     ' was selected as the default ',
     code('overflow'),
-    '\n       value \u2013 it seems inferior to ',
+    '\n    value \u2013 it seems inferior to ',
     code('auto'),
     ' in most use cases.'
   ])

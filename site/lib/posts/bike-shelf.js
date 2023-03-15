@@ -94,7 +94,7 @@ const body = [
   p([
     'The article from which this photograph is lifted, entitled ',
     a('http://knifeandsaw.wordpress.com/furniture/bike-shelf/')('Bike Shelf'),
-    ', is over on ',
+    ',\n    is over on ',
     a('http://knifeandsaw.wordpress.com/')('Knife & Saw'),
     '.'
   ])

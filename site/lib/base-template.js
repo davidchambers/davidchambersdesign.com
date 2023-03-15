@@ -121,42 +121,42 @@ const base$002Dtemplate = document$002Dtitle => {
       script({})('try{Typekit.load();}catch(e){}')
     ]),
     body([
-      div({ [Symbol.for('id')]: 'skip' })(a$0027({ [Symbol.for('href')]: '#main' })('Skip to main content')),
+      div({ [Symbol.for('id')]: 'skip' })([a$0027({ [Symbol.for('href')]: '#main' })('Skip to main content')]),
       div({ [Symbol.for('id')]: 'wrap' })([
-        div({ [Symbol.for('id')]: 'header' })(header([
-          a$0027({
-            [Symbol.for('id')]: 'title',
-            [Symbol.for('href')]: '/'
-          })('David Chambers Design'),
-          hr,
-          p('It\'s where I share interesting info with other web geeks'),
-          nav$0027({ [Symbol.for('id')]: 'nav' })(ul([
-            li(a$0027({ [Symbol.for('href')]: '/about/' })(span({})([
-              strong('About.'),
-              text(' Who I am and what I do.')
-            ]))),
-            li(a$0027({ [Symbol.for('href')]: '/contact/' })(span({})([
-              strong('Contact.'),
-              text(' Just in case you want to get in touch.')
-            ]))),
-            li(a$0027({ [Symbol.for('href')]: '/archives/' })(span({})([
-              strong('Archives.'),
-              text(' Old posts, recent posts, they\'re all here.')
-            ]))),
-            li(a$0027({ [Symbol.for('href')]: '/tags/' })(span({})([
-              strong('Tags.'),
-              text(' Helpful if you\'re after posts on a particular topic.')
-            ]))),
-            li(a$0027({ [Symbol.for('href')]: 'https://bitbucket.org/davidchambers' })(span({})([
-              strong('Bitbucket.'),
-              text(' Home to most of my open-source projects.')
-            ]))),
-            li(a$0027({ [Symbol.for('href')]: '/twitter/' })(span({})([
-              strong('Twitter.'),
-              text(' It\'s where I chirrup\u2026 or chirp\u2026 or something.')
-            ])))
-          ]))
-        ])),
+        div({ [Symbol.for('id')]: 'header' })([header([
+            a$0027({
+              [Symbol.for('id')]: 'title',
+              [Symbol.for('href')]: '/'
+            })('David Chambers Design'),
+            hr,
+            p('It\'s where I share interesting info with other web geeks'),
+            nav$0027({ [Symbol.for('id')]: 'nav' })([ul([
+                li([a$0027({ [Symbol.for('href')]: '/about/' })(span({})([
+                    strong('About.'),
+                    text(' Who I am and what I do.')
+                  ]))]),
+                li([a$0027({ [Symbol.for('href')]: '/contact/' })(span({})([
+                    strong('Contact.'),
+                    text(' Just in case you want to get in touch.')
+                  ]))]),
+                li([a$0027({ [Symbol.for('href')]: '/archives/' })(span({})([
+                    strong('Archives.'),
+                    text(' Old posts, recent posts, they\'re all here.')
+                  ]))]),
+                li([a$0027({ [Symbol.for('href')]: '/tags/' })(span({})([
+                    strong('Tags.'),
+                    text(' Helpful if you\'re after posts on a particular topic.')
+                  ]))]),
+                li([a$0027({ [Symbol.for('href')]: 'https://bitbucket.org/davidchambers' })(span({})([
+                    strong('Bitbucket.'),
+                    text(' Home to most of my open-source projects.')
+                  ]))]),
+                li([a$0027({ [Symbol.for('href')]: '/twitter/' })(span({})([
+                    strong('Twitter.'),
+                    text(' It\'s where I chirrup\u2026 or chirp\u2026 or something.')
+                  ]))])
+              ])])
+          ])]),
         div({ [Symbol.for('id')]: 'main' })(main)
       ]),
       footer([p([

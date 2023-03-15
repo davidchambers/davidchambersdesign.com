@@ -6,50 +6,49 @@ export default {
   id: 57,
   slug: "empty-collections-are-valid-cache-data",
   title: "Empty collections are valid cache data",
-  datetime: (datetime "2010-07-06" "09:34:00" :Pacific/Auckland),
+  datetime: datetime "2010-07-06" "09:34:00" :Pacific/Auckland,
   tags: ["django"],
   body: body,
 };
 
 body = [
 
-  (p
-     ["When using Django's cache, ensure that empty collections
-       (", (code "[]"), ", ", (code "()"), ", ", (code "{}"), ") are
-       treated as valid cache data."]),
+  p [
+   "When using Django's cache, ensure that empty collections
+    (", code "[]", ", ", code "()", ", ", code "{}", ") are
+    treated as valid cache data.",
+  ],
 
-  (code-block :python
+  code-block :python "
+    cached = cache.get(cache_key)
+    if cached:
+        return cached
 
-     "
-     cached = cache.get(cache_key)
-     if cached:
-         return cached
+    # perform expensive operation
+  ",
 
-     # perform expensive operation
-     "),
+  p [
+   "In the above snippet, if the call to ", code "get", "
+    returns an empty collection the cached result is ignored
+    and the value is recalculated unnecessarily.",
+  ],
 
-  (p
-     ["In the above snippet, if the call to ", (code "get"), "
-       returns an empty collection the cached result is ignored
-       and the value is recalculated unnecessarily."]),
+  p [
+   "Avoid this by explicitly comparing the return value to ", code "None", ":",
+  ],
 
-  (p
-     ["Avoid this by explicitly comparing the return value to ",
-      (code "None"), ":"]),
+  code-block :python "
+    cached = cache.get(cache_key)
+    if cached is not None: # much better!
+        return cached
+  ",
 
-  (code-block :python
-
-     "
-     cached = cache.get(cache_key)
-     if cached is not None: # much better!
-         return cached
-     "),
-
-  (p
-     ["Django's documentation wisely advises against caching the
-       literal value ", (code "None"), ", and the above snippet makes
-       it clear why this is good advice – the ", (code "get"), " method
-       returns ", (code "None"), " when the cache does not contain an
-       entry for the supplied key."]),
+  p [
+   "Django's documentation wisely advises against caching the
+    literal value ", code "None", ", and the above snippet makes
+    it clear why this is good advice – the ", code "get", " method
+    returns ", code "None", " when the cache does not contain an
+    entry for the supplied key.",
+  ],
 
 ];

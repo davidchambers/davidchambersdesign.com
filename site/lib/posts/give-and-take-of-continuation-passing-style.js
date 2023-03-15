@@ -92,28 +92,28 @@ const body = [
   p([
     'I have been experimenting with ',
     a('https://en.wikipedia.org/wiki/Continuation-passing_style')('continuation-passing style'),
-    ' recently. Writing code in this\n       style feels strange but exciting! I recently discovered that one\n       can use functions in place of objects.'
+    ' recently. Writing code in this\n    style feels strange but exciting! I recently discovered that one\n    can use functions in place of objects.'
   ]),
   p([
-    'Local mutation and reassignment are acceptable, but I avoid them\n       whenever practical. As a result I use ',
+    'Local mutation and reassignment are acceptable, but I avoid them\n    whenever practical. As a result I use ',
     code('reduce'),
     ' ',
     em('a lot'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))('\n     //    reduce :: (b -> a -> b) -> b -> Array a -> b\n     const reduce = f => b => as => as.reduce ((b, a) => f (b) (a), b);\n\n     //    append :: a -> Array a -> Array a\n     const append = a => as => [...as, a];\n\n     //    blah :: Integer -> String -> { id :: Integer, name :: String }\n     const blah = id => name => ({id, name});\n\n     > reduce (({id, blahs}) => name => ({id: id + 1, blahs: append (blah (id) (name)) (blahs)}))\n     .        ({id: 1, blahs: []})\n     .        ([\'foo\', \'bar\', \'baz\'])\n     . .blahs\n     [{id: 1, name: \'foo\'}, {id: 2, name: \'bar\'}, {id: 3, name: \'baz\'}]\n     '),
+  code$002Dblock(Symbol.for('javascript'))('\n    //    reduce :: (b -> a -> b) -> b -> Array a -> b\n    const reduce = f => b => as => as.reduce ((b, a) => f (b) (a), b);\n\n    //    append :: a -> Array a -> Array a\n    const append = a => as => [...as, a];\n\n    //    blah :: Integer -> String -> { id :: Integer, name :: String }\n    const blah = id => name => ({id, name});\n\n    > reduce (({id, blahs}) => name => ({id: id + 1, blahs: append (blah (id) (name)) (blahs)}))\n    .        ({id: 1, blahs: []})\n    .        ([\'foo\', \'bar\', \'baz\'])\n    . .blahs\n    [{id: 1, name: \'foo\'}, {id: 2, name: \'bar\'}, {id: 3, name: \'baz\'}]\n  '),
   p([
-    '\u261D️ This has been my approach for the past several years. The accumulator\n       contains all necessary state, and at the end of the reduction I access\n       whichever fields are relevant (in this case just ',
+    '\u261D️ This has been my approach for the past several years. The accumulator\n    contains all necessary state, and at the end of the reduction I access\n    whichever fields are relevant (in this case just ',
     code('blahs'),
     ').'
   ]),
-  code$002Dblock(Symbol.for('javascript'))('\n     > reduce (cont => name => id => append (blah (id) (name)) (cont (id + 1)))\n     .        (id => [])\n     .        ([\'foo\', \'bar\', \'baz\'])\n     .        (1)\n     [{id: 3, name: \'foo\'}, {id: 2, name: \'bar\'}, {id: 1, name: \'baz\'}]\n     '),
+  code$002Dblock(Symbol.for('javascript'))('\n    > reduce (cont => name => id => append (blah (id) (name)) (cont (id + 1)))\n    .        (id => [])\n    .        ([\'foo\', \'bar\', \'baz\'])\n    .        (1)\n    [{id: 3, name: \'foo\'}, {id: 2, name: \'bar\'}, {id: 1, name: \'baz\'}]\n  '),
   p([
-    '\u261D️ This was my first attempt at using continuations. The problem is\n       that function wrapping happens from left to right, so the ',
+    '\u261D️ This was my first attempt at using continuations. The problem is\n    that function wrapping happens from left to right, so the ',
     code('id'),
-    '\n       is threaded from right to left, giving the wrong result.'
+    '\n    is threaded from right to left, giving the wrong result.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))('\n     > reduce (cont => name => id => blahs => cont (id + 1) (append (blah (id) (name)) (blahs)))\n     .        (id => blahs => blahs)\n     .        ([\'foo\', \'bar\', \'baz\'])\n     .        (1)\n     .        ([])\n     [{id: 1, name: \'baz\'}, {id: 2, name: \'bar\'}, {id: 3, name: \'baz\'}]\n     '),
+  code$002Dblock(Symbol.for('javascript'))('\n    > reduce (cont => name => id => blahs => cont (id + 1) (append (blah (id) (name)) (blahs)))\n    .        (id => blahs => blahs)\n    .        ([\'foo\', \'bar\', \'baz\'])\n    .        (1)\n    .        ([])\n    [{id: 1, name: \'baz\'}, {id: 2, name: \'bar\'}, {id: 3, name: \'baz\'}]\n  '),
   p([
     '\u261D️ This was my second attempt. The order is reversed, but the ',
     code('id'),
@@ -134,16 +134,16 @@ const body = [
     code('take'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))('\n     //    take :: (Integer -> Array String -> a) -> a\n     const take = give => give (1) ([]);\n     '),
+  code$002Dblock(Symbol.for('javascript'))('\n    //    take :: (Integer -> Array String -> a) -> a\n    const take = give => give (1) ([]);\n  '),
   p([
     code('a'),
     ' is a type variable. We have no idea what ',
     code('give'),
-    ',\n       the continuation provided to ',
+    ',\n    the continuation provided to ',
     code('take'),
     ', will return. ',
     code('take'),
-    ' returns whatever give returns, though, so the return\n       type of ',
+    ' returns whatever give returns, though, so the return\n    type of ',
     code('take'),
     ' matches the return type of ',
     code('give'),
@@ -152,25 +152,25 @@ const body = [
   p([
     'Having established that the type of the accumulator is ',
     code('(Integer -> Array String -> a) -> a'),
-    ', we need to\n       have the reducing function return a function of that type.'
+    ', we need to\n    have the reducing function return a function of that type.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))('\n     > reduce (take => name => give => give (1) ([blah (1) (name)]))\n     .        (give => give (1) ([]))\n     .        ([\'foo\', \'bar\', \'baz\'])\n     .        (id => blahs => blahs)\n     [{id: 1, name: \'baz\'}]\n     '),
+  code$002Dblock(Symbol.for('javascript'))('\n    > reduce (take => name => give => give (1) ([blah (1) (name)]))\n    .        (give => give (1) ([]))\n    .        ([\'foo\', \'bar\', \'baz\'])\n    .        (id => blahs => blahs)\n    [{id: 1, name: \'baz\'}]\n  '),
   p([
     '\u261D️ The answer is wrong -- we lost ',
     code('\'foo\''),
     ' and ',
     code('\'bar\''),
-    ',\n       and ',
+    ', and ',
     code('\'baz\''),
     ' has the wrong ',
     code('id'),
     ' -- but the types align.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))('\n     > reduce (take => name => take (id => blahs => give => give (id + 1) (append (blah (id) (name)) (blahs))))\n     .        (give => give (1) ([]))\n     .        ([\'foo\', \'bar\', \'baz\'])\n     .        (id => blahs => blahs)\n     [{id: 1, name: \'foo\'}, {id: 2, name: \'bar\'}, {id: 3, name: \'baz\'}]\n     '),
+  code$002Dblock(Symbol.for('javascript'))('\n    > reduce (take => name => take (id => blahs => give => give (id + 1) (append (blah (id) (name)) (blahs))))\n    .        (give => give (1) ([]))\n    .        ([\'foo\', \'bar\', \'baz\'])\n    .        (id => blahs => blahs)\n    [{id: 1, name: \'foo\'}, {id: 2, name: \'bar\'}, {id: 3, name: \'baz\'}]\n  '),
   p([
     '\u261D️ Success! We receive a continuation we refer to as ',
     code('take'),
-    '.\n       We apply ',
+    '.\n    We apply ',
     code('take'),
     ' to gain access to ',
     code('id'),
@@ -178,18 +178,18 @@ const body = [
     code('blahs'),
     ', and we then return a new continuation, ',
     code('give => give (id + 1) (append (blah (id) (name)) (blahs))'),
-    ',\n       which is the ',
+    ',\n    which is the ',
     code('take'),
     ' function for the next iteration.'
   ]),
   p([
-    'This approach extends to an arbitrary number of state variables\n       (e.g. ',
+    'This approach extends to an arbitrary number of state variables\n    (e.g. ',
     code('give => give (0) (\'\') ([]) ({})'),
-    '). I find the\n       names ',
+    '). I find the\n    names ',
     code('give'),
     ' and ',
     code('take'),
-    ' helpful for\n       remembering which continuation is which. :)'
+    ' helpful for\n    remembering which continuation is which. :)'
   ])
 ];
 export default {

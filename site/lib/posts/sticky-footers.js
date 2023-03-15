@@ -91,33 +91,33 @@ import datetime from '../datetime.js';
 const body = [
   excerpt([
     p([strong('Sticky footers should be ubiquitous. They are not.')]),
-    p(['This leads me to believe that many developers are unaware\n           of how to prevent footers from floating up on pages without\n           much content.'])
+    p(['This leads me to believe that many developers are unaware\n      of how to prevent footers from floating up on pages without\n      much content.'])
   ]),
-  p(['I\'ll explain how it\'s done. The markup must look something like\n       the following:']),
-  code$002Dblock(Symbol.for('html'))('\n     <body>\n         <div id="wrap">\n             <div id="main">\n             </div>\n         </div>\n         <div id="footer">\n         </div>\n     </body>\n     '),
-  p(['The required CSS is also straightforward. First, set the heights\n       of the html and body elements to the height of the viewport:']),
-  code$002Dblock(Symbol.for('css'))('\n     html    { height: 100%; }\n     body    { height: 100%; }\n     '),
+  p(['I\'ll explain how it\'s done. The markup must look something like\n    the following:']),
+  code$002Dblock(Symbol.for('html'))('\n    <body>\n        <div id="wrap">\n            <div id="main">\n            </div>\n        </div>\n        <div id="footer">\n        </div>\n    </body>\n  '),
+  p(['The required CSS is also straightforward. First, set the heights\n    of the html and body elements to the height of the viewport:']),
+  code$002Dblock(Symbol.for('css'))('\n    html    { height: 100%; }\n    body    { height: 100%; }\n  '),
   p([
     'This makes it possible to set the ',
     em('minimum'),
-    ' height of\n       the wrapper div to the height of the viewport:'
+    ' height of\n    the wrapper div to the height of the viewport:'
   ]),
-  code$002Dblock(Symbol.for('css'))('\n     #wrap   { min-height: 100%; }\n     '),
-  p(['Next, pull up the footer so that it\'s visible without scrolling\n       on pages without a lot of content:']),
-  code$002Dblock(Symbol.for('css'))('\n     #footer { margin-top: -5em; height: 5em; }\n     '),
-  p(['Finally, apply bottom padding to the main content div to ensure\n       that nothing is covered by the footer:']),
-  code$002Dblock(Symbol.for('css'))('\n     #main   { padding-bottom: 5em; }\n     '),
+  code$002Dblock(Symbol.for('css'))('\n    #wrap   { min-height: 100%; }\n  '),
+  p(['Next, pull up the footer so that it\'s visible without scrolling\n    on pages without a lot of content:']),
+  code$002Dblock(Symbol.for('css'))('\n    #footer { margin-top: -5em; height: 5em; }\n  '),
+  p(['Finally, apply bottom padding to the main content div to ensure\n    that nothing is covered by the footer:']),
+  code$002Dblock(Symbol.for('css'))('\n    #main   { padding-bottom: 5em; }\n  '),
   p(['Putting it all together gives the following:']),
-  code$002Dblock(Symbol.for('css'))('\n     html    { height: 100%; }\n     body    { height: 100%; }\n     #wrap   { min-height: 100%; }\n     #main   { padding-bottom: 5em; }\n     #footer { margin-top: -5em; height: 5em; }\n     '),
+  code$002Dblock(Symbol.for('css'))('\n    html    { height: 100%; }\n    body    { height: 100%; }\n    #wrap   { min-height: 100%; }\n    #main   { padding-bottom: 5em; }\n    #footer { margin-top: -5em; height: 5em; }\n  '),
   p([
-    'This CSS works in all modern browsers. If you need to support\n       antiquated browsers, you should have a look at the hacks suggested\n       at ',
+    'This CSS works in all modern browsers. If you need to support\n    antiquated browsers, you should have a look at the hacks suggested\n    at ',
     a('http://www.cssstickyfooter.com/')('CSS Sticky Footer'),
     '.'
   ]),
   p([strong([
       'Check out the ',
       a('/examples/sticky-footers/')('sticky footer demo'),
-      '\n           to see all this theory in action.'
+      '\n      to see all this theory in action.'
     ])])
 ];
 export default {

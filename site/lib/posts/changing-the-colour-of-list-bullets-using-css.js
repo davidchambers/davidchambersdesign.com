@@ -90,29 +90,29 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['So, you\'re about to style an unordered list of some sort...']),
-  code$002Dblock(Symbol.for('html'))('\n     <h1>TXJS 2011 Speakers</h1>\n     <ul>\n       <li>Brendan Eich</li>\n       <li>Alex Russell</li>\n       <li>Douglas Crockford</li>\n       <li>Paul Irish</li>\n     </ul>\n     '),
-  p(['You\'ve decided upon hanging square bullets in a light grey \u2013\n       nothing too distracting...']),
-  code$002Dblock(Symbol.for('css'))('\n     ul {\n       list-style: square outside;\n       color: #ccc;\n     }\n     li {\n       color: #000;\n     }\n     '),
-  p(['This should do the trick, but doesn\'t for some reason! How the heck\n       does one target the bullets and only the bullets? As far as I know\n       it\'s not possible.']),
+  code$002Dblock(Symbol.for('html'))('\n    <h1>TXJS 2011 Speakers</h1>\n    <ul>\n      <li>Brendan Eich</li>\n      <li>Alex Russell</li>\n      <li>Douglas Crockford</li>\n      <li>Paul Irish</li>\n    </ul>\n  '),
+  p(['You\'ve decided upon hanging square bullets in a light grey \u2013\n    nothing too distracting...']),
+  code$002Dblock(Symbol.for('css'))('\n    ul {\n      list-style: square outside;\n      color: #ccc;\n    }\n    li {\n      color: #000;\n    }\n  '),
+  p(['This should do the trick, but doesn\'t for some reason! How the heck\n    does one target the bullets and only the bullets? As far as I know\n    it\'s not possible.']),
   h3$0027({ [Symbol.for('id')]: 'conventional-hack' })('Conventional hack'),
-  code$002Dblock(Symbol.for('html'))('\n     <h1>TXJS 2011 Speakers</h1>\n     <ul>\n       <li><span>Brendan Eich</span></li>\n       <li><span>Alex Russell</span></li>\n       <li><span>Douglas Crockford</span></li>\n       <li><span>Paul Irish</span></li>\n     </ul>\n\n     <style>\n       ul {\n         list-style: square outside;\n         color: #ccc;\n       }\n       li > span {\n         color: #000;\n       }\n     </style>\n     '),
+  code$002Dblock(Symbol.for('html'))('\n    <h1>TXJS 2011 Speakers</h1>\n    <ul>\n      <li><span>Brendan Eich</span></li>\n      <li><span>Alex Russell</span></li>\n      <li><span>Douglas Crockford</span></li>\n      <li><span>Paul Irish</span></li>\n    </ul>\n\n    <style>\n      ul {\n        list-style: square outside;\n        color: #ccc;\n      }\n      li > span {\n        color: #000;\n      }\n    </style>\n  '),
   p([
     'This gets the job done, but those ',
     code('span'),
-    's are ugly \u2013\n       there are ways to achieve the desired visual effect without\n       hacking the markup.'
+    's are ugly \u2013\n    there are ways to achieve the desired visual effect without\n    hacking the markup.'
   ]),
   h3$0027({ [Symbol.for('id')]: 'background-image-technique' })('Background image technique'),
-  code$002Dblock(Symbol.for('css'))('\n     ul {\n       list-style: none;\n     }\n     li {\n       margin-left: -12px;\n       background: url(bullet.png) no-repeat 0;\n       text-indent: 12px;\n     }\n     '),
+  code$002Dblock(Symbol.for('css'))('\n    ul {\n      list-style: none;\n    }\n    li {\n      margin-left: -12px;\n      background: url(bullet.png) no-repeat 0;\n      text-indent: 12px;\n    }\n  '),
   p([
-    'This requires very little CSS. To avoid incurring the overhead\n       of an extra HTTP request, one could Base64-encode the image in a ',
+    'This requires very little CSS. To avoid incurring the overhead\n    of an extra HTTP request, one could Base64-encode the image in a ',
     a('http://en.wikipedia.org/wiki/Data_URI_scheme#CSS')('data URI'),
     '.'
   ]),
   h3$0027({ [Symbol.for('id')]: 'pseudo-element-technique' })('Pseudo-element technique'),
-  code$002Dblock(Symbol.for('css'))('\n     ul {\n       list-style: none;\n     }\n     li {\n       position: relative;\n     }\n     li:before {\n       position: absolute;\n       top: 8px;\n       margin: 8px 0 0 -12px;\n         /* accommodate Camino */\n         vertical-align: middle;\n         display: inline-block;\n       width: 4px;\n       height: 4px;\n       background: #ccc;\n       content: "";\n     }\n     '),
-  p(['So it\'s possible to fashion square bullets of any colour\n       with just a handful of straightforward declarations. Nice!']),
+  code$002Dblock(Symbol.for('css'))('\n    ul {\n      list-style: none;\n    }\n    li {\n      position: relative;\n    }\n    li:before {\n      position: absolute;\n      top: 8px;\n      margin: 8px 0 0 -12px;\n        /* accommodate Camino */\n        vertical-align: middle;\n        display: inline-block;\n      width: 4px;\n      height: 4px;\n      background: #ccc;\n      content: "";\n    }\n  '),
+  p(['So it\'s possible to fashion square bullets of any colour\n    with just a handful of straightforward declarations. Nice!']),
   p(['Prefer round bullets? No problem. :)']),
-  code$002Dblock(Symbol.for('css'))('\n     ...\n     -webkit-border-radius: 2px;\n     -moz-border-radius: 2px;\n     border-radius: 2px;\n     ...\n     ')
+  code$002Dblock(Symbol.for('css'))('\n    ...\n    -webkit-border-radius: 2px;\n    -moz-border-radius: 2px;\n    border-radius: 2px;\n    ...\n  ')
 ];
 export default {
   ['id']: 83,

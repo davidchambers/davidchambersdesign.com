@@ -23,7 +23,7 @@ const pink = '#ff5e99';
 const recycled$002Dpaper = '#fef9ec';
 const screen = coerce => {
   return (() => {
-    const $0025 = x => {
+    const pc = x => {
       return coerce(x) + '%';
     };
     const em = x => {
@@ -47,7 +47,7 @@ const screen = coerce => {
     const rgba = r => {
       return g => b => a => 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
     };
-    const $0021important = x => {
+    const important$0021 = x => {
       return coerce(x) + ' !important';
     };
     const tag$002Dbackground = S.pipe([
@@ -74,7 +74,7 @@ const screen = coerce => {
         ['html'],
         [
           Symbol.for('height'),
-          $0025(100),
+          pc(100),
           Symbol.for('background-color'),
           base3
         ],
@@ -90,11 +90,11 @@ const screen = coerce => {
           Symbol.for('min-width'),
           px(675),
           Symbol.for('height'),
-          $0025(100),
+          pc(100),
           Symbol.for('background-color'),
           base3,
           Symbol.for('font-size'),
-          $0025(75),
+          pc(75),
           Symbol.for('font-family'),
           sans$002Dserif([
             'Lucida Grande',
@@ -121,7 +121,7 @@ const screen = coerce => {
           Symbol.for('height'),
           Symbol.for('auto'),
           Symbol.for('min-height'),
-          $0025(100),
+          pc(100),
           Symbol.for('font-size'),
           em(1),
           Symbol.for('line-height'),
@@ -138,7 +138,7 @@ const screen = coerce => {
           Symbol.for('top'),
           0,
           Symbol.for('width'),
-          $0025(100),
+          pc(100),
           Symbol.for('height'),
           px(160),
           Symbol.for('background'),
@@ -159,7 +159,7 @@ const screen = coerce => {
             Symbol.for('auto')
           ],
           Symbol.for('width'),
-          $0025(65),
+          pc(65),
           Symbol.for('min-width'),
           px(615),
           Symbol.for('max-width'),
@@ -267,7 +267,7 @@ const screen = coerce => {
           [
             'url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABtklEQVRIx7WUsWrCUBSGMzt1dHAWhG5eFQyEFJwsSBxcSlsqYhwcKnYolIB3qZRSXESKYye7+AgpqQUnX8FH8Bluzx+OEIpWb5oGPg9E7/mu/z2JoZQy/pPwI5/PRxGEJAJiwwR8T0R/G0fQKZVKn/V6/X0ymTyv12tJDMbj8RPdm+E7/CauoGOa5tcLXXRPEh5xT9wRPeJ2OBw+lsvlxVaiIxDYXaT5A9EnukSbaBI3qFLKQbFYRGRCRyARS6Q5duwSV0SDcIga10a1Wn3DGh1BgMw5lj43v+CmFcIiTK4Vz/N6WKMj2OBAOfMu7xzNbQJRnBI5rmK5XJ5jja5gwAfa5lgq3DxLZIg016zv+2e6ggCjyNk3OWuLd4ymJ0SKa6bVal3rRoRDnmEUeVpqnHmOd57isYQkbVnWq+4hh2OKOT/0DxzHuRRCfOiOafig4SHCnO87AzQvFAr+fD5XPAD6rwo8RJhzjCKmBQeKzBELdj4ajdT2MgxDJv6ym06n9mq1Uq7rKtRDknivYFpGsqMkcQX2LkloTkiwV5Kk4CjJXwUHJUkIfpUkJdgpSVrwU2LHFujwDcrfprHNIpr7AAAAAElFTkSuQmCC\')',
             Symbol.for('no-repeat'),
-            $0025(100)
+            pc(100)
           ],
           Symbol.for('padding'),
           [
@@ -350,7 +350,7 @@ const screen = coerce => {
           Symbol.for('background'),
           [
             Symbol.for('no-repeat'),
-            $0025(50)
+            pc(50)
           ]
         ],
         ['#nav a:focus'],
@@ -486,7 +486,7 @@ const screen = coerce => {
             Symbol.for('auto')
           ],
           Symbol.for('width'),
-          $0025(65),
+          pc(65),
           Symbol.for('min-width'),
           px(615),
           Symbol.for('max-width'),
@@ -509,7 +509,7 @@ const screen = coerce => {
             0
           ],
           Symbol.for('width'),
-          $0025(65),
+          pc(65),
           Symbol.for('min-width'),
           px(615),
           Symbol.for('max-width'),
@@ -888,7 +888,7 @@ const screen = coerce => {
             0
           ],
           Symbol.for('width'),
-          $0025(100),
+          pc(100),
           Symbol.for('height'),
           px(385)
         ],
@@ -916,7 +916,7 @@ const screen = coerce => {
             0
           ],
           Symbol.for('border'),
-          $0021important(Symbol.for('none'))
+          important$0021(Symbol.for('none'))
         ],
         ['img[src*=\'/decorative/right/\']'],
         [
@@ -930,7 +930,7 @@ const screen = coerce => {
             em(1)
           ],
           Symbol.for('border'),
-          $0021important(Symbol.for('none'))
+          important$0021(Symbol.for('none'))
         ],
         [
           'img[src*=\'/elam/\']',
@@ -964,9 +964,9 @@ const screen = coerce => {
             px(-29)
           ],
           Symbol.for('max-width'),
-          $0021important(Symbol.for('none')),
+          important$0021(Symbol.for('none')),
           Symbol.for('border'),
-          $0021important(Symbol.for('none'))
+          important$0021(Symbol.for('none'))
         ],
         ['img[src*=\'/windows/lion/\']'],
         [
@@ -1069,7 +1069,7 @@ const screen = coerce => {
         ['input.placeholder'],
         [
           Symbol.for('color'),
-          $0021important(mid$002Dgray)
+          important$0021(mid$002Dgray)
         ],
         ['ins'],
         [
@@ -1105,7 +1105,7 @@ const screen = coerce => {
         ['object.video'],
         [
           Symbol.for('width'),
-          $0025(100),
+          pc(100),
           Symbol.for('height'),
           px(385)
         ],
@@ -1200,7 +1200,7 @@ const screen = coerce => {
           Symbol.for('display'),
           Symbol.for('block'),
           Symbol.for('width'),
-          $0025(98),
+          pc(98),
           Symbol.for('height'),
           em(15),
           Symbol.for('border'),
@@ -1376,7 +1376,7 @@ const screen = coerce => {
             0
           ],
           Symbol.for('width'),
-          $0025(24.5),
+          pc(24.5),
           Symbol.for('height'),
           em(3.5)
         ],
@@ -1396,7 +1396,7 @@ const screen = coerce => {
           Symbol.for('display'),
           Symbol.for('block'),
           Symbol.for('width'),
-          $0025(100),
+          pc(100),
           Symbol.for('border'),
           [
             px(1),
@@ -1446,7 +1446,7 @@ const screen = coerce => {
           Symbol.for('top'),
           px(-6),
           Symbol.for('width'),
-          $0025(100),
+          pc(100),
           Symbol.for('padding'),
           [
             px(16),
@@ -1483,7 +1483,7 @@ const screen = coerce => {
         ['div.syntaxhighlighter'],
         [
           Symbol.for('margin'),
-          $0021important([
+          important$0021([
             em(1.75),
             0,
             px(-1)
@@ -1513,9 +1513,9 @@ const screen = coerce => {
         ['.structural'],
         [
           Symbol.for('position'),
-          $0021important(Symbol.for('absolute')),
+          important$0021(Symbol.for('absolute')),
           Symbol.for('left'),
-          $0021important(px(-9999))
+          important$0021(px(-9999))
         ],
         ['ol li.interviewer'],
         [
@@ -1605,7 +1605,7 @@ const screen = coerce => {
         ['#main img'],
         [
           Symbol.for('max-width'),
-          $0025(100)
+          pc(100)
         ],
         ['#main article header'],
         [
@@ -1829,7 +1829,7 @@ const screen = coerce => {
           Symbol.for('float'),
           Symbol.for('left'),
           Symbol.for('width'),
-          $0025(65)
+          pc(65)
         ],
         ['article article > div > p:first-child'],
         [
@@ -1839,7 +1839,7 @@ const screen = coerce => {
         ['article article > div > blockquote:first-child > p:first-child'],
         [
           Symbol.for('margin'),
-          $0021important(0)
+          important$0021(0)
         ],
         ['article article footer'],
         [
@@ -1848,7 +1848,7 @@ const screen = coerce => {
           Symbol.for('float'),
           Symbol.for('right'),
           Symbol.for('width'),
-          $0025(30),
+          pc(30),
           Symbol.for('padding'),
           0,
           Symbol.for('color'),

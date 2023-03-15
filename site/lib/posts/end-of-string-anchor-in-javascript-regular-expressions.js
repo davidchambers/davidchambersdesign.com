@@ -90,9 +90,9 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
-    'JavaScript\'s regular expressions are less than awesome, sadly.\n       One limitation is the lack of start of string and end of string\n       anchors. In Perl, for example, ',
+    'JavaScript\'s regular expressions are less than awesome, sadly.\n    One limitation is the lack of start of string and end of string\n    anchors. In Perl, for example, ',
     code('\\A'),
-    ' matches the start\n       of a string, ',
+    ' matches the start\n    of a string, ',
     code('\\Z'),
     ' the end.'
   ]),
@@ -107,10 +107,10 @@ const body = [
     code('\\Z'),
     ' ',
     strong('except in multiline mode'),
-    ' where they match the start\n       and end of any line.'
+    ' where they match the start and\n    end of any line.'
   ]),
-  p(['It\'s possible, though, to have a lookahead act as an end of string\n       anchor in multiline mode:']),
-  code$002Dblock(Symbol.for('javascript'))('\n     > /bar(?![\\s\\S])/m.test(\'foo\\nbar\')\n     true\n     > /bar(?![\\s\\S])/m.test(\'foo\\nbar\\n\')\n     false\n     > /bar(?![\\s\\S])/m.test(\'foo\\nbar\\nbaz\')\n     false\n     '),
+  p(['It\'s possible, though, to have a lookahead act as an end of string\n    anchor in multiline mode:']),
+  code$002Dblock(Symbol.for('javascript'))('\n    > /bar(?![\\s\\S])/m.test(\'foo\\nbar\')\n    true\n    > /bar(?![\\s\\S])/m.test(\'foo\\nbar\\n\')\n    false\n    > /bar(?![\\s\\S])/m.test(\'foo\\nbar\\nbaz\')\n    false\n  '),
   p([
     code('(?![\\s\\S])'),
     ' at the end of the pattern is equivalent to ',
@@ -119,7 +119,7 @@ const body = [
   ]),
   h3('Start of string anchor?'),
   p([
-    'Unfortunately, since JavaScript offers lookahead but not lookbehind,\n       this approach can\'t be used to simulate ',
+    'Unfortunately, since JavaScript offers lookahead but not lookbehind,\n    this approach can\'t be used to simulate ',
     code('\\A'),
     '.'
   ])

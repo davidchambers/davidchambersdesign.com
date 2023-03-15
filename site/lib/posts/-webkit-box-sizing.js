@@ -89,15 +89,15 @@ import {
 import { captioned$002Dimage } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  p(['This site\'s search field has been virtually unusable in Chrome\n       and Safari on Windows for several months. Fixing it was not high\n       on my priority list, but I finally got to it this evening.']),
+  p(['This site\'s search field has been virtually unusable in Chrome\n    and Safari on Windows for several months. Fixing it was not high\n    on my priority list, but I finally got to it this evening.']),
   captioned$002Dimage('/images/posts/58/-webkit-box-sizing=border-box.png')('-webkit-box-sizing: border-box')('Before'),
-  p(['I did my best to get these browsers to respect the padding values\n       that I\'d assigned in my style sheet, getting aggressive in the Web\n       Inspector. No joy.']),
+  p(['I did my best to get these browsers to respect the padding values\n    that I\'d assigned in my style sheet, getting aggressive in the Web\n    Inspector. No joy.']),
   p([
     'I then noticed a curious property, ',
     code('-webkit-box-sizing'),
-    '.\n       Sure enough, this was the culprit. Safari and Chrome both use ',
+    '.\n    Sure enough, this was the culprit. Safari and Chrome both use ',
     code('border-box'),
-    ' as the default value, which means that padding\n       does not add to an element\'s dimensions the way it does in the\n       standard box model.'
+    ' as the default value, which means that padding\n    does not add to an element\'s dimensions the way it does in the\n    standard box model.'
   ]),
   p([
     'Specifying ',
@@ -105,7 +105,7 @@ const body = [
     ' fixed the problem.'
   ]),
   captioned$002Dimage('/images/posts/58/-webkit-box-sizing=content-box.png')('-webkit-box-sizing: content-box')('After'),
-  p(['This is an extremely satisfying solution as it neatly targets\n       the source of the problem.']),
+  p(['This is an extremely satisfying solution as it neatly targets\n    the source of the problem.']),
   p([
     'The question remains as to why these browsers default to ',
     code('border-box'),
@@ -115,7 +115,7 @@ const body = [
     code('input'),
     ' elements with ',
     code('type="search"'),
-    '.\n       I don\'t know whether default styles are specified at the\n       rendering engine level or at the browser level, but either\n       way I would say that it\'s the result of Apple fiddling with\n       the controls to make search inputs look sexy on Mac OS X\n       (where they\'re rendered very differently).'
+    '.\n    I don\'t know whether default styles are specified at the\n    rendering engine level or at the browser level, but either\n    way I would say that it\'s the result of Apple fiddling with\n    the controls to make search inputs look sexy on Mac OS X\n    (where they\'re rendered very differently).'
   ])
 ];
 export default {

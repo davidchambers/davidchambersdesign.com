@@ -95,20 +95,20 @@ const body = [
   p([
     'I love ',
     a('http://www.panic.com/coda/')('Coda'),
-    '.\n       It\'s just so... sexy, somehow. I\'ve just discovered ',
+    '.\n    It\'s just so... sexy, somehow. I\'ve just discovered ',
     a('http://www.djangoproject.com/')('Django'),
-    ', with which\n       I\'m fast falling in love as well. Naturally, when I came to write\n       my first Django template I opened Coda.app and started coding.'
+    ', with which\n    I\'m fast falling in love as well. Naturally, when I came to write\n    my first Django template I opened Coda.app and started coding.'
   ]),
   p([
     'It soon became apparent, however, that ',
-    strong('Coda does not apply\n       syntax highlighting to Django'),
+    strong('Coda does not apply\n    syntax highlighting to Django'),
     '. The solution? Juan Pablo Claude\'s ',
     a('http://weblog.bignerdranch.com/?p=49')('Django and Django-template bundles for Coda'),
     '.'
   ]),
   captioned$002Dimage('/images/posts/11/django-syntax-highlighting-in-coda.png')('Django syntax highlighting in Coda')('Django syntax highlighting in Coda'),
   update(datetime('2010-11-14')('14:00:00')(Symbol.for('Australia/Sydney')))([p([
-      'I\'ve since discovered an alternative mode which\n           is actively maintained over on GitHub. I now use ',
+      'I\'ve since discovered an alternative mode which\n      is actively maintained over on GitHub. I now use ',
       a('https://github.com/jbergantine/Django-Template')('jbergantine\'s Django-Template'),
       '.'
     ])])

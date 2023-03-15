@@ -92,12 +92,12 @@ const body = [
   p([
     'I followed ',
     a('http://daringfireball.net/2010/11/flash_free_and_cheating_with_google_chrome')('John Gruber\'s suggestion'),
-    ' and removed Flash Player from my Mac.\n       Like John, I\'ve come to rely upon Google Chrome for viewing the\n       occasional Flash movie. As a result I\'ve become proficient at the\n       keyboard dance required to open in Chrome the page I\'m currently\n       viewing in Safari:'
+    ' and removed Flash Player from my Mac.\n    Like John, I\'ve come to rely upon Google Chrome for viewing the\n    occasional Flash movie. As a result I\'ve become proficient at the\n    keyboard dance required to open in Chrome the page I\'m currently\n    viewing in Safari:'
   ]),
   ol([
     li([
       strong('\u2318L'),
-      '\n            (',
+      ' (',
       strong('File'),
       ' > ',
       strong('Open Location...'),
@@ -105,7 +105,7 @@ const body = [
     ]),
     li([
       strong('\u2318C'),
-      '\n            (',
+      ' (',
       strong('Edit'),
       ' > ',
       strong('Copy'),
@@ -113,15 +113,15 @@ const body = [
     ]),
     li([
       strong('\u2318Space'),
-      '\n            (invoke Quicksilver/Spotlight)'
+      ' (invoke Quicksilver/Spotlight)'
     ]),
     li([
       strong('C-H-R-\u21A9'),
-      '\n            (open Google Chrome)'
+      ' (open Google Chrome)'
     ]),
     li([
       strong('\u2318L'),
-      '\n            (',
+      ' (',
       strong('File'),
       ' > ',
       strong('Open Location...'),
@@ -129,7 +129,7 @@ const body = [
     ]),
     li([
       strong('\u2318V'),
-      '\n            (',
+      ' (',
       strong('Edit'),
       ' > ',
       strong('Paste'),
@@ -137,17 +137,17 @@ const body = [
     ]),
     li([
       strong('\u21A9'),
-      '\n            (go, go, go!)'
+      ' (go, go, go!)'
     ])
   ]),
-  p(['Well, I\'ve performed this dance for the last time.\n       I now do this instead:']),
+  p(['Well, I\'ve performed this dance for the last time.\n    I now do this instead:']),
   ol([li([strong('\u2325\u2318G')])]),
   p([
-    'Credit for this simple but brilliant idea goes to Rob McBroom.\n       Rob\'s post on ',
+    'Credit for this simple but brilliant idea goes to Rob McBroom.\n    Rob\'s post on ',
     a('http://projects.skurfer.com/posts/2011/chrome_shortcut/')('opening pages in Google Chrome'),
-    ' lists the (very easy)\n       steps required to enable this shortcut.'
+    ' lists the (very easy)\n    steps required to enable this shortcut.'
   ]),
-  update(datetime('2011-01-30')('23:30:00')(Symbol.for('America/Los_Angeles')))([p(['Chris points out that John himself mentioned this trick\n           in his aforelinked post.'])])
+  update(datetime('2011-01-30')('23:30:00')(Symbol.for('America/Los_Angeles')))([p(['Chris points out that John himself mentioned this trick\n      in his aforelinked post.'])])
 ];
 export default {
   ['id']: 77,

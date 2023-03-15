@@ -90,21 +90,21 @@ import { uncaptioned$002Dimage } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
-    p(['I recently began learning Danish. I\'m taking a weekly class, and\n           the first week\'s homework involved listening to the conversations\n           we covered during the lesson. I began by playing the audio files,\n           following along in the Danish transcripts. I found myself wanting\n           to listen to the difficult parts over and over, but scrubbing\n           through a timeline is rather awkward.']),
-    p(['It occurred to me that I could use iTunes to solve this problem.\n           Normally, iTunes will play a track from beginning to end. It\'s\n           possible, though, to specify a certain portion of the track to be\n           played instead. By adding an audio file to a playlist many times\n           and specifying consecutive portions (e.g. 0:00\u20130:02, 0:02\u20130:04.8,\n           ...), a track can be broken into manageable clips for more\n           convenient navigation.']),
+    p(['I recently began learning Danish. I\'m taking a weekly class, and\n      the first week\'s homework involved listening to the conversations\n      we covered during the lesson. I began by playing the audio files,\n      following along in the Danish transcripts. I found myself wanting\n      to listen to the difficult parts over and over, but scrubbing\n      through a timeline is rather awkward.']),
+    p(['It occurred to me that I could use iTunes to solve this problem.\n      Normally, iTunes will play a track from beginning to end. It\'s\n      possible, though, to specify a certain portion of the track to be\n      played instead. By adding an audio file to a playlist many times\n      and specifying consecutive portions (e.g. 0:00\u20130:02, 0:02\u20130:04.8,\n      ...), a track can be broken into manageable clips for more\n      convenient navigation.']),
     p(['Here\'s the end result:']),
     uncaptioned$002Dimage('/images/posts/93/windows/lion/itunes-playlist-for-danish-dialogue.png')('iTunes playlist for Danish dialogue')
   ]),
   h3('Creating an iTunes playlist from a single audio file'),
   ol([
-    li([p(['Open iTunes and create a playlist. I named mine\n               "danske".'])]),
+    li([p(['Open iTunes and create a playlist. I named mine "danske".'])]),
     li([p(['Locate the audio file in Finder.'])]),
-    li([p(['Drag the file from the Finder window, and drop it\n               onto the iTunes icon in the dock. This will make a\n               copy of the file in your "iTunes Music" folder.'])]),
-    li([p(['Drag the file from the Finder window, and drop it onto\n               the newly created playlist in the iTunes sidebar.'])]),
+    li([p(['Drag the file from the Finder window, and drop it\n        onto the iTunes icon in the dock. This will make a\n        copy of the file in your "iTunes Music" folder.'])]),
+    li([p(['Drag the file from the Finder window, and drop it onto\n        the newly created playlist in the iTunes sidebar.'])]),
     li([p([
         'Select the track in iTunes, then hit ',
         strong('\u2318I'),
-        '\n               (or select ',
+        ' (or select ',
         strong('Get Info'),
         ' from the ',
         strong('File'),
@@ -122,31 +122,31 @@ const body = [
       ]),
       uncaptioned$002Dimage('/images/posts/93/windows/lion/setting-the-stop-time.png')('Setting the clip\'s stop time')
     ]),
-    li([p(['Play the clip, and adjust the stop time until the clip\n               contains just the desired portion of the dialogue.'])]),
+    li([p(['Play the clip, and adjust the stop time until the clip\n        contains just the desired portion of the dialogue.'])]),
     li([
       p([
         'Hit ',
         strong('\u2318I'),
         ' again, and this time click the ',
         strong('Info'),
-        ' tab. Type the clip\'s transcription\n               into the ',
+        ' tab. Type the clip\'s transcription\n        into the ',
         strong('Name'),
         ' field.'
       ]),
       uncaptioned$002Dimage('/images/posts/93/windows/lion/setting-the-name.png')('Setting the clip\'s name')
     ]),
-    li([p(['Repeat steps 4 through 8 as necessary. Ensure that\n               each clip\'s start time is the same as the previous\n               clip\'s stop time.'])]),
+    li([p(['Repeat steps 4 through 8 as necessary. Ensure that\n        each clip\'s start time is the same as the previous\n        clip\'s stop time.'])]),
     li([p([
         'Select all of the newly added clips. Hit ',
         strong('\u2318I'),
-        '.\n               In the ',
+        '.\n        In the ',
         strong('Album'),
-        ' field, type the name of the\n               audio file. Click ',
+        ' field, type the name of the\n        audio file. Click ',
         strong('OK'),
         '.'
       ])])
   ]),
-  p(['Having a dialog comprised of many short clips is very useful.\n       It enables one to listen to a clip repeatedly to practise a\n       difficult word or phrase, or to say each sentence aloud before\n       listening to the "answer". And since the clips are contiguous\n       one can still listen to the dialog from beginning to end.'])
+  p(['Having a dialog comprised of many short clips is very useful.\n    It enables one to listen to a clip repeatedly to practise a\n    difficult word or phrase, or to say each sentence aloud before\n    listening to the "answer". And since the clips are contiguous\n    one can still listen to the dialog from beginning to end.'])
 ];
 export default {
   ['id']: 93,

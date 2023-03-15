@@ -96,22 +96,22 @@ export default {
     p([
       'I work at ',
       a('http://www.atlassian.com/')('Atlassian'),
-      '\n         with a great group of people dedicated to making ',
+      '\n      with a great group of people dedicated to making ',
       a('https://bitbucket.org/')('Bitbucket'),
-      ' awesome.\n         Our efforts benefit tens of thousands of software\n         developers, which makes the job incredibly rewarding.'
+      ' awesome.\n      Our efforts benefit tens of thousands of software\n      developers, which makes the job incredibly rewarding.'
     ]),
     p([
       'I\'ve created several dozen ',
       a('https://bitbucket.org/davidchambers')('open source projects'),
-      ',\n         many of which are small, self-contained JavaScript utilities\n         written in CoffeeScript. In 2011 I created and released ',
+      ',\n      many of which are small, self-contained JavaScript utilities\n      written in CoffeeScript. In 2011 I created and released ',
       a('http://hashify.me/')('Hashify'),
-      ', a little gift to the Internet.\n         :)'
+      ', a little gift to the Internet.\n      :)'
     ]),
     captioned$002Dimage('/images/about/david-jo-shaun.jpg')('Me with friends Jo and Shaun at the Luge in Rotorua')('Me with friends at the Luge in Rotorua'),
     p([
       'Feel free to ',
       a('http://twitter.com/davidchambers')('follow me on Twitter'),
-      '.\n         I tweet sporadically and infrequently.'
+      '.\n      I tweet sporadically and infrequently.'
     ])
   ]
 };

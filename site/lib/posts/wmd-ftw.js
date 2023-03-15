@@ -88,18 +88,18 @@ import {
 } from '../elements.js';
 import datetime from '../datetime.js';
 const body = [
-  p(['Comment forms that don\'t provide previews -- or at least an\n       indication of how comments are processed -- really annoy me.\n       If I decide to leave a comment I take care to avoid spelling\n       mistakes and grammatical errors. It\'s quite upsetting, then,\n       to see my code snippet completely mangled and my carefully\n       typed links displayed in plain text (<a href="...).']),
+  p(['Comment forms that don\'t provide previews -- or at least an\n    indication of how comments are processed -- really annoy me.\n    If I decide to leave a comment I take care to avoid spelling\n    mistakes and grammatical errors. It\'s quite upsetting, then,\n    to see my code snippet completely mangled and my carefully\n    typed links displayed in plain text (<a href="...).']),
   p([
-    'Despite my appreciation of the preview, not one of my sites\n       provided this service until a few hours ago. Now that I\'ve\n       migrated from WordPress to ',
+    'Despite my appreciation of the preview, not one of my sites\n    provided this service until a few hours ago. Now that I\'ve\n    migrated from WordPress to ',
     a('http://mango.io/')('Mango'),
-    '\n       I\'m able to spend some time working on front-end code. My first\n       two challenges were localizing dates and times, and integrating ',
+    '\n    I\'m able to spend some time working on front-end code. My first\n    two challenges were localizing dates and times, and integrating ',
     a('http://wmd-editor.com/')('wmd'),
     '.'
   ]),
   p([
-    'Getting wmd working turned out to be extremely easy, but I was\n       not content with a live preview of the ',
+    'Getting wmd working turned out to be extremely easy, but I was\n    not content with a live preview of the ',
     em('comment'),
-    ' only.\n       No, I wanted the preview to resemble as closely as possible\n       the published result, which meant updating the preview area in\n       response to changes to "name", "e-mail", and "website"\n       as well as to changes to the comment itself.'
+    ' only.\n    No, I wanted the preview to resemble as closely as possible\n    the published result, which meant updating the preview area in\n    response to changes to "name", "e-mail", and "website"\n    as well as to changes to the comment itself.'
   ]),
   video({
     [Symbol.for('src')]: '/images/posts/53/wmd.mp4',

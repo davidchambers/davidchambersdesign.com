@@ -90,17 +90,17 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
-    'This is a JavaScript function for Photoshop which saves\n       the active document as a 24-bit PNG file. It is equivalent to\n       manually selecting ',
+    'This is a JavaScript function for Photoshop which saves\n    the active document as a 24-bit PNG file. It is equivalent to\n    manually selecting ',
     strong('File > Save for Web & Devices...'),
-    '\n       which means that the file size of the resulting PNG will be smaller\n       than would be the case using ',
+    '\n    which means that the file size of the resulting PNG will be smaller\n    than would be the case using ',
     code('PNGSaveOptions()'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))('\n     function saveForWebPNG(outputFolderStr, filename)\n     {\n         var opts, file;\n         opts = new ExportOptionsSaveForWeb();\n         opts.format = SaveDocumentType.PNG;\n         opts.PNG8 = false;\n         opts.quality = 100;\n         if (filename.length > 27) {\n             file = new File(outputFolderStr + "/temp.png");\n             activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);\n             file.rename(filename + ".png");\n         }\n         else {\n             file = new File(outputFolderStr + "/" + filename + ".png");\n             activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);\n         }\n     }\n     '),
+  code$002Dblock(Symbol.for('javascript'))('\n    function saveForWebPNG(outputFolderStr, filename)\n    {\n        var opts, file;\n        opts = new ExportOptionsSaveForWeb();\n        opts.format = SaveDocumentType.PNG;\n        opts.PNG8 = false;\n        opts.quality = 100;\n        if (filename.length > 27) {\n            file = new File(outputFolderStr + "/temp.png");\n            activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);\n            file.rename(filename + ".png");\n        }\n        else {\n            file = new File(outputFolderStr + "/" + filename + ".png");\n            activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);\n        }\n    }\n  '),
   p([
     'Photoshop on Mac limits the length of a ',
     code('File'),
-    '\n       object\'s file name to 31 characters. Credit for the rename\n       workaround should go to Mark Walsh who posted the solution\n       on the Adobe forums in a thread titled ',
+    '\n    object\'s file name to 31 characters. Credit for the rename\n    workaround should go to Mark Walsh who posted the solution\n    on the Adobe forums in a thread titled ',
     a('http://forums.adobe.com/thread/290409')('Save for web filename problems'),
     '.'
   ])

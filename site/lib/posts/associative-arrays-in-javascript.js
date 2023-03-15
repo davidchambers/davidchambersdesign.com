@@ -90,20 +90,20 @@ import datetime from '../datetime.js';
 const body = [
   p([
     strong('JavaScript does not have associative arrays.'),
-    '\n       (This will be old news to many.)'
+    '\n    (This will be old news to many.)'
   ]),
   p([
-    'Confusion arises from the fact that array syntax in JavaScript is\n       very similar to array syntax in PHP, a language that ',
+    'Confusion arises from the fact that array syntax in JavaScript is\n    very similar to array syntax in PHP, a language that ',
     em('does'),
-    '\n       have associative arrays. Additionally, ',
-    strong('any object in\n       JavaScript can be treated as an associative array'),
-    '. This means\n       that if one creates a JavaScript ',
+    '\n    have associative arrays. Additionally, ',
+    strong('any object in\n    JavaScript can be treated as an associative array'),
+    '. This means\n    that if one creates a JavaScript ',
     code('Array'),
-    ' object and\n       proceeds to use PHP\'s associative array syntax in an attempt to\n       add items to it, one ',
+    ' object and\n    proceeds to use PHP\'s associative array syntax in an attempt to\n    add items to it, one ',
     em('will'),
-    ' succeed in assigning it\n       attribute\u2013value pairs. The object in question need not be an ',
+    ' succeed in assigning it\n    attribute\u2013value pairs. The object in question need not be an ',
     code('Array'),
-    ' for this to work, though, so for the sake of\n       clarity using a vanilla ',
+    ' for this to work, though, so for the sake of\n    clarity using a vanilla ',
     code('Object'),
     ' is advisable.'
   ]),

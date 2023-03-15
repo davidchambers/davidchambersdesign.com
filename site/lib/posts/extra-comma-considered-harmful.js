@@ -92,25 +92,25 @@ const body = [
   p([
     'On ',
     time({ [Symbol.for('datetime')]: '2010-03-19T13:58-00:00' })('19 March 2010'),
-    ',\n       David Chambers wrote:'
+    ',\n    David Chambers wrote:'
   ]),
   blockquote([
     p(['Hi Douglas,']),
     p([
       '[...] Moments ago I used ',
       a('http://www.jslint.com/')('JSLint'),
-      '\n           for the first time; I plan to use it frequently from this point\n           forward. I have one question, though, concerning the acceptability\n           of extra commas. Consider the following code snippet:'
+      '\n      for the first time; I plan to use it frequently from this point\n      forward. I have one question, though, concerning the acceptability\n      of extra commas. Consider the following code snippet:'
     ]),
-    code$002Dblock(Symbol.for('javascript'))('\n         var ninja = {\n             name: \'Hattori Hanzou Masashige\',\n             shuriken: 5,\n             attack: function () {\n                 if (ninja.shuriken) {\n                     ninja.shuriken -= 1;\n                     window.alert(\'Hai-Ya!\');\n                 }\n             },\n         };\n         '),
+    code$002Dblock(Symbol.for('javascript'))('\n      var ninja = {\n          name: \'Hattori Hanzou Masashige\',\n          shuriken: 5,\n          attack: function () {\n              if (ninja.shuriken) {\n                  ninja.shuriken -= 1;\n                  window.alert(\'Hai-Ya!\');\n              }\n          },\n      };\n    '),
     p([
       'JSLint returns an ',
       em('extra comma'),
-      ' error for the\n           unnecessary comma preceding the closing brace. I would argue,\n           though, that this in not an error. As far as I\'m aware, this\n           comma will not cause problems.'
+      ' error for the\n      unnecessary comma preceding the closing brace. I would argue,\n      though, that this in not an error. As far as I\'m aware, this\n      comma will not cause problems.'
     ]),
     p([
-      'In fact, quite the opposite is true. If one were to insert\n           an additional property or method after ',
+      'In fact, quite the opposite is true. If one were to insert\n      an additional property or method after ',
       em('attack'),
-      ' one\n           would not need to remember to first add a comma. In Django\n           it\'s considered best practice to include a comma after every\n           item (including the last) in a one item per line collection\n           for this very reason.'
+      ' one\n      would not need to remember to first add a comma. In Django\n      it\'s considered best practice to include a comma after every\n      item (including the last) in a one item per line collection\n      for this very reason.'
     ]),
     p(['I thought I\'d give you my two cents, anyway. :)']),
     p(['Regards,']),
@@ -119,9 +119,9 @@ const body = [
   p([
     'On ',
     time({ [Symbol.for('datetime')]: '2010-03-19T15:13-00:00' })('19 March 2010'),
-    ',\n       Douglas Crockford wrote:'
+    ',\n    Douglas Crockford wrote:'
   ]),
-  blockquote(p(['Your awareness is incorrect. Have you tested on IE6?']))
+  blockquote([p(['Your awareness is incorrect. Have you tested on IE6?'])])
 ];
 export default {
   ['id']: 46,

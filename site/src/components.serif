@@ -15,68 +15,69 @@ export {
 };
 
 caption caption = {
-  (p' {[:class]: "caption"} caption)
+  p' {[:class]: "caption"} caption
 };
 
 captioned-image src alt caption = {
-  (dl
-     [(dt (img {[:alt]: alt, [:src]: src})),
-      (dd caption)])
+  dl [
+    dt {img {[:alt]: alt, [:src]: src}},
+    dd caption,
+  ]
 };
 
 captioned-images images = {
-  (dl (S.chain image => [(dt (img {[:alt]: image[1], [:src]: image[0]})),
-                         (dd image[2])]
-               images))
+  dl {S.chain {image => [dt (img {[:alt]: image[1], [:src]: image[0]}),
+                         dd image[2]]}
+              images}
 };
 
 code-block language source-code = {
   lines =
-    (S.fromMaybe [] (S.chain S.init (S.tail (S.lines source-code))));
+    S.fromMaybe [] {S.chain S.init {S.tail {S.lines source-code}}};
   trim-leading-spaces line =
-    (S.fromMaybe line
-                 (S.chain prefix => (S.stripPrefix prefix line)
-                          (S.map x => x.match
-                                 (S.chain (S.match new RegExp("^[ ]*", ""))
-                                          (S.head lines)))));
-  (pre (code (text (S.unlines (S.map trim-leading-spaces lines)))))
+    S.fromMaybe line
+                {S.chain {prefix => S.stripPrefix prefix line}
+                         {S.map {x => x.match}
+                                {S.chain {S.match new RegExp("^[ ]*", "")}
+                                         {S.head lines}}}};
+  pre {code {text {S.unlines {S.map trim-leading-spaces lines}}}}
 };
 
 decorative-image src = {
-  (p (img {[:alt]: "", [:src]: src}))
+  p (img {[:alt]: "", [:src]: src})
 };
 
 interview-list interviewer interviewee exchange = {
-  (ol (S.snd (S.reduce (S.pair name => items => quotation => {
-                                 if name === interviewer then {
-                                   (S.Pair interviewee
-                                           [...items,
-                                            (li' {[:class]: "interviewer"}
-                                               [(strong interviewer + ":"), " ", ...quotation])])
-                                 } else {
-                                   (S.Pair interviewer
-                                           [...items,
-                                            (li' {}
-                                               [(strong interviewee + ":"), " ", ...quotation])])
-                                 }
-                               })
-                       (S.Pair interviewer [])
-                       (S.map canonicalize-children exchange))))
+  ol {S.snd {S.reduce {S.pair name => items => quotation => {
+                                if name === interviewer then {
+                                  S.Pair interviewee
+                                         [...items,
+                                          li' {[:class]: "interviewer"}
+                                              [strong {interviewer + ":"}, " ", ...quotation]]
+                                } else {
+                                  S.Pair interviewer
+                                         [...items,
+                                          li' {}
+                                              [strong {interviewee + ":"}, " ", ...quotation]]
+                                }
+                              }}
+                      {S.Pair interviewer []}
+                      {S.map canonicalize-children exchange}}}
 };
 
 pros-and-cons-list f = {
-  (ul (f (li' {[:class]: "pro"})
-         (li' {[:class]: "con"})))
+  ul {f {li' {[:class]: "pro"}}
+        {li' {[:class]: "con"}}}
 };
 
 uncaptioned-image src alt = {
-  (p (img {[:alt]: alt, [:src]: src}))
+  p {img {[:alt]: alt, [:src]: src}}
 };
 
 update datetime body = {
-  (div {[:class]: "update"}
-     (S.prepend (h4 ["Update \u2014 ",
-                     (time {[:datetime]: datetime.toISO()}
-                        datetime.toFormat("d MMMM y"))])
-                (canonicalize-children body)))
+  div {[:class]: "update"}
+      {S.prepend {h4 ["Update \u2014 ",
+                      time {[:datetime]: datetime.toISO()}
+                           datetime.toFormat("d MMMM y")]}
+                 {canonicalize-children body}}
 };

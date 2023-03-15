@@ -91,37 +91,37 @@ const body = [
   p([
     'One of my flatmates linked me to this clip recently. It\'s titled ',
     a('http://www.ted.com/index.php/talks/david_carson_on_design.html')('Design, discovery and humor'),
-    ' and certainly delivers the\n       entertainment it promises. It\'s well worth a look.'
+    ' and certainly delivers the\n    entertainment it promises. It\'s well worth a look.'
   ]),
   dl([
-    dt(object({
-      [Symbol.for('type')]: 'application/x-shockwave-flash',
-      [Symbol.for('width')]: '446',
-      [Symbol.for('height')]: '326',
-      [Symbol.for('data')]: 'http://video.ted.com/assets/player/swf/EmbedPlayer.swf'
-    })([
-      param({
-        [Symbol.for('name')]: 'movie',
-        [Symbol.for('value')]: 'http://video.ted.com/assets/player/swf/EmbedPlayer.swf'
-      }),
-      param({
-        [Symbol.for('name')]: 'wmode',
-        [Symbol.for('value')]: 'transparent'
-      }),
-      param({
-        [Symbol.for('name')]: 'allowFullScreen',
-        [Symbol.for('value')]: 'true'
-      }),
-      param({
-        [Symbol.for('name')]: 'flashvars',
-        [Symbol.for('value')]: 'vu=http://video.ted.com/talks/embed/DavidCarson_2003-embed_high.flv&su=http://images.ted.com/images/ted/tedindex/embed-posters/DavidCarson-2003.embed_thumbnail.jpg&vw=432&vh=240&ap=0&ti=436'
-      })
-    ])),
-    dd(p([
-      'David Carson presents ',
-      strong('Design, discovery and humor'),
-      '\n              at TED, February 2003'
-    ]))
+    dt([object({
+        [Symbol.for('type')]: 'application/x-shockwave-flash',
+        [Symbol.for('width')]: '446',
+        [Symbol.for('height')]: '326',
+        [Symbol.for('data')]: 'http://video.ted.com/assets/player/swf/EmbedPlayer.swf'
+      })([
+        param({
+          [Symbol.for('name')]: 'movie',
+          [Symbol.for('value')]: 'http://video.ted.com/assets/player/swf/EmbedPlayer.swf'
+        }),
+        param({
+          [Symbol.for('name')]: 'wmode',
+          [Symbol.for('value')]: 'transparent'
+        }),
+        param({
+          [Symbol.for('name')]: 'allowFullScreen',
+          [Symbol.for('value')]: 'true'
+        }),
+        param({
+          [Symbol.for('name')]: 'flashvars',
+          [Symbol.for('value')]: 'vu=http://video.ted.com/talks/embed/DavidCarson_2003-embed_high.flv&su=http://images.ted.com/images/ted/tedindex/embed-posters/DavidCarson-2003.embed_thumbnail.jpg&vw=432&vh=240&ap=0&ti=436'
+        })
+      ])]),
+    dd([p([
+        'David Carson presents ',
+        strong('Design, discovery and humor'),
+        '\n        at TED, February 2003'
+      ])])
   ])
 ];
 export default {

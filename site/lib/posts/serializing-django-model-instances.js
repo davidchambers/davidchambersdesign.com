@@ -89,21 +89,21 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  p(['One might expect the following code to serialize a Django model\n       instance:']),
-  code$002Dblock(Symbol.for('python'))('\n     import simplejson\n     simplejson.dumps(instance)\n     '),
+  p(['One might expect the following code to serialize a Django model instance:']),
+  code$002Dblock(Symbol.for('python'))('\n    import simplejson\n    simplejson.dumps(instance)\n  '),
   p([
-    'Unforunately, this raises a TypeError, as the instance is not JSON\n       serializable. I don\'t understand ',
+    'Unforunately, this raises a TypeError, as the instance is not JSON\n    serializable. I don\'t understand ',
     em('why'),
-    ' model instances are\n       not serializable, but I do have a solution: define a serialization\n       method on the instance\'s model.'
+    ' model instances are\n    not serializable, but I do have a solution: define a serialization\n    method on the instance\'s model.'
   ]),
-  code$002Dblock(Symbol.for('python'))('\n     def toJSON(self):\n         import simplejson\n         return simplejson.dumps(dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]]))\n     '),
+  code$002Dblock(Symbol.for('python'))('\n    def toJSON(self):\n        import simplejson\n        return simplejson.dumps(dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]]))\n  '),
   p(['Here\'s the verbose equivalent for those averse to one-liners:']),
-  code$002Dblock(Symbol.for('python'))('\n     def toJSON(self):\n         fields = []\n         for field in self._meta.fields:\n             fields.append(field.name)\n\n         d = {}\n         for attr in fields:\n             d[attr] = getattr(self, attr)\n\n         import simplejson\n         return simplejson.dumps(d)\n     '),
+  code$002Dblock(Symbol.for('python'))('\n    def toJSON(self):\n        fields = []\n        for field in self._meta.fields:\n            fields.append(field.name)\n\n        d = {}\n        for attr in fields:\n            d[attr] = getattr(self, attr)\n\n        import simplejson\n        return simplejson.dumps(d)\n  '),
   p([
     code('_meta.fields'),
-    ' is an ordered list of model fields\n       which can be accessed from instances and from the model itself. ',
+    ' is an ordered list of model fields\n    which can be accessed from instances and from the model itself. ',
     a('http://www.djangofoo.com/tag/meta-fields')('_meta.fields'),
-    '\n       is one of the few features not covered in Django\'s excellent\n       documentation.'
+    '\n    is one of the few features not covered in Django\'s excellent\n    documentation.'
   ])
 ];
 export default {

@@ -13,7 +13,7 @@ union set-1 set-2 = {
 };
 
 similarity set-1 set-2 = {
-  (intersection set-1 set-2).size / (Math.sqrt (union set-1 set-2).size)
+  {intersection set-1 set-2}.size / Math.sqrt {union set-1 set-2}.size
 };
 
 seconds-between from to = {
@@ -21,23 +21,22 @@ seconds-between from to = {
 };
 
 with-scores that this = {
-  score = (similarity new Set(that.tags)
-                      new Set(this.tags));
-  primary = (S.negate score);
-  secondary = (Math.abs (seconds-between that.datetime
-                                         this.datetime));
+  score = similarity new Set(that.tags)
+                     new Set(this.tags);
+  primary = S.negate score;
+  secondary = Math.abs {seconds-between that.datetime
+                                        this.datetime};
   if score >= 0.5 then {
-    (S.Just (S.Pair (S.Pair primary secondary) this))
+    S.Just {S.Pair {S.Pair primary secondary} this}
   } else {
     S.Nothing
   }
 };
 
-related-posts posts post = {
-  (S.pipe [(S.reject this => this.slug === post.slug),
-           (S.mapMaybe (with-scores post)),
-           S.sort,
-           (S.map S.snd),
-           posts => posts.slice(0, 5)]
-          posts)
-};
+related-posts posts post = S.pipe [
+  S.reject this => this.slug === post.slug,
+  S.mapMaybe (with-scores post),
+  S.sort,
+  S.map S.snd,
+  posts => posts.slice(0, 5),
+] posts;

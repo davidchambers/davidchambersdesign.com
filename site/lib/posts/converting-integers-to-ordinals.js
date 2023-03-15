@@ -90,25 +90,25 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
-    'When dealing with dates, it\'s not uncommon to need to convert an\n       integer into an ordinal number (1st, 2nd, 3rd, etc.). While making\n       improvements to ',
+    'When dealing with dates, it\'s not uncommon to need to convert an\n    integer into an ordinal number (1st, 2nd, 3rd, etc.). While making\n    improvements to ',
     a('http://mango.io/wtf?')('Mango'),
-    ' recently I\n       wrote a function to do this, first in Python, later in JavaScript.'
+    ' recently I\n    wrote a function to do this, first in Python, later in JavaScript.'
   ]),
   h3('Python'),
-  code$002Dblock(Symbol.for('python'))('\n     def ordinal(n):\n         if 10 < n < 14: return u\'%sth\' % n\n         if n % 10 == 1: return u\'%sst\' % n\n         if n % 10 == 2: return u\'%snd\' % n\n         if n % 10 == 3: return u\'%srd\' % n\n         return u\'%sth\' % n\n     '),
+  code$002Dblock(Symbol.for('python'))('\n    def ordinal(n):\n        if 10 < n < 14: return u\'%sth\' % n\n        if n % 10 == 1: return u\'%sst\' % n\n        if n % 10 == 2: return u\'%snd\' % n\n        if n % 10 == 3: return u\'%srd\' % n\n        return u\'%sth\' % n\n  '),
   h3('JavaScript'),
-  code$002Dblock(Symbol.for('javascript'))('\n     function ordinal(n) {\n         if (10 < n && n < 14) return n + \'th\';\n         switch (n % 10) {\n             case 1: return n + \'st\';\n             case 2: return n + \'nd\';\n             case 3: return n + \'rd\';\n             default: return n + \'th\';\n         }\n     }\n     '),
-  p(['By special-casing 11, 12, and 13, the function becomes incredibly\n       simple.']),
+  code$002Dblock(Symbol.for('javascript'))('\n    function ordinal(n) {\n        if (10 < n && n < 14) return n + \'th\';\n        switch (n % 10) {\n            case 1: return n + \'st\';\n            case 2: return n + \'nd\';\n            case 3: return n + \'rd\';\n            default: return n + \'th\';\n        }\n    }\n  '),
+  p(['By special-casing 11, 12, and 13, the function becomes\n    incredibly simple.']),
   p([
     'I\'m pleased to have found a context in which JavaScript\'s ',
     code('switch'),
     ' statement is almost ',
     em('elegant'),
-    '.\n       The problem, usually, is the need to ',
+    '.\n    The problem, usually, is the need to ',
     code('break'),
-    '\n       to prevent fall-through. When used within a function,\n       though, the ',
+    '\n    to prevent fall-through. When used within a function,\n    though, the ',
     code('return'),
-    ' statement is able to\n       perform this role, making the JavaScript code almost\n       as readable as the Python equivalent.'
+    ' statement is able to\n    perform this role, making the JavaScript code almost\n    as readable as the Python equivalent.'
   ])
 ];
 export default {
