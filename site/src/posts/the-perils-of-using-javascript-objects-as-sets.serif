@@ -42,13 +42,13 @@ body = [
     membership checks via the ", code "in", " keyword:",
   ],
 
-  code-block :python "
+  code-block :python `
     >>> usernames = {'brodie', 'jespern', 'nvenegas'}
     >>> 'brodie' in usernames
     True
     >>> 'davidchambers' in usernames
     False
-  ",
+  `,
 
   p [
    "Incidentally, since sets are essentially dictionaries
@@ -57,13 +57,13 @@ body = [
     dictionary's keys:",
   ],
 
-  code-block :python "
+  code-block :python `
     >>> settings = {'lines': 50, 'number': False, 'spell': True}
     >>> 'number' in settings
     True
     >>> 'wrap' in settings
     False
-  ",
+  `,
 
   h3 "Fashioning a poor man’s set from the limited materials
       JavaScript provides",
@@ -74,13 +74,13 @@ body = [
     One could use a string:",
   ],
 
-  code-block :javascript "
+  code-block :javascript `
     > usernames = ',brodie,jespern,nvenegas,'
     > /,brodie,/.test(usernames)
     true
     > /,davidchambers,/.test(username)
     false
-  ",
+  `,
 
   p [
    "This approach is problematic for several reasons: it assumes
@@ -94,13 +94,13 @@ body = [
    "An array is clearly a better choice:",
   ],
 
-  code-block :javascript "
+  code-block :javascript `
     > usernames = ['brodie', 'jespern', 'nvenegas']
     > usernames.indexOf('brodie') >= 0
     true
     > usernames.indexOf('davidchambers') >= 0
     false
-  ",
+  `,
 
   p [
    "Though this is an improvement, membership checks are still
@@ -115,13 +115,13 @@ body = [
    "An object, then, is the ", em "best", " choice:",
   ],
 
-  code-block :javascript "
+  code-block :javascript `
     > usernames = {'brodie': 1, 'jespern': 1, 'nvenegas': 1}
     > 'brodie' in usernames
     true
     > 'davidchambers' in usernames
     false
-  ",
+  `,
 
   p [
    "This addresses the outstanding problems, and the ", code "in", "
@@ -132,14 +132,14 @@ body = [
    "But it also introduces a subtle bug:",
   ],
 
-  code-block :javascript "
+  code-block :javascript `
     > 'constructor' in usernames
     true
     > 'toString' in usernames
     true
     > 'valueOf' in usernames
     true
-  ",
+  `,
 
   p [
    "The ", code "in", " check tells us whether the property exists on
@@ -151,26 +151,26 @@ body = [
     property exists on the object itself:",
   ],
 
-  code-block :javascript "
+  code-block :javascript `
     > usernames.hasOwnProperty('brodie')
     true
     > usernames.hasOwnProperty('davidchambers')
     false
-  ",
+  `,
 
   p [
    "This fixes the unwanted inheritance problem, but introduces
     another subtle error:",
   ],
 
-  code-block :javascript "
-    > usernames['davidchambers'] = 1 // add \"davidchambers\" to set
+  code-block :javascript `
+    > usernames['davidchambers'] = 1 // add "davidchambers" to set
     1
-    > usernames['hasOwnProperty'] = 1 // add \"hasOwnProperty\" to set
+    > usernames['hasOwnProperty'] = 1 // add "hasOwnProperty" to set
     1
     > usernames.hasOwnProperty('davidchambers')
     TypeError: Property 'hasOwnProperty' of object #<Object> is not a function
-  ",
+  `,
 
   p [
    "If we rely on ", code "usernames.hasOwnProperty", " we lose
@@ -179,10 +179,10 @@ body = [
     function from a reliable source (", code "Object.prototype", "):",
   ],
 
-  code-block :javascript "
+  code-block :javascript `
     > Object.prototype.hasOwnProperty.call(usernames, 'davidchambers')
     true
-  ",
+  `,
 
   p [
    "What a mouthful! This is, though, the correct way to maintain
@@ -198,7 +198,7 @@ body = [
     reason to favour it:",
   ],
 
-  code-block :javascript "
+  code-block :javascript `
     > sentinel = {}
     > usernames = {'brodie': sentinel, 'jespern': sentinel, 'nvenegas': sentinel}
     > usernames['brodie'] === sentinel
@@ -207,6 +207,6 @@ body = [
     false
     > usernames['constructor'] === sentinel
     false
-  ",
+  `,
 
 ];

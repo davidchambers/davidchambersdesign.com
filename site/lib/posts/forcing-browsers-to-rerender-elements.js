@@ -100,9 +100,21 @@ const body = [
     a('http://script.aculo.us/')('script.aculo.us'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('javascript'))('\n    Element.addMethods({\n        redraw: function (element) {\n            element = $(element);\n            var n = document.createTextNode(\' \');\n            element.appendChild(n);\n            (function () { n.parentNode.removeChild(n); }).defer();\n            return element;\n        }\n    });\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    Element.addMethods({
+        redraw: function (element) {
+            element = $(element);
+            var n = document.createTextNode(' ');
+            element.appendChild(n);
+            (function () { n.parentNode.removeChild(n); }).defer();
+            return element;
+        }
+    });
+  `),
   p(['The post\'s first comment includes an alternative approach:']),
-  code$002Dblock(Symbol.for('javascript'))('\n    element.className = element.className;\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    element.className = element.className;
+  `),
   p(['I gather that there are situations in which this simple solution\n    fails -- it\'s no silver bullet -- but it fixed a problem I encountered\n    in IE8 earlier this evening so I\'m pleased to have discovered it!'])
 ];
 export default {

@@ -101,9 +101,50 @@ const body = [
       ' More importantly,\n      should I be required to remember such things? The answer,\n      of course, is no. I set about writing a function that would\n      allow the file\'s size to be displayed dynamically.'
     ])
   ]),
-  code$002Dblock(Symbol.for('php'))('\n    <?php\n\n    /**\n     * echoes nicely formatted filesize\n     * @param string $filename\n     * @param string $before\n     * @param string $after\n     */\n    function print_filesize($filename, $before = \' <span class="filesize">(\', $after = \')</span>\')\n    {\n        if (file_exists($filename))\n        {\n            $size = filesize($filename);\n            $unit = \'B\';\n\n            if (intval($size/(1024*1024*1024)))\n            {\n                $size = number_format(($size/(1024*1024*1024)), 1);\n                $unit = \'GB\';\n            }\n            elseif (intval($size/(1024*1024)))\n            {\n                $size = number_format(($size/(1024*1024)), 1);\n                $unit = \'MB\';\n            }\n            elseif (intval($size/1024))\n            {\n                $size = number_format(($size/1024), 1);\n                $unit = \'KB\';\n            }\n\n            $approx = $unit == \'B\' ? \'\' : \'\u2248\' ;\n\n            echo "{$before}{$approx}{$size} {$unit}{$after}";\n        }\n    }\n\n    ?>\n  '),
+  code$002Dblock(Symbol.for('php'))(`
+    <?php
+
+    /**
+     * echoes nicely formatted filesize
+     * @param string $filename
+     * @param string $before
+     * @param string $after
+     */
+    function print_filesize($filename, $before = ' <span class="filesize">(', $after = ')</span>')
+    {
+        if (file_exists($filename))
+        {
+            $size = filesize($filename);
+            $unit = 'B';
+
+            if (intval($size/(1024*1024*1024)))
+            {
+                $size = number_format(($size/(1024*1024*1024)), 1);
+                $unit = 'GB';
+            }
+            elseif (intval($size/(1024*1024)))
+            {
+                $size = number_format(($size/(1024*1024)), 1);
+                $unit = 'MB';
+            }
+            elseif (intval($size/1024))
+            {
+                $size = number_format(($size/1024), 1);
+                $unit = 'KB';
+            }
+
+            $approx = $unit == 'B' ? '' : '≈' ;
+
+            echo "{$before}{$approx}{$size} {$unit}{$after}";
+        }
+    }
+
+    ?>
+  `),
   p(['Example usage:']),
-  code$002Dblock(Symbol.for('php'))('\n    <a href="favicon.ico">favicon.ico</a><?php print_filesize(\'favicon.ico\'); ?>\n  '),
+  code$002Dblock(Symbol.for('php'))(`
+    <a href="favicon.ico">favicon.ico</a><?php print_filesize('favicon.ico'); ?>
+  `),
   p([
     'This gives: ',
     a('/favicon.ico')('favicon.ico'),

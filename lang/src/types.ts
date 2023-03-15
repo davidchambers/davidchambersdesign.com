@@ -38,6 +38,18 @@ export const StringLiteral = (
   value,
 });
 
+export interface TemplateLiteral {
+  readonly type: 'TemplateLiteral';
+  readonly value: string;
+}
+
+export const TemplateLiteral = (
+  value: string,
+): TemplateLiteral => ({
+  type: 'TemplateLiteral',
+  value,
+});
+
 export interface SymbolLiteral {
   readonly type: 'SymbolLiteral';
   readonly name: string;
@@ -175,6 +187,7 @@ export type PrimaryExpression =
   | BooleanLiteral
   | NumberLiteral
   | StringLiteral
+  | TemplateLiteral
   | SymbolLiteral
   | ArrayExpression
   | ObjectExpression
@@ -600,6 +613,7 @@ export type Expression =
   | BooleanLiteral
   | NumberLiteral
   | StringLiteral
+  | TemplateLiteral
   | SymbolLiteral
   | MetaProperty
   | MemberExpression

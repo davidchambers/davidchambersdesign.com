@@ -110,7 +110,14 @@ const body = [
     ' where they match the start and\n    end of any line.'
   ]),
   p(['It\'s possible, though, to have a lookahead act as an end of string\n    anchor in multiline mode:']),
-  code$002Dblock(Symbol.for('javascript'))('\n    > /bar(?![\\s\\S])/m.test(\'foo\\nbar\')\n    true\n    > /bar(?![\\s\\S])/m.test(\'foo\\nbar\\n\')\n    false\n    > /bar(?![\\s\\S])/m.test(\'foo\\nbar\\nbaz\')\n    false\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    > /bar(?![\\s\\S])/m.test('foo\\nbar')
+    true
+    > /bar(?![\\s\\S])/m.test('foo\\nbar\\n')
+    false
+    > /bar(?![\\s\\S])/m.test('foo\\nbar\\nbaz')
+    false
+  `),
   p([
     code('(?![\\s\\S])'),
     ' at the end of the pattern is equivalent to ',

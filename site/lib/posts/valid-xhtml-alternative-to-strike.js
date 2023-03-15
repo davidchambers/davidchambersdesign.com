@@ -94,12 +94,16 @@ const body = [
     a('http://validator.w3.org/')('W3C\'s markup validation service'),
     '\n    gave the following error:'
   ]),
-  code$002Dblock(Symbol.for('plain-text'))('\n    element "strike" undefined\n  '),
+  code$002Dblock(Symbol.for('plain-text'))(`
+    element "strike" undefined
+  `),
   p([
     code('<strike>'),
     ' is not valid XHTML; I\'d forgotten the correct\n    XHTML markup for this purpose:'
   ]),
-  code$002Dblock(Symbol.for('html'))('\n    my favourite colour is <del>red</del> <ins>white</ins>\n  '),
+  code$002Dblock(Symbol.for('html'))(`
+    my favourite colour is <del>red</del> <ins>white</ins>
+  `),
   p([
     'The above gives:\n    my favourite colour is ',
     del('red'),
@@ -107,7 +111,10 @@ const body = [
     ins('white')
   ]),
   p(['It\'s a good idea to explicitly define the appearance of deleted\n    and inserted text in your style sheet:']),
-  code$002Dblock(Symbol.for('css'))('\n    del { text-decoration: line-through; }\n    ins { text-decoration: underline; }\n  ')
+  code$002Dblock(Symbol.for('css'))(`
+    del { text-decoration: line-through; }
+    ins { text-decoration: underline; }
+  `)
 ];
 export default {
   ['id']: 8,

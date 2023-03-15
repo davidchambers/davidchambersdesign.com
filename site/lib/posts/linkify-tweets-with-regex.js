@@ -99,12 +99,18 @@ const body = [
     p(['Here\'s the gist: a match will begin with "@" and the\n      at sign must be followed by one or more word (letter\u2009/\n      number\u2009/ underscore) characters. The @name must either\n      appear at the beginning of the tweet or be preceded by a\n      space. This prevents the regular expression from matching\n      "@example" in "me@example.com".'])
   ]),
   h4('JavaScript implementation'),
-  code$002Dblock(Symbol.for('javascript'))('\n    tweet.replace(/(^|\\s)(@\\w+)/gm, \'$1<a href="http://twitter.com/$2">$2</a>\');\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    tweet.replace(/(^|\\s)(@\\w+)/gm, '$1<a href="http://twitter.com/$2">$2</a>');
+  `),
   p(['It would of course be nicer to write:']),
-  code$002Dblock(Symbol.for('javascript'))('\n    tweet.replace(/(?<=(?:^|\\s))(@\\w+)/gm, \'<a href="http://twitter.com/$1">$1</a>\');\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    tweet.replace(/(?<=(?:^|\\s))(@\\w+)/gm, '<a href="http://twitter.com/$1">$1</a>');
+  `),
   p(['Unfortunately, JavaScript does not support lookbehinds in\n    regular expressions, so one\'s forced to capture the preceding\n    space character (if in fact there is one) and spit it out in\n    the replacement string.']),
   h4('PHP implementation'),
-  code$002Dblock(Symbol.for('php'))('\n    preg_replace(\'/(^|\\s)(@\\w+)/m\', \'$1<a href="http://twitter.com/$2">$2</a>\', $tweet);\n  '),
+  code$002Dblock(Symbol.for('php'))(`
+    preg_replace('/(^|\\s)(@\\w+)/m', '$1<a href="http://twitter.com/$2">$2</a>', $tweet);
+  `),
   h4('Python implementation'),
   p([
     'Python ',
@@ -115,7 +121,12 @@ const body = [
     code('(?<=^|\\s)'),
     '. No matter.'
   ]),
-  code$002Dblock(Symbol.for('python'))('\n    import re\n    re.sub(r\'(?m)(^|\\s)(@\\w+)\',\n            lambda m: m.group(1) + \'<a href="http://twitter.com/\' + m.group(2) + \'">\' + m.group(2) + \'</a>\',\n            tweet)\n  '),
+  code$002Dblock(Symbol.for('python'))(`
+    import re
+    re.sub(r'(?m)(^|\\s)(@\\w+)',
+            lambda m: m.group(1) + '<a href="http://twitter.com/' + m.group(2) + '">' + m.group(2) + '</a>',
+            tweet)
+  `),
   p(['For once, Python\'s syntax is the least elegant!']),
   p(['Interestingly, while testing these snippets I found I did not\n    need to specify multi-line mode. Perhaps multi-line mode is\n    assumed? I\'d like to know the answer.']),
   h3('Matching hyperlinks'),

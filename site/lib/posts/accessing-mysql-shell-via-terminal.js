@@ -100,7 +100,9 @@ const body = [
     a('http://www.oreillynet.com/cs/user/view/cs_msg/7078#id_7118')('error 1044 and 1045'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('console'))('\n    mysql -u root -p mysql\n  ')
+  code$002Dblock(Symbol.for('console'))(`
+    mysql -u root -p mysql
+  `)
 ];
 export default {
   ['id']: 34,

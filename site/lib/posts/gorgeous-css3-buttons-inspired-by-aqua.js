@@ -156,9 +156,20 @@ const body = [
     em('somewhat'),
     ' button-like. Even antiquated browsers\n    such as Internet Explorer 6 understand the rules defined\n    thus far. The next step is to make the elements more\n    appealing and more button-like in modern browsers.'
   ]),
-  code$002Dblock(Symbol.for('css'))('\n    -webkit-border-radius: 1em;\n    -moz-border-radius: 1em;\n    border-radius: 1em;\n  '),
+  code$002Dblock(Symbol.for('css'))(`
+    -webkit-border-radius: 1em;
+    -moz-border-radius: 1em;
+    border-radius: 1em;
+  `),
   captioned$002Dimage('/images/posts/39/start-game-button-and-hyperlink-border-radius.png')('Button and hyperlink with rounded corners')('Rounded corners'),
-  code$002Dblock(Symbol.for('css'))('\n    background: -webkit-gradient(linear, left top, left bottom,\n        from(#fc6), to(#fc6),\n        color-stop(0.1, #fff), color-stop(0.2, #fc6),\n        color-stop(0.5, #fc6), color-stop(0.5, #fa2));\n    background: -moz-linear-gradient(-90deg,\n        #fc6 5%, #fff 15%, #fc6 25%, #fc6 50%, #fa2 50%, #fc6);\n  '),
+  code$002Dblock(Symbol.for('css'))(`
+    background: -webkit-gradient(linear, left top, left bottom,
+        from(#fc6), to(#fc6),
+        color-stop(0.1, #fff), color-stop(0.2, #fc6),
+        color-stop(0.5, #fc6), color-stop(0.5, #fa2));
+    background: -moz-linear-gradient(-90deg,
+        #fc6 5%, #fff 15%, #fc6 25%, #fc6 50%, #fa2 50%, #fc6);
+  `),
   captioned$002Dimage('/images/posts/39/start-game-button-and-hyperlink-background-gradient.png')('Button and hyperlink with background gradient')('Linear gradient with colour stops creates a sense of depth'),
   h3('Styling different states'),
   p([
@@ -178,10 +189,30 @@ const body = [
   p(['On the web, submit inputs and hyperlinks have several possible\n    states, the most important of which are hover, focus, and active.\n    When creating style rules for each of these states it\'s important\n    to bear in mind that more than one state may apply at one time.']),
   captioned$002Dimage('/images/posts/windows/transmission-up-to-date.png')('Transmission dialog featuring a button with two states')('Here the OK button exhibits both a pulsating blue background and an outer glow'),
   h4('Hover'),
-  code$002Dblock(Symbol.for('css'))('\n    .aqua:hover {\n        border-color: #740;\n        background: #fb4;\n        background: -webkit-gradient(linear, left top, left bottom,\n            from(#fb4), to(#fb4),\n            color-stop(0.1, #fea), color-stop(0.2, #fb4),\n            color-stop(0.5, #fb4), color-stop(0.5, #f90));\n        background: -moz-linear-gradient(-90deg,\n            #fb4 5%, #fea 15%, #fb4 25%, #fb4 50%, #f90 50%, #fb4);\n        color: #740;\n        cursor: pointer;\n    }\n  '),
+  code$002Dblock(Symbol.for('css'))(`
+    .aqua:hover {
+        border-color: #740;
+        background: #fb4;
+        background: -webkit-gradient(linear, left top, left bottom,
+            from(#fb4), to(#fb4),
+            color-stop(0.1, #fea), color-stop(0.2, #fb4),
+            color-stop(0.5, #fb4), color-stop(0.5, #f90));
+        background: -moz-linear-gradient(-90deg,
+            #fb4 5%, #fea 15%, #fb4 25%, #fb4 50%, #f90 50%, #fb4);
+        color: #740;
+        cursor: pointer;
+    }
+  `),
   captioned$002Dimage('/images/posts/39/start-game-button-and-hyperlink-hover.png')('Hover state')('Hover state (right) alongside default state'),
   h4('Focus'),
-  code$002Dblock(Symbol.for('css'))('\n    .aqua:focus {\n        -webkit-box-shadow: #740 0 1px 0.75em;\n        -moz-box-shadow: #740 0 1px 0.75em;\n        color: #740;\n        outline: none;\n    }\n  '),
+  code$002Dblock(Symbol.for('css'))(`
+    .aqua:focus {
+        -webkit-box-shadow: #740 0 1px 0.75em;
+        -moz-box-shadow: #740 0 1px 0.75em;
+        color: #740;
+        outline: none;
+    }
+  `),
   captioned$002Dimages([
     [
       '/images/posts/39/start-game-button-and-hyperlink-focus.png',
@@ -195,7 +226,19 @@ const body = [
     ]
   ]),
   h4('Active'),
-  code$002Dblock(Symbol.for('css'))('\n    .aqua:active {\n        border-color: #630;\n        background: #f90;\n        background: -webkit-gradient(linear, left top, left bottom,\n            from(#f90), to(#f90),\n            color-stop(0.1, #fd8), color-stop(0.3, #fb4),\n            color-stop(0.5, #fb4), color-stop(0.5, #f90));\n        background: -moz-linear-gradient(-90deg,\n            #f90 5%, #fd8 15%, #fb4 35%, #fb4 50%, #f90 50%, #f90);\n        color: #630;\n    }\n  '),
+  code$002Dblock(Symbol.for('css'))(`
+    .aqua:active {
+        border-color: #630;
+        background: #f90;
+        background: -webkit-gradient(linear, left top, left bottom,
+            from(#f90), to(#f90),
+            color-stop(0.1, #fd8), color-stop(0.3, #fb4),
+            color-stop(0.5, #fb4), color-stop(0.5, #f90));
+        background: -moz-linear-gradient(-90deg,
+            #f90 5%, #fd8 15%, #fb4 35%, #fb4 50%, #f90 50%, #f90);
+        color: #630;
+    }
+  `),
   captioned$002Dimage('/images/posts/39/start-game-button-and-hyperlink-active.png')('Active state')('Active state (right) alongside default state'),
   h3('Demo'),
   p([

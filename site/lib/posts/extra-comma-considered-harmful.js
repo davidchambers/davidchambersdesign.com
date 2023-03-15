@@ -101,7 +101,18 @@ const body = [
       a('http://www.jslint.com/')('JSLint'),
       '\n      for the first time; I plan to use it frequently from this point\n      forward. I have one question, though, concerning the acceptability\n      of extra commas. Consider the following code snippet:'
     ]),
-    code$002Dblock(Symbol.for('javascript'))('\n      var ninja = {\n          name: \'Hattori Hanzou Masashige\',\n          shuriken: 5,\n          attack: function () {\n              if (ninja.shuriken) {\n                  ninja.shuriken -= 1;\n                  window.alert(\'Hai-Ya!\');\n              }\n          },\n      };\n    '),
+    code$002Dblock(Symbol.for('javascript'))(`
+      var ninja = {
+          name: 'Hattori Hanzou Masashige',
+          shuriken: 5,
+          attack: function () {
+              if (ninja.shuriken) {
+                  ninja.shuriken -= 1;
+                  window.alert('Hai-Ya!');
+              }
+          },
+      };
+    `),
     p([
       'JSLint returns an ',
       em('extra comma'),

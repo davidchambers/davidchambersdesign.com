@@ -122,7 +122,9 @@ const body = [
     strong('.bash_profile'),
     ', or in a separate file which either\n    one of these imports.'
   ]),
-  code$002Dblock(Symbol.for('bash'))('\n    alias site-packages="cd /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages"\n  '),
+  code$002Dblock(Symbol.for('bash'))(`
+    alias site-packages="cd /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages"
+  `),
   p([
     'Thanks to this alias I can enter ',
     code('site-packages'),
@@ -130,7 +132,14 @@ const body = [
     code('cd -'),
     ',\n    which takes you to the directory you were in most recently.'
   ]),
-  code$002Dblock(Symbol.for('console'))('\n    $ cd ~/Desktop\n    $ site-packages\n    $ pwd\n    /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages\n    $ cd -\n    /Users/dc/Desktop\n  '),
+  code$002Dblock(Symbol.for('console'))(`
+    $ cd ~/Desktop
+    $ site-packages
+    $ pwd
+    /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages
+    $ cd -
+    /Users/dc/Desktop
+  `),
   p([
     a('https://github.com/r00k/dotfiles/blob/master/bash/aliases')('r00k\'s bash aliases'),
     ' provide some ideas as to other ways\n    in which aliases can be put to use. :D'

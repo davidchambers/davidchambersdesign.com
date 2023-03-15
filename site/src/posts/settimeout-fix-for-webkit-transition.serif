@@ -38,7 +38,7 @@ body = [
     p [
      "The code behind this example is not complicated:",
     ],
-    code-block :javascript "
+    code-block :javascript `
       element.style.webkitTransitionProperty = 'left';
       element.style.webkitTransitionDuration = '2s';
       element.addEventListener('click', function () {
@@ -47,7 +47,7 @@ body = [
               this.style.left = 0;
           });
       });
-    ",
+    `,
   ],
 
   p [
@@ -79,11 +79,11 @@ body = [
    "The code:",
   ],
 
-  code-block :javascript "
+  code-block :javascript `
     element.style.left = '100px';
     element.style.webkitTransitionProperty = 'left';
     element.style.webkitTransitionDuration = '2s';
-  ",
+  `,
 
   p [
    "Here are the instructions this code attempts to provide:",
@@ -140,13 +140,13 @@ body = [
    "The working code:",
   ],
 
-  code-block :javascript "
+  code-block :javascript `
     element.style.left = '100px';
     setTimeout(function () {
         element.style.webkitTransitionProperty = 'left';
         element.style.webkitTransitionDuration = '2s';
     }, 0);
-  ",
+  `,
 
   p [
    "For some reason wrapping the ", code "webkitTransition*", "
@@ -180,14 +180,14 @@ body = [
       li "Browsers optimize away redundant style changes",
       li "This matters with transitions, because they are temporal",
     ],
-    code-block :javascript "
+    code-block :javascript `
       var box = document.getElementById('box');
       box.style.backgroundColor = 'red';
       box.style.webkitTransition = 'background-color 2s';
       window.setTimeout(function() {
         box.style.backgroundColor = 'blue';
       }, 0);
-    ",
+    `,
   ],
 
 ];

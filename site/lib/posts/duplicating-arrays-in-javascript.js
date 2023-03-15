@@ -94,18 +94,30 @@ const body = [
     a('#footnote')('*'),
     '). As a result, a significant\n    portion of JavaScript coders do not think of variables as pointers\n    to memory addresses. This leads to confusion in cases such as this:'
   ]),
-  code$002Dblock(Symbol.for('javascript'))('\n    var fruits = [\'orange\', \'lime\'];\n    var colours = fruits; // naïve attempt to duplicate array\n    colours.push(\'yellow\');\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    var fruits = ['orange', 'lime'];
+    var colours = fruits; // naïve attempt to duplicate array
+    colours.push('yellow');
+  `),
   p([
     'One might be surprised to learn that ',
     code('fruits'),
     ' now contains\n    not just "orange" and "lime" but also "yellow". Oops! Here\'s how\n    it went wrong:'
   ]),
-  code$002Dblock(Symbol.for('javascript'))('\n    var fruits = [\'orange\', \'lime\'];\n    // fruits points to array containing "orange" and "lime"\n\n    var colours = fruits;\n    // colours now points to that same array!\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    var fruits = ['orange', 'lime'];
+    // fruits points to array containing "orange" and "lime"
+
+    var colours = fruits;
+    // colours now points to that same array!
+  `),
   p([
     'How, then, does one create a copy of the original array? ',
     em('Slice!')
   ]),
-  code$002Dblock(Symbol.for('javascript'))('\n    var colours = fruits.slice();\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    var colours = fruits.slice();
+  `),
   aside$0027({ [Symbol.for('id')]: 'footnote' })([
     '* Languages such as C.\n    Like ',
     a('http://www.quirksmode.org/about/')('ppk'),

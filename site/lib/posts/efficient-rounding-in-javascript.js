@@ -94,9 +94,13 @@ const body = [
     code('x'),
     ', which you want to round\n    to the nearest integer. Easy, right?'
   ]),
-  code$002Dblock(Symbol.for('javascript'))('\n    x = Math.round(x);\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    x = Math.round(x);
+  `),
   p(['Sure, but is this the fastest option? I think not.']),
-  code$002Dblock(Symbol.for('javascript'))('\n    x = x < 0 ? x - 0.5 >> 0 : x + 0.5 >> 0;\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    x = x < 0 ? x - 0.5 >> 0 : x + 0.5 >> 0;
+  `),
   p([
     'What the heck\'s going on here? ',
     code('>>'),

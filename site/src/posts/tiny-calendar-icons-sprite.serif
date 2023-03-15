@@ -38,16 +38,16 @@ body = [
     using CSS. One could start with an empty span element:",
   ],
 
-  code-block :html "
-    <span class=\"day-1\"></span>
-  ",
+  code-block :html `
+    <span class="day-1"></span>
+  `,
 
   p [
    "The following CSS sets the width and height of the element and
     sets the sprite as its background image:",
   ],
 
-  code-block :css "
+  code-block :css `
     span.day-1
     {
         display: block;
@@ -56,7 +56,7 @@ body = [
         background-image: url(/path/to/images/calendar.png);
         background-repeat: no-repeat;
     }
-  ",
+  `,
 
   p [
    "By default the top left corner of an element's background image
@@ -75,7 +75,7 @@ body = [
     is specified:",
   ],
 
-  code-block :css "
+  code-block :css `
     span.day-1
     {
         display: block;
@@ -85,7 +85,7 @@ body = [
         background-repeat: no-repeat;
         background-position: -60px -20px;
     }
-  ",
+  `,
 
   p [
    "This drags the background image 60px to the left, and lifts it 20px:",
@@ -100,7 +100,7 @@ body = [
    "Here's the final CSS:",
   ],
 
-  code-block :css "
+  code-block :css `
     span.day
     {
         display: block;
@@ -147,15 +147,15 @@ body = [
     span.day-29 { background-position:  -60px -100px; }
     span.day-30 { background-position:  -80px -100px; }
     span.day-31 { background-position: -100px -100px; }
-  ",
+  `,
 
   p [
    "Note that I introduced the class name ", strong "day", " to streamline
     the CSS. This must appear in the HTML, as in this example:",
   ],
 
-  code-block :html "
-    <span class=\"day day-31\"></span>
-  ",
+  code-block :html `
+    <span class="day day-31"></span>
+  `,
 
 ];

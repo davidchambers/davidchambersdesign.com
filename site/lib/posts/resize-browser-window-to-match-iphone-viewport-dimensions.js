@@ -102,14 +102,18 @@ const body = [
           strong('Portrait'),
           ' (labelled "\u2051")'
         ]),
-        code$002Dblock(Symbol.for('plain-text'))('\n          javascript:open(location,\'iPhone:portrait\',\'innerWidth=\'+(320+15)+\',innerHeight=\'+(480+15)+\',scrollbars=yes\');\n        ')
+        code$002Dblock(Symbol.for('plain-text'))(`
+          javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
+        `)
       ]),
       li([
         p([
           strong('Landscape'),
           ' (labelled "**")'
         ]),
-        code$002Dblock(Symbol.for('plain-text'))('\n          javascript:open(location,\'iPhone:landscape\',\'innerWidth=\'+(480+15)+\',innerHeight=\'+(320+15)+\',scrollbars=yes\');\n        ')
+        code$002Dblock(Symbol.for('plain-text'))(`
+          javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
+        `)
       ])
     ]),
     captioned$002Dimage('/images/posts/37/iphone-testing-bookmarklets.png')('iPhone testing bookmarklets')('iPhone testing bookmarklets: portrait and landscape')

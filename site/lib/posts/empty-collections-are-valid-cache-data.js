@@ -98,7 +98,13 @@ const body = [
     code('{}'),
     ') are\n    treated as valid cache data.'
   ]),
-  code$002Dblock(Symbol.for('python'))('\n    cached = cache.get(cache_key)\n    if cached:\n        return cached\n\n    # perform expensive operation\n  '),
+  code$002Dblock(Symbol.for('python'))(`
+    cached = cache.get(cache_key)
+    if cached:
+        return cached
+
+    # perform expensive operation
+  `),
   p([
     'In the above snippet, if the call to ',
     code('get'),
@@ -109,7 +115,11 @@ const body = [
     code('None'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('python'))('\n    cached = cache.get(cache_key)\n    if cached is not None: # much better!\n        return cached\n  '),
+  code$002Dblock(Symbol.for('python'))(`
+    cached = cache.get(cache_key)
+    if cached is not None: # much better!
+        return cached
+  `),
   p([
     'Django\'s documentation wisely advises against caching the\n    literal value ',
     code('None'),

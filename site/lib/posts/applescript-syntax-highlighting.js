@@ -127,7 +127,44 @@ const body = [
       'Screenshot of snippet styled by AppleScript theme for SyntaxHighlighter'
     ]
   ]),
-  code$002Dblock(Symbol.for('applescript'))('\n    #!/usr/bin/osascript\n\n    (*\n        This handler determines whether someone is happy.\n        It\'s actually just a good way to showcase AppleScript syntax highlighting using Alex Gorbatchev\'s SyntaxHighlighter.\n        (* Hey, nested comments. Woot! *)\n    *)\n\n    on user_is_happy()\n        -- determine which application is currently frontmost\n        tell application "System Events" to set app_list to the name of application processes whose frontmost is true\n        set front_app to the first item of app_list\n        tell application "Finder"\n            activate\n            display dialog \xAC\n                "Enter your name" default answer "" buttons {"Cancel", "OK"} \xAC\n                default button 2 with icon note\n            set user_name to the text returned of the result\n            (* The word "return" in the line below should not be in bold. The regex does its best to determine whether the word is being used in a return statement or as a line return. *)\n            display dialog "Hello, " & user_name & "!" & return & return & \xAC\n                "Are you happy?" buttons {"Yes", "No"} with icon note\n            set is_happy to the button returned of the result\n        end tell\n        -- activate the application that was frontmost initially\n        tell application front_app to activate\n        return is_happy = "Yes" -- this time the word "return" should be in bold\n    end user_is_happy\n\n    if user_is_happy() then\n        say "Woohoo!" using "Alex"\n    else\n        repeat 3 times\n            beep\n            delay 0.5\n        end repeat\n    end if\n  '),
+  code$002Dblock(Symbol.for('applescript'))(`
+    #!/usr/bin/osascript
+
+    (*
+        This handler determines whether someone is happy.
+        It's actually just a good way to showcase AppleScript syntax highlighting using Alex Gorbatchev's SyntaxHighlighter.
+        (* Hey, nested comments. Woot! *)
+    *)
+
+    on user_is_happy()
+        -- determine which application is currently frontmost
+        tell application "System Events" to set app_list to the name of application processes whose frontmost is true
+        set front_app to the first item of app_list
+        tell application "Finder"
+            activate
+            display dialog ¬
+                "Enter your name" default answer "" buttons {"Cancel", "OK"} ¬
+                default button 2 with icon note
+            set user_name to the text returned of the result
+            (* The word "return" in the line below should not be in bold. The regex does its best to determine whether the word is being used in a return statement or as a line return. *)
+            display dialog "Hello, " & user_name & "!" & return & return & ¬
+                "Are you happy?" buttons {"Yes", "No"} with icon note
+            set is_happy to the button returned of the result
+        end tell
+        -- activate the application that was frontmost initially
+        tell application front_app to activate
+        return is_happy = "Yes" -- this time the word "return" should be in bold
+    end user_is_happy
+
+    if user_is_happy() then
+        say "Woohoo!" using "Alex"
+    else
+        repeat 3 times
+            beep
+            delay 0.5
+        end repeat
+    end if
+  `),
   caption(['Live rendering of AppleScript snippet']),
   h3$0027({ [Symbol.for('id')]: 'setup' })('Setup'),
   p(['To add AppleScript syntax highlighting to your own site or blog,\n    do the following:']),
@@ -153,7 +190,11 @@ const body = [
       ])]),
     li([
       p(['Include the brush like so:']),
-      code$002Dblock(Symbol.for('html'))('\n        <script src="/path/to/scripts/shCore.js"></script>\n        <script src="/path/to/scripts/shBrushAppleScript.js"></script>\n        <script>SyntaxHighlighter.all()</script>\n      ')
+      code$002Dblock(Symbol.for('html'))(`
+        <script src="/path/to/scripts/shCore.js"></script>
+        <script src="/path/to/scripts/shBrushAppleScript.js"></script>
+        <script>SyntaxHighlighter.all()</script>
+      `)
     ])
   ]),
   h3$0027({ [Symbol.for('id')]: 'usage' })('Usage'),
@@ -162,7 +203,9 @@ const body = [
     code('pre'),
     ' tags like so:'
   ]),
-  code$002Dblock(Symbol.for('html'))('\n    <pre class="brush: applescript; class-name: applescript;"></pre>\n  '),
+  code$002Dblock(Symbol.for('html'))(`
+    <pre class="brush: applescript; class-name: applescript;"></pre>
+  `),
   p([
     code('brush: applescript;'),
     ' tells SyntaxHighlighter to\n    use the AppleScript brush for the text within the pre tag. ',
@@ -177,7 +220,9 @@ const body = [
       code('class-name'),
       ' in the, ahem, class name is\n      no longer necessary (apparently I made a convincing argument).\n      This is now sufficient:'
     ]),
-    code$002Dblock(Symbol.for('html'))('\n      <pre class="brush:applescript"></pre>\n    ')
+    code$002Dblock(Symbol.for('html'))(`
+      <pre class="brush:applescript"></pre>
+    `)
   ]),
   p([
     'Note that including ',

@@ -119,7 +119,9 @@ const body = [
     code('datetime'),
     ' attribute provides the canonical\n    representation of a point in time.'
   ]),
-  code$002Dblock(Symbol.for('html'))('\n    <time datetime="1984-04-26">26 April 1984</time>\n  '),
+  code$002Dblock(Symbol.for('html'))(`
+    <time datetime="1984-04-26">26 April 1984</time>
+  `),
   p([
     'Simply by using the ',
     code('time'),
@@ -157,7 +159,9 @@ const body = [
     code('time'),
     ' element.'
   ]),
-  code$002Dblock(Symbol.for('html'))('\n    <time datetime="2010-11-27T13:30-00:00">27 November 2010</time>\n  '),
+  code$002Dblock(Symbol.for('html'))(`
+    <time datetime="2010-11-27T13:30-00:00">27 November 2010</time>
+  `),
   p([
     'We could localize this element (along with any other ',
     code('time'),
@@ -165,13 +169,17 @@ const body = [
     code('localize'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('html'))('\n    $(\'time\').localize();\n  '),
+  code$002Dblock(Symbol.for('html'))(`
+    $('time').localize();
+  `),
   p([
     'This updates both the visible text and the value of the ',
     code('datetime'),
     ' attribute.'
   ]),
-  code$002Dblock(Symbol.for('html'))('\n    <time datetime="2010-11-28T00:30+11:00">28 November 2010</time>\n  '),
+  code$002Dblock(Symbol.for('html'))(`
+    <time datetime="2010-11-28T00:30+11:00">28 November 2010</time>
+  `),
   (() => {
     const url = 'http://bitbucket.org/davidchambers/jquery.localize';
     const link = path => {

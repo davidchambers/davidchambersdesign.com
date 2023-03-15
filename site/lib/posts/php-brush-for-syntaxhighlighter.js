@@ -171,7 +171,33 @@ const body = [
       '.'
     ])
   ]),
-  code$002Dblock(Symbol.for('php'))('\n    <?php\n\n    \'single-quoted string\';\n\n    "double-quoted string";\n\n    // single-quoted string with literal dollar sign\n    \'fruit smoothie: $5.50\';\n\n    // double-quoted string containing a variable\n    "fruit smoothie: $cost";\n\n    // numerical value\n    $cost = 5.50;\n\n    // a few common function calls\n    empty($variable);\n    isset($variable);\n    strlen($variable);\n    strrev($variable);\n\n    // a call to a custom function\n    is_ready_to_order($customer);\n\n    ?>\n  '),
+  code$002Dblock(Symbol.for('php'))(`
+    <?php
+
+    'single-quoted string';
+
+    "double-quoted string";
+
+    // single-quoted string with literal dollar sign
+    'fruit smoothie: $5.50';
+
+    // double-quoted string containing a variable
+    "fruit smoothie: $cost";
+
+    // numerical value
+    $cost = 5.50;
+
+    // a few common function calls
+    empty($variable);
+    isset($variable);
+    strlen($variable);
+    strrev($variable);
+
+    // a call to a custom function
+    is_ready_to_order($customer);
+
+    ?>
+  `),
   caption(['Live rendering of improved PHP brush'])
 ];
 export default {

@@ -155,7 +155,10 @@ const body = [
         strong('Downloads'),
         '\n        folder (or wherever you saved the script).'
       ]),
-      code$002Dblock(Symbol.for('console'))('\n        $ cd ~/Downloads\n        $ ls\n      '),
+      code$002Dblock(Symbol.for('console'))(`
+        $ cd ~/Downloads
+        $ ls
+      `),
       p([
         'Run the ',
         code('ls'),
@@ -170,9 +173,14 @@ const body = [
         strong('/bin'),
         ' directory so that it can be run from\n        any directory (you\'ll be asked to enter your password).'
       ]),
-      code$002Dblock(Symbol.for('console'))('\n        $ chmod 555 setfileicon\n        $ sudo mv setfileicon /bin/setfileicon\n      '),
+      code$002Dblock(Symbol.for('console'))(`
+        $ chmod 555 setfileicon
+        $ sudo mv setfileicon /bin/setfileicon
+      `),
       p(['Finally, run the script passing in two arguments: the\n        path to the .icns file; and the path to the file, folder,\n        or bundle to which you\'d like to attach the icons.']),
-      code$002Dblock(Symbol.for('console'))('\n        $ setfileicon ~/icons.icns ~/example\n      ')
+      code$002Dblock(Symbol.for('console'))(`
+        $ setfileicon ~/icons.icns ~/example
+      `)
     ])
   ]),
   h3('TL;DR'),

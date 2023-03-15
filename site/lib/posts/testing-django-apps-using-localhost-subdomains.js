@@ -102,7 +102,16 @@ const body = [
         code('middleware.py'),
         ' in my project directory:'
       ]),
-      code$002Dblock(Symbol.for('python'))('\n        class SubdomainMiddleware:\n            def process_request(self, request):\n                \'\'\'Parse out the subdomain from the request\'\'\'\n                request.subdomain = None\n                host = request.META.get(\'HTTP_HOST\', \'\')\n                host_s = host.replace(\'www.\', \'\').split(\'.\')\n                if len(host_s) > 2:\n                    request.subdomain = \'\'.join(host_s[:-2])\n      ')
+      code$002Dblock(Symbol.for('python'))(`
+        class SubdomainMiddleware:
+            def process_request(self, request):
+                '''Parse out the subdomain from the request'''
+                request.subdomain = None
+                host = request.META.get('HTTP_HOST', '')
+                host_s = host.replace('www.', '').split('.')
+                if len(host_s) > 2:
+                    request.subdomain = ''.join(host_s[:-2])
+      `)
     ]),
     li([
       p([
@@ -110,7 +119,12 @@ const body = [
         code('MIDDLEWARE_CLASSES'),
         ':'
       ]),
-      code$002Dblock(Symbol.for('python'))('\n        MIDDLEWARE_CLASSES = (\n            ...,\n            \'middleware.SubdomainMiddleware\',\n        )\n      ')
+      code$002Dblock(Symbol.for('python'))(`
+        MIDDLEWARE_CLASSES = (
+            ...,
+            'middleware.SubdomainMiddleware',
+        )
+      `)
     ]),
     li([
       p([
@@ -118,7 +132,11 @@ const body = [
         code('/etc/hosts'),
         ' file as per Dave\'s suggestion:'
       ]),
-      code$002Dblock(Symbol.for('plain-text'))('\n        127.0.0.1 test.com\n        127.0.0.1 blog.test.com\n        127.0.0.1 search.test.com\n      '),
+      code$002Dblock(Symbol.for('plain-text'))(`
+        127.0.0.1 test.com
+        127.0.0.1 blog.test.com
+        127.0.0.1 search.test.com
+      `),
       p([
         'Initially I replaced ',
         code('test.com'),
@@ -132,7 +150,9 @@ const body = [
     ]),
     li([
       p(['I added the port number to the address:']),
-      code$002Dblock(Symbol.for('plain-text'))('\n        http://test.com:8000/\n      '),
+      code$002Dblock(Symbol.for('plain-text'))(`
+        http://test.com:8000/
+      `),
       p([
         'This ',
         em('actually'),

@@ -175,7 +175,15 @@ const body = [
     em('at least'),
     ' one\n    definition. This enables more than one description -- a title and a\n    caption, for instance -- to be tied to an image:'
   ]),
-  code$002Dblock(Symbol.for('html'))('\n    <dl>\n        <dt><img src="images/ds81.jpg" alt="Vancouver architecture" /></dt>\n        <dd>This is not like that</dd>\n        <dd>Contrasting ideas engage the mind. Make a photo today that tells\n        a story with contrasting elements. \u2014 <i>Daily Shoot 81</i></dd>\n        ...\n    </dl>\n  '),
+  code$002Dblock(Symbol.for('html'))(`
+    <dl>
+        <dt><img src="images/ds81.jpg" alt="Vancouver architecture" /></dt>
+        <dd>This is not like that</dd>
+        <dd>Contrasting ideas engage the mind. Make a photo today that tells
+        a story with contrasting elements. — <i>Daily Shoot 81</i></dd>
+        ...
+    </dl>
+  `),
   p(['Beautiful, isn\'t it? No pointless (literally) anchors, no meaningless\n    ids, no class names, just content wrapped in descriptive HyperText\n    Markup Language. This ensures that the page\'s content is accessible\n    to all: those viewing the page on mobile phones; those using screen\n    readers or feed readers; and, of course, web crawlers.']),
   captioned$002Dimage('/images/posts/43/meaningful-markup-degrades-gracefully.jpg')('Meaningful markup degrades gracefully')('The page\'s content is accessible even with styles disabled'),
   h3('Demo'),

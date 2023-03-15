@@ -90,21 +90,38 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['What is the best way to get the attributes of a Django model\n    or instance?']),
-  code$002Dblock(Symbol.for('python'))('\n    from django.db import models\n\n    class Musician(models.Model):\n        first_name = models.CharField()\n        last_name  = models.CharField()\n        instrument = models.CharField()\n  '),
+  code$002Dblock(Symbol.for('python'))(`
+    from django.db import models
+
+    class Musician(models.Model):
+        first_name = models.CharField()
+        last_name  = models.CharField()
+        instrument = models.CharField()
+  `),
   p([
     'One option is to use ',
     code('__dict__.keys()'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('python'))('\n    >>> m = Musician(first_name=\'Norah\', last_name=\'Jones\', instrument=\'piano\')\n    >>> print m.__dict__.keys()\n    [\'last_name\', \'instrument\', \'first_name\', \'id\']\n  '),
+  code$002Dblock(Symbol.for('python'))(`
+    >>> m = Musician(first_name='Norah', last_name='Jones', instrument='piano')
+    >>> print m.__dict__.keys()
+    ['last_name', 'instrument', 'first_name', 'id']
+  `),
   p([
     'Another options is to use ',
     code('_meta.fields'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('python'))('\n    >>> print [f.name for f in m._meta.fields]\n    [\'id\', \'first_name\', \'last_name\', \'instrument\']\n  '),
+  code$002Dblock(Symbol.for('python'))(`
+    >>> print [f.name for f in m._meta.fields]
+    ['id', 'first_name', 'last_name', 'instrument']
+  `),
   p(['This approach also works on models directly:']),
-  code$002Dblock(Symbol.for('python'))('\n    >>> print [f.name for f in Musician._meta.fields]\n    [\'id\', \'first_name\', \'last_name\', \'instrument\']\n  '),
+  code$002Dblock(Symbol.for('python'))(`
+    >>> print [f.name for f in Musician._meta.fields]
+    ['id', 'first_name', 'last_name', 'instrument']
+  `),
   h3([
     'Advantages of using ',
     code('_meta.fields')

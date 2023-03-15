@@ -95,9 +95,26 @@ const body = [
     ' recently I\n    wrote a function to do this, first in Python, later in JavaScript.'
   ]),
   h3('Python'),
-  code$002Dblock(Symbol.for('python'))('\n    def ordinal(n):\n        if 10 < n < 14: return u\'%sth\' % n\n        if n % 10 == 1: return u\'%sst\' % n\n        if n % 10 == 2: return u\'%snd\' % n\n        if n % 10 == 3: return u\'%srd\' % n\n        return u\'%sth\' % n\n  '),
+  code$002Dblock(Symbol.for('python'))(`
+    def ordinal(n):
+        if 10 < n < 14: return u'%sth' % n
+        if n % 10 == 1: return u'%sst' % n
+        if n % 10 == 2: return u'%snd' % n
+        if n % 10 == 3: return u'%srd' % n
+        return u'%sth' % n
+  `),
   h3('JavaScript'),
-  code$002Dblock(Symbol.for('javascript'))('\n    function ordinal(n) {\n        if (10 < n && n < 14) return n + \'th\';\n        switch (n % 10) {\n            case 1: return n + \'st\';\n            case 2: return n + \'nd\';\n            case 3: return n + \'rd\';\n            default: return n + \'th\';\n        }\n    }\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    function ordinal(n) {
+        if (10 < n && n < 14) return n + 'th';
+        switch (n % 10) {
+            case 1: return n + 'st';
+            case 2: return n + 'nd';
+            case 3: return n + 'rd';
+            default: return n + 'th';
+        }
+    }
+  `),
   p(['By special-casing 11, 12, and 13, the function becomes\n    incredibly simple.']),
   p([
     'I\'m pleased to have found a context in which JavaScript\'s ',

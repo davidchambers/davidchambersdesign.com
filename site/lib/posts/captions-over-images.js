@@ -111,14 +111,24 @@ const body = [
     em('describes'),
     ' a term. Meaningful markup for an\n    image and its caption should look something like the following:'
   ]),
-  code$002Dblock(Symbol.for('html'))('\n    <dl>\n        <dt><img src="images/paris.jpg" alt="View from Notre Dame de Paris" /></dt>\n        <dd>View from Notre Dame de Paris</dd>\n    </dl>\n  '),
+  code$002Dblock(Symbol.for('html'))(`
+    <dl>
+        <dt><img src="images/paris.jpg" alt="View from Notre Dame de Paris" /></dt>
+        <dd>View from Notre Dame de Paris</dd>
+    </dl>
+  `),
   p(['Ideally, images appearing one after the other should belong to the\n    same definition list.']),
   p([
     'My aim was to achieve a result similar to Chris\'s ',
     a('http://css-tricks.com/examples/TypeOverImagePlugin/')('image title plugin demo'),
     '\n    simply by styling a definition list containing images and their\n    captions. In the end, I was forced to abandon the ideal of using a\n    single definition list for multiple images and captions: the nature\n    of CSS positioning dictates that each image\u2013caption pair reside in\n    its own element. The final markup, however, is still quite clean:'
   ]),
-  code$002Dblock(Symbol.for('html'))('\n    <dl class="captioned-image">\n        <dt><img src="images/paris.jpg" alt="View from Notre Dame de Paris" /></dt>\n        <dd><span>View from Notre Dame de Paris</span></dd>\n    </dl>\n  '),
+  code$002Dblock(Symbol.for('html'))(`
+    <dl class="captioned-image">
+        <dt><img src="images/paris.jpg" alt="View from Notre Dame de Paris" /></dt>
+        <dd><span>View from Notre Dame de Paris</span></dd>
+    </dl>
+  `),
   p(['Additional markup required:']),
   ul([
     li([
@@ -133,7 +143,16 @@ const body = [
     a('/examples/captions-over-images/')('captions over images demo'),
     '\n    to see the approach in action. The CSS responsible for the\n    appearance of the captions is as follows:'
   ]),
-  code$002Dblock(Symbol.for('css'))('\n    dl.captioned-image         { position: relative; margin: 1em 0; }\n    dl.captioned-image dt img  { display: block; }\n    dl.captioned-image dd      { position: absolute; left: 0; bottom: 1.25em;\n                                 font: bold 2em/1.25em Helvetica, sans-serif; }\n    dl.captioned-image.top dd  { top: 1.25em; }\n    dl.captioned-image dd span { display: block; float: left; clear: both;\n                                 background: #000; background: rgba(0, 0, 0, 0.7);\n                                 padding: 0.25em 0.5em; color: #fff; }\n  '),
+  code$002Dblock(Symbol.for('css'))(`
+    dl.captioned-image         { position: relative; margin: 1em 0; }
+    dl.captioned-image dt img  { display: block; }
+    dl.captioned-image dd      { position: absolute; left: 0; bottom: 1.25em;
+                                 font: bold 2em/1.25em Helvetica, sans-serif; }
+    dl.captioned-image.top dd  { top: 1.25em; }
+    dl.captioned-image dd span { display: block; float: left; clear: both;
+                                 background: #000; background: rgba(0, 0, 0, 0.7);
+                                 padding: 0.25em 0.5em; color: #fff; }
+  `),
   p([
     'I set out to display captions over images without the use\n    of JavaScript while keeping meaningless markup to a minimum. ',
     strong('Have I succeeded, do you think?')

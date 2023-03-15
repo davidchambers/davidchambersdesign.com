@@ -19,9 +19,9 @@ body = [
     reported as follows:",
   ],
 
-  code-block :plain-text "
+  code-block :plain-text `
     Got error 'repetition-operator operand invalid' from regexp
-  ",
+  `,
 
   p [
    "The problem resulted from an unescaped ", strong "{", " being
@@ -50,7 +50,7 @@ body = [
     thought I'd share it in case others encounter the same problem:",
   ],
 
-  code-block :php "
+  code-block :php `
     <?php
 
     function mysql_regexp_escape_string($string)
@@ -67,7 +67,7 @@ body = [
     }
 
     ?>
-  ",
+  `,
 
   p [
    "It is quite possible that a solution to this problem already exists.

@@ -39,6 +39,10 @@ const esFromStringLiteral = (stringLiteral: Serif.StringLiteral): ES.Literal => 
   ES.Literal(stringLiteral.value)
 );
 
+const esFromTemplateLiteral = (templateLiteral: Serif.TemplateLiteral): ES.TemplateLiteral => (
+  ES.TemplateLiteral([ES.TemplateElement(templateLiteral.value, true)], [])
+);
+
 const esFromSymbolLiteral = (symbolLiteral: Serif.SymbolLiteral): ES.CallExpression => (
   ES.CallExpression(
     esFromMemberExpression(Serif.MemberExpression(Serif.Identifier('Symbol'), Serif.StringLiteral('for'))),
@@ -223,6 +227,7 @@ const esFromExpression = (expr: Serif.Expression): ES.Expression => {
     case 'BooleanLiteral':              return esFromBooleanLiteral(expr);
     case 'NumberLiteral':               return esFromNumberLiteral(expr);
     case 'StringLiteral':               return esFromStringLiteral(expr);
+    case 'TemplateLiteral':             return esFromTemplateLiteral(expr);
     case 'SymbolLiteral':               return esFromSymbolLiteral(expr);
     case 'MetaProperty':                return esFromMetaProperty(expr);
     case 'MemberExpression':            return esFromMemberExpression(expr);

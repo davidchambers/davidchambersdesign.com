@@ -151,7 +151,12 @@ const body = [
   ]),
   p(['As a result, WordPress themes often require customization,\n    where by "customization" I mean hacking to pieces.']),
   p(['Django -- and by extension Mango -- has a different approach,\n    which is incredibly simple. One provides Django with an ordered\n    list of places to look for templates.']),
-  code$002Dblock(Symbol.for('python'))('\n    TEMPLATE_DIRS = (\n        \'/webapps/dcd/blog/templates\',\n        \'/webapps/dcd/blog/mango/templates\',\n    )\n  '),
+  code$002Dblock(Symbol.for('python'))(`
+    TEMPLATE_DIRS = (
+        '/webapps/dcd/blog/templates',
+        '/webapps/dcd/blog/mango/templates',
+    )
+  `),
   p([
     'If Mango needs ',
     code('archives.dhtml'),

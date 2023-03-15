@@ -45,13 +45,13 @@ body = [
     ]
   },
 
-  code-block :plain-text "
-    <a class=\"more\" href=\"/meaningful-markup/\">Read more</a>
+  code-block :plain-text `
+    <a class="more" href="/meaningful-markup/">Read more</a>
 
     .more:after {
-        content: \" »\";
+        content: " »";
     }
-  ",
+  `,
 
   p [
    "There are many other situations in which ", code ":before", "/",
@@ -64,15 +64,15 @@ body = [
     (although the change is yet to go live).",
   ],
 
-  code-block :css "
+  code-block :css `
     .footer-nav li {
         display: inline;
         list-type: none;
     }
     .footer-nav li+li:before {
-        content: \" | \";
+        content: " | ";
     }
-  ",
+  `,
 
   p [
    "The second selector above may look strange unless you're
@@ -87,9 +87,9 @@ body = [
     the comma-separated list.",
   ],
 
-  code-block :html "
+  code-block :html `
     <p><strong>Tags:</strong> Apple, iOS, iPad</p>
-  ",
+  `,
 
   p [
    "This approach is inflexible. Displaying the tags as Twitter-style
@@ -106,14 +106,14 @@ body = [
     is a heading that relates to the list of tags.",
   ],
 
-  code-block :html "
+  code-block :html `
     <h4>Tags</h4>
     <ol>
         <li>Apple</li>
         <li>iOS</li>
         <li>iPad</li>
     </ol>
-  ",
+  `,
 
   p [
    "It takes a bit of work to display this markup as a simple
@@ -121,20 +121,20 @@ body = [
     alter the list's appearance without touching the markup.",
   ],
 
-  code-block :css "
+  code-block :css `
     h4, ol, li {
         display: inline;
     }
     h4:after {
-        content: \":\";
+        content: ":";
     }
     li:after {
-        content: \",\";
+        content: ",";
     }
     li:last-child:after {
-        content: \"\";
+        content: "";
     }
-  ",
+  `,
 
   h2 "Summary",
 

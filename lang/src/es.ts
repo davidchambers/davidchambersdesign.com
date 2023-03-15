@@ -119,6 +119,32 @@ export const Property = (
   computed: options?.computed ?? false,
 });
 
+// 13.2.8 Template Literals
+
+export type TemplateLiteral = ES.TemplateLiteral;
+
+export const TemplateLiteral = (
+  quasis: Array<TemplateElement>,
+  expressions: Array<Expression>,
+): TemplateLiteral => ({
+  type: 'TemplateLiteral',
+  quasis,
+  expressions,
+});
+
+export type TemplateElement = ES.TemplateElement;
+
+export const TemplateElement = (
+  value: string,
+  tail: boolean,
+): TemplateElement => ({
+  type: 'TemplateElement',
+  value: {
+    raw: value,
+  },
+  tail,
+});
+
 // 13.3.2 Property Accessors
 
 export type MemberExpression = ES.MemberExpression;

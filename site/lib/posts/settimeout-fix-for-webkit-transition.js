@@ -104,7 +104,16 @@ const body = [
     })(['Click to animate']),
     script({})('(function () {\n           var element = document.getElementById(\'transition-example-1\');\n           element.style.webkitTransitionProperty = \'left\';\n           element.style.webkitTransitionDuration = \'2s\';\n           element.addEventListener(\'click\', function () {\n               this.style.left = \'100px\';\n               this.addEventListener(\'webkitTransitionEnd\', function () {\n                   this.style.left = 0;\n               });\n           });\n       })();'),
     p(['The code behind this example is not complicated:']),
-    code$002Dblock(Symbol.for('javascript'))('\n      element.style.webkitTransitionProperty = \'left\';\n      element.style.webkitTransitionDuration = \'2s\';\n      element.addEventListener(\'click\', function () {\n          this.style.left = \'100px\';\n          this.addEventListener(\'webkitTransitionEnd\', function () {\n              this.style.left = 0;\n          });\n      });\n    ')
+    code$002Dblock(Symbol.for('javascript'))(`
+      element.style.webkitTransitionProperty = 'left';
+      element.style.webkitTransitionDuration = '2s';
+      element.addEventListener('click', function () {
+          this.style.left = '100px';
+          this.addEventListener('webkitTransitionEnd', function () {
+              this.style.left = 0;
+          });
+      });
+    `)
   ]),
   p(['The following example, though, does not act as one might expect!']),
   p$0027({
@@ -113,7 +122,11 @@ const body = [
   })(['Click to reposition']),
   script({})('(function () {\n         var element = document.getElementById(\'transition-example-2\');\n         element.addEventListener(\'click\', function () {\n             this.style.left = \'100px\';\n             this.style.webkitTransitionProperty = \'left\';\n             this.style.webkitTransitionDuration = \'2s\';\n             this.addEventListener(\'webkitTransitionEnd\', function () {\n                 this.innerHTML = "D\'oh!";\n                 this.style.left = 0;\n             });\n         });\n     })();'),
   p(['The code:']),
-  code$002Dblock(Symbol.for('javascript'))('\n    element.style.left = \'100px\';\n    element.style.webkitTransitionProperty = \'left\';\n    element.style.webkitTransitionDuration = \'2s\';\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    element.style.left = '100px';
+    element.style.webkitTransitionProperty = 'left';
+    element.style.webkitTransitionDuration = '2s';
+  `),
   p(['Here are the instructions this code attempts to provide:']),
   ol([
     li([
@@ -141,7 +154,13 @@ const body = [
   })(['Click to reposition']),
   script({})('(function () {\n         var element = document.getElementById(\'transition-example-3\');\n         element.addEventListener(\'click\', function () {\n             this.style.left = \'100px\';\n             setTimeout(function () {\n                 element.style.webkitTransitionProperty = \'left\';\n                 element.style.webkitTransitionDuration = \'2s\';\n             }, 0);\n             setTimeout(function () {\n                 element.style.webkitTransitionProperty = \'none\';\n                 element.style.left = 0;\n             }, 2000);\n         });\n     })();'),
   p(['The working code:']),
-  code$002Dblock(Symbol.for('javascript'))('\n    element.style.left = \'100px\';\n    setTimeout(function () {\n        element.style.webkitTransitionProperty = \'left\';\n        element.style.webkitTransitionDuration = \'2s\';\n    }, 0);\n  '),
+  code$002Dblock(Symbol.for('javascript'))(`
+    element.style.left = '100px';
+    setTimeout(function () {
+        element.style.webkitTransitionProperty = 'left';
+        element.style.webkitTransitionDuration = '2s';
+    }, 0);
+  `),
   p([
     'For some reason wrapping the ',
     code('webkitTransition*'),
@@ -168,7 +187,14 @@ const body = [
       li('Browsers optimize away redundant style changes'),
       li('This matters with transitions, because they are temporal')
     ]),
-    code$002Dblock(Symbol.for('javascript'))('\n      var box = document.getElementById(\'box\');\n      box.style.backgroundColor = \'red\';\n      box.style.webkitTransition = \'background-color 2s\';\n      window.setTimeout(function() {\n        box.style.backgroundColor = \'blue\';\n      }, 0);\n    ')
+    code$002Dblock(Symbol.for('javascript'))(`
+      var box = document.getElementById('box');
+      box.style.backgroundColor = 'red';
+      box.style.webkitTransition = 'background-color 2s';
+      window.setTimeout(function() {
+        box.style.backgroundColor = 'blue';
+      }, 0);
+    `)
   ])
 ];
 export default {

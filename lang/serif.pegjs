@@ -112,7 +112,24 @@ StringChar
   / '\\' 'u' digits:$([0-9A-F] [0-9A-F] [0-9A-F] [0-9A-F])
               { return String.fromCharCode(parseInt(digits, 16)); }
   / '\\'      { expected('valid escape sequence'); }
-  / [^"]
+  / !'"' c:.  { return c; }
+
+TemplateLiteral
+  = '`' chars:TemplateLiteralChar* '`'
+    { return Serif.TemplateLiteral(chars.join('')); }
+
+TemplateLiteralChar
+  = '\\' '`'  { return '\\`'; }
+  / '\\' '\\' { return '\\\\'; }
+  / '\\' 'b'  { return '\\b'; }
+  / '\\' 'f'  { return '\\f'; }
+  / '\\' 'n'  { return '\\n'; }
+  / '\\' 'r'  { return '\\r'; }
+  / '\\' 't'  { return '\\t'; }
+  / '\\' 'u' digits:$([0-9A-F] [0-9A-F] [0-9A-F] [0-9A-F])
+              { return '\\u' + digits; }
+  / '\\'      { expected('valid escape sequence'); }
+  / !'`' c:.  { return c; }
 
 SymbolLiteral
   = ':' name:$(SymbolChar)+
@@ -233,6 +250,7 @@ MemberExpression
         BooleanLiteral
       / NumberLiteral
       / StringLiteral
+      / TemplateLiteral
       / SymbolLiteral
       / ArrayExpression
       / ObjectExpression

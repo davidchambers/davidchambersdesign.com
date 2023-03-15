@@ -116,7 +116,9 @@ const body = [
     strong('~/.bashrc'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('bash'))('\n    PS1="\\n\\[\\e[1;36m\\]\\w\\n\\[\\e[1;32m\\]> \\[\\e[0m\\]"\n  '),
+  code$002Dblock(Symbol.for('bash'))(`
+    PS1="\\n\\[\\e[1;36m\\]\\w\\n\\[\\e[1;32m\\]> \\[\\e[0m\\]"
+  `),
   h4('What the heck does all this mean?'),
   p([
     code('PS1'),
@@ -177,7 +179,10 @@ const body = [
       code(':shell'),
       ' while in command mode to open a shell.\n      The first time I did so I noticed that the colour codes\n      appeared in the prompt. Feature detection can be used to\n      ensure that colour codes are only provided to "smart"\n      terminals:'
     ]),
-    code$002Dblock(Symbol.for('bash'))('\n      [[ "$TERM" == dumb ]] && PS1="\\n\\w\\n> "\n      [[ "$TERM" != dumb ]] && PS1="\\n\\[\\e[1;36m\\]\\w\\n\\[\\e[1;32m\\]> \\[\\e[0m\\]"\n    ')
+    code$002Dblock(Symbol.for('bash'))(`
+      [[ "$TERM" == dumb ]] && PS1="\\n\\w\\n> "
+      [[ "$TERM" != dumb ]] && PS1="\\n\\[\\e[1;36m\\]\\w\\n\\[\\e[1;32m\\]> \\[\\e[0m\\]"
+    `)
   ]),
   h4('Note for Mac OS X users'),
   p([
@@ -189,7 +194,11 @@ const body = [
     strong('~/.bash_profile'),
     '\n    should contain the following snippet.'
   ]),
-  code$002Dblock(Symbol.for('bash'))('\n    if [ -f ~/.bashrc ]; then\n      source ~/.bashrc\n    fi\n  ')
+  code$002Dblock(Symbol.for('bash'))(`
+    if [ -f ~/.bashrc ]; then
+      source ~/.bashrc
+    fi
+  `)
 ];
 export default {
   ['id']: 80,
