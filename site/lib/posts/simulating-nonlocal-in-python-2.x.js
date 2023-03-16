@@ -86,13 +86,20 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { code$002Dblock } from '../components.js';
+import {
+  code$002Dblock,
+  $2014
+} from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
     p([
       a('http://en.wikipedia.org/wiki/Closure_(computer_science)')('Closure'),
-      ' is truly wonderful. JavaScript -- despite its\n      plethora of quirks -- is now widely appreciated, thanks in large\n      part to its lexical scoping. Python 3 is lexically-scoped, too,\n      as the following code demonstrates.'
+      '\n      is truly wonderful. JavaScript',
+      $2014,
+      'despite its plethora of quirks',
+      $2014,
+      'is now widely appreciated, thanks in large part to its lexical scoping.\n      Python 3 is lexically-scoped, too, as the following code demonstrates.'
     ]),
     code$002Dblock(Symbol.for('python'))(`def cache(saved=None):
     def _(thing=None):

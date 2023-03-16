@@ -8,10 +8,10 @@ export {
   captioned-images
   code-block
   decorative-image
-  interview-list
   pros-and-cons-list
   uncaptioned-image
   update
+  —
 };
 
 caption caption = {
@@ -39,24 +39,6 @@ decorative-image src = {
   p (img {[:alt]: "", [:src]: src})
 };
 
-interview-list interviewer interviewee exchange = {
-  ol {S.snd {S.reduce {S.pair name => items => quotation => {
-                                if name === interviewer then {
-                                  S.Pair interviewee
-                                         [...items,
-                                          li' {[:class]: "interviewer"}
-                                              [strong {interviewer + ":"}, " ", ...quotation]]
-                                } else {
-                                  S.Pair interviewer
-                                         [...items,
-                                          li' {}
-                                              [strong {interviewee + ":"}, " ", ...quotation]]
-                                }
-                              }}
-                      {S.Pair interviewer []}
-                      {S.map canonicalize-children exchange}}}
-};
-
 pros-and-cons-list f = {
   ul {f {li' {[:class]: "pro"}}
         {li' {[:class]: "con"}}}
@@ -73,3 +55,5 @@ update datetime body = {
                            datetime.toFormat("d MMMM y")]}
                  {canonicalize-children body}}
 };
+
+— = text "\u2009\u2014\u2009";

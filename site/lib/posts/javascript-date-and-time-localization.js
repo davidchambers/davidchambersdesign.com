@@ -88,7 +88,8 @@ import {
 } from '../elements.js';
 import {
   captioned$002Dimage,
-  code$002Dblock
+  code$002Dblock,
+  $2014
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
@@ -101,7 +102,13 @@ const body = [
     ])
   ]),
   captioned$002Dimage('/images/posts/74/gmt-ftl.png')('Bitbucket status message')('The link to a time zone converter highlights the need for localization'),
-  p(['Implementing client-side localization of dates and times is not\n    terribly difficult -- I first managed it with only a superficial\n    understanding of JavaScript -- but it\'s a challenge to do so in\n    a simple, reusable manner.']),
+  p([
+    'Implementing client-side localization of dates and times is not\n    terribly difficult',
+    $2014,
+    'I first managed it with only a superficial\n    understanding of JavaScript',
+    $2014,
+    'but it\'s a challenge to do so in\n    a simple, reusable manner.'
+  ]),
   h3('HTML5'),
   p([
     'For localization to be possible date, time, and time zone\n    information must be stored somewhere. In the past we\'d\n    have been forced to misappropriate ',
@@ -138,7 +145,11 @@ const body = [
     a('http://prototypejs.org/')('Prototype'),
     '.\n    More recently I became an advocate of ',
     a('http://mootools.net/')('MooTools'),
-    ' which -- like Prototype --\n    fixes deficiencies in the JavaScript language itself, in addition\n    to fixing the DOM.'
+    ' which',
+    $2014,
+    'like Prototype',
+    $2014,
+    'fixes deficiencies in the JavaScript language itself, in addition\n    to fixing the DOM.'
   ]),
   p([
     'While reading John Resig\'s ',

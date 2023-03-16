@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block} from "../components.serif";
+import {code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -48,9 +48,9 @@ body = [
   `,
 
   p [
-   "I gather that there are situations in which this simple solution
-    fails -- it's no silver bullet -- but it fixed a problem I encountered
-    in IE8 earlier this evening so I'm pleased to have discovered it!",
+   "I gather that there are situations in which this simple solution fails",
+    —, "it's no silver bullet", —, "but it fixed a problem I encountered in
+    IE8 earlier this evening so I'm pleased to have discovered it!",
   ],
 
 ];

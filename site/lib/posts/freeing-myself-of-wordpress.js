@@ -88,7 +88,8 @@ import {
 } from '../elements.js';
 import {
   code$002Dblock,
-  uncaptioned$002Dimage
+  uncaptioned$002Dimage,
+  $2014
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
@@ -98,7 +99,13 @@ const body = [
     ' is powerful software,\n    which I\'ve recommended frequently since I came across it two\n    years ago. I\'ve used it on several sites (including this one),\n    and it has served me well.'
   ]),
   p(['Over time, though, a few things started to get me down. More and\n    more, I found myself fighting WordPress rather than working with it.\n    In one case I was forced to hack core WordPress files to prevent\n    session data from being cleared between requests. WordPress is\n    great blogging software, but I\'ve been guilty of trying to do\n    too much with it.']),
-  p(['Having decided to use WordPress for my blogs and better suited\n    tools for more complex projects, my frustrations abated, but did\n    not disappear. I was still writing posts in HTML -- I\'m a control\n    freak and can\'t live without definition lists -- and generating\n    50 or more database records for each post by frequently previewing\n    while writing.']),
+  p([
+    'Having decided to use WordPress for my blogs and better suited\n    tools for more complex projects, my frustrations abated, but did\n    not disappear. I was still writing posts in HTML',
+    $2014,
+    'I\'m a control\n    freak and can\'t live without definition lists',
+    $2014,
+    'and generating\n    50 or more database records for each post by frequently previewing\n    while writing.'
+  ]),
   excerpt([
     p([
       strong('I wanted to simplify everything.'),
@@ -150,7 +157,13 @@ const body = [
     '\n    appears on an "archives" page, for example, yet with WordPress\n    this is exactly what they are expected to do.'
   ]),
   p(['As a result, WordPress themes often require customization,\n    where by "customization" I mean hacking to pieces.']),
-  p(['Django -- and by extension Mango -- has a different approach,\n    which is incredibly simple. One provides Django with an ordered\n    list of places to look for templates.']),
+  p([
+    'Django',
+    $2014,
+    'and by extension Mango',
+    $2014,
+    'has a different approach,\n    which is incredibly simple. One provides Django with an ordered list\n    of places to look for templates.'
+  ]),
   code$002Dblock(Symbol.for('python'))(`TEMPLATE_DIRS = (
     '/webapps/dcd/blog/templates',
     '/webapps/dcd/blog/mango/templates',

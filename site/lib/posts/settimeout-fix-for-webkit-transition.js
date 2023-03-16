@@ -88,7 +88,8 @@ import {
 } from '../elements.js';
 import {
   code$002Dblock,
-  update
+  update,
+  $2014
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
@@ -144,7 +145,13 @@ element.style.webkitTransitionDuration = '2s';
       '.'
     ])
   ]),
-  p(['What actually happens -- as you\'ll have seen if you\'re viewing\n    this page in a recent version of Safari or Chrome -- is that the\n    transition is applied to the preceding update. This behaviour\n    strikes me as strange, but I have very little understanding of\n    how these transitions are meant to be effected by the browser.']),
+  p([
+    'What actually happens',
+    $2014,
+    'as you\'ll have seen if you\'re viewing this\n    page in a recent version of Safari or Chrome',
+    $2014,
+    'is that the transition\n    is applied to the preceding update. This behaviour strikes me as strange,\n    but I have very little understanding of how these transitions are meant\n    to be effected by the browser.'
+  ]),
   p(['I did manage to get the element to behave as I had intended:']),
   p$0027({
     [Symbol.for('id')]: 'transition-example-3',

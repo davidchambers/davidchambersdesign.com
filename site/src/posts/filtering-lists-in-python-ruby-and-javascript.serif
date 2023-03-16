@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block} from "../components.serif";
+import {code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -86,7 +86,7 @@ body = [
     a "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Reduce"
       [code "reduce"], " is the correct method for the job. ",
     code "reduce", " \"reduces\" an array to a single value, which
-    could be a string, an object, another array -- whatever!",
+    could be a string, an object, another array", —, "whatever!",
   ],
 
   p [

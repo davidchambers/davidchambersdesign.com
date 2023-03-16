@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image code-block} from "../components.serif";
+import {captioned-image code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -37,8 +37,8 @@ body = [
 
   p [
    "Implementing client-side localization of dates and times is not
-    terribly difficult -- I first managed it with only a superficial
-    understanding of JavaScript -- but it's a challenge to do so in
+    terribly difficult", —, "I first managed it with only a superficial
+    understanding of JavaScript", —, "but it's a challenge to do so in
     a simple, reusable manner.",
   ],
 
@@ -79,8 +79,8 @@ body = [
     a JavaScript library. Soon after that I ", del "decided", " ",
     ins "stumbled", " upon ", a "http://prototypejs.org/" "Prototype", ".
     More recently I became an advocate of ",
-    a "http://mootools.net/" "MooTools", " which -- like Prototype --
-    fixes deficiencies in the JavaScript language itself, in addition
+    a "http://mootools.net/" "MooTools", " which", —, "like Prototype", —,
+   "fixes deficiencies in the JavaScript language itself, in addition
     to fixing the DOM.",
   ],
 

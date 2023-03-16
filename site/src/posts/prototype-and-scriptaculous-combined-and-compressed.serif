@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block} from "../components.serif";
+import {code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -51,8 +51,8 @@ body = [
   p [
    "This prevents caching issues that might otherwise arise
     upon updating to a newer version of prototype+scriptaculous
-    (I'll update the three files -- and this post -- each time
-    a new version of Prototype is released).",
+    (I'll update the three files", —, "and this post", —,
+   "each time a new version of Prototype is released).",
   ],
 
 ];

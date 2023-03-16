@@ -86,7 +86,10 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { code$002Dblock } from '../components.js';
+import {
+  code$002Dblock,
+  $2014
+} from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
@@ -131,7 +134,11 @@ const body = [
     '.\n    Meaningful markup is wonderful, and meaningful URLs offer\n    similar benefits (to both people and search engines).'
   ]),
   p([
-    'Finally -- and this point relates to URL shortening services\n    rather than to short URLs themselves -- there\'s no guarantee\n    that sites which ',
+    'Finally',
+    $2014,
+    'and this point relates to URL shortening services\n    rather than to short URLs themselves',
+    $2014,
+    'there\'s no guarantee\n    that sites which ',
     em('currently'),
     ' provide a service will\n    continue to do so indefinitely.'
   ]),

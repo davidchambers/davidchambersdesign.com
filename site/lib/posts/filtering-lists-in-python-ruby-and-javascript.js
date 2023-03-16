@@ -86,7 +86,10 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { code$002Dblock } from '../components.js';
+import {
+  code$002Dblock,
+  $2014
+} from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
@@ -133,7 +136,9 @@ end.join('\\n')
     a('https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Reduce')([code('reduce')]),
     ' is the correct method for the job. ',
     code('reduce'),
-    ' "reduces" an array to a single value, which\n    could be a string, an object, another array -- whatever!'
+    ' "reduces" an array to a single value, which\n    could be a string, an object, another array',
+    $2014,
+    'whatever!'
   ]),
   p([
     'Note the empty array (',

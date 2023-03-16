@@ -86,7 +86,10 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { code$002Dblock } from '../components.js';
+import {
+  code$002Dblock,
+  $2014
+} from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
@@ -111,7 +114,13 @@ const body = [
   ]),
   code$002Dblock(Symbol.for('html'))(`<script src="/scripts/prototype+scriptaculous.min.js?p=1.6.1&amp;s=1.8.3"></script>
 `),
-  p(['This prevents caching issues that might otherwise arise\n    upon updating to a newer version of prototype+scriptaculous\n    (I\'ll update the three files -- and this post -- each time\n    a new version of Prototype is released).'])
+  p([
+    'This prevents caching issues that might otherwise arise\n    upon updating to a newer version of prototype+scriptaculous\n    (I\'ll update the three files',
+    $2014,
+    'and this post',
+    $2014,
+    'each time a new version of Prototype is released).'
+  ])
 ];
 export default {
   ['id']: 32,

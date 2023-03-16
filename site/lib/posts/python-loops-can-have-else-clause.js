@@ -88,7 +88,8 @@ import {
 } from '../elements.js';
 import {
   code$002Dblock,
-  update
+  update,
+  $2014
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
@@ -99,7 +100,13 @@ const body = [
   p(['JavaScript:']),
   code$002Dblock(Symbol.for('javascript'))(`['foo', 'bar'].join(' ')
 `),
-  p(['Often -- as is the case above -- the syntactical differences are\n    minor, but there are times when there\'s no direct translation.']),
+  p([
+    'Often',
+    $2014,
+    'as is the case above',
+    $2014,
+    'the syntactical differences\n    are minor, but there are times when there\'s no direct translation.'
+  ]),
   p([
     a('http://mootools.net/')('MooTools'),
     ', for example, adds the ',

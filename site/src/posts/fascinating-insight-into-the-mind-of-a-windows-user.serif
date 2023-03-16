@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image decorative-image interview-list} from "../components.serif";
+import {captioned-image decorative-image —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -21,15 +21,24 @@ body = [
     I was in the room at the time.",
   ],
 
-  interview-list "Matt" "Doug" [
-   "So, Doug, do you think you could go the way of Mac?",
-
-   "I already have, really, but I'd never buy one.",
-
-   "Why's that?",
-
-   "Well -- no offense, David -- if I were to buy one I'd be getting
-    something a retard could use, and I'm not a retard.",
+  ol [
+    li' {[:class]: "interviewer"} [
+      strong "Matt:", "
+      So, Doug, do you think you could go the way of Mac?",
+    ],
+    li [
+      strong "Doug:", "
+      I already have, really, but I'd never buy one.",
+    ],
+    li' {[:class]: "interviewer"} [
+      strong "Matt:", "
+      Why's that?",
+    ],
+    li [
+      strong "Doug:", "
+      Well", —, "no offense, David", —, "if I were to buy one I'd be
+      getting something a retard could use, and I'm not a retard.",
+    ],
   ],
 
   p [

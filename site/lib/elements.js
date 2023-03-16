@@ -22,7 +22,6 @@ const canonicalize$002Dattrs = attrs => {
 const canonicalize$002Dchildren = S.compose(S.map(child => typeof child == 'string' ? S.pipe([
   s => s.replace(new RegExp('^[ ]+', 'gm'), ' '),
   s => s.replaceAll('\n', ''),
-  s => s.replaceAll(' -- ', '\u2009\u2014\u2009'),
   text
 ])(child) : child))(S.unless(Array.isArray)(Array.of));
 const render$002Dblock$002Delement = tag$002Dname => {

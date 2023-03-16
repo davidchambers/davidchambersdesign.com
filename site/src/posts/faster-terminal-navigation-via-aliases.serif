@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block} from "../components.serif";
+import {code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -36,7 +36,7 @@ body = [
 
   p [
    "Do you find yourself ", code "cd", "-ing to a particular directory
-    dozens of times each day? Perhaps you -- like me -- forget ",
+    dozens of times each day? Perhaps you", —, "like me", —, "forget ",
     strong "where the heck Python's site-packages directory lives", ",
     and resort to Googling to find out? Aliases to the rescue!",
   ],

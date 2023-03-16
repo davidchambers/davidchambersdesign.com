@@ -118,23 +118,6 @@ const decorative$002Dimage = src => {
     [Symbol.for('src')]: src
   }));
 };
-const interview$002Dlist = interviewer => {
-  return interviewee => exchange => ol(S.snd(S.reduce(S.pair(name => items => quotation => name === interviewer ? S.Pair(interviewee)([
-    ...items,
-    li$0027({ [Symbol.for('class')]: 'interviewer' })([
-      strong(interviewer + ':'),
-      ' ',
-      ...quotation
-    ])
-  ]) : S.Pair(interviewer)([
-    ...items,
-    li$0027({})([
-      strong(interviewee + ':'),
-      ' ',
-      ...quotation
-    ])
-  ])))(S.Pair(interviewer)([]))(S.map(canonicalize$002Dchildren)(exchange))));
-};
 const pros$002Dand$002Dcons$002Dlist = f => {
   return ul(f(li$0027({ [Symbol.for('class')]: 'pro' }))(li$0027({ [Symbol.for('class')]: 'con' })));
 };
@@ -150,14 +133,15 @@ const update = datetime => {
     time({ [Symbol.for('datetime')]: datetime.toISO() })(datetime.toFormat('d MMMM y'))
   ]))(canonicalize$002Dchildren(body)));
 };
+const $2014 = text('\u2009\u2014\u2009');
 export {
   caption,
   captioned$002Dimage,
   captioned$002Dimages,
   code$002Dblock,
   decorative$002Dimage,
-  interview$002Dlist,
   pros$002Dand$002Dcons$002Dlist,
   uncaptioned$002Dimage,
-  update
+  update,
+  $2014
 };

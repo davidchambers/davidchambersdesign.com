@@ -86,7 +86,10 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { decorative$002Dimage } from '../components.js';
+import {
+  decorative$002Dimage,
+  $2014
+} from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   decorative$002Dimage('/images/posts/decorative/right/disk-utility-icon.png'),
@@ -95,7 +98,13 @@ const body = [
     a('http://www.apple.com/macbookair/')('MacBook Air'),
     '\n    is the first computer from Apple to jettison the optical\n    drive; others will undoubtedly follow, eventually.'
   ]),
-  p(['Since the vast majority of Mac OS X users currently possess the\n    means to read and burn CDs, however, I thought this information --\n    lifted straight from Disk Utility Help -- worth sharing. These\n    instructions apply to Snow Leopard, although I would guess that\n    the process is identical for older versions of OS X (the more\n    recent ones, at any rate).']),
+  p([
+    'Since the vast majority of Mac OS X users currently possess the\n    means to read and burn CDs, however, I thought this information',
+    $2014,
+    'lifted straight from Disk Utility Help',
+    $2014,
+    'worth sharing.\n    These instructions apply to Snow Leopard, although I would guess\n    that the process is identical for older versions of OS X (the more\n    recent ones, at any rate).'
+  ]),
   h3('Recording on a recordable CD more than once'),
   p(['Normally, you can burn items to a recordable CD, such\n    as a CD-R or CD-RW disc, only one time. However, if you\n    use Disk Utility to burn the disc, you can burn items to a\n    disk in more than one session as long as space is available.\n    This is also called "multisession burning."']),
   p(['To burn a disc, you need an optical drive in your computer\n    or connected directly to your computer. You can\u2019t burn a disc\n    using a remote optical drive.']),

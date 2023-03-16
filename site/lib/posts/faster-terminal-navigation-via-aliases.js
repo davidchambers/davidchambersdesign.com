@@ -86,7 +86,10 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { code$002Dblock } from '../components.js';
+import {
+  code$002Dblock,
+  $2014
+} from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
@@ -111,7 +114,11 @@ const body = [
   p([
     'Do you find yourself ',
     code('cd'),
-    '-ing to a particular directory\n    dozens of times each day? Perhaps you -- like me -- forget ',
+    '-ing to a particular directory\n    dozens of times each day? Perhaps you',
+    $2014,
+    'like me',
+    $2014,
+    'forget ',
     strong('where the heck Python\'s site-packages directory lives'),
     ',\n    and resort to Googling to find out? Aliases to the rescue!'
   ]),

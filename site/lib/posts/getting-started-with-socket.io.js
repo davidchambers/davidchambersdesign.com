@@ -86,11 +86,18 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { code$002Dblock } from '../components.js';
+import {
+  code$002Dblock,
+  $2014
+} from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([p([
-      'There\'s no shortage of blog posts which -- like this one --\n      provide an introduction to ',
+      'There\'s no shortage of blog posts which',
+      $2014,
+      'like this one',
+      $2014,
+      'provide an introduction to ',
       a('http://socket.io/')('Socket.IO'),
       '. Many, though, were\n      written prior to the release of 0.7, which ushered in ',
       a('https://github.com/LearnBoost/Socket.IO/wiki/Migrating-0.6-to-0.7')('significant API changes'),
@@ -161,7 +168,11 @@ io.sockets.on 'connection', (socket) ->
     code('message'),
     ' to all the clients ',
     em('except the one that emitted the "broadcast" event'),
-    '.\n    The "whisper" handler is very different in that it doesn\'t send\n    a message at all. Rather, it emits yet another event. Again, the\n    name of this event -- "secret" -- is not special in any way.'
+    '.\n    The "whisper" handler is very different in that it doesn\'t send\n    a message at all. Rather, it emits yet another event. Again, the\n    name of this event',
+    $2014,
+    '"secret"',
+    $2014,
+    'is not special in any way.'
   ]),
   p([
     'Having completed these two steps our server-side code is done,\n    so we could now run ',
@@ -225,7 +236,13 @@ socket.on 'message', (message) ->
 socket.on 'secret', (message) ->
   console.log message
 `),
-  p(['The first five events -- "connect", "disconnect",\n    "reconnecting", "reconnect", and "reconnect_failed" --\n    are emitted by Socket.IO in response to changes in the\n    connection status. We\'ve registered a handler for each\n    in order to expose this information to users.']),
+  p([
+    'The first five events',
+    $2014,
+    '"connect", "disconnect",\n    "reconnecting", "reconnect", and "reconnect_failed"',
+    $2014,
+    'are emitted by Socket.IO in response to changes in the\n    connection status. We\'ve registered a handler for each\n    in order to expose this information to users.'
+  ]),
   p([
     'We\'ve also added handlers for "message" and "secret"\n    events. Our "message" handler will be called whenever\n    the server receives a "publish" or "broadcast" event\n    (',
     code('io.sockets.send'),
@@ -250,8 +267,20 @@ $('button').click ->
   h3('How it all fits together'),
   p(['Let\'s look at exactly what happens when a user types "the password\n    is 1234" into the text field and clicks "whisper".']),
   p(['First, our "click" handler captures the DOM event and in turn\n    emits our custom "whisper" event with "the password is 1234"\n    as its data.']),
-  p(['Next, the server -- which is listening for our custom events --\n    captures the "whisper" event. It then emits a "secret" event\n    to all clients except the one that sent the "whisper", passing\n    along the event data.']),
-  p(['Finally, each client -- bar the originator of this chain of events --\n    captures the "secret" event and logs "the password is 1234" to the\n    console.']),
+  p([
+    'Next, the server',
+    $2014,
+    'which is listening for our custom events',
+    $2014,
+    'captures the "whisper" event. It then emits a "secret" event\n    to all clients except the one that sent the "whisper", passing\n    along the event data.'
+  ]),
+  p([
+    'Finally, each client',
+    $2014,
+    'bar the originator of this chain of events',
+    $2014,
+    'captures the "secret" event and logs "the password is 1234" to the\n    console.'
+  ]),
   h3('Code'),
   p([
     'The ',

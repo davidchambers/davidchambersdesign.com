@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-images update} from "../components.serif";
+import {captioned-images update —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -21,10 +21,10 @@ body = [
   ],
 
   p [
-   "I've always enjoyed creating icons in Photoshop. Not the gorgeous,
-    often richly detailed icons that grace OS X applications -- although
-    I would love to learn to create these as well -- but icons designed
-    pixel by pixel for display at very small scales.",
+   "I've always enjoyed creating icons in Photoshop. Not the gorgeous, often
+    richly detailed icons that grace OS X applications", —, "although I would
+    love to learn to create these as well", —, "but icons designed pixel by
+    pixel for display at very small scales.",
   ],
 
   p [

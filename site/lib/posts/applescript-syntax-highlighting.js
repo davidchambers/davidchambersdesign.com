@@ -90,7 +90,8 @@ import {
   caption,
   captioned$002Dimages,
   code$002Dblock,
-  update
+  update,
+  $2014
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
@@ -107,7 +108,11 @@ const body = [
       strong('How hard could it be to write a brush for AppleScript?'),
       ',\n      I wondered. The handy guide to ',
       a('http://alexgorbatchev.com/wiki/SyntaxHighlighter:Brushes:Custom')('developing a custom brush'),
-      ' got me started, and I was soon\n      busy trying to encapsulate AppleScript\'s syntax -- along with its\n      keywords and countless words and phrases with special meanings --\n      into a handful of regular expressions.'
+      ' got me started, and I was soon\n      busy trying to encapsulate AppleScript\'s syntax',
+      $2014,
+      'along with its\n      keywords and countless words and phrases with special meanings',
+      $2014,
+      'into a handful of regular expressions.'
     ])
   ]),
   p([

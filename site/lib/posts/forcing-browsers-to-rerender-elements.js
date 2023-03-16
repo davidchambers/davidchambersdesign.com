@@ -86,7 +86,10 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { code$002Dblock } from '../components.js';
+import {
+  code$002Dblock,
+  $2014
+} from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
@@ -113,7 +116,13 @@ const body = [
   p(['The post\'s first comment includes an alternative approach:']),
   code$002Dblock(Symbol.for('javascript'))(`element.className = element.className;
 `),
-  p(['I gather that there are situations in which this simple solution\n    fails -- it\'s no silver bullet -- but it fixed a problem I encountered\n    in IE8 earlier this evening so I\'m pleased to have discovered it!'])
+  p([
+    'I gather that there are situations in which this simple solution fails',
+    $2014,
+    'it\'s no silver bullet',
+    $2014,
+    'but it fixed a problem I encountered in\n    IE8 earlier this evening so I\'m pleased to have discovered it!'
+  ])
 ];
 export default {
   ['id']: 42,

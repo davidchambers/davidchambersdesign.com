@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block uncaptioned-image} from "../components.serif";
+import {code-block uncaptioned-image —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -34,8 +34,8 @@ body = [
   p [
    "Having decided to use WordPress for my blogs and better suited
     tools for more complex projects, my frustrations abated, but did
-    not disappear. I was still writing posts in HTML -- I'm a control
-    freak and can't live without definition lists -- and generating
+    not disappear. I was still writing posts in HTML", —, "I'm a control
+    freak and can't live without definition lists", —, "and generating
     50 or more database records for each post by frequently previewing
     while writing.",
   ],
@@ -131,9 +131,9 @@ body = [
   ],
 
   p [
-   "Django -- and by extension Mango -- has a different approach,
-    which is incredibly simple. One provides Django with an ordered
-    list of places to look for templates.",
+   "Django", —, "and by extension Mango", —, "has a different approach,
+    which is incredibly simple. One provides Django with an ordered list
+    of places to look for templates.",
   ],
 
   code-block :python `

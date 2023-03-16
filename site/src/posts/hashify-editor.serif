@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-images} from "../components.serif";
+import {captioned-images —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -88,8 +88,8 @@ body = [
   ],
 
   p [
-   "Best of all is the preview option: one is able to view -- and of
-    course, edit -- the text at ", a "http://hashify.me/" "hashify.me", "
+   "Best of all is the preview option: one is able to view", —, "and of
+    course, edit", —, "the text at ", a "http://hashify.me/" "hashify.me", "
     with a single click.",
   ],
 
@@ -106,7 +106,7 @@ body = [
 
   p [
    "I love sites which support Markdown commenting. Unfortunately many of
-    those that do -- even ", a "http://forrst.com/" "Forrst", " -- don't
+    those that do", —, "even ", a "http://forrst.com/" "Forrst", —, "don't
     provide previews. As a result, each time I'm about to submit a lengthy
     comment I select all, copy, open a new tab, go to hashify.me, tab into
     the editor, and paste in my comment. Were Forrst to integrate Hashify

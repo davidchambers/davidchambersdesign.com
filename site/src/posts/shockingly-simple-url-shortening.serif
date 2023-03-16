@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block} from "../components.serif";
+import {code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -61,8 +61,8 @@ body = [
   ],
 
   p [
-   "Finally -- and this point relates to URL shortening services
-    rather than to short URLs themselves -- there's no guarantee
+   "Finally", —, "and this point relates to URL shortening services
+    rather than to short URLs themselves", —, "there's no guarantee
     that sites which ", em "currently", " provide a service will
     continue to do so indefinitely.",
   ],

@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block} from "../components.serif";
+import {code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -114,9 +114,9 @@ body = [
   `,
 
   p [
-   "☝️ The answer is wrong -- we lost ", code "'foo'", " and ",
-    code "'bar'", ", and ", code "'baz'", " has the wrong ",
-    code "id", " -- but the types align.",
+   "☝️ The answer is wrong", —, "we lost ", code "'foo'", " and ",
+    code "'bar'", ", and ", code "'baz'", " has the wrong ", code "id", —,
+   "but the types align.",
   ],
 
   code-block :javascript `

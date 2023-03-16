@@ -89,17 +89,33 @@ import {
 import {
   captioned$002Dimage,
   decorative$002Dimage,
-  interview$002Dlist
+  $2014
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   decorative$002Dimage('/images/posts/decorative/right/no-apple.png'),
   p(['The following conversation took place a couple of days ago in\n    my apartment. Matt\'s my flatmate, Doug\'s one of Matt\'s friends.\n    I was in the room at the time.']),
-  interview$002Dlist('Matt')('Doug')([
-    'So, Doug, do you think you could go the way of Mac?',
-    'I already have, really, but I\'d never buy one.',
-    'Why\'s that?',
-    'Well -- no offense, David -- if I were to buy one I\'d be getting\n    something a retard could use, and I\'m not a retard.'
+  ol([
+    li$0027({ [Symbol.for('class')]: 'interviewer' })([
+      strong('Matt:'),
+      '\n      So, Doug, do you think you could go the way of Mac?'
+    ]),
+    li([
+      strong('Doug:'),
+      '\n      I already have, really, but I\'d never buy one.'
+    ]),
+    li$0027({ [Symbol.for('class')]: 'interviewer' })([
+      strong('Matt:'),
+      '\n      Why\'s that?'
+    ]),
+    li([
+      strong('Doug:'),
+      '\n      Well',
+      $2014,
+      'no offense, David',
+      $2014,
+      'if I were to buy one I\'d be\n      getting something a retard could use, and I\'m not a retard.'
+    ])
   ]),
   p([
     'I found this exchange both entertaining and enlightening. Never had\n    I considered the possibility that certain individuals use Windows ',

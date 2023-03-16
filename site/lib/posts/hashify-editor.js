@@ -86,7 +86,10 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { captioned$002Dimages } from '../components.js';
+import {
+  captioned$002Dimages,
+  $2014
+} from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['On 19 April 2011, at around noon Pacific time, I published a short tweet.']),
@@ -129,7 +132,11 @@ const body = [
     ' into a useful Markdown editor. TextMate-style\n    keyboard shortcuts make it a joy to work with metacharacters and text\n    selections.'
   ]),
   p([
-    'Best of all is the preview option: one is able to view -- and of\n    course, edit -- the text at ',
+    'Best of all is the preview option: one is able to view',
+    $2014,
+    'and of\n    course, edit',
+    $2014,
+    'the text at ',
     a('http://hashify.me/')('hashify.me'),
     '\n    with a single click.'
   ]),
@@ -147,9 +154,12 @@ const body = [
   ]),
   h3('Adoption'),
   p([
-    'I love sites which support Markdown commenting. Unfortunately many of\n    those that do -- even ',
+    'I love sites which support Markdown commenting. Unfortunately many of\n    those that do',
+    $2014,
+    'even ',
     a('http://forrst.com/')('Forrst'),
-    ' -- don\'t\n    provide previews. As a result, each time I\'m about to submit a lengthy\n    comment I select all, copy, open a new tab, go to hashify.me, tab into\n    the editor, and paste in my comment. Were Forrst to integrate Hashify\n    Editor, six of these steps could be replaced by a single mouse click.\n    :D'
+    $2014,
+    'don\'t\n    provide previews. As a result, each time I\'m about to submit a lengthy\n    comment I select all, copy, open a new tab, go to hashify.me, tab into\n    the editor, and paste in my comment. Were Forrst to integrate Hashify\n    Editor, six of these steps could be replaced by a single mouse click.\n    :D'
   ])
 ];
 export default {

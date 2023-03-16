@@ -88,20 +88,34 @@ import {
 } from '../elements.js';
 import {
   captioned$002Dimage,
-  decorative$002Dimage,
-  interview$002Dlist
+  decorative$002Dimage
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
     decorative$002Dimage('/images/posts/decorative/left/adobe-illustrator-cs3-icon.png'),
     p(['Not so long ago I was talking to my brother online as he\n      worked on a poster for a presentation. He is an engineer;\n      using Illustrator was a new experience for him. He generally\n      picks up new things easily, but as you may appreciate,\n      Illustrator is often far from logical. We reached a point\n      where he asked me about scaling rounded rectangles \u2013 this\n      is where things started to get hairy.']),
-    interview$002Dlist('him')('me')([
-      'if I have a rounded rectangle and resize it, it there a\n      way to stop it from changing the rounding of the corners\n      (which I want constant for all my rectangles)?',
-      'you can work out how large you want it to be and then\n      double-click with the rectangle tool and you\'ll be able\n      to enter all the correct values',
-      'is there a way to change how curved they are after placing them?',
-      'InDesign has a much better was of dealing with this issue than\n      does Illustrator... in InDesign, the rectangle is treated as an\n      object, and its corner radius is treated as a property in just\n      the same way as its width, height, and position... this means\n      that you can change the corner radius at any time...',
-      'that\'s how it should be'
+    ol([
+      li$0027({ [Symbol.for('class')]: 'interviewer' })([
+        strong('him:'),
+        '\n        if I have a rounded rectangle and resize it, it there a\n        way to stop it from changing the rounding of the corners\n        (which I want constant for all my rectangles)?'
+      ]),
+      li([
+        strong('me:'),
+        '\n        you can work out how large you want it to be and then\n        double-click with the rectangle tool and you\'ll be able\n        to enter all the correct values'
+      ]),
+      li$0027({ [Symbol.for('class')]: 'interviewer' })([
+        strong('him:'),
+        '\n        is there a way to change how curved they are after placing them?'
+      ]),
+      li([
+        strong('me:'),
+        '\n        InDesign has a much better was of dealing with this issue than\n        does Illustrator... in InDesign, the rectangle is treated as an\n        object, and its corner radius is treated as a property in just\n        the same way as its width, height, and position... this means\n        that you can change the corner radius at any time...'
+      ]),
+      li$0027({ [Symbol.for('class')]: 'interviewer' })([
+        strong('him:'),
+        '\n        that\'s how it should be'
+      ])
     ])
   ]),
   p(['Hmm. Since InDesign deals with rounded rectangles effortlessly,\n    why does Illustrator make them such a pain? I did a quick Google\n    search and found out how to create a rounded rectangle which can\n    be scaled without affecting the corners. As with many simple tasks,\n    Illustrator requires the user to carry out several steps:']),

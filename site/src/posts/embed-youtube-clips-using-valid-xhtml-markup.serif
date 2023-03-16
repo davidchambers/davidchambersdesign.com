@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block} from "../components.serif";
+import {code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -21,10 +21,10 @@ body = [
   ],
 
   p [
-   "I've always found it easier to write the markup myself, as
-    there's really nothing to it. Simply replace both instances
-    of ", code "video_id", " in the following code with -- you
-    guessed it -- the video's ID.",
+   "I've always found it easier to write the markup myself,
+    as there's really nothing to it. Simply replace both
+    instances of ", code "video_id", " in the following
+    code with", —, "you guessed it", —, "the video's ID.",
   ],
 
   code-block :html `

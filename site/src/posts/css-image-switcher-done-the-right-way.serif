@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image code-block} from "../components.serif";
+import {captioned-image code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -130,8 +130,8 @@ body = [
 
   p [
    "Each term in a definition list should have ", em "at least", " one
-    definition. This enables more than one description -- a title and a
-    caption, for instance -- to be tied to an image:",
+    definition. This enables more than one description", —, "a title and
+    a caption, for instance", —, "to be tied to an image:",
   ],
 
   code-block :html `

@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {caption captioned-images code-block update} from "../components.serif";
+import {caption captioned-images code-block update —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -34,9 +34,9 @@ body = [
       I wondered. The handy guide to ",
       a "http://alexgorbatchev.com/wiki/SyntaxHighlighter:Brushes:Custom"
         "developing a custom brush", " got me started, and I was soon
-      busy trying to encapsulate AppleScript's syntax -- along with its
-      keywords and countless words and phrases with special meanings --
-      into a handful of regular expressions.",
+      busy trying to encapsulate AppleScript's syntax", —, "along with its
+      keywords and countless words and phrases with special meanings", —,
+     "into a handful of regular expressions.",
     ],
   ],
 

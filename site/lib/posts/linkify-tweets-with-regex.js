@@ -88,15 +88,22 @@ import {
 } from '../elements.js';
 import {
   code$002Dblock,
-  decorative$002Dimage
+  decorative$002Dimage,
+  $2014
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
     decorative$002Dimage('/images/posts/decorative/right/at-sign-in-speech-bubble.png'),
-    p(['Regular expressions are powerful, useful, and -- in my opinion\n      -- lots of fun! Thanks to the prevalence of Twitter, every web\n      developer will be exposed to regex sooner or later: before\n      outputting tweets in HTML, Twitter names and hyperlinks must\n      be wrapped in anchor tags.']),
+    p([
+      'Regular expressions are powerful, useful, and',
+      $2014,
+      'in my opinion',
+      $2014,
+      'lots of fun! Thanks to the prevalence of Twitter, every web developer\n      will be exposed to regex sooner or later: before outputting tweets in\n      HTML, Twitter names and hyperlinks must be wrapped in anchor tags.'
+    ]),
     h3('Matching @names'),
-    p(['Here\'s the gist: a match will begin with "@" and the\n      at sign must be followed by one or more word (letter\u2009/\n      number\u2009/ underscore) characters. The @name must either\n      appear at the beginning of the tweet or be preceded by a\n      space. This prevents the regular expression from matching\n      "@example" in "me@example.com".'])
+    p(['Here\'s the gist: a match will begin with "@" and the at sign\n      must be followed by one or more word (letter\u2009/ number\u2009/ underscore)\n      characters. The @name must either appear at the beginning of the tweet\n      or be preceded by a space. This prevents the regular expression from\n      matching "@example" in "me@example.com".'])
   ]),
   h4('JavaScript implementation'),
   code$002Dblock(Symbol.for('javascript'))(`tweet.replace(/(^|\\s)(@\\w+)/gm, '$1<a href="http://twitter.com/$2">$2</a>');

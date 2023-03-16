@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block} from "../components.serif";
+import {code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -15,8 +15,8 @@ body = [
 
   excerpt [
     p [
-     "There's no shortage of blog posts which -- like this one --
-      provide an introduction to ",
+     "There's no shortage of blog posts which", —, "like this one", —,
+     "provide an introduction to ",
       a "http://socket.io/" "Socket.IO", ". Many, though, were
       written prior to the release of 0.7, which ushered in ",
       a "https://github.com/LearnBoost/Socket.IO/wiki/Migrating-0.6-to-0.7"
@@ -117,7 +117,7 @@ body = [
     em "except the one that emitted the \"broadcast\" event", ".
     The \"whisper\" handler is very different in that it doesn't send
     a message at all. Rather, it emits yet another event. Again, the
-    name of this event -- \"secret\" -- is not special in any way.",
+    name of this event", —, "\"secret\"", —, "is not special in any way.",
   ],
 
   p [
@@ -198,9 +198,9 @@ body = [
   `,
 
   p [
-   "The first five events -- \"connect\", \"disconnect\",
-    \"reconnecting\", \"reconnect\", and \"reconnect_failed\" --
-    are emitted by Socket.IO in response to changes in the
+   "The first five events", —, "\"connect\", \"disconnect\",
+    \"reconnecting\", \"reconnect\", and \"reconnect_failed\"", —,
+   "are emitted by Socket.IO in response to changes in the
     connection status. We've registered a handler for each
     in order to expose this information to users.",
   ],
@@ -256,15 +256,15 @@ body = [
   ],
 
   p [
-   "Next, the server -- which is listening for our custom events --
-    captures the \"whisper\" event. It then emits a \"secret\" event
+   "Next, the server", —, "which is listening for our custom events", —,
+   "captures the \"whisper\" event. It then emits a \"secret\" event
     to all clients except the one that sent the \"whisper\", passing
     along the event data.",
   ],
 
   p [
-   "Finally, each client -- bar the originator of this chain of events --
-    captures the \"secret\" event and logs \"the password is 1234\" to the
+   "Finally, each client", —, "bar the originator of this chain of events", —,
+   "captures the \"secret\" event and logs \"the password is 1234\" to the
     console.",
   ],
 

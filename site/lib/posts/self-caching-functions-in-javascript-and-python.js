@@ -86,7 +86,10 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { code$002Dblock } from '../components.js';
+import {
+  code$002Dblock,
+  $2014
+} from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
@@ -269,7 +272,11 @@ fibonacci.cache = {}
     code('_cache'),
     ' is the dictionary that was created\n    at the time that ',
     code('fibonacci'),
-    ' was created. Python\'s\n    dictionaries are mutable, meaning that they can be changed in place.\n    Together, these two features make it possible to use a mutable\n    default argument -- in this case a dictionary -- as a cache.'
+    ' was created. Python\'s\n    dictionaries are mutable, meaning that they can be changed in place.\n    Together, these two features make it possible to use a mutable\n    default argument',
+    $2014,
+    'in this case a dictionary',
+    $2014,
+    'as a cache.'
   ]),
   h3('Final thoughts'),
   p([

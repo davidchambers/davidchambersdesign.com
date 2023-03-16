@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {decorative-image} from "../components.serif";
+import {decorative-image —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -24,10 +24,10 @@ body = [
 
   p [
    "Since the vast majority of Mac OS X users currently possess the
-    means to read and burn CDs, however, I thought this information --
-    lifted straight from Disk Utility Help -- worth sharing. These
-    instructions apply to Snow Leopard, although I would guess that
-    the process is identical for older versions of OS X (the more
+    means to read and burn CDs, however, I thought this information",
+    —, "lifted straight from Disk Utility Help", —, "worth sharing.
+    These instructions apply to Snow Leopard, although I would guess
+    that the process is identical for older versions of OS X (the more
     recent ones, at any rate).",
   ],
 

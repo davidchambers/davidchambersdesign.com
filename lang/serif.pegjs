@@ -197,6 +197,7 @@ IdentifierStart
   / '⇩'
   / '⇦'
   / '⇨'
+  / '—'
 
 IdentifierPart
   = IdentifierStart

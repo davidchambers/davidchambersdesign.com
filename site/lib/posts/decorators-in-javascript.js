@@ -86,7 +86,10 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { code$002Dblock } from '../components.js';
+import {
+  code$002Dblock,
+  $2014
+} from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['A decorator is a function which takes a function and returns a function:']),
@@ -145,7 +148,13 @@ deleteAccount = loginRequired ->
     type: 'DELETE'
     url: "/api/1.0/users/#{user.id}"
 `),
-  p(['Decorators are commonly used in Python -- which provides special syntax\n    for "decorating" functions -- but are rarely seen in JavaScript code.\n    This despite the fact that JavaScript\'s first-class functions are ideally\n    suited to the task. Perhaps CoffeeScript\'s lighter-weight function syntax\n    will result in decorators making more frequent appearances in JavaScript\n    code.'])
+  p([
+    'Decorators are commonly used in Python',
+    $2014,
+    'which provides special syntax\n    for "decorating" functions',
+    $2014,
+    'but are rarely seen in JavaScript code.\n    This despite the fact that JavaScript\'s first-class functions are ideally\n    suited to the task. Perhaps CoffeeScript\'s lighter-weight function syntax\n    will result in decorators making more frequent appearances in JavaScript\n    code.'
+  ])
 ];
 export default {
   ['id']: 89,

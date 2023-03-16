@@ -1,3 +1,4 @@
+import {—} from "../components.serif";
 import * from "../elements.serif" hiding {body};
 import datetime from "../datetime.serif";
 
@@ -13,8 +14,8 @@ export default {
 body = [
 
   p [
-   "Comment forms that don't provide previews -- or at least an
-    indication of how comments are processed -- really annoy me.
+   "Comment forms that don't provide previews", —, "or at least an
+    indication of how comments are processed", —, "really annoy me.
     If I decide to leave a comment I take care to avoid spelling
     mistakes and grammatical errors. It's quite upsetting, then,
     to see my code snippet completely mangled and my carefully

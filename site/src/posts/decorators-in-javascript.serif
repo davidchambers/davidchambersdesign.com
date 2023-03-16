@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block} from "../components.serif";
+import {code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -91,8 +91,8 @@ body = [
   `,
 
   p [
-   "Decorators are commonly used in Python -- which provides special syntax
-    for \"decorating\" functions -- but are rarely seen in JavaScript code.
+   "Decorators are commonly used in Python", —, "which provides special syntax
+    for \"decorating\" functions", —, "but are rarely seen in JavaScript code.
     This despite the fact that JavaScript's first-class functions are ideally
     suited to the task. Perhaps CoffeeScript's lighter-weight function syntax
     will result in decorators making more frequent appearances in JavaScript

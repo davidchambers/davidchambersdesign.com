@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block update} from "../components.serif";
+import {code-block update —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -102,11 +102,11 @@ body = [
   ],
 
   p [
-   "What actually happens -- as you'll have seen if you're viewing
-    this page in a recent version of Safari or Chrome -- is that the
-    transition is applied to the preceding update. This behaviour
-    strikes me as strange, but I have very little understanding of
-    how these transitions are meant to be effected by the browser.",
+   "What actually happens", —, "as you'll have seen if you're viewing this
+    page in a recent version of Safari or Chrome", —, "is that the transition
+    is applied to the preceding update. This behaviour strikes me as strange,
+    but I have very little understanding of how these transitions are meant
+    to be effected by the browser.",
   ],
 
   p [

@@ -88,7 +88,8 @@ import {
 } from '../elements.js';
 import {
   captioned$002Dimage,
-  code$002Dblock
+  code$002Dblock,
+  $2014
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
@@ -173,7 +174,11 @@ const body = [
   p([
     'Each term in a definition list should have ',
     em('at least'),
-    ' one\n    definition. This enables more than one description -- a title and a\n    caption, for instance -- to be tied to an image:'
+    ' one\n    definition. This enables more than one description',
+    $2014,
+    'a title and\n    a caption, for instance',
+    $2014,
+    'to be tied to an image:'
   ]),
   code$002Dblock(Symbol.for('html'))(`<dl>
     <dt><img src="images/ds81.jpg" alt="Vancouver architecture" /></dt>

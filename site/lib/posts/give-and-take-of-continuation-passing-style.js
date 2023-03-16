@@ -86,7 +86,10 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { code$002Dblock } from '../components.js';
+import {
+  code$002Dblock,
+  $2014
+} from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
@@ -188,7 +191,9 @@ const take = give => give (1) ([]);
 [{id: 1, name: 'baz'}]
 `),
   p([
-    '\u261D️ The answer is wrong -- we lost ',
+    '\u261D️ The answer is wrong',
+    $2014,
+    'we lost ',
     code('\'foo\''),
     ' and ',
     code('\'bar\''),
@@ -196,7 +201,8 @@ const take = give => give (1) ([]);
     code('\'baz\''),
     ' has the wrong ',
     code('id'),
-    ' -- but the types align.'
+    $2014,
+    'but the types align.'
   ]),
   code$002Dblock(Symbol.for('javascript'))(`> reduce (take => name => take (id => blahs => give => give (id + 1) (append (blah (id) (name)) (blahs))))
 .        (give => give (1) ([]))

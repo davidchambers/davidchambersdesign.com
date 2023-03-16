@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block} from "../components.serif";
+import {code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -267,7 +267,7 @@ body = [
     at the time that ", code "fibonacci", " was created. Python's
     dictionaries are mutable, meaning that they can be changed in place.
     Together, these two features make it possible to use a mutable
-    default argument -- in this case a dictionary -- as a cache.",
+    default argument", —, "in this case a dictionary", —, "as a cache.",
   ],
 
   h3 "Final thoughts",
