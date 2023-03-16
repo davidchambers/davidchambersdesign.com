@@ -160,20 +160,20 @@ const hat$002Dstripes$002Dlight = [
 ];
 const about = [
   path({
-    [Symbol.for('fill')]: '#edb',
-    [Symbol.for('d')]: render(skin)
+    ['fill']: '#edb',
+    ['d']: render(skin)
   }),
   path({
-    [Symbol.for('fill')]: '#963',
-    [Symbol.for('d')]: render(features)
+    ['fill']: '#963',
+    ['d']: render(features)
   }),
   path({
-    [Symbol.for('fill')]: '#432',
-    [Symbol.for('d')]: render(hat$002Dstripes$002Ddark)
+    ['fill']: '#432',
+    ['d']: render(hat$002Dstripes$002Ddark)
   }),
   path({
-    [Symbol.for('fill')]: '#ccc',
-    [Symbol.for('d')]: render(hat$002Dstripes$002Dlight)
+    ['fill']: '#ccc',
+    ['d']: render(hat$002Dstripes$002Dlight)
   })
 ];
 export default about;

@@ -31,8 +31,8 @@ sticky-tape = [
 ];
 
 bitbucket = [
-  path {[:fill]: "#27c", [:d]: render bucket},
-  path {[:fill]: "#ee7", [:d]: render sticky-note},
-  path {[:fill]: "#a7a", [:d]: render symbol},
-  path {[:fill]: "#fff", [:d]: render sticky-tape, [:opacity]: 0.25},
+  path {fill: "#27c", d: render bucket},
+  path {fill: "#ee7", d: render sticky-note},
+  path {fill: "#a7a", d: render symbol},
+  path {fill: "#fff", d: render sticky-tape, opacity: 0.25},
 ];

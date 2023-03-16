@@ -147,7 +147,7 @@ function print_filesize($filename, $before = ' <span class="filesize">(', $after
     'This gives: ',
     a('/favicon.ico')('favicon.ico'),
     ' ',
-    span({ [Symbol.for('class')]: 'filesize' })('(\u22481.1 kB)'),
+    span({ ['class']: 'filesize' })('(\u22481.1 kB)'),
     '. By default, the function\n    wraps the file\'s size in a ',
     code('span'),
     ' element with ',

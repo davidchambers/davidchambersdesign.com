@@ -98,7 +98,7 @@ export default {
       li(a('#2004')('2004')),
       li(a('#2005')('2005'))
     ]),
-    h3$0027({ [Symbol.for('id')]: '2003' })('2003'),
+    h3$0027({ ['id']: '2003' })('2003'),
     h4('Design philosophies poster'),
     p([
       b('Brief.'),
@@ -113,7 +113,7 @@ export default {
     uncaptioned$002Dimage('/images/elam/sugar-billboards/dizzy-snake.jpg')('Excessive sugar consumption can cause dizziness'),
     uncaptioned$002Dimage('/images/elam/sugar-billboards/breast-cancer.jpg')('Excessive sugar consumption can cause breast cancer'),
     uncaptioned$002Dimage('/images/elam/sugar-billboards/plane-crash.jpg')('Excessive sugar consumption can impair concentration'),
-    h3$0027({ [Symbol.for('id')]: '2004' })('2004'),
+    h3$0027({ ['id']: '2004' })('2004'),
     h4([
       i('Caligula'),
       ' poster'
@@ -149,7 +149,7 @@ export default {
       ' Design a page for possible inclusion in the 2004 Panprint\n      calendar. Panprint produces a calendar each year as a way to promote its\n      services, and the work of young designers. This year the theme is "true\n      colours". A1.'
     ]),
     uncaptioned$002Dimage('/images/elam/lightbox/panprint-poster.jpg')('Panprint poster'),
-    h3$0027({ [Symbol.for('id')]: '2005' })('2005'),
+    h3$0027({ ['id']: '2005' })('2005'),
     h4('Gameplayer brand identity'),
     p([
       b('Brief.'),

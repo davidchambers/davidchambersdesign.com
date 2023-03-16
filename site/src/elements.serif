@@ -99,18 +99,12 @@ escape = {
 };
 
 text value = {
-  [:text]: [value],
-  [:render]: indent => level => inline => escape value,
+  text: [value],
+  render: indent => level => inline => escape value,
 };
 
-canonicalize-attrs attrs = {
-  Object.fromEntries {
-    S.map {name => {
-      value = attrs[name];
-      [name,
-       if typeof value == "symbol" then Symbol.keyFor value else String value]
-    }}
-    {Object.getOwnPropertySymbols attrs}}
+canonicalize-attrs = {
+  S.map String
 };
 
 canonicalize-children = {
@@ -133,16 +127,16 @@ render-block-element tag-name attrs children indent level inline = {
   + "<"
   + Symbol.keyFor tag-name
   + S.foldMap String
-              {sym =>
+              {entry =>
                  " "
-                 + Symbol.keyFor sym
-                 + "=\""
-                 + escape {S.unwords {S.map S.trim {S.lines attrs[sym]}}}
-                 + "\""}
-              {Object.getOwnPropertySymbols attrs}
+                 + entry[0]
+                 + `="`
+                 + escape {{String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}
+                 + `"`}
+              {Object.entries attrs}
   + ">\n"
   + S.foldMap String
-              {child => child:render indent {level + 1} false}
+              {child => child.render indent {level + 1} false}
               children
   + indent.repeat(level)
   + "</"
@@ -155,16 +149,16 @@ render-inline-element tag-name attrs children indent level inline = {
   + "<"
   + Symbol.keyFor tag-name
   + S.foldMap String
-              {sym =>
+              {entry =>
                  " "
-                 + Symbol.keyFor sym
-                 + "=\""
-                 + escape {S.unwords {S.map S.trim {S.lines attrs[sym]}}}
-                 + "\""}
-              {Object.getOwnPropertySymbols attrs}
+                 + entry[0]
+                 + `="`
+                 + escape {{String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}
+                 + `"`}
+              {Object.entries attrs}
   + ">"
   + S.foldMap String
-              {child => child:render indent 0 true}
+              {child => child.render indent 0 true}
               children
   + "</"
   + Symbol.keyFor tag-name
@@ -177,60 +171,55 @@ render-self-closing-element tag-name attrs indent level inline = {
   + "<"
   + Symbol.keyFor tag-name
   + S.foldMap String
-              {sym =>
+              {entry =>
                  " "
-                 + Symbol.keyFor sym
-                 + "=\""
-                 + escape {S.unwords {S.map S.trim {S.lines attrs[sym]}}}
-                 + "\""}
-              {Object.getOwnPropertySymbols attrs}
+                 + entry[0]
+                 + `="`
+                 + escape {{String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}
+                 + `"`}
+              {Object.entries attrs}
   + " />"
   + {if inline then "" else "\n"}
 };
 
 block-element tag-name attrs children = {
-  attrs' = canonicalize-attrs attrs;
   children' = canonicalize-children children;
   {
-    [:format]: :block,
-    [:text]: children'.flatMap(child => child:text),
-    [:render]: render-block-element tag-name attrs' children',
+    format: :block,
+    text: children'.flatMap(child => child.text),
+    render: render-block-element tag-name attrs children',
   }
 };
 
 inline-element tag-name attrs children = {
-  attrs' = canonicalize-attrs attrs;
   children' = canonicalize-children children;
-  format = if children'.some(node => node:format === :block) then :block else :inline;
+  format = if children'.some(node => node.format === :block) then :block else :inline;
   {
-    [:format]: format,
-    [:text]: children'.flatMap(child => child:text),
-    [:render]: indent => level => inline => {
+    format: format,
+    text: children'.flatMap(child => child.text),
+    render: indent => level => inline => {
       render = if format === :inline then render-inline-element else render-block-element;
-      render tag-name attrs' children' indent level inline
+      render tag-name attrs children' indent level inline
     },
   }
 };
 
 self-closing-element tag-name attrs = {
-  attrs' = canonicalize-attrs attrs;
-  {
-    [:format]: :inline,
-    [:text]: [],
-    [:render]: render-self-closing-element tag-name attrs',
-  }
+  format: :inline,
+  text: [],
+  render: render-self-closing-element tag-name attrs,
 };
 
 excerpt children = {
   children' = canonicalize-children children;
   render indent level inline = {
     S.foldMap String
-              {child => child:render indent level inline}
+              {child => child.render indent level inline}
               children'
   };
   {
-    [:text]: children.flatMap(child => child:text),
-    [:render]: render,
+    text: children.flatMap(child => child.text),
+    render: render,
   }
 };
 
@@ -316,7 +305,7 @@ svg                      = block-element :svg;
 ;; are rendered inline unless the element contains an element
 ;; whose opening and closing tags are rendered on their own lines.
 a'                      = inline-element :a;
-a href                  = a' {[:href]: href};
+a href                  = a' {href: href};
 code'                   = inline-element :code;
 code                    = inline-element :code {};
 del'                    = inline-element :del;

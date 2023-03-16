@@ -22,7 +22,7 @@ body = [
   ],
 
   ol [
-    li' {[:class]: "interviewer"} [
+    li' {class: "interviewer"} [
       strong "Matt:", "
       So, Doug, do you think you could go the way of Mac?",
     ],
@@ -30,7 +30,7 @@ body = [
       strong "Doug:", "
       I already have, really, but I'd never buy one.",
     ],
-    li' {[:class]: "interviewer"} [
+    li' {class: "interviewer"} [
       strong "Matt:", "
       Why's that?",
     ],

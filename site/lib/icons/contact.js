@@ -90,20 +90,20 @@ const seam = [
 ];
 const contact = [
   path({
-    [Symbol.for('fill')]: '#963',
-    [Symbol.for('d')]: render(stroke)
+    ['fill']: '#963',
+    ['d']: render(stroke)
   }),
   path({
-    [Symbol.for('fill')]: '#feb',
-    [Symbol.for('d')]: render(fill)
+    ['fill']: '#feb',
+    ['d']: render(fill)
   }),
   path({
-    [Symbol.for('fill')]: '#741',
-    [Symbol.for('d')]: render(flap)
+    ['fill']: '#741',
+    ['d']: render(flap)
   }),
   path({
-    [Symbol.for('fill')]: '#b85',
-    [Symbol.for('d')]: render(seam)
+    ['fill']: '#b85',
+    ['d']: render(seam)
   })
 ];
 export default contact;

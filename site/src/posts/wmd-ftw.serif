@@ -41,8 +41,8 @@ body = [
   ],
 
   video {
-    [:src]: "/images/posts/53/wmd.mp4",
-    [:controls]: "controls",
+    src: "/images/posts/53/wmd.mp4",
+    controls: "controls",
   } [
     p [
      "Get with the programme; this video's in an HTML5 ",

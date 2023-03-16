@@ -11,10 +11,10 @@ render-tags posts = {
                     posts.flatMap(post => post.tags);
   [
     h1 "Tags",
-    ol' {[:id]: "tags"}
-        {S.map {tag => li' {[:data-count]: counts[tag]}
+    ol' {id: "tags"}
+        {S.map {tag => li' {data-count: counts[tag]}
                            {a {"/tag/" + tag + "/"} tags[tag]}}
                {Object.keys tags}},
-    div {[:class]: "clearfix"} [],
+    div {class: "clearfix"} [],
   ]
 };

@@ -786,23 +786,23 @@ const ycharsy = paths([
   yNy
 ]);
 const mask = [path({
-    [Symbol.for('d')]: render(wcharsw),
-    [Symbol.for('fill')]: '#000',
-    [Symbol.for('fill-rule')]: Symbol.for('evenodd')
+    ['d']: render(wcharsw),
+    ['fill']: '#000',
+    ['fill-rule']: 'evenodd'
   })];
 const fill = [
   path({
-    [Symbol.for('d')]: render(xcharsx),
-    [Symbol.for('fill')]: '#999'
+    ['d']: render(xcharsx),
+    ['fill']: '#999'
   }),
   path({
-    [Symbol.for('d')]: render(ycharsy),
-    [Symbol.for('fill')]: '#666'
+    ['d']: render(ycharsy),
+    ['fill']: '#666'
   })
 ];
 const default_ = {
-  [Symbol.for('mask')]: mask,
-  [Symbol.for('fill')]: fill
+  ['mask']: mask,
+  ['fill']: fill
 };
 export default default_;
 export {

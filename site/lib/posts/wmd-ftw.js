@@ -109,8 +109,8 @@ const body = [
     ' only.\n    No, I wanted the preview to resemble as closely as possible\n    the published result, which meant updating the preview area in\n    response to changes to "name", "e-mail", and "website"\n    as well as to changes to the comment itself.'
   ]),
   video({
-    [Symbol.for('src')]: '/images/posts/53/wmd.mp4',
-    [Symbol.for('controls')]: 'controls'
+    ['src']: '/images/posts/53/wmd.mp4',
+    ['controls']: 'controls'
   })([
     p([
       'Get with the programme; this video\'s in an HTML5 ',

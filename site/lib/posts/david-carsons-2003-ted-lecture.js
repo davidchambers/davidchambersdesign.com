@@ -95,26 +95,26 @@ const body = [
   ]),
   dl([
     dt([object({
-        [Symbol.for('type')]: 'application/x-shockwave-flash',
-        [Symbol.for('width')]: '446',
-        [Symbol.for('height')]: '326',
-        [Symbol.for('data')]: 'http://video.ted.com/assets/player/swf/EmbedPlayer.swf'
+        ['type']: 'application/x-shockwave-flash',
+        ['width']: '446',
+        ['height']: '326',
+        ['data']: 'http://video.ted.com/assets/player/swf/EmbedPlayer.swf'
       })([
         param({
-          [Symbol.for('name')]: 'movie',
-          [Symbol.for('value')]: 'http://video.ted.com/assets/player/swf/EmbedPlayer.swf'
+          ['name']: 'movie',
+          ['value']: 'http://video.ted.com/assets/player/swf/EmbedPlayer.swf'
         }),
         param({
-          [Symbol.for('name')]: 'wmode',
-          [Symbol.for('value')]: 'transparent'
+          ['name']: 'wmode',
+          ['value']: 'transparent'
         }),
         param({
-          [Symbol.for('name')]: 'allowFullScreen',
-          [Symbol.for('value')]: 'true'
+          ['name']: 'allowFullScreen',
+          ['value']: 'true'
         }),
         param({
-          [Symbol.for('name')]: 'flashvars',
-          [Symbol.for('value')]: 'vu=http://video.ted.com/talks/embed/DavidCarson_2003-embed_high.flv&su=http://images.ted.com/images/ted/tedindex/embed-posters/DavidCarson-2003.embed_thumbnail.jpg&vw=432&vh=240&ap=0&ti=436'
+          ['name']: 'flashvars',
+          ['value']: 'vu=http://video.ted.com/talks/embed/DavidCarson_2003-embed_high.flv&su=http://images.ted.com/images/ted/tedindex/embed-posters/DavidCarson-2003.embed_thumbnail.jpg&vw=432&vh=240&ap=0&ti=436'
         })
       ])]),
     dd([p([

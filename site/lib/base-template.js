@@ -90,85 +90,85 @@ import {
 const base$002Dtemplate = document$002Dtitle => {
   return main => html([
     head([
-      meta({ [Symbol.for('charset')]: 'utf-8' }),
-      title(canonicalize$002Dchildren(document$002Dtitle).flatMap(child => child[Symbol.for('text')])),
+      meta({ ['charset']: 'utf-8' }),
+      title(canonicalize$002Dchildren(document$002Dtitle).flatMap(child => child.text)),
       link({
-        [Symbol.for('rel')]: 'alternate',
-        [Symbol.for('type')]: 'application/atom+xml',
-        [Symbol.for('href')]: '/feed/'
+        ['rel']: 'alternate',
+        ['type']: 'application/atom+xml',
+        ['href']: '/feed/'
       }),
       link({
-        [Symbol.for('rel')]: 'stylesheet',
-        [Symbol.for('href')]: '/css/reset.css',
-        [Symbol.for('media')]: 'all'
+        ['rel']: 'stylesheet',
+        ['href']: '/css/reset.css',
+        ['media']: 'all'
       }),
       link({
-        [Symbol.for('rel')]: 'stylesheet',
-        [Symbol.for('href')]: '/css/print.css',
-        [Symbol.for('media')]: 'print'
+        ['rel']: 'stylesheet',
+        ['href']: '/css/print.css',
+        ['media']: 'print'
       }),
       link({
-        [Symbol.for('rel')]: 'stylesheet',
-        [Symbol.for('href')]: '/css/screen.css',
-        [Symbol.for('media')]: 'screen'
+        ['rel']: 'stylesheet',
+        ['href']: '/css/screen.css',
+        ['media']: 'screen'
       }),
       link({
-        [Symbol.for('rel')]: 'shortcut icon',
-        [Symbol.for('type')]: 'image/x-icon',
-        [Symbol.for('href')]: 'http://static.davidchambersdesign.com/favicon.ico'
+        ['rel']: 'shortcut icon',
+        ['type']: 'image/x-icon',
+        ['href']: 'http://static.davidchambersdesign.com/favicon.ico'
       }),
-      script({ [Symbol.for('src')]: 'http://use.typekit.com/jhk0ogh.js' })([]),
+      script({ ['src']: 'http://use.typekit.com/jhk0ogh.js' })([]),
       script({})('try{Typekit.load();}catch(e){}')
     ]),
     body([
-      div({ [Symbol.for('id')]: 'skip' })([a$0027({ [Symbol.for('href')]: '#main' })('Skip to main content')]),
-      div({ [Symbol.for('id')]: 'wrap' })([
-        div({ [Symbol.for('id')]: 'header' })([header([
+      div({ ['id']: 'skip' })([a$0027({ ['href']: '#main' })('Skip to main content')]),
+      div({ ['id']: 'wrap' })([
+        div({ ['id']: 'header' })([header([
             a$0027({
-              [Symbol.for('id')]: 'title',
-              [Symbol.for('href')]: '/'
+              ['id']: 'title',
+              ['href']: '/'
             })('David Chambers Design'),
             hr,
             p('It\'s where I share interesting info with other web geeks'),
-            nav$0027({ [Symbol.for('id')]: 'nav' })([ul([
-                li([a$0027({ [Symbol.for('href')]: '/about/' })(span({})([
+            nav$0027({ ['id']: 'nav' })([ul([
+                li([a$0027({ ['href']: '/about/' })(span({})([
                     strong('About.'),
                     text(' Who I am and what I do.')
                   ]))]),
-                li([a$0027({ [Symbol.for('href')]: '/contact/' })(span({})([
+                li([a$0027({ ['href']: '/contact/' })(span({})([
                     strong('Contact.'),
                     text(' Just in case you want to get in touch.')
                   ]))]),
-                li([a$0027({ [Symbol.for('href')]: '/archives/' })(span({})([
+                li([a$0027({ ['href']: '/archives/' })(span({})([
                     strong('Archives.'),
                     text(' Old posts, recent posts, they\'re all here.')
                   ]))]),
-                li([a$0027({ [Symbol.for('href')]: '/tags/' })(span({})([
+                li([a$0027({ ['href']: '/tags/' })(span({})([
                     strong('Tags.'),
                     text(' Helpful if you\'re after posts on a particular topic.')
                   ]))]),
-                li([a$0027({ [Symbol.for('href')]: 'https://bitbucket.org/davidchambers' })(span({})([
+                li([a$0027({ ['href']: 'https://bitbucket.org/davidchambers' })(span({})([
                     strong('Bitbucket.'),
                     text(' Home to most of my open-source projects.')
                   ]))]),
-                li([a$0027({ [Symbol.for('href')]: '/twitter/' })(span({})([
+                li([a$0027({ ['href']: '/twitter/' })(span({})([
                     strong('Twitter.'),
                     text(' It\'s where I chirrup\u2026 or chirp\u2026 or something.')
                   ]))])
               ])])
           ])]),
-        div({ [Symbol.for('id')]: 'main' })(main)
+        div({ ['id']: 'main' })(main)
       ]),
       footer([p([
           text('Powered by '),
           a$0027({
-            [Symbol.for('href')]: 'http://mango.io/wtf?',
-            [Symbol.for('data-version')]: '0.9dev'
+            ['href']: 'http://mango.io/wtf?',
+            ['data-version']: '0.9dev'
           })('Mango'),
           text('. Hosted on '),
-          a$0027({ [Symbol.for('href')]: 'http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d' })('Linode'),
+          a$0027({ ['href']: 'http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d' })('Linode'),
           text('. Original content '),
-          a$0027({ [Symbol.for('href')]: '/copying/' })('WTFPL-licensed'),
+          a$0027({ ['href']: '/copying/' })('WTFPL-licensed'),
           text('.')
         ])])
     ])

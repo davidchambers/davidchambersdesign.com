@@ -104,7 +104,7 @@ body = [
     "Live rendering of AppleScript snippet",
   ],
 
-  h3' {[:id]: "setup"} "Setup",
+  h3' {id: "setup"} "Setup",
 
   p [
    "To add AppleScript syntax highlighting to your own site or blog,
@@ -149,7 +149,7 @@ body = [
     ],
   ],
 
-  h3' {[:id]: "usage"} "Usage",
+  h3' {id: "usage"} "Usage",
 
   p [
    "To have SyntaxHighlighter parse a block of AppleScript,

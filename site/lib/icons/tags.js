@@ -184,24 +184,24 @@ const string = [
 ];
 const tags = [
   path({
-    [Symbol.for('fill')]: '#741',
-    [Symbol.for('d')]: render(stroke)
+    ['fill']: '#741',
+    ['d']: render(stroke)
   }),
   path({
-    [Symbol.for('fill')]: '#feb',
-    [Symbol.for('d')]: render(fill)
+    ['fill']: '#feb',
+    ['d']: render(fill)
   }),
   path({
-    [Symbol.for('fill')]: '#c93',
-    [Symbol.for('d')]: render(text)
+    ['fill']: '#c93',
+    ['d']: render(text)
   }),
   path({
-    [Symbol.for('fill')]: '#fff',
-    [Symbol.for('d')]: render(sticker)
+    ['fill']: '#fff',
+    ['d']: render(sticker)
   }),
   path({
-    [Symbol.for('fill')]: '#333',
-    [Symbol.for('d')]: render(string)
+    ['fill']: '#333',
+    ['d']: render(string)
   })
 ];
 export default tags;

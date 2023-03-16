@@ -26,7 +26,7 @@ body = [
       is where things started to get hairy.",
     ],
     ol [
-      li' {[:class]: "interviewer"} [
+      li' {class: "interviewer"} [
         strong "him:", "
         if I have a rounded rectangle and resize it, it there a
         way to stop it from changing the rounding of the corners
@@ -38,7 +38,7 @@ body = [
         double-click with the rectangle tool and you'll be able
         to enter all the correct values"
       ],
-      li' {[:class]: "interviewer"} [
+      li' {class: "interviewer"} [
         strong "him:", "
         is there a way to change how curved they are after placing them?"
       ],
@@ -50,7 +50,7 @@ body = [
         the same way as its width, height, and position... this means
         that you can change the corner radius at any time..."
       ],
-      li' {[:class]: "interviewer"} [
+      li' {class: "interviewer"} [
         strong "him:", "
         that's how it should be"
       ],

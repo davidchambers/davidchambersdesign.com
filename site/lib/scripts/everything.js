@@ -231,41 +231,41 @@ write$002Dfile(public_([
 const render$002Dsvg = attrs => {
   return paths => (() => {
     const attrs$0027 = {
-      [Symbol.for('xmlns')]: 'http://www.w3.org/2000/svg',
-      [Symbol.for('version')]: '1.1',
+      ['xmlns']: 'http://www.w3.org/2000/svg',
+      ['version']: '1.1',
       ...attrs
     };
-    return '<?xml version="1.0" standalone="no"?>\n' + svg(attrs$0027)(paths)[Symbol.for('render')]('  ')(0)(false);
+    return '<?xml version="1.0" standalone="no"?>\n' + svg(attrs$0027)(paths).render('  ')(0)(false);
   })();
 };
 write$002Dfile(public_([
   'svg',
   'masthead.svg'
-]))(render$002Dsvg({})(masthead[Symbol.for('fill')]));
+]))(render$002Dsvg({})(masthead.fill));
 write$002Dfile(public_([
   'svg',
   'masthead-mask.svg'
-]))(render$002Dsvg({})(masthead[Symbol.for('mask')]));
+]))(render$002Dsvg({})(masthead.mask));
 write$002Dfile(public_([
   'svg',
   'about.svg'
 ]))(render$002Dsvg({
-  [Symbol.for('width')]: 16,
-  [Symbol.for('height')]: 16
+  ['width']: 16,
+  ['height']: 16
 })(icon$002Fabout));
 write$002Dfile(public_([
   'svg',
   'archives.svg'
 ]))(render$002Dsvg({
-  [Symbol.for('width')]: 16,
-  [Symbol.for('height')]: 16
+  ['width']: 16,
+  ['height']: 16
 })(icon$002Farchives));
 write$002Dfile(public_([
   'svg',
   'bitbucket.svg'
 ]))(render$002Dsvg({
-  [Symbol.for('width')]: 16,
-  [Symbol.for('height')]: 16
+  ['width']: 16,
+  ['height']: 16
 })(icon$002Fbitbucket));
 write$002Dfile(public_([
   'svg',
@@ -311,32 +311,32 @@ write$002Dfile(public_([
   'svg',
   'contact.svg'
 ]))(render$002Dsvg({
-  [Symbol.for('width')]: 16,
-  [Symbol.for('height')]: 16
+  ['width']: 16,
+  ['height']: 16
 })(icon$002Fcontact));
 write$002Dfile(public_([
   'svg',
   'flushcache.svg'
 ]))(render$002Dsvg({
-  [Symbol.for('width')]: 16,
-  [Symbol.for('height')]: 16
+  ['width']: 16,
+  ['height']: 16
 })(icon$002Fflushcache));
 write$002Dfile(public_([
   'svg',
   'tags.svg'
 ]))(render$002Dsvg({
-  [Symbol.for('width')]: 16,
-  [Symbol.for('height')]: 16
+  ['width']: 16,
+  ['height']: 16
 })(icon$002Ftags));
 write$002Dfile(public_([
   'svg',
   'twitter.svg'
 ]))(render$002Dsvg({
-  [Symbol.for('width')]: 16,
-  [Symbol.for('height')]: 16
+  ['width']: 16,
+  ['height']: 16
 })(icon$002Ftwitter));
 const render$002Ddocument = element => {
-  return '<!DOCTYPE html>\n' + element[Symbol.for('render')]('  ')(0)(false);
+  return '<!DOCTYPE html>\n' + element.render('  ')(0)(false);
 };
 write$002Dfile(public_(['archives.html']))(render$002Ddocument(base$002Dtemplate('Archives')(render$002Darchives(posts))));
 write$002Dfile(public_(['tags.html']))(render$002Ddocument(base$002Dtemplate('Tags')(render$002Dtags(posts))));

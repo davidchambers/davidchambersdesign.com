@@ -91,7 +91,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'On ',
-    time({ [Symbol.for('datetime')]: '2010-03-19T13:58-00:00' })('19 March 2010'),
+    time({ ['datetime']: '2010-03-19T13:58-00:00' })('19 March 2010'),
     ',\n    David Chambers wrote:'
   ]),
   blockquote([
@@ -128,7 +128,7 @@ const body = [
   ]),
   p([
     'On ',
-    time({ [Symbol.for('datetime')]: '2010-03-19T15:13-00:00' })('19 March 2010'),
+    time({ ['datetime']: '2010-03-19T15:13-00:00' })('19 March 2010'),
     ',\n    Douglas Crockford wrote:'
   ]),
   blockquote([p(['Your awareness is incorrect. Have you tested on IE6?'])])

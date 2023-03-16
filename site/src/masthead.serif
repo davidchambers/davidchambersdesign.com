@@ -174,8 +174,8 @@ wcharsw = paths [wDw, wAw, wVw, wIw, wDw, wCw, wHw, wAw, wMw, wBw, wEw, wRw, wSw
 xcharsx = paths [xDx, xAx, xVx, xIx, xDx, xCx, xHx, xAx, xMx, xBx, xEx, xRx, xSx, xDx, xEx, xSx, xIx, xGx, xNx];
 ycharsy = paths [yDy, yAy, yVy, yIy, yDy, yCy, yHy, yAy, yMy, yBy, yEy, yRy, ySy, yDy, yEy, ySy, yIy, yGy, yNy];
 
-mask = [path {[:d]: render wcharsw, [:fill]: "#000", [:fill-rule]: :evenodd}];
-fill = [path {[:d]: render xcharsx, [:fill]: "#999"},
-        path {[:d]: render ycharsy, [:fill]: "#666"}];
+mask = [path {d: render wcharsw, fill: "#000", fill-rule: "evenodd"}];
+fill = [path {d: render xcharsx, fill: "#999"},
+        path {d: render ycharsy, fill: "#666"}];
 
-default = {[:mask]: mask, [:fill]: fill};
+default = {mask: mask, fill: fill};

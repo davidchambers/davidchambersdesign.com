@@ -115,7 +115,7 @@ var colours = fruits;
   ]),
   code$002Dblock(Symbol.for('javascript'))(`var colours = fruits.slice();
 `),
-  aside$0027({ [Symbol.for('id')]: 'footnote' })([
+  aside$0027({ ['id']: 'footnote' })([
     '* Languages such as C.\n    Like ',
     a('http://www.quirksmode.org/about/')('ppk'),
     ',\n    I take care to include quotation marks. ;)'

@@ -82,20 +82,20 @@ const paper = [
 ];
 const archives = [
   path({
-    [Symbol.for('fill')]: '#da5',
-    [Symbol.for('d')]: render(base)
+    ['fill']: '#da5',
+    ['d']: render(base)
   }),
   path({
-    [Symbol.for('fill')]: '#333',
-    [Symbol.for('d')]: render(spiral)
+    ['fill']: '#333',
+    ['d']: render(spiral)
   }),
   path({
-    [Symbol.for('fill')]: '#b00',
-    [Symbol.for('d')]: render(header)
+    ['fill']: '#b00',
+    ['d']: render(header)
   }),
   path({
-    [Symbol.for('fill')]: '#fff',
-    [Symbol.for('d')]: render(paper)
+    ['fill']: '#fff',
+    ['d']: render(paper)
   })
 ];
 export default archives;

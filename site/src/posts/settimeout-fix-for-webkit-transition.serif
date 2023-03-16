@@ -18,8 +18,8 @@ body = [
      "Here's a simple animation which utilizes ", code "webkitTransition", ":",
     ],
     p' {
-      [:id]: "transition-example-1",
-      [:style]: "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;",
+      id: "transition-example-1",
+      style: "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;",
     } [
      "Click to animate",
     ],
@@ -55,8 +55,8 @@ body = [
   ],
 
   p' {
-    [:id]: "transition-example-2",
-    [:style]: "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;",
+    id: "transition-example-2",
+    style: "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;",
   } [
    "Click to reposition",
   ],
@@ -114,8 +114,8 @@ body = [
   ],
 
   p' {
-    [:id]: "transition-example-3",
-    [:style]: "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;",
+    id: "transition-example-3",
+    style: "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;",
   } [
    "Click to reposition",
   ],

@@ -89,13 +89,13 @@ import {
   video
 } from './elements.js';
 const caption = caption => {
-  return p$0027({ [Symbol.for('class')]: 'caption' })(caption);
+  return p$0027({ ['class']: 'caption' })(caption);
 };
 const captioned$002Dimage = src => {
   return alt => caption => dl([
     dt(img({
-      [Symbol.for('alt')]: alt,
-      [Symbol.for('src')]: src
+      ['alt']: alt,
+      ['src']: src
     })),
     dd(caption)
   ]);
@@ -103,8 +103,8 @@ const captioned$002Dimage = src => {
 const captioned$002Dimages = images => {
   return dl(S.chain(image => [
     dt(img({
-      [Symbol.for('alt')]: image[1],
-      [Symbol.for('src')]: image[0]
+      ['alt']: image[1],
+      ['src']: image[0]
     })),
     dd(image[2])
   ])(images));
@@ -114,23 +114,23 @@ const code$002Dblock = language => {
 };
 const decorative$002Dimage = src => {
   return p(img({
-    [Symbol.for('alt')]: '',
-    [Symbol.for('src')]: src
+    ['alt']: '',
+    ['src']: src
   }));
 };
 const pros$002Dand$002Dcons$002Dlist = f => {
-  return ul(f(li$0027({ [Symbol.for('class')]: 'pro' }))(li$0027({ [Symbol.for('class')]: 'con' })));
+  return ul(f(li$0027({ ['class']: 'pro' }))(li$0027({ ['class']: 'con' })));
 };
 const uncaptioned$002Dimage = src => {
   return alt => p(img({
-    [Symbol.for('alt')]: alt,
-    [Symbol.for('src')]: src
+    ['alt']: alt,
+    ['src']: src
   }));
 };
 const update = datetime => {
-  return body => div({ [Symbol.for('class')]: 'update' })(S.prepend(h4([
+  return body => div({ ['class']: 'update' })(S.prepend(h4([
     'Update \u2014 ',
-    time({ [Symbol.for('datetime')]: datetime.toISO() })(datetime.toFormat('d MMMM y'))
+    time({ ['datetime']: datetime.toISO() })(datetime.toFormat('d MMMM y'))
   ]))(canonicalize$002Dchildren(body)));
 };
 const $2014 = text('\u2009\u2014\u2009');

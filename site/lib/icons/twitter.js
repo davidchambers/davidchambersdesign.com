@@ -26,26 +26,26 @@ const a = rx$002Dry => {
 };
 const twitter = [
   linearGradient({
-    [Symbol.for('id')]: 'gradient',
-    [Symbol.for('x1')]: '50%',
-    [Symbol.for('y1')]: '0%',
-    [Symbol.for('x2')]: '50%',
-    [Symbol.for('y2')]: '100%'
+    ['id']: 'gradient',
+    ['x1']: '50%',
+    ['y1']: '0%',
+    ['x2']: '50%',
+    ['y2']: '100%'
   })([
     stop({
-      [Symbol.for('stop-color')]: '#96ecfd',
-      [Symbol.for('offset')]: '0%'
+      ['stop-color']: '#96ecfd',
+      ['offset']: '0%'
     }),
     stop({
-      [Symbol.for('stop-color')]: '#14dff0',
-      [Symbol.for('offset')]: '100%'
+      ['stop-color']: '#14dff0',
+      ['offset']: '100%'
     })
   ]),
   path({
-    [Symbol.for('stroke')]: '#fff',
-    [Symbol.for('stroke-width')]: 1,
-    [Symbol.for('fill')]: 'url(#gradient)',
-    [Symbol.for('d')]: render([
+    ['stroke']: '#fff',
+    ['stroke-width']: 1,
+    ['fill']: 'url(#gradient)',
+    ['d']: render([
       $21E8(3),
       $21E9(3),
       a([

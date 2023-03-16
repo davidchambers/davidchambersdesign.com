@@ -114,12 +114,12 @@ const body = [
   p(['SproutCore is server-agnostic, which allows it to connect to\n    existing services, and allows new services to be created using\n    the most appropriate server-side technologies.']),
   dl([
     dt([embed({
-        [Symbol.for('type')]: 'application/x-shockwave-flash',
-        [Symbol.for('src')]: 'http://blip.tv/play/g_MngZaxYQI',
-        [Symbol.for('width')]: 480,
-        [Symbol.for('height')]: 300,
-        [Symbol.for('allowscriptaccess')]: Symbol.for('always'),
-        [Symbol.for('allowfullscreen')]: true
+        ['type']: 'application/x-shockwave-flash',
+        ['src']: 'http://blip.tv/play/g_MngZaxYQI',
+        ['width']: 480,
+        ['height']: 300,
+        ['allowscriptaccess']: 'always',
+        ['allowfullscreen']: true
       })]),
     dd(['Mike Subelsky introducing SproutCore at JSConf Washington, April 2009'])
   ]),
@@ -130,12 +130,12 @@ const body = [
   ]),
   dl([
     dt([embed({
-        [Symbol.for('type')]: 'application/x-shockwave-flash',
-        [Symbol.for('src')]: 'http://blip.tv/play/AYGylE4C',
-        [Symbol.for('width')]: 480,
-        [Symbol.for('height')]: 300,
-        [Symbol.for('allowscriptaccess')]: Symbol.for('always'),
-        [Symbol.for('allowfullscreen')]: true
+        ['type']: 'application/x-shockwave-flash',
+        ['src']: 'http://blip.tv/play/AYGylE4C',
+        ['width']: 480,
+        ['height']: 300,
+        ['allowscriptaccess']: 'always',
+        ['allowfullscreen']: true
       })]),
     dd(['Ryan Dahl introducing Node.js at JSConf Berlin, November 2009'])
   ]),

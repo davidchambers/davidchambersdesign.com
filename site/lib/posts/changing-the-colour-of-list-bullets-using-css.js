@@ -108,7 +108,7 @@ li {
 }
 `),
   p(['This should do the trick, but doesn\'t for some reason! How the heck\n    does one target the bullets and only the bullets? As far as I know\n    it\'s not possible.']),
-  h3$0027({ [Symbol.for('id')]: 'conventional-hack' })('Conventional hack'),
+  h3$0027({ ['id']: 'conventional-hack' })('Conventional hack'),
   code$002Dblock(Symbol.for('html'))(`<h1>TXJS 2011 Speakers</h1>
 <ul>
   <li><span>Brendan Eich</span></li>
@@ -132,7 +132,7 @@ li {
     code('span'),
     's are ugly \u2013\n    there are ways to achieve the desired visual effect without\n    hacking the markup.'
   ]),
-  h3$0027({ [Symbol.for('id')]: 'background-image-technique' })('Background image technique'),
+  h3$0027({ ['id']: 'background-image-technique' })('Background image technique'),
   code$002Dblock(Symbol.for('css'))(`ul {
   list-style: none;
 }
@@ -147,7 +147,7 @@ li {
     a('http://en.wikipedia.org/wiki/Data_URI_scheme#CSS')('data URI'),
     '.'
   ]),
-  h3$0027({ [Symbol.for('id')]: 'pseudo-element-technique' })('Pseudo-element technique'),
+  h3$0027({ ['id']: 'pseudo-element-technique' })('Pseudo-element technique'),
   code$002Dblock(Symbol.for('css'))(`ul {
   list-style: none;
 }

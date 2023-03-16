@@ -130,7 +130,7 @@ const body = [
   p(['While faking the drop shadow on the Sound window above I discovered\n    a combination of drop shadow values which pretty much perfectly match\n    those of an active window in OS X:']),
   uncaptioned$002Dimage('/images/posts/47/drop-shadow-settings.png')('Photoshop\'s drop shadow dialog'),
   dl([
-    dt$0027({ [Symbol.for('class')]: 'textual' })('shadow color'),
+    dt$0027({ ['class']: 'textual' })('shadow color'),
     dd('#000000 (black)'),
     dt('opacity'),
     dd('45%'),

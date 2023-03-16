@@ -117,7 +117,7 @@ const body = [
       ' did the trick!'
     ])
   ]),
-  h3$0027({ [Symbol.for('id')]: 'usage' })('Usage'),
+  h3$0027({ ['id']: 'usage' })('Usage'),
   p([
     'First, you\'ll need to save a copy of ',
     a('/examples/prototype-image-slider/prototype-image-slider.js')('prototype-image-slider.js'),

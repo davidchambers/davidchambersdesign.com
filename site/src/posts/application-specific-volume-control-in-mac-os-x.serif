@@ -81,7 +81,7 @@ body = [
     "Photoshop's drop shadow dialog",
 
   dl [
-    dt' {[:class]: "textual"} "shadow color",
+    dt' {class: "textual"} "shadow color",
     dd "#000000 (black)",
 
     dt "opacity",

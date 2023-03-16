@@ -150,12 +150,12 @@ const fill = [
 ];
 const flushcache = [
   path({
-    [Symbol.for('fill')]: '#391',
-    [Symbol.for('d')]: render(stroke)
+    ['fill']: '#391',
+    ['d']: render(stroke)
   }),
   path({
-    [Symbol.for('fill')]: '#6c4',
-    [Symbol.for('d')]: render(fill)
+    ['fill']: '#6c4',
+    ['d']: render(fill)
   })
 ];
 export default flushcache;

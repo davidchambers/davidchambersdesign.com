@@ -97,8 +97,8 @@ const render$002Dtags = posts => {
     }))(S.map(x => 0)(tags))(posts.flatMap(post => post.tags));
     return [
       h1('Tags'),
-      ol$0027({ [Symbol.for('id')]: 'tags' })(S.map(tag => li$0027({ [Symbol.for('data-count')]: counts[tag] })(a('/tag/' + tag + '/')(tags[tag])))(Object.keys(tags))),
-      div({ [Symbol.for('class')]: 'clearfix' })([])
+      ol$0027({ ['id']: 'tags' })(S.map(tag => li$0027({ ['data-count']: counts[tag] })(a('/tag/' + tag + '/')(tags[tag])))(Object.keys(tags))),
+      div({ ['class']: 'clearfix' })([])
     ];
   })();
 };

@@ -48,7 +48,7 @@ body = [
     it's not possible.",
   ],
 
-  h3' {[:id]: "conventional-hack"} "Conventional hack",
+  h3' {id: "conventional-hack"} "Conventional hack",
 
   code-block :html `
     <h1>TXJS 2011 Speakers</h1>
@@ -76,7 +76,7 @@ body = [
     hacking the markup.",
   ],
 
-  h3' {[:id]: "background-image-technique"} "Background image technique",
+  h3' {id: "background-image-technique"} "Background image technique",
 
   code-block :css `
     ul {
@@ -95,7 +95,7 @@ body = [
     a "http://en.wikipedia.org/wiki/Data_URI_scheme#CSS" "data URI", ".",
   ],
 
-  h3' {[:id]: "pseudo-element-technique"} "Pseudo-element technique",
+  h3' {id: "pseudo-element-technique"} "Pseudo-element technique",
 
   code-block :css `
     ul {

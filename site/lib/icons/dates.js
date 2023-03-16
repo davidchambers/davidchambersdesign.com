@@ -12,9 +12,9 @@ import {
   $2193
 } from '../orthogonal.js';
 const dates = S.map(d => path({
-  [Symbol.for('fill-rule')]: Symbol.for('evenodd'),
-  [Symbol.for('fill')]: '#000',
-  [Symbol.for('d')]: render([
+  ['fill-rule']: 'evenodd',
+  ['fill']: '#000',
+  ['d']: render([
     $21E8(0),
     $21E9(0),
     ...d

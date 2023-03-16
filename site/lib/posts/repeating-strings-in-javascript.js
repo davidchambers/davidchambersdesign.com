@@ -90,16 +90,16 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['Python and Ruby share beautiful syntax for repeating strings;\n    PHP\'s syntax is characteristically ugly.']),
-  h3$0027({ [Symbol.for('id')]: 'python' })('Python'),
+  h3$0027({ ['id']: 'python' })('Python'),
   code$002Dblock(Symbol.for('python'))(`'=' * 5
 `),
-  h3$0027({ [Symbol.for('id')]: 'ruby' })('Ruby'),
+  h3$0027({ ['id']: 'ruby' })('Ruby'),
   code$002Dblock(Symbol.for('ruby'))(`'=' * 5
 `),
-  h3$0027({ [Symbol.for('id')]: 'php' })('PHP'),
+  h3$0027({ ['id']: 'php' })('PHP'),
   code$002Dblock(Symbol.for('php'))(`str_repeat('=', 5)
 `),
-  h3$0027({ [Symbol.for('id')]: 'javascript' })('JavaScript?'),
+  h3$0027({ ['id']: 'javascript' })('JavaScript?'),
   p(['True to form, repeating strings in JavaScript is ugly and\n      counterintuitive, but kinda cool.']),
   code$002Dblock(Symbol.for('javascript'))(`new Array(5 + 1).join('=')
 `)

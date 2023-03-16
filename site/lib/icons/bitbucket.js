@@ -70,21 +70,21 @@ const sticky$002Dtape = [
 ];
 const bitbucket = [
   path({
-    [Symbol.for('fill')]: '#27c',
-    [Symbol.for('d')]: render(bucket)
+    ['fill']: '#27c',
+    ['d']: render(bucket)
   }),
   path({
-    [Symbol.for('fill')]: '#ee7',
-    [Symbol.for('d')]: render(sticky$002Dnote)
+    ['fill']: '#ee7',
+    ['d']: render(sticky$002Dnote)
   }),
   path({
-    [Symbol.for('fill')]: '#a7a',
-    [Symbol.for('d')]: render(symbol)
+    ['fill']: '#a7a',
+    ['d']: render(symbol)
   }),
   path({
-    [Symbol.for('fill')]: '#fff',
-    [Symbol.for('d')]: render(sticky$002Dtape),
-    [Symbol.for('opacity')]: 0.25
+    ['fill']: '#fff',
+    ['d']: render(sticky$002Dtape),
+    ['opacity']: 0.25
   })
 ];
 export default bitbucket;

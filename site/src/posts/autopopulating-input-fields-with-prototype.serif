@@ -42,7 +42,7 @@ body = [
     li [a "#usage" "Usage"],
   ],
 
-  h3' {[:id]: "behaviour"} "Behaviour",
+  h3' {id: "behaviour"} "Behaviour",
 
   ul [
     li [
@@ -62,7 +62,7 @@ body = [
     ],
   ],
 
-  h3' {[:id]: "html5-placeholder-text"} "HTML5 placeholder text",
+  h3' {id: "html5-placeholder-text"} "HTML5 placeholder text",
 
   p [
    "HTML5 allows placeholder text to be specified in the markup
@@ -71,13 +71,13 @@ body = [
     behaviour described above with no reliance on JavaScript.",
   ],
 
-  h3' {[:id]: "markup"} "Markup",
+  h3' {id: "markup"} "Markup",
 
   code-block :html `
     <input type="search" id="s" name="s" placeholder="search..." />
   `,
 
-  h3' {[:id]: "styling"} "Styling",
+  h3' {id: "styling"} "Styling",
 
   code-block :css `
     input.placeholder { color: #a9a9a9 !important; }
@@ -88,7 +88,7 @@ body = [
     for placeholder text.",
   ],
 
-  h3' {[:id]: "placeholder-class"} "Placeholder class",
+  h3' {id: "placeholder-class"} "Placeholder class",
 
   code-block :javascript `
     var Placeholder = Class.create({
@@ -115,7 +115,7 @@ body = [
     a "http://prototypejs.org/" "Prototype", ".",
   ],
 
-  h3' {[:id]: "usage"} "Usage",
+  h3' {id: "usage"} "Usage",
 
   p [
    "To create a new instance of the Placeholder class, simply pass

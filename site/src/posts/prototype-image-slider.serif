@@ -52,7 +52,7 @@ body = [
     ],
   ],
 
-  h3' {[:id]: "usage"} "Usage",
+  h3' {id: "usage"} "Usage",
 
   p [
    "First, you'll need to save a copy of ",

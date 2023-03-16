@@ -96,7 +96,7 @@ const body = [
   decorative$002Dimage('/images/posts/decorative/right/no-apple.png'),
   p(['The following conversation took place a couple of days ago in\n    my apartment. Matt\'s my flatmate, Doug\'s one of Matt\'s friends.\n    I was in the room at the time.']),
   ol([
-    li$0027({ [Symbol.for('class')]: 'interviewer' })([
+    li$0027({ ['class']: 'interviewer' })([
       strong('Matt:'),
       '\n      So, Doug, do you think you could go the way of Mac?'
     ]),
@@ -104,7 +104,7 @@ const body = [
       strong('Doug:'),
       '\n      I already have, really, but I\'d never buy one.'
     ]),
-    li$0027({ [Symbol.for('class')]: 'interviewer' })([
+    li$0027({ ['class']: 'interviewer' })([
       strong('Matt:'),
       '\n      Why\'s that?'
     ]),

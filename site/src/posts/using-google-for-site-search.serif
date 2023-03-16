@@ -40,7 +40,7 @@ body = [
   ],
 
   dl [
-    dt' {[:class]: "textual"} "q",
+    dt' {class: "textual"} "q",
     dd "Search query as entered by the user.",
 
     dt "ie",

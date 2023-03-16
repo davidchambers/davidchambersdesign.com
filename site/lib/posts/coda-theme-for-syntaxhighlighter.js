@@ -189,7 +189,7 @@ def daily_sales_total(*all_sales):
 `),
   h3('Including non-HTML code in HTML snippets'),
   p(['The Coda theme, like Coda itself, can handle non-HTML code inside\n    HTML snippets.']),
-  h4$0027({ [Symbol.for('id')]: 'css-inside-html' })('CSS inside HTML'),
+  h4$0027({ ['id']: 'css-inside-html' })('CSS inside HTML'),
   p([
     'For HTML snippets that contain some CSS, use ',
     code('<pre class="brush: css; html-script: true;"></pre>'),
@@ -214,7 +214,7 @@ def daily_sales_total(*all_sales):
     </style>
 </head>
 `),
-  h4$0027({ [Symbol.for('id')]: 'javascript-inside-html' })('JavaScript inside HTML'),
+  h4$0027({ ['id']: 'javascript-inside-html' })('JavaScript inside HTML'),
   p([
     'For HTML snippets that contain some JavaScript, use ',
     code('<pre class="brush: javascript; html-script: true;"></pre>'),
@@ -238,7 +238,7 @@ def daily_sales_total(*all_sales):
     </script>
 </body>
 `),
-  h4$0027({ [Symbol.for('id')]: 'php-inside-html' })('PHP inside HTML'),
+  h4$0027({ ['id']: 'php-inside-html' })('PHP inside HTML'),
   p([
     'For HTML snippets that contain some PHP, use ',
     code('<pre class="brush: php; html-script: true;"></pre>'),
@@ -275,7 +275,7 @@ def daily_sales_total(*all_sales):
 `)
     ])
   ]),
-  h3$0027({ [Symbol.for('id')]: 'setup' })('Setup'),
+  h3$0027({ ['id']: 'setup' })('Setup'),
   ol([
     li([
       'Download and unzip ',

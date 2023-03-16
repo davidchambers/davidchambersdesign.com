@@ -114,7 +114,7 @@ const body = [
     ])
   ]),
   update(datetime('2009-06-27')('06:21:00')(Symbol.for('Pacific/Auckland')))([p(['I have completely rewritten the code so that it no longer\n      requires empty functions inside the brush files to act as\n      indicators of readiness. Instead, the required brushes are\n      retrieved in a daisy chain. This is both more elegant and\n      more reliable. Additionally, style sheets are now also\n      retrieved on demand.'])]),
-  h3$0027({ [Symbol.for('id')]: 'setup' })('Setup'),
+  h3$0027({ ['id']: 'setup' })('Setup'),
   p([strong('Requires Prototype!')]),
   p([
     'If you are not already using Prototype on your site,\n    I recommend using SyntaxHighlighter in the conventional\n    manner, since there is significant overhead associated\n    with loading ',
@@ -177,7 +177,7 @@ const body = [
         ' directory.'
       ])])
   ]),
-  h3$0027({ [Symbol.for('id')]: 'usage' })('Usage'),
+  h3$0027({ ['id']: 'usage' })('Usage'),
   p([
     'The ',
     code('settings'),

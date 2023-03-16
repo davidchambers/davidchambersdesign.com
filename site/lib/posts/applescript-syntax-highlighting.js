@@ -170,7 +170,7 @@ else
 end if
 `),
   caption(['Live rendering of AppleScript snippet']),
-  h3$0027({ [Symbol.for('id')]: 'setup' })('Setup'),
+  h3$0027({ ['id']: 'setup' })('Setup'),
   p(['To add AppleScript syntax highlighting to your own site or blog,\n    do the following:']),
   ol([
     li([p([
@@ -200,7 +200,7 @@ end if
 `)
     ])
   ]),
-  h3$0027({ [Symbol.for('id')]: 'usage' })('Usage'),
+  h3$0027({ ['id']: 'usage' })('Usage'),
   p([
     'To have SyntaxHighlighter parse a block of AppleScript,\n    wrap the code in ',
     code('pre'),

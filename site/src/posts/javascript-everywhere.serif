@@ -75,12 +75,12 @@ body = [
   dl [
     dt [
       embed {
-        [:type]: "application/x-shockwave-flash",
-        [:src]: "http://blip.tv/play/g_MngZaxYQI",
-        [:width]: 480,
-        [:height]: 300,
-        [:allowscriptaccess]: :always,
-        [:allowfullscreen]: true,
+        type: "application/x-shockwave-flash",
+        src: "http://blip.tv/play/g_MngZaxYQI",
+        width: 480,
+        height: 300,
+        allowscriptaccess: "always",
+        allowfullscreen: true,
       },
     ],
     dd [
@@ -98,12 +98,12 @@ body = [
   dl [
     dt [
       embed {
-        [:type]: "application/x-shockwave-flash",
-        [:src]: "http://blip.tv/play/AYGylE4C",
-        [:width]: 480,
-        [:height]: 300,
-        [:allowscriptaccess]: :always,
-        [:allowfullscreen]: true,
+        type: "application/x-shockwave-flash",
+        src: "http://blip.tv/play/AYGylE4C",
+        width: 480,
+        height: 300,
+        allowscriptaccess: "always",
+        allowfullscreen: true,
       },
     ],
     dd [
