@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image} from "../components.serif";
+import {captioned-images} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -19,9 +19,12 @@ body = [
       "insert images into Gmail messages", ". About time, I say.",
   ],
 
-  captioned-image
-    "/images/posts/10/gmail-insert-image-icon.png"
-    "Gmail insert image icon"
-    "Gmail's insert image icon, visible in rich formatting mode",
+  captioned-images [{
+    alt: "Gmail insert image icon",
+    src: "/images/posts/10/gmail-insert-image-icon.png",
+    caption: [
+     "Gmail's insert image icon, visible in rich formatting mode",
+    ],
+  }],
 
 ];

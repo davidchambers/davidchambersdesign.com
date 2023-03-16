@@ -87,7 +87,7 @@ import {
   video
 } from '../elements.js';
 import {
-  captioned$002Dimage,
+  captioned$002Dimages,
   code$002Dblock,
   update
 } from '../components.js';
@@ -95,7 +95,11 @@ import datetime from '../datetime.js';
 const body = [
   excerpt([
     p(['Mac OS X\'s default bash prompt is dull and uninformative.']),
-    captioned$002Dimage('/images/posts/80/windows/default-os-x-bash-prompt.png')('Mac OS X\'s default bash prompt')('Mac OS X\'s default bash prompt'),
+    captioned$002Dimages([{
+        ['alt']: 'Mac OS X\'s default bash prompt',
+        ['src']: '/images/posts/80/windows/default-os-x-bash-prompt.png',
+        ['caption']: ['Mac OS X\'s default bash prompt']
+      }]),
     p([
       'Since only the current directory name is visible, I find\n      myself running ',
       code('pwd'),
@@ -109,7 +113,11 @@ const body = [
     code('\\n'),
     '\n    providing much-needed breathing room).'
   ]),
-  captioned$002Dimage('/images/posts/80/windows/custom-bash-prompt.png')('Custom bash prompt which displays the full path')('Custom bash prompt which displays the full path'),
+  captioned$002Dimages([{
+      ['alt']: 'Custom bash prompt which displays the full path',
+      ['src']: '/images/posts/80/windows/custom-bash-prompt.png',
+      ['caption']: ['Custom bash prompt which displays the full path']
+    }]),
   h3('Configuring the bash prompt'),
   p([
     'Add something like the following to your ',

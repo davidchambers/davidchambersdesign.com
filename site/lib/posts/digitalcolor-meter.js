@@ -86,10 +86,12 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { uncaptioned$002Dimage } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  uncaptioned$002Dimage('/images/posts/windows/digitalcolor-meter.png')('DigitalColor Meter'),
+  p([img({
+      ['alt']: 'DigitalColor Meter',
+      ['src']: '/images/posts/windows/digitalcolor-meter.png'
+    })]),
   p([
     'I thought this recent ',
     a('http://minimalmac.com/post/836796290/')('post on the Minimal Mac blog'),

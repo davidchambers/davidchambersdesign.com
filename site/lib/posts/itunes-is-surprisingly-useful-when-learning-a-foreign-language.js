@@ -86,14 +86,16 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { uncaptioned$002Dimage } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
     p(['I recently began learning Danish. I\'m taking a weekly class, and\n      the first week\'s homework involved listening to the conversations\n      we covered during the lesson. I began by playing the audio files,\n      following along in the Danish transcripts. I found myself wanting\n      to listen to the difficult parts over and over, but scrubbing\n      through a timeline is rather awkward.']),
     p(['It occurred to me that I could use iTunes to solve this problem.\n      Normally, iTunes will play a track from beginning to end. It\'s\n      possible, though, to specify a certain portion of the track to be\n      played instead. By adding an audio file to a playlist many times\n      and specifying consecutive portions (e.g. 0:00\u20130:02, 0:02\u20130:04.8,\n      ...), a track can be broken into manageable clips for more\n      convenient navigation.']),
     p(['Here\'s the end result:']),
-    uncaptioned$002Dimage('/images/posts/93/windows/lion/itunes-playlist-for-danish-dialogue.png')('iTunes playlist for Danish dialogue')
+    p([img({
+        ['alt']: 'iTunes playlist for Danish dialogue',
+        ['src']: '/images/posts/93/windows/lion/itunes-playlist-for-danish-dialogue.png'
+      })])
   ]),
   h3('Creating an iTunes playlist from a single audio file'),
   ol([
@@ -120,7 +122,10 @@ const body = [
         strong('OK'),
         '.'
       ]),
-      uncaptioned$002Dimage('/images/posts/93/windows/lion/setting-the-stop-time.png')('Setting the clip\'s stop time')
+      p([img({
+          ['alt']: 'Setting the clip\'s stop time',
+          ['src']: '/images/posts/93/windows/lion/setting-the-stop-time.png'
+        })])
     ]),
     li([p(['Play the clip, and adjust the stop time until the clip\n        contains just the desired portion of the dialogue.'])]),
     li([
@@ -133,7 +138,10 @@ const body = [
         strong('Name'),
         ' field.'
       ]),
-      uncaptioned$002Dimage('/images/posts/93/windows/lion/setting-the-name.png')('Setting the clip\'s name')
+      p([img({
+          ['alt']: 'Setting the clip\'s name',
+          ['src']: '/images/posts/93/windows/lion/setting-the-name.png'
+        })])
     ]),
     li([p(['Repeat steps 4 through 8 as necessary. Ensure that\n        each clip\'s start time is the same as the previous\n        clip\'s stop time.'])]),
     li([p([

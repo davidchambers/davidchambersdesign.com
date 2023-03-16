@@ -141,16 +141,16 @@ const body = [
     '\n    with a single click.'
   ]),
   captioned$002Dimages([
-    [
-      '/images/posts/85/hashify-editor-at-david-chambers-design.png',
-      'Hashify Editor at David Chambers Design',
-      'Hashify Editor at David Chambers Design'
-    ],
-    [
-      '/images/posts/85/comment-preview-at-hashify.me.png',
-      'Comment preview at hashify.me',
-      'Comment preview at hashify.me'
-    ]
+    {
+      ['alt']: 'Hashify Editor at David Chambers Design',
+      ['src']: '/images/posts/85/hashify-editor-at-david-chambers-design.png',
+      ['caption']: ['Hashify Editor at David Chambers Design']
+    },
+    {
+      ['alt']: 'Comment preview at hashify.me',
+      ['src']: '/images/posts/85/comment-preview-at-hashify.me.png',
+      ['caption']: ['Comment preview at hashify.me']
+    }
   ]),
   h3('Adoption'),
   p([

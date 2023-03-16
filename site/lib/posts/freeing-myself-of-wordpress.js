@@ -88,7 +88,6 @@ import {
 } from '../elements.js';
 import {
   code$002Dblock,
-  uncaptioned$002Dimage,
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
@@ -198,7 +197,10 @@ const body = [
     a('http://panic.com/coda/')('Coda'),
     ' as I\'m doing now,\n    preview locally, and hit the upload arrow when I\'m ready\n    to share my thoughts with the world.'
   ]),
-  uncaptioned$002Dimage('/images/posts/50/publish.png')('Publish a post from Coda')
+  p([img({
+      ['alt']: 'Publish a post from Coda',
+      ['src']: '/images/posts/50/publish.png'
+    })])
 ];
 export default {
   ['id']: 50,

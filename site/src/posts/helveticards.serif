@@ -1,5 +1,4 @@
 import * from "../elements.serif" hiding {body};
-import {uncaptioned-image} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -13,7 +12,12 @@ export default {
 
 body = [
 
-  uncaptioned-image "/images/posts/92/helveticards.jpg" "Helveticards",
+  p [
+    img {
+      alt: "Helveticards",
+      src: "/images/posts/92/helveticards.jpg",
+    },
+  ],
 
   blockquote [
     p [

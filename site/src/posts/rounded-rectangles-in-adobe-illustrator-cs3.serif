@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image decorative-image} from "../components.serif";
+import {captioned-images} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -14,8 +14,12 @@ export default {
 body = [
 
   excerpt [
-    decorative-image
-      "/images/posts/decorative/left/adobe-illustrator-cs3-icon.png",
+    p [
+      img {
+        alt: "",
+        src: "/images/posts/decorative/left/adobe-illustrator-cs3-icon.png",
+      },
+    ],
     p [
      "Not so long ago I was talking to my brother online as he
       worked on a poster for a presentation. He is an engineer;
@@ -83,11 +87,14 @@ body = [
     ],
   ],
 
-  captioned-image
-    "/images/posts/windows/illustrator-shape-options-dialog.png"
-    "Illustrator's Shape Options dialog"
-    ["Illustrator's ", strong "Shape Options", " dialog,
-      set up to enable rounded rectangles which scale correctly"],
+  captioned-images [{
+    alt: "Illustrator's Shape Options dialog",
+    src: "/images/posts/windows/illustrator-shape-options-dialog.png",
+    caption: [
+     "Illustrator's ", strong "Shape Options", " dialog,
+      set up to enable rounded rectangles which scale correctly",
+    ],
+  }],
 
   p [
    "Now that the shape has been converted to a rounded rectangle, the ",

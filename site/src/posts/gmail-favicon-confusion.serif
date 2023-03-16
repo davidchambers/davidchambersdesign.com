@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image} from "../components.serif";
+import {captioned-images} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -21,10 +21,13 @@ body = [
     rather amusing situation.",
   ],
 
-  captioned-image
-    "/images/posts/63/gmail-icons.png"
-    "Browser tabs featuring different Gmail icons"
-    "Scaled down 32x32 icon (left) and regular favicon",
+  captioned-images [{
+    alt: "Browser tabs featuring different Gmail icons",
+    src: "/images/posts/63/gmail-icons.png",
+    caption: [
+     "Scaled down 32x32 icon (left) and regular favicon",
+    ],
+  }],
 
   p [
    "Most days when Gmail loads I get the favicon, but I've had a couple
@@ -39,10 +42,13 @@ body = [
     but when I had a close look at it I was upset by its sloppiness.",
   ],
 
-  captioned-image
-    "/images/posts/63/gmail-icon-32*10.png"
-    "32x32 Gmail icon at 1000%"
-    "32x32 Gmail icon at 1000%",
+  captioned-images [{
+    alt: "32x32 Gmail icon at 1000%",
+    src: "/images/posts/63/gmail-icon-32*10.png",
+    caption: [
+     "32x32 Gmail icon at 1000%",
+    ],
+  }],
 
   p [
     a "http://blog.cocoia.com/" "Sebastiaan de With", "

@@ -87,7 +87,7 @@ import {
   video
 } from '../elements.js';
 import {
-  captioned$002Dimage,
+  captioned$002Dimages,
   code$002Dblock
 } from '../components.js';
 import datetime from '../datetime.js';
@@ -101,10 +101,14 @@ const body = [
       a('http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/')('show full directory paths in Finder window title bars'),
       '.'
     ])]),
-  captioned$002Dimage('/images/posts/2/finder-windows-without-paths.png')('Finder windows without paths')([
-    strong('Before:'),
-    ' Finder windows with directory name only in title bar'
-  ]),
+  captioned$002Dimages([{
+      ['alt']: 'Finder windows without paths',
+      ['src']: '/images/posts/2/finder-windows-without-paths.png',
+      ['caption']: [
+        strong('Before:'),
+        '\n      Finder windows with directory name only in title bar'
+      ]
+    }]),
   p(['In the screenshot above, it is clear that the two Finder windows are\n    displaying different Fonts folders, but it is unclear which is which.']),
   p([
     'To display the full path, copy and paste the following into Terminal\n    and hit ',
@@ -116,10 +120,14 @@ const body = [
   p(['For the changes to take effect, you will need to restart Finder:']),
   code$002Dblock(Symbol.for('console'))(`killall Finder
 `),
-  captioned$002Dimage('/images/posts/2/finder-windows-with-paths.png')('Finder windows with paths')([
-    strong('After:'),
-    ' Finder windows with full directory path in title bar'
-  ]),
+  captioned$002Dimages([{
+      ['alt']: 'Finder windows with paths',
+      ['src']: '/images/posts/2/finder-windows-with-paths.png',
+      ['caption']: [
+        strong('After:'),
+        '\n      Finder windows with full directory path in title bar'
+      ]
+    }]),
   p([
     'Confusion resolved! Please note that this is ',
     strong('only applicable for OS X 10.5'),

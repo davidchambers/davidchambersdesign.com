@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image code-block —} from "../components.serif";
+import {captioned-images code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -17,10 +17,13 @@ body = [
     p [
       strong "This post has been a long time coming.",
     ],
-    captioned-image
-      "/images/posts/74/email-message-screenshot.png"
-      "Reminder message"
-      "Reminder message, dated 18 January 2010",
+    captioned-images [{
+      alt: "Reminder message",
+      src: "/images/posts/74/email-message-screenshot.png",
+      caption: [
+       "Reminder message, dated 18 January 2010",
+      ],
+    }],
     p [
       strong "It's unacceptable for any website or web application
       to output dates and times using an arbitrary time zone.", "
@@ -30,10 +33,13 @@ body = [
     ],
   ],
 
-  captioned-image
-    "/images/posts/74/gmt-ftl.png"
-    "Bitbucket status message"
-    "The link to a time zone converter highlights the need for localization",
+  captioned-images [{
+    alt: "Bitbucket status message",
+    src: "/images/posts/74/gmt-ftl.png",
+    caption: [
+     "The link to a time zone converter highlights the need for localization",
+    ],
+  }],
 
   p [
    "Implementing client-side localization of dates and times is not

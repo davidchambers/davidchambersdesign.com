@@ -86,10 +86,7 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import {
-  code$002Dblock,
-  uncaptioned$002Dimage
-} from '../components.js';
+import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['This turned out to be quite a bit easier than I\'d imagined.\n    Here are the things I did:']),
@@ -142,7 +139,10 @@ const body = [
         ' file.'
       ]),
       p(['At this point I expected everything to work as advertised.\n        Instead, I got this:']),
-      uncaptioned$002Dimage('/images/posts/windows/it-works!.png')('It works!'),
+      p([img({
+          ['alt']: 'It works!',
+          ['src']: '/images/posts/windows/it-works!.png'
+        })]),
       p(['That would depend on one\'s definition of "works".\n        I wanted my Django site to appear, which required a\n        very simple tweak...'])
     ]),
     li([

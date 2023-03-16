@@ -87,7 +87,7 @@ import {
   video
 } from '../elements.js';
 import {
-  captioned$002Dimage,
+  captioned$002Dimages,
   code$002Dblock,
   $2014
 } from '../components.js';
@@ -95,13 +95,21 @@ import datetime from '../datetime.js';
 const body = [
   excerpt([
     p([strong('This post has been a long time coming.')]),
-    captioned$002Dimage('/images/posts/74/email-message-screenshot.png')('Reminder message')('Reminder message, dated 18 January 2010'),
+    captioned$002Dimages([{
+        ['alt']: 'Reminder message',
+        ['src']: '/images/posts/74/email-message-screenshot.png',
+        ['caption']: ['Reminder message, dated 18 January 2010']
+      }]),
     p([
       strong('It\'s unacceptable for any website or web application\n      to output dates and times using an arbitrary time zone.'),
       '\n      Displaying dates and times in UTC/GMT is only slightly better:\n      dates cannot be relied upon, and users must perform mental\n      gymnastics in order to localize date\u2013time combos.'
     ])
   ]),
-  captioned$002Dimage('/images/posts/74/gmt-ftl.png')('Bitbucket status message')('The link to a time zone converter highlights the need for localization'),
+  captioned$002Dimages([{
+      ['alt']: 'Bitbucket status message',
+      ['src']: '/images/posts/74/gmt-ftl.png',
+      ['caption']: ['The link to a time zone converter highlights the need for localization']
+    }]),
   p([
     'Implementing client-side localization of dates and times is not\n    terribly difficult',
     $2014,

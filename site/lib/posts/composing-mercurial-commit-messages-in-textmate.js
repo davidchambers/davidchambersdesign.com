@@ -88,12 +88,14 @@ import {
 } from '../elements.js';
 import {
   code$002Dblock,
-  decorative$002Dimage,
   update
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  decorative$002Dimage('/images/posts/decorative/right/textmate-icon.png'),
+  p([img({
+      ['alt']: '',
+      ['src']: '/images/posts/decorative/right/textmate-icon.png'
+    })]),
   p([
     'Using the ',
     code('-m'),

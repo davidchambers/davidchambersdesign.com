@@ -87,7 +87,7 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { captioned$002Dimage } from '../components.js';
+import { captioned$002Dimages } from '../components.js';
 export default {
   ['slug']: 'about',
   ['title']: 'About',
@@ -107,7 +107,11 @@ export default {
       a('http://hashify.me/')('Hashify'),
       ', a little gift to the Internet.\n      :)'
     ]),
-    captioned$002Dimage('/images/about/david-jo-shaun.jpg')('Me with friends Jo and Shaun at the Luge in Rotorua')('Me with friends at the Luge in Rotorua'),
+    captioned$002Dimages([{
+        ['alt']: 'Me with friends Jo and Shaun at the Luge in Rotorua',
+        ['src']: '/images/about/david-jo-shaun.jpg',
+        ['caption']: ['Me with friends at the Luge in Rotorua']
+      }]),
     p([
       'Feel free to ',
       a('http://twitter.com/davidchambers')('follow me on Twitter'),

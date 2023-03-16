@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image code-block update} from "../components.serif";
+import {captioned-images code-block update} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -17,10 +17,13 @@ body = [
     p [
      "Mac OS X's default bash prompt is dull and uninformative.",
     ],
-    captioned-image
-      "/images/posts/80/windows/default-os-x-bash-prompt.png"
-      "Mac OS X's default bash prompt"
-      "Mac OS X's default bash prompt",
+    captioned-images [{
+      alt: "Mac OS X's default bash prompt",
+      src: "/images/posts/80/windows/default-os-x-bash-prompt.png",
+      caption: [
+       "Mac OS X's default bash prompt",
+      ],
+    }],
     p [
      "Since only the current directory name is visible, I find
       myself running ", code "pwd", " more often than is healthy.
@@ -34,10 +37,13 @@ body = [
     providing much-needed breathing room).",
   ],
 
-  captioned-image
-    "/images/posts/80/windows/custom-bash-prompt.png"
-    "Custom bash prompt which displays the full path"
-    "Custom bash prompt which displays the full path",
+  captioned-images [{
+    alt: "Custom bash prompt which displays the full path",
+    src: "/images/posts/80/windows/custom-bash-prompt.png",
+    caption: [
+     "Custom bash prompt which displays the full path",
+    ],
+  }],
 
   h3 "Configuring the bash prompt",
 

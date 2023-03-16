@@ -86,7 +86,7 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { captioned$002Dimage } from '../components.js';
+import { captioned$002Dimages } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
@@ -108,19 +108,27 @@ const body = [
     strong('Settings'),
     '.'
   ]),
-  captioned$002Dimage('/images/posts/13/settings-link-in-google-calendar.png')('Settings link in Google Calendar')([
-    strong('Settings'),
-    ' link in Google Calendar'
-  ]),
+  captioned$002Dimages([{
+      ['alt']: 'Settings link in Google Calendar',
+      ['src']: '/images/posts/13/settings-link-in-google-calendar.png',
+      ['caption']: [
+        strong('Settings'),
+        ' link in Google Calendar'
+      ]
+    }]),
   p([
     'Next, click on the ',
     strong('Mobile Setup'),
     ' tab.'
   ]),
-  excerpt([captioned$002Dimage('/images/posts/13/mobile-setup-tab-in-google-calendar.png')('Mobile Setup tab in Google Calendar')([
-      strong('Mobile Setup'),
-      ' tab in Google Calendar'
-    ])]),
+  excerpt([captioned$002Dimages([{
+        ['alt']: 'Mobile Setup tab in Google Calendar',
+        ['src']: '/images/posts/13/mobile-setup-tab-in-google-calendar.png',
+        ['caption']: [
+          strong('Mobile Setup'),
+          ' tab in Google Calendar'
+        ]
+      }])]),
   p([
     'Enter your cell phone number and click ',
     strong('Send Verification Code'),
@@ -128,7 +136,11 @@ const body = [
     strong('Finish setup'),
     '.'
   ]),
-  captioned$002Dimage('/images/posts/13/phone-number-successfully-validated.png')('Phone number successfully validated')('Confirmation of phone number validation'),
+  captioned$002Dimages([{
+      ['alt']: 'Phone number successfully validated',
+      ['src']: '/images/posts/13/phone-number-successfully-validated.png',
+      ['caption']: ['Confirmation of phone number validation']
+    }]),
   p([
     'Once your phone number has been validated you should be taken to the ',
     strong('Notifications'),
@@ -140,11 +152,15 @@ const body = [
     strong('Notifications'),
     '.'
   ]),
-  captioned$002Dimage('/images/posts/13/event-reminders-in-google-calendar.png')('Event reminders in Google Calendar')([
-    'Google Calendar\'s ',
-    strong('Notifications'),
-    ' pane,\n      where default event reminders are set'
-  ]),
+  captioned$002Dimages([{
+      ['alt']: 'Event reminders in Google Calendar',
+      ['src']: '/images/posts/13/event-reminders-in-google-calendar.png',
+      ['caption']: [
+        'Google Calendar\'s ',
+        strong('Notifications'),
+        ' pane,\n      where default event reminders are set'
+      ]
+    }]),
   p(['You\'re then able to set default event reminders, which may include\n    one or more text messages. You\'ll also be able to add SMS reminders\n    against individual calendar events.'])
 ];
 export default {

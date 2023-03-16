@@ -87,7 +87,7 @@ import {
   video
 } from '../elements.js';
 import {
-  captioned$002Dimage,
+  captioned$002Dimages,
   update
 } from '../components.js';
 import datetime from '../datetime.js';
@@ -106,7 +106,11 @@ const body = [
     a('http://weblog.bignerdranch.com/?p=49')('Django and Django-template bundles for Coda'),
     '.'
   ]),
-  captioned$002Dimage('/images/posts/11/django-syntax-highlighting-in-coda.png')('Django syntax highlighting in Coda')('Django syntax highlighting in Coda'),
+  captioned$002Dimages([{
+      ['alt']: 'Django syntax highlighting in Coda',
+      ['src']: '/images/posts/11/django-syntax-highlighting-in-coda.png',
+      ['caption']: ['Django syntax highlighting in Coda']
+    }]),
   update(datetime('2010-11-14')('14:00:00')(Symbol.for('Australia/Sydney')))([p([
       'I\'ve since discovered an alternative mode which\n      is actively maintained over on GitHub. I now use ',
       a('https://github.com/jbergantine/Django-Template')('jbergantine\'s Django-Template'),

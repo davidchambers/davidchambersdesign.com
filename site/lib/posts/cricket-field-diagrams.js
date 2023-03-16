@@ -95,36 +95,36 @@ const body = [
     ',\n    a game a friend and I designed many years ago, I produced\n    a set of diagrams which represent the segments of a cricket\n    field. The isolated nature of this small design challenge\n    provided a refreshing break from the various and interrelated\n    considerations involved in designing for the Web.'
   ]),
   captioned$002Dimages([
-    [
-      '/images/posts/40/mid-wicket.png',
-      'Cricket field with mid-wicket area highlighted',
-      'Mid-wicket'
-    ],
-    [
-      '/images/posts/40/down-the-ground.png',
-      'Cricket field with covers highlighted',
-      'Down the ground'
-    ],
-    [
-      '/images/posts/40/covers.png',
-      'Cricket field with covers highlighted',
-      'Covers'
-    ],
-    [
-      '/images/posts/40/behind-point.png',
-      'Cricket field with area behind point highlighted',
-      'Behind point'
-    ],
-    [
-      '/images/posts/40/behind-the-wicket.png',
-      'Cricket field with area behind the wicket highlighted',
-      'Behind the wicket'
-    ],
-    [
-      '/images/posts/40/behind-square.png',
-      'Cricket field with area backward of square highlighted',
-      'Behind square'
-    ]
+    {
+      ['alt']: 'Cricket field with mid-wicket area highlighted',
+      ['src']: '/images/posts/40/mid-wicket.png',
+      ['caption']: ['Mid-wicket']
+    },
+    {
+      ['alt']: 'Cricket field with covers highlighted',
+      ['src']: '/images/posts/40/down-the-ground.png',
+      ['caption']: ['Down the ground']
+    },
+    {
+      ['alt']: 'Cricket field with covers highlighted',
+      ['src']: '/images/posts/40/covers.png',
+      ['caption']: ['Covers']
+    },
+    {
+      ['alt']: 'Cricket field with area behind point highlighted',
+      ['src']: '/images/posts/40/behind-point.png',
+      ['caption']: ['Behind point']
+    },
+    {
+      ['alt']: 'Cricket field with area behind the wicket highlighted',
+      ['src']: '/images/posts/40/behind-the-wicket.png',
+      ['caption']: ['Behind the wicket']
+    },
+    {
+      ['alt']: 'Cricket field with area backward of square highlighted',
+      ['src']: '/images/posts/40/behind-square.png',
+      ['caption']: ['Behind square']
+    }
   ]),
   p(['You\'re free to make use of these images (they\'re transparent PNGs).\n    Attribution is appreciated but not required. :)'])
 ];

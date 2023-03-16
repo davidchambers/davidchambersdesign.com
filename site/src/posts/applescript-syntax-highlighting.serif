@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {caption captioned-images code-block update —} from "../components.serif";
+import {captioned-images code-block update —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -52,14 +52,19 @@ body = [
     browser.",
   ],
 
-  captioned-images [
-    ["/images/posts/15/script-editor-syntax-highlighting.png",
-     "",
-     "Screenshot of Script Editor's rendering of an AppleScript snippet"],
-    ["/images/posts/15/syntaxhighlighter-applescript-theme.png",
-     "",
-     "Screenshot of snippet styled by AppleScript theme for SyntaxHighlighter"],
-  ],
+  captioned-images [{
+    alt: "",
+    src: "/images/posts/15/script-editor-syntax-highlighting.png",
+    caption: [
+     "Screenshot of Script Editor's rendering of an AppleScript snippet",
+    ],
+  }, {
+    alt: "",
+    src: "/images/posts/15/syntaxhighlighter-applescript-theme.png",
+    caption: [
+     "Screenshot of snippet styled by AppleScript theme for SyntaxHighlighter",
+    ],
+  }],
 
   code-block :applescript `
     #!/usr/bin/osascript
@@ -100,7 +105,7 @@ body = [
     end if
   `,
 
-  caption [
+  p' {class: "caption"} [
     "Live rendering of AppleScript snippet",
   ],
 

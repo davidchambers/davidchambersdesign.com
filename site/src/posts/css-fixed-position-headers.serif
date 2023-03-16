@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block pros-and-cons-list} from "../components.serif";
+import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -89,14 +89,14 @@ body = [
     padding from adding unwanted white space between elements.",
   ],
 
-  pros-and-cons-list pro => con => [
-    pro [
+  ul [
+    li' {class: "pro"} [
      "No additional markup is required.",
     ],
-    pro [
+    li' {class: "pro"} [
      "Straightforward CSS.",
     ],
-    con [
+    li' {class: "con"} [
      "The CSS selector needs to contain all block-level elements
       that may have ids in some instances. This is likely to include
       elements such as divs and forms. Since it is hard to foresee
@@ -104,7 +104,7 @@ body = [
       uniquely identified element, it is difficult to ensure that
       this approach will work in all cases.",
     ],
-    con [
+    li' {class: "con"} [
       strong "The negative bottom margin causes each block-level
       element to overlap the preceding element, making \"overlapped\"
       links unclickable!",
@@ -155,19 +155,19 @@ body = [
     element of interest is not obscured by the header.",
   ],
 
-  pros-and-cons-list pro => con => [
-    pro [
+  ul [
+    li' {class: "pro"} [
      "Straightforward CSS.",
     ],
-    pro [
+    li' {class: "pro"} [
      "Links are always clickable!",
     ],
-    con [
+    li' {class: "con"} [
      "Additional markup is required, necessitating that
       existing content be updated (or JavaScript used to
       insert the additional elements dynamically).",
     ],
-    con [
+    li' {class: "con"} [
      "Not only is this extra markup meaningless,
       but it actually removes ids from the elements
       to which they were additionally assigned. Any
@@ -224,21 +224,21 @@ body = [
     }
   `,
 
-  pros-and-cons-list pro => con => [
-    pro [
+  ul [
+    li' {class: "pro"} [
      "No additional markup is required.",
     ],
-    pro [
+    li' {class: "pro"} [
      "Straightforward CSS.",
     ],
-    pro [
+    li' {class: "pro"} [
      "Links are always clickable.",
     ],
-    con [
+    li' {class: "con"} [
      "JavaScript (and in this case ",
       a "http://prototypejs.org/" "Prototype", ") required.",
     ],
-    con [
+    li' {class: "con"} [
      "Association between an id and the element it identifies
       is broken.",
     ],

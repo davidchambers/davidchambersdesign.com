@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image decorative-image —} from "../components.serif";
+import {captioned-images —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -13,7 +13,12 @@ export default {
 
 body = [
 
-  decorative-image "/images/posts/decorative/right/no-apple.png",
+  p [
+    img {
+      alt: "",
+      src: "/images/posts/decorative/right/no-apple.png",
+    },
+  ],
 
   p [
    "The following conversation took place a couple of days ago in
@@ -59,10 +64,13 @@ body = [
     of these at school:",
   ],
 
-  captioned-image
-    "/images/posts/44/27-inch-imac.jpg"
-    "27-inch iMac"
-    "27-inch iMac",
+  captioned-images [{
+    alt: "27-inch iMac",
+    src: "/images/posts/44/27-inch-imac.jpg",
+    caption: [
+     "27-inch iMac",
+    ],
+  }],
 
   p [
    "Talk about having one's cake and eating it, too.",

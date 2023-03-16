@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image} from "../components.serif";
+import {captioned-images} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -19,10 +19,13 @@ body = [
     on my priority list, but I finally got to it this evening.",
   ],
 
-  captioned-image
-    "/images/posts/58/-webkit-box-sizing=border-box.png"
-    "-webkit-box-sizing: border-box"
-    "Before",
+  captioned-images [{
+    alt: "-webkit-box-sizing: border-box",
+    src: "/images/posts/58/-webkit-box-sizing=border-box.png",
+    caption: [
+     "Before",
+    ],
+  }],
 
   p [
    "I did my best to get these browsers to respect the padding values
@@ -42,10 +45,13 @@ body = [
    "Specifying ", code "content-box", " fixed the problem.",
   ],
 
-  captioned-image
-    "/images/posts/58/-webkit-box-sizing=content-box.png"
-    "-webkit-box-sizing: content-box"
-    "After",
+  captioned-images [{
+    alt: "-webkit-box-sizing: content-box",
+    src: "/images/posts/58/-webkit-box-sizing=content-box.png",
+    caption: [
+     "After",
+    ],
+  }],
 
   p [
    "This is an extremely satisfying solution as it neatly targets

@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body excerpt};
-import {captioned-image captioned-images code-block decorative-image} from "../components.serif";
+import {captioned-images code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -22,7 +22,12 @@ excerpt = [
     style rules can be provided for older browsers).",
   ],
 
-  decorative-image "/images/posts/39/start-game-hyperlink-and-button.png",
+  p [
+    img {
+      alt: "",
+      src: "/images/posts/39/start-game-hyperlink-and-button.png",
+    },
+  ],
 
 ];
 
@@ -42,10 +47,13 @@ body = [
     differently (by default).",
   ],
 
-  captioned-image
-    "/images/posts/39/unstyled-button-and-hyperlink.png"
-    "Unstyled button and hyperlink"
-    "Default appearance of buttons and hyperlinks in Safari on Mac OS X",
+  captioned-images [{
+    alt: "Unstyled button and hyperlink",
+    src: "/images/posts/39/unstyled-button-and-hyperlink.png",
+    caption: [
+     "Default appearance of buttons and hyperlinks in Safari on Mac OS X",
+    ],
+  }],
 
   p [
    "Web applications, however, sometimes blur the line between
@@ -58,11 +66,14 @@ body = [
     appearance should suggest appropriate modes of interaction.",
   ],
 
-  captioned-image
-    "/images/posts/39/wordpress-publish-pane.png"
-    "WordPress Publish pane"
-    ["In WordPress's ", strong "Publish", " pane \"Save Draft\" is a
-      submit input, \"Preview\" is a link; both are styled as buttons"],
+  captioned-images [{
+    alt: "WordPress Publish pane",
+    src: "/images/posts/39/wordpress-publish-pane.png",
+    caption: [
+     "In WordPress's ", strong "Publish", " pane \"Save Draft\" is a
+      submit input, \"Preview\" is a link; both are styled as buttons",
+    ],
+  }],
 
   h3 "Styling links to look like buttons",
 
@@ -80,24 +91,33 @@ body = [
     elements rendered in the same way.",
   ],
 
-  captioned-images [
-    ["/images/posts/39/start-game-button-and-hyperlink-unstyled.png",
-     "Unstyled button and hyperlink",
-     "Unstyled submit input and hyperlink"],
-    ["/images/posts/39/start-game-button-and-hyperlink-border.png",
-     "Button and hyperlink with border",
-     code "border: 1px solid #850; color: #850;"],
-    ["/images/posts/39/start-game-button-and-hyperlink-background-color.png",
-     "Button and hyperlink with background colour",
-     code "background: #fc6; text-decoration: none;"],
-    ["/images/posts/39/start-game-button-and-hyperlink-padding-font.png",
-     "Button and hyperlink with consistent padding and font properties",
-     code "padding: 0.25em 0.5em;
-           font: bold 12px/15px
-                 \"Lucida Grande\",
-                 \"Lucida Sans Unicode\",
-                 sans-serif;"],
-  ],
+  captioned-images [{
+    alt: "Unstyled button and hyperlink",
+    src: "/images/posts/39/start-game-button-and-hyperlink-unstyled.png",
+    caption: [
+     "Unstyled submit input and hyperlink",
+    ],
+  }, {
+    alt: "Button and hyperlink with border",
+    src: "/images/posts/39/start-game-button-and-hyperlink-border.png",
+    caption: [
+      code "border: 1px solid #850; color: #850;",
+    ],
+  }, {
+    alt: "Button and hyperlink with background colour",
+    src: "/images/posts/39/start-game-button-and-hyperlink-background-color.png",
+    caption: [
+      code "background: #fc6; text-decoration: none;",
+    ],
+  }, {
+    alt: "Button and hyperlink with consistent padding and font properties",
+    src: "/images/posts/39/start-game-button-and-hyperlink-padding-font.png",
+    caption: [
+      code `
+        padding: 0.25em 0.5em; font: bold 12px/15px "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+      `,
+    ],
+  }],
 
   h4 "Progressive enhancement",
 
@@ -115,10 +135,13 @@ body = [
     border-radius: 1em;
   `,
 
-  captioned-image
-    "/images/posts/39/start-game-button-and-hyperlink-border-radius.png"
-    "Button and hyperlink with rounded corners"
-    "Rounded corners",
+  captioned-images [{
+    alt: "Button and hyperlink with rounded corners",
+    src: "/images/posts/39/start-game-button-and-hyperlink-border-radius.png",
+    caption: [
+     "Rounded corners",
+    ],
+  }],
 
   code-block :css `
     background: -webkit-gradient(linear, left top, left bottom,
@@ -129,10 +152,13 @@ body = [
         #fc6 5%, #fff 15%, #fc6 25%, #fc6 50%, #fa2 50%, #fc6);
   `,
 
-  captioned-image
-    "/images/posts/39/start-game-button-and-hyperlink-background-gradient.png"
-    "Button and hyperlink with background gradient"
-    "Linear gradient with colour stops creates a sense of depth",
+  captioned-images [{
+    alt: "Button and hyperlink with background gradient",
+    src: "/images/posts/39/start-game-button-and-hyperlink-background-gradient.png",
+    caption: [
+     "Linear gradient with colour stops creates a sense of depth",
+    ],
+  }],
 
   h3 "Styling different states",
 
@@ -147,11 +173,14 @@ body = [
     is being clicked).",
   ],
 
-  captioned-image
-    "/images/posts/39/textedit-save-dialog.png"
-    "TextEdit dialog featuring two different button states"
-    ["In Aqua, ", strong "return", " activates the blue button; ",
-      strong "space bar", " activates the button with the outer glow"],
+  captioned-images [{
+    alt: "TextEdit dialog featuring two different button states",
+    src: "/images/posts/39/textedit-save-dialog.png",
+    caption: [
+     "In Aqua, ", strong "return", " activates the blue button; ",
+      strong "space bar", " activates the button with the outer glow",
+    ],
+  }],
 
   p [
    "On the web, submit inputs and hyperlinks have several possible
@@ -160,10 +189,14 @@ body = [
     to bear in mind that more than one state may apply at one time.",
   ],
 
-  captioned-image
-    "/images/posts/windows/transmission-up-to-date.png"
-    "Transmission dialog featuring a button with two states"
-    "Here the OK button exhibits both a pulsating blue background and an outer glow",
+  captioned-images [{
+    alt: "Transmission dialog featuring a button with two states",
+    src: "/images/posts/windows/transmission-up-to-date.png",
+    caption: [
+     "Here the OK button exhibits both a pulsating blue background
+      and an outer glow",
+    ],
+  }],
 
   h4 "Hover",
 
@@ -182,10 +215,13 @@ body = [
     }
   `,
 
-  captioned-image
-    "/images/posts/39/start-game-button-and-hyperlink-hover.png"
-    "Hover state"
-    "Hover state (right) alongside default state",
+  captioned-images [{
+    alt: "Hover state",
+    src: "/images/posts/39/start-game-button-and-hyperlink-hover.png",
+    caption: [
+     "Hover state (right) alongside default state",
+    ],
+  }],
 
   h4 "Focus",
 
@@ -198,14 +234,19 @@ body = [
     }
   `,
 
-  captioned-images [
-    ["/images/posts/39/start-game-button-and-hyperlink-focus.png",
-     "Focus state",
-     "Focus state (right) alongside default state"],
-    ["/images/posts/39/start-game-button-and-hyperlink-focus-hover.png",
-     "Focus+hover state",
-     "The focus and hover states play nicely together"],
-  ],
+  captioned-images [{
+    alt: "Focus state",
+    src: "/images/posts/39/start-game-button-and-hyperlink-focus.png",
+    caption: [
+     "Focus state (right) alongside default state",
+    ],
+  }, {
+    alt: "Focus+hover state",
+    src: "/images/posts/39/start-game-button-and-hyperlink-focus-hover.png",
+    caption: [
+     "The focus and hover states play nicely together",
+    ],
+  }],
 
   h4 "Active",
 
@@ -223,10 +264,13 @@ body = [
     }
   `,
 
-  captioned-image
-    "/images/posts/39/start-game-button-and-hyperlink-active.png"
-    "Active state"
-    "Active state (right) alongside default state",
+  captioned-images [{
+    alt: "Active state",
+    src: "/images/posts/39/start-game-button-and-hyperlink-active.png",
+    caption: [
+      "Active state (right) alongside default state",
+    ],
+  }],
 
   h3 "Demo",
 

@@ -86,11 +86,13 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { uncaptioned$002Dimage } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['Simple design executed beatifully.']),
-  uncaptioned$002Dimage('http://knifeandsaw.files.wordpress.com/2010/09/photo_bikerack_cu_bars.jpg')('Bike shelf'),
+  p([img({
+      ['alt']: 'Bike shelf',
+      ['src']: 'http://knifeandsaw.files.wordpress.com/2010/09/photo_bikerack_cu_bars.jpg'
+    })]),
   p([
     'The article from which this photograph is lifted, entitled ',
     a('http://knifeandsaw.wordpress.com/furniture/bike-shelf/')('Bike Shelf'),

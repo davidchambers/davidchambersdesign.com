@@ -1,5 +1,5 @@
 import * from "../elements.serif";
-import {captioned-image} from "../components.serif";
+import {captioned-images} from "../components.serif";
 
 export default {
 
@@ -31,10 +31,13 @@ export default {
       :)",
     ],
 
-    captioned-image
-      "/images/about/david-jo-shaun.jpg"
-      "Me with friends Jo and Shaun at the Luge in Rotorua"
-      "Me with friends at the Luge in Rotorua",
+    captioned-images [{
+      alt: "Me with friends Jo and Shaun at the Luge in Rotorua",
+      src: "/images/about/david-jo-shaun.jpg",
+      caption: [
+       "Me with friends at the Luge in Rotorua",
+      ],
+    }],
 
     p [
      "Feel free to ",

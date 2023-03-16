@@ -87,7 +87,7 @@ import {
   video
 } from '../elements.js';
 import {
-  captioned$002Dimage,
+  captioned$002Dimages,
   code$002Dblock,
   $2014
 } from '../components.js';
@@ -126,7 +126,11 @@ const body = [
     a('http://css-tricks.com/examples/CSSImageSwitcher/')('CSS image switcher demo'),
     ' with styles disabled,\n    one sees something most unhelpful:'
   ]),
-  captioned$002Dimage('/images/posts/43/css-tricks-image-switcher-demo-sans-styles.png')('Chris Coyier\'s CSS image switcher demo displays nothing\n     but four unhelpful links when styles are disabled')('CSS image switcher demo as seen at CSS-Tricks\n     (with styles disabled; note the lack of images)'),
+  captioned$002Dimages([{
+      ['alt']: 'Chris Coyier\'s CSS image switcher demo displays nothing\n          but four unhelpful links when styles are disabled',
+      ['src']: '/images/posts/43/css-tricks-image-switcher-demo-sans-styles.png',
+      ['caption']: ['CSS image switcher demo as seen at CSS-Tricks\n      (with styles disabled; note the lack of images)']
+    }]),
   p([
     'Well, at least one could click on these links to view the images,\n    right? Wrong! The hrefs contain nothing but the hash sign. Chris\n    does mention in the screencast that these links ',
     em('could'),
@@ -164,13 +168,17 @@ const body = [
     strong('definition list'),
     ' is the most appropriate tool\n    in our toolbox.'
   ]),
-  captioned$002Dimage('/images/posts/43/definition-list-markup.png')('Definition list markup')([
-    'The screenshot above is marked up within a ',
-    strong('dt'),
-    '\n      and this caption is a ',
-    strong('dd'),
-    ' (how meta!)'
-  ]),
+  captioned$002Dimages([{
+      ['alt']: 'Definition list markup',
+      ['src']: '/images/posts/43/definition-list-markup.png',
+      ['caption']: [
+        'The screenshot above is marked up within a ',
+        strong('dt'),
+        '\n      and this caption is a ',
+        strong('dd'),
+        ' (how meta!)'
+      ]
+    }]),
   p([
     'Each term in a definition list should have ',
     em('at least'),
@@ -189,7 +197,11 @@ const body = [
 </dl>
 `),
   p(['Beautiful, isn\'t it? No pointless (literally) anchors, no meaningless\n    ids, no class names, just content wrapped in descriptive HyperText\n    Markup Language. This ensures that the page\'s content is accessible\n    to all: those viewing the page on mobile phones; those using screen\n    readers or feed readers; and, of course, web crawlers.']),
-  captioned$002Dimage('/images/posts/43/meaningful-markup-degrades-gracefully.jpg')('Meaningful markup degrades gracefully')('The page\'s content is accessible even with styles disabled'),
+  captioned$002Dimages([{
+      ['alt']: 'Meaningful markup degrades gracefully',
+      ['src']: '/images/posts/43/meaningful-markup-degrades-gracefully.jpg',
+      ['caption']: ['The page\'s content is accessible even with styles disabled']
+    }]),
   h3('Demo'),
   p([
     'Check out the ',

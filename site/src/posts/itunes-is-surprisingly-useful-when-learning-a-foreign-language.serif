@@ -1,5 +1,4 @@
 import * from "../elements.serif" hiding {body};
-import {uncaptioned-image} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -34,10 +33,12 @@ body = [
     p [
      "Here's the end result:",
     ],
-
-    uncaptioned-image
-      "/images/posts/93/windows/lion/itunes-playlist-for-danish-dialogue.png"
-      "iTunes playlist for Danish dialogue",
+    p [
+      img {
+        alt: "iTunes playlist for Danish dialogue",
+        src: "/images/posts/93/windows/lion/itunes-playlist-for-danish-dialogue.png",
+      },
+    ],
   ],
 
   h3 "Creating an iTunes playlist from a single audio file",
@@ -77,9 +78,12 @@ body = [
        "Click the ", strong "Options", " tab and enter a ",
         strong "Stop Time", ". Click ", strong "OK", ".",
       ],
-      uncaptioned-image
-        "/images/posts/93/windows/lion/setting-the-stop-time.png"
-        "Setting the clip's stop time",
+      p [
+        img {
+          alt: "Setting the clip's stop time",
+          src: "/images/posts/93/windows/lion/setting-the-stop-time.png",
+        },
+      ],
     ],
     li [
       p [
@@ -93,9 +97,12 @@ body = [
         strong "Info", " tab. Type the clip's transcription
         into the ", strong "Name", " field.",
       ],
-      uncaptioned-image
-        "/images/posts/93/windows/lion/setting-the-name.png"
-        "Setting the clip's name",
+      p [
+        img {
+          alt: "Setting the clip's name",
+          src: "/images/posts/93/windows/lion/setting-the-name.png",
+        },
+      ],
     ],
     li [
       p [

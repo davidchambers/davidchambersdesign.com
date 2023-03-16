@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block decorative-image update} from "../components.serif";
+import {code-block update} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -13,7 +13,12 @@ export default {
 
 body = [
 
-  decorative-image "/images/posts/decorative/right/textmate-icon.png",
+  p [
+    img {
+      alt: "",
+      src: "/images/posts/decorative/right/textmate-icon.png",
+    },
+  ],
 
   p [
    "Using the ", code "-m", " flag can be a timesaver, but for several

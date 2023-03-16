@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {caption captioned-image code-block update} from "../components.serif";
+import {captioned-images code-block update} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -29,10 +29,14 @@ body = [
       with SyntaxHighlighter are far from perfect. Have a look at the
       bundled PHP brush in action below.",
     ],
-    captioned-image
-      "/images/posts/16/bundled-php-brush-in-action.png"
-      "Screenshot of PHP code highlighted by SyntaxHighlighter's PHP brush"
-      "Screenshot of bundled PHP brush in action",
+    captioned-images [{
+      alt: "Screenshot of PHP code highlighted by SyntaxHighlighter's
+            PHP brush",
+      src: "/images/posts/16/bundled-php-brush-in-action.png",
+      caption: [
+       "Screenshot of bundled PHP brush in action",
+      ],
+    }],
   ],
 
   p [
@@ -116,7 +120,7 @@ body = [
     ?>
   `,
 
-  caption [
+  p' {class: "caption"} [
    "Live rendering of improved PHP brush",
   ],
 

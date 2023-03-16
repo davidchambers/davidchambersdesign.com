@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image} from "../components.serif";
+import {captioned-images} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -36,20 +36,26 @@ body = [
     top right of the page. Click on ", strong "Settings", ".",
   ],
 
-  captioned-image
-    "/images/posts/13/settings-link-in-google-calendar.png"
-    "Settings link in Google Calendar"
-    [strong "Settings", " link in Google Calendar"],
+  captioned-images [{
+    alt: "Settings link in Google Calendar",
+    src: "/images/posts/13/settings-link-in-google-calendar.png",
+    caption: [
+      strong "Settings", " link in Google Calendar",
+    ],
+  }],
 
   p [
    "Next, click on the ", strong "Mobile Setup", " tab.",
   ],
 
   excerpt [
-    captioned-image
-      "/images/posts/13/mobile-setup-tab-in-google-calendar.png"
-      "Mobile Setup tab in Google Calendar"
-      [strong "Mobile Setup", " tab in Google Calendar"],
+    captioned-images [{
+      alt: "Mobile Setup tab in Google Calendar",
+      src: "/images/posts/13/mobile-setup-tab-in-google-calendar.png",
+      caption: [
+        strong "Mobile Setup", " tab in Google Calendar",
+      ],
+    }],
   ],
 
   p [
@@ -59,10 +65,13 @@ body = [
     Enter the code and click ", strong "Finish setup", ".",
   ],
 
-  captioned-image
-    "/images/posts/13/phone-number-successfully-validated.png"
-    "Phone number successfully validated"
-    "Confirmation of phone number validation",
+  captioned-images [{
+    alt: "Phone number successfully validated",
+    src: "/images/posts/13/phone-number-successfully-validated.png",
+    caption: [
+     "Confirmation of phone number validation",
+    ],
+  }],
 
   p [
    "Once your phone number has been validated you should be taken to the ",
@@ -71,11 +80,14 @@ body = [
     strong "Notifications", ".",
   ],
 
-  captioned-image
-    "/images/posts/13/event-reminders-in-google-calendar.png"
-    "Event reminders in Google Calendar"
-    ["Google Calendar's ", strong "Notifications", " pane,
-      where default event reminders are set"],
+  captioned-images [{
+    alt: "Event reminders in Google Calendar",
+    src: "/images/posts/13/event-reminders-in-google-calendar.png",
+    caption: [
+     "Google Calendar's ", strong "Notifications", " pane,
+      where default event reminders are set",
+    ],
+  }],
 
   p [
    "You're then able to set default event reminders, which may include

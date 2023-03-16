@@ -87,13 +87,15 @@ import {
   video
 } from '../elements.js';
 import {
-  captioned$002Dimage,
-  decorative$002Dimage,
+  captioned$002Dimages,
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  decorative$002Dimage('/images/posts/decorative/right/no-apple.png'),
+  p([img({
+      ['alt']: '',
+      ['src']: '/images/posts/decorative/right/no-apple.png'
+    })]),
   p(['The following conversation took place a couple of days ago in\n    my apartment. Matt\'s my flatmate, Doug\'s one of Matt\'s friends.\n    I was in the room at the time.']),
   ol([
     li$0027({ ['class']: 'interviewer' })([
@@ -124,7 +126,11 @@ const body = [
   ]),
   p(['There\'s certainly some sound reasoning behind Doug\'s stance: Doug\n    is proficient in Windows; gaining proficiency in Windows requires\n    a certain level of intelligence; Doug\'s proficiency in Windows is\n    therefore indicative of his intelligence.']),
   p(['Why, then, does Doug say that he\'s switched camps? He\'s using one\n    of these at school:']),
-  captioned$002Dimage('/images/posts/44/27-inch-imac.jpg')('27-inch iMac')('27-inch iMac'),
+  captioned$002Dimages([{
+      ['alt']: '27-inch iMac',
+      ['src']: '/images/posts/44/27-inch-imac.jpg',
+      ['caption']: ['27-inch iMac']
+    }]),
   p(['Talk about having one\'s cake and eating it, too.'])
 ];
 export default {

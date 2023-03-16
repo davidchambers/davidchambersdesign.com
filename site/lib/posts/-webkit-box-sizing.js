@@ -86,11 +86,15 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { captioned$002Dimage } from '../components.js';
+import { captioned$002Dimages } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['This site\'s search field has been virtually unusable in Chrome\n    and Safari on Windows for several months. Fixing it was not high\n    on my priority list, but I finally got to it this evening.']),
-  captioned$002Dimage('/images/posts/58/-webkit-box-sizing=border-box.png')('-webkit-box-sizing: border-box')('Before'),
+  captioned$002Dimages([{
+      ['alt']: '-webkit-box-sizing: border-box',
+      ['src']: '/images/posts/58/-webkit-box-sizing=border-box.png',
+      ['caption']: ['Before']
+    }]),
   p(['I did my best to get these browsers to respect the padding values\n    that I\'d assigned in my style sheet, getting aggressive in the Web\n    Inspector. No joy.']),
   p([
     'I then noticed a curious property, ',
@@ -104,7 +108,11 @@ const body = [
     code('content-box'),
     ' fixed the problem.'
   ]),
-  captioned$002Dimage('/images/posts/58/-webkit-box-sizing=content-box.png')('-webkit-box-sizing: content-box')('After'),
+  captioned$002Dimages([{
+      ['alt']: '-webkit-box-sizing: content-box',
+      ['src']: '/images/posts/58/-webkit-box-sizing=content-box.png',
+      ['caption']: ['After']
+    }]),
   p(['This is an extremely satisfying solution as it neatly targets\n    the source of the problem.']),
   p([
     'The question remains as to why these browsers default to ',

@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image update} from "../components.serif";
+import {captioned-images update} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -28,10 +28,13 @@ body = [
       "Django and Django-template bundles for Coda", ".",
   ],
 
-  captioned-image
-    "/images/posts/11/django-syntax-highlighting-in-coda.png"
-    "Django syntax highlighting in Coda"
-    "Django syntax highlighting in Coda",
+  captioned-images [{
+    alt: "Django syntax highlighting in Coda",
+    src: "/images/posts/11/django-syntax-highlighting-in-coda.png",
+    caption: [
+      "Django syntax highlighting in Coda",
+    ],
+  }],
 
   update (datetime "2010-11-14" "14:00:00" :Australia/Sydney) [
     p [

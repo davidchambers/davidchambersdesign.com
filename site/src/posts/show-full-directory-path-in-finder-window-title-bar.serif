@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image code-block} from "../components.serif";
+import {captioned-images code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -27,10 +27,14 @@ body = [
     ],
   ],
 
-  captioned-image
-    "/images/posts/2/finder-windows-without-paths.png"
-    "Finder windows without paths"
-    [strong "Before:", " Finder windows with directory name only in title bar"],
+  captioned-images [{
+    alt: "Finder windows without paths",
+    src: "/images/posts/2/finder-windows-without-paths.png",
+    caption: [
+      strong "Before:", "
+      Finder windows with directory name only in title bar",
+    ],
+  }],
 
   p [
    "In the screenshot above, it is clear that the two Finder windows are
@@ -54,10 +58,14 @@ body = [
     killall Finder
   `,
 
-  captioned-image
-    "/images/posts/2/finder-windows-with-paths.png"
-    "Finder windows with paths"
-    [strong "After:", " Finder windows with full directory path in title bar"],
+  captioned-images [{
+    alt: "Finder windows with paths",
+    src: "/images/posts/2/finder-windows-with-paths.png",
+    caption: [
+      strong "After:", "
+      Finder windows with full directory path in title bar",
+    ],
+  }],
 
   p [
    "Confusion resolved! Please note that this is ",

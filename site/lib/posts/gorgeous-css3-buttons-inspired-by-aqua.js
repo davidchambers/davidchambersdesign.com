@@ -86,15 +86,16 @@ import {
   video
 } from '../elements.js';
 import {
-  captioned$002Dimage,
   captioned$002Dimages,
-  code$002Dblock,
-  decorative$002Dimage
+  code$002Dblock
 } from '../components.js';
 import datetime from '../datetime.js';
 const excerpt = [
   p(['Modern browsers can display exciting visual effects such\n    as drop shadows (without the use of background images).\n    CSS3 makes it possible to turn submit inputs and even links\n    into rich, Aqua-like buttons in these browsers (alternative\n    style rules can be provided for older browsers).']),
-  decorative$002Dimage('/images/posts/39/start-game-hyperlink-and-button.png')
+  p([img({
+      ['alt']: '',
+      ['src']: '/images/posts/39/start-game-hyperlink-and-button.png'
+    })])
 ];
 const body = [
   p([
@@ -109,7 +110,11 @@ const body = [
     em('do'),
     '\n    different things, it makes sense that browsers display them\n    differently (by default).'
   ]),
-  captioned$002Dimage('/images/posts/39/unstyled-button-and-hyperlink.png')('Unstyled button and hyperlink')('Default appearance of buttons and hyperlinks in Safari on Mac OS X'),
+  captioned$002Dimages([{
+      ['alt']: 'Unstyled button and hyperlink',
+      ['src']: '/images/posts/39/unstyled-button-and-hyperlink.png',
+      ['caption']: ['Default appearance of buttons and hyperlinks in Safari on Mac OS X']
+    }]),
   p([
     'Web applications, however, sometimes blur the line between\n    doing things and going places; visually distinguishing\n    links from buttons, therefore, is not always appropriate.\n    As Stephen Anderson explains in his article ',
     a('http://www.alistapart.com/articles/indefenseofeyecandy')('In Defense of Eye Candy'),
@@ -117,11 +122,15 @@ const body = [
     a('http://www.alistapart.com/')('A List Apart'),
     ', an element\'s\n    appearance should suggest appropriate modes of interaction.'
   ]),
-  captioned$002Dimage('/images/posts/39/wordpress-publish-pane.png')('WordPress Publish pane')([
-    'In WordPress\'s ',
-    strong('Publish'),
-    ' pane "Save Draft" is a\n      submit input, "Preview" is a link; both are styled as buttons'
-  ]),
+  captioned$002Dimages([{
+      ['alt']: 'WordPress Publish pane',
+      ['src']: '/images/posts/39/wordpress-publish-pane.png',
+      ['caption']: [
+        'In WordPress\'s ',
+        strong('Publish'),
+        ' pane "Save Draft" is a\n      submit input, "Preview" is a link; both are styled as buttons'
+      ]
+    }]),
   h3('Styling links to look like buttons'),
   p([em([
       strong('Beware!'),
@@ -129,26 +138,27 @@ const body = [
     ])]),
   p(['An unstyled submit input and an unstyled hyperlink are displayed\n    below. One must declare a number of rules in order to have the two\n    elements rendered in the same way.']),
   captioned$002Dimages([
-    [
-      '/images/posts/39/start-game-button-and-hyperlink-unstyled.png',
-      'Unstyled button and hyperlink',
-      'Unstyled submit input and hyperlink'
-    ],
-    [
-      '/images/posts/39/start-game-button-and-hyperlink-border.png',
-      'Button and hyperlink with border',
-      code('border: 1px solid #850; color: #850;')
-    ],
-    [
-      '/images/posts/39/start-game-button-and-hyperlink-background-color.png',
-      'Button and hyperlink with background colour',
-      code('background: #fc6; text-decoration: none;')
-    ],
-    [
-      '/images/posts/39/start-game-button-and-hyperlink-padding-font.png',
-      'Button and hyperlink with consistent padding and font properties',
-      code('padding: 0.25em 0.5em;\n           font: bold 12px/15px\n                 "Lucida Grande",\n                 "Lucida Sans Unicode",\n                 sans-serif;')
-    ]
+    {
+      ['alt']: 'Unstyled button and hyperlink',
+      ['src']: '/images/posts/39/start-game-button-and-hyperlink-unstyled.png',
+      ['caption']: ['Unstyled submit input and hyperlink']
+    },
+    {
+      ['alt']: 'Button and hyperlink with border',
+      ['src']: '/images/posts/39/start-game-button-and-hyperlink-border.png',
+      ['caption']: [code('border: 1px solid #850; color: #850;')]
+    },
+    {
+      ['alt']: 'Button and hyperlink with background colour',
+      ['src']: '/images/posts/39/start-game-button-and-hyperlink-background-color.png',
+      ['caption']: [code('background: #fc6; text-decoration: none;')]
+    },
+    {
+      ['alt']: 'Button and hyperlink with consistent padding and font properties',
+      ['src']: '/images/posts/39/start-game-button-and-hyperlink-padding-font.png',
+      ['caption']: [code(`padding: 0.25em 0.5em; font: bold 12px/15px "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+`)]
+    }
   ]),
   h4('Progressive enhancement'),
   p([
@@ -160,7 +170,11 @@ const body = [
 -moz-border-radius: 1em;
 border-radius: 1em;
 `),
-  captioned$002Dimage('/images/posts/39/start-game-button-and-hyperlink-border-radius.png')('Button and hyperlink with rounded corners')('Rounded corners'),
+  captioned$002Dimages([{
+      ['alt']: 'Button and hyperlink with rounded corners',
+      ['src']: '/images/posts/39/start-game-button-and-hyperlink-border-radius.png',
+      ['caption']: ['Rounded corners']
+    }]),
   code$002Dblock(Symbol.for('css'))(`background: -webkit-gradient(linear, left top, left bottom,
     from(#fc6), to(#fc6),
     color-stop(0.1, #fff), color-stop(0.2, #fc6),
@@ -168,7 +182,11 @@ border-radius: 1em;
 background: -moz-linear-gradient(-90deg,
     #fc6 5%, #fff 15%, #fc6 25%, #fc6 50%, #fa2 50%, #fc6);
 `),
-  captioned$002Dimage('/images/posts/39/start-game-button-and-hyperlink-background-gradient.png')('Button and hyperlink with background gradient')('Linear gradient with colour stops creates a sense of depth'),
+  captioned$002Dimages([{
+      ['alt']: 'Button and hyperlink with background gradient',
+      ['src']: '/images/posts/39/start-game-button-and-hyperlink-background-gradient.png',
+      ['caption']: ['Linear gradient with colour stops creates a sense of depth']
+    }]),
   h3('Styling different states'),
   p([
     'It is important to consider the different states a button may have.\n    Apple\'s ',
@@ -177,15 +195,23 @@ background: -moz-linear-gradient(-90deg,
     strong('return'),
     ' activates the button; a button with an outer glow\n    can be activated via the space bar; and a static blue background is\n    used for a button\'s "active" state (which occurs while the button\n    is being clicked).'
   ]),
-  captioned$002Dimage('/images/posts/39/textedit-save-dialog.png')('TextEdit dialog featuring two different button states')([
-    'In Aqua, ',
-    strong('return'),
-    ' activates the blue button; ',
-    strong('space bar'),
-    ' activates the button with the outer glow'
-  ]),
+  captioned$002Dimages([{
+      ['alt']: 'TextEdit dialog featuring two different button states',
+      ['src']: '/images/posts/39/textedit-save-dialog.png',
+      ['caption']: [
+        'In Aqua, ',
+        strong('return'),
+        ' activates the blue button; ',
+        strong('space bar'),
+        ' activates the button with the outer glow'
+      ]
+    }]),
   p(['On the web, submit inputs and hyperlinks have several possible\n    states, the most important of which are hover, focus, and active.\n    When creating style rules for each of these states it\'s important\n    to bear in mind that more than one state may apply at one time.']),
-  captioned$002Dimage('/images/posts/windows/transmission-up-to-date.png')('Transmission dialog featuring a button with two states')('Here the OK button exhibits both a pulsating blue background and an outer glow'),
+  captioned$002Dimages([{
+      ['alt']: 'Transmission dialog featuring a button with two states',
+      ['src']: '/images/posts/windows/transmission-up-to-date.png',
+      ['caption']: ['Here the OK button exhibits both a pulsating blue background\n      and an outer glow']
+    }]),
   h4('Hover'),
   code$002Dblock(Symbol.for('css'))(`.aqua:hover {
     border-color: #740;
@@ -200,7 +226,11 @@ background: -moz-linear-gradient(-90deg,
     cursor: pointer;
 }
 `),
-  captioned$002Dimage('/images/posts/39/start-game-button-and-hyperlink-hover.png')('Hover state')('Hover state (right) alongside default state'),
+  captioned$002Dimages([{
+      ['alt']: 'Hover state',
+      ['src']: '/images/posts/39/start-game-button-and-hyperlink-hover.png',
+      ['caption']: ['Hover state (right) alongside default state']
+    }]),
   h4('Focus'),
   code$002Dblock(Symbol.for('css'))(`.aqua:focus {
     -webkit-box-shadow: #740 0 1px 0.75em;
@@ -210,16 +240,16 @@ background: -moz-linear-gradient(-90deg,
 }
 `),
   captioned$002Dimages([
-    [
-      '/images/posts/39/start-game-button-and-hyperlink-focus.png',
-      'Focus state',
-      'Focus state (right) alongside default state'
-    ],
-    [
-      '/images/posts/39/start-game-button-and-hyperlink-focus-hover.png',
-      'Focus+hover state',
-      'The focus and hover states play nicely together'
-    ]
+    {
+      ['alt']: 'Focus state',
+      ['src']: '/images/posts/39/start-game-button-and-hyperlink-focus.png',
+      ['caption']: ['Focus state (right) alongside default state']
+    },
+    {
+      ['alt']: 'Focus+hover state',
+      ['src']: '/images/posts/39/start-game-button-and-hyperlink-focus-hover.png',
+      ['caption']: ['The focus and hover states play nicely together']
+    }
   ]),
   h4('Active'),
   code$002Dblock(Symbol.for('css'))(`.aqua:active {
@@ -234,7 +264,11 @@ background: -moz-linear-gradient(-90deg,
     color: #630;
 }
 `),
-  captioned$002Dimage('/images/posts/39/start-game-button-and-hyperlink-active.png')('Active state')('Active state (right) alongside default state'),
+  captioned$002Dimages([{
+      ['alt']: 'Active state',
+      ['src']: '/images/posts/39/start-game-button-and-hyperlink-active.png',
+      ['caption']: ['Active state (right) alongside default state']
+    }]),
   h3('Demo'),
   p([
     'Interact with the finished styled button on the ',

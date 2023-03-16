@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image code-block —} from "../components.serif";
+import {captioned-images code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -62,12 +62,15 @@ body = [
     one sees something most unhelpful:",
   ],
 
-  captioned-image
-    "/images/posts/43/css-tricks-image-switcher-demo-sans-styles.png"
-    "Chris Coyier's CSS image switcher demo displays nothing
-     but four unhelpful links when styles are disabled"
-    "CSS image switcher demo as seen at CSS-Tricks
-     (with styles disabled; note the lack of images)",
+  captioned-images [{
+    alt: "Chris Coyier's CSS image switcher demo displays nothing
+          but four unhelpful links when styles are disabled",
+    src: "/images/posts/43/css-tricks-image-switcher-demo-sans-styles.png",
+    caption: [
+     "CSS image switcher demo as seen at CSS-Tricks
+      (with styles disabled; note the lack of images)",
+    ],
+  }],
 
   p [
    "Well, at least one could click on these links to view the images,
@@ -121,12 +124,14 @@ body = [
     in our toolbox.",
   ],
 
-  captioned-image
-    "/images/posts/43/definition-list-markup.png"
-    "Definition list markup"
-    ["The screenshot above is marked up within a ", strong "dt", "
+  captioned-images [{
+    alt: "Definition list markup",
+    src: "/images/posts/43/definition-list-markup.png",
+    caption: [
+     "The screenshot above is marked up within a ", strong "dt", "
       and this caption is a ", strong "dd", " (how meta!)",
-  ],
+    ],
+  }],
 
   p [
    "Each term in a definition list should have ", em "at least", " one
@@ -152,10 +157,13 @@ body = [
     readers or feed readers; and, of course, web crawlers.",
   ],
 
-  captioned-image
-    "/images/posts/43/meaningful-markup-degrades-gracefully.jpg"
-    "Meaningful markup degrades gracefully"
-    "The page's content is accessible even with styles disabled",
+  captioned-images [{
+    alt: "Meaningful markup degrades gracefully",
+    src: "/images/posts/43/meaningful-markup-degrades-gracefully.jpg",
+    caption: [
+     "The page's content is accessible even with styles disabled",
+    ],
+  }],
 
   h3 "Demo",
 

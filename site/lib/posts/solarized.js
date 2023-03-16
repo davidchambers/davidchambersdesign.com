@@ -86,7 +86,7 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { captioned$002Dimage } from '../components.js';
+import { captioned$002Dimages } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([
@@ -99,7 +99,11 @@ const body = [
     a('https://github.com/bobthecow/solarized-seestyle')('Coda bundle'),
     '.\n    While the code on my screen immediately looked very nice, a few of\n    Justin\'s colour choices didn\'t sit well with me.* I spent an hour\n    or two trying a large number of different combinations until my\n    JavaScript file was harmoniously highlighted.'
   ]),
-  captioned$002Dimage('/images/posts/84/solarized-code-snippet.png')('Solarized code snippet')('Solarized code snippet'),
+  captioned$002Dimages([{
+      ['alt']: 'Solarized code snippet',
+      ['src']: '/images/posts/84/solarized-code-snippet.png',
+      ['caption']: ['Solarized code snippet']
+    }]),
   p(['I wanted an even intensity, but didn\'t allow myself to deviate\n    from Ethan\'s prescribed colours. I\'m happy with the result: the\n    soft highlighting makes the code easier to understand without\n    being a distraction. Only regular expression literals leap\n    forward, but these tend to occur infrequently.']),
   p([
     'Coda users may be surprised to see method invocations\n    highlighted. That\'s one of the minor enhancements I\'ve made\n    to the default mode. If you\'re interested, have a look at ',

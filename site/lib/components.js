@@ -88,60 +88,31 @@ import {
   var$0027,
   video
 } from './elements.js';
-const caption = caption => {
-  return p$0027({ ['class']: 'caption' })(caption);
-};
-const captioned$002Dimage = src => {
-  return alt => caption => dl([
-    dt(img({
-      ['alt']: alt,
-      ['src']: src
-    })),
-    dd(caption)
-  ]);
-};
 const captioned$002Dimages = images => {
-  return dl(S.chain(image => [
+  return dl(images.flatMap(image => [
     dt(img({
-      ['alt']: image[1],
-      ['src']: image[0]
+      ['alt']: image.alt,
+      ['src']: image.src
     })),
-    dd(image[2])
-  ])(images));
+    dd(image.caption)
+  ]));
 };
 const code$002Dblock = language => {
   return source$002Dcode => pre(code(text(source$002Dcode)));
 };
-const decorative$002Dimage = src => {
-  return p(img({
-    ['alt']: '',
-    ['src']: src
-  }));
-};
-const pros$002Dand$002Dcons$002Dlist = f => {
-  return ul(f(li$0027({ ['class']: 'pro' }))(li$0027({ ['class']: 'con' })));
-};
-const uncaptioned$002Dimage = src => {
-  return alt => p(img({
-    ['alt']: alt,
-    ['src']: src
-  }));
-};
 const update = datetime => {
-  return body => div({ ['class']: 'update' })(S.prepend(h4([
-    'Update \u2014 ',
-    time({ ['datetime']: datetime.toISO() })(datetime.toFormat('d MMMM y'))
-  ]))(canonicalize$002Dchildren(body)));
+  return body => div({ ['class']: 'update' })([
+    h4([
+      'Update \u2014 ',
+      time({ ['datetime']: datetime.toISO() })([datetime.toFormat('d MMMM y')])
+    ]),
+    ...canonicalize$002Dchildren(body)
+  ]);
 };
 const $2014 = text('\u2009\u2014\u2009');
 export {
-  caption,
-  captioned$002Dimage,
   captioned$002Dimages,
   code$002Dblock,
-  decorative$002Dimage,
-  pros$002Dand$002Dcons$002Dlist,
-  uncaptioned$002Dimage,
   update,
   $2014
 };

@@ -87,7 +87,7 @@ import {
   video
 } from '../elements.js';
 import {
-  captioned$002Dimage,
+  captioned$002Dimages,
   code$002Dblock
 } from '../components.js';
 import datetime from '../datetime.js';
@@ -101,7 +101,11 @@ const body = [
       '\n      used on the page. Therefore, up to 31 HTTP requests were\n      required just to retrieve the calendar icons. Not good.'
     ]),
     p(['The same result can be achieved with a single HTTP request\n      through the use of a sprite:']),
-    captioned$002Dimage('/images/posts/23/calendar.png')('Tiny calendar icons sprite')('Tiny calendar icons sprite, which you\'re welcome to save and use')
+    captioned$002Dimages([{
+        ['alt']: 'Tiny calendar icons sprite',
+        ['src']: '/images/posts/23/calendar.png',
+        ['caption']: ['Tiny calendar icons sprite, which you\'re welcome to save and use']
+      }])
   ]),
   p(['One uses a sprite by applying a background image to an element\n    using CSS. One could start with an empty span element:']),
   code$002Dblock(Symbol.for('html'))(`<span class="day-1"></span>
@@ -117,11 +121,15 @@ const body = [
 }
 `),
   p(['By default the top left corner of an element\'s background image\n    is aligned with the element\'s top left corner, so at this stage\n    all that\'s displayed is a 16px by 16px white box:']),
-  captioned$002Dimage('/images/posts/23/calendar-span-default-bg-pos.png')('Calendar sprite applied as background image using default positioning')([
-    'Calendar sprite applied as background image using ',
-    strong('default'),
-    ' positioning'
-  ]),
+  captioned$002Dimages([{
+      ['alt']: 'Calendar sprite applied as background image using\n          default positioning',
+      ['src']: '/images/posts/23/calendar-span-default-bg-pos.png',
+      ['caption']: [
+        'Calendar sprite applied as background image using ',
+        strong('default'),
+        ' positioning'
+      ]
+    }]),
   p(['To have the "1" icon displayed, the element\'s background position\n    is specified:']),
   code$002Dblock(Symbol.for('css'))(`span.day-1
 {
@@ -134,7 +142,11 @@ const body = [
 }
 `),
   p(['This drags the background image 60px to the left, and lifts it 20px:']),
-  captioned$002Dimage('/images/posts/23/calendar-span-specified-bg-pos.png')('Calendar sprite applied as background image using correct positioning')('Calendar sprite applied as background image using correct positioning'),
+  captioned$002Dimages([{
+      ['alt']: 'Calendar sprite applied as background image using\n          correct positioning',
+      ['src']: '/images/posts/23/calendar-span-specified-bg-pos.png',
+      ['caption']: ['Calendar sprite applied as background image using correct positioning']
+    }]),
   p(['Here\'s the final CSS:']),
   code$002Dblock(Symbol.for('css'))(`span.day
 {

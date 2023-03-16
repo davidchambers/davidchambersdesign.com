@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {decorative-image —} from "../components.serif";
+import {—} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -13,7 +13,12 @@ export default {
 
 body = [
 
-  decorative-image "/images/posts/decorative/right/disk-utility-icon.png",
+  p [
+    img {
+      alt: "",
+      src: "/images/posts/decorative/right/disk-utility-icon.png",
+    },
+  ],
 
   p [
    "The days of the compact disc are surely numbered. The ",

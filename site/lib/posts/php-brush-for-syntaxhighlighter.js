@@ -87,8 +87,7 @@ import {
   video
 } from '../elements.js';
 import {
-  caption,
-  captioned$002Dimage,
+  captioned$002Dimages,
   code$002Dblock,
   update
 } from '../components.js';
@@ -101,7 +100,11 @@ const body = [
       '\n      is a well-written bundle which enables syntax highlighting of\n      code via JavaScript. More than twenty languages are supported\n      "out of the box", and brushes (JavaScript files containing\n      language-specific regular expressions) can be created to\n      support additional languages.'
     ]),
     p(['Unfortunately, however, several of the brushes that come bundled\n      with SyntaxHighlighter are far from perfect. Have a look at the\n      bundled PHP brush in action below.']),
-    captioned$002Dimage('/images/posts/16/bundled-php-brush-in-action.png')('Screenshot of PHP code highlighted by SyntaxHighlighter\'s PHP brush')('Screenshot of bundled PHP brush in action')
+    captioned$002Dimages([{
+        ['alt']: 'Screenshot of PHP code highlighted by SyntaxHighlighter\'s\n            PHP brush',
+        ['src']: '/images/posts/16/bundled-php-brush-in-action.png',
+        ['caption']: ['Screenshot of bundled PHP brush in action']
+      }])
   ]),
   p(['I would give this brush 6/10. Here are its deficiencies,\n    as I see them:']),
   ul([
@@ -197,7 +200,7 @@ is_ready_to_order($customer);
 
 ?>
 `),
-  caption(['Live rendering of improved PHP brush'])
+  p$0027({ ['class']: 'caption' })(['Live rendering of improved PHP brush'])
 ];
 export default {
   ['id']: 16,

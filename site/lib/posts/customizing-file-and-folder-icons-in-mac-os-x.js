@@ -87,10 +87,8 @@ import {
   video
 } from '../elements.js';
 import {
-  captioned$002Dimage,
-  code$002Dblock,
-  decorative$002Dimage,
-  uncaptioned$002Dimage
+  captioned$002Dimages,
+  code$002Dblock
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
@@ -102,10 +100,19 @@ const body = [
   h3('Creating .icns and applying them to files, folders, or bundles'),
   ol([
     li([
-      decorative$002Dimage('/images/posts/decorative/right/photoshop-icon.png'),
+      p([img({
+          ['alt']: '',
+          ['src']: '/images/posts/decorative/right/photoshop-icon.png'
+        })]),
       p(['Create icon versions at one or more of the following sizes:\n        16, 32, 128, 256, and 512. (I\'ve created two very different\n        images for this tutorial.)']),
-      uncaptioned$002Dimage('/images/posts/72/16x16-icon.png')('16x16 icon'),
-      uncaptioned$002Dimage('/images/posts/72/32x32-icon.png')('32x32 icon'),
+      p([img({
+          ['alt']: '16x16 icon',
+          ['src']: '/images/posts/72/16x16-icon.png'
+        })]),
+      p([img({
+          ['alt']: '32x32 icon',
+          ['src']: '/images/posts/72/32x32-icon.png'
+        })]),
       p([
         'Save the images in a lossless format such as PNG.\n        (If saving from Photoshop, make sure to use ',
         strong('Save for Web & Devices'),
@@ -115,10 +122,16 @@ const body = [
         strong('Save As'),
         '.)'
       ]),
-      uncaptioned$002Dimage('/images/posts/72/save-for-web-and-devices.png')('Save for Web & Devices')
+      p([img({
+          ['alt']: 'Save for Web & Devices',
+          ['src']: '/images/posts/72/save-for-web-and-devices.png'
+        })])
     ]),
     li([
-      decorative$002Dimage('/images/posts/decorative/right/icon-composer-icon.png'),
+      p([img({
+          ['alt']: '',
+          ['src']: '/images/posts/decorative/right/icon-composer-icon.png'
+        })]),
       p([
         'Open ',
         a('http://en.wikipedia.org/wiki/Apple_Developer_Tools#Icon_Composer')('Icon Composer'),
@@ -130,7 +143,11 @@ const body = [
         a('http://developer.apple.com/technologies/xcode.html')('download from Apple'),
         '. If you\'re bandwidth-conscious\n        you can dig out your Mac OS X installation DVD to save\n        yourself a few GBs.'
       ]),
-      captioned$002Dimage('/images/posts/72/icon-composer-interface.png')('Icon Composer interface')('Icon Composer interface'),
+      captioned$002Dimages([{
+          ['alt']: 'Icon Composer interface',
+          ['src']: '/images/posts/72/icon-composer-interface.png',
+          ['caption']: ['Icon Composer interface']
+        }]),
       p(['Copy and paste the various versions into their respective\n        slots. (The foolproof way to copy an icon is to open it in\n        Preview, \u2318A to select, then \u2318C to copy.)']),
       p([
         'Save the Icon Composer file. This\'ll create a single ',
@@ -139,7 +156,10 @@ const body = [
       ])
     ]),
     li([
-      decorative$002Dimage('/images/posts/decorative/right/terminal-icon.png'),
+      p([img({
+          ['alt']: '',
+          ['src']: '/images/posts/decorative/right/terminal-icon.png'
+        })]),
       p(['The final step is to apply attach the .icns file as\n        metadata to the file, folder, or bundle of interest.\n        There are a plethora of apps which provide this\n        functionality via attractive GUIs, but one shouldn\'t\n        need third-party software to change the appearance\n        of a folder!']),
       p([
         'I scoured the Web for a way to edit this metadata\n        directly. I failed to find one, but came across ',
@@ -182,7 +202,11 @@ $ sudo mv setfileicon /bin/setfileicon
   ]),
   h3('TL;DR'),
   p(['I agree. It shouldn\'t be this difficult. At least I\'ve now\n    documented the convoluted process. :s']),
-  captioned$002Dimage('/images/posts/72/icons-in-situ.png')('Icons in situ')('Icons in situ (note the 16x16 icon in the sidebar)')
+  captioned$002Dimages([{
+      ['alt']: 'Icons in situ',
+      ['src']: '/images/posts/72/icons-in-situ.png',
+      ['caption']: ['Icons in situ (note the 16x16 icon in the sidebar)']
+    }])
 ];
 export default {
   ['id']: 72,

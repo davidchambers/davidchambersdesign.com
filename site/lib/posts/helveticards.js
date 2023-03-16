@@ -86,10 +86,12 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import { uncaptioned$002Dimage } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  uncaptioned$002Dimage('/images/posts/92/helveticards.jpg')('Helveticards'),
+  p([img({
+      ['alt']: 'Helveticards',
+      ['src']: '/images/posts/92/helveticards.jpg'
+    })]),
   blockquote([p([
       a('http://helveticards.uberdm.com/')('Helveticards'),
       ' are a\n      set of über minimalist typographic playing cards by designer ',

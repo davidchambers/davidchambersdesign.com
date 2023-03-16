@@ -86,13 +86,13 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import {
-  decorative$002Dimage,
-  $2014
-} from '../components.js';
+import { $2014 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  decorative$002Dimage('/images/posts/decorative/right/disk-utility-icon.png'),
+  p([img({
+      ['alt']: '',
+      ['src']: '/images/posts/decorative/right/disk-utility-icon.png'
+    })]),
   p([
     'The days of the compact disc are surely numbered. The ',
     a('http://www.apple.com/macbookair/')('MacBook Air'),

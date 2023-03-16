@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image} from "../components.serif";
+import {captioned-images} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -30,10 +30,13 @@ body = [
     JavaScript file was harmoniously highlighted.",
   ],
 
-  captioned-image
-    "/images/posts/84/solarized-code-snippet.png"
-    "Solarized code snippet"
-    "Solarized code snippet",
+  captioned-images [{
+    alt: "Solarized code snippet",
+    src: "/images/posts/84/solarized-code-snippet.png",
+    caption: [
+     "Solarized code snippet",
+    ],
+  }],
 
   p [
    "I wanted an even intensity, but didn't allow myself to deviate

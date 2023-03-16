@@ -86,10 +86,7 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import {
-  code$002Dblock,
-  pros$002Dand$002Dcons$002Dlist
-} from '../components.js';
+import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
@@ -128,11 +125,11 @@ const body = [
 }
 `),
   p(['This approach adds top padding (equal to the height of the header)\n    to each of the block-level elements in the content area. This ensures\n    that elements are in the correct position when jumped to using #id.\n    An equal and opposite bottom margin is also applied to prevent the\n    padding from adding unwanted white space between elements.']),
-  pros$002Dand$002Dcons$002Dlist(pro => con => [
-    pro(['No additional markup is required.']),
-    pro(['Straightforward CSS.']),
-    con(['The CSS selector needs to contain all block-level elements\n      that may have ids in some instances. This is likely to include\n      elements such as divs and forms. Since it is hard to foresee\n      all the situations in which a link may direct a user to a\n      uniquely identified element, it is difficult to ensure that\n      this approach will work in all cases.']),
-    con([strong('The negative bottom margin causes each block-level\n      element to overlap the preceding element, making "overlapped"\n      links unclickable!')])
+  ul([
+    li$0027({ ['class']: 'pro' })(['No additional markup is required.']),
+    li$0027({ ['class']: 'pro' })(['Straightforward CSS.']),
+    li$0027({ ['class']: 'con' })(['The CSS selector needs to contain all block-level elements\n      that may have ids in some instances. This is likely to include\n      elements such as divs and forms. Since it is hard to foresee\n      all the situations in which a link may direct a user to a\n      uniquely identified element, it is difficult to ensure that\n      this approach will work in all cases.']),
+    li$0027({ ['class']: 'con' })([strong('The negative bottom margin causes each block-level\n      element to overlap the preceding element, making "overlapped"\n      links unclickable!')])
   ]),
   h3('Approach 2: preceding divs'),
   p(['Again, the CSS:']),
@@ -154,11 +151,11 @@ const body = [
 <p>Suspendisse potenti. Proin convallis lacinia nibh, nec auctor ligula mattis consectetur. Mauris vel elit sit amet nibh volutpat varius id vel sem. Pellentesque id purus ligula. Vivamus vel nulla vel justo tempor ultricies.</p>
 `),
   p(['With this approach, each uniquely identified block-level\n    element within the content area gives its id to a div which\n    appears immediately before it in the HTML. Each of these divs\n    is offset by the height of the header, ensuring that the\n    element of interest is not obscured by the header.']),
-  pros$002Dand$002Dcons$002Dlist(pro => con => [
-    pro(['Straightforward CSS.']),
-    pro(['Links are always clickable!']),
-    con(['Additional markup is required, necessitating that\n      existing content be updated (or JavaScript used to\n      insert the additional elements dynamically).']),
-    con([
+  ul([
+    li$0027({ ['class']: 'pro' })(['Straightforward CSS.']),
+    li$0027({ ['class']: 'pro' })(['Links are always clickable!']),
+    li$0027({ ['class']: 'con' })(['Additional markup is required, necessitating that\n      existing content be updated (or JavaScript used to\n      insert the additional elements dynamically).']),
+    li$0027({ ['class']: 'con' })([
       'Not only is this extra markup meaningless,\n      but it actually removes ids from the elements\n      to which they were additionally assigned. Any\n      existing CSS selectors that refer to one of these\n      elements will need to be updated. (For example, ',
       code('h3#comments'),
       ' would need to change to ',
@@ -191,16 +188,16 @@ document.observe('dom:loaded', function () {
     margin: -160px 0 0 0;
 }
 `),
-  pros$002Dand$002Dcons$002Dlist(pro => con => [
-    pro(['No additional markup is required.']),
-    pro(['Straightforward CSS.']),
-    pro(['Links are always clickable.']),
-    con([
+  ul([
+    li$0027({ ['class']: 'pro' })(['No additional markup is required.']),
+    li$0027({ ['class']: 'pro' })(['Straightforward CSS.']),
+    li$0027({ ['class']: 'pro' })(['Links are always clickable.']),
+    li$0027({ ['class']: 'con' })([
       'JavaScript (and in this case ',
       a('http://prototypejs.org/')('Prototype'),
       ') required.'
     ]),
-    con(['Association between an id and the element it identifies\n      is broken.'])
+    li$0027({ ['class']: 'con' })(['Association between an id and the element it identifies\n      is broken.'])
   ]),
   h3('Summary'),
   p(['I have implemented the JavaScript approach, and it works nicely.\n    I am still hopeful that there exists a simpler and/or more universal\n    solution to the problem posed by fixed-position headers. Please let\n    me know if you have any ideas or suggestions.'])

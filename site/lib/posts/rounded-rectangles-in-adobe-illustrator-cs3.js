@@ -86,14 +86,14 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import {
-  captioned$002Dimage,
-  decorative$002Dimage
-} from '../components.js';
+import { captioned$002Dimages } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
-    decorative$002Dimage('/images/posts/decorative/left/adobe-illustrator-cs3-icon.png'),
+    p([img({
+        ['alt']: '',
+        ['src']: '/images/posts/decorative/left/adobe-illustrator-cs3-icon.png'
+      })]),
     p(['Not so long ago I was talking to my brother online as he\n      worked on a poster for a presentation. He is an engineer;\n      using Illustrator was a new experience for him. He generally\n      picks up new things easily, but as you may appreciate,\n      Illustrator is often far from logical. We reached a point\n      where he asked me about scaling rounded rectangles \u2013 this\n      is where things started to get hairy.']),
     ol([
       li$0027({ ['class']: 'interviewer' })([
@@ -142,11 +142,15 @@ const body = [
     ]),
     li(['enter your desired corner radius, and off you go!'])
   ]),
-  captioned$002Dimage('/images/posts/windows/illustrator-shape-options-dialog.png')('Illustrator\'s Shape Options dialog')([
-    'Illustrator\'s ',
-    strong('Shape Options'),
-    ' dialog,\n      set up to enable rounded rectangles which scale correctly'
-  ]),
+  captioned$002Dimages([{
+      ['alt']: 'Illustrator\'s Shape Options dialog',
+      ['src']: '/images/posts/windows/illustrator-shape-options-dialog.png',
+      ['caption']: [
+        'Illustrator\'s ',
+        strong('Shape Options'),
+        ' dialog,\n      set up to enable rounded rectangles which scale correctly'
+      ]
+    }]),
   p([
     'Now that the shape has been converted to a rounded rectangle, the ',
     strong('Shape Options'),

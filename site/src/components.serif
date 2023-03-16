@@ -3,57 +3,34 @@ import S from "sanctuary";
 import * from "./elements.serif";
 
 export {
-  caption
-  captioned-image
   captioned-images
   code-block
-  decorative-image
-  pros-and-cons-list
-  uncaptioned-image
   update
   —
 };
 
-caption caption = {
-  p' {class: "caption"} caption
-};
-
-captioned-image src alt caption = {
-  dl [
-    dt {img {alt: alt, src: src}},
-    dd caption,
-  ]
-};
-
 captioned-images images = {
-  dl {S.chain {image => [dt (img {alt: image[1], src: image[0]}),
-                         dd image[2]]}
-              images}
+  dl
+    images.flatMap(image => [
+      dt {img {alt: image.alt, src: image.src}},
+      dd image.caption,
+    ])
 };
 
 code-block language source-code = {
   pre {code {text source-code}}
 };
 
-decorative-image src = {
-  p (img {alt: "", src: src})
-};
-
-pros-and-cons-list f = {
-  ul {f {li' {class: "pro"}}
-        {li' {class: "con"}}}
-};
-
-uncaptioned-image src alt = {
-  p {img {alt: alt, src: src}}
-};
-
 update datetime body = {
-  div {class: "update"}
-      {S.prepend {h4 ["Update \u2014 ",
-                      time {datetime: datetime.toISO()}
-                           datetime.toFormat("d MMMM y")]}
-                 {canonicalize-children body}}
+  div {class: "update"} [
+    h4 [
+      "Update \u2014 ",
+      time {datetime: datetime.toISO()} [
+        datetime.toFormat("d MMMM y")
+      ],
+    ],
+    ...{canonicalize-children body},
+  ]
 };
 
 — = text "\u2009\u2014\u2009";

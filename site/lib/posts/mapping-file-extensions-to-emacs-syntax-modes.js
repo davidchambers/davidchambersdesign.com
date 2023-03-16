@@ -87,7 +87,7 @@ import {
   video
 } from '../elements.js';
 import {
-  captioned$002Dimage,
+  captioned$002Dimages,
   code$002Dblock
 } from '../components.js';
 import datetime from '../datetime.js';
@@ -101,7 +101,11 @@ const body = [
     strong('~/.emacs'),
     ' file did\n    the trick. :)'
   ]),
-  captioned$002Dimage('/images/posts/81/emacs-syntax-highlighting.png')('Emacs syntax highlighting')('HTML in Emacs with and without syntax highlighting')
+  captioned$002Dimages([{
+      ['alt']: 'Emacs syntax highlighting',
+      ['src']: '/images/posts/81/emacs-syntax-highlighting.png',
+      ['caption']: ['HTML in Emacs with and without syntax highlighting']
+    }])
 ];
 export default {
   ['id']: 81,

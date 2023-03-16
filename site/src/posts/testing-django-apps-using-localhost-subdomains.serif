@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block uncaptioned-image} from "../components.serif";
+import {code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -67,9 +67,12 @@ body = [
        "At this point I expected everything to work as advertised.
         Instead, I got this:",
       ],
-      uncaptioned-image
-        "/images/posts/windows/it-works!.png"
-        "It works!",
+      p [
+        img {
+          alt: "It works!",
+          src: "/images/posts/windows/it-works!.png",
+        },
+      ],
       p [
        "That would depend on one's definition of \"works\".
         I wanted my Django site to appear, which required a

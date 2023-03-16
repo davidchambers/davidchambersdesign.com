@@ -87,7 +87,6 @@ import {
   video
 } from '../elements.js';
 import {
-  captioned$002Dimage,
   captioned$002Dimages,
   code$002Dblock
 } from '../components.js';
@@ -114,19 +113,23 @@ const body = [
 `)
       ])
     ]),
-    captioned$002Dimage('/images/posts/37/iphone-testing-bookmarklets.png')('iPhone testing bookmarklets')('iPhone testing bookmarklets: portrait and landscape')
+    captioned$002Dimages([{
+        ['alt']: 'iPhone testing bookmarklets',
+        ['src']: '/images/posts/37/iphone-testing-bookmarklets.png',
+        ['caption']: ['iPhone testing bookmarklets: portrait and landscape']
+      }])
   ]),
   captioned$002Dimages([
-    [
-      '/images/posts/windows/safari-window-iphone-dimensions-portrait.png',
-      'Safari window resized to iPhone portrait dimensions',
-      '320x480: iPhone portrait dimensions'
-    ],
-    [
-      '/images/posts/windows/safari-window-iphone-dimensions-landscape.png',
-      'Safari window resized to iPhone landscape dimensions',
-      '480x320: iPhone landscape dimensions'
-    ]
+    {
+      ['alt']: 'Safari window resized to iPhone portrait dimensions',
+      ['src']: '/images/posts/windows/safari-window-iphone-dimensions-portrait.png',
+      ['caption']: ['320x480: iPhone portrait dimensions']
+    },
+    {
+      ['alt']: 'Safari window resized to iPhone landscape dimensions',
+      ['src']: '/images/posts/windows/safari-window-iphone-dimensions-landscape.png',
+      ['caption']: ['480x320: iPhone landscape dimensions']
+    }
   ]),
   p(['It appears that I need to rework this site\'s style sheet\n    to better present content in these smaller viewports!'])
 ];

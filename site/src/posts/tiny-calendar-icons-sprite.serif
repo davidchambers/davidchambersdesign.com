@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image code-block} from "../components.serif";
+import {captioned-images code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -27,10 +27,13 @@ body = [
      "The same result can be achieved with a single HTTP request
       through the use of a sprite:",
     ],
-    captioned-image
-      "/images/posts/23/calendar.png"
-      "Tiny calendar icons sprite"
-      "Tiny calendar icons sprite, which you're welcome to save and use",
+    captioned-images [{
+      alt: "Tiny calendar icons sprite",
+      src: "/images/posts/23/calendar.png",
+      caption: [
+       "Tiny calendar icons sprite, which you're welcome to save and use",
+      ],
+    }],
   ],
 
   p [
@@ -64,11 +67,15 @@ body = [
     all that's displayed is a 16px by 16px white box:",
   ],
 
-  captioned-image
-    "/images/posts/23/calendar-span-default-bg-pos.png"
-    "Calendar sprite applied as background image using default positioning"
-    ["Calendar sprite applied as background image using ",
-      strong "default", " positioning"],
+  captioned-images [{
+    alt: "Calendar sprite applied as background image using
+          default positioning",
+    src: "/images/posts/23/calendar-span-default-bg-pos.png",
+    caption: [
+     "Calendar sprite applied as background image using ",
+      strong "default", " positioning",
+    ],
+  }],
 
   p [
    "To have the \"1\" icon displayed, the element's background position
@@ -91,10 +98,14 @@ body = [
    "This drags the background image 60px to the left, and lifts it 20px:",
   ],
 
-  captioned-image
-    "/images/posts/23/calendar-span-specified-bg-pos.png"
-    "Calendar sprite applied as background image using correct positioning"
-    "Calendar sprite applied as background image using correct positioning",
+  captioned-images [{
+    alt: "Calendar sprite applied as background image using
+          correct positioning",
+    src: "/images/posts/23/calendar-span-specified-bg-pos.png",
+    caption: [
+     "Calendar sprite applied as background image using correct positioning",
+    ],
+  }],
 
   p [
    "Here's the final CSS:",

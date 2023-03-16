@@ -86,10 +86,7 @@ import {
   var$0027,
   video
 } from '../elements.js';
-import {
-  uncaptioned$002Dimage,
-  update
-} from '../components.js';
+import { update } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
@@ -104,7 +101,10 @@ const body = [
       '. Not ideal.'
     ]),
     h3('System Preferences > Sound > Application Volumes'),
-    uncaptioned$002Dimage('/images/posts/windows/application-volumes.png')('Possible interface for application-specific volume settings\n       in Mac OS X'),
+    p([img({
+        ['alt']: 'Possible interface for application-specific\n              volume settings in Mac OS X',
+        ['src']: '/images/posts/windows/application-volumes.png'
+      })]),
     p([
       'Wouldn\'t this be nice? Many months ago I did some Googling\n      to find out whether it\'s possible to control volume on an\n      application-by-application basis in OS X. The closest thing\n      to a solution was an X11 (read: ugly) app that ',
       em('kinda'),
@@ -124,11 +124,17 @@ const body = [
       a('http://www.joesoft.com/products/hear.php')('Hear'),
       '\n      offers this functionality, but isn\'t cheap. I hope Hear\'s\n      developers decide to release a preference pane that provides\n      the functionality of Hear\'s mixer pane and nothing more\n      (I\'m about to make this request).'
     ]),
-    uncaptioned$002Dimage('/images/posts/windows/hear-mixer-pane.png')('Hear\'s mixer pane')
+    p([img({
+        ['alt']: 'Hear\'s mixer pane',
+        ['src']: '/images/posts/windows/hear-mixer-pane.png'
+      })])
   ]),
   h4('Bonus titbit'),
   p(['While faking the drop shadow on the Sound window above I discovered\n    a combination of drop shadow values which pretty much perfectly match\n    those of an active window in OS X:']),
-  uncaptioned$002Dimage('/images/posts/47/drop-shadow-settings.png')('Photoshop\'s drop shadow dialog'),
+  p([img({
+      ['alt']: 'Photoshop\'s drop shadow dialog',
+      ['src']: '/images/posts/47/drop-shadow-settings.png'
+    })]),
   dl([
     dt$0027({ ['class']: 'textual' })('shadow color'),
     dd('#000000 (black)'),

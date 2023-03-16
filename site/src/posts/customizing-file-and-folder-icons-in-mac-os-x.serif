@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image code-block decorative-image uncaptioned-image} from "../components.serif";
+import {captioned-images code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -34,19 +34,29 @@ body = [
 
   ol [
     li [
-      decorative-image
-        "/images/posts/decorative/right/photoshop-icon.png",
+      p [
+        img {
+          alt: "",
+          src: "/images/posts/decorative/right/photoshop-icon.png",
+        },
+      ],
       p [
        "Create icon versions at one or more of the following sizes:
         16, 32, 128, 256, and 512. (I've created two very different
         images for this tutorial.)",
       ],
-      uncaptioned-image
-        "/images/posts/72/16x16-icon.png"
-        "16x16 icon",
-      uncaptioned-image
-        "/images/posts/72/32x32-icon.png"
-        "32x32 icon",
+      p [
+        img {
+          alt: "16x16 icon",
+          src: "/images/posts/72/16x16-icon.png",
+        },
+      ],
+      p [
+        img {
+          alt: "32x32 icon",
+          src: "/images/posts/72/32x32-icon.png",
+        },
+      ],
       p [
        "Save the images in a lossless format such as PNG.
         (If saving from Photoshop, make sure to use ",
@@ -54,13 +64,20 @@ body = [
         doesn't like PNG files generated via Photoshop's ",
         strong "Save", " / ", strong "Save As", ".)",
       ],
-      uncaptioned-image
-        "/images/posts/72/save-for-web-and-devices.png"
-        "Save for Web & Devices",
+      p [
+        img {
+          alt: "Save for Web & Devices",
+          src: "/images/posts/72/save-for-web-and-devices.png",
+        },
+      ],
     ],
     li [
-      decorative-image
-        "/images/posts/decorative/right/icon-composer-icon.png",
+      p [
+        img {
+          alt: "",
+          src: "/images/posts/decorative/right/icon-composer-icon.png",
+        },
+      ],
       p [
        "Open ",
         a "http://en.wikipedia.org/wiki/Apple_Developer_Tools#Icon_Composer"
@@ -74,10 +91,13 @@ body = [
         you can dig out your Mac OS X installation DVD to save
         yourself a few GBs.",
       ],
-      captioned-image
-        "/images/posts/72/icon-composer-interface.png"
-        "Icon Composer interface"
-        "Icon Composer interface",
+      captioned-images [{
+        alt: "Icon Composer interface",
+        src: "/images/posts/72/icon-composer-interface.png",
+        caption: [
+         "Icon Composer interface",
+        ],
+      }],
       p [
        "Copy and paste the various versions into their respective
         slots. (The foolproof way to copy an icon is to open it in
@@ -90,8 +110,12 @@ body = [
       ],
     ],
     li [
-      decorative-image
-        "/images/posts/decorative/right/terminal-icon.png",
+      p [
+        img {
+          alt: "",
+          src: "/images/posts/decorative/right/terminal-icon.png",
+        },
+      ],
       p [
        "The final step is to apply attach the .icns file as
         metadata to the file, folder, or bundle of interest.
@@ -152,9 +176,12 @@ body = [
     documented the convoluted process. :s",
   ],
 
-  captioned-image
-    "/images/posts/72/icons-in-situ.png"
-    "Icons in situ"
-    "Icons in situ (note the 16x16 icon in the sidebar)",
+  captioned-images [{
+    alt: "Icons in situ",
+    src: "/images/posts/72/icons-in-situ.png",
+    caption: [
+     "Icons in situ (note the 16x16 icon in the sidebar)",
+    ],
+  }],
 
 ];

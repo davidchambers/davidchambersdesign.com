@@ -23,26 +23,43 @@ body = [
     considerations involved in designing for the Web.",
   ],
 
-  captioned-images [
-    ["/images/posts/40/mid-wicket.png",
-     "Cricket field with mid-wicket area highlighted",
-     "Mid-wicket"],
-    ["/images/posts/40/down-the-ground.png",
-     "Cricket field with covers highlighted",
-     "Down the ground"],
-    ["/images/posts/40/covers.png",
-     "Cricket field with covers highlighted",
-     "Covers"],
-    ["/images/posts/40/behind-point.png",
-     "Cricket field with area behind point highlighted",
-     "Behind point"],
-    ["/images/posts/40/behind-the-wicket.png",
-     "Cricket field with area behind the wicket highlighted",
-     "Behind the wicket"],
-    ["/images/posts/40/behind-square.png",
-     "Cricket field with area backward of square highlighted",
-     "Behind square"],
-  ],
+  captioned-images [{
+    alt: "Cricket field with mid-wicket area highlighted",
+    src: "/images/posts/40/mid-wicket.png",
+    caption: [
+     "Mid-wicket",
+    ],
+  }, {
+    alt: "Cricket field with covers highlighted",
+    src: "/images/posts/40/down-the-ground.png",
+    caption: [
+     "Down the ground",
+    ],
+  }, {
+    alt: "Cricket field with covers highlighted",
+    src: "/images/posts/40/covers.png",
+    caption: [
+     "Covers",
+    ],
+  }, {
+    alt: "Cricket field with area behind point highlighted",
+    src: "/images/posts/40/behind-point.png",
+    caption: [
+     "Behind point",
+    ],
+  }, {
+    alt: "Cricket field with area behind the wicket highlighted",
+    src: "/images/posts/40/behind-the-wicket.png",
+    caption: [
+     "Behind the wicket",
+    ],
+  }, {
+    alt: "Cricket field with area backward of square highlighted",
+    src: "/images/posts/40/behind-square.png",
+    caption: [
+     "Behind square",
+    ],
+  }],
 
   p [
    "You're free to make use of these images (they're transparent PNGs).

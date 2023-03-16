@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {uncaptioned-image update} from "../components.serif";
+import {update} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -28,10 +28,13 @@ body = [
       em "everything", ". Not ideal.",
     ],
     h3 "System Preferences > Sound > Application Volumes",
-    uncaptioned-image
-      "/images/posts/windows/application-volumes.png"
-      "Possible interface for application-specific volume settings
-       in Mac OS X",
+    p [
+      img {
+        alt: "Possible interface for application-specific
+              volume settings in Mac OS X",
+        src: "/images/posts/windows/application-volumes.png",
+      },
+    ],
     p [
      "Wouldn't this be nice? Many months ago I did some Googling
       to find out whether it's possible to control volume on an
@@ -63,9 +66,12 @@ body = [
       the functionality of Hear's mixer pane and nothing more
       (I'm about to make this request).",
     ],
-    uncaptioned-image
-      "/images/posts/windows/hear-mixer-pane.png"
-      "Hear's mixer pane",
+    p [
+      img {
+        alt: "Hear's mixer pane",
+        src: "/images/posts/windows/hear-mixer-pane.png",
+      },
+    ],
   ],
 
   h4 "Bonus titbit",
@@ -76,9 +82,12 @@ body = [
     those of an active window in OS X:",
   ],
 
-  uncaptioned-image
-    "/images/posts/47/drop-shadow-settings.png"
-    "Photoshop's drop shadow dialog",
+  p [
+    img {
+      alt: "Photoshop's drop shadow dialog",
+      src: "/images/posts/47/drop-shadow-settings.png",
+    },
+  ],
 
   dl [
     dt' {class: "textual"} "shadow color",

@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image captioned-images code-block} from "../components.serif";
+import {captioned-images code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -45,20 +45,28 @@ body = [
         `,
       ],
     ],
-    captioned-image
-      "/images/posts/37/iphone-testing-bookmarklets.png"
-      "iPhone testing bookmarklets"
-      "iPhone testing bookmarklets: portrait and landscape",
+    captioned-images [{
+      alt: "iPhone testing bookmarklets",
+      src: "/images/posts/37/iphone-testing-bookmarklets.png",
+      caption: [
+       "iPhone testing bookmarklets: portrait and landscape",
+      ],
+    }],
   ],
 
-  captioned-images [
-    ["/images/posts/windows/safari-window-iphone-dimensions-portrait.png",
-     "Safari window resized to iPhone portrait dimensions",
-     "320x480: iPhone portrait dimensions"],
-    ["/images/posts/windows/safari-window-iphone-dimensions-landscape.png",
-     "Safari window resized to iPhone landscape dimensions",
-     "480x320: iPhone landscape dimensions"],
-  ],
+  captioned-images [{
+    alt: "Safari window resized to iPhone portrait dimensions",
+    src: "/images/posts/windows/safari-window-iphone-dimensions-portrait.png",
+    caption: [
+     "320x480: iPhone portrait dimensions",
+    ],
+  }, {
+    alt: "Safari window resized to iPhone landscape dimensions",
+    src: "/images/posts/windows/safari-window-iphone-dimensions-landscape.png",
+    caption: [
+     "480x320: iPhone landscape dimensions",
+    ],
+  }],
 
   p [
    "It appears that I need to rework this site's style sheet

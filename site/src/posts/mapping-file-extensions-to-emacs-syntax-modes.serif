@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-image code-block} from "../components.serif";
+import {captioned-images code-block} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -35,9 +35,12 @@ body = [
     the trick. :)",
   ],
 
-  captioned-image
-    "/images/posts/81/emacs-syntax-highlighting.png"
-    "Emacs syntax highlighting"
-    "HTML in Emacs with and without syntax highlighting",
+  captioned-images [{
+    alt: "Emacs syntax highlighting",
+    src: "/images/posts/81/emacs-syntax-highlighting.png",
+    caption: [
+     "HTML in Emacs with and without syntax highlighting",
+    ],
+  }],
 
 ];

@@ -1,5 +1,4 @@
 import * from "../elements.serif";
-import {uncaptioned-image} from "../components.serif";
 
 export default {
 
@@ -30,9 +29,12 @@ export default {
       manifesto. This may take the form of a booklet, pamphlet or poster.",
     ],
 
-    uncaptioned-image
-      "/images/elam/lightbox/design-philosophies-poster.png"
-      "Design philosophies: simple, sensible, sustainable",
+    p [
+      img {
+        alt: "Design philosophies: simple, sensible, sustainable",
+        src: "/images/elam/lightbox/design-philosophies-poster.png",
+      },
+    ],
 
     h4 "Sugar awareness billboard campaign",
 
@@ -42,17 +44,26 @@ export default {
       dangers without coming across as \"preachy\".",
     ],
 
-    uncaptioned-image
-      "/images/elam/sugar-billboards/dizzy-snake.jpg"
-      "Excessive sugar consumption can cause dizziness",
+    p [
+      img {
+        alt: "Excessive sugar consumption can cause dizziness",
+        src: "/images/elam/sugar-billboards/dizzy-snake.jpg",
+      },
+    ],
 
-    uncaptioned-image
-      "/images/elam/sugar-billboards/breast-cancer.jpg"
-      "Excessive sugar consumption can cause breast cancer",
+    p [
+      img {
+        alt: "Excessive sugar consumption can cause breast cancer",
+        src: "/images/elam/sugar-billboards/breast-cancer.jpg",
+      },
+    ],
 
-    uncaptioned-image
-      "/images/elam/sugar-billboards/plane-crash.jpg"
-      "Excessive sugar consumption can impair concentration",
+    p [
+      img {
+        alt: "Excessive sugar consumption can impair concentration",
+        src: "/images/elam/sugar-billboards/plane-crash.jpg",
+      },
+    ],
 
     h3' {id: "2004"} "2004",
 
@@ -65,13 +76,19 @@ export default {
       to theatre. Copy provided. A1.",
     ],
 
-    uncaptioned-image
-      "/images/elam/lightbox/caligula-poster.png"
-      "Poster for the play Caligula",
+    p [
+      img {
+        alt: "Poster for the play Caligula",
+        src: "/images/elam/lightbox/caligula-poster.png",
+      },
+    ],
 
-    uncaptioned-image
-      "/images/elam/caligula-typography.png"
-      "Typography used in Caligula poster",
+    p [
+      img {
+        alt: "Typography used in Caligula poster",
+        src: "/images/elam/caligula-typography.png",
+      },
+    ],
 
     h4 [i "tyypo", " magazine"],
 
@@ -81,9 +98,12 @@ export default {
       Actual size: A4.)",
     ],
 
-    uncaptioned-image
-      "/images/elam/lightbox/tyypo-cover.png"
-      "tyypo magazine cover",
+    p [
+      img {
+        alt: "tyypo magazine cover",
+        src: "/images/elam/lightbox/tyypo-cover.png",
+      },
+    ],
 
     h4 "Elam open days poster",
 
@@ -92,9 +112,12 @@ export default {
       To be displayed around the city, and sent to secondary schools. A1.",
     ],
 
-    uncaptioned-image
-      "/images/elam/lightbox/elam-open-days-poster.png"
-      "Elam open days poster",
+    p [
+      img {
+        alt: "Elam open days poster",
+        src: "/images/elam/lightbox/elam-open-days-poster.png",
+      },
+    ],
 
     h4 "Panprint calendar competition",
 
@@ -105,9 +128,12 @@ export default {
       colours\". A1.",
     ],
 
-    uncaptioned-image
-      "/images/elam/lightbox/panprint-poster.jpg"
-      "Panprint poster",
+    p [
+      img {
+        alt: "Panprint poster",
+        src: "/images/elam/lightbox/panprint-poster.jpg",
+      },
+    ],
 
     h3' {id: "2005"} "2005",
 
@@ -121,17 +147,26 @@ export default {
       and 24 years of age, without marginalizing older players of the games.",
     ],
 
-    uncaptioned-image
-      "/images/elam/gameplayer-business-card-james.png"
-      "Gameplayer business card (James)",
+    p [
+      img {
+        alt: "Gameplayer business card (James)",
+        src: "/images/elam/gameplayer-business-card-james.png",
+      },
+    ],
 
-    uncaptioned-image
-      "/images/elam/gameplayer-business-card-cici.png"
-      "Gameplayer business card (Cici)",
+    p [
+      img {
+        alt: "Gameplayer business card (Cici)",
+        src: "/images/elam/gameplayer-business-card-cici.png",
+      },
+    ],
 
-    uncaptioned-image
-      "/images/elam/gameplayer-promotional-card.png"
-      "Gameplayer promotional card",
+    p [
+      img {
+        alt: "Gameplayer promotional card",
+        src: "/images/elam/gameplayer-promotional-card.png",
+      },
+    ],
 
     h4 "Playing card design",
 
@@ -168,9 +203,12 @@ export default {
       prevent them from \"bulging\".",
     ],
 
-    uncaptioned-image
-      "/images/elam/playing-cards.jpg"
-      "Playing cards",
+    p [
+      img {
+        alt: "Playing cards",
+        src: "/images/elam/playing-cards.jpg",
+      },
+    ],
 
     h4 [i "Exposure05", " catalogue"],
 
@@ -180,13 +218,19 @@ export default {
       Students' Association.",
     ],
 
-    uncaptioned-image
-      "/images/elam/exposure-cover.jpg"
-      "Exposure magazine cover",
+    p [
+      img {
+        alt: "Exposure magazine cover",
+        src: "/images/elam/exposure-cover.jpg",
+      },
+    ],
 
-    uncaptioned-image
-      "/images/elam/exposure-spread.jpg"
-      "Exposure magazine spread",
+    p [
+      img {
+        alt: "Exposure magazine spread",
+        src: "/images/elam/exposure-spread.jpg",
+      },
+    ],
 
     h4 "\"Insight Drive\"",
 
@@ -201,9 +245,12 @@ export default {
       exciting way.",
     ],
 
-    uncaptioned-image
-      "/images/elam/insight-drive.jpg"
-      "Packaged motors ready to send",
+    p [
+      img {
+        alt: "Packaged motors ready to send",
+        src: "/images/elam/insight-drive.jpg",
+      },
+    ],
 
   ],
 

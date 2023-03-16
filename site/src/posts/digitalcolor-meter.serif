@@ -1,5 +1,4 @@
 import * from "../elements.serif" hiding {body};
-import {uncaptioned-image} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -13,9 +12,12 @@ export default {
 
 body = [
 
-  uncaptioned-image
-    "/images/posts/windows/digitalcolor-meter.png"
-    "DigitalColor Meter",
+  p [
+    img {
+      alt: "DigitalColor Meter",
+      src: "/images/posts/windows/digitalcolor-meter.png",
+    },
+  ],
 
   p [
    "I thought this recent ",

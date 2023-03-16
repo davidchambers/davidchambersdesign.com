@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {code-block uncaptioned-image —} from "../components.serif";
+import {code-block —} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {
@@ -194,8 +194,11 @@ body = [
     to share my thoughts with the world.",
   ],
 
-  uncaptioned-image
-    "/images/posts/50/publish.png"
-    "Publish a post from Coda",
+  p [
+    img {
+      alt: "Publish a post from Coda",
+      src: "/images/posts/50/publish.png",
+    },
+  ],
 
 ];

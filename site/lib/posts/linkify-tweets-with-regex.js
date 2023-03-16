@@ -88,13 +88,15 @@ import {
 } from '../elements.js';
 import {
   code$002Dblock,
-  decorative$002Dimage,
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   excerpt([
-    decorative$002Dimage('/images/posts/decorative/right/at-sign-in-speech-bubble.png'),
+    p([img({
+        ['alt']: '',
+        ['src']: '/images/posts/decorative/right/at-sign-in-speech-bubble.png'
+      })]),
     p([
       'Regular expressions are powerful, useful, and',
       $2014,
