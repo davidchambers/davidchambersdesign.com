@@ -125,38 +125,35 @@ const body = [
     ' attribute. In supporting\n    browsers (currently Chrome and Safari) this produces the\n    behaviour described above with no reliance on JavaScript.'
   ]),
   h3$0027({ [Symbol.for('id')]: 'markup' })('Markup'),
-  code$002Dblock(Symbol.for('html'))(`
-    <input type="search" id="s" name="s" placeholder="search..." />
-  `),
+  code$002Dblock(Symbol.for('html'))(`<input type="search" id="s" name="s" placeholder="search..." />
+`),
   h3$0027({ [Symbol.for('id')]: 'styling' })('Styling'),
-  code$002Dblock(Symbol.for('css'))(`
-    input.placeholder { color: #a9a9a9 !important; }
-  `),
+  code$002Dblock(Symbol.for('css'))(`input.placeholder { color: #a9a9a9 !important; }
+`),
   p([
     'I decided to use ',
     code('#a9a9a9'),
     ' as Safari uses this colour\n    for placeholder text.'
   ]),
   h3$0027({ [Symbol.for('id')]: 'placeholder-class' })('Placeholder class'),
-  code$002Dblock(Symbol.for('javascript'))(`
-    var Placeholder = Class.create({
-        initialize: function (element) {
-            this.element = element;
-            this.placeholder = element.readAttribute('placeholder');
-            this.blur();
-            Event.observe(this.element, 'focus', this.focus.bindAsEventListener(this));
-            Event.observe(this.element, 'blur', this.blur.bindAsEventListener(this));
-        },
-        focus: function () {
-            if (this.element.hasClassName('placeholder'))
-                this.element.clear().removeClassName('placeholder');
-        },
-        blur: function () {
-            if (this.element.value === '')
-                this.element.addClassName('placeholder').value = this.placeholder;
-        }
-    });
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`var Placeholder = Class.create({
+    initialize: function (element) {
+        this.element = element;
+        this.placeholder = element.readAttribute('placeholder');
+        this.blur();
+        Event.observe(this.element, 'focus', this.focus.bindAsEventListener(this));
+        Event.observe(this.element, 'blur', this.blur.bindAsEventListener(this));
+    },
+    focus: function () {
+        if (this.element.hasClassName('placeholder'))
+            this.element.clear().removeClassName('placeholder');
+    },
+    blur: function () {
+        if (this.element.value === '')
+            this.element.addClassName('placeholder').value = this.placeholder;
+    }
+});
+`),
   p([
     'The Placeholder class requires ',
     a('http://prototypejs.org/')('Prototype'),
@@ -164,24 +161,22 @@ const body = [
   ]),
   h3$0027({ [Symbol.for('id')]: 'usage' })('Usage'),
   p(['To create a new instance of the Placeholder class, simply pass\n    the constructor a Prototype extended element:']),
-  code$002Dblock(Symbol.for('javascript'))(`
-    new Placeholder($('s'));
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`new Placeholder($('s'));
+`),
   p([
     'Ensure that the DOM is ready by wrapping everything in Prototype\'s ',
     code('dom:loaded'),
     ' event listener. This also avoids polluting the\n    global namespace.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    document.observe('dom:loaded', function () {
-        var Placeholder = Class.create({
-            ...
-        });
-        $$('input[placeholder]').each(function (input) {
-            new Placeholder(input);
-        });
+  code$002Dblock(Symbol.for('javascript'))(`document.observe('dom:loaded', function () {
+    var Placeholder = Class.create({
+        ...
     });
-  `),
+    $$('input[placeholder]').each(function (input) {
+        new Placeholder(input);
+    });
+});
+`),
   update(datetime('2010-03-30')('17:17:00')(Symbol.for('Pacific/Auckland')))([p(['I\'ve updated the selector used in the above example. Selecting\n      all inputs with placeholder attributes is far more elegant than\n      listing each input explicitly. It also means that an input added\n      anywhere on the site will automatically receive this special\n      treatment (provided that it has a placeholder attribute).'])]),
   p([strong('This site\'s search field shows the code in action.')]),
   update(datetime('2010-04-16')('00:59:00')(Symbol.for('Pacific/Auckland')))([
@@ -192,66 +187,65 @@ const body = [
       a('http://blog.decaf.de/2009/07/iphone-like-password-fields-using-jquery/')('iPhone-like password fields using jQuery'),
       '.'
     ]),
-    code$002Dblock(Symbol.for('javascript'))(`
-      // provide input hints
-      document.observe('dom:loaded', function () {
-          var PLACEHOLDER_SUFFIX = '_placeholder'; // used for password inputs
+    code$002Dblock(Symbol.for('javascript'))(`// provide input hints
+document.observe('dom:loaded', function () {
+    var PLACEHOLDER_SUFFIX = '_placeholder'; // used for password inputs
 
-          $$('input[placeholder]').each(function (input) {
-              var label, placeholder,
-                  placeholder_text = input.readAttribute('placeholder');
+    $$('input[placeholder]').each(function (input) {
+        var label, placeholder,
+            placeholder_text = input.readAttribute('placeholder');
 
-              if (input.readAttribute('type') == 'password') {
-                  placeholder = input.clone();
-                  placeholder.type = 'text'; // not "password"
-                  placeholder.value = placeholder_text;
-                  placeholder.addClassName('placeholder');
+        if (input.readAttribute('type') == 'password') {
+            placeholder = input.clone();
+            placeholder.type = 'text'; // not "password"
+            placeholder.value = placeholder_text;
+            placeholder.addClassName('placeholder');
 
-                  if (input.id) {
-                      // update input id and label
-                      placeholder.id += PLACEHOLDER_SUFFIX;
-                      label = $$('label[for="' + input.id + '"]')
-                      label.invoke('writeAttribute', 'for', input.id +
-                              PLACEHOLDER_SUFFIX);
-                  }
+            if (input.id) {
+                // update input id and label
+                placeholder.id += PLACEHOLDER_SUFFIX;
+                label = $$('label[for="' + input.id + '"]')
+                label.invoke('writeAttribute', 'for', input.id +
+                        PLACEHOLDER_SUFFIX);
+            }
 
-                  input.writeAttribute({ 'accesskey': '', 'tabindex': '' });
-                  input.hide().insert({ 'before': placeholder });
+            input.writeAttribute({ 'accesskey': '', 'tabindex': '' });
+            input.hide().insert({ 'before': placeholder });
 
-                  // when placeholder input gains focus,
-                  // hide it and show "real" password input
-                  Event.observe(placeholder, 'focus', function () {
-                      this.hide();
-                      input.show();
-                      Form.Element.focus(input);
-                  });
+            // when placeholder input gains focus,
+            // hide it and show "real" password input
+            Event.observe(placeholder, 'focus', function () {
+                this.hide();
+                input.show();
+                Form.Element.focus(input);
+            });
 
-                  // when "real" password input loses focus,
-                  // if it's empty, hide it and show placeholder input
-                  Event.observe(input, 'blur', function () {
-                      if (this.value === '') {
-                          this.hide();
-                          placeholder.show();
-                      }
-                  });
-              } else {
-                  // insert placeholder text
-                  input.addClassName('placeholder').value = placeholder_text;
+            // when "real" password input loses focus,
+            // if it's empty, hide it and show placeholder input
+            Event.observe(input, 'blur', function () {
+                if (this.value === '') {
+                    this.hide();
+                    placeholder.show();
+                }
+            });
+        } else {
+            // insert placeholder text
+            input.addClassName('placeholder').value = placeholder_text;
 
-                  Event.observe(input, 'focus', function () {
-                      if (this.hasClassName('placeholder')) {
-                          this.clear().removeClassName('placeholder');
-                      }
-                  });
-                  Event.observe(input, 'blur', function () {
-                      if (this.value === '') {
-                          this.addClassName('placeholder').value = placeholder_text;
-                      }
-                  });
-              }
-          });
-      });
-    `)
+            Event.observe(input, 'focus', function () {
+                if (this.hasClassName('placeholder')) {
+                    this.clear().removeClassName('placeholder');
+                }
+            });
+            Event.observe(input, 'blur', function () {
+                if (this.value === '') {
+                    this.addClassName('placeholder').value = placeholder_text;
+                }
+            });
+        }
+    });
+});
+`)
   ])
 ];
 export default {

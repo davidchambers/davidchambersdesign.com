@@ -111,13 +111,11 @@ const body = [
     strong('return'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('console'))(`
-    defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES
-  `),
+  code$002Dblock(Symbol.for('console'))(`defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES
+`),
   p(['For the changes to take effect, you will need to restart Finder:']),
-  code$002Dblock(Symbol.for('console'))(`
-    killall Finder
-  `),
+  code$002Dblock(Symbol.for('console'))(`killall Finder
+`),
   captioned$002Dimage('/images/posts/2/finder-windows-with-paths.png')('Finder windows with paths')([
     strong('After:'),
     ' Finder windows with full directory path in title bar'
@@ -128,13 +126,11 @@ const body = [
     ' users.'
   ]),
   p(['To revert to the default title bar treatment, simply enter:']),
-  code$002Dblock(Symbol.for('console'))(`
-    defaults write com.apple.finder _FXShowPosixPathInTitle -bool NO
-  `),
+  code$002Dblock(Symbol.for('console'))(`defaults write com.apple.finder _FXShowPosixPathInTitle -bool NO
+`),
   p(['Then, restart Finder once again:']),
-  code$002Dblock(Symbol.for('console'))(`
-    killall Finder
-  `)
+  code$002Dblock(Symbol.for('console'))(`killall Finder
+`)
 ];
 export default {
   ['id']: 2,

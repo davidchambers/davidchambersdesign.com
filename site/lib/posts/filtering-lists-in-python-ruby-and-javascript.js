@@ -96,21 +96,19 @@ const body = [
   ]),
   p(['Gary provides several examples of equivalent code in Python and\n    Ruby to highlight situations in which one language reads better\n    than the other, such as the following.']),
   p(['Python:']),
-  code$002Dblock(Symbol.for('python'))(`
-    '\\n'.join(obj.name
-        for obj in (
-            repository.retrieve(id)
-            for id in ids)
-        if obj)
-  `),
+  code$002Dblock(Symbol.for('python'))(`'\\n'.join(obj.name
+    for obj in (
+        repository.retrieve(id)
+        for id in ids)
+    if obj)
+`),
   p(['Ruby:']),
-  code$002Dblock(Symbol.for('ruby'))(`
-    ids.map do |id|
-      repository.retrieve(id)
-    end.compact.map do |obj|
-      obj.name
-    end.join('\\n')
-  `),
+  code$002Dblock(Symbol.for('ruby'))(`ids.map do |id|
+  repository.retrieve(id)
+end.compact.map do |obj|
+  obj.name
+end.join('\\n')
+`),
   p([
     'The Ruby code (the one beginning with ',
     code('ids.map'),
@@ -122,12 +120,11 @@ const body = [
     code('filter'),
     ' array method.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    ids.filter(function (id) {
-        var obj = repository.retrieve(id);
-        return obj && obj.name;
-    }).join('\\n');
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`ids.filter(function (id) {
+    var obj = repository.retrieve(id);
+    return obj && obj.name;
+}).join('\\n');
+`),
   p([
     a('https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Filter')([code('filter')]),
     ', though, just removes from an array the\n    items which fail the provided "test". So the code above is\n    on the right track, but fails to produce a list of names.'
@@ -143,13 +140,12 @@ const body = [
     code('[]'),
     ') on line 5 \u2013 that\'s our\n    "accumulator".'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    ids.reduce(function (ids, id) {
-        var obj = repository.retrieve(id);
-        if (obj && obj.name) ids.push(obj.name);
-        return ids;
-    }, []).join('\\n');
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`ids.reduce(function (ids, id) {
+    var obj = repository.retrieve(id);
+    if (obj && obj.name) ids.push(obj.name);
+    return ids;
+}, []).join('\\n');
+`),
   p(['Not bad. It\'s not as elegant as the Ruby code, but it\'s not\n    "inside out" the way the Python code is.'])
 ];
 export default {

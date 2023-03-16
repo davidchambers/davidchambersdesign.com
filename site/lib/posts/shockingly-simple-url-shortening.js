@@ -148,10 +148,9 @@ const body = [
     strong('simple, elegant solution'),
     ' which took all\n    of ten minutes to implement.'
   ]),
-  code$002Dblock(Symbol.for('TK'))(`
-    RewriteEngine On
-    RewriteRule ^(.*)$ http://davidchambersdesign.com/$1 [R=301,L]
-  `),
+  code$002Dblock(Symbol.for('TK'))(`RewriteEngine On
+RewriteRule ^(.*)$ http://davidchambersdesign.com/$1 [R=301,L]
+`),
   p([
     'The code above forms the entirety of the ',
     strong('.htaccess'),

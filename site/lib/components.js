@@ -110,13 +110,7 @@ const captioned$002Dimages = images => {
   ])(images));
 };
 const code$002Dblock = language => {
-  return source$002Dcode => (() => {
-    const lines = S.fromMaybe([])(S.chain(S.init)(S.tail(S.lines(source$002Dcode))));
-    const trim$002Dleading$002Dspaces = line => {
-      return S.fromMaybe(line)(S.chain(prefix => S.stripPrefix(prefix)(line))(S.map(x => x.match)(S.chain(S.match(new RegExp('^[ ]*', '')))(S.head(lines)))));
-    };
-    return pre(code(text(S.unlines(S.map(trim$002Dleading$002Dspaces)(lines)))));
-  })();
+  return source$002Dcode => pre(code(text(source$002Dcode)));
 };
 const decorative$002Dimage = src => {
   return p(img({

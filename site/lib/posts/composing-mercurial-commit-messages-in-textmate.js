@@ -134,9 +134,8 @@ const body = [
     ])]),
   update(datetime('2011-01-22')('15:20:00')(Symbol.for('Australia/Sydney')))([
     p(['To use TextMate as your git editor, run the following command:']),
-    code$002Dblock(Symbol.for('console'))(`
-      git config --global core.editor "mate -w"
-    `),
+    code$002Dblock(Symbol.for('console'))(`git config --global core.editor "mate -w"
+`),
     p([
       'This adds ',
       code('editor = mate -w'),

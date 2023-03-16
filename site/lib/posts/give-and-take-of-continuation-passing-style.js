@@ -101,47 +101,44 @@ const body = [
     em('a lot'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    //    reduce :: (b -> a -> b) -> b -> Array a -> b
-    const reduce = f => b => as => as.reduce ((b, a) => f (b) (a), b);
+  code$002Dblock(Symbol.for('javascript'))(`//    reduce :: (b -> a -> b) -> b -> Array a -> b
+const reduce = f => b => as => as.reduce ((b, a) => f (b) (a), b);
 
-    //    append :: a -> Array a -> Array a
-    const append = a => as => [...as, a];
+//    append :: a -> Array a -> Array a
+const append = a => as => [...as, a];
 
-    //    blah :: Integer -> String -> { id :: Integer, name :: String }
-    const blah = id => name => ({id, name});
+//    blah :: Integer -> String -> { id :: Integer, name :: String }
+const blah = id => name => ({id, name});
 
-    > reduce (({id, blahs}) => name => ({id: id + 1, blahs: append (blah (id) (name)) (blahs)}))
-    .        ({id: 1, blahs: []})
-    .        (['foo', 'bar', 'baz'])
-    . .blahs
-    [{id: 1, name: 'foo'}, {id: 2, name: 'bar'}, {id: 3, name: 'baz'}]
-  `),
+> reduce (({id, blahs}) => name => ({id: id + 1, blahs: append (blah (id) (name)) (blahs)}))
+.        ({id: 1, blahs: []})
+.        (['foo', 'bar', 'baz'])
+. .blahs
+[{id: 1, name: 'foo'}, {id: 2, name: 'bar'}, {id: 3, name: 'baz'}]
+`),
   p([
     '\u261D️ This has been my approach for the past several years. The accumulator\n    contains all necessary state, and at the end of the reduction I access\n    whichever fields are relevant (in this case just ',
     code('blahs'),
     ').'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    > reduce (cont => name => id => append (blah (id) (name)) (cont (id + 1)))
-    .        (id => [])
-    .        (['foo', 'bar', 'baz'])
-    .        (1)
-    [{id: 3, name: 'foo'}, {id: 2, name: 'bar'}, {id: 1, name: 'baz'}]
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`> reduce (cont => name => id => append (blah (id) (name)) (cont (id + 1)))
+.        (id => [])
+.        (['foo', 'bar', 'baz'])
+.        (1)
+[{id: 3, name: 'foo'}, {id: 2, name: 'bar'}, {id: 1, name: 'baz'}]
+`),
   p([
     '\u261D️ This was my first attempt at using continuations. The problem is\n    that function wrapping happens from left to right, so the ',
     code('id'),
     '\n    is threaded from right to left, giving the wrong result.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    > reduce (cont => name => id => blahs => cont (id + 1) (append (blah (id) (name)) (blahs)))
-    .        (id => blahs => blahs)
-    .        (['foo', 'bar', 'baz'])
-    .        (1)
-    .        ([])
-    [{id: 1, name: 'baz'}, {id: 2, name: 'bar'}, {id: 3, name: 'baz'}]
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`> reduce (cont => name => id => blahs => cont (id + 1) (append (blah (id) (name)) (blahs)))
+.        (id => blahs => blahs)
+.        (['foo', 'bar', 'baz'])
+.        (1)
+.        ([])
+[{id: 1, name: 'baz'}, {id: 2, name: 'bar'}, {id: 3, name: 'baz'}]
+`),
   p([
     '\u261D️ This was my second attempt. The order is reversed, but the ',
     code('id'),
@@ -162,10 +159,9 @@ const body = [
     code('take'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    //    take :: (Integer -> Array String -> a) -> a
-    const take = give => give (1) ([]);
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`//    take :: (Integer -> Array String -> a) -> a
+const take = give => give (1) ([]);
+`),
   p([
     code('a'),
     ' is a type variable. We have no idea what ',
@@ -185,13 +181,12 @@ const body = [
     code('(Integer -> Array String -> a) -> a'),
     ', we need to\n    have the reducing function return a function of that type.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    > reduce (take => name => give => give (1) ([blah (1) (name)]))
-    .        (give => give (1) ([]))
-    .        (['foo', 'bar', 'baz'])
-    .        (id => blahs => blahs)
-    [{id: 1, name: 'baz'}]
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`> reduce (take => name => give => give (1) ([blah (1) (name)]))
+.        (give => give (1) ([]))
+.        (['foo', 'bar', 'baz'])
+.        (id => blahs => blahs)
+[{id: 1, name: 'baz'}]
+`),
   p([
     '\u261D️ The answer is wrong -- we lost ',
     code('\'foo\''),
@@ -203,13 +198,12 @@ const body = [
     code('id'),
     ' -- but the types align.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    > reduce (take => name => take (id => blahs => give => give (id + 1) (append (blah (id) (name)) (blahs))))
-    .        (give => give (1) ([]))
-    .        (['foo', 'bar', 'baz'])
-    .        (id => blahs => blahs)
-    [{id: 1, name: 'foo'}, {id: 2, name: 'bar'}, {id: 3, name: 'baz'}]
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`> reduce (take => name => take (id => blahs => give => give (id + 1) (append (blah (id) (name)) (blahs))))
+.        (give => give (1) ([]))
+.        (['foo', 'bar', 'baz'])
+.        (id => blahs => blahs)
+[{id: 1, name: 'foo'}, {id: 2, name: 'bar'}, {id: 3, name: 'baz'}]
+`),
   p([
     '\u261D️ Success! We receive a continuation we refer to as ',
     code('take'),

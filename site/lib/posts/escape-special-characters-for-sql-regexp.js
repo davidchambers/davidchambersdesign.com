@@ -94,9 +94,8 @@ const body = [
     a('http://search.mtg-apps.com/')('MTG card search'),
     '\n    that I\'ve been developing recently, I encountered an error that MySQL\n    reported as follows:'
   ]),
-  code$002Dblock(Symbol.for('plain-text'))(`
-    Got error 'repetition-operator operand invalid' from regexp
-  `),
+  code$002Dblock(Symbol.for('plain-text'))(`Got error 'repetition-operator operand invalid' from regexp
+`),
   p([
     'The problem resulted from an unescaped ',
     strong('{'),
@@ -110,24 +109,23 @@ const body = [
       '\n      to escape problematic characters before submitting a query.\n      When the query in question involves MySQL\'s REGEXP function,\n      however, we need to go one step further and escape regex\'s\n      special characters.'
     ])]),
   p(['I had a look on php.net to see whether such a function exists.\n    Having failed to find one there, I did a Google search but again\n    came away empty-handed. I wrote my own function for the job, and\n    thought I\'d share it in case others encounter the same problem:']),
-  code$002Dblock(Symbol.for('php'))(`
-    <?php
+  code$002Dblock(Symbol.for('php'))(`<?php
 
-    function mysql_regexp_escape_string($string)
+function mysql_regexp_escape_string($string)
+{
+    $special_chars = array('*', '.', '?', '+', '[', ']', '(', ')', '{', '}', '^', '$', '|', '\\\\');
+    $replacements = array();
+
+    foreach ($special_chars as $special_char)
     {
-        $special_chars = array('*', '.', '?', '+', '[', ']', '(', ')', '{', '}', '^', '$', '|', '\\\\');
-        $replacements = array();
-
-        foreach ($special_chars as $special_char)
-        {
-            $replacements[] = '\\\\' . $special_char;
-        }
-
-        return str_replace($special_chars, $replacements, $string);
+        $replacements[] = '\\\\' . $special_char;
     }
 
-    ?>
-  `),
+    return str_replace($special_chars, $replacements, $string);
+}
+
+?>
+`),
   p(['It is quite possible that a solution to this problem already exists.\n    If this is the case, I am eager to know about it.'])
 ];
 export default {

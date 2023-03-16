@@ -98,70 +98,64 @@ const body = [
     code('in'),
     ' keyword:'
   ]),
-  code$002Dblock(Symbol.for('python'))(`
-    >>> usernames = {'brodie', 'jespern', 'nvenegas'}
-    >>> 'brodie' in usernames
-    True
-    >>> 'davidchambers' in usernames
-    False
-  `),
+  code$002Dblock(Symbol.for('python'))(`>>> usernames = {'brodie', 'jespern', 'nvenegas'}
+>>> 'brodie' in usernames
+True
+>>> 'davidchambers' in usernames
+False
+`),
   p(['Incidentally, since sets are essentially dictionaries\n    without values, it\'s unsurprising that the same form\n    can be used to determine whether a value is among a\n    dictionary\'s keys:']),
-  code$002Dblock(Symbol.for('python'))(`
-    >>> settings = {'lines': 50, 'number': False, 'spell': True}
-    >>> 'number' in settings
-    True
-    >>> 'wrap' in settings
-    False
-  `),
+  code$002Dblock(Symbol.for('python'))(`>>> settings = {'lines': 50, 'number': False, 'spell': True}
+>>> 'number' in settings
+True
+>>> 'wrap' in settings
+False
+`),
   h3('Fashioning a poor man\u2019s set from the limited materials\n      JavaScript provides'),
   p([
     'How might one create a set of strings in JavaScript given the\n    limited, ahem, ',
     em('set'),
     ' of data structures at our disposal?\n    One could use a string:'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    > usernames = ',brodie,jespern,nvenegas,'
-    > /,brodie,/.test(usernames)
-    true
-    > /,davidchambers,/.test(username)
-    false
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`> usernames = ',brodie,jespern,nvenegas,'
+> /,brodie,/.test(usernames)
+true
+> /,davidchambers,/.test(username)
+false
+`),
   p(['This approach is problematic for several reasons: it assumes\n    that "," won\'t appear in a username, membership checks are\n    inefficient, inserting an existing member will cause the\n    string to grow unless an expensive membership check is\n    performed, and the separators make things awkward.']),
   p(['An array is clearly a better choice:']),
-  code$002Dblock(Symbol.for('javascript'))(`
-    > usernames = ['brodie', 'jespern', 'nvenegas']
-    > usernames.indexOf('brodie') >= 0
-    true
-    > usernames.indexOf('davidchambers') >= 0
-    false
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`> usernames = ['brodie', 'jespern', 'nvenegas']
+> usernames.indexOf('brodie') >= 0
+true
+> usernames.indexOf('davidchambers') >= 0
+false
+`),
   p(['Though this is an improvement, membership checks are still\n    inefficient, and each insert still requires a member check if\n    we\'re to avoid having the array grow needlessly. If we kept the\n    array ordered we could use binary search, but inserts would be\n    even slower as each member would need to be inserted in the\n    correct position.']),
   p([
     'An object, then, is the ',
     em('best'),
     ' choice:'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    > usernames = {'brodie': 1, 'jespern': 1, 'nvenegas': 1}
-    > 'brodie' in usernames
-    true
-    > 'davidchambers' in usernames
-    false
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`> usernames = {'brodie': 1, 'jespern': 1, 'nvenegas': 1}
+> 'brodie' in usernames
+true
+> 'davidchambers' in usernames
+false
+`),
   p([
     'This addresses the outstanding problems, and the ',
     code('in'),
     '\n    keyword makes the intent of these expressions clear.'
   ]),
   p(['But it also introduces a subtle bug:']),
-  code$002Dblock(Symbol.for('javascript'))(`
-    > 'constructor' in usernames
-    true
-    > 'toString' in usernames
-    true
-    > 'valueOf' in usernames
-    true
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`> 'constructor' in usernames
+true
+> 'toString' in usernames
+true
+> 'valueOf' in usernames
+true
+`),
   p([
     'The ',
     code('in'),
@@ -173,21 +167,19 @@ const body = [
     code('in'),
     ' is out, then, but there is a way to ask whether a\n    property exists on the object itself:'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    > usernames.hasOwnProperty('brodie')
-    true
-    > usernames.hasOwnProperty('davidchambers')
-    false
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`> usernames.hasOwnProperty('brodie')
+true
+> usernames.hasOwnProperty('davidchambers')
+false
+`),
   p(['This fixes the unwanted inheritance problem, but introduces\n    another subtle error:']),
-  code$002Dblock(Symbol.for('javascript'))(`
-    > usernames['davidchambers'] = 1 // add "davidchambers" to set
-    1
-    > usernames['hasOwnProperty'] = 1 // add "hasOwnProperty" to set
-    1
-    > usernames.hasOwnProperty('davidchambers')
-    TypeError: Property 'hasOwnProperty' of object #<Object> is not a function
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`> usernames['davidchambers'] = 1 // add "davidchambers" to set
+1
+> usernames['hasOwnProperty'] = 1 // add "hasOwnProperty" to set
+1
+> usernames.hasOwnProperty('davidchambers')
+TypeError: Property 'hasOwnProperty' of object #<Object> is not a function
+`),
   p([
     'If we rely on ',
     code('usernames.hasOwnProperty'),
@@ -195,23 +187,21 @@ const body = [
     code('Object.prototype'),
     '):'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    > Object.prototype.hasOwnProperty.call(usernames, 'davidchambers')
-    true
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`> Object.prototype.hasOwnProperty.call(usernames, 'davidchambers')
+true
+`),
   p(['What a mouthful! This is, though, the correct way to maintain\n    a collection of unique strings in JavaScript. It\'s efficient,\n    and avoids the pitfalls of the aforementioned approaches.']),
   h3('Bonus section'),
   p(['In working through this question with a candidate I realized\n    there\'s another solution, though I can\'t think of a compelling\n    reason to favour it:']),
-  code$002Dblock(Symbol.for('javascript'))(`
-    > sentinel = {}
-    > usernames = {'brodie': sentinel, 'jespern': sentinel, 'nvenegas': sentinel}
-    > usernames['brodie'] === sentinel
-    true
-    > usernames['davidchambers'] === sentinel
-    false
-    > usernames['constructor'] === sentinel
-    false
-  `)
+  code$002Dblock(Symbol.for('javascript'))(`> sentinel = {}
+> usernames = {'brodie': sentinel, 'jespern': sentinel, 'nvenegas': sentinel}
+> usernames['brodie'] === sentinel
+true
+> usernames['davidchambers'] === sentinel
+false
+> usernames['constructor'] === sentinel
+false
+`)
 ];
 export default {
   ['id']: 94,

@@ -108,9 +108,8 @@ const body = [
     code('overflow'),
     '\n    to the rescue.'
   ]),
-  code$002Dblock(Symbol.for('css'))(`
-    textarea { overflow: auto; }
-  `),
+  code$002Dblock(Symbol.for('css'))(`textarea { overflow: auto; }
+`),
   p([
     'The ',
     code('overflow'),

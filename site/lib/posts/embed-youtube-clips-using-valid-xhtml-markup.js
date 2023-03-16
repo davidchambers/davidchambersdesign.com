@@ -95,14 +95,13 @@ const body = [
     code('video_id'),
     ' in the following code with -- you\n    guessed it -- the video\'s ID.'
   ]),
-  code$002Dblock(Symbol.for('html'))(`
-    <object class="youtube"
-            type="application/x-shockwave-flash"
-            data="http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0">
-        <param name="movie" value="http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0" />
-        <param name="allowFullScreen" value="true" />
-    </object>
-  `),
+  code$002Dblock(Symbol.for('html'))(`<object class="youtube"
+        type="application/x-shockwave-flash"
+        data="http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0">
+    <param name="movie" value="http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0" />
+    <param name="allowFullScreen" value="true" />
+</object>
+`),
   p([
     code('rel=0'),
     ' is often useful to include (as I\'ve done\n    in the example above) as it prevents thumbnails for related\n    videos from being displayed at the end of the clip.'
@@ -119,13 +118,12 @@ const body = [
     code('height'),
     ' attributes in the markup.'
   ]),
-  code$002Dblock(Symbol.for('css'))(`
-    object.youtube
-    {
-        width: 100%;
-        height: 385px;
-    }
-  `)
+  code$002Dblock(Symbol.for('css'))(`object.youtube
+{
+    width: 100%;
+    height: 385px;
+}
+`)
 ];
 export default {
   ['id']: 25,

@@ -94,13 +94,11 @@ import datetime from '../datetime.js';
 const body = [
   p(['I write a lot of Python. I also write a lot of JavaScript. As I switch\n    between the two (often several times in a day) I sometimes find myself\n    trying to do something in one using the syntax of the other. The most\n    common example is joining a list.']),
   p(['Python:']),
-  code$002Dblock(Symbol.for('python'))(`
-    ' '.join(['foo', 'bar'])
-  `),
+  code$002Dblock(Symbol.for('python'))(`' '.join(['foo', 'bar'])
+`),
   p(['JavaScript:']),
-  code$002Dblock(Symbol.for('javascript'))(`
-    ['foo', 'bar'].join(' ')
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`['foo', 'bar'].join(' ')
+`),
   p(['Often -- as is the case above -- the syntactical differences are\n    minor, but there are times when there\'s no direct translation.']),
   p([
     a('http://mootools.net/')('MooTools'),
@@ -113,18 +111,16 @@ const body = [
     code('Array'),
     ' object.\n      This makes it possible to write some rather terse conditional\n      statements.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    var numbers = [87, 33, 21, 75];
-    if (numbers.every(function (n) { return n % 3 == 0; })) {
-        window.alert('The numbers are all divisible by 3.');
-    }
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`var numbers = [87, 33, 21, 75];
+if (numbers.every(function (n) { return n % 3 == 0; })) {
+    window.alert('The numbers are all divisible by 3.');
+}
+`),
   p(['Python lists have no comparable method, so how would one write\n    this in Python?']),
-  code$002Dblock(Symbol.for('python'))(`
-    numbers = [87, 33, 21, 75]
-    if [n for n in numbers if n % 3 == 0] == numbers:
-        print 'The numbers are all divisible by 3.'
-  `),
+  code$002Dblock(Symbol.for('python'))(`numbers = [87, 33, 21, 75]
+if [n for n in numbers if n % 3 == 0] == numbers:
+    print 'The numbers are all divisible by 3.'
+`),
   p([
     'This approach involves using a list comprehension to create a\n    list of numbers which are divisible by 3, and comparing this list\n    to ',
     code('numbers'),
@@ -140,37 +136,34 @@ const body = [
       em('is'),
       ' an\n      elegant way to express this in Python:'
     ]),
-    code$002Dblock(Symbol.for('python'))(`
-      if all((n % 3 == 0 for n in numbers)):
-           print 'The numbers are all divisible by 3.'
-    `)
+    code$002Dblock(Symbol.for('python'))(`if all((n % 3 == 0 for n in numbers)):
+     print 'The numbers are all divisible by 3.'
+`)
   ]),
   h3('Now for something a bit more challenging'),
   p(['Assume that we have a list of documents, and we want to know which\n    of the documents contain all the terms in a list of search terms.']),
-  code$002Dblock(Symbol.for('javascript'))(`
-    // (MooTools) JavaScript
+  code$002Dblock(Symbol.for('javascript'))(`// (MooTools) JavaScript
 
-    var terms = ['python', 'list', 'methods'], matches = [];
-    documents.each(function (document) {
-        if (terms.every(function (term) {
-            return document.body.indexOf(term) != -1;
-        })) matches.append(document);
-    });
-  `),
+var terms = ['python', 'list', 'methods'], matches = [];
+documents.each(function (document) {
+    if (terms.every(function (term) {
+        return document.body.indexOf(term) != -1;
+    })) matches.append(document);
+});
+`),
   p([
     'Here, we ',
     em('could'),
     ' use the list comprehension approach\n    as before.'
   ]),
-  code$002Dblock(Symbol.for('python'))(`
-    # Python
+  code$002Dblock(Symbol.for('python'))(`# Python
 
-    terms = ['python', 'list', 'methods']
-    matches = []
-    for document in documents:
-        if [t for t in terms if document.body.find(t) != -1] == terms:
-            matches.append(document)
-  `),
+terms = ['python', 'list', 'methods']
+matches = []
+for document in documents:
+    if [t for t in terms if document.body.find(t) != -1] == terms:
+        matches.append(document)
+`),
   p([
     'This is reasonably succinct, but not terribly efficient since\n    each document is checked for ',
     em('every'),
@@ -184,16 +177,15 @@ const body = [
       '\n    clause!'
     ])
   ]),
-  code$002Dblock(Symbol.for('python'))(`
-    terms = ['python', 'list', 'methods']
-    matches = []
-    for document in documents:
-        for term in terms:
-            if document.body.find(term) == -1:
-                break
-        else: # every term was found
-            matches.append(document)
-  `),
+  code$002Dblock(Symbol.for('python'))(`terms = ['python', 'list', 'methods']
+matches = []
+for document in documents:
+    for term in terms:
+        if document.body.find(term) == -1:
+            break
+    else: # every term was found
+        matches.append(document)
+`),
   p([
     'From ',
     a('http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops')('4. More Control Flow Tools'),

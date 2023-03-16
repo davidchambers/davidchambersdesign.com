@@ -32,15 +32,7 @@ captioned-images images = {
 };
 
 code-block language source-code = {
-  lines =
-    S.fromMaybe [] {S.chain S.init {S.tail {S.lines source-code}}};
-  trim-leading-spaces line =
-    S.fromMaybe line
-                {S.chain {prefix => S.stripPrefix prefix line}
-                         {S.map {x => x.match}
-                                {S.chain {S.match new RegExp("^[ ]*", "")}
-                                         {S.head lines}}}};
-  pre {code {text {S.unlines {S.map trim-leading-spaces lines}}}}
+  pre {code {text source-code}}
 };
 
 decorative-image src = {

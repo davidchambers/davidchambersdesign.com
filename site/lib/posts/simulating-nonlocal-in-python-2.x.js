@@ -94,16 +94,15 @@ const body = [
       a('http://en.wikipedia.org/wiki/Closure_(computer_science)')('Closure'),
       ' is truly wonderful. JavaScript -- despite its\n      plethora of quirks -- is now widely appreciated, thanks in large\n      part to its lexical scoping. Python 3 is lexically-scoped, too,\n      as the following code demonstrates.'
     ]),
-    code$002Dblock(Symbol.for('python'))(`
-      def cache(saved=None):
-          def _(thing=None):
-              nonlocal saved
-              if thing is not None:
-                  saved = thing
-              return saved
-          return _
-      cache = cache()
-    `),
+    code$002Dblock(Symbol.for('python'))(`def cache(saved=None):
+    def _(thing=None):
+        nonlocal saved
+        if thing is not None:
+            saved = thing
+        return saved
+    return _
+cache = cache()
+`),
     p([
       'If (the rebound) ',
       code('cache'),
@@ -117,12 +116,11 @@ const body = [
       code('saved'),
       '\n      and returned.'
     ]),
-    code$002Dblock(Symbol.for('TK'))(`
-      >>> cache(2**3)
-      8
-      >>> cache()
-      8
-    `),
+    code$002Dblock(Symbol.for('TK'))(`>>> cache(2**3)
+8
+>>> cache()
+8
+`),
     p([
       'This works thanks to the ',
       code('nonlocal'),
@@ -130,28 +128,26 @@ const body = [
     ])
   ]),
   h3('Bringing lexical scoping to Python 2.x'),
-  code$002Dblock(Symbol.for('python'))(`
-    def cache(saved=None):
-        def _(thing=None):
-            # nonlocal saved
-            if thing is not None:
-                saved = thing
-            return saved
-        return _
-    cache = cache()
-  `),
+  code$002Dblock(Symbol.for('python'))(`def cache(saved=None):
+    def _(thing=None):
+        # nonlocal saved
+        if thing is not None:
+            saved = thing
+        return saved
+    return _
+cache = cache()
+`),
   p([
     'The ',
     code('nonlocal'),
     ' line is commented out as it\'s a syntax\n    error in Python 2.x.'
   ]),
-  code$002Dblock(Symbol.for('TK'))(`
-    >>> cache(2**3)
-    8
-    >>> cache()
-    ...
-    UnboundLocalError: local variable 'saved' referenced before assignment
-  `),
+  code$002Dblock(Symbol.for('TK'))(`>>> cache(2**3)
+8
+>>> cache()
+...
+UnboundLocalError: local variable 'saved' referenced before assignment
+`),
   p([
     'When ',
     code('cache'),
@@ -177,28 +173,26 @@ const body = [
   ]),
   p(['It is possible to simulate lexical scoping in Python 2.x.\n    The approaches I find most palatable utilize a dictionary\n    or a function object as a namespace accessible to both the\n    inner and outer functions.']),
   h4('Dictionary'),
-  code$002Dblock(Symbol.for('python'))(`
-    def cache():
-        ns = {'saved': None}
-        def _(thing=None):
-            if thing is not None:
-                ns['saved'] = thing
-            return ns['saved']
-        return _
-    cache = cache()
-  `),
+  code$002Dblock(Symbol.for('python'))(`def cache():
+    ns = {'saved': None}
+    def _(thing=None):
+        if thing is not None:
+            ns['saved'] = thing
+        return ns['saved']
+    return _
+cache = cache()
+`),
   h4('Function object'),
-  code$002Dblock(Symbol.for('python'))(`
-    def cache():
-        def ns(): pass
-        ns.saved = None
-        def _(thing=None):
-            if thing is not None:
-                ns.saved = thing
-            return ns.saved
-        return _
-    cache = cache()
-  `),
+  code$002Dblock(Symbol.for('python'))(`def cache():
+    def ns(): pass
+    ns.saved = None
+    def _(thing=None):
+        if thing is not None:
+            ns.saved = thing
+        return ns.saved
+    return _
+cache = cache()
+`),
   p([
     'The dictionary approach is arguably more correct, but subscript\n    notation hurts my eyes so I prefer to stick things on a function\n    object. It\'s useful that ',
     code('def ns(): pass'),

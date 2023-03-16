@@ -103,15 +103,13 @@ const body = [
     a('http://jashkenas.github.com/coffee-script/')('CoffeeScript'),
     '\n    and as such are largely free of the parentheses, squiggly brackets,\n    and semicolons that riddle the equivalent JavaScript code. For those\n    unfamiliar with CoffeeScript\'s syntax, here\'s the fifteen second\n    rundown:'
   ]),
-  code$002Dblock(Symbol.for('coffeescript'))(`
-    qux = foo 'bar', (baz) -> 'Hello, world!'
-  `),
+  code$002Dblock(Symbol.for('coffeescript'))(`qux = foo 'bar', (baz) -> 'Hello, world!'
+`),
   p(['The above is equivalent to:']),
-  code$002Dblock(Symbol.for('javascript'))(`
-    var qux = foo('bar', function (baz) {
-      return 'Hello, world!';
-    });
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`var qux = foo('bar', function (baz) {
+  return 'Hello, world!';
+});
+`),
   p([
     'CoffeeScript uses ',
     code('->'),
@@ -121,33 +119,31 @@ const body = [
   ]),
   h3('Step 1: Create a server'),
   p(['This is Node 101 stuff:']),
-  code$002Dblock(Symbol.for('coffeescript'))(`
-    fs   = require 'fs'
-    http = require 'http'
+  code$002Dblock(Symbol.for('coffeescript'))(`fs   = require 'fs'
+http = require 'http'
 
-    server = http.createServer (req, res) ->
-      fs.readFile "#{__dirname}/socket.io.demo.html", (err, data) ->
-        res.writeHead 200, 'Content-Type': 'text/html'
-        res.end data, 'utf8'
+server = http.createServer (req, res) ->
+  fs.readFile "#{__dirname}/socket.io.demo.html", (err, data) ->
+    res.writeHead 200, 'Content-Type': 'text/html'
+    res.end data, 'utf8'
 
-    server.listen 1337
-  `),
+server.listen 1337
+`),
   p(['The server we\'ve created simply responds to any request on\n    port 1337 with the contents of "socket.io.demo.html", which\n    must reside in the same directory as the script we\'re creating.']),
   h3('Step 2: Add server-side event handlers'),
-  code$002Dblock(Symbol.for('coffeescript'))(`
-    io = require('socket.io').listen server
+  code$002Dblock(Symbol.for('coffeescript'))(`io = require('socket.io').listen server
 
-    io.sockets.on 'connection', (socket) ->
+io.sockets.on 'connection', (socket) ->
 
-      socket.on 'publish', (message) ->
-        io.sockets.send message
+  socket.on 'publish', (message) ->
+    io.sockets.send message
 
-      socket.on 'broadcast', (message) ->
-        socket.broadcast.send message
+  socket.on 'broadcast', (message) ->
+    socket.broadcast.send message
 
-      socket.on 'whisper', (message) ->
-        socket.broadcast.emit 'secret', message
-  `),
+  socket.on 'whisper', (message) ->
+    socket.broadcast.emit 'secret', message
+`),
   p(['Here we\'ve instructed our server to listen for three custom\n    events: "publish", "broadcast", and "whisper". Note that\n    these particular names are not special in any way.']),
   p([
     'When the server receives one of these events, it invokes the\n    appropriate handler with the event\'s data as the sole argument.\n    Since we\'re expecting a string argument in each of these cases,\n    we\'ve named the parameter ',
@@ -173,64 +169,62 @@ const body = [
     '\n    to produce the actual JavaScript file we\'ll run in Node. We\'re now\n    ready to tackle the client-side component.'
   ]),
   h3('Step 3: Create the HTML file'),
-  code$002Dblock(Symbol.for('html'))(`
-    <!doctype html>
-    <html>
-      <head>
-        <title>Socket.IO demo</title>
-      </head>
-      <body>
-        <h1>Socket.IO demo</h1>
-        <input type="text" autofocus="autofocus" />
-        <button type="button">publish</button>
-        <button type="button">broadcast</button>
-        <button type="button">whisper</button>
-        <p>Status: <span id="status">Undefined</span></p>
-        <ol id="messages"></ol>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="http://code.jquery.com/jquery-latest.js"></script>
-        <script src="http://jashkenas.github.com/coffee-script/extras/coffee-script.js"></script>
-        <script type="text/coffeescript">
+  code$002Dblock(Symbol.for('html'))(`<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO demo</title>
+  </head>
+  <body>
+    <h1>Socket.IO demo</h1>
+    <input type="text" autofocus="autofocus" />
+    <button type="button">publish</button>
+    <button type="button">broadcast</button>
+    <button type="button">whisper</button>
+    <p>Status: <span id="status">Undefined</span></p>
+    <ol id="messages"></ol>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="http://jashkenas.github.com/coffee-script/extras/coffee-script.js"></script>
+    <script type="text/coffeescript">
 
-          jQuery ($) ->
+      jQuery ($) ->
 
-            // TODO: add client-side logic
+        // TODO: add client-side logic
 
-        </script>
-      </body>
-    </html>
-  `),
+    </script>
+  </body>
+</html>
+`),
   p([
     code('<script src="/socket.io/socket.io.js"></script>'),
     ' was\n    the line that most confused me in the tutorials I read. I assumed\n    that I\'d need to serve this file myself, which turned out not to\n    be the case. Somehow, it just works.'
   ]),
   p(['Note the inclusion of "coffee-script.js", which enables us to\n    write our client-side logic in CoffeeScript, too. :)']),
   h3('Step 4: Add client-side Socket.IO event handlers'),
-  code$002Dblock(Symbol.for('coffeescript'))(`
-    $status = $ '#status'
-    socket = io.connect()
+  code$002Dblock(Symbol.for('coffeescript'))(`$status = $ '#status'
+socket = io.connect()
 
-    socket.on 'connect', ->
-      $status.text 'Connected'
+socket.on 'connect', ->
+  $status.text 'Connected'
 
-    socket.on 'disconnect', ->
-      $status.text 'Disconnected'
+socket.on 'disconnect', ->
+  $status.text 'Disconnected'
 
-    socket.on 'reconnecting', (seconds) ->
-      $status.text "Reconnecting in #{seconds} seconds"
+socket.on 'reconnecting', (seconds) ->
+  $status.text "Reconnecting in #{seconds} seconds"
 
-    socket.on 'reconnect', ->
-      $status.text 'Reconnected'
+socket.on 'reconnect', ->
+  $status.text 'Reconnected'
 
-    socket.on 'reconnect_failed', ->
-      $status.text 'Failed to reconnect'
+socket.on 'reconnect_failed', ->
+  $status.text 'Failed to reconnect'
 
-    socket.on 'message', (message) ->
-      $('<li>').text(message).appendTo $('#messages')
+socket.on 'message', (message) ->
+  $('<li>').text(message).appendTo $('#messages')
 
-    socket.on 'secret', (message) ->
-      console.log message
-  `),
+socket.on 'secret', (message) ->
+  console.log message
+`),
   p(['The first five events -- "connect", "disconnect",\n    "reconnecting", "reconnect", and "reconnect_failed" --\n    are emitted by Socket.IO in response to changes in the\n    connection status. We\'ve registered a handler for each\n    in order to expose this information to users.']),
   p([
     'We\'ve also added handlers for "message" and "secret"\n    events. Our "message" handler will be called whenever\n    the server receives a "publish" or "broadcast" event\n    (',
@@ -241,13 +235,12 @@ const body = [
   ]),
   p(['All that remains is to have the client emit appropriate\n    custom events in response to input from users.']),
   h3('Step 5: Add DOM event handlers which emit custom events'),
-  code$002Dblock(Symbol.for('coffeescript'))(`
-    $input = $ 'input'
+  code$002Dblock(Symbol.for('coffeescript'))(`$input = $ 'input'
 
-    $('button').click ->
-      socket.emit $(this).text(), $input.val()
-      $input.val('').focus()
-  `),
+$('button').click ->
+  socket.emit $(this).text(), $input.val()
+  $input.val('').focus()
+`),
   p(['Here, we\'ve bound a "click" handler to the three buttons.\n    Whenever one of these buttons is clicked the appropriate event\n    is emitted ("publish", "broadcast", or "whisper" depending\n    on the button clicked). The current value of the text input is\n    used as the event\'s data.']),
   p([
     'That\'s it. We can now run ',

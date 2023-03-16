@@ -101,38 +101,35 @@ const body = [
       ',\n      which is a well suited to the task: it can be described in just\n      a couple of lines of code yet benefits enormously from caching\n      due to its recursive nature.'
     ]),
     h3('JavaScript Fibonacci without caching'),
-    code$002Dblock(Symbol.for('javascript'))(`
-      function fibonacci(n) {
-          if (n <= 1) return n;
-          return fibonacci(n - 2) + fibonacci(n - 1);
-      }
-    `)
+    code$002Dblock(Symbol.for('javascript'))(`function fibonacci(n) {
+    if (n <= 1) return n;
+    return fibonacci(n - 2) + fibonacci(n - 1);
+}
+`)
   ]),
   p(['I created a simple timer:']),
-  code$002Dblock(Symbol.for('javascript'))(`
-    function timer(func) {
-        var i = 10, start;
-        while (i--) {
-            start = new Date;
-            func.apply(this, [].slice.call(arguments, 1));
-            console.log(func.name, 'executed in', new Date - start, 'ms');
-        }
+  code$002Dblock(Symbol.for('javascript'))(`function timer(func) {
+    var i = 10, start;
+    while (i--) {
+        start = new Date;
+        func.apply(this, [].slice.call(arguments, 1));
+        console.log(func.name, 'executed in', new Date - start, 'ms');
     }
-  `),
+}
+`),
   p(['How does the vanilla function perform?']),
-  code$002Dblock(Symbol.for('TK'))(`
-    >>> timer(fibonacci, 35);
-    fibonacci executed in 559 ms
-    fibonacci executed in 559 ms
-    fibonacci executed in 559 ms
-    fibonacci executed in 557 ms
-    fibonacci executed in 557 ms
-    fibonacci executed in 559 ms
-    fibonacci executed in 558 ms
-    fibonacci executed in 558 ms
-    fibonacci executed in 559 ms
-    fibonacci executed in 559 ms
-  `),
+  code$002Dblock(Symbol.for('TK'))(`>>> timer(fibonacci, 35);
+fibonacci executed in 559 ms
+fibonacci executed in 559 ms
+fibonacci executed in 559 ms
+fibonacci executed in 557 ms
+fibonacci executed in 557 ms
+fibonacci executed in 559 ms
+fibonacci executed in 558 ms
+fibonacci executed in 558 ms
+fibonacci executed in 559 ms
+fibonacci executed in 559 ms
+`),
   p([
     'Values of ',
     code('n'),
@@ -149,36 +146,34 @@ const body = [
     code('fibonacci'),
     ' function. This ensures that our cache\n    cannot be overwritten, accidentally or otherwise.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    fibonacci = (function () {
+  code$002Dblock(Symbol.for('javascript'))(`fibonacci = (function () {
 
-        var cache = {};
+    var cache = {};
 
-        return function (n) {
+    return function (n) {
 
-            var cached = cache[n];
-            if (cached) return cached;
+        var cached = cache[n];
+        if (cached) return cached;
 
-            if (n <= 1) return n;
+        if (n <= 1) return n;
 
-            return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
-        };
-    }());
-  `),
+        return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
+    };
+}());
+`),
   p(['Does caching make a difference?']),
-  code$002Dblock(Symbol.for('TK'))(`
-    >>> timer(fibonacci, 35);
-     executed in 1 ms
-     executed in 0 ms
-     executed in 0 ms
-     executed in 0 ms
-     executed in 0 ms
-     executed in 0 ms
-     executed in 0 ms
-     executed in 0 ms
-     executed in 0 ms
-     executed in 0 ms
-  `),
+  code$002Dblock(Symbol.for('TK'))(`>>> timer(fibonacci, 35);
+ executed in 1 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+ executed in 0 ms
+`),
   p([
     'Undeniably, yes. Not only is the new version of the function much\n    faster, but its less recursive nature makes it possible to find\n    Fibonacci numbers for much larger values of ',
     code('n'),
@@ -191,70 +186,64 @@ const body = [
     code('if (cached)'),
     ' statement is no longer appropriate.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    fibonacci = (function () {
+  code$002Dblock(Symbol.for('javascript'))(`fibonacci = (function () {
 
-        var cache = { 0:0, 1:1 };
+    var cache = { 0:0, 1:1 };
 
-        return function (n) {
+    return function (n) {
 
-            var cached = cache[n];
-            if (typeof cached !== 'undefined') return cached;
+        var cached = cache[n];
+        if (typeof cached !== 'undefined') return cached;
 
-            return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
-        };
-    }());
-  `),
+        return (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
+    };
+}());
+`),
   h3('JavaScript Fibonacci with caching via function property'),
   p(['It\'s also possible to cache results without using closure.\n    This is important since Python (which I\'ll get to shortly)\n    does not have this capability.']),
-  code$002Dblock(Symbol.for('javascript'))(`
-    function fibonacci(n) {
+  code$002Dblock(Symbol.for('javascript'))(`function fibonacci(n) {
 
-        if (!fibonacci.cache) fibonacci.cache = {};
+    if (!fibonacci.cache) fibonacci.cache = {};
 
-        var cached = fibonacci.cache[n];
-        if (cached) return cached;
+    var cached = fibonacci.cache[n];
+    if (cached) return cached;
 
-        if (n <= 1) return n;
+    if (n <= 1) return n;
 
-        return (fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
-    }
-  `),
+    return (fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
+}
+`),
   p(['To avoid the overhead of checking for the existence of the cache\n    on each invocation, the cache could be initialized outside of the\n    function definition.']),
-  code$002Dblock(Symbol.for('javascript'))(`
-    function fibonacci(n) {
-        // function body
-    }
-    fibonacci.cache = {};
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`function fibonacci(n) {
+    // function body
+}
+fibonacci.cache = {};
+`),
   p(['Caching via function property and caching via closure performed\n    equally well for me in Safari on Mac OS X.']),
   h3('Python Fibonacci without caching'),
-  code$002Dblock(Symbol.for('python'))(`
-    def fibonacci(n):
-        if n <= 1:
-            return n
-        else:
-            return fibonacci(n - 2) + fibonacci(n - 1)
-  `),
+  code$002Dblock(Symbol.for('python'))(`def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n - 2) + fibonacci(n - 1)
+`),
   p(['Does the vanilla Python function outperform the vanilla JavaScript\n    function?']),
-  code$002Dblock(Symbol.for('TK'))(`
-    >>> import time
-    >>> for i in range(10): t = time.time(); fibonacci(35); print time.time() - t;
-  `),
+  code$002Dblock(Symbol.for('TK'))(`>>> import time
+>>> for i in range(10): t = time.time(); fibonacci(35); print time.time() - t;
+`),
   p(['Interestingly, Python was more than an order of magnitude slower than\n    JavaScript in this worst-case scenario. The point of this exercise is\n    not to compare apples to oranges, however, it\'s to see how much of a\n    difference caching makes in each case.']),
   h3('Python Fibonacci with caching via function property'),
-  code$002Dblock(Symbol.for('python'))(`
-    def fibonacci(n):
-        if n in fibonacci.cache:
-            return fibonacci.cache[n]
-        elif n <= 1:
-            return n
-        else:
-            f = fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
-            return f
+  code$002Dblock(Symbol.for('python'))(`def fibonacci(n):
+    if n in fibonacci.cache:
+        return fibonacci.cache[n]
+    elif n <= 1:
+        return n
+    else:
+        f = fibonacci.cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
+        return f
 
-    fibonacci.cache = {}
-  `),
+fibonacci.cache = {}
+`),
   p([
     'This resulted in ',
     code('fibonacci(35)'),
@@ -262,16 +251,15 @@ const body = [
   ]),
   h3('Python Fibonacci with caching via mutable default argument'),
   p(['For the sake of completion I\'ll include this unappealing approach.']),
-  code$002Dblock(Symbol.for('python'))(`
-    def fibonacci(n, _cache={}):
-        if n <= 1:
-            return n
-        elif n in _cache:
-            return _cache[n]
-        else:
-            f = _cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
-            return f
-  `),
+  code$002Dblock(Symbol.for('python'))(`def fibonacci(n, _cache={}):
+    if n <= 1:
+        return n
+    elif n in _cache:
+        return _cache[n]
+    else:
+        f = _cache[n] = fibonacci(n - 2) + fibonacci(n - 1)
+        return f
+`),
   p([
     'How does this work? In Python, default arguments are brought to\n    life upon a function\'s creation, not its execution. Thus when ',
     code('fibonacci'),

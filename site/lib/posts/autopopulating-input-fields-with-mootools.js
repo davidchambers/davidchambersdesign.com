@@ -94,23 +94,22 @@ const body = [
     a('/autopopulating-input-fields-with-prototype/')('Auto-populating input fields with Prototype'),
     '.\n    Looking at the code now, I realize that it\'s not very pretty.\n    I\'m rewriting this site\'s JavaScript in MooTools, and the new\n    code is quite a bit more elegant.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    // provide input hints
-    window.addEvent('domready', function () {
-        $$('input[placeholder]').addEvents({
-            focus: function () {
-                if (this.hasClass('placeholder')) {
-                    this.removeClass('placeholder').set('value', '');
-                }
-            },
-            blur: function () {
-                if (this.get('value') === '') {
-                    this.addClass('placeholder').set('value', this.get('placeholder'));
-                }
+  code$002Dblock(Symbol.for('javascript'))(`// provide input hints
+window.addEvent('domready', function () {
+    $$('input[placeholder]').addEvents({
+        focus: function () {
+            if (this.hasClass('placeholder')) {
+                this.removeClass('placeholder').set('value', '');
             }
-        }).fireEvent('blur');
-    });
-  `),
+        },
+        blur: function () {
+            if (this.get('value') === '') {
+                this.addClass('placeholder').set('value', this.get('placeholder'));
+            }
+        }
+    }).fireEvent('blur');
+});
+`),
   p([
     'I really appreciate the fact that MooTools provides ',
     code('addEvents'),

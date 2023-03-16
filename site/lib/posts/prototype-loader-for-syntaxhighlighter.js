@@ -138,38 +138,36 @@ const body = [
       ])]),
     li([
       p(['Replace:']),
-      code$002Dblock(Symbol.for('html'))(`
-        <script src="/path/to/scripts/shCore.js"></script>
-        <script src="/path/to/scripts/shBrushAS3.js"></script>
-        <script src="/path/to/scripts/shBrushBash.js"></script>
-        .
-        .
-        .
-        <script src="/path/to/scripts/shBrushVb.js"></script>
-        <script src="/path/to/scripts/shBrushXml.js"></script>
+      code$002Dblock(Symbol.for('html'))(`<script src="/path/to/scripts/shCore.js"></script>
+<script src="/path/to/scripts/shBrushAS3.js"></script>
+<script src="/path/to/scripts/shBrushBash.js"></script>
+.
+.
+.
+<script src="/path/to/scripts/shBrushVb.js"></script>
+<script src="/path/to/scripts/shBrushXml.js"></script>
 
-        <script>SyntaxHighlighter.all()</script>
-      `),
+<script>SyntaxHighlighter.all()</script>
+`),
       p(['with:']),
-      code$002Dblock(Symbol.for('html'))(`
-        <script>
-            function Brush(name, filename, aliases)
-            {
-                this.name = name;
-                this.filename = filename;
-                this.aliases = aliases;
-            }
-            var settings = {
-                selector: 'head',
-                path: 'http://example.com/sh/',
-                stylesheets: ['shThemeDefault'],
-                brushes: [],
-                extensions: { stylesheet: 'css', brush: 'js' },
-                defaults: {}
-            };
-        </script>
-        <script src="/path/to/scripts/loader.js"></script>
-      `)
+      code$002Dblock(Symbol.for('html'))(`<script>
+    function Brush(name, filename, aliases)
+    {
+        this.name = name;
+        this.filename = filename;
+        this.aliases = aliases;
+    }
+    var settings = {
+        selector: 'head',
+        path: 'http://example.com/sh/',
+        stylesheets: ['shThemeDefault'],
+        brushes: [],
+        extensions: { stylesheet: 'css', brush: 'js' },
+        defaults: {}
+    };
+</script>
+<script src="/path/to/scripts/loader.js"></script>
+`)
     ]),
     li([p([
         'Replace both instances of ',
@@ -197,20 +195,18 @@ const body = [
     code('settings.stylesheets'),
     '\n    is an array containing just the default style sheet. This can easily be\n    modified:'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    stylesheets: ['shThemeCoda', 'shThemeAppleScript'],
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`stylesheets: ['shThemeCoda', 'shThemeAppleScript'],
+`),
   p([
     strong('Brushes.'),
     ' By default, ',
     code('settings.brushes'),
     '\n    is an empty array. All the bundled brushes are handled automatically,\n    but additional brushes can be included by adding them to this array:'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    brushes: [
-        new Brush('AppleScript', 'shBrushAppleScript', ['applescript'])
-    ],
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`brushes: [
+    new Brush('AppleScript', 'shBrushAppleScript', ['applescript'])
+],
+`),
   p([
     'When creating a ',
     code('Brush'),
@@ -232,12 +228,11 @@ const body = [
     code('settings.defaults'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`
-    defaults: {
-        'auto-links': false,
-        'html-script': true
-    }
-  `),
+  code$002Dblock(Symbol.for('javascript'))(`defaults: {
+    'auto-links': false,
+    'html-script': true
+}
+`),
   p([
     'Many thanks to Dan Breslau for letting me know about ',
     code('SyntaxHighlighter.highlight()'),

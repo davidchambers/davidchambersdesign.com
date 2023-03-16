@@ -109,9 +109,8 @@ const body = [
     code('src'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('html'))(`
-    <script src="/scripts/prototype+scriptaculous.min.js?p=1.6.1&amp;s=1.8.3"></script>
-  `),
+  code$002Dblock(Symbol.for('html'))(`<script src="/scripts/prototype+scriptaculous.min.js?p=1.6.1&amp;s=1.8.3"></script>
+`),
   p(['This prevents caching issues that might otherwise arise\n    upon updating to a newer version of prototype+scriptaculous\n    (I\'ll update the three files -- and this post -- each time\n    a new version of Prototype is released).'])
 ];
 export default {
