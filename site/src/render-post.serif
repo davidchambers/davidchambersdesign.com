@@ -1,32 +1,33 @@
-import S from "sanctuary";
-
 import * from "./elements.serif";
 import tags from "./tags.serif";
 
 export default render-post;
 
 render-post post related-posts = [
-  article' {S.maybe {} {id => {id: id}} {S.value "article-id" post}} [
+  article' {if "article-id" in post then {id: post.article-id} else {}} [
     header [
       h1 post.title,
-      time {datetime: post.datetime.toFormat("yyyy-MM-dd'T'HH:mm:ssZZ"), pubdate: "pubdate"}
-           post.datetime.toFormat("d MMMM y"),
+      time {
+        datetime: post.datetime.toFormat("yyyy-MM-dd'T'HH:mm:ssZZ"),
+        pubdate: "pubdate",
+      } [
+        post.datetime.toFormat("d MMMM y"),
+      ],
     ],
     ...post.body,
-    footer' {class: "metadata"}
-            {S.join [[ul {li' {class: "shorturl"} {a `http://dċd.ws/${post.id}/` "Short URL"}}],
-                     {S.array []
-                              {head => tail => [
-                                 h4 "This post has the following tags:",
-                                 ol {S.map {tag => li {a `/tag/${tag}/` tags[tag]}}
-                                           [head, ...tail]},
-                               ]}
-                              post.tags}]},
+    footer' {class: "metadata"} [
+      ul {li' {class: "shorturl"} {a `http://dċd.ws/${post.id}/` "Short URL"}},
+      ...{
+        if post.tags.length === 0 then [] else [
+          h4 "This post has the following tags:",
+          ol post.tags.map(tag => li [a `/tag/${tag}/` tags[tag]]),
+        ]
+      },
+    ],
     ...{
       if related-posts.length === 0 then [] else [
         h3' {id: "related"} "Possibly related posts",
-        ul {S.map {related-post => li {a `/${related-post.slug}/` related-post.title}}
-                  related-posts},
+        ul {related-posts.map(post => li [a `/${post.slug}/` post.title])},
       ]
     },
   ],

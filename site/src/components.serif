@@ -12,13 +12,13 @@ export {
 captioned-images images = {
   dl
     images.flatMap(image => [
-      dt {img {alt: image.alt, src: image.src}},
+      dt [img {alt: image.alt, src: image.src}],
       dd image.caption,
     ])
 };
 
 code-block language source-code = {
-  pre {code {text source-code}}
+  pre $ code $ text source-code
 };
 
 update datetime body = {

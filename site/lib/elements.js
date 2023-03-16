@@ -8,12 +8,7 @@ const text = value => ({
   text: [value],
   render: indent => level => inline => escape(value)
 });
-const canonicalize$002Dattrs = S.map(String);
-const canonicalize$002Dchildren = S.compose(S.map(child => typeof child == 'string' ? S.pipe([
-  s => s.replace(new RegExp('^[ ]+', 'gm'), ' '),
-  s => s.replaceAll('\n', ''),
-  text
-])(child) : child))(S.unless(Array.isArray)(Array.of));
+const canonicalize$002Dchildren = children => (Array.isArray(children) ? children : [children]).map(child => typeof child == 'string' ? text(child.replace(new RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', '')) : child);
 const render$002Dblock$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ S.foldMap(String)(entry => ` ${ entry[0] }="${ escape(String(entry[1]).replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`)(Object.entries(attrs)) }>\n${ S.foldMap(String)(child => child.render(indent)(level + 1)(false))(children) }${ indent.repeat(level) }</${ Symbol.keyFor(tag$002Dname) }>\n`;
 const render$002Dinline$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ S.foldMap(String)(entry => ` ${ entry[0] }="${ escape(String(entry[1]).replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`)(Object.entries(attrs)) }>${ S.foldMap(String)(child => child.render(indent)(0)(true))(children) }</${ Symbol.keyFor(tag$002Dname) }>${ inline ? '' : '\n' }`;
 const render$002Dself$002Dclosing$002Delement = tag$002Dname => attrs => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ S.foldMap(String)(entry => ` ${ entry[0] }="${ escape(String(entry[1]).replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`)(Object.entries(attrs)) } />${ inline ? '' : '\n' }`;

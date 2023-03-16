@@ -16,7 +16,7 @@ coerce x = {
 
 split-every-2 xs = {
   S.array []
-          {k => S.array [] {v => asdf => [[k, v], ...{split-every-2 asdf}]}}
+          {k => S.array [] $ v => asdf => [[k, v], ...{split-every-2 asdf}]}
           xs
 };
 
@@ -60,6 +60,6 @@ format-block selectors properties = {
 generate-css = S.pipe [
   screen,
   split-every-2,
-  S.map {pairs => format-block pairs[0] {vendor-prefixes {split-every-2 pairs[1]}}},
+  S.map {pairs => format-block pairs[0] $ vendor-prefixes $ split-every-2 pairs[1]},
   S.joinWith "\n",
 ] coerce;

@@ -103,23 +103,14 @@ text value = {
   render: indent => level => inline => escape value,
 };
 
-canonicalize-attrs = {
-  S.map String
-};
-
-canonicalize-children = {
-  S.compose {S.map {child => {
-                      if typeof child == "string" then {
-                        S.pipe [
-                          s => s.replace(new RegExp("^[ ]+", "gm"), " "),
-                          s => s.replaceAll("\n", ""),
-                          text,
-                        ] child
-                      } else {
-                        child
-                      }
-                    }}}
-            {S.unless Array.isArray Array.of}
+canonicalize-children children = {
+  {if Array.isArray children then children else [children]}.map(child => {
+    if typeof child == "string" then {
+      text child.replace(new RegExp("^[ ]+", "gm"), " ").replaceAll("\n", "")
+    } else {
+      child
+    }
+  })
 };
 
 render-block-element tag-name attrs children indent level inline = {
@@ -129,7 +120,7 @@ render-block-element tag-name attrs children indent level inline = {
     Symbol.keyFor tag-name
   }${
     S.foldMap String
-              {entry => ` ${entry[0]}="${escape {{String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}}"`}
+              {entry => ` ${entry[0]}="${escape {String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}"`}
               {Object.entries attrs}
   }>\n${
     S.foldMap String
@@ -149,7 +140,7 @@ render-inline-element tag-name attrs children indent level inline = {
     Symbol.keyFor tag-name
   }${
     S.foldMap String
-              {entry => ` ${entry[0]}="${escape {{String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}}"`}
+              {entry => ` ${entry[0]}="${escape {String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}"`}
               {Object.entries attrs}
   }>${
     S.foldMap String
@@ -169,7 +160,7 @@ render-self-closing-element tag-name attrs indent level inline = {
     Symbol.keyFor tag-name
   }${
     S.foldMap String
-              {entry => ` ${entry[0]}="${escape {{String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}}"`}
+              {entry => ` ${entry[0]}="${escape {String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}"`}
               {Object.entries attrs}
   } />${
     if inline then "" else "\n"

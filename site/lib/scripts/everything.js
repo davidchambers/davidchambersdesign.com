@@ -329,5 +329,5 @@ write$002Dfile(public_([
 const render$002Ddocument = element => `<!DOCTYPE html>\n${ element.render('  ')(0)(false) }`;
 write$002Dfile(public_(['archives.html']))(render$002Ddocument(base$002Dtemplate('Archives')(render$002Darchives(posts))));
 write$002Dfile(public_(['tags.html']))(render$002Ddocument(base$002Dtemplate('Tags')(render$002Dtags(posts))));
-S.map(page => write$002Dfile(public_([`${ page.slug }.html`]))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))))(pages);
-S.map(post => write$002Dfile(public_([`${ post.slug }.html`]))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post))))))(posts);
+pages.forEach(page => write$002Dfile(public_([`${ page.slug }.html`]))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))));
+posts.forEach(post => write$002Dfile(public_([`${ post.slug }.html`]))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post))))));

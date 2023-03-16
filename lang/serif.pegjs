@@ -496,6 +496,14 @@ ConditionalExpression
     { return Serif.ConditionalExpression(predicate, consequent, alternative); }
   / CoalesceExpression
 
+ApplicationOperator
+  = '$'
+
+ApplicationExpression
+  = callee:ConditionalExpression
+    args:(Separator+ ApplicationOperator Separator+ arg:ApplicationExpression { return arg; })*
+    { return args.reduce((callee, arg) => Serif.Application(callee, [arg]), callee); }
+
 BlockExpression
   = '{' Separator*
     head:Statement
@@ -567,4 +575,4 @@ Separator
   / Comment
 
 Expression
-  = ConditionalExpression
+  = ApplicationExpression

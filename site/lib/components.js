@@ -89,10 +89,10 @@ import {
   video
 } from './elements.js';
 const captioned$002Dimages = images => dl(images.flatMap(image => [
-  dt(img({
-    alt: image.alt,
-    src: image.src
-  })),
+  dt([img({
+      alt: image.alt,
+      src: image.src
+    })]),
   dd(image.caption)
 ]));
 const code$002Dblock = language => source$002Dcode => pre(code(text(source$002Dcode)));

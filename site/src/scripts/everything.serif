@@ -303,20 +303,17 @@ render-document element = {
 };
 
 write-file {public ["archives.html"]}
-           {render-document {base-template "Archives"
-                                           {render-archives posts}}};
+           {render-document $ base-template "Archives" $ render-archives posts};
 
 write-file {public ["tags.html"]}
-           {render-document {base-template "Tags"
-                                           {render-tags posts}}};
+           {render-document $ base-template "Tags" $ render-tags posts};
 
-S.map {page => write-file {public [`${page.slug}.html`]}
-                          {render-document {base-template page.title
-                                                          {render-page page}}}}
-      pages;
+pages.forEach(page => {
+  write-file {public [`${page.slug}.html`]}
+             {render-document $ base-template page.title $ render-page page}
+});
 
-S.map {post => write-file {public [`${post.slug}.html`]}
-                          {render-document {base-template post.title
-                                                          {render-post post
-                                                                       {related-posts posts post}}}}}
-      posts;
+posts.forEach(post => {
+  write-file {public [`${post.slug}.html`]}
+             {render-document $ base-template post.title $ render-post post $ related-posts posts post}
+});
