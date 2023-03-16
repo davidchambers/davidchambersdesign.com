@@ -147,7 +147,7 @@ export const ArrayExpression = (
 });
 
 export interface Property {
-  readonly type: 'property';
+  readonly type: 'Property';
   readonly key: Expression;
   readonly value: Expression;
 }
@@ -156,7 +156,7 @@ export const Property = (
   key: Expression,
   value: Expression,
 ): Property => ({
-  type: 'property',
+  type: 'Property',
   key,
   value,
 });
