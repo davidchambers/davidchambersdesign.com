@@ -87,7 +87,5 @@ import {
   var$0027,
   video
 } from './elements.js';
-const render$002Dpage = page => {
-  return [article(page.body)];
-};
+const render$002Dpage = page => [article(page.body)];
 export default render$002Dpage;

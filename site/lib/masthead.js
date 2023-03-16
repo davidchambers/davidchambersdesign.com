@@ -676,32 +676,28 @@ const yVy = [
   $2190(1),
   $2191(20)
 ];
-const update = positions => {
-  return dir => (() => {
-    const x = S.fst(positions[0]);
-    const y = S.snd(positions[0]);
-    return [
-      dir[0] === Symbol.for('h') ? S.Pair(x + dir[1])(y) : dir[0] === Symbol.for('v') ? S.Pair(x)(y + dir[1]) : S.Pair(x + dir[1][0])(y + dir[1][1]),
-      ...positions
-    ];
-  })();
-};
-const reset = path => {
-  return (() => {
-    const paths = S.extend(S.I)(S.reduce(update)([S.Pair(0)(0)])(path));
-    const xs = S.chain(S.map(S.fst))(paths);
-    const ys = S.chain(S.map(S.snd))(paths);
-    const dx = S.reduce(S.max)(0)(xs) - xs[0];
-    const dy = 0 - ys[0];
-    return [
-      Symbol.for('m'),
-      [
-        dx,
-        dy
-      ]
-    ];
-  })();
-};
+const update = positions => dir => (() => {
+  const x = S.fst(positions[0]);
+  const y = S.snd(positions[0]);
+  return [
+    dir[0] === Symbol.for('h') ? S.Pair(x + dir[1])(y) : dir[0] === Symbol.for('v') ? S.Pair(x)(y + dir[1]) : S.Pair(x + dir[1][0])(y + dir[1][1]),
+    ...positions
+  ];
+})();
+const reset = path => (() => {
+  const paths = S.extend(S.I)(S.reduce(update)([S.Pair(0)(0)])(path));
+  const xs = S.chain(S.map(S.fst))(paths);
+  const ys = S.chain(S.map(S.snd))(paths);
+  const dx = S.reduce(S.max)(0)(xs) - xs[0];
+  const dy = 0 - ys[0];
+  return [
+    Symbol.for('m'),
+    [
+      dx,
+      dy
+    ]
+  ];
+})();
 const paths = S.pipe([
   S.map(char => [
     ...char,

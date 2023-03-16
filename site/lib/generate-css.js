@@ -1,29 +1,23 @@
 import S from 'sanctuary';
 import screen from './css/screen.js';
-const coerce = x => {
-  return Array.isArray(x) ? S.unwords(S.map(coerce)(x)) : typeof x == 'symbol' ? Symbol.keyFor(x) : String(x);
-};
-const split$002Devery$002D2 = xs => {
-  return S.array([])(k => S.array([])(v => asdf => [
-    [
-      k,
-      v
-    ],
-    ...split$002Devery$002D2(asdf)
-  ]))(xs);
-};
-const vendor$002Dprefix = unprefixed => {
-  return prefixed => S.chain(property => property[0] === unprefixed ? [
-    ...prefixed,
-    unprefixed
-  ].map(k => [
+const coerce = x => Array.isArray(x) ? S.unwords(S.map(coerce)(x)) : typeof x == 'symbol' ? Symbol.keyFor(x) : String(x);
+const split$002Devery$002D2 = xs => S.array([])(k => S.array([])(v => asdf => [
+  [
     k,
+    v
+  ],
+  ...split$002Devery$002D2(asdf)
+]))(xs);
+const vendor$002Dprefix = unprefixed => prefixed => S.chain(property => property[0] === unprefixed ? [
+  ...prefixed,
+  unprefixed
+].map(k => [
+  k,
+  property[1]
+]) : [[
+    property[0],
     property[1]
-  ]) : [[
-      property[0],
-      property[1]
-    ]]);
-};
+  ]]);
 const vendor$002Dprefixes = S.pipe([
   vendor$002Dprefix(Symbol.for('border-radius'))([
     Symbol.for('-webkit-border-radius'),
@@ -46,9 +40,7 @@ const vendor$002Dprefixes = S.pipe([
     Symbol.for('-o-transition-timing-function')
   ])
 ]);
-const format$002Dblock = selectors => {
-  return properties => `${ selectors.join(',\n') } {\n${ properties.map(property => `  ${ coerce(property[0]) }: ${ coerce(property[1]) };\n`).join('') }}\n`;
-};
+const format$002Dblock = selectors => properties => `${ selectors.join(',\n') } {\n${ properties.map(property => `  ${ coerce(property[0]) }: ${ coerce(property[1]) };\n`).join('') }}\n`;
 const generate$002Dcss = S.pipe([
   screen,
   split$002Devery$002D2,

@@ -218,23 +218,17 @@ const posts = [
   post$002Fthe$002Dperils$002Dof$002Dusing$002Djavascript$002Dobjects$002Das$002Dsets,
   post$002Fgive$002Dand$002Dtake$002Dof$002Dcontinuation$002Dpassing$002Dstyle
 ];
-const public_ = components => {
-  return path.join(dirname, '..', '..', 'public', ...components);
-};
-const write$002Dfile = filename => {
-  return data => fs.writeFileSync(filename, data);
-};
+const public_ = components => path.join(dirname, '..', '..', 'public', ...components);
+const write$002Dfile = filename => data => fs.writeFileSync(filename, data);
 write$002Dfile(public_([
   'css',
   'screen.css'
 ]))(generate$002Dcss);
-const render$002Dsvg = attrs => {
-  return paths => `<?xml version="1.0" standalone="no"?>\n${ svg({
-    ['xmlns']: 'http://www.w3.org/2000/svg',
-    ['version']: '1.1',
-    ...attrs
-  })(paths).render('  ')(0)(false) }`;
-};
+const render$002Dsvg = attrs => paths => `<?xml version="1.0" standalone="no"?>\n${ svg({
+  ['xmlns']: 'http://www.w3.org/2000/svg',
+  ['version']: '1.1',
+  ...attrs
+})(paths).render('  ')(0)(false) }`;
 write$002Dfile(public_([
   'svg',
   'masthead.svg'
@@ -332,9 +326,7 @@ write$002Dfile(public_([
   ['width']: 16,
   ['height']: 16
 })(icon$002Ftwitter));
-const render$002Ddocument = element => {
-  return `<!DOCTYPE html>\n${ element.render('  ')(0)(false) }`;
-};
+const render$002Ddocument = element => `<!DOCTYPE html>\n${ element.render('  ')(0)(false) }`;
 write$002Dfile(public_(['archives.html']))(render$002Ddocument(base$002Dtemplate('Archives')(render$002Darchives(posts))));
 write$002Dfile(public_(['tags.html']))(render$002Ddocument(base$002Dtemplate('Tags')(render$002Dtags(posts))));
 S.map(page => write$002Dfile(public_([`${ page.slug }.html`]))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))))(pages);

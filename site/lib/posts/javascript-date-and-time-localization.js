@@ -197,9 +197,7 @@ const body = [
 `),
   (() => {
     const url = 'http://bitbucket.org/davidchambers/jquery.localize';
-    const link = path => {
-      return a(url + path);
-    };
+    const link = path => a(url + path);
     return p([
       'Date and time formats are fully customizable via ',
       link('/src#directives')('directives'),

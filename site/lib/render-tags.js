@@ -89,17 +89,15 @@ import {
   video
 } from './elements.js';
 import tags from './tags.js';
-const render$002Dtags = posts => {
-  return (() => {
-    const counts = S.reduce(counts => tag => ({
-      ...counts,
-      [tag]: counts[tag] + 1
-    }))(S.map(x => 0)(tags))(posts.flatMap(post => post.tags));
-    return [
-      h1('Tags'),
-      ol$0027({ ['id']: 'tags' })(S.map(tag => li$0027({ ['data-count']: counts[tag] })(a(`/tag/${ tag }/`)(tags[tag])))(Object.keys(tags))),
-      div({ ['class']: 'clearfix' })([])
-    ];
-  })();
-};
+const render$002Dtags = posts => (() => {
+  const counts = S.reduce(counts => tag => ({
+    ...counts,
+    [tag]: counts[tag] + 1
+  }))(S.map(x => 0)(tags))(posts.flatMap(post => post.tags));
+  return [
+    h1('Tags'),
+    ol$0027({ ['id']: 'tags' })(S.map(tag => li$0027({ ['data-count']: counts[tag] })(a(`/tag/${ tag }/`)(tags[tag])))(Object.keys(tags))),
+    div({ ['class']: 'clearfix' })([])
+  ];
+})();
 export default render$002Dtags;

@@ -88,16 +88,14 @@ import {
   var$0027,
   video
 } from './elements.js';
-const render$002Dsection = section => {
-  return li([
-    h2(section.heading),
-    ol(S.map(post => li([
-      a$0027({ ['href']: `/${ post.slug }` })(post.title),
-      ' ',
-      time({ ['datetime']: post.datetime.toISO() })(post.datetime.toFormat('d MMMM y | h:mm') + post.datetime.toFormat('a').toLowerCase())
-    ]))(section.posts))
-  ]);
-};
+const render$002Dsection = section => li([
+  h2(section.heading),
+  ol(S.map(post => li([
+    a$0027({ ['href']: `/${ post.slug }` })(post.title),
+    ' ',
+    time({ ['datetime']: post.datetime.toISO() })(post.datetime.toFormat('d MMMM y | h:mm') + post.datetime.toFormat('a').toLowerCase())
+  ]))(section.posts))
+]);
 const render$002Darchives = S.pipe([
   S.map(S.join(S.Pair)),
   S.map(S.mapLeft(post => post.datetime)),

@@ -222,10 +222,10 @@ const esFromFunctionDeclaration = (functionDeclaration: Serif.FunctionDeclaratio
       esFromIdentifierName(functionDeclaration.name),
       ES.ArrowFunctionExpression(
         functionDeclaration.parameterNames.slice(0, 1).map(esFromIdentifierName),
-        ES.BlockStatement([ES.ReturnStatement(functionDeclaration.parameterNames.slice(1).reduceRight(
+        functionDeclaration.parameterNames.slice(1).reduceRight(
           (body, name) => ES.ArrowFunctionExpression([esFromIdentifierName(name)], body),
           esFromExpression(functionDeclaration.body)
-        ))]),
+        ),
       ),
     ),
   ])

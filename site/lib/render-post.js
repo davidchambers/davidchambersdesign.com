@@ -89,30 +89,28 @@ import {
   video
 } from './elements.js';
 import tags from './tags.js';
-const render$002Dpost = post => {
-  return related$002Dposts => [article$0027(S.maybe({})(id => ({ ['id']: id }))(S.value('article-id')(post)))([
-      header([
-        h1(post.title),
-        time({
-          ['datetime']: post.datetime.toFormat('yyyy-MM-dd\'T\'HH:mm:ssZZ'),
-          ['pubdate']: 'pubdate'
-        })(post.datetime.toFormat('d MMMM y'))
-      ]),
-      ...post.body,
-      footer$0027({ ['class']: 'metadata' })(S.join([
-        [ul(li$0027({ ['class']: 'shorturl' })(a(`http://dċd.ws/${ post.id }/`)('Short URL')))],
-        S.array([])(head => tail => [
-          h4('This post has the following tags:'),
-          ol(S.map(tag => li(a(`/tag/${ tag }/`)(tags[tag])))([
-            head,
-            ...tail
-          ]))
-        ])(post.tags)
-      ])),
-      ...related$002Dposts.length === 0 ? [] : [
-        h3$0027({ ['id']: 'related' })('Possibly related posts'),
-        ul(S.map(related$002Dpost => li(a(`/${ related$002Dpost.slug }/`)(related$002Dpost.title)))(related$002Dposts))
-      ]
-    ])];
-};
+const render$002Dpost = post => related$002Dposts => [article$0027(S.maybe({})(id => ({ ['id']: id }))(S.value('article-id')(post)))([
+    header([
+      h1(post.title),
+      time({
+        ['datetime']: post.datetime.toFormat('yyyy-MM-dd\'T\'HH:mm:ssZZ'),
+        ['pubdate']: 'pubdate'
+      })(post.datetime.toFormat('d MMMM y'))
+    ]),
+    ...post.body,
+    footer$0027({ ['class']: 'metadata' })(S.join([
+      [ul(li$0027({ ['class']: 'shorturl' })(a(`http://dċd.ws/${ post.id }/`)('Short URL')))],
+      S.array([])(head => tail => [
+        h4('This post has the following tags:'),
+        ol(S.map(tag => li(a(`/tag/${ tag }/`)(tags[tag])))([
+          head,
+          ...tail
+        ]))
+      ])(post.tags)
+    ])),
+    ...related$002Dposts.length === 0 ? [] : [
+      h3$0027({ ['id']: 'related' })('Possibly related posts'),
+      ul(S.map(related$002Dpost => li(a(`/${ related$002Dpost.slug }/`)(related$002Dpost.title)))(related$002Dposts))
+    ]
+  ])];
 export default render$002Dpost;

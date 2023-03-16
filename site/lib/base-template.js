@@ -87,91 +87,89 @@ import {
   var$0027,
   video
 } from './elements.js';
-const base$002Dtemplate = document$002Dtitle => {
-  return main => html([
-    head([
-      meta({ ['charset']: 'utf-8' }),
-      title(canonicalize$002Dchildren(document$002Dtitle).flatMap(child => child.text)),
-      link({
-        ['rel']: 'alternate',
-        ['type']: 'application/atom+xml',
-        ['href']: '/feed/'
-      }),
-      link({
-        ['rel']: 'stylesheet',
-        ['href']: '/css/reset.css',
-        ['media']: 'all'
-      }),
-      link({
-        ['rel']: 'stylesheet',
-        ['href']: '/css/print.css',
-        ['media']: 'print'
-      }),
-      link({
-        ['rel']: 'stylesheet',
-        ['href']: '/css/screen.css',
-        ['media']: 'screen'
-      }),
-      link({
-        ['rel']: 'shortcut icon',
-        ['type']: 'image/x-icon',
-        ['href']: 'http://static.davidchambersdesign.com/favicon.ico'
-      }),
-      script({ ['src']: 'http://use.typekit.com/jhk0ogh.js' })([]),
-      script({})('try{Typekit.load();}catch(e){}')
-    ]),
-    body([
-      div({ ['id']: 'skip' })([a$0027({ ['href']: '#main' })('Skip to main content')]),
-      div({ ['id']: 'wrap' })([
-        div({ ['id']: 'header' })([header([
-            a$0027({
-              ['id']: 'title',
-              ['href']: '/'
-            })('David Chambers Design'),
-            hr,
-            p('It\'s where I share interesting info with other web geeks'),
-            nav$0027({ ['id']: 'nav' })([ul([
-                li([a$0027({ ['href']: '/about/' })(span({})([
-                    strong('About.'),
-                    text(' Who I am and what I do.')
-                  ]))]),
-                li([a$0027({ ['href']: '/contact/' })(span({})([
-                    strong('Contact.'),
-                    text(' Just in case you want to get in touch.')
-                  ]))]),
-                li([a$0027({ ['href']: '/archives/' })(span({})([
-                    strong('Archives.'),
-                    text(' Old posts, recent posts, they\'re all here.')
-                  ]))]),
-                li([a$0027({ ['href']: '/tags/' })(span({})([
-                    strong('Tags.'),
-                    text(' Helpful if you\'re after posts on a particular topic.')
-                  ]))]),
-                li([a$0027({ ['href']: 'https://bitbucket.org/davidchambers' })(span({})([
-                    strong('Bitbucket.'),
-                    text(' Home to most of my open-source projects.')
-                  ]))]),
-                li([a$0027({ ['href']: '/twitter/' })(span({})([
-                    strong('Twitter.'),
-                    text(' It\'s where I chirrup\u2026 or chirp\u2026 or something.')
-                  ]))])
-              ])])
-          ])]),
-        div({ ['id']: 'main' })(main)
-      ]),
-      footer([p([
-          text('Powered by '),
+const base$002Dtemplate = document$002Dtitle => main => html([
+  head([
+    meta({ ['charset']: 'utf-8' }),
+    title(canonicalize$002Dchildren(document$002Dtitle).flatMap(child => child.text)),
+    link({
+      ['rel']: 'alternate',
+      ['type']: 'application/atom+xml',
+      ['href']: '/feed/'
+    }),
+    link({
+      ['rel']: 'stylesheet',
+      ['href']: '/css/reset.css',
+      ['media']: 'all'
+    }),
+    link({
+      ['rel']: 'stylesheet',
+      ['href']: '/css/print.css',
+      ['media']: 'print'
+    }),
+    link({
+      ['rel']: 'stylesheet',
+      ['href']: '/css/screen.css',
+      ['media']: 'screen'
+    }),
+    link({
+      ['rel']: 'shortcut icon',
+      ['type']: 'image/x-icon',
+      ['href']: 'http://static.davidchambersdesign.com/favicon.ico'
+    }),
+    script({ ['src']: 'http://use.typekit.com/jhk0ogh.js' })([]),
+    script({})('try{Typekit.load();}catch(e){}')
+  ]),
+  body([
+    div({ ['id']: 'skip' })([a$0027({ ['href']: '#main' })('Skip to main content')]),
+    div({ ['id']: 'wrap' })([
+      div({ ['id']: 'header' })([header([
           a$0027({
-            ['href']: 'http://mango.io/wtf?',
-            ['data-version']: '0.9dev'
-          })('Mango'),
-          text('. Hosted on '),
-          a$0027({ ['href']: 'http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d' })('Linode'),
-          text('. Original content '),
-          a$0027({ ['href']: '/copying/' })('WTFPL-licensed'),
-          text('.')
-        ])])
-    ])
-  ]);
-};
+            ['id']: 'title',
+            ['href']: '/'
+          })('David Chambers Design'),
+          hr,
+          p('It\'s where I share interesting info with other web geeks'),
+          nav$0027({ ['id']: 'nav' })([ul([
+              li([a$0027({ ['href']: '/about/' })(span({})([
+                  strong('About.'),
+                  text(' Who I am and what I do.')
+                ]))]),
+              li([a$0027({ ['href']: '/contact/' })(span({})([
+                  strong('Contact.'),
+                  text(' Just in case you want to get in touch.')
+                ]))]),
+              li([a$0027({ ['href']: '/archives/' })(span({})([
+                  strong('Archives.'),
+                  text(' Old posts, recent posts, they\'re all here.')
+                ]))]),
+              li([a$0027({ ['href']: '/tags/' })(span({})([
+                  strong('Tags.'),
+                  text(' Helpful if you\'re after posts on a particular topic.')
+                ]))]),
+              li([a$0027({ ['href']: 'https://bitbucket.org/davidchambers' })(span({})([
+                  strong('Bitbucket.'),
+                  text(' Home to most of my open-source projects.')
+                ]))]),
+              li([a$0027({ ['href']: '/twitter/' })(span({})([
+                  strong('Twitter.'),
+                  text(' It\'s where I chirrup\u2026 or chirp\u2026 or something.')
+                ]))])
+            ])])
+        ])]),
+      div({ ['id']: 'main' })(main)
+    ]),
+    footer([p([
+        text('Powered by '),
+        a$0027({
+          ['href']: 'http://mango.io/wtf?',
+          ['data-version']: '0.9dev'
+        })('Mango'),
+        text('. Hosted on '),
+        a$0027({ ['href']: 'http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d' })('Linode'),
+        text('. Original content '),
+        a$0027({ ['href']: '/copying/' })('WTFPL-licensed'),
+        text('.')
+      ])])
+  ])
+]);
 export default base$002Dtemplate;
