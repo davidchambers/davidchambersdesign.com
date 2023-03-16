@@ -13,7 +13,7 @@ render-tags posts = {
     h1 "Tags",
     ol' {id: "tags"}
         {S.map {tag => li' {data-count: counts[tag]}
-                           {a {"/tag/" + tag + "/"} tags[tag]}}
+                           {a `/tag/${tag}/` tags[tag]}}
                {Object.keys tags}},
     div {class: "clearfix"} [],
   ]

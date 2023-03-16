@@ -14,18 +14,18 @@ render-post post related-posts = [
     ],
     ...post.body,
     footer' {class: "metadata"}
-            {S.join [[ul {li' {class: "shorturl"} {a {"http://dċd.ws/" + post.id + "/"} "Short URL"}}],
+            {S.join [[ul {li' {class: "shorturl"} {a `http://dċd.ws/${post.id}/` "Short URL"}}],
                      {S.array []
                               {head => tail => [
                                  h4 "This post has the following tags:",
-                                 ol {S.map {tag => li {a {"/tag/" + tag + "/"} tags[tag]}}
+                                 ol {S.map {tag => li {a `/tag/${tag}/` tags[tag]}}
                                            [head, ...tail]},
                                ]}
                               post.tags}]},
     ...{
       if related-posts.length === 0 then [] else [
         h3' {id: "related"} "Possibly related posts",
-        ul {S.map {related-post => li {a {"/" + related-post.slug + "/"} related-post.title}}
+        ul {S.map {related-post => li {a `/${related-post.slug}/` related-post.title}}
                   related-posts},
       ]
     },

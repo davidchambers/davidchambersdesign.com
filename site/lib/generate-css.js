@@ -4,13 +4,25 @@ const coerce = x => {
   return Array.isArray(x) ? S.unwords(S.map(coerce)(x)) : typeof x == 'symbol' ? Symbol.keyFor(x) : String(x);
 };
 const split$002Devery$002D2 = xs => {
-  return S.array([])(k => S.array([])(v => S.compose(S.prepend(S.Pair(k)(v)))(split$002Devery$002D2)))(xs);
+  return S.array([])(k => S.array([])(v => asdf => [
+    [
+      k,
+      v
+    ],
+    ...split$002Devery$002D2(asdf)
+  ]))(xs);
 };
 const vendor$002Dprefix = unprefixed => {
-  return prefixed => S.chain(S.pair(k => v => k === unprefixed ? [
+  return prefixed => S.chain(property => property[0] === unprefixed ? [
     ...prefixed,
     unprefixed
-  ].map(k => S.Pair(k)(v)) : [S.Pair(k)(v)]));
+  ].map(k => [
+    k,
+    property[1]
+  ]) : [[
+      property[0],
+      property[1]
+    ]]);
 };
 const vendor$002Dprefixes = S.pipe([
   vendor$002Dprefix(Symbol.for('border-radius'))([
@@ -35,14 +47,12 @@ const vendor$002Dprefixes = S.pipe([
   ])
 ]);
 const format$002Dblock = selectors => {
-  return properties => selectors.join(',\n') + ' {\n' + properties.map(S.pair(k => v => '  ' + coerce(k) + ': ' + coerce(v) + ';\n')).join('') + '}\n';
+  return properties => `${ selectors.join(',\n') } {\n${ properties.map(property => `  ${ coerce(property[0]) }: ${ coerce(property[1]) };\n`).join('') }}\n`;
 };
 const generate$002Dcss = S.pipe([
   screen,
   split$002Devery$002D2,
-  S.map(S.map(split$002Devery$002D2)),
-  S.map(S.map(vendor$002Dprefixes)),
-  S.map(S.pair(format$002Dblock)),
+  S.map(pairs => format$002Dblock(pairs[0])(vendor$002Dprefixes(split$002Devery$002D2(pairs[1])))),
   S.joinWith('\n')
 ])(coerce);
 export default generate$002Dcss;

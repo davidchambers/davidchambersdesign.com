@@ -1,6 +1,6 @@
 import S from 'sanctuary';
 const $0027 = text => {
-  return '\'' + text.replace(new RegExp('(?=\')', 'g'), '\\') + '\'';
+  return `'${ text.replace(new RegExp('(?=\')', 'g'), '\\') }'`;
 };
 const base03 = '#002b36';
 const base02 = '#073642';
@@ -45,20 +45,17 @@ const screen = coerce => {
       ].join(', ');
     };
     const rgba = r => {
-      return g => b => a => 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+      return g => b => a => `rgba(${ r }, ${ g }, ${ b }, ${ a })`;
     };
     const important$0021 = x => {
-      return coerce(x) + ' !important';
+      return `${ coerce(x) } !important`;
     };
     const tag$002Dbackground = S.pipe([
       Math.log2,
       n => n * 5,
       n => 247 - n,
       Math.floor,
-      n => n.toString(16),
-      s => s.padStart(2, '0'),
-      s => s.repeat(3),
-      s => '#' + s
+      n => `#${ n.toString(16).padStart(2, '0').repeat(3) }`
     ]);
     const tag$002Dcolor = S.pipe([
       Math.log2,
@@ -1466,7 +1463,7 @@ const screen = coerce => {
         ]
       ],
       S.foldMap(Array)(count => [
-        ['#tags li[data-count=\'' + count + '\'] a'],
+        [`#tags li[data-count='${ count }'] a`],
         [
           Symbol.for('background'),
           tag$002Dbackground(count),

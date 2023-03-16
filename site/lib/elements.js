@@ -17,13 +17,13 @@ const canonicalize$002Dchildren = S.compose(S.map(child => typeof child == 'stri
   text
 ])(child) : child))(S.unless(Array.isArray)(Array.of));
 const render$002Dblock$002Delement = tag$002Dname => {
-  return attrs => children => indent => level => inline => indent.repeat(level) + '<' + Symbol.keyFor(tag$002Dname) + S.foldMap(String)(entry => ' ' + entry[0] + `="` + escape(String(entry[1]).replace(new RegExp('\n[ ]*', 'g'), ' ')) + `"`)(Object.entries(attrs)) + '>\n' + S.foldMap(String)(child => child.render(indent)(level + 1)(false))(children) + indent.repeat(level) + '</' + Symbol.keyFor(tag$002Dname) + '>\n';
+  return attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ S.foldMap(String)(entry => ` ${ entry[0] }="${ escape(String(entry[1]).replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`)(Object.entries(attrs)) }>\n${ S.foldMap(String)(child => child.render(indent)(level + 1)(false))(children) }${ indent.repeat(level) }</${ Symbol.keyFor(tag$002Dname) }>\n`;
 };
 const render$002Dinline$002Delement = tag$002Dname => {
-  return attrs => children => indent => level => inline => indent.repeat(level) + '<' + Symbol.keyFor(tag$002Dname) + S.foldMap(String)(entry => ' ' + entry[0] + `="` + escape(String(entry[1]).replace(new RegExp('\n[ ]*', 'g'), ' ')) + `"`)(Object.entries(attrs)) + '>' + S.foldMap(String)(child => child.render(indent)(0)(true))(children) + '</' + Symbol.keyFor(tag$002Dname) + '>' + (inline ? '' : '\n');
+  return attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ S.foldMap(String)(entry => ` ${ entry[0] }="${ escape(String(entry[1]).replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`)(Object.entries(attrs)) }>${ S.foldMap(String)(child => child.render(indent)(0)(true))(children) }</${ Symbol.keyFor(tag$002Dname) }>${ inline ? '' : '\n' }`;
 };
 const render$002Dself$002Dclosing$002Delement = tag$002Dname => {
-  return attrs => indent => level => inline => indent.repeat(level) + '<' + Symbol.keyFor(tag$002Dname) + S.foldMap(String)(entry => ' ' + entry[0] + `="` + escape(String(entry[1]).replace(new RegExp('\n[ ]*', 'g'), ' ')) + `"`)(Object.entries(attrs)) + ' />' + (inline ? '' : '\n');
+  return attrs => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ S.foldMap(String)(entry => ` ${ entry[0] }="${ escape(String(entry[1]).replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`)(Object.entries(attrs)) } />${ inline ? '' : '\n' }`;
 };
 const block$002Delement = tag$002Dname => {
   return attrs => children => (() => {

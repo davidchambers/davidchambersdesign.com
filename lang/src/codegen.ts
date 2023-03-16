@@ -46,11 +46,15 @@ const dedentCond = (raw: string, lineEnding: '\n' | '\r\n'): string | null => {
   return tail.replace(new RegExp(`^[ ]{0,${indent}}`, 'gm'), '');
 };
 
-const esFromTemplateLiteral = (templateLiteral: Serif.TemplateLiteral): ES.TemplateLiteral => {
-  const raw = templateLiteral.value;
-  const dedented = dedentCond(raw, '\n') ?? dedentCond(raw, '\r\n') ?? raw;
-  return ES.TemplateLiteral([ES.TemplateElement(dedented, true)], []);
-};
+const esFromTemplateLiteral = (templateLiteral: Serif.TemplateLiteral): ES.TemplateLiteral => (
+  ES.TemplateLiteral(
+    templateLiteral.quasis.map(quasi => ES.TemplateElement(
+      dedentCond(quasi.raw, '\n') ?? dedentCond(quasi.raw, '\r\n') ?? quasi.raw,
+      quasi.tail,
+    )),
+    templateLiteral.expressions.map(esFromExpression),
+  )
+);
 
 const esFromSymbolLiteral = (symbolLiteral: Serif.SymbolLiteral): ES.CallExpression => (
   ES.CallExpression(

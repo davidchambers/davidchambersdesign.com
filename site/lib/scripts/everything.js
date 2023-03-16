@@ -229,14 +229,11 @@ write$002Dfile(public_([
   'screen.css'
 ]))(generate$002Dcss);
 const render$002Dsvg = attrs => {
-  return paths => (() => {
-    const attrs$0027 = {
-      ['xmlns']: 'http://www.w3.org/2000/svg',
-      ['version']: '1.1',
-      ...attrs
-    };
-    return '<?xml version="1.0" standalone="no"?>\n' + svg(attrs$0027)(paths).render('  ')(0)(false);
-  })();
+  return paths => `<?xml version="1.0" standalone="no"?>\n${ svg({
+    ['xmlns']: 'http://www.w3.org/2000/svg',
+    ['version']: '1.1',
+    ...attrs
+  })(paths).render('  ')(0)(false) }`;
 };
 write$002Dfile(public_([
   'svg',
@@ -336,9 +333,9 @@ write$002Dfile(public_([
   ['height']: 16
 })(icon$002Ftwitter));
 const render$002Ddocument = element => {
-  return '<!DOCTYPE html>\n' + element.render('  ')(0)(false);
+  return `<!DOCTYPE html>\n${ element.render('  ')(0)(false) }`;
 };
 write$002Dfile(public_(['archives.html']))(render$002Ddocument(base$002Dtemplate('Archives')(render$002Darchives(posts))));
 write$002Dfile(public_(['tags.html']))(render$002Ddocument(base$002Dtemplate('Tags')(render$002Dtags(posts))));
-S.map(page => write$002Dfile(public_([page.slug + '.html']))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))))(pages);
-S.map(post => write$002Dfile(public_([post.slug + '.html']))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post))))))(posts);
+S.map(page => write$002Dfile(public_([`${ page.slug }.html`]))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))))(pages);
+S.map(post => write$002Dfile(public_([`${ post.slug }.html`]))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post))))))(posts);

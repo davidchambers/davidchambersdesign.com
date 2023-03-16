@@ -38,16 +38,34 @@ export const StringLiteral = (
   value,
 });
 
+export interface TemplateElement {
+  readonly type: 'TemplateElement';
+  readonly tail: boolean;
+  readonly raw: string;
+}
+
+export const TemplateElement = (
+  tail: boolean,
+  raw: string,
+): TemplateElement => ({
+  type: 'TemplateElement',
+  tail,
+  raw,
+});
+
 export interface TemplateLiteral {
   readonly type: 'TemplateLiteral';
-  readonly value: string;
+  readonly quasis: ReadonlyArray<TemplateElement>;
+  readonly expressions: ReadonlyArray<Expression>;
 }
 
 export const TemplateLiteral = (
-  value: string,
+  quasis: ReadonlyArray<TemplateElement>,
+  expressions: ReadonlyArray<Expression>,
 ): TemplateLiteral => ({
   type: 'TemplateLiteral',
-  value,
+  quasis,
+  expressions,
 });
 
 export interface SymbolLiteral {

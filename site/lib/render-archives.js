@@ -92,7 +92,7 @@ const render$002Dsection = section => {
   return li([
     h2(section.heading),
     ol(S.map(post => li([
-      a$0027({ ['href']: '/' + post.slug })(post.title),
+      a$0027({ ['href']: `/${ post.slug }` })(post.title),
       ' ',
       time({ ['datetime']: post.datetime.toISO() })(post.datetime.toFormat('d MMMM y | h:mm') + post.datetime.toFormat('a').toLowerCase())
     ]))(section.posts))

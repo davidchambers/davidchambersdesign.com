@@ -115,11 +115,27 @@ StringChar
   / !'"' c:.  { return c; }
 
 TemplateLiteral
-  = '`' chars:TemplateLiteralChar* '`'
-    { return Serif.TemplateLiteral(chars.join('')); }
+  = '`'
+    pairs:(quasi:Quasi '${' Separator* expression:Expression Separator* '}' { return {quasi, expression}; })*
+    quasi:Quasi
+    '`'
+    {
+      const quasis = [];
+      const expressions = [];
+      for (const {quasi, expression} of pairs) {
+        quasis.push(Serif.TemplateElement(false, quasi));
+        expressions.push(expression);
+      }
+      quasis.push(Serif.TemplateElement(true, quasi));
+      return Serif.TemplateLiteral(quasis, expressions);
+    }
+
+Quasi
+  = $(TemplateLiteralChar*)
 
 TemplateLiteralChar
   = '\\' '`'  { return '\\`'; }
+  / '\\' '$'  { return '\\$'; }
   / '\\' '\\' { return '\\\\'; }
   / '\\' 'b'  { return '\\b'; }
   / '\\' 'f'  { return '\\f'; }
@@ -129,7 +145,8 @@ TemplateLiteralChar
   / '\\' 'u' digits:$([0-9A-F] [0-9A-F] [0-9A-F] [0-9A-F])
               { return '\\u' + digits; }
   / '\\'      { expected('valid escape sequence'); }
-  / !'`' c:.  { return c; }
+  / '$' !'{'  { return '$'; }
+  / !'`' !'$' c:.  { return c; }
 
 SymbolLiteral
   = ':' name:$(SymbolChar)+

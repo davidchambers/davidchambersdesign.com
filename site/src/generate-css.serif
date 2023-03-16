@@ -16,18 +16,18 @@ coerce x = {
 
 split-every-2 xs = {
   S.array []
-          {k => S.array [] {v => S.compose {S.prepend {S.Pair k v}} split-every-2}}
+          {k => S.array [] {v => asdf => [[k, v], ...{split-every-2 asdf}]}}
           xs
 };
 
 vendor-prefix unprefixed prefixed = {
-  S.chain {S.pair {k => v => {
-                     if k === unprefixed then {
-                       [...prefixed, unprefixed].map(k => S.Pair k v)
-                     } else {
-                       [S.Pair k v]
-                     }
-                   }}}
+  S.chain {property => {
+             if property[0] === unprefixed then {
+               [...prefixed, unprefixed].map(k => [k, property[1]])
+             } else {
+               [[property[0], property[1]]]
+             }
+           }}
 };
 
 vendor-prefixes = S.pipe [
@@ -50,17 +50,16 @@ vendor-prefixes = S.pipe [
 ];
 
 format-block selectors properties = {
-  selectors.join(",\n")
-  + " {\n"
-  + properties.map(S.pair {k => v => "  " + coerce k + ": " + coerce v + ";\n"}).join("")
-  + "}\n"
+  `${
+    selectors.join(",\n")
+  } {\n${
+    properties.map({property => `  ${coerce property[0]}: ${coerce property[1]};\n`}).join("")
+  }}\n`
 };
 
 generate-css = S.pipe [
   screen,
   split-every-2,
-  S.map {S.map split-every-2},
-  S.map {S.map vendor-prefixes},
-  S.map {S.pair format-block},
+  S.map {pairs => format-block pairs[0] {vendor-prefixes {split-every-2 pairs[1]}}},
   S.joinWith "\n",
 ] coerce;

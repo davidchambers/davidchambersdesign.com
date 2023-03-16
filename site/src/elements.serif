@@ -123,63 +123,57 @@ canonicalize-children = {
 };
 
 render-block-element tag-name attrs children indent level inline = {
-  indent.repeat(level)
-  + "<"
-  + Symbol.keyFor tag-name
-  + S.foldMap String
-              {entry =>
-                 " "
-                 + entry[0]
-                 + `="`
-                 + escape {{String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}
-                 + `"`}
+  `${
+    indent.repeat(level)
+  }<${
+    Symbol.keyFor tag-name
+  }${
+    S.foldMap String
+              {entry => ` ${entry[0]}="${escape {{String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}}"`}
               {Object.entries attrs}
-  + ">\n"
-  + S.foldMap String
+  }>\n${
+    S.foldMap String
               {child => child.render indent {level + 1} false}
               children
-  + indent.repeat(level)
-  + "</"
-  + Symbol.keyFor tag-name
-  + ">\n"
+  }${
+    indent.repeat(level)
+  }</${
+    Symbol.keyFor tag-name
+  }>\n`
 };
 
 render-inline-element tag-name attrs children indent level inline = {
-  indent.repeat(level)
-  + "<"
-  + Symbol.keyFor tag-name
-  + S.foldMap String
-              {entry =>
-                 " "
-                 + entry[0]
-                 + `="`
-                 + escape {{String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}
-                 + `"`}
+  `${
+    indent.repeat(level)
+  }<${
+    Symbol.keyFor tag-name
+  }${
+    S.foldMap String
+              {entry => ` ${entry[0]}="${escape {{String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}}"`}
               {Object.entries attrs}
-  + ">"
-  + S.foldMap String
+  }>${
+    S.foldMap String
               {child => child.render indent 0 true}
               children
-  + "</"
-  + Symbol.keyFor tag-name
-  + ">"
-  + {if inline then "" else "\n"}
+  }</${
+    Symbol.keyFor tag-name
+  }>${
+    if inline then "" else "\n"
+  }`
 };
 
 render-self-closing-element tag-name attrs indent level inline = {
-  indent.repeat(level)
-  + "<"
-  + Symbol.keyFor tag-name
-  + S.foldMap String
-              {entry =>
-                 " "
-                 + entry[0]
-                 + `="`
-                 + escape {{String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}
-                 + `"`}
+  `${
+    indent.repeat(level)
+  }<${
+    Symbol.keyFor tag-name
+  }${
+    S.foldMap String
+              {entry => ` ${entry[0]}="${escape {{String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}}"`}
               {Object.entries attrs}
-  + " />"
-  + {if inline then "" else "\n"}
+  } />${
+    if inline then "" else "\n"
+  }`
 };
 
 block-element tag-name attrs children = {

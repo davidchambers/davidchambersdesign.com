@@ -100,10 +100,10 @@ const render$002Dpost = post => {
       ]),
       ...post.body,
       footer$0027({ ['class']: 'metadata' })(S.join([
-        [ul(li$0027({ ['class']: 'shorturl' })(a('http://dċd.ws/' + post.id + '/')('Short URL')))],
+        [ul(li$0027({ ['class']: 'shorturl' })(a(`http://dċd.ws/${ post.id }/`)('Short URL')))],
         S.array([])(head => tail => [
           h4('This post has the following tags:'),
-          ol(S.map(tag => li(a('/tag/' + tag + '/')(tags[tag])))([
+          ol(S.map(tag => li(a(`/tag/${ tag }/`)(tags[tag])))([
             head,
             ...tail
           ]))
@@ -111,7 +111,7 @@ const render$002Dpost = post => {
       ])),
       ...related$002Dposts.length === 0 ? [] : [
         h3$0027({ ['id']: 'related' })('Possibly related posts'),
-        ul(S.map(related$002Dpost => li(a('/' + related$002Dpost.slug + '/')(related$002Dpost.title)))(related$002Dposts))
+        ul(S.map(related$002Dpost => li(a(`/${ related$002Dpost.slug }/`)(related$002Dpost.title)))(related$002Dposts))
       ]
     ])];
 };

@@ -2,7 +2,7 @@ import S from "sanctuary";
 
 export default screen;
 
-' text = "'" + text.replace(new RegExp("(?=')", "g"), "\\") + "'";
+' text = `'${text.replace(new RegExp("(?=')", "g"), "\\")}'`;
 
 base03          = "#002b36";
 base02          = "#073642";
@@ -33,19 +33,16 @@ screen coerce = {
   sans-serif names = [...names.map('), "sans-serif"].join(", ");
   monospace  names = [...names.map('), "monospace"].join(", ");
 
-  rgba r g b a = "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
+  rgba r g b a = `rgba(${r}, ${g}, ${b}, ${a})`;
 
-  important! x = coerce x + " !important";
+  important! x = `${coerce x} !important`;
 
   tag-background = S.pipe [
     Math.log2,
     n => n * 5,
     n => 247 - n,
     Math.floor,
-    n => n.toString(16),
-    s => s.padStart(2, "0"),
-    s => s.repeat(3),
-    s => "#" + s,
+    n => `#${n.toString(16).padStart(2, "0").repeat(3)}`,
   ];
 
   tag-color = S.pipe [
@@ -701,7 +698,7 @@ screen coerce = {
   ],
 
   S.foldMap Array
-            {count => [["#tags li[data-count='" + count + "'] a"],
+            {count => [[`#tags li[data-count='${count}'] a`],
                        [:background, tag-background count,
                         :color, tag-color count]]}
             {S.range 1 20},

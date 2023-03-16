@@ -236,9 +236,9 @@ write-file {public ["css", "screen.css"]}
            generate-css;
 
 render-svg attrs paths = {
-  attrs' = {xmlns: "http://www.w3.org/2000/svg", version: "1.1", ...attrs};
-  "<?xml version=\"1.0\" standalone=\"no\"?>\n"
-  + {svg attrs' paths}.render "  " 0 false
+  `<?xml version="1.0" standalone="no"?>\n${
+    {svg {xmlns: "http://www.w3.org/2000/svg", version: "1.1", ...attrs} paths}.render "  " 0 false
+  }`
 };
 
 write-file {public ["svg", "masthead.svg"]}
@@ -299,7 +299,7 @@ write-file {public ["svg", "twitter.svg"]}
            {render-svg {width: 16, height: 16} icon/twitter};
 
 render-document element = {
-  "<!DOCTYPE html>\n" + element.render "  " 0 false
+  `<!DOCTYPE html>\n${element.render "  " 0 false}`
 };
 
 write-file {public ["archives.html"]}
@@ -310,12 +310,12 @@ write-file {public ["tags.html"]}
            {render-document {base-template "Tags"
                                            {render-tags posts}}};
 
-S.map {page => write-file {public [page.slug + ".html"]}
+S.map {page => write-file {public [`${page.slug}.html`]}
                           {render-document {base-template page.title
                                                           {render-page page}}}}
       pages;
 
-S.map {post => write-file {public [post.slug + ".html"]}
+S.map {post => write-file {public [`${post.slug}.html`]}
                           {render-document {base-template post.title
                                                           {render-post post
                                                                        {related-posts posts post}}}}}
