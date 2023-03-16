@@ -82,20 +82,20 @@ const paper = [
 ];
 const archives = [
   path({
-    ['fill']: '#da5',
-    ['d']: render(base)
+    fill: '#da5',
+    d: render(base)
   }),
   path({
-    ['fill']: '#333',
-    ['d']: render(spiral)
+    fill: '#333',
+    d: render(spiral)
   }),
   path({
-    ['fill']: '#b00',
-    ['d']: render(header)
+    fill: '#b00',
+    d: render(header)
   }),
   path({
-    ['fill']: '#fff',
-    ['d']: render(paper)
+    fill: '#fff',
+    d: render(paper)
   })
 ];
 export default archives;

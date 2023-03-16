@@ -100,9 +100,9 @@ const body = [
     '.\n    While the code on my screen immediately looked very nice, a few of\n    Justin\'s colour choices didn\'t sit well with me.* I spent an hour\n    or two trying a large number of different combinations until my\n    JavaScript file was harmoniously highlighted.'
   ]),
   captioned$002Dimages([{
-      ['alt']: 'Solarized code snippet',
-      ['src']: '/images/posts/84/solarized-code-snippet.png',
-      ['caption']: ['Solarized code snippet']
+      alt: 'Solarized code snippet',
+      src: '/images/posts/84/solarized-code-snippet.png',
+      caption: ['Solarized code snippet']
     }]),
   p(['I wanted an even intensity, but didn\'t allow myself to deviate\n    from Ethan\'s prescribed colours. I\'m happy with the result: the\n    soft highlighting makes the code easier to understand without\n    being a distraction. Only regular expression literals leap\n    forward, but these tend to occur infrequently.']),
   p([
@@ -113,15 +113,15 @@ const body = [
   p(['* Blue escape sequences within red regular expression literals\n    are too striking for my liking!'])
 ];
 export default {
-  ['id']: 84,
-  ['slug']: 'solarized',
-  ['title']: 'Solarized',
-  ['datetime']: datetime('2011-04-23')('02:20:00')(Symbol.for('America/Los_Angeles')),
-  ['tags']: [
+  id: 84,
+  slug: 'solarized',
+  title: 'Solarized',
+  datetime: datetime('2011-04-23')('02:20:00')(Symbol.for('America/Los_Angeles')),
+  tags: [
     'coda',
     'design',
     'programming',
     'solarized'
   ],
-  ['body']: body
+  body: body
 };

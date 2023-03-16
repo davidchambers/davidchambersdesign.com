@@ -782,23 +782,23 @@ const ycharsy = paths([
   yNy
 ]);
 const mask = [path({
-    ['d']: render(wcharsw),
-    ['fill']: '#000',
+    d: render(wcharsw),
+    fill: '#000',
     ['fill-rule']: 'evenodd'
   })];
 const fill = [
   path({
-    ['d']: render(xcharsx),
-    ['fill']: '#999'
+    d: render(xcharsx),
+    fill: '#999'
   }),
   path({
-    ['d']: render(ycharsy),
-    ['fill']: '#666'
+    d: render(ycharsy),
+    fill: '#666'
   })
 ];
 const default_ = {
-  ['mask']: mask,
-  ['fill']: fill
+  mask: mask,
+  fill: fill
 };
 export default default_;
 export {

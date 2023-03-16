@@ -134,14 +134,14 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 68,
-  ['slug']: 'efficient-rounding-in-javascript',
-  ['title']: 'Efficient rounding in JavaScript',
-  ['datetime']: datetime('2010-08-31')('22:20:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 68,
+  slug: 'efficient-rounding-in-javascript',
+  title: 'Efficient rounding in JavaScript',
+  datetime: datetime('2010-08-31')('22:20:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'javascript',
     'optimization',
     'performance'
   ],
-  ['body']: body
+  body: body
 };

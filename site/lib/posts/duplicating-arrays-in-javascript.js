@@ -115,17 +115,17 @@ var colours = fruits;
   ]),
   code$002Dblock(Symbol.for('javascript'))(`var colours = fruits.slice();
 `),
-  aside$0027({ ['id']: 'footnote' })([
+  aside$0027({ id: 'footnote' })([
     '* Languages such as C.\n    Like ',
     a('http://www.quirksmode.org/about/')('ppk'),
     ',\n    I take care to include quotation marks. ;)'
   ])
 ];
 export default {
-  ['id']: 35,
-  ['slug']: 'duplicating-arrays-in-javascript',
-  ['title']: 'Duplicating arrays in JavaScript',
-  ['datetime']: datetime('2010-01-09')('19:26:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: ['javascript'],
-  ['body']: body
+  id: 35,
+  slug: 'duplicating-arrays-in-javascript',
+  title: 'Duplicating arrays in JavaScript',
+  datetime: datetime('2010-01-09')('19:26:00')(Symbol.for('Pacific/Auckland')),
+  tags: ['javascript'],
+  body: body
 };

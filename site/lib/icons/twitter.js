@@ -24,26 +24,26 @@ const a = rx$002Dry => angle => large$002Darc$002Dflag => sweep$002Dflag => dx$0
 ];
 const twitter = [
   linearGradient({
-    ['id']: 'gradient',
-    ['x1']: '50%',
-    ['y1']: '0%',
-    ['x2']: '50%',
-    ['y2']: '100%'
+    id: 'gradient',
+    x1: '50%',
+    y1: '0%',
+    x2: '50%',
+    y2: '100%'
   })([
     stop({
       ['stop-color']: '#96ecfd',
-      ['offset']: '0%'
+      offset: '0%'
     }),
     stop({
       ['stop-color']: '#14dff0',
-      ['offset']: '100%'
+      offset: '100%'
     })
   ]),
   path({
-    ['stroke']: '#fff',
+    stroke: '#fff',
     ['stroke-width']: 1,
-    ['fill']: 'url(#gradient)',
-    ['d']: render([
+    fill: 'url(#gradient)',
+    d: render([
       $21E8(3),
       $21E9(3),
       a([

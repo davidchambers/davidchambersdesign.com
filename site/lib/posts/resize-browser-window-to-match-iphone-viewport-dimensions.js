@@ -114,34 +114,34 @@ const body = [
       ])
     ]),
     captioned$002Dimages([{
-        ['alt']: 'iPhone testing bookmarklets',
-        ['src']: '/images/posts/37/iphone-testing-bookmarklets.png',
-        ['caption']: ['iPhone testing bookmarklets: portrait and landscape']
+        alt: 'iPhone testing bookmarklets',
+        src: '/images/posts/37/iphone-testing-bookmarklets.png',
+        caption: ['iPhone testing bookmarklets: portrait and landscape']
       }])
   ]),
   captioned$002Dimages([
     {
-      ['alt']: 'Safari window resized to iPhone portrait dimensions',
-      ['src']: '/images/posts/windows/safari-window-iphone-dimensions-portrait.png',
-      ['caption']: ['320x480: iPhone portrait dimensions']
+      alt: 'Safari window resized to iPhone portrait dimensions',
+      src: '/images/posts/windows/safari-window-iphone-dimensions-portrait.png',
+      caption: ['320x480: iPhone portrait dimensions']
     },
     {
-      ['alt']: 'Safari window resized to iPhone landscape dimensions',
-      ['src']: '/images/posts/windows/safari-window-iphone-dimensions-landscape.png',
-      ['caption']: ['480x320: iPhone landscape dimensions']
+      alt: 'Safari window resized to iPhone landscape dimensions',
+      src: '/images/posts/windows/safari-window-iphone-dimensions-landscape.png',
+      caption: ['480x320: iPhone landscape dimensions']
     }
   ]),
   p(['It appears that I need to rework this site\'s style sheet\n    to better present content in these smaller viewports!'])
 ];
 export default {
-  ['id']: 37,
-  ['slug']: 'resize-browser-window-to-match-iphone-viewport-dimensions',
-  ['title']: 'Resize browser window to match iPhone viewport dimensions',
-  ['datetime']: datetime('2010-02-16')('03:20:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 37,
+  slug: 'resize-browser-window-to-match-iphone-viewport-dimensions',
+  title: 'Resize browser window to match iPhone viewport dimensions',
+  datetime: datetime('2010-02-16')('03:20:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'bookmarklets',
     'iphone',
     'javascript'
   ],
-  ['body']: body
+  body: body
 };

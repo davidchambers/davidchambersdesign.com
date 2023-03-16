@@ -100,8 +100,8 @@ const body = [
       ':'
     ]),
     p$0027({
-      ['id']: 'transition-example-1',
-      ['style']: 'position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;'
+      id: 'transition-example-1',
+      style: 'position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;'
     })(['Click to animate']),
     script({})('(function () {\n           var element = document.getElementById(\'transition-example-1\');\n           element.style.webkitTransitionProperty = \'left\';\n           element.style.webkitTransitionDuration = \'2s\';\n           element.addEventListener(\'click\', function () {\n               this.style.left = \'100px\';\n               this.addEventListener(\'webkitTransitionEnd\', function () {\n                   this.style.left = 0;\n               });\n           });\n       })();'),
     p(['The code behind this example is not complicated:']),
@@ -117,8 +117,8 @@ element.addEventListener('click', function () {
   ]),
   p(['The following example, though, does not act as one might expect!']),
   p$0027({
-    ['id']: 'transition-example-2',
-    ['style']: 'position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;'
+    id: 'transition-example-2',
+    style: 'position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;'
   })(['Click to reposition']),
   script({})('(function () {\n         var element = document.getElementById(\'transition-example-2\');\n         element.addEventListener(\'click\', function () {\n             this.style.left = \'100px\';\n             this.style.webkitTransitionProperty = \'left\';\n             this.style.webkitTransitionDuration = \'2s\';\n             this.addEventListener(\'webkitTransitionEnd\', function () {\n                 this.innerHTML = "D\'oh!";\n                 this.style.left = 0;\n             });\n         });\n     })();'),
   p(['The code:']),
@@ -154,8 +154,8 @@ element.style.webkitTransitionDuration = '2s';
   ]),
   p(['I did manage to get the element to behave as I had intended:']),
   p$0027({
-    ['id']: 'transition-example-3',
-    ['style']: 'position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;'
+    id: 'transition-example-3',
+    style: 'position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;'
   })(['Click to reposition']),
   script({})('(function () {\n         var element = document.getElementById(\'transition-example-3\');\n         element.addEventListener(\'click\', function () {\n             this.style.left = \'100px\';\n             setTimeout(function () {\n                 element.style.webkitTransitionProperty = \'left\';\n                 element.style.webkitTransitionDuration = \'2s\';\n             }, 0);\n             setTimeout(function () {\n                 element.style.webkitTransitionProperty = \'none\';\n                 element.style.left = 0;\n             }, 2000);\n         });\n     })();'),
   p(['The working code:']),
@@ -201,13 +201,13 @@ window.setTimeout(function() {
   ])
 ];
 export default {
-  ['id']: 55,
-  ['slug']: 'settimeout-fix-for-webkit-transition',
-  ['title']: 'setTimeout fix for -webkit-transition',
-  ['datetime']: datetime('2010-06-18')('03:12:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 55,
+  slug: 'settimeout-fix-for-webkit-transition',
+  title: 'setTimeout fix for -webkit-transition',
+  datetime: datetime('2010-06-18')('03:12:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'css3',
     'javascript'
   ],
-  ['body']: body
+  body: body
 };

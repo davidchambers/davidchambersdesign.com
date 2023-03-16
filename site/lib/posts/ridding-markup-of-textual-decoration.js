@@ -202,14 +202,14 @@ li:last-child:after {
   ])
 ];
 export default {
-  ['id']: 73,
-  ['slug']: 'ridding-markup-of-textual-decoration',
-  ['title']: 'Ridding markup of textual decoration',
-  ['datetime']: datetime('2010-11-15')('01:00:00')(Symbol.for('Australia/Sydney')),
-  ['tags']: [
+  id: 73,
+  slug: 'ridding-markup-of-textual-decoration',
+  title: 'Ridding markup of textual decoration',
+  datetime: datetime('2010-11-15')('01:00:00')(Symbol.for('Australia/Sydney')),
+  tags: [
     'css',
     'html',
     'meaningful-markup'
   ],
-  ['body']: body
+  body: body
 };

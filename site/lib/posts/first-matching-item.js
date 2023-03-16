@@ -122,10 +122,10 @@ for student in students:
   p(['I think I\'ll use this approach from time to time.\n    Let me know if you\'re aware of another option.'])
 ];
 export default {
-  ['id']: 54,
-  ['slug']: 'first-matching-item',
-  ['title']: 'First matching item',
-  ['datetime']: datetime('2010-06-17')('23:17:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: ['programming'],
-  ['body']: body
+  id: 54,
+  slug: 'first-matching-item',
+  title: 'First matching item',
+  datetime: datetime('2010-06-17')('23:17:00')(Symbol.for('Pacific/Auckland')),
+  tags: ['programming'],
+  body: body
 };

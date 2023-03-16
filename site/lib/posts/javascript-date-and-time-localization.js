@@ -96,9 +96,9 @@ const body = [
   excerpt([
     p([strong('This post has been a long time coming.')]),
     captioned$002Dimages([{
-        ['alt']: 'Reminder message',
-        ['src']: '/images/posts/74/email-message-screenshot.png',
-        ['caption']: ['Reminder message, dated 18 January 2010']
+        alt: 'Reminder message',
+        src: '/images/posts/74/email-message-screenshot.png',
+        caption: ['Reminder message, dated 18 January 2010']
       }]),
     p([
       strong('It\'s unacceptable for any website or web application\n      to output dates and times using an arbitrary time zone.'),
@@ -106,9 +106,9 @@ const body = [
     ])
   ]),
   captioned$002Dimages([{
-      ['alt']: 'Bitbucket status message',
-      ['src']: '/images/posts/74/gmt-ftl.png',
-      ['caption']: ['The link to a time zone converter highlights the need for localization']
+      alt: 'Bitbucket status message',
+      src: '/images/posts/74/gmt-ftl.png',
+      caption: ['The link to a time zone converter highlights the need for localization']
     }]),
   p([
     'Implementing client-side localization of dates and times is not\n    terribly difficult',
@@ -210,11 +210,11 @@ const body = [
   })()
 ];
 export default {
-  ['id']: 74,
-  ['slug']: 'javascript-date-and-time-localization',
-  ['title']: 'JavaScript date and time localization',
-  ['datetime']: datetime('2010-11-28')('01:45:00')(Symbol.for('Australia/Sydney')),
-  ['tags']: [
+  id: 74,
+  slug: 'javascript-date-and-time-localization',
+  title: 'JavaScript date and time localization',
+  datetime: datetime('2010-11-28')('01:45:00')(Symbol.for('Australia/Sydney')),
+  tags: [
     'html5',
     'i18n',
     'javascript',
@@ -222,5 +222,5 @@ export default {
     'localization',
     'meaningful-markup'
   ],
-  ['body']: body
+  body: body
 };

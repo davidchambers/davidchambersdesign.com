@@ -147,7 +147,7 @@ function print_filesize($filename, $before = ' <span class="filesize">(', $after
     'This gives: ',
     a('/favicon.ico')('favicon.ico'),
     ' ',
-    span({ ['class']: 'filesize' })('(\u22481.1 kB)'),
+    span({ class: 'filesize' })('(\u22481.1 kB)'),
     '. By default, the function\n    wraps the file\'s size in a ',
     code('span'),
     ' element with ',
@@ -156,13 +156,13 @@ function print_filesize($filename, $before = ' <span class="filesize">(', $after
   ])
 ];
 export default {
-  ['id']: 17,
-  ['slug']: 'php-print_filesize-function',
-  ['title']: 'PHP print_filesize function',
-  ['datetime']: datetime('2009-06-10')('21:17:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 17,
+  slug: 'php-print_filesize-function',
+  title: 'PHP print_filesize function',
+  datetime: datetime('2009-06-10')('21:17:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'best-practice',
     'php'
   ],
-  ['body']: body
+  body: body
 };

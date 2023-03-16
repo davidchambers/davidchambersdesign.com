@@ -140,8 +140,8 @@ const body = [
       ]),
       p(['At this point I expected everything to work as advertised.\n        Instead, I got this:']),
       p([img({
-          ['alt']: 'It works!',
-          ['src']: '/images/posts/windows/it-works!.png'
+          alt: 'It works!',
+          src: '/images/posts/windows/it-works!.png'
         })]),
       p(['That would depend on one\'s definition of "works".\n        I wanted my Django site to appear, which required a\n        very simple tweak...'])
     ]),
@@ -158,13 +158,13 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 56,
-  ['slug']: 'testing-django-apps-using-localhost-subdomains',
-  ['title']: 'Testing Django apps using localhost subdomains',
-  ['datetime']: datetime('2010-07-04')('08:23:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 56,
+  slug: 'testing-django-apps-using-localhost-subdomains',
+  title: 'Testing Django apps using localhost subdomains',
+  datetime: datetime('2010-07-04')('08:23:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'django',
     'mac-os-x'
   ],
-  ['body']: body
+  body: body
 };

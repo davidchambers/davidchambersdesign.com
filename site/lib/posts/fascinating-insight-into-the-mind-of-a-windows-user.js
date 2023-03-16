@@ -93,12 +93,12 @@ import {
 import datetime from '../datetime.js';
 const body = [
   p([img({
-      ['alt']: '',
-      ['src']: '/images/posts/decorative/right/no-apple.png'
+      alt: '',
+      src: '/images/posts/decorative/right/no-apple.png'
     })]),
   p(['The following conversation took place a couple of days ago in\n    my apartment. Matt\'s my flatmate, Doug\'s one of Matt\'s friends.\n    I was in the room at the time.']),
   ol([
-    li$0027({ ['class']: 'interviewer' })([
+    li$0027({ class: 'interviewer' })([
       strong('Matt:'),
       '\n      So, Doug, do you think you could go the way of Mac?'
     ]),
@@ -106,7 +106,7 @@ const body = [
       strong('Doug:'),
       '\n      I already have, really, but I\'d never buy one.'
     ]),
-    li$0027({ ['class']: 'interviewer' })([
+    li$0027({ class: 'interviewer' })([
       strong('Matt:'),
       '\n      Why\'s that?'
     ]),
@@ -127,20 +127,20 @@ const body = [
   p(['There\'s certainly some sound reasoning behind Doug\'s stance: Doug\n    is proficient in Windows; gaining proficiency in Windows requires\n    a certain level of intelligence; Doug\'s proficiency in Windows is\n    therefore indicative of his intelligence.']),
   p(['Why, then, does Doug say that he\'s switched camps? He\'s using one\n    of these at school:']),
   captioned$002Dimages([{
-      ['alt']: '27-inch iMac',
-      ['src']: '/images/posts/44/27-inch-imac.jpg',
-      ['caption']: ['27-inch iMac']
+      alt: '27-inch iMac',
+      src: '/images/posts/44/27-inch-imac.jpg',
+      caption: ['27-inch iMac']
     }]),
   p(['Talk about having one\'s cake and eating it, too.'])
 ];
 export default {
-  ['id']: 44,
-  ['slug']: 'fascinating-insight-into-the-mind-of-a-windows-user',
-  ['title']: 'Fascinating insight into the mind of a Windows user',
-  ['datetime']: datetime('2010-03-25')('15:06:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 44,
+  slug: 'fascinating-insight-into-the-mind-of-a-windows-user',
+  title: 'Fascinating insight into the mind of a Windows user',
+  datetime: datetime('2010-03-25')('15:06:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'mac-os-x',
     'windows'
   ],
-  ['body']: body
+  body: body
 };

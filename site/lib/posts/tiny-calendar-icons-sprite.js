@@ -102,9 +102,9 @@ const body = [
     ]),
     p(['The same result can be achieved with a single HTTP request\n      through the use of a sprite:']),
     captioned$002Dimages([{
-        ['alt']: 'Tiny calendar icons sprite',
-        ['src']: '/images/posts/23/calendar.png',
-        ['caption']: ['Tiny calendar icons sprite, which you\'re welcome to save and use']
+        alt: 'Tiny calendar icons sprite',
+        src: '/images/posts/23/calendar.png',
+        caption: ['Tiny calendar icons sprite, which you\'re welcome to save and use']
       }])
   ]),
   p(['One uses a sprite by applying a background image to an element\n    using CSS. One could start with an empty span element:']),
@@ -122,9 +122,9 @@ const body = [
 `),
   p(['By default the top left corner of an element\'s background image\n    is aligned with the element\'s top left corner, so at this stage\n    all that\'s displayed is a 16px by 16px white box:']),
   captioned$002Dimages([{
-      ['alt']: 'Calendar sprite applied as background image using\n          default positioning',
-      ['src']: '/images/posts/23/calendar-span-default-bg-pos.png',
-      ['caption']: [
+      alt: 'Calendar sprite applied as background image using\n          default positioning',
+      src: '/images/posts/23/calendar-span-default-bg-pos.png',
+      caption: [
         'Calendar sprite applied as background image using ',
         strong('default'),
         ' positioning'
@@ -143,9 +143,9 @@ const body = [
 `),
   p(['This drags the background image 60px to the left, and lifts it 20px:']),
   captioned$002Dimages([{
-      ['alt']: 'Calendar sprite applied as background image using\n          correct positioning',
-      ['src']: '/images/posts/23/calendar-span-specified-bg-pos.png',
-      ['caption']: ['Calendar sprite applied as background image using correct positioning']
+      alt: 'Calendar sprite applied as background image using\n          correct positioning',
+      src: '/images/posts/23/calendar-span-specified-bg-pos.png',
+      caption: ['Calendar sprite applied as background image using correct positioning']
     }]),
   p(['Here\'s the final CSS:']),
   code$002Dblock(Symbol.for('css'))(`span.day
@@ -204,15 +204,15 @@ span.day-31 { background-position: -100px -100px; }
 `)
 ];
 export default {
-  ['id']: 23,
-  ['slug']: 'tiny-calendar-icons-sprite',
-  ['title']: 'Tiny calendar icons sprite',
-  ['datetime']: datetime('2009-08-28')('18:04:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 23,
+  slug: 'tiny-calendar-icons-sprite',
+  title: 'Tiny calendar icons sprite',
+  datetime: datetime('2009-08-28')('18:04:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'css',
     'design',
     'html',
     'icons'
   ],
-  ['body']: body
+  body: body
 };

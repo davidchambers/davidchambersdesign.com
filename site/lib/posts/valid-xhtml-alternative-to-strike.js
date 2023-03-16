@@ -114,16 +114,16 @@ ins { text-decoration: underline; }
 `)
 ];
 export default {
-  ['id']: 8,
-  ['slug']: 'valid-xhtml-alternative-to-strike',
-  ['title']: [
+  id: 8,
+  slug: 'valid-xhtml-alternative-to-strike',
+  title: [
     'Valid XHTML alternative to ',
     code('<strike>')
   ],
-  ['datetime']: datetime('2009-03-17')('21:53:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  datetime: datetime('2009-03-17')('21:53:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'css',
     'html'
   ],
-  ['body']: body
+  body: body
 };

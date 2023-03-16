@@ -154,15 +154,15 @@ end.join('\\n')
   p(['Not bad. It\'s not as elegant as the Ruby code, but it\'s not\n    "inside out" the way the Python code is.'])
 ];
 export default {
-  ['id']: 69,
-  ['slug']: 'filtering-lists-in-python-ruby-and-javascript',
-  ['title']: 'Filtering lists in Python, Ruby, and JavaScript',
-  ['datetime']: datetime('2010-09-09')('04:21:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 69,
+  slug: 'filtering-lists-in-python-ruby-and-javascript',
+  title: 'Filtering lists in Python, Ruby, and JavaScript',
+  datetime: datetime('2010-09-09')('04:21:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'javascript',
     'programming',
     'python',
     'ruby'
   ],
-  ['body']: body
+  body: body
 };

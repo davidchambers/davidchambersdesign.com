@@ -101,9 +101,9 @@ const body = [
     ]),
     p(['Unfortunately, however, several of the brushes that come bundled\n      with SyntaxHighlighter are far from perfect. Have a look at the\n      bundled PHP brush in action below.']),
     captioned$002Dimages([{
-        ['alt']: 'Screenshot of PHP code highlighted by SyntaxHighlighter\'s\n            PHP brush',
-        ['src']: '/images/posts/16/bundled-php-brush-in-action.png',
-        ['caption']: ['Screenshot of bundled PHP brush in action']
+        alt: 'Screenshot of PHP code highlighted by SyntaxHighlighter\'s\n            PHP brush',
+        src: '/images/posts/16/bundled-php-brush-in-action.png',
+        caption: ['Screenshot of bundled PHP brush in action']
       }])
   ]),
   p(['I would give this brush 6/10. Here are its deficiencies,\n    as I see them:']),
@@ -200,17 +200,17 @@ is_ready_to_order($customer);
 
 ?>
 `),
-  p$0027({ ['class']: 'caption' })(['Live rendering of improved PHP brush'])
+  p$0027({ class: 'caption' })(['Live rendering of improved PHP brush'])
 ];
 export default {
-  ['id']: 16,
-  ['slug']: 'php-brush-for-syntaxhighlighter',
-  ['title']: 'PHP brush for SyntaxHighlighter',
-  ['datetime']: datetime('2009-06-08')('17:00:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 16,
+  slug: 'php-brush-for-syntaxhighlighter',
+  title: 'PHP brush for SyntaxHighlighter',
+  datetime: datetime('2009-06-08')('17:00:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'javascript',
     'php',
     'syntaxhighlighter'
   ],
-  ['body']: body
+  body: body
 };

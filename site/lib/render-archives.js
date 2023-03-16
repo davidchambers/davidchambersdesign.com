@@ -91,9 +91,9 @@ import {
 const render$002Dsection = section => li([
   h2(section.heading),
   ol(S.map(post => li([
-    a$0027({ ['href']: `/${ post.slug }` })(post.title),
+    a$0027({ href: `/${ post.slug }` })(post.title),
     ' ',
-    time({ ['datetime']: post.datetime.toISO() })(post.datetime.toFormat('d MMMM y | h:mm') + post.datetime.toFormat('a').toLowerCase())
+    time({ datetime: post.datetime.toISO() })(post.datetime.toFormat('d MMMM y | h:mm') + post.datetime.toFormat('a').toLowerCase())
   ]))(section.posts))
 ]);
 const render$002Darchives = S.pipe([
@@ -103,15 +103,15 @@ const render$002Darchives = S.pipe([
   S.map(S.mapLeft(datetime => datetime.toFormat('MMMM y'))),
   S.groupBy(S.on(S.equals)(S.fst)),
   S.chain(S.array([])(head => tail => [{
-      ['heading']: S.fst(head),
-      ['posts']: S.map(S.snd)([
+      heading: S.fst(head),
+      posts: S.map(S.snd)([
         head,
         ...tail
       ])
     }])),
   sections => [
     h1('Archives'),
-    ol$0027({ ['class']: 'archives' })(S.map(render$002Dsection)(sections))
+    ol$0027({ class: 'archives' })(S.map(render$002Dsection)(sections))
   ]
 ]);
 export default render$002Darchives;

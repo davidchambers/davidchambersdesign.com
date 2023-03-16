@@ -110,13 +110,13 @@ endif;
   ])
 ];
 export default {
-  ['id']: 12,
-  ['slug']: 'looping-more-than-once-with-the-wordpress-loop',
-  ['title']: 'Looping more than once with the WordPress loop',
-  ['datetime']: datetime('2009-04-17')('00:34:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 12,
+  slug: 'looping-more-than-once-with-the-wordpress-loop',
+  title: 'Looping more than once with the WordPress loop',
+  datetime: datetime('2009-04-17')('00:34:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'php',
     'wordpress'
   ],
-  ['body']: body
+  body: body
 };

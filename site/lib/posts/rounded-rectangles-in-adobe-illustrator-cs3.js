@@ -91,12 +91,12 @@ import datetime from '../datetime.js';
 const body = [
   excerpt([
     p([img({
-        ['alt']: '',
-        ['src']: '/images/posts/decorative/left/adobe-illustrator-cs3-icon.png'
+        alt: '',
+        src: '/images/posts/decorative/left/adobe-illustrator-cs3-icon.png'
       })]),
     p(['Not so long ago I was talking to my brother online as he\n      worked on a poster for a presentation. He is an engineer;\n      using Illustrator was a new experience for him. He generally\n      picks up new things easily, but as you may appreciate,\n      Illustrator is often far from logical. We reached a point\n      where he asked me about scaling rounded rectangles \u2013 this\n      is where things started to get hairy.']),
     ol([
-      li$0027({ ['class']: 'interviewer' })([
+      li$0027({ class: 'interviewer' })([
         strong('him:'),
         '\n        if I have a rounded rectangle and resize it, it there a\n        way to stop it from changing the rounding of the corners\n        (which I want constant for all my rectangles)?'
       ]),
@@ -104,7 +104,7 @@ const body = [
         strong('me:'),
         '\n        you can work out how large you want it to be and then\n        double-click with the rectangle tool and you\'ll be able\n        to enter all the correct values'
       ]),
-      li$0027({ ['class']: 'interviewer' })([
+      li$0027({ class: 'interviewer' })([
         strong('him:'),
         '\n        is there a way to change how curved they are after placing them?'
       ]),
@@ -112,7 +112,7 @@ const body = [
         strong('me:'),
         '\n        InDesign has a much better was of dealing with this issue than\n        does Illustrator... in InDesign, the rectangle is treated as an\n        object, and its corner radius is treated as a property in just\n        the same way as its width, height, and position... this means\n        that you can change the corner radius at any time...'
       ]),
-      li$0027({ ['class']: 'interviewer' })([
+      li$0027({ class: 'interviewer' })([
         strong('him:'),
         '\n        that\'s how it should be'
       ])
@@ -143,9 +143,9 @@ const body = [
     li(['enter your desired corner radius, and off you go!'])
   ]),
   captioned$002Dimages([{
-      ['alt']: 'Illustrator\'s Shape Options dialog',
-      ['src']: '/images/posts/windows/illustrator-shape-options-dialog.png',
-      ['caption']: [
+      alt: 'Illustrator\'s Shape Options dialog',
+      src: '/images/posts/windows/illustrator-shape-options-dialog.png',
+      caption: [
         'Illustrator\'s ',
         strong('Shape Options'),
         ' dialog,\n      set up to enable rounded rectangles which scale correctly'
@@ -162,14 +162,14 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 3,
-  ['slug']: 'rounded-rectangles-in-adobe-illustrator-cs3',
-  ['title']: 'Rounded rectangles in Adobe Illustrator CS3',
-  ['datetime']: datetime('2008-12-03')('12:49:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 3,
+  slug: 'rounded-rectangles-in-adobe-illustrator-cs3',
+  title: 'Rounded rectangles in Adobe Illustrator CS3',
+  datetime: datetime('2008-12-03')('12:49:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'adobe',
     'cs3',
     'illustrator'
   ],
-  ['body']: body
+  body: body
 };

@@ -150,16 +150,16 @@ const body = [
   update(datetime('2011-01-30')('23:30:00')(Symbol.for('America/Los_Angeles')))([p(['Chris points out that John himself mentioned this trick\n      in his aforelinked post.'])])
 ];
 export default {
-  ['id']: 77,
-  ['slug']: 'safari-keyboard-shortcut-to-open-current-page-in-google-chrome',
-  ['title']: 'Safari keyboard shortcut to open current page in Google Chrome',
-  ['datetime']: datetime('2011-01-30')('21:35:00')(Symbol.for('America/Los_Angeles')),
-  ['tags']: [
+  id: 77,
+  slug: 'safari-keyboard-shortcut-to-open-current-page-in-google-chrome',
+  title: 'Safari keyboard shortcut to open current page in Google Chrome',
+  datetime: datetime('2011-01-30')('21:35:00')(Symbol.for('America/Los_Angeles')),
+  tags: [
     'flash',
     'google-chrome',
     'keyboard-shortcuts',
     'mac-os-x',
     'safari'
   ],
-  ['body']: body
+  body: body
 };

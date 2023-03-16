@@ -116,13 +116,13 @@ const body = [
   p(['The above returns users to their starting point after they\'ve\n    logged in.'])
 ];
 export default {
-  ['id']: 7,
-  ['slug']: 'wordpress-login-redirect',
-  ['title']: 'WordPress login redirect',
-  ['datetime']: datetime('2009-03-01')('03:01:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 7,
+  slug: 'wordpress-login-redirect',
+  title: 'WordPress login redirect',
+  datetime: datetime('2009-03-01')('03:01:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'php',
     'wordpress'
   ],
-  ['body']: body
+  body: body
 };

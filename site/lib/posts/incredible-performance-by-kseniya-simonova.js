@@ -96,14 +96,14 @@ const body = [
   p([a('http://www.youtube.com/watch?v=518XP8prwZo')('Kseniya Simonova on Ukraine\'s Got Talent')])
 ];
 export default {
-  ['id']: 21,
-  ['slug']: 'incredible-performance-by-kseniya-simonova',
-  ['title']: 'Incredible performance by Kseniya Simonova',
-  ['datetime']: datetime('2009-08-10')('10:29:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 21,
+  slug: 'incredible-performance-by-kseniya-simonova',
+  title: 'Incredible performance by Kseniya Simonova',
+  datetime: datetime('2009-08-10')('10:29:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'art',
     'performance',
     'video'
   ],
-  ['body']: body
+  body: body
 };

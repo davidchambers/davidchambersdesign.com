@@ -96,13 +96,13 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 62,
-  ['slug']: 'dieter-rams-video-interview',
-  ['title']: 'Dieter Rams video interview',
-  ['datetime']: datetime('2010-07-20')('19:30:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 62,
+  slug: 'dieter-rams-video-interview',
+  title: 'Dieter Rams video interview',
+  datetime: datetime('2010-07-20')('19:30:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'design',
     'video'
   ],
-  ['body']: body
+  body: body
 };

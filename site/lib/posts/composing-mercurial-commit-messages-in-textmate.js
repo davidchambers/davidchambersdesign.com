@@ -93,8 +93,8 @@ import {
 import datetime from '../datetime.js';
 const body = [
   p([img({
-      ['alt']: '',
-      ['src']: '/images/posts/decorative/right/textmate-icon.png'
+      alt: '',
+      src: '/images/posts/decorative/right/textmate-icon.png'
     })]),
   p([
     'Using the ',
@@ -150,16 +150,16 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 76,
-  ['slug']: 'composing-mercurial-commit-messages-in-textmate',
-  ['title']: 'Composing Mercurial commit messages in TextMate',
-  ['datetime']: datetime('2011-01-10')('01:25:00')(Symbol.for('Australia/Sydney')),
-  ['tags']: [
+  id: 76,
+  slug: 'composing-mercurial-commit-messages-in-textmate',
+  title: 'Composing Mercurial commit messages in TextMate',
+  datetime: datetime('2011-01-10')('01:25:00')(Symbol.for('Australia/Sydney')),
+  tags: [
     'hg',
     'mac-os-x',
     'markdown',
     'mercurial',
     'textmate'
   ],
-  ['body']: body
+  body: body
 };

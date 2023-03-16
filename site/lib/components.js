@@ -90,16 +90,16 @@ import {
 } from './elements.js';
 const captioned$002Dimages = images => dl(images.flatMap(image => [
   dt(img({
-    ['alt']: image.alt,
-    ['src']: image.src
+    alt: image.alt,
+    src: image.src
   })),
   dd(image.caption)
 ]));
 const code$002Dblock = language => source$002Dcode => pre(code(text(source$002Dcode)));
-const update = datetime => body => div({ ['class']: 'update' })([
+const update = datetime => body => div({ class: 'update' })([
   h4([
     'Update \u2014 ',
-    time({ ['datetime']: datetime.toISO() })([datetime.toFormat('d MMMM y')])
+    time({ datetime: datetime.toISO() })([datetime.toFormat('d MMMM y')])
   ]),
   ...canonicalize$002Dchildren(body)
 ]);

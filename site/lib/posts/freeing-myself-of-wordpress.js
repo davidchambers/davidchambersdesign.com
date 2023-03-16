@@ -198,19 +198,19 @@ const body = [
     ' as I\'m doing now,\n    preview locally, and hit the upload arrow when I\'m ready\n    to share my thoughts with the world.'
   ]),
   p([img({
-      ['alt']: 'Publish a post from Coda',
-      ['src']: '/images/posts/50/publish.png'
+      alt: 'Publish a post from Coda',
+      src: '/images/posts/50/publish.png'
     })])
 ];
 export default {
-  ['id']: 50,
-  ['slug']: 'freeing-myself-of-wordpress',
-  ['title']: 'Freeing myself of WordPress',
-  ['datetime']: datetime('2010-06-03')('02:56:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 50,
+  slug: 'freeing-myself-of-wordpress',
+  title: 'Freeing myself of WordPress',
+  datetime: datetime('2010-06-03')('02:56:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'django',
     'mango',
     'wordpress'
   ],
-  ['body']: body
+  body: body
 };

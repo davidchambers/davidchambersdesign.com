@@ -125,14 +125,14 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 42,
-  ['slug']: 'forcing-browsers-to-rerender-elements',
-  ['title']: 'Forcing browsers to rerender elements',
-  ['datetime']: datetime('2010-03-22')('19:40:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 42,
+  slug: 'forcing-browsers-to-rerender-elements',
+  title: 'Forcing browsers to rerender elements',
+  datetime: datetime('2010-03-22')('19:40:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'dom',
     'ie',
     'javascript'
   ],
-  ['body']: body
+  body: body
 };

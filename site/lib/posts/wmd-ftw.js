@@ -109,8 +109,8 @@ const body = [
     ' only.\n    No, I wanted the preview to resemble as closely as possible\n    the published result, which meant updating the preview area in\n    response to changes to "name", "e-mail", and "website"\n    as well as to changes to the comment itself.'
   ]),
   video({
-    ['src']: '/images/posts/53/wmd.mp4',
-    ['controls']: 'controls'
+    src: '/images/posts/53/wmd.mp4',
+    controls: 'controls'
   })([
     p([
       'Get with the programme; this video\'s in an HTML5 ',
@@ -126,15 +126,15 @@ const body = [
   p(['This was a great deal of fun to implement!'])
 ];
 export default {
-  ['id']: 53,
-  ['slug']: 'wmd-ftw',
-  ['title']: 'wmd ftw!',
-  ['datetime']: datetime('2010-06-13')('11:25:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 53,
+  slug: 'wmd-ftw',
+  title: 'wmd ftw!',
+  datetime: datetime('2010-06-13')('11:25:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'javascript',
     'markdown',
     'ux',
     'wmd'
   ],
-  ['body']: body
+  body: body
 };

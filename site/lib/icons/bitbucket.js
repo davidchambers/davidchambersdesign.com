@@ -70,21 +70,21 @@ const sticky$002Dtape = [
 ];
 const bitbucket = [
   path({
-    ['fill']: '#27c',
-    ['d']: render(bucket)
+    fill: '#27c',
+    d: render(bucket)
   }),
   path({
-    ['fill']: '#ee7',
-    ['d']: render(sticky$002Dnote)
+    fill: '#ee7',
+    d: render(sticky$002Dnote)
   }),
   path({
-    ['fill']: '#a7a',
-    ['d']: render(symbol)
+    fill: '#a7a',
+    d: render(symbol)
   }),
   path({
-    ['fill']: '#fff',
-    ['d']: render(sticky$002Dtape),
-    ['opacity']: 0.25
+    fill: '#fff',
+    d: render(sticky$002Dtape),
+    opacity: 0.25
   })
 ];
 export default bitbucket;

@@ -116,13 +116,13 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 19,
-  ['slug']: 'associative-arrays-in-javascript',
-  ['title']: 'Associative arrays in JavaScript',
-  ['datetime']: datetime('2009-06-29')('19:14:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 19,
+  slug: 'associative-arrays-in-javascript',
+  title: 'Associative arrays in JavaScript',
+  datetime: datetime('2009-06-29')('19:14:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'best-practice',
     'javascript'
   ],
-  ['body']: body
+  body: body
 };

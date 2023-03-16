@@ -184,24 +184,24 @@ const string = [
 ];
 const tags = [
   path({
-    ['fill']: '#741',
-    ['d']: render(stroke)
+    fill: '#741',
+    d: render(stroke)
   }),
   path({
-    ['fill']: '#feb',
-    ['d']: render(fill)
+    fill: '#feb',
+    d: render(fill)
   }),
   path({
-    ['fill']: '#c93',
-    ['d']: render(text)
+    fill: '#c93',
+    d: render(text)
   }),
   path({
-    ['fill']: '#fff',
-    ['d']: render(sticker)
+    fill: '#fff',
+    d: render(sticker)
   }),
   path({
-    ['fill']: '#333',
-    ['d']: render(string)
+    fill: '#333',
+    d: render(string)
   })
 ];
 export default tags;

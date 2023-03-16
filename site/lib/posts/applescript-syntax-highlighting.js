@@ -121,14 +121,14 @@ const body = [
   ]),
   captioned$002Dimages([
     {
-      ['alt']: '',
-      ['src']: '/images/posts/15/script-editor-syntax-highlighting.png',
-      ['caption']: ['Screenshot of Script Editor\'s rendering of an AppleScript snippet']
+      alt: '',
+      src: '/images/posts/15/script-editor-syntax-highlighting.png',
+      caption: ['Screenshot of Script Editor\'s rendering of an AppleScript snippet']
     },
     {
-      ['alt']: '',
-      ['src']: '/images/posts/15/syntaxhighlighter-applescript-theme.png',
-      ['caption']: ['Screenshot of snippet styled by AppleScript theme for SyntaxHighlighter']
+      alt: '',
+      src: '/images/posts/15/syntaxhighlighter-applescript-theme.png',
+      caption: ['Screenshot of snippet styled by AppleScript theme for SyntaxHighlighter']
     }
   ]),
   code$002Dblock(Symbol.for('applescript'))(`#!/usr/bin/osascript
@@ -168,8 +168,8 @@ else
     end repeat
 end if
 `),
-  p$0027({ ['class']: 'caption' })(['Live rendering of AppleScript snippet']),
-  h3$0027({ ['id']: 'setup' })('Setup'),
+  p$0027({ class: 'caption' })(['Live rendering of AppleScript snippet']),
+  h3$0027({ id: 'setup' })('Setup'),
   p(['To add AppleScript syntax highlighting to your own site or blog,\n    do the following:']),
   ol([
     li([p([
@@ -199,7 +199,7 @@ end if
 `)
     ])
   ]),
-  h3$0027({ ['id']: 'usage' })('Usage'),
+  h3$0027({ id: 'usage' })('Usage'),
   p([
     'To have SyntaxHighlighter parse a block of AppleScript,\n    wrap the code in ',
     code('pre'),
@@ -233,15 +233,15 @@ end if
   ])
 ];
 export default {
-  ['id']: 15,
-  ['slug']: 'applescript-syntax-highlighting',
-  ['title']: 'AppleScript syntax highlighting',
-  ['datetime']: datetime('2009-06-04')('03:12:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 15,
+  slug: 'applescript-syntax-highlighting',
+  title: 'AppleScript syntax highlighting',
+  datetime: datetime('2009-06-04')('03:12:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'applescript',
     'javascript',
     'mac-os-x',
     'syntaxhighlighter'
   ],
-  ['body']: body
+  body: body
 };

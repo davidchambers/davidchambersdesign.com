@@ -105,7 +105,7 @@ const body = [
   ]),
   p(['Search queries on this site are now submitted to Google with the\n    specification that only results from this domain are to be returned.\n    Here\'s a breakdown of the various query parameters I included:']),
   dl([
-    dt$0027({ ['class']: 'textual' })('q'),
+    dt$0027({ class: 'textual' })('q'),
     dd('Search query as entered by the user.'),
     dt('ie'),
     dd('Sets the character encoding that is used to interpret the query string.'),
@@ -121,13 +121,13 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 45,
-  ['slug']: 'using-google-for-site-search',
-  ['title']: 'Using Google for site search',
-  ['datetime']: datetime('2010-03-25')('22:06:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 45,
+  slug: 'using-google-for-site-search',
+  title: 'Using Google for site search',
+  datetime: datetime('2010-03-25')('22:06:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'google',
     'search'
   ],
-  ['body']: body
+  body: body
 };

@@ -138,13 +138,13 @@ class Musician(models.Model):
   ])
 ];
 export default {
-  ['id']: 38,
-  ['slug']: 'get-attributes-of-django-model-or-instance',
-  ['title']: 'Get attributes of Django model or instance',
-  ['datetime']: datetime('2010-02-22')('20:24:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 38,
+  slug: 'get-attributes-of-django-model-or-instance',
+  title: 'Get attributes of Django model or instance',
+  datetime: datetime('2010-02-22')('20:24:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'django',
     'python'
   ],
-  ['body']: body
+  body: body
 };

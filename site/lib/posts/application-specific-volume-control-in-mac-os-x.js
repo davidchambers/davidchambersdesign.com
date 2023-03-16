@@ -102,8 +102,8 @@ const body = [
     ]),
     h3('System Preferences > Sound > Application Volumes'),
     p([img({
-        ['alt']: 'Possible interface for application-specific\n              volume settings in Mac OS X',
-        ['src']: '/images/posts/windows/application-volumes.png'
+        alt: 'Possible interface for application-specific\n              volume settings in Mac OS X',
+        src: '/images/posts/windows/application-volumes.png'
       })]),
     p([
       'Wouldn\'t this be nice? Many months ago I did some Googling\n      to find out whether it\'s possible to control volume on an\n      application-by-application basis in OS X. The closest thing\n      to a solution was an X11 (read: ugly) app that ',
@@ -125,18 +125,18 @@ const body = [
       '\n      offers this functionality, but isn\'t cheap. I hope Hear\'s\n      developers decide to release a preference pane that provides\n      the functionality of Hear\'s mixer pane and nothing more\n      (I\'m about to make this request).'
     ]),
     p([img({
-        ['alt']: 'Hear\'s mixer pane',
-        ['src']: '/images/posts/windows/hear-mixer-pane.png'
+        alt: 'Hear\'s mixer pane',
+        src: '/images/posts/windows/hear-mixer-pane.png'
       })])
   ]),
   h4('Bonus titbit'),
   p(['While faking the drop shadow on the Sound window above I discovered\n    a combination of drop shadow values which pretty much perfectly match\n    those of an active window in OS X:']),
   p([img({
-      ['alt']: 'Photoshop\'s drop shadow dialog',
-      ['src']: '/images/posts/47/drop-shadow-settings.png'
+      alt: 'Photoshop\'s drop shadow dialog',
+      src: '/images/posts/47/drop-shadow-settings.png'
     })]),
   dl([
-    dt$0027({ ['class']: 'textual' })('shadow color'),
+    dt$0027({ class: 'textual' })('shadow color'),
     dd('#000000 (black)'),
     dt('opacity'),
     dd('45%'),
@@ -151,13 +151,13 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 47,
-  ['slug']: 'application-specific-volume-control-in-mac-os-x',
-  ['title']: 'Application-specific volume control in Mac OS X?',
-  ['datetime']: datetime('2010-04-07')('02:04:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 47,
+  slug: 'application-specific-volume-control-in-mac-os-x',
+  title: 'Application-specific volume control in Mac OS X?',
+  datetime: datetime('2010-04-07')('02:04:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'mac-os-x',
     'ux'
   ],
-  ['body']: body
+  body: body
 };

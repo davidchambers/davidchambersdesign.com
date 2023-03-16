@@ -286,14 +286,14 @@ fibonacci.cache = {}
   ])
 ];
 export default {
-  ['id']: 67,
-  ['slug']: 'self-caching-functions-in-javascript-and-python',
-  ['title']: 'Self-caching functions in JavaScript and Python',
-  ['datetime']: datetime('2010-08-29')('01:10:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 67,
+  slug: 'self-caching-functions-in-javascript-and-python',
+  title: 'Self-caching functions in JavaScript and Python',
+  datetime: datetime('2010-08-29')('01:10:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'javascript',
     'programming',
     'python'
   ],
-  ['body']: body
+  body: body
 };

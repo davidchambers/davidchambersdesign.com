@@ -13,8 +13,8 @@ import {
 } from '../orthogonal.js';
 const dates = S.map(d => path({
   ['fill-rule']: 'evenodd',
-  ['fill']: '#000',
-  ['d']: render([
+  fill: '#000',
+  d: render([
     $21E8(0),
     $21E9(0),
     ...d

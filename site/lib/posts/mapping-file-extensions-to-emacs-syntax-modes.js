@@ -102,19 +102,19 @@ const body = [
     ' file did\n    the trick. :)'
   ]),
   captioned$002Dimages([{
-      ['alt']: 'Emacs syntax highlighting',
-      ['src']: '/images/posts/81/emacs-syntax-highlighting.png',
-      ['caption']: ['HTML in Emacs with and without syntax highlighting']
+      alt: 'Emacs syntax highlighting',
+      src: '/images/posts/81/emacs-syntax-highlighting.png',
+      caption: ['HTML in Emacs with and without syntax highlighting']
     }])
 ];
 export default {
-  ['id']: 81,
-  ['slug']: 'mapping-file-extensions-to-emacs-syntax-modes',
-  ['title']: 'Mapping file extensions to Emacs syntax modes',
-  ['datetime']: datetime('2011-02-18')('23:15:00')(Symbol.for('America/Los_Angeles')),
-  ['tags']: [
+  id: 81,
+  slug: 'mapping-file-extensions-to-emacs-syntax-modes',
+  title: 'Mapping file extensions to Emacs syntax modes',
+  datetime: datetime('2011-02-18')('23:15:00')(Symbol.for('America/Los_Angeles')),
+  tags: [
     'emacs',
     'syntax-highlighting'
   ],
-  ['body']: body
+  body: body
 };

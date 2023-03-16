@@ -119,15 +119,15 @@ window.addEvent('domready', function () {
   ])
 ];
 export default {
-  ['id']: 52,
-  ['slug']: 'autopopulating-input-fields-with-mootools',
-  ['title']: 'Auto-populating input fields with MooTools',
-  ['datetime']: datetime('2010-06-09')('23:23:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 52,
+  slug: 'autopopulating-input-fields-with-mootools',
+  title: 'Auto-populating input fields with MooTools',
+  datetime: datetime('2010-06-09')('23:23:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'html5',
     'javascript',
     'mootools',
     'ux'
   ],
-  ['body']: body
+  body: body
 };

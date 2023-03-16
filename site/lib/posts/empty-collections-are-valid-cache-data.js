@@ -129,10 +129,10 @@ if cached is not None: # much better!
   ])
 ];
 export default {
-  ['id']: 57,
-  ['slug']: 'empty-collections-are-valid-cache-data',
-  ['title']: 'Empty collections are valid cache data',
-  ['datetime']: datetime('2010-07-06')('09:34:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: ['django'],
-  ['body']: body
+  id: 57,
+  slug: 'empty-collections-are-valid-cache-data',
+  title: 'Empty collections are valid cache data',
+  datetime: datetime('2010-07-06')('09:34:00')(Symbol.for('Pacific/Auckland')),
+  tags: ['django'],
+  body: body
 };

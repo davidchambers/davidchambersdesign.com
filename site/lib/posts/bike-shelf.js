@@ -90,8 +90,8 @@ import datetime from '../datetime.js';
 const body = [
   p(['Simple design executed beatifully.']),
   p([img({
-      ['alt']: 'Bike shelf',
-      ['src']: 'http://knifeandsaw.files.wordpress.com/2010/09/photo_bikerack_cu_bars.jpg'
+      alt: 'Bike shelf',
+      src: 'http://knifeandsaw.files.wordpress.com/2010/09/photo_bikerack_cu_bars.jpg'
     })]),
   p([
     'The article from which this photograph is lifted, entitled ',
@@ -102,10 +102,10 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 71,
-  ['slug']: 'bike-shelf',
-  ['title']: 'Bike shelf',
-  ['datetime']: datetime('2010-09-20')('19:53:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: ['design'],
-  ['body']: body
+  id: 71,
+  slug: 'bike-shelf',
+  title: 'Bike shelf',
+  datetime: datetime('2010-09-20')('19:53:00')(Symbol.for('Pacific/Auckland')),
+  tags: ['design'],
+  body: body
 };

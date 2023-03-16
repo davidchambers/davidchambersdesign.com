@@ -123,15 +123,15 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 32,
-  ['slug']: 'prototype-and-scriptaculous-combined-and-compressed',
-  ['title']: 'Prototype and script.aculo.us, combined and compressed',
-  ['datetime']: datetime('2009-11-09')('23:14:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 32,
+  slug: 'prototype-and-scriptaculous-combined-and-compressed',
+  title: 'Prototype and script.aculo.us, combined and compressed',
+  datetime: datetime('2009-11-09')('23:14:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'javascript',
     'optimization',
     'prototype',
     'script.aculo.us'
   ],
-  ['body']: body
+  body: body
 };

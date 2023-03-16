@@ -111,23 +111,23 @@ const body = [
     li([a('#placeholder-class')('Placeholder class')]),
     li([a('#usage')('Usage')])
   ]),
-  h3$0027({ ['id']: 'behaviour' })('Behaviour'),
+  h3$0027({ id: 'behaviour' })('Behaviour'),
   ul([
     li(['Placeholder text should be inserted into input field\n      upon page load.']),
     li(['Placeholder text should be targetable via CSS.']),
     li(['Clicking or tabbing into input field should remove\n      placeholder text.']),
     li(['Placeholder text should be reinserted if input field\n      is empty when it loses focus.'])
   ]),
-  h3$0027({ ['id']: 'html5-placeholder-text' })('HTML5 placeholder text'),
+  h3$0027({ id: 'html5-placeholder-text' })('HTML5 placeholder text'),
   p([
     'HTML5 allows placeholder text to be specified in the markup\n    through the ',
     code('placeholder'),
     ' attribute. In supporting\n    browsers (currently Chrome and Safari) this produces the\n    behaviour described above with no reliance on JavaScript.'
   ]),
-  h3$0027({ ['id']: 'markup' })('Markup'),
+  h3$0027({ id: 'markup' })('Markup'),
   code$002Dblock(Symbol.for('html'))(`<input type="search" id="s" name="s" placeholder="search..." />
 `),
-  h3$0027({ ['id']: 'styling' })('Styling'),
+  h3$0027({ id: 'styling' })('Styling'),
   code$002Dblock(Symbol.for('css'))(`input.placeholder { color: #a9a9a9 !important; }
 `),
   p([
@@ -135,7 +135,7 @@ const body = [
     code('#a9a9a9'),
     ' as Safari uses this colour\n    for placeholder text.'
   ]),
-  h3$0027({ ['id']: 'placeholder-class' })('Placeholder class'),
+  h3$0027({ id: 'placeholder-class' })('Placeholder class'),
   code$002Dblock(Symbol.for('javascript'))(`var Placeholder = Class.create({
     initialize: function (element) {
         this.element = element;
@@ -159,7 +159,7 @@ const body = [
     a('http://prototypejs.org/')('Prototype'),
     '.'
   ]),
-  h3$0027({ ['id']: 'usage' })('Usage'),
+  h3$0027({ id: 'usage' })('Usage'),
   p(['To create a new instance of the Placeholder class, simply pass\n    the constructor a Prototype extended element:']),
   code$002Dblock(Symbol.for('javascript'))(`new Placeholder($('s'));
 `),
@@ -249,15 +249,15 @@ document.observe('dom:loaded', function () {
   ])
 ];
 export default {
-  ['id']: 33,
-  ['slug']: 'autopopulating-input-fields-with-prototype',
-  ['title']: 'Auto-populating input fields with Prototype',
-  ['datetime']: datetime('2010-01-07')('22:03:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 33,
+  slug: 'autopopulating-input-fields-with-prototype',
+  title: 'Auto-populating input fields with Prototype',
+  datetime: datetime('2010-01-07')('22:03:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'html5',
     'javascript',
     'prototype',
     'ux'
   ],
-  ['body']: body
+  body: body
 };

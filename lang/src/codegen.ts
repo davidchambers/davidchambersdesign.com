@@ -104,11 +104,26 @@ const esFromArrayExpression = (arrayExpression: Serif.ArrayExpression): ES.Array
 
 const esFromObjectExpression = (objectExpression: Serif.ObjectExpression): ES.ObjectExpression => (
   ES.ObjectExpression(
-    objectExpression.properties.map(property =>
-      property.type === 'SpreadElement'
-      ? esFromSpreadElement(property)
-      : ES.Property(esFromExpression(property.key), esFromExpression(property.value), {computed: true})
-    )
+    objectExpression.properties.map(property => {
+      if (property.type === 'SpreadElement') {
+        return esFromSpreadElement(property);
+      } else if (
+        property.key.type === 'StringLiteral' &&
+        validEsIdentifierName(property.key.value)
+      ) {
+        return ES.Property(
+          esFromEscapedIdentifierName(property.key.value as Escaped),
+          esFromExpression(property.value),
+          {computed: false}
+        );
+      } else {
+        return ES.Property(
+          esFromExpression(property.key),
+          esFromExpression(property.value),
+          {computed: true}
+        );
+      }
+    })
   )
 );
 

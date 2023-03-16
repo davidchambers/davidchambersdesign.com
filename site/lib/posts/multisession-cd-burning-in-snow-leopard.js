@@ -90,8 +90,8 @@ import { $2014 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p([img({
-      ['alt']: '',
-      ['src']: '/images/posts/decorative/right/disk-utility-icon.png'
+      alt: '',
+      src: '/images/posts/decorative/right/disk-utility-icon.png'
     })]),
   p([
     'The days of the compact disc are surely numbered. The ',
@@ -121,13 +121,13 @@ const body = [
   p(['To add more files to the disc later, follow the steps above.\n    You can continue this process until all available space on the\n    disc is used.'])
 ];
 export default {
-  ['id']: 29,
-  ['slug']: 'multisession-cd-burning-in-snow-leopard',
-  ['title']: 'Multisession CD burning in Snow Leopard',
-  ['datetime']: datetime('2009-10-27')('08:58:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 29,
+  slug: 'multisession-cd-burning-in-snow-leopard',
+  title: 'Multisession CD burning in Snow Leopard',
+  datetime: datetime('2009-10-27')('08:58:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'mac-os-x',
     'snow-leopard'
   ],
-  ['body']: body
+  body: body
 };

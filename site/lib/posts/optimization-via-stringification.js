@@ -121,14 +121,14 @@ print base64.b64encode(s, altchars)
 `)
 ];
 export default {
-  ['id']: 51,
-  ['slug']: 'optimization-via-stringification',
-  ['title']: 'Optimization via stringification',
-  ['datetime']: datetime('2010-06-03')('14:28:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 51,
+  slug: 'optimization-via-stringification',
+  title: 'Optimization via stringification',
+  datetime: datetime('2010-06-03')('14:28:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'css',
     'optimization',
     'python'
   ],
-  ['body']: body
+  body: body
 };

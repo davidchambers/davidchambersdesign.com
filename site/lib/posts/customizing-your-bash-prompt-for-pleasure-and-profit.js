@@ -96,9 +96,9 @@ const body = [
   excerpt([
     p(['Mac OS X\'s default bash prompt is dull and uninformative.']),
     captioned$002Dimages([{
-        ['alt']: 'Mac OS X\'s default bash prompt',
-        ['src']: '/images/posts/80/windows/default-os-x-bash-prompt.png',
-        ['caption']: ['Mac OS X\'s default bash prompt']
+        alt: 'Mac OS X\'s default bash prompt',
+        src: '/images/posts/80/windows/default-os-x-bash-prompt.png',
+        caption: ['Mac OS X\'s default bash prompt']
       }]),
     p([
       'Since only the current directory name is visible, I find\n      myself running ',
@@ -114,9 +114,9 @@ const body = [
     '\n    providing much-needed breathing room).'
   ]),
   captioned$002Dimages([{
-      ['alt']: 'Custom bash prompt which displays the full path',
-      ['src']: '/images/posts/80/windows/custom-bash-prompt.png',
-      ['caption']: ['Custom bash prompt which displays the full path']
+      alt: 'Custom bash prompt which displays the full path',
+      src: '/images/posts/80/windows/custom-bash-prompt.png',
+      caption: ['Custom bash prompt which displays the full path']
     }]),
   h3('Configuring the bash prompt'),
   p([
@@ -206,14 +206,14 @@ fi
 `)
 ];
 export default {
-  ['id']: 80,
-  ['slug']: 'customizing-your-bash-prompt-for-pleasure-and-profit',
-  ['title']: 'Customizing your bash prompt for pleasure and profit',
-  ['datetime']: datetime('2011-02-13')('01:30:00')(Symbol.for('America/Los_Angeles')),
-  ['tags']: [
+  id: 80,
+  slug: 'customizing-your-bash-prompt-for-pleasure-and-profit',
+  title: 'Customizing your bash prompt for pleasure and profit',
+  datetime: datetime('2011-02-13')('01:30:00')(Symbol.for('America/Los_Angeles')),
+  tags: [
     'mac-os-x',
     'productivity',
     'terminal.app'
   ],
-  ['body']: body
+  body: body
 };

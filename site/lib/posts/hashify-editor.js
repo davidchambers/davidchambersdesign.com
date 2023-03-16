@@ -142,14 +142,14 @@ const body = [
   ]),
   captioned$002Dimages([
     {
-      ['alt']: 'Hashify Editor at David Chambers Design',
-      ['src']: '/images/posts/85/hashify-editor-at-david-chambers-design.png',
-      ['caption']: ['Hashify Editor at David Chambers Design']
+      alt: 'Hashify Editor at David Chambers Design',
+      src: '/images/posts/85/hashify-editor-at-david-chambers-design.png',
+      caption: ['Hashify Editor at David Chambers Design']
     },
     {
-      ['alt']: 'Comment preview at hashify.me',
-      ['src']: '/images/posts/85/comment-preview-at-hashify.me.png',
-      ['caption']: ['Comment preview at hashify.me']
+      alt: 'Comment preview at hashify.me',
+      src: '/images/posts/85/comment-preview-at-hashify.me.png',
+      caption: ['Comment preview at hashify.me']
     }
   ]),
   h3('Adoption'),
@@ -163,15 +163,15 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 85,
-  ['slug']: 'hashify-editor',
-  ['title']: 'Hashify Editor',
-  ['datetime']: datetime('2011-04-24')('06:15:00')(Symbol.for('America/Los_Angeles')),
-  ['tags']: [
+  id: 85,
+  slug: 'hashify-editor',
+  title: 'Hashify Editor',
+  datetime: datetime('2011-04-24')('06:15:00')(Symbol.for('America/Los_Angeles')),
+  tags: [
     'hashify',
     'markdown',
     'showdown',
     'ux'
   ],
-  ['body']: body
+  body: body
 };

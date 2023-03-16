@@ -95,19 +95,19 @@ const body = [
     '. About time, I say.'
   ]),
   captioned$002Dimages([{
-      ['alt']: 'Gmail insert image icon',
-      ['src']: '/images/posts/10/gmail-insert-image-icon.png',
-      ['caption']: ['Gmail\'s insert image icon, visible in rich formatting mode']
+      alt: 'Gmail insert image icon',
+      src: '/images/posts/10/gmail-insert-image-icon.png',
+      caption: ['Gmail\'s insert image icon, visible in rich formatting mode']
     }])
 ];
 export default {
-  ['id']: 10,
-  ['slug']: 'inserting-images-in-gmail-messages',
-  ['title']: 'Inserting images in Gmail messages',
-  ['datetime']: datetime('2009-04-15')('20:27:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 10,
+  slug: 'inserting-images-in-gmail-messages',
+  title: 'Inserting images in Gmail messages',
+  datetime: datetime('2009-04-15')('20:27:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'gmail',
     'html'
   ],
-  ['body']: body
+  body: body
 };

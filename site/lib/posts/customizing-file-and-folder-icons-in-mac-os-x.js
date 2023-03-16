@@ -101,17 +101,17 @@ const body = [
   ol([
     li([
       p([img({
-          ['alt']: '',
-          ['src']: '/images/posts/decorative/right/photoshop-icon.png'
+          alt: '',
+          src: '/images/posts/decorative/right/photoshop-icon.png'
         })]),
       p(['Create icon versions at one or more of the following sizes:\n        16, 32, 128, 256, and 512. (I\'ve created two very different\n        images for this tutorial.)']),
       p([img({
-          ['alt']: '16x16 icon',
-          ['src']: '/images/posts/72/16x16-icon.png'
+          alt: '16x16 icon',
+          src: '/images/posts/72/16x16-icon.png'
         })]),
       p([img({
-          ['alt']: '32x32 icon',
-          ['src']: '/images/posts/72/32x32-icon.png'
+          alt: '32x32 icon',
+          src: '/images/posts/72/32x32-icon.png'
         })]),
       p([
         'Save the images in a lossless format such as PNG.\n        (If saving from Photoshop, make sure to use ',
@@ -123,14 +123,14 @@ const body = [
         '.)'
       ]),
       p([img({
-          ['alt']: 'Save for Web & Devices',
-          ['src']: '/images/posts/72/save-for-web-and-devices.png'
+          alt: 'Save for Web & Devices',
+          src: '/images/posts/72/save-for-web-and-devices.png'
         })])
     ]),
     li([
       p([img({
-          ['alt']: '',
-          ['src']: '/images/posts/decorative/right/icon-composer-icon.png'
+          alt: '',
+          src: '/images/posts/decorative/right/icon-composer-icon.png'
         })]),
       p([
         'Open ',
@@ -144,9 +144,9 @@ const body = [
         '. If you\'re bandwidth-conscious\n        you can dig out your Mac OS X installation DVD to save\n        yourself a few GBs.'
       ]),
       captioned$002Dimages([{
-          ['alt']: 'Icon Composer interface',
-          ['src']: '/images/posts/72/icon-composer-interface.png',
-          ['caption']: ['Icon Composer interface']
+          alt: 'Icon Composer interface',
+          src: '/images/posts/72/icon-composer-interface.png',
+          caption: ['Icon Composer interface']
         }]),
       p(['Copy and paste the various versions into their respective\n        slots. (The foolproof way to copy an icon is to open it in\n        Preview, \u2318A to select, then \u2318C to copy.)']),
       p([
@@ -157,8 +157,8 @@ const body = [
     ]),
     li([
       p([img({
-          ['alt']: '',
-          ['src']: '/images/posts/decorative/right/terminal-icon.png'
+          alt: '',
+          src: '/images/posts/decorative/right/terminal-icon.png'
         })]),
       p(['The final step is to apply attach the .icns file as\n        metadata to the file, folder, or bundle of interest.\n        There are a plethora of apps which provide this\n        functionality via attractive GUIs, but one shouldn\'t\n        need third-party software to change the appearance\n        of a folder!']),
       p([
@@ -203,20 +203,20 @@ $ sudo mv setfileicon /bin/setfileicon
   h3('TL;DR'),
   p(['I agree. It shouldn\'t be this difficult. At least I\'ve now\n    documented the convoluted process. :s']),
   captioned$002Dimages([{
-      ['alt']: 'Icons in situ',
-      ['src']: '/images/posts/72/icons-in-situ.png',
-      ['caption']: ['Icons in situ (note the 16x16 icon in the sidebar)']
+      alt: 'Icons in situ',
+      src: '/images/posts/72/icons-in-situ.png',
+      caption: ['Icons in situ (note the 16x16 icon in the sidebar)']
     }])
 ];
 export default {
-  ['id']: 72,
-  ['slug']: 'customizing-file-and-folder-icons-in-mac-os-x',
-  ['title']: 'Customizing file and folder icons in Mac OS X',
-  ['datetime']: datetime('2010-09-29')('00:00:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 72,
+  slug: 'customizing-file-and-folder-icons-in-mac-os-x',
+  title: 'Customizing file and folder icons in Mac OS X',
+  datetime: datetime('2010-09-29')('00:00:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'icons',
     'mac-os-x',
     'terminal.app'
   ],
-  ['body']: body
+  body: body
 };

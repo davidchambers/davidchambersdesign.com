@@ -94,8 +94,8 @@ import datetime from '../datetime.js';
 const body = [
   excerpt([
     p([img({
-        ['alt']: '',
-        ['src']: '/images/posts/decorative/right/at-sign-in-speech-bubble.png'
+        alt: '',
+        src: '/images/posts/decorative/right/at-sign-in-speech-bubble.png'
       })]),
     p([
       'Regular expressions are powerful, useful, and',
@@ -142,16 +142,16 @@ re.sub(r'(?m)(^|\\s)(@\\w+)',
   ])
 ];
 export default {
-  ['id']: 48,
-  ['slug']: 'linkify-tweets-with-regex',
-  ['title']: 'Linkify tweets with regex',
-  ['datetime']: datetime('2010-04-10')('03:22:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 48,
+  slug: 'linkify-tweets-with-regex',
+  title: 'Linkify tweets with regex',
+  datetime: datetime('2010-04-10')('03:22:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'javascript',
     'php',
     'python',
     'regex',
     'regular-expressions'
   ],
-  ['body']: body
+  body: body
 };

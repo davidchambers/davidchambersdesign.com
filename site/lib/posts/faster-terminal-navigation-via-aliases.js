@@ -153,14 +153,14 @@ $ cd -
   p(['I\'ve sworn off it, and I\'m pleased to have done so. It\'s great\n    to be able to edit settings files on a server in place, rather\n    than opening Transmit, navigating to the relevant directory,\n    right-clicking and selecting "Open", making the change in\n    Coda, and saving to have the updated file sent back via FTP.'])
 ];
 export default {
-  ['id']: 79,
-  ['slug']: 'faster-terminal-navigation-via-aliases',
-  ['title']: 'Faster Terminal navigation via aliases',
-  ['datetime']: datetime('2011-02-12')('22:10:00')(Symbol.for('America/Los_Angeles')),
-  ['tags']: [
+  id: 79,
+  slug: 'faster-terminal-navigation-via-aliases',
+  title: 'Faster Terminal navigation via aliases',
+  datetime: datetime('2011-02-12')('22:10:00')(Symbol.for('America/Los_Angeles')),
+  tags: [
     'mac-os-x',
     'productivity',
     'terminal.app'
   ],
-  ['body']: body
+  body: body
 };

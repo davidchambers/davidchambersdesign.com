@@ -102,13 +102,13 @@ const body = [
   blockquote([p(['The plan of the brick villa is a good example of the\n      way in which Mies van der Rohe developed the art of\n      structure from the very beginning. The structure of\n      a brick wall begins with the smallest unit into which\n      the whole can be divided: the brick. The dimensions are\n      calculated in terms of the basic unit of the brick.'])])
 ];
 export default {
-  ['id']: 64,
-  ['slug']: 'man-after-my-own-heart',
-  ['title']: 'Man after my own heart',
-  ['datetime']: datetime('2010-07-23')('00:07:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 64,
+  slug: 'man-after-my-own-heart',
+  title: 'Man after my own heart',
+  datetime: datetime('2010-07-23')('00:07:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'architecture',
     'design'
   ],
-  ['body']: body
+  body: body
 };

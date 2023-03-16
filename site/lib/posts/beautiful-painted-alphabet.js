@@ -101,14 +101,14 @@ const body = [
   blockquote([p(['Job and Gradus are both ambitious concerning letters.\n      Spontaneous jam sessions in our studio inspired us to\n      make this film about the fun [of] drawing letters.'])])
 ];
 export default {
-  ['id']: 1,
-  ['slug']: 'beautiful-painted-alphabet',
-  ['title']: 'Beautiful painted alphabet',
-  ['datetime']: datetime('2008-08-22')('01:56:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 1,
+  slug: 'beautiful-painted-alphabet',
+  title: 'Beautiful painted alphabet',
+  datetime: datetime('2008-08-22')('01:56:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'design',
     'typography',
     'video'
   ],
-  ['body']: body
+  body: body
 };

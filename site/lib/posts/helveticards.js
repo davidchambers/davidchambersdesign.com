@@ -89,8 +89,8 @@ import {
 import datetime from '../datetime.js';
 const body = [
   p([img({
-      ['alt']: 'Helveticards',
-      ['src']: '/images/posts/92/helveticards.jpg'
+      alt: 'Helveticards',
+      src: '/images/posts/92/helveticards.jpg'
     })]),
   blockquote([p([
       a('http://helveticards.uberdm.com/')('Helveticards'),
@@ -110,13 +110,13 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 92,
-  ['slug']: 'helveticards',
-  ['title']: 'Helveticards',
-  ['datetime']: datetime('2011-11-20')('22:00:00')(Symbol.for('America/Los_Angeles')),
-  ['tags']: [
+  id: 92,
+  slug: 'helveticards',
+  title: 'Helveticards',
+  datetime: datetime('2011-11-20')('22:00:00')(Symbol.for('America/Los_Angeles')),
+  tags: [
     'design',
     'typography'
   ],
-  ['body']: body
+  body: body
 };

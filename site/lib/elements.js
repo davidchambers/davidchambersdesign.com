@@ -5,8 +5,8 @@ const escape = S.pipe([
   s => s.replaceAll('>', '&gt;')
 ]);
 const text = value => ({
-  ['text']: [value],
-  ['render']: indent => level => inline => escape(value)
+  text: [value],
+  render: indent => level => inline => escape(value)
 });
 const canonicalize$002Dattrs = S.map(String);
 const canonicalize$002Dchildren = S.compose(S.map(child => typeof child == 'string' ? S.pipe([
@@ -20,34 +20,34 @@ const render$002Dself$002Dclosing$002Delement = tag$002Dname => attrs => indent 
 const block$002Delement = tag$002Dname => attrs => children => (() => {
   const children$0027 = canonicalize$002Dchildren(children);
   return {
-    ['format']: Symbol.for('block'),
-    ['text']: children$0027.flatMap(child => child.text),
-    ['render']: render$002Dblock$002Delement(tag$002Dname)(attrs)(children$0027)
+    format: Symbol.for('block'),
+    text: children$0027.flatMap(child => child.text),
+    render: render$002Dblock$002Delement(tag$002Dname)(attrs)(children$0027)
   };
 })();
 const inline$002Delement = tag$002Dname => attrs => children => (() => {
   const children$0027 = canonicalize$002Dchildren(children);
   const format = children$0027.some(node => node.format === Symbol.for('block')) ? Symbol.for('block') : Symbol.for('inline');
   return {
-    ['format']: format,
-    ['text']: children$0027.flatMap(child => child.text),
-    ['render']: indent => level => inline => (() => {
+    format: format,
+    text: children$0027.flatMap(child => child.text),
+    render: indent => level => inline => (() => {
       const render = format === Symbol.for('inline') ? render$002Dinline$002Delement : render$002Dblock$002Delement;
       return render(tag$002Dname)(attrs)(children$0027)(indent)(level)(inline);
     })()
   };
 })();
 const self$002Dclosing$002Delement = tag$002Dname => attrs => ({
-  ['format']: Symbol.for('inline'),
-  ['text']: [],
-  ['render']: render$002Dself$002Dclosing$002Delement(tag$002Dname)(attrs)
+  format: Symbol.for('inline'),
+  text: [],
+  render: render$002Dself$002Dclosing$002Delement(tag$002Dname)(attrs)
 });
 const excerpt = children => (() => {
   const children$0027 = canonicalize$002Dchildren(children);
   const render = indent => level => inline => S.foldMap(String)(child => child.render(indent)(level)(inline))(children$0027);
   return {
-    ['text']: children.flatMap(child => child.text),
-    ['render']: render
+    text: children.flatMap(child => child.text),
+    render: render
   };
 })();
 const html$0027 = block$002Delement(Symbol.for('html'));
@@ -119,7 +119,7 @@ const linearGradient = block$002Delement(Symbol.for('linearGradient'));
 const object = block$002Delement(Symbol.for('object'));
 const svg = block$002Delement(Symbol.for('svg'));
 const a$0027 = inline$002Delement(Symbol.for('a'));
-const a = href => a$0027({ ['href']: href });
+const a = href => a$0027({ href: href });
 const code$0027 = inline$002Delement(Symbol.for('code'));
 const code = inline$002Delement(Symbol.for('code'))({});
 const del$0027 = inline$002Delement(Symbol.for('del'));

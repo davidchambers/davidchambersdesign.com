@@ -127,9 +127,9 @@ const body = [
     ' with styles disabled,\n    one sees something most unhelpful:'
   ]),
   captioned$002Dimages([{
-      ['alt']: 'Chris Coyier\'s CSS image switcher demo displays nothing\n          but four unhelpful links when styles are disabled',
-      ['src']: '/images/posts/43/css-tricks-image-switcher-demo-sans-styles.png',
-      ['caption']: ['CSS image switcher demo as seen at CSS-Tricks\n      (with styles disabled; note the lack of images)']
+      alt: 'Chris Coyier\'s CSS image switcher demo displays nothing\n          but four unhelpful links when styles are disabled',
+      src: '/images/posts/43/css-tricks-image-switcher-demo-sans-styles.png',
+      caption: ['CSS image switcher demo as seen at CSS-Tricks\n      (with styles disabled; note the lack of images)']
     }]),
   p([
     'Well, at least one could click on these links to view the images,\n    right? Wrong! The hrefs contain nothing but the hash sign. Chris\n    does mention in the screencast that these links ',
@@ -169,9 +169,9 @@ const body = [
     ' is the most appropriate tool\n    in our toolbox.'
   ]),
   captioned$002Dimages([{
-      ['alt']: 'Definition list markup',
-      ['src']: '/images/posts/43/definition-list-markup.png',
-      ['caption']: [
+      alt: 'Definition list markup',
+      src: '/images/posts/43/definition-list-markup.png',
+      caption: [
         'The screenshot above is marked up within a ',
         strong('dt'),
         '\n      and this caption is a ',
@@ -198,9 +198,9 @@ const body = [
 `),
   p(['Beautiful, isn\'t it? No pointless (literally) anchors, no meaningless\n    ids, no class names, just content wrapped in descriptive HyperText\n    Markup Language. This ensures that the page\'s content is accessible\n    to all: those viewing the page on mobile phones; those using screen\n    readers or feed readers; and, of course, web crawlers.']),
   captioned$002Dimages([{
-      ['alt']: 'Meaningful markup degrades gracefully',
-      ['src']: '/images/posts/43/meaningful-markup-degrades-gracefully.jpg',
-      ['caption']: ['The page\'s content is accessible even with styles disabled']
+      alt: 'Meaningful markup degrades gracefully',
+      src: '/images/posts/43/meaningful-markup-degrades-gracefully.jpg',
+      caption: ['The page\'s content is accessible even with styles disabled']
     }]),
   h3('Demo'),
   p([
@@ -214,11 +214,11 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 43,
-  ['slug']: 'css-image-switcher-done-the-right-way',
-  ['title']: 'CSS image switcher (done the right way)',
-  ['datetime']: datetime('2010-03-24')('12:47:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 43,
+  slug: 'css-image-switcher-done-the-right-way',
+  title: 'CSS image switcher (done the right way)',
+  datetime: datetime('2010-03-24')('12:47:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'accessibility',
     'best-practice',
     'css',
@@ -226,5 +226,5 @@ export default {
     'seo',
     'ux'
   ],
-  ['body']: body
+  body: body
 };

@@ -95,26 +95,26 @@ const body = [
   ]),
   dl([
     dt([object({
-        ['type']: 'application/x-shockwave-flash',
-        ['width']: '446',
-        ['height']: '326',
-        ['data']: 'http://video.ted.com/assets/player/swf/EmbedPlayer.swf'
+        type: 'application/x-shockwave-flash',
+        width: '446',
+        height: '326',
+        data: 'http://video.ted.com/assets/player/swf/EmbedPlayer.swf'
       })([
         param({
-          ['name']: 'movie',
-          ['value']: 'http://video.ted.com/assets/player/swf/EmbedPlayer.swf'
+          name: 'movie',
+          value: 'http://video.ted.com/assets/player/swf/EmbedPlayer.swf'
         }),
         param({
-          ['name']: 'wmode',
-          ['value']: 'transparent'
+          name: 'wmode',
+          value: 'transparent'
         }),
         param({
-          ['name']: 'allowFullScreen',
-          ['value']: 'true'
+          name: 'allowFullScreen',
+          value: 'true'
         }),
         param({
-          ['name']: 'flashvars',
-          ['value']: 'vu=http://video.ted.com/talks/embed/DavidCarson_2003-embed_high.flv&su=http://images.ted.com/images/ted/tedindex/embed-posters/DavidCarson-2003.embed_thumbnail.jpg&vw=432&vh=240&ap=0&ti=436'
+          name: 'flashvars',
+          value: 'vu=http://video.ted.com/talks/embed/DavidCarson_2003-embed_high.flv&su=http://images.ted.com/images/ted/tedindex/embed-posters/DavidCarson-2003.embed_thumbnail.jpg&vw=432&vh=240&ap=0&ti=436'
         })
       ])]),
     dd([p([
@@ -125,14 +125,14 @@ const body = [
   ])
 ];
 export default {
-  ['id']: 6,
-  ['slug']: 'david-carsons-2003-ted-lecture',
-  ['title']: 'David Carson\'s 2003 TED lecture',
-  ['datetime']: datetime('2009-02-10')('11:21:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 6,
+  slug: 'david-carsons-2003-ted-lecture',
+  title: 'David Carson\'s 2003 TED lecture',
+  datetime: datetime('2009-02-10')('11:21:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'design',
     'typography',
     'video'
   ],
-  ['body']: body
+  body: body
 };

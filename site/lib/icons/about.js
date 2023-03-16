@@ -160,20 +160,20 @@ const hat$002Dstripes$002Dlight = [
 ];
 const about = [
   path({
-    ['fill']: '#edb',
-    ['d']: render(skin)
+    fill: '#edb',
+    d: render(skin)
   }),
   path({
-    ['fill']: '#963',
-    ['d']: render(features)
+    fill: '#963',
+    d: render(features)
   }),
   path({
-    ['fill']: '#432',
-    ['d']: render(hat$002Dstripes$002Ddark)
+    fill: '#432',
+    d: render(hat$002Dstripes$002Ddark)
   }),
   path({
-    ['fill']: '#ccc',
-    ['d']: render(hat$002Dstripes$002Dlight)
+    fill: '#ccc',
+    d: render(hat$002Dstripes$002Dlight)
   })
 ];
 export default about;

@@ -102,9 +102,9 @@ const body = [
       '.'
     ])]),
   captioned$002Dimages([{
-      ['alt']: 'Finder windows without paths',
-      ['src']: '/images/posts/2/finder-windows-without-paths.png',
-      ['caption']: [
+      alt: 'Finder windows without paths',
+      src: '/images/posts/2/finder-windows-without-paths.png',
+      caption: [
         strong('Before:'),
         '\n      Finder windows with directory name only in title bar'
       ]
@@ -121,9 +121,9 @@ const body = [
   code$002Dblock(Symbol.for('console'))(`killall Finder
 `),
   captioned$002Dimages([{
-      ['alt']: 'Finder windows with paths',
-      ['src']: '/images/posts/2/finder-windows-with-paths.png',
-      ['caption']: [
+      alt: 'Finder windows with paths',
+      src: '/images/posts/2/finder-windows-with-paths.png',
+      caption: [
         strong('After:'),
         '\n      Finder windows with full directory path in title bar'
       ]
@@ -141,10 +141,10 @@ const body = [
 `)
 ];
 export default {
-  ['id']: 2,
-  ['slug']: 'show-full-directory-path-in-finder-window-title-bar',
-  ['title']: 'Show full directory path in Finder window title bar',
-  ['datetime']: datetime('2008-11-29')('19:07:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: ['mac-os-x'],
-  ['body']: body
+  id: 2,
+  slug: 'show-full-directory-path-in-finder-window-title-bar',
+  title: 'Show full directory path in Finder window title bar',
+  datetime: datetime('2008-11-29')('19:07:00')(Symbol.for('Pacific/Auckland')),
+  tags: ['mac-os-x'],
+  body: body
 };

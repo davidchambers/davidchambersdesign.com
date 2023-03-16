@@ -93,8 +93,8 @@ const body = [
     p(['It occurred to me that I could use iTunes to solve this problem.\n      Normally, iTunes will play a track from beginning to end. It\'s\n      possible, though, to specify a certain portion of the track to be\n      played instead. By adding an audio file to a playlist many times\n      and specifying consecutive portions (e.g. 0:00\u20130:02, 0:02\u20130:04.8,\n      ...), a track can be broken into manageable clips for more\n      convenient navigation.']),
     p(['Here\'s the end result:']),
     p([img({
-        ['alt']: 'iTunes playlist for Danish dialogue',
-        ['src']: '/images/posts/93/windows/lion/itunes-playlist-for-danish-dialogue.png'
+        alt: 'iTunes playlist for Danish dialogue',
+        src: '/images/posts/93/windows/lion/itunes-playlist-for-danish-dialogue.png'
       })])
   ]),
   h3('Creating an iTunes playlist from a single audio file'),
@@ -123,8 +123,8 @@ const body = [
         '.'
       ]),
       p([img({
-          ['alt']: 'Setting the clip\'s stop time',
-          ['src']: '/images/posts/93/windows/lion/setting-the-stop-time.png'
+          alt: 'Setting the clip\'s stop time',
+          src: '/images/posts/93/windows/lion/setting-the-stop-time.png'
         })])
     ]),
     li([p(['Play the clip, and adjust the stop time until the clip\n        contains just the desired portion of the dialogue.'])]),
@@ -139,8 +139,8 @@ const body = [
         ' field.'
       ]),
       p([img({
-          ['alt']: 'Setting the clip\'s name',
-          ['src']: '/images/posts/93/windows/lion/setting-the-name.png'
+          alt: 'Setting the clip\'s name',
+          src: '/images/posts/93/windows/lion/setting-the-name.png'
         })])
     ]),
     li([p(['Repeat steps 4 through 8 as necessary. Ensure that\n        each clip\'s start time is the same as the previous\n        clip\'s stop time.'])]),
@@ -157,14 +157,14 @@ const body = [
   p(['Having a dialog comprised of many short clips is very useful.\n    It enables one to listen to a clip repeatedly to practise a\n    difficult word or phrase, or to say each sentence aloud before\n    listening to the "answer". And since the clips are contiguous\n    one can still listen to the dialog from beginning to end.'])
 ];
 export default {
-  ['id']: 93,
-  ['slug']: 'itunes-is-surprisingly-useful-when-learning-a-foreign-language',
-  ['title']: 'iTunes: Surprisingly useful when learning a foreign language',
-  ['datetime']: datetime('2012-01-29')('19:20:00')(Symbol.for('America/Los_Angeles')),
-  ['tags']: [
+  id: 93,
+  slug: 'itunes-is-surprisingly-useful-when-learning-a-foreign-language',
+  title: 'iTunes: Surprisingly useful when learning a foreign language',
+  datetime: datetime('2012-01-29')('19:20:00')(Symbol.for('America/Los_Angeles')),
+  tags: [
     'itunes',
     'language',
     'mac-os-x'
   ],
-  ['body']: body
+  body: body
 };

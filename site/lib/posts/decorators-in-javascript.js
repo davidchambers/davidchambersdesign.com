@@ -157,14 +157,14 @@ deleteAccount = loginRequired ->
   ])
 ];
 export default {
-  ['id']: 89,
-  ['slug']: 'decorators-in-javascript',
-  ['title']: 'Decorators in JavaScript',
-  ['datetime']: datetime('2011-07-26')('22:00:00')(Symbol.for('America/Los_Angeles')),
-  ['tags']: [
+  id: 89,
+  slug: 'decorators-in-javascript',
+  title: 'Decorators in JavaScript',
+  datetime: datetime('2011-07-26')('22:00:00')(Symbol.for('America/Los_Angeles')),
+  tags: [
     'coffeescript',
     'javascript',
     'programming'
   ],
-  ['body']: body
+  body: body
 };

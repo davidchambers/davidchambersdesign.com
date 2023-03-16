@@ -156,11 +156,11 @@ dl.captioned-image dd span { display: block; float: left; clear: both;
   ])
 ];
 export default {
-  ['id']: 24,
-  ['slug']: 'captions-over-images',
-  ['title']: 'Captions over images',
-  ['datetime']: datetime('2009-08-31')('03:36:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 24,
+  slug: 'captions-over-images',
+  title: 'Captions over images',
+  datetime: datetime('2009-08-31')('03:36:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'best-practice',
     'css',
     'html',
@@ -168,5 +168,5 @@ export default {
     'jquery',
     'meaningful-markup'
   ],
-  ['body']: body
+  body: body
 };

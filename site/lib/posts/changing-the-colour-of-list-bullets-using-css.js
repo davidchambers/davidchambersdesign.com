@@ -108,7 +108,7 @@ li {
 }
 `),
   p(['This should do the trick, but doesn\'t for some reason! How the heck\n    does one target the bullets and only the bullets? As far as I know\n    it\'s not possible.']),
-  h3$0027({ ['id']: 'conventional-hack' })('Conventional hack'),
+  h3$0027({ id: 'conventional-hack' })('Conventional hack'),
   code$002Dblock(Symbol.for('html'))(`<h1>TXJS 2011 Speakers</h1>
 <ul>
   <li><span>Brendan Eich</span></li>
@@ -132,7 +132,7 @@ li {
     code('span'),
     's are ugly \u2013\n    there are ways to achieve the desired visual effect without\n    hacking the markup.'
   ]),
-  h3$0027({ ['id']: 'background-image-technique' })('Background image technique'),
+  h3$0027({ id: 'background-image-technique' })('Background image technique'),
   code$002Dblock(Symbol.for('css'))(`ul {
   list-style: none;
 }
@@ -147,7 +147,7 @@ li {
     a('http://en.wikipedia.org/wiki/Data_URI_scheme#CSS')('data URI'),
     '.'
   ]),
-  h3$0027({ ['id']: 'pseudo-element-technique' })('Pseudo-element technique'),
+  h3$0027({ id: 'pseudo-element-technique' })('Pseudo-element technique'),
   code$002Dblock(Symbol.for('css'))(`ul {
   list-style: none;
 }
@@ -177,13 +177,13 @@ border-radius: 2px;
 `)
 ];
 export default {
-  ['id']: 83,
-  ['slug']: 'changing-the-colour-of-list-bullets-using-css',
-  ['title']: 'Changing the colour of list bullets using CSS',
-  ['datetime']: datetime('2011-04-13')('17:30:00')(Symbol.for('America/Los_Angeles')),
-  ['tags']: [
+  id: 83,
+  slug: 'changing-the-colour-of-list-bullets-using-css',
+  title: 'Changing the colour of list bullets using CSS',
+  datetime: datetime('2011-04-13')('17:30:00')(Symbol.for('America/Los_Angeles')),
+  tags: [
     'css',
     'meaningful-markup'
   ],
-  ['body']: body
+  body: body
 };

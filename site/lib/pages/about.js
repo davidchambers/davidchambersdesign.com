@@ -89,9 +89,9 @@ import {
 } from '../elements.js';
 import { captioned$002Dimages } from '../components.js';
 export default {
-  ['slug']: 'about',
-  ['title']: 'About',
-  ['body']: [
+  slug: 'about',
+  title: 'About',
+  body: [
     p([b('Greetings! My name is David Chambers and I\'m a software developer\n         based in San Francisco.')]),
     p([
       'I work at ',
@@ -108,9 +108,9 @@ export default {
       ', a little gift to the Internet.\n      :)'
     ]),
     captioned$002Dimages([{
-        ['alt']: 'Me with friends Jo and Shaun at the Luge in Rotorua',
-        ['src']: '/images/about/david-jo-shaun.jpg',
-        ['caption']: ['Me with friends at the Luge in Rotorua']
+        alt: 'Me with friends Jo and Shaun at the Luge in Rotorua',
+        src: '/images/about/david-jo-shaun.jpg',
+        caption: ['Me with friends at the Luge in Rotorua']
       }]),
     p([
       'Feel free to ',

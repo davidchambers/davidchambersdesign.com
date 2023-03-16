@@ -182,13 +182,13 @@ RewriteRule ^(.*)$ http://davidchambersdesign.com/$1 [R=301,L]
   ])
 ];
 export default {
-  ['id']: 36,
-  ['slug']: 'shockingly-simple-url-shortening',
-  ['title']: 'Shockingly simple URL shortening',
-  ['datetime']: datetime('2010-01-26')('03:34:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 36,
+  slug: 'shockingly-simple-url-shortening',
+  title: 'Shockingly simple URL shortening',
+  datetime: datetime('2010-01-26')('03:34:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     '.htaccess',
     'twitter'
   ],
-  ['body']: body
+  body: body
 };

@@ -117,7 +117,7 @@ const body = [
       ' did the trick!'
     ])
   ]),
-  h3$0027({ ['id']: 'usage' })('Usage'),
+  h3$0027({ id: 'usage' })('Usage'),
   p([
     'First, you\'ll need to save a copy of ',
     a('/examples/prototype-image-slider/prototype-image-slider.js')('prototype-image-slider.js'),
@@ -160,16 +160,16 @@ new Slider('slider', 1.5, -1); // slower transitions; last slide displayed first
     ])])
 ];
 export default {
-  ['id']: 26,
-  ['slug']: 'prototype-image-slider',
-  ['title']: 'Prototype image slider',
-  ['datetime']: datetime('2009-09-16')('23:43:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 26,
+  slug: 'prototype-image-slider',
+  title: 'Prototype image slider',
+  datetime: datetime('2009-09-16')('23:43:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'css',
     'html',
     'javascript',
     'meaningful-markup',
     'prototype'
   ],
-  ['body']: body
+  body: body
 };

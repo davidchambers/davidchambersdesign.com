@@ -114,12 +114,12 @@ const body = [
   p(['SproutCore is server-agnostic, which allows it to connect to\n    existing services, and allows new services to be created using\n    the most appropriate server-side technologies.']),
   dl([
     dt([embed({
-        ['type']: 'application/x-shockwave-flash',
-        ['src']: 'http://blip.tv/play/g_MngZaxYQI',
-        ['width']: 480,
-        ['height']: 300,
-        ['allowscriptaccess']: 'always',
-        ['allowfullscreen']: true
+        type: 'application/x-shockwave-flash',
+        src: 'http://blip.tv/play/g_MngZaxYQI',
+        width: 480,
+        height: 300,
+        allowscriptaccess: 'always',
+        allowfullscreen: true
       })]),
     dd(['Mike Subelsky introducing SproutCore at JSConf Washington, April 2009'])
   ]),
@@ -130,12 +130,12 @@ const body = [
   ]),
   dl([
     dt([embed({
-        ['type']: 'application/x-shockwave-flash',
-        ['src']: 'http://blip.tv/play/AYGylE4C',
-        ['width']: 480,
-        ['height']: 300,
-        ['allowscriptaccess']: 'always',
-        ['allowfullscreen']: true
+        type: 'application/x-shockwave-flash',
+        src: 'http://blip.tv/play/AYGylE4C',
+        width: 480,
+        height: 300,
+        allowscriptaccess: 'always',
+        allowfullscreen: true
       })]),
     dd(['Ryan Dahl introducing Node.js at JSConf Berlin, November 2009'])
   ]),
@@ -147,14 +147,14 @@ const body = [
   p(['JavaScript is at last recieving the attention and respect it\n    has long deserved. I\'m greatly looking forward to building an\n    application using non-blocking, event-driven JavaScript on both\n    sides of the wire.'])
 ];
 export default {
-  ['id']: 61,
-  ['slug']: 'javascript-everywhere',
-  ['title']: 'JavaScript, JavaScript, everywhere',
-  ['datetime']: datetime('2010-07-20')('19:05:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 61,
+  slug: 'javascript-everywhere',
+  title: 'JavaScript, JavaScript, everywhere',
+  datetime: datetime('2010-07-20')('19:05:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'javascript',
     'node.js',
     'sproutcore'
   ],
-  ['body']: body
+  body: body
 };

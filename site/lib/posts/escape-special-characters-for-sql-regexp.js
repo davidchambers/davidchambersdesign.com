@@ -129,13 +129,13 @@ function mysql_regexp_escape_string($string)
   p(['It is quite possible that a solution to this problem already exists.\n    If this is the case, I am eager to know about it.'])
 ];
 export default {
-  ['id']: 5,
-  ['slug']: 'escape-special-characters-for-sql-regexp',
-  ['title']: 'Escape special characters for SQL REGEXP',
-  ['datetime']: datetime('2009-01-10')('22:21:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 5,
+  slug: 'escape-special-characters-for-sql-regexp',
+  title: 'Escape special characters for SQL REGEXP',
+  datetime: datetime('2009-01-10')('22:21:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'php',
     'sql'
   ],
-  ['body']: body
+  body: body
 };

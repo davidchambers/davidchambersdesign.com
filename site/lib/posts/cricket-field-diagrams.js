@@ -96,47 +96,47 @@ const body = [
   ]),
   captioned$002Dimages([
     {
-      ['alt']: 'Cricket field with mid-wicket area highlighted',
-      ['src']: '/images/posts/40/mid-wicket.png',
-      ['caption']: ['Mid-wicket']
+      alt: 'Cricket field with mid-wicket area highlighted',
+      src: '/images/posts/40/mid-wicket.png',
+      caption: ['Mid-wicket']
     },
     {
-      ['alt']: 'Cricket field with covers highlighted',
-      ['src']: '/images/posts/40/down-the-ground.png',
-      ['caption']: ['Down the ground']
+      alt: 'Cricket field with covers highlighted',
+      src: '/images/posts/40/down-the-ground.png',
+      caption: ['Down the ground']
     },
     {
-      ['alt']: 'Cricket field with covers highlighted',
-      ['src']: '/images/posts/40/covers.png',
-      ['caption']: ['Covers']
+      alt: 'Cricket field with covers highlighted',
+      src: '/images/posts/40/covers.png',
+      caption: ['Covers']
     },
     {
-      ['alt']: 'Cricket field with area behind point highlighted',
-      ['src']: '/images/posts/40/behind-point.png',
-      ['caption']: ['Behind point']
+      alt: 'Cricket field with area behind point highlighted',
+      src: '/images/posts/40/behind-point.png',
+      caption: ['Behind point']
     },
     {
-      ['alt']: 'Cricket field with area behind the wicket highlighted',
-      ['src']: '/images/posts/40/behind-the-wicket.png',
-      ['caption']: ['Behind the wicket']
+      alt: 'Cricket field with area behind the wicket highlighted',
+      src: '/images/posts/40/behind-the-wicket.png',
+      caption: ['Behind the wicket']
     },
     {
-      ['alt']: 'Cricket field with area backward of square highlighted',
-      ['src']: '/images/posts/40/behind-square.png',
-      ['caption']: ['Behind square']
+      alt: 'Cricket field with area backward of square highlighted',
+      src: '/images/posts/40/behind-square.png',
+      caption: ['Behind square']
     }
   ]),
   p(['You\'re free to make use of these images (they\'re transparent PNGs).\n    Attribution is appreciated but not required. :)'])
 ];
 export default {
-  ['id']: 40,
-  ['slug']: 'cricket-field-diagrams',
-  ['title']: 'Cricket field diagrams',
-  ['datetime']: datetime('2010-03-15')('00:58:00')(Symbol.for('Pacific/Auckland')),
-  ['tags']: [
+  id: 40,
+  slug: 'cricket-field-diagrams',
+  title: 'Cricket field diagrams',
+  datetime: datetime('2010-03-15')('00:58:00')(Symbol.for('Pacific/Auckland')),
+  tags: [
     'design',
     'icons'
   ],
   ['article-id']: 'cricket-field-diagrams',
-  ['body']: body
+  body: body
 };

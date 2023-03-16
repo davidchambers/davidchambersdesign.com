@@ -225,8 +225,8 @@ write$002Dfile(public_([
   'screen.css'
 ]))(generate$002Dcss);
 const render$002Dsvg = attrs => paths => `<?xml version="1.0" standalone="no"?>\n${ svg({
-  ['xmlns']: 'http://www.w3.org/2000/svg',
-  ['version']: '1.1',
+  xmlns: 'http://www.w3.org/2000/svg',
+  version: '1.1',
   ...attrs
 })(paths).render('  ')(0)(false) }`;
 write$002Dfile(public_([
@@ -241,22 +241,22 @@ write$002Dfile(public_([
   'svg',
   'about.svg'
 ]))(render$002Dsvg({
-  ['width']: 16,
-  ['height']: 16
+  width: 16,
+  height: 16
 })(icon$002Fabout));
 write$002Dfile(public_([
   'svg',
   'archives.svg'
 ]))(render$002Dsvg({
-  ['width']: 16,
-  ['height']: 16
+  width: 16,
+  height: 16
 })(icon$002Farchives));
 write$002Dfile(public_([
   'svg',
   'bitbucket.svg'
 ]))(render$002Dsvg({
-  ['width']: 16,
-  ['height']: 16
+  width: 16,
+  height: 16
 })(icon$002Fbitbucket));
 write$002Dfile(public_([
   'svg',
@@ -302,29 +302,29 @@ write$002Dfile(public_([
   'svg',
   'contact.svg'
 ]))(render$002Dsvg({
-  ['width']: 16,
-  ['height']: 16
+  width: 16,
+  height: 16
 })(icon$002Fcontact));
 write$002Dfile(public_([
   'svg',
   'flushcache.svg'
 ]))(render$002Dsvg({
-  ['width']: 16,
-  ['height']: 16
+  width: 16,
+  height: 16
 })(icon$002Fflushcache));
 write$002Dfile(public_([
   'svg',
   'tags.svg'
 ]))(render$002Dsvg({
-  ['width']: 16,
-  ['height']: 16
+  width: 16,
+  height: 16
 })(icon$002Ftags));
 write$002Dfile(public_([
   'svg',
   'twitter.svg'
 ]))(render$002Dsvg({
-  ['width']: 16,
-  ['height']: 16
+  width: 16,
+  height: 16
 })(icon$002Ftwitter));
 const render$002Ddocument = element => `<!DOCTYPE html>\n${ element.render('  ')(0)(false) }`;
 write$002Dfile(public_(['archives.html']))(render$002Ddocument(base$002Dtemplate('Archives')(render$002Darchives(posts))));
