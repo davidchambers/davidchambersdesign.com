@@ -78,7 +78,7 @@ screen coerce = {
 
     ["#skip"], [
       :position, :absolute,
-      :left, px -9999,
+      :left, px {-9999},
     ],
 
     ["#wrap"], [
@@ -130,7 +130,7 @@ screen coerce = {
     ],
     ["#header header form div label"], [
       :position, :absolute,
-      :left, px -9999,
+      :left, px {-9999},
     ],
     ["#header header form div input[type='search']"], [
       :position, :absolute,
@@ -272,7 +272,7 @@ screen coerce = {
 
     ["#wrap + footer"], [
       :position, :relative,
-      :margin, [em -5.25, :auto, 0],
+      :margin, [em {-5.25}, :auto, 0],
       :width, pc 65,
       :min-width, px 615,
       :max-width, em 60,
@@ -282,7 +282,7 @@ screen coerce = {
       :z-index, 20,
     ],
     ["#wrap + footer > :first-child"], [
-      :margin, [px -1, 0, 0],
+      :margin, [px {-1}, 0, 0],
       :color, base1,
     ],
 
@@ -387,7 +387,7 @@ screen coerce = {
      "dl dt img",
      "dl dt object"], [
       :display, :block,
-      :margin, [0, 0, px -1],
+      :margin, [0, 0, px {-1}],
     ],
     ["dl dt embed",
      "dl dt img"], [
@@ -426,7 +426,7 @@ screen coerce = {
 
     [".unidentified span"], [
       :float, :left,
-      :margin, [px -159, 0, 0],
+      :margin, [px {-159}, 0, 0],
     ],
     [".unidentified a"], [
       :visibility, :hidden,
@@ -467,31 +467,31 @@ screen coerce = {
     ],
     ["img[src*='/elam/']",
      "img[src*='/lightbox/']"], [
-      :margin, [em 1.75, 0, px -1],
+      :margin, [em 1.75, 0, px {-1}],
       :border, [px 1, :solid, "#cccccc"],
     ],
     ["img[src*='/lightbox/large/']"], [
       :margin, 0,
     ],
     ["img[src*='/windows/']"], [
-      :margin, [px 3, px -40, px -29],
+      :margin, [px 3, px {-40}, px {-29}],
       :max-width, important! :none,
       :border, important! :none,
     ],
     ["img[src*='/windows/lion/']"], [
-      :margin, [px -6, px -56, px -52],
+      :margin, [px {-6}, px {-56}, px {-52}],
     ],
     ["dt > img[src*='/windows/']"], [
-      :margin, [px -24, px -40, px -35],
+      :margin, [px {-24}, px {-40}, px {-35}],
     ],
     ["dt > img[src*='/windows/lion/']"], [
-      :margin, [px -33, px -56, px -58],
+      :margin, [px {-33}, px {-56}, px {-58}],
     ],
     ["p > img[src*='/windows/']"], [
-      :margin, [px -18, px -40, px -29],
+      :margin, [px {-18}, px {-40}, px {-29}],
     ],
     ["p > img[src*='/windows/lion/']"], [
-      :margin, [px -27, px -56, px -52],
+      :margin, [px {-27}, px {-56}, px {-52}],
     ],
     ["p > img:only-child"], [
       :border, [px 1, :solid, "#cccccc"],
@@ -559,7 +559,7 @@ screen coerce = {
     ],
 
     ["pre"], [
-      :margin, [em 1.286, 0, em -0.214],
+      :margin, [em 1.286, 0, em {-0.214}],
       :border, [px 1, :solid, base2],
       :background-color, recycled-paper,
       :padding, [em 0.143, em 0.714],
@@ -608,7 +608,7 @@ screen coerce = {
     ["ul li.pro",
      "ul li.con"], [
       :margin, 0,
-      :margin-left, px -21,
+      :margin-left, px {-21},
       :background, [:no-repeat, 0, em 0.25],
       :padding, [0, 0, 0, px 21],
       :list-style, :none,
@@ -625,7 +625,7 @@ screen coerce = {
     ],
 
     ["article > header > dl"], [
-      :margin, [em 1.571, 0, em -0.071],
+      :margin, [em 1.571, 0, em {-0.071}],
       :font, ["1.167em/1.5", monospace ["Courier", "Courier New"]],
       :color, base1,
       :overflow, :auto,
@@ -686,8 +686,8 @@ screen coerce = {
     ["#tags li a:focus",
      "#tags li a:hover",
      "#tags li a.hover"], [
-      :left, px -21,
-      :top, px -6,
+      :left, px {-21},
+      :top, px {-6},
       :width, pc 100,
       :padding, [px 16, px 21],
       :box-shadow, [0, px 1, px 3, rgba 0 0 0 0.2],
@@ -710,7 +710,7 @@ screen coerce = {
     ],
 
     ["div.syntaxhighlighter"], [
-      :margin, important! [em 1.75, 0, px -1],
+      :margin, important! [em 1.75, 0, px {-1}],
     ],
     ["div.syntaxhighlighter code"], [
       :border, :none,
@@ -729,7 +729,7 @@ screen coerce = {
 
     [".structural"], [
       :position, important! :absolute,
-      :left, important! {px -9999},
+      :left, important! $ px {-9999},
     ],
 
     ["ol li.interviewer"], [
@@ -797,7 +797,7 @@ screen coerce = {
     ],
 
     [".update"], [
-      :margin, [em 1.75, 0, px -1],
+      :margin, [em 1.75, 0, px {-1}],
       :border-width, [px 1, 0],
       :border-style, :solid,
       :border-color, base1,
@@ -811,7 +811,7 @@ screen coerce = {
     ],
 
     ["footer.metadata"], [
-      :margin-left, em -1,
+      :margin-left, em {-1},
       :padding, [em 1.75, 0, 0, em 1],
       :overflow, :hidden,
     ],
@@ -823,7 +823,7 @@ screen coerce = {
       :list-style, :none,
     ],
     ["footer.metadata ul a"], [
-      :margin-left, em -0.833,
+      :margin-left, em {-0.833},
       :border-radius, em 0.875,
       :background, blue,
       :padding, [0, em 0.667, 0, em 0.833],
@@ -835,7 +835,7 @@ screen coerce = {
     ],
     ["footer.metadata h4"], [
       :position, :absolute,
-      :left, px -9999,
+      :left, px {-9999},
     ],
     ["footer.metadata ol"], [
       :margin, 0,
@@ -847,7 +847,7 @@ screen coerce = {
     ],
 
     ["article article"], [
-      :margin, [0, 0, 0, px -30],
+      :margin, [0, 0, 0, px {-30}],
       :border-bottom, [px 1, :solid, "#cccccc"],
       :padding, [em 0.417, 0, em 1.25, px 30],
       :overflow, :auto,
@@ -882,7 +882,7 @@ screen coerce = {
       :padding, [0, 0, 0, em 1],
     ],
     ["article h2 + article"], [
-      :margin, [em 1.25, 0, 0, px -30],
+      :margin, [em 1.25, 0, 0, px {-30}],
       :border-top, [px 1, :solid, "#cccccc"],
     ],
 
@@ -927,7 +927,7 @@ screen coerce = {
     ],
     ["form > fieldset + div > label"], [
       :position, :absolute,
-      :left, px -9999,
+      :left, px {-9999},
     ],
     ["form > fieldset + div + div > label"], [
       :left, em 1.75,
@@ -997,7 +997,7 @@ screen coerce = {
 
     ["ol.archives"], [
       :margin, 0,
-      :margin-left, px -21,
+      :margin-left, px {-21},
       :list-style, :none,
     ],
     ["ol.archives li h2"], [
@@ -1158,7 +1158,7 @@ screen coerce = {
       :left, px 340,
     ],
     ["#cricket-field-diagrams dl dt img"], [
-      :margin, px -1,
+      :margin, px {-1},
       :border, :none,
     ],
 

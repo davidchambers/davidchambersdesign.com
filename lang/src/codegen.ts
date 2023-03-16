@@ -30,9 +30,7 @@ const esFromBooleanLiteral = (booleanLiteral: Serif.BooleanLiteral): ES.Literal 
 );
 
 const esFromNumberLiteral = (numberLiteral: Serif.NumberLiteral): ES.UnaryExpression | ES.Literal => (
-  numberLiteral.value < 0
-  ? ES.UnaryExpression('-', ES.Literal(-numberLiteral.value))
-  : ES.Literal(numberLiteral.value)
+  ES.Literal(numberLiteral.value)
 );
 
 const esFromStringLiteral = (stringLiteral: Serif.StringLiteral): ES.Literal => (

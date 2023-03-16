@@ -1,8 +1,8 @@
 Module
-  = imports:(Separator* importDeclaration:ImportDeclaration                                   { return importDeclaration; })*
-    exports:(Separator* exportDeclaration:(ExportNamedDeclaration / ExportDefaultDeclaration) { return exportDeclaration; })*
-    statements:(Separator* statement:Statement Separator* ';' { return statement; })*
-    Separator*
+  = imports:(_ importDeclaration:ImportDeclaration                                   { return importDeclaration; })*
+    exports:(_ exportDeclaration:(ExportNamedDeclaration / ExportDefaultDeclaration) { return exportDeclaration; })*
+    statements:(_ statement:Statement _ ';' { return statement; })*
+    _
     { return Serif.Module([...imports, ...statements, ...exports]); }
 
 ImportSpecifier
@@ -15,58 +15,58 @@ ImportDefaultSpecifier
 
 ImportDeclaration
   = 'import'
-    Separator+ '{'
+    _ '{'
     specifiers:(
-      head:(Separator* specifier:ImportSpecifier { return specifier; })
+      head:(_ specifier:ImportSpecifier { return specifier; })
       tail:(Separator+ specifier:ImportSpecifier { return specifier; })*
       { return [head, ...tail]; }
     )?
-    Separator* '}'
-    Separator+ 'from'
-    Separator+ source:StringLiteral
-    Separator* ';'
+    _ '}'
+    _ 'from'
+    _ source:StringLiteral
+    _ ';'
     { return Serif.ImportDeclaration(source, specifiers ?? []); }
   / 'import'
-    Separator+ '*'
-    Separator+ 'from'
-    Separator+ source:StringLiteral
+    _ '*'
+    _ 'from'
+    _ source:StringLiteral
     hiding:(
-      Separator+ 'hiding'
-      Separator+ '{'
+      _ 'hiding'
+      _ '{'
       hiding:(
-        head:(Separator* ident:Identifier { return ident; })
+        head:(_ ident:Identifier { return ident; })
         tail:(Separator+ ident:Identifier { return ident; })*
         { return [head, ...tail]; }
       )?
-      Separator* '}'
+      _ '}'
       { return hiding ?? []; }
     )?
-    Separator* ';'
+    _ ';'
     { return Serif.ImportEverythingDeclaration(source, hiding ?? []); }
   / 'import'
     Separator+ specifier:ImportDefaultSpecifier
     Separator+ 'from'
-    Separator+ source:StringLiteral
-    Separator* ';'
+    _ source:StringLiteral
+    _ ';'
     { return Serif.ImportDefaultDeclaration(source, specifier); }
 
 ExportDefaultDeclaration
   = 'export'
     Separator+ 'default'
-    Separator+ declaration:Expression
-    Separator* ';'
+    _ declaration:Expression
+    _ ';'
     { return Serif.ExportDefaultDeclaration(declaration); }
 
 ExportNamedDeclaration
   = 'export'
-    Separator+ '{'
+    _ '{'
     specifiers:(
-      head:(Separator* ident:Identifier { return ident; })
+      head:(_ ident:Identifier { return ident; })
       tail:(Separator+ ident:Identifier { return ident; })*
       { return [head, ...tail]; }
     )?
-    Separator* '}'
-    Separator* ';'
+    _ '}'
+    _ ';'
     { return Serif.ExportNamedDeclaration(specifiers ?? []); }
 
 BooleanLiteral
@@ -92,8 +92,7 @@ HexadecimalNumber
     { return Serif.NumberLiteral(parseInt(digits, 16)); }
 
 DecimalNumber
-  = ('-' / '+')?
-    ('0' / ([1-9] [0-9]*))
+  = ('0' / ([1-9] [0-9]*))
     ('.' [0-9]+)?
     { return Serif.NumberLiteral(parseFloat(text())); }
 
@@ -116,7 +115,7 @@ StringChar
 
 TemplateLiteral
   = '`'
-    pairs:(quasi:Quasi '${' Separator* expression:Expression Separator* '}' { return {quasi, expression}; })*
+    pairs:(quasi:Quasi '${' _ expression:Expression _ '}' { return {quasi, expression}; })*
     quasi:Quasi
     '`'
     {
@@ -223,13 +222,13 @@ IdentifierPart
   / '/'
 
 ArrayExpression
-  = '[' Separator* ']'
+  = '[' _ ']'
     { return Serif.ArrayExpression([]); }
-  / '[' Separator*
+  / '[' _
     head:ArrayElement
-    tail:(Separator* ',' Separator* element:ArrayElement { return element; })*
-    Separator* ','?
-    Separator* ']'
+    tail:(_ ',' _ element:ArrayElement { return element; })*
+    _ ','?
+    _ ']'
     { return Serif.ArrayExpression([head, ...tail]); }
 
 ArrayElement
@@ -237,13 +236,13 @@ ArrayElement
   / Expression
 
 ObjectExpression
-  = '{' Separator* '}'
+  = '{' _ '}'
     { return Serif.ObjectExpression([]); }
-  / '{' Separator*
+  / '{' _
     head:ObjectElement
-    tail:(Separator* ',' Separator* element:ObjectElement { return element; })*
-    Separator* ','?
-    Separator* '}'
+    tail:(_ ',' _ element:ObjectElement { return element; })*
+    _ ','?
+    _ '}'
     { return Serif.ObjectExpression([head, ...tail]); }
 
 ObjectElement
@@ -253,10 +252,10 @@ ObjectElement
 Property
   = key:(
         ident:Identifier { return Serif.StringLiteral(ident.name); }
-      / '[' Separator* expression:Expression Separator* ']' { return expression; }
+      / '[' _ expression:Expression _ ']' { return expression; }
     )
-    Separator* ':'
-    Separator* value:Expression
+    _ ':'
+    _ value:Expression
     { return Serif.Property(key, value); }
 
 ImportMeta
@@ -280,35 +279,35 @@ MemberExpression
     properties:(
         SymbolLiteral
       / '.' ident:Identifier                              { return Serif.StringLiteral(ident.name); }
-      / '[' Separator* property:Expression Separator* ']' { return property; }
+      / '[' _ property:Expression _ ']' { return property; }
     )*
     { return properties.reduce(Serif.MemberExpression, object); }
 
 NewExpression
-  = NewToken Separator+ callee:MemberExpression Separator* args:Arguments
+  = NewToken _ callee:MemberExpression _ args:Arguments
     { return Serif.NewExpression(callee, args); }
 
 CallExpression
   = head:MemberExpression
     tail:(
-        Separator* args:Arguments                         { return expr => Serif.CallExpression(expr, args); }
+        _ args:Arguments                         { return expr => Serif.CallExpression(expr, args); }
       / symbol:SymbolLiteral                              { return expr => Serif.MemberExpression(expr, symbol); }
       / '.' ident:Identifier                              { return expr => Serif.MemberExpression(expr, Serif.StringLiteral(ident.name)); }
-      / '[' Separator* property:Expression Separator* ']' { return expr => Serif.MemberExpression(expr, property); }
+      / '[' _ property:Expression _ ']' { return expr => Serif.MemberExpression(expr, property); }
     )*
     { return tail.reduce((expr, wrap) => wrap(expr), head); }
 
 Arguments
-  = '(' Separator* ')'
+  = '(' _ ')'
     { return []; }
-  / '(' Separator*
+  / '(' _
     head:Expression
-    tail:(Separator* ',' Separator* argument:(SpreadElement / Expression) { return argument; })*
-    Separator* ')'
+    tail:(_ ',' _ argument:(SpreadElement / Expression) { return argument; })*
+    _ ')'
     { return [head, ...tail]; }
 
 ArrowFunctionExpression
-  = parameter:Identifier Separator+ '=>' Separator+ body:Expression
+  = parameter:Identifier _ '=>' _ body:Expression
     { return Serif.ArrowFunctionExpression(parameter, body); }
   / CallExpression
 
@@ -325,7 +324,7 @@ UnaryOperator
   / '!'
 
 UnaryExpression
-  = operator:UnaryOperator Separator+ argument:Application
+  = operator:UnaryOperator _ argument:Application
     { return Serif.UnaryExpression(operator, argument); }
   / Application
 
@@ -334,11 +333,7 @@ ExponentiationOperator
 
 ExponentiationExpression
   = left:UnaryExpression
-    tail:(
-      Separator+ operator:ExponentiationOperator
-      Separator+ right:UnaryExpression
-      { return {operator, right}; }
-    )*
+    tail:(_ operator:ExponentiationOperator _ right:UnaryExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.ExponentiationExpression(operator, left, right), left); }
 
 MultiplicativeOperator
@@ -348,11 +343,7 @@ MultiplicativeOperator
 
 MultiplicativeExpression
   = left:ExponentiationExpression
-    tail:(
-      Separator+ operator:MultiplicativeOperator
-      Separator+ right:ExponentiationExpression
-      { return {operator, right}; }
-    )*
+    tail:(_ operator:MultiplicativeOperator _ right:ExponentiationExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.MultiplicativeExpression(operator, left, right), left); }
 
 AdditiveOperator
@@ -361,11 +352,7 @@ AdditiveOperator
 
 AdditiveExpression
   = left:MultiplicativeExpression
-    tail:(
-      Separator+ operator:AdditiveOperator
-      Separator+ right:MultiplicativeExpression
-      { return {operator, right}; }
-    )*
+    tail:(_ operator:AdditiveOperator _ right:MultiplicativeExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.AdditiveExpression(operator, left, right), left); }
 
 ShiftOperator
@@ -375,11 +362,7 @@ ShiftOperator
 
 ShiftExpression
   = left:AdditiveExpression
-    tail:(
-      Separator+ operator:ShiftOperator
-      Separator+ right:AdditiveExpression
-      { return {operator, right}; }
-    )*
+    tail:(_ operator:ShiftOperator _ right:AdditiveExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.ShiftExpression(operator, left, right), left); }
 
 RelationalOperator
@@ -392,11 +375,7 @@ RelationalOperator
 
 RelationalExpression
   = left:ShiftExpression
-    tail:(
-      Separator+ operator:RelationalOperator
-      Separator+ right:ShiftExpression
-      { return {operator, right}; }
-    )*
+    tail:(_ operator:RelationalOperator _ right:ShiftExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.RelationalExpression(operator, left, right), left); }
 
 EqualityOperator
@@ -407,11 +386,7 @@ EqualityOperator
 
 EqualityExpression
   = left:RelationalExpression
-    tail:(
-      Separator+ operator:EqualityOperator
-      Separator+ right:RelationalExpression
-      { return {operator, right}; }
-    )*
+    tail:(_ operator:EqualityOperator _ right:RelationalExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.EqualityExpression(operator, left, right), left); }
 
 BitwiseANDOperator
@@ -419,11 +394,7 @@ BitwiseANDOperator
 
 BitwiseANDExpression
   = left:EqualityExpression
-    tail:(
-      Separator+ operator:BitwiseANDOperator
-      Separator+ right:EqualityExpression
-      { return {operator, right}; }
-    )*
+    tail:(_ operator:BitwiseANDOperator _ right:EqualityExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.EqualityExpression(operator, left, right), left); }
 
 BitwiseXOROperator
@@ -431,11 +402,7 @@ BitwiseXOROperator
 
 BitwiseXORExpression
   = left:BitwiseANDExpression
-    tail:(
-      Separator+ oeprator:BitwiseXOROperator
-      Separator+ right:BitwiseANDExpression
-      { return {operator, right}; }
-    )*
+    tail:(_ operator:BitwiseXOROperator _ right:BitwiseANDExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.BitwiseXORExpression(operator, left, right), left); }
 
 BitwiseOROperator
@@ -443,11 +410,7 @@ BitwiseOROperator
 
 BitwiseORExpression
   = left:BitwiseXORExpression
-    tail:(
-      Separator+ operator:BitwiseOROperator
-      Separator+ right:BitwiseXORExpression
-      { return {operator, right}; }
-    )*
+    tail:(_ operator:BitwiseOROperator _ right:BitwiseXORExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.BitwiseORExpression(operator, left, right), left); }
 
 LogicalANDOperator
@@ -455,11 +418,7 @@ LogicalANDOperator
 
 LogicalANDExpression
   = left:BitwiseORExpression
-    tail:(
-      Separator+ operator:LogicalANDOperator
-      Separator+ right:BitwiseORExpression
-      { return {operator, right}; }
-    )*
+    tail:(_ operator:LogicalANDOperator _ right:BitwiseORExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.LogicalANDExpression(operator, left, right), left); }
 
 LogicalOROperator
@@ -467,11 +426,7 @@ LogicalOROperator
 
 LogicalORExpression
   = left:LogicalANDExpression
-    tail:(
-      Separator+ operator:LogicalOROperator
-      Separator+ right:LogicalANDExpression
-      { return {operator, right}; }
-    )*
+    tail:(_ operator:LogicalOROperator _ right:LogicalANDExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.LogicalORExpression(operator, left, right), left); }
 
 CoalesceOperator
@@ -479,20 +434,16 @@ CoalesceOperator
 
 CoalesceExpression
   = left:LogicalORExpression
-    tail:(
-      Separator+ operator:CoalesceOperator
-      Separator+ right:LogicalORExpression
-      { return {operator, right}; }
-    )*
+    tail:(_ operator:CoalesceOperator _ right:LogicalORExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.CoalesceExpression(operator, left, right), left); }
 
 ConditionalExpression
   = IfToken
-    Separator+ predicate:ConditionalExpression
-    Separator+ ThenToken
-    Separator+ consequent:ConditionalExpression
-    Separator+ ElseToken
-    Separator+ alternative:ConditionalExpression
+    _ predicate:ConditionalExpression
+    _ ThenToken
+    _ consequent:ConditionalExpression
+    _ ElseToken
+    _ alternative:ConditionalExpression
     { return Serif.ConditionalExpression(predicate, consequent, alternative); }
   / CoalesceExpression
 
@@ -501,14 +452,14 @@ ApplicationOperator
 
 ApplicationExpression
   = callee:ConditionalExpression
-    args:(Separator+ ApplicationOperator Separator+ arg:ApplicationExpression { return arg; })*
+    args:(_ ApplicationOperator _ arg:ApplicationExpression { return arg; })*
     { return args.reduce((callee, arg) => Serif.Application(callee, [arg]), callee); }
 
 BlockExpression
-  = '{' Separator*
+  = '{' _
     head:Statement
-    tail:(Separator* ';' Separator* statement:Statement { return statement; })*
-    Separator* '}'
+    tail:(_ ';' _ statement:Statement { return statement; })*
+    _ '}'
     { return Serif.BlockExpression([head, ...tail]); }
 
 Statement
@@ -519,14 +470,12 @@ Statement
 FunctionDeclaration
   = name:(ident:Identifier { return ident.name; })
     parameterNames:(Separator+ ident:Identifier { return ident.name; })+
-    Separator+ '='
-    Separator+ body:Expression
+    _ '=' _ body:Expression
     { return Serif.FunctionDeclaration(name, parameterNames, body); }
 
 VariableDeclaration
   = name:(ident:Identifier { return ident.name; })
-    Separator+ '='
-    Separator+ expression:Expression
+    _ '=' _ expression:Expression
     { return Serif.VariableDeclaration(name, expression); }
 
 ExpressionStatement
@@ -573,6 +522,9 @@ Comment
 Separator
   = Whitespace
   / Comment
+
+_ =
+  Separator*
 
 Expression
   = ApplicationExpression
