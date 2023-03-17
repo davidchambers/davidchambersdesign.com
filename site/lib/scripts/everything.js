@@ -4,13 +4,13 @@ import url from 'node:url';
 import S from 'sanctuary';
 import { svg } from '../elements.js';
 import base$002Dtemplate from '../base-template.js';
-import generate$002Dcss from '../generate-css.js';
 import masthead from '../masthead.js';
 import related$002Dposts from '../related-posts.js';
 import render$002Darchives from '../render-archives.js';
 import render$002Dpage from '../render-page.js';
 import render$002Dpost from '../render-post.js';
 import render$002Dtags from '../render-tags.js';
+import css$002Fscreen from '../css/screen.js';
 import icon$002Fabout from '../icons/about.js';
 import icon$002Farchives from '../icons/archives.js';
 import icon$002Fbitbucket from '../icons/bitbucket.js';
@@ -223,7 +223,7 @@ const write$002Dfile = filename => data => fs.writeFileSync(filename, data);
 write$002Dfile(public_([
   'css',
   'screen.css'
-]))(generate$002Dcss);
+]))(css$002Fscreen);
 const render$002Dsvg = attrs => paths => `<?xml version="1.0" standalone="no"?>\n${ svg({
   xmlns: 'http://www.w3.org/2000/svg',
   version: '1.1',

@@ -37,22 +37,21 @@ const esFromStringLiteral = (stringLiteral: Serif.StringLiteral): ES.Literal => 
   ES.Literal(stringLiteral.value)
 );
 
-const dedentCond = (raw: string, lineEnding: '\n' | '\r\n'): string | null => {
-  if (!raw.startsWith(lineEnding)) return null;
-  const tail = raw.slice(lineEnding.length);
-  const indent = tail.search(/(?! )/);
-  return tail.replace(new RegExp(`^[ ]{0,${indent}}`, 'gm'), '');
-};
-
-const esFromTemplateLiteral = (templateLiteral: Serif.TemplateLiteral): ES.TemplateLiteral => (
-  ES.TemplateLiteral(
-    templateLiteral.quasis.map(quasi => ES.TemplateElement(
-      dedentCond(quasi.raw, '\n') ?? dedentCond(quasi.raw, '\r\n') ?? quasi.raw,
-      quasi.tail,
-    )),
+const esFromTemplateLiteral = (templateLiteral: Serif.TemplateLiteral): ES.TemplateLiteral => {
+  const [quasi, ...quasis] = templateLiteral.quasis;
+  const lineEnding = ['\n', '\r\n'].find(lineEnding => quasi.raw.startsWith(lineEnding));
+  if (lineEnding == null) return ES.TemplateLiteral(
+    templateLiteral.quasis.map(quasi => ES.TemplateElement(quasi.raw, quasi.tail)),
     templateLiteral.expressions.map(esFromExpression),
-  )
-);
+  );
+  const indent = quasi.raw.slice(lineEnding.length).search(/(?! )/);
+  const pattern = new RegExp(`${lineEnding}[ ]{0,${indent}}`, 'g');
+  const dedent = (text: string): string => text.replace(pattern, lineEnding);
+  return ES.TemplateLiteral([
+    ES.TemplateElement(dedent(quasi.raw).slice(lineEnding.length), quasi.tail),
+    ...quasis.map(quasi => ES.TemplateElement(dedent(quasi.raw), quasi.tail)),
+  ], templateLiteral.expressions.map(esFromExpression));
+};
 
 const esFromSymbolLiteral = (symbolLiteral: Serif.SymbolLiteral): ES.CallExpression => (
   ES.CallExpression(

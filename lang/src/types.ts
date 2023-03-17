@@ -55,12 +55,12 @@ export const TemplateElement = (
 
 export interface TemplateLiteral {
   readonly type: 'TemplateLiteral';
-  readonly quasis: ReadonlyArray<TemplateElement>;
+  readonly quasis: ReadonlyNonEmptyArray<TemplateElement>;
   readonly expressions: ReadonlyArray<Expression>;
 }
 
 export const TemplateLiteral = (
-  quasis: ReadonlyArray<TemplateElement>,
+  quasis: ReadonlyNonEmptyArray<TemplateElement>,
   expressions: ReadonlyArray<Expression>,
 ): TemplateLiteral => ({
   type: 'TemplateLiteral',

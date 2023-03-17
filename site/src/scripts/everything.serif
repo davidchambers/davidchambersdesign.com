@@ -6,13 +6,13 @@ import S from "sanctuary";
 
 import {svg} from "../elements.serif";
 import base-template from "../base-template.serif";
-import generate-css from "../generate-css.serif";
 import masthead from "../masthead.serif";
 import related-posts from "../related-posts.serif";
 import render-archives from "../render-archives.serif";
 import render-page from "../render-page.serif";
 import render-post from "../render-post.serif";
 import render-tags from "../render-tags.serif";
+import css/screen from "../css/screen.serif";
 import icon/about from "../icons/about.serif";
 import icon/archives from "../icons/archives.serif";
 import icon/bitbucket from "../icons/bitbucket.serif";
@@ -232,8 +232,7 @@ write-file filename data = {
   fs.writeFileSync(filename, data)
 };
 
-write-file {public ["css", "screen.css"]}
-           generate-css;
+write-file {public ["css", "screen.css"]} css/screen;
 
 render-svg attrs paths = {
   `<?xml version="1.0" standalone="no"?>\n${
