@@ -126,7 +126,7 @@ const esFromObjectExpression = (objectExpression: Serif.ObjectExpression): ES.Ob
 
 const esFromArrowFunctionExpression = (arrowFunctionExpression: Serif.ArrowFunctionExpression): ES.ArrowFunctionExpression => (
   ES.ArrowFunctionExpression(
-    [esFromIdentifier(arrowFunctionExpression.parameter)],
+    arrowFunctionExpression.parameters.map(esFromIdentifier),
     esFromExpression(arrowFunctionExpression.body),
   )
 );

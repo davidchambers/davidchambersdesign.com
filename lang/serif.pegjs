@@ -278,7 +278,7 @@ MemberExpression
     )
     properties:(
         SymbolLiteral
-      / '.' ident:Identifier                              { return Serif.StringLiteral(ident.name); }
+      / _ '.' ident:Identifier          { return Serif.StringLiteral(ident.name); }
       / '[' _ property:Expression _ ']' { return property; }
     )*
     { return properties.reduce(Serif.MemberExpression, object); }
@@ -290,9 +290,9 @@ NewExpression
 CallExpression
   = head:MemberExpression
     tail:(
-        _ args:Arguments                         { return expr => Serif.CallExpression(expr, args); }
-      / symbol:SymbolLiteral                              { return expr => Serif.MemberExpression(expr, symbol); }
-      / '.' ident:Identifier                              { return expr => Serif.MemberExpression(expr, Serif.StringLiteral(ident.name)); }
+        _ args:Arguments                { return expr => Serif.CallExpression(expr, args); }
+      / symbol:SymbolLiteral            { return expr => Serif.MemberExpression(expr, symbol); }
+      / _ '.' ident:Identifier          { return expr => Serif.MemberExpression(expr, Serif.StringLiteral(ident.name)); }
       / '[' _ property:Expression _ ']' { return expr => Serif.MemberExpression(expr, property); }
     )*
     { return tail.reduce((expr, wrap) => wrap(expr), head); }
@@ -307,9 +307,20 @@ Arguments
     { return [head, ...tail]; }
 
 ArrowFunctionExpression
-  = parameter:Identifier _ '=>' _ body:Expression
-    { return Serif.ArrowFunctionExpression(parameter, body); }
+  = parameters:ArrowFunctionParameters _ '=>' _ body:Expression
+    { return Serif.ArrowFunctionExpression(parameters, body); }
   / CallExpression
+
+ArrowFunctionParameters
+  = '(' _ ')'
+    { return []; }
+  / '(' _
+    head:Identifier
+    tail:(_ ',' _ parameter:Identifier { return parameter; })*
+    _ ')'
+    { return [head, ...tail]; }
+  / parameter:Identifier
+    { return [parameter]; }
 
 Application
   = callee:ArrowFunctionExpression

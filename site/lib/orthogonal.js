@@ -1,24 +1,42 @@
 import S from 'sanctuary';
-const reducer = prev => path => curr => curr[0] === Symbol.for('M') ? prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m') ? S.Pair(curr)(path) : S.Pair(curr)([
-  ...path,
-  prev
-]) : (prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m')) && curr[0] === Symbol.for('m') ? S.Pair([
-  prev[0],
+const reducer = prev => path => curr => curr[0] === Symbol.for('M') ? prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m') ? [
+  curr,
+  path
+] : [
+  curr,
   [
-    prev[1][0] + curr[1][0],
-    prev[1][1] + curr[1][1]
+    ...path,
+    prev
   ]
-])(path) : S.Pair(curr)([
-  ...path,
-  prev
-]);
-const simplify = S.array([])(head => tail => S.pair(S.append)(S.reduce(S.pair(reducer))(S.Pair(head)([]))(tail)));
-const render = S.pipe([
-  simplify,
-  S.join,
-  S.map(x => typeof x === 'symbol' ? Symbol.keyFor(x) : String(x)),
-  S.unwords
-]);
+] : (prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m')) && curr[0] === Symbol.for('m') ? [
+  [
+    prev[0],
+    [
+      prev[1][0] + curr[1][0],
+      prev[1][1] + curr[1][1]
+    ]
+  ],
+  path
+] : [
+  curr,
+  [
+    ...path,
+    prev
+  ]
+];
+const simplify = paths => paths.length === 0 ? [] : (() => {
+  const head = paths[0];
+  const tail = paths.slice(1);
+  const pair = S.reduce(pair => curr => reducer(pair[0])(pair[1])(curr))([
+    head,
+    []
+  ])(tail);
+  return [
+    ...pair[1],
+    pair[0]
+  ];
+})();
+const render = paths => simplify(paths).flat().map(x => typeof x === 'symbol' ? Symbol.keyFor(x) : String(x)).join(' ');
 const $21E6 = x => [
   Symbol.for('m'),
   [

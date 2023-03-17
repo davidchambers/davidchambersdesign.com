@@ -175,16 +175,16 @@ export const ObjectExpression = (
 
 export interface ArrowFunctionExpression {
   readonly type: 'ArrowFunctionExpression';
-  readonly parameter: Identifier;
+  readonly parameters: ReadonlyArray<Identifier>;
   readonly body: Expression;
 }
 
 export const ArrowFunctionExpression = (
-  parameter: Identifier,
+  parameters: ReadonlyArray<Identifier>,
   body: Expression,
 ): ArrowFunctionExpression => ({
   type: 'ArrowFunctionExpression',
-  parameter,
+  parameters,
   body,
 });
 

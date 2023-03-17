@@ -5,45 +5,41 @@ export {render ⇦ ⇨ ⇧ ⇩ ← → ↑ ↓};
 reducer prev path curr = {
   if curr[0] === :M then {
     if {prev[0] === :M || prev[0] === :m} then {
-      S.Pair curr path  ;; ignore previous move
+      [curr, path]  ;; ignore previous move
     } else {
-      S.Pair curr [...path, prev]
+      [curr, [...path, prev]]
     }
   } else {
     if {prev[0] === :M || prev[0] === :m} && curr[0] === :m then {
-      S.Pair [prev[0],
-              [prev[1][0] + curr[1][0],
-               prev[1][1] + curr[1][1]]]
-             path
+      [[prev[0], [prev[1][0] + curr[1][0], prev[1][1] + curr[1][1]]], path]
     } else {
-      S.Pair curr [...path, prev]
+      [curr, [...path, prev]]
     }
   }
 };
 
-simplify = {
-  S.array []
-          head => tail => {
-            S.pair S.append
-                   {S.reduce {S.pair reducer}
-                             {S.Pair head []}
-                             tail}
-          }
+simplify paths = {
+  if paths.length === 0 then [] else {
+    head = paths[0];
+    tail = paths.slice(1);
+    pair = S.reduce {pair => curr => reducer pair[0] pair[1] curr} [head, []] tail;
+    [...pair[1], pair[0]]
+  }
 };
 
-render = S.pipe [
-  simplify,
-  S.join,
-  S.map x => if typeof x === "symbol" then Symbol.keyFor x else String x,
-  S.unwords,
-];
+render paths = {
+  {simplify paths}
+  .flat()
+  .map(x => if typeof x === "symbol" then Symbol.keyFor x else String x)
+  .join(" ")
+};
 
-⇦ x = [:m, [{- x}, 0]];
-⇨ x = [:m, [{+ x}, 0]];
-⇧ y = [:m, [0, {- y}]];
-⇩ y = [:m, [0, {+ y}]];
+⇦ x = [:m, [-x, 0]];
+⇨ x = [:m, [+x, 0]];
+⇧ y = [:m, [0, -y]];
+⇩ y = [:m, [0, +y]];
 
-← x = [:h, {- x}];
-→ x = [:h, {+ x}];
-↑ y = [:v, {- y}];
-↓ y = [:v, {+ y}];
+← x = [:h, -x];
+→ x = [:h, +x];
+↑ y = [:v, -y];
+↓ y = [:v, +y];
