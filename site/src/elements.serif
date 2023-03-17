@@ -119,13 +119,11 @@ render-block-element tag-name attrs children indent level inline = {
   }<${
     Symbol.keyFor tag-name
   }${
-    S.foldMap String
-              {entry => ` ${entry[0]}="${escape {String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}"`}
-              {Object.entries attrs}
+    {Object.entries attrs}
+    .map([name, value] => ` ${name}="${escape `${value}`.replace(new RegExp("\n[ ]*", "g"), " ")}"`)
+    .join("")
   }>\n${
-    S.foldMap String
-              {child => child.render indent {level + 1} false}
-              children
+    children.map(child => child.render indent {level + 1} false).join("")
   }${
     indent.repeat(level)
   }</${
@@ -139,13 +137,11 @@ render-inline-element tag-name attrs children indent level inline = {
   }<${
     Symbol.keyFor tag-name
   }${
-    S.foldMap String
-              {entry => ` ${entry[0]}="${escape {String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}"`}
-              {Object.entries attrs}
+    {Object.entries attrs}
+    .map([name, value] => ` ${name}="${escape `${value}`.replace(new RegExp("\n[ ]*", "g"), " ")}"`)
+    .join("")
   }>${
-    S.foldMap String
-              {child => child.render indent 0 true}
-              children
+    children.map(child => child.render indent 0 true).join("")
   }</${
     Symbol.keyFor tag-name
   }>${
@@ -159,9 +155,9 @@ render-self-closing-element tag-name attrs indent level inline = {
   }<${
     Symbol.keyFor tag-name
   }${
-    S.foldMap String
-              {entry => ` ${entry[0]}="${escape {String entry[1]}.replace(new RegExp("\n[ ]*", "g"), " ")}"`}
-              {Object.entries attrs}
+    {Object.entries attrs}
+    .map([name, value] => ` ${name}="${escape `${value}`.replace(new RegExp("\n[ ]*", "g"), " ")}"`)
+    .join("")
   } />${
     if inline then "" else "\n"
   }`
@@ -198,12 +194,10 @@ self-closing-element tag-name attrs = {
 excerpt children = {
   children' = canonicalize-children children;
   render indent level inline = {
-    S.foldMap String
-              {child => child.render indent level inline}
-              children'
+    children'.map(child => child.render indent level inline).join("")
   };
   {
-    text: children.flatMap(child => child.text),
+    text: children'.flatMap(child => child.text),
     render: render,
   }
 };

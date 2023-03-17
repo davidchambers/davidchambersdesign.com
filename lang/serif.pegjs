@@ -14,60 +14,20 @@ ImportDefaultSpecifier
     { return Serif.ImportDefaultSpecifier(local); }
 
 ImportDeclaration
-  = 'import'
-    _ '{'
-    specifiers:(
-      head:(_ specifier:ImportSpecifier { return specifier; })
-      tail:(Separator+ specifier:ImportSpecifier { return specifier; })*
-      { return [head, ...tail]; }
-    )?
-    _ '}'
-    _ 'from'
-    _ source:StringLiteral
-    _ ';'
-    { return Serif.ImportDeclaration(source, specifiers ?? []); }
-  / 'import'
-    _ '*'
-    _ 'from'
-    _ source:StringLiteral
-    hiding:(
-      _ 'hiding'
-      _ '{'
-      hiding:(
-        head:(_ ident:Identifier { return ident; })
-        tail:(Separator+ ident:Identifier { return ident; })*
-        { return [head, ...tail]; }
-      )?
-      _ '}'
-      { return hiding ?? []; }
-    )?
-    _ ';'
+  = 'import' _ '{' _ specifiers:ImportSpecifier|.., __| _ '}' _ 'from' _ source:StringLiteral _ ';'
+    { return Serif.ImportDeclaration(source, specifiers); }
+  / 'import' _ '*' _ 'from' _ source:StringLiteral hiding:(_ 'hiding' _ '{' _ hiding:Identifier|.., __| _ '}' { return hiding; })? _ ';'
     { return Serif.ImportEverythingDeclaration(source, hiding ?? []); }
-  / 'import'
-    Separator+ specifier:ImportDefaultSpecifier
-    Separator+ 'from'
-    _ source:StringLiteral
-    _ ';'
+  / 'import' __ specifier:ImportDefaultSpecifier __ 'from' _ source:StringLiteral _ ';'
     { return Serif.ImportDefaultDeclaration(source, specifier); }
 
 ExportDefaultDeclaration
-  = 'export'
-    Separator+ 'default'
-    _ declaration:Expression
-    _ ';'
+  = 'export' __ 'default' _ declaration:Expression _ ';'
     { return Serif.ExportDefaultDeclaration(declaration); }
 
 ExportNamedDeclaration
-  = 'export'
-    _ '{'
-    specifiers:(
-      head:(_ ident:Identifier { return ident; })
-      tail:(Separator+ ident:Identifier { return ident; })*
-      { return [head, ...tail]; }
-    )?
-    _ '}'
-    _ ';'
-    { return Serif.ExportNamedDeclaration(specifiers ?? []); }
+  = 'export' _ '{' _ specifiers:Identifier|.., __| _ '}' _ ';'
+    { return Serif.ExportNamedDeclaration(specifiers); }
 
 BooleanLiteral
   = 'true'  { return Serif.BooleanLiteral(true); }
@@ -108,7 +68,7 @@ StringChar
   / '\\' 'n'  { return '\n'; }
   / '\\' 'r'  { return '\r'; }
   / '\\' 't'  { return '\t'; }
-  / '\\' 'u' digits:$([0-9A-F] [0-9A-F] [0-9A-F] [0-9A-F])
+  / '\\' 'u' digits:$[0-9A-F]|4|
               { return String.fromCharCode(parseInt(digits, 16)); }
   / '\\'      { expected('valid escape sequence'); }
   / !'"' c:.  { return c; }
@@ -141,7 +101,7 @@ TemplateLiteralChar
   / '\\' 'n'  { return '\\n'; }
   / '\\' 'r'  { return '\\r'; }
   / '\\' 't'  { return '\\t'; }
-  / '\\' 'u' digits:$([0-9A-F] [0-9A-F] [0-9A-F] [0-9A-F])
+  / '\\' 'u' digits:$[0-9A-F]|4|
               { return '\\u' + digits; }
   / '\\'      { expected('valid escape sequence'); }
   / '$' !'{'  { return '$'; }
@@ -224,12 +184,8 @@ IdentifierPart
 ArrayExpression
   = '[' _ ']'
     { return Serif.ArrayExpression([]); }
-  / '[' _
-    head:ArrayElement
-    tail:(_ ',' _ element:ArrayElement { return element; })*
-    _ ','?
-    _ ']'
-    { return Serif.ArrayExpression([head, ...tail]); }
+  / '[' _ elements:ArrayElement|1.., CommaSeparator| _ ','? _ ']'
+    { return Serif.ArrayExpression(elements); }
 
 ArrayElement
   = SpreadElement
@@ -238,25 +194,31 @@ ArrayElement
 ObjectExpression
   = '{' _ '}'
     { return Serif.ObjectExpression([]); }
-  / '{' _
-    head:ObjectElement
-    tail:(_ ',' _ element:ObjectElement { return element; })*
-    _ ','?
-    _ '}'
-    { return Serif.ObjectExpression([head, ...tail]); }
+  / '{' _ properties:ObjectElement|1.., CommaSeparator| _ ','? _ '}'
+    { return Serif.ObjectExpression(properties); }
 
 ObjectElement
   = SpreadElement
   / Property
 
 Property
-  = key:(
-        ident:Identifier { return Serif.StringLiteral(ident.name); }
-      / '[' _ expression:Expression _ ']' { return expression; }
-    )
-    _ ':'
-    _ value:Expression
+  = key:PropertyName _ ':' _ value:AssignmentExpression
     { return Serif.Property(key, value); }
+
+PropertyName
+  = LiteralPropertyName
+  / ComputedPropertyName
+
+LiteralPropertyName
+  = ident:Identifier
+    { return Serif.StringLiteral(ident.name); }
+
+ComputedPropertyName
+  = '[' _ expression:AssignmentExpression _ ']'
+    { return expression; }
+
+AssignmentExpression
+  = Expression
 
 ImportMeta
   = meta:'import' '.' property:'meta'
@@ -300,11 +262,8 @@ CallExpression
 Arguments
   = '(' _ ')'
     { return []; }
-  / '(' _
-    head:Expression
-    tail:(_ ',' _ argument:(SpreadElement / Expression) { return argument; })*
-    _ ')'
-    { return [head, ...tail]; }
+  / '(' _ args:(SpreadElement / Expression)|1.., CommaSeparator| _ ')'
+    { return args; }
 
 ArrowFunctionExpression
   = parameters:ArrowFunctionParameters _ '=>' _ body:Expression
@@ -314,18 +273,106 @@ ArrowFunctionExpression
 ArrowFunctionParameters
   = '(' _ ')'
     { return []; }
-  / '(' _
-    head:Identifier
-    tail:(_ ',' _ parameter:Identifier { return parameter; })*
-    _ ')'
-    { return [head, ...tail]; }
-  / parameter:Identifier
+  / '(' _ parameters:Pattern|1.., CommaSeparator| _ ')'
+    { return parameters; }
+  / parameter:Pattern
     { return [parameter]; }
+
+// AssignmentPattern
+//   = ObjectAssignmentPattern
+//   / ArrayAssignmentPattern
+//
+// ObjectAssignmentPattern
+//   = '{' _ '}'
+//   / '{' _ AssignmentRestProperty _ '}'
+//   / '{' _ AssignmentPropertyList _ '}'
+//   / '{' _ AssignmentPropertyList _ ',' _ AssignmentRestProperty _ '}'
+//
+// ArrayAssignmentPattern
+//   = '[' _ Elision? _ AssignmentRestElement? _ ']'
+//   / '[' _ AssignmentElementList _ ']'
+//   / '[' _ AssignmentElementList _ ',' _ Elision|.., _| _ AssignmentRestElement _ ']'
+//
+// AssignmentRestProperty
+//   = '...' DestructuringAssignmentTarget
+//
+// AssignmentPropertyList
+//   = AssignmentElisionElement
+//   / AssignmentElementList _ ',' _ AssignmentElisionElement
+//
+// AssignmentElementList
+//   = AssignmentElisionElement
+//   / AssignmentElementList _ ',' _ AssignmentElisionElement
+//
+// AssignmentElisionElement
+//   = Elision|.., _| _ AssignmentElement
+//
+// AssignmentProperty
+//   = IdentifierReference // _ Initializer?
+//   / PropertyName _ ':' _ AssignmentElement
+//
+// AssignmentElement
+//   = DestructuringAssignmentTarget // _ Initializer?
+//
+// AssignmentRestElement
+//   = '...' DestructuringAssignmentTarget
+//
+// DestructuringAssignmentTarget
+//   = LeftHandSideExpression
+//
+// Elision
+//   = ','
+
+Pattern
+  = ArrayPattern
+  / ObjectPattern
+  / RestElement
+  / Identifier
+
+ArrayPattern
+  = '[' _ ']'
+    { return Serif.ArrayPattern([]); }
+  / '[' _ elisions:Elision|.., _| _ ']'
+    { return Serif.ArrayPattern(elisions); }
+  / '['
+    elements:(
+        _ elision:Elision                   { return elision; }
+      / _ element:ArrayPatternElement _ ',' { return element; }
+    )*
+    _ element:ArrayPatternElement?
+    _ ']'
+    { return Serif.ArrayPattern(element == null ? elements : [...elements, element]); }
+
+Elision
+  = ','
+    { return null; }
+
+ArrayPatternElement
+  = Pattern
+
+ObjectPattern
+  = '{' _ '}'
+    { return Serif.ObjectPattern([]); }
+  / '{' _ properties:ObjectPatternProperty|1.., CommaSeparator| _ '}'
+    { return Serif.ObjectPattern(properties); }
+
+ObjectPatternProperty
+  = ident:Identifier _ ':' _ element:LeftHandSideExpression
+    { return Serif.AssignmentProperty(ident, element); }
+  / ident:Identifier
+    { return Serif.AssignmentProperty(ident, ident); }
+
+RestElement
+  = '...' argument:Identifier
+    { return Serif.RestElement(argument); }
 
 Application
   = callee:ArrowFunctionExpression
-    args:(Separator+ arg:ArrowFunctionExpression { return arg; })*
+    args:(__ arg:ArrowFunctionExpression { return arg; })*
     { return Serif.Application(callee, args); }
+
+LeftHandSideExpression
+  = ArrowFunctionExpression
 
 UnaryOperator
   = TypeofToken
@@ -467,11 +514,8 @@ ApplicationExpression
     { return args.reduce((callee, arg) => Serif.Application(callee, [arg]), callee); }
 
 BlockExpression
-  = '{' _
-    head:Statement
-    tail:(_ ';' _ statement:Statement { return statement; })*
-    _ '}'
-    { return Serif.BlockExpression([head, ...tail]); }
+  = '{' _ statements:Statement|1.., SemicolonSeparator| _ '}'
+    { return Serif.BlockExpression(statements); }
 
 Statement
   = FunctionDeclaration
@@ -479,15 +523,14 @@ Statement
   / ExpressionStatement
 
 FunctionDeclaration
-  = name:(ident:Identifier { return ident.name; })
-    parameterNames:(Separator+ ident:Identifier { return ident.name; })+
+  = ident:Identifier
+    parameters:(__ parameter:Pattern { return parameter; })+
     _ '=' _ body:Expression
-    { return Serif.FunctionDeclaration(name, parameterNames, body); }
+    { return Serif.FunctionDeclaration(ident.name, parameters, body); }
 
 VariableDeclaration
-  = name:(ident:Identifier { return ident.name; })
-    _ '=' _ expression:Expression
-    { return Serif.VariableDeclaration(name, expression); }
+  = pattern:Pattern _ '=' _ expression:Expression
+    { return Serif.VariableDeclaration(pattern, expression); }
 
 ExpressionStatement
   = expression:Expression
@@ -530,12 +573,17 @@ Whitespace
 Comment
   = ';;' (!LineTerminator .)*
 
-Separator
-  = Whitespace
-  / Comment
-
 _ =
-  Separator*
+  (Whitespace / Comment)*
+
+__
+  = Comment? Whitespace _
+
+CommaSeparator
+  = _ ',' _
+
+SemicolonSeparator
+  = _ ';' _
 
 Expression
   = ApplicationExpression

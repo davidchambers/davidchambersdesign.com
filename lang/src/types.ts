@@ -149,13 +149,26 @@ export const ArrayExpression = (
 export interface Property {
   readonly type: 'Property';
   readonly key: Expression;
-  readonly value: Expression;
+  readonly value: Expression | Pattern;
 }
 
 export const Property = (
   key: Expression,
   value: Expression,
 ): Property => ({
+  type: 'Property',
+  key,
+  value,
+});
+
+export interface AssignmentProperty extends Property {
+  readonly value: Pattern;
+}
+
+export const AssignmentProperty = (
+  key: Expression,
+  value: Pattern,
+): AssignmentProperty => ({
   type: 'Property',
   key,
   value,
@@ -173,9 +186,53 @@ export const ObjectExpression = (
   properties,
 });
 
+export type Pattern =
+  | ArrayPattern
+  | ObjectPattern
+  | RestElement
+  | Identifier
+//| AssignmentPattern
+//| MemberExpression
+
+export interface ArrayPattern {
+  type: 'ArrayPattern';
+  elements: ReadonlyArray<Pattern | null>;
+}
+
+export const ArrayPattern = (
+  elements: ReadonlyArray<Pattern | null>,
+): ArrayPattern => ({
+  type: 'ArrayPattern',
+  elements,
+});
+
+export interface ObjectPattern {
+  type: 'ObjectPattern';
+  properties: ReadonlyArray<AssignmentProperty | RestElement>;
+}
+
+export const ObjectPattern = (
+  properties: ReadonlyArray<AssignmentProperty | RestElement>,
+): ObjectPattern => ({
+  type: 'ObjectPattern',
+  properties,
+});
+
+export interface RestElement {
+  type: 'RestElement';
+  argument: Identifier;
+}
+
+export const RestElement = (
+  argument: Identifier,
+): RestElement => ({
+  type: 'RestElement',
+  argument,
+});
+
 export interface ArrowFunctionExpression {
   readonly type: 'ArrowFunctionExpression';
-  readonly parameters: ReadonlyArray<Identifier>;
+  readonly parameters: ReadonlyArray<Pattern>;
   readonly body: Expression;
 }
 
@@ -752,34 +809,34 @@ export const ExportDefaultDeclaration = (
 
 export interface VariableDeclaration {
   readonly type: 'VariableDeclaration';
-  readonly name: string;
+  readonly pattern: Pattern;
   readonly expression: Expression;
 }
 
 export const VariableDeclaration = (
-  name: string,
+  pattern: Pattern,
   expression: Expression,
 ): VariableDeclaration => ({
   type: 'VariableDeclaration',
-  name,
+  pattern,
   expression,
 });
 
 export interface FunctionDeclaration {
   readonly type: 'FunctionDeclaration';
   readonly name: string;
-  readonly parameterNames: ReadonlyNonEmptyArray<string>;
+  readonly parameters: ReadonlyNonEmptyArray<Pattern>;
   readonly body: Expression;
 }
 
 export const FunctionDeclaration = (
   name: string,
-  parameterNames: ReadonlyNonEmptyArray<string>,
+  parameters: ReadonlyNonEmptyArray<Pattern>,
   body: Expression,
 ): FunctionDeclaration => ({
   type: 'FunctionDeclaration',
   name,
-  parameterNames,
+  parameters,
   body,
 });
 

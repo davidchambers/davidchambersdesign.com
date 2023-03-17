@@ -2,28 +2,28 @@ import S from "sanctuary";
 
 export {render ⇦ ⇨ ⇧ ⇩ ← → ↑ ↓};
 
-reducer prev path curr = {
-  if curr[0] === :M then {
-    if {prev[0] === :M || prev[0] === :m} then {
-      [curr, path]  ;; ignore previous move
-    } else {
-      [curr, [...path, prev]]
-    }
-  } else {
-    if {prev[0] === :M || prev[0] === :m} && curr[0] === :m then {
-      [[prev[0], [prev[1][0] + curr[1][0], prev[1][1] + curr[1][1]]], path]
-    } else {
-      [curr, [...path, prev]]
-    }
-  }
-};
-
 simplify paths = {
   if paths.length === 0 then [] else {
-    head = paths[0];
-    tail = paths.slice(1);
-    pair = S.reduce {pair => curr => reducer pair[0] pair[1] curr} [head, []] tail;
-    [...pair[1], pair[0]]
+    [head, ...tail] = paths;
+    [prev, path] = tail.reduce(
+      ([prev, path], curr) => {
+        if curr[0] === :M then {
+          if {prev[0] === :M || prev[0] === :m} then {
+            [curr, path]  ;; ignore previous move
+          } else {
+            [curr, [...path, prev]]
+          }
+        } else {
+          if {prev[0] === :M || prev[0] === :m} && curr[0] === :m then {
+            [[prev[0], [prev[1][0] + curr[1][0], prev[1][1] + curr[1][1]]], path]
+          } else {
+            [curr, [...path, prev]]
+          }
+        }
+      },
+      [head, []]
+    );
+    [...path, prev]
   }
 };
 

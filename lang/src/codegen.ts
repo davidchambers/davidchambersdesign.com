@@ -110,13 +110,13 @@ const esFromObjectExpression = (objectExpression: Serif.ObjectExpression): ES.Ob
       ) {
         return ES.Property(
           esFromEscapedIdentifierName(property.key.value as Escaped),
-          esFromExpression(property.value),
+          esFromExpression(property.value as Serif.Expression),
           {computed: false}
         );
       } else {
         return ES.Property(
           esFromExpression(property.key),
-          esFromExpression(property.value),
+          esFromExpression(property.value as Serif.Expression),
           {computed: true}
         );
       }
@@ -124,9 +124,33 @@ const esFromObjectExpression = (objectExpression: Serif.ObjectExpression): ES.Ob
   )
 );
 
+const esFromArrayPattern = (arrayPattern: Serif.ArrayPattern): ES.ArrayPattern => (
+  ES.ArrayPattern(arrayPattern.elements.map(element =>
+    element == null ? null : esFromPattern(element)
+  ))
+);
+
+const esFromObjectPattern = (objectPattern: Serif.ObjectPattern): ES.ObjectPattern => (
+  ES.ObjectPattern(objectPattern.properties.map(property => {
+    switch (property.type) {
+      case 'Property':        return ES.AssignmentProperty(esFromExpression(property.key), esFromPattern(property.value));
+      case 'RestElement':     return ES.RestElement(esFromIdentifier(property.argument));
+    }
+  }))
+);
+
+const esFromPattern = (pattern: Serif.Pattern): ES.Pattern => {
+  switch (pattern.type) {
+    case 'ArrayPattern':    return esFromArrayPattern(pattern);
+    case 'ObjectPattern':   return esFromObjectPattern(pattern);
+    case 'RestElement':     return ES.RestElement(esFromIdentifier(pattern.argument));
+    case 'Identifier':      return esFromIdentifier(pattern);
+  }
+};
+
 const esFromArrowFunctionExpression = (arrowFunctionExpression: Serif.ArrowFunctionExpression): ES.ArrowFunctionExpression => (
   ES.ArrowFunctionExpression(
-    arrowFunctionExpression.parameters.map(esFromIdentifier),
+    arrowFunctionExpression.parameters.map(esFromPattern),
     esFromExpression(arrowFunctionExpression.body),
   )
 );
@@ -149,9 +173,9 @@ const esFromBlockExpression = (blockExpression: Serif.BlockExpression): ES.Expre
     ES.ArrowFunctionExpression(
       [],
       ES.BlockStatement(
-        last.type !== 'ExpressionStatement'
-        ? [...blockExpression.statements.map(esFromStatement), ES.ReturnStatement(esFromIdentifierName(last.name))]
-        : [...blockExpression.statements.slice(0, -1).map(esFromStatement), ES.ReturnStatement(esFromExpression(last.expression))]
+        last.type === 'ExpressionStatement'
+        ? [...blockExpression.statements.slice(0, -1).map(esFromStatement), ES.ReturnStatement(esFromExpression(last.expression))]
+        : blockExpression.statements.map(esFromStatement)
       )
     ),
     []
@@ -222,7 +246,7 @@ const esFromCallExpression = (callExpression: Serif.CallExpression): ES.Expressi
 const esFromVariableDeclaration = (variableDeclaration: Serif.VariableDeclaration): ES.VariableDeclaration => (
   ES.VariableDeclaration([
     ES.VariableDeclarator(
-      esFromIdentifierName(variableDeclaration.name),
+      esFromPattern(variableDeclaration.pattern),
       esFromExpression(variableDeclaration.expression),
     ),
   ])
@@ -233,9 +257,9 @@ const esFromFunctionDeclaration = (functionDeclaration: Serif.FunctionDeclaratio
     ES.VariableDeclarator(
       esFromIdentifierName(functionDeclaration.name),
       ES.ArrowFunctionExpression(
-        functionDeclaration.parameterNames.slice(0, 1).map(esFromIdentifierName),
-        functionDeclaration.parameterNames.slice(1).reduceRight(
-          (body, name) => ES.ArrowFunctionExpression([esFromIdentifierName(name)], body),
+        functionDeclaration.parameters.slice(0, 1).map(esFromPattern),
+        functionDeclaration.parameters.slice(1).reduceRight(
+          (body, param) => ES.ArrowFunctionExpression([esFromPattern(param)], body),
           esFromExpression(functionDeclaration.body)
         ),
       ),

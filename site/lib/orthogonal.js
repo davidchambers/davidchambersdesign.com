@@ -1,39 +1,37 @@
 import S from 'sanctuary';
-const reducer = prev => path => curr => curr[0] === Symbol.for('M') ? prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m') ? [
-  curr,
-  path
-] : [
-  curr,
-  [
-    ...path,
-    prev
-  ]
-] : (prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m')) && curr[0] === Symbol.for('m') ? [
-  [
-    prev[0],
-    [
-      prev[1][0] + curr[1][0],
-      prev[1][1] + curr[1][1]
-    ]
-  ],
-  path
-] : [
-  curr,
-  [
-    ...path,
-    prev
-  ]
-];
 const simplify = paths => paths.length === 0 ? [] : (() => {
-  const head = paths[0];
-  const tail = paths.slice(1);
-  const pair = S.reduce(pair => curr => reducer(pair[0])(pair[1])(curr))([
+  const [head, ...tail] = paths;
+  const [prev, path] = tail.reduce(([prev, path], curr) => curr[0] === Symbol.for('M') ? prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m') ? [
+    curr,
+    path
+  ] : [
+    curr,
+    [
+      ...path,
+      prev
+    ]
+  ] : (prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m')) && curr[0] === Symbol.for('m') ? [
+    [
+      prev[0],
+      [
+        prev[1][0] + curr[1][0],
+        prev[1][1] + curr[1][1]
+      ]
+    ],
+    path
+  ] : [
+    curr,
+    [
+      ...path,
+      prev
+    ]
+  ], [
     head,
     []
-  ])(tail);
+  ]);
   return [
-    ...pair[1],
-    pair[0]
+    ...path,
+    prev
   ];
 })();
 const render = paths => simplify(paths).flat().map(x => typeof x === 'symbol' ? Symbol.keyFor(x) : String(x)).join(' ');

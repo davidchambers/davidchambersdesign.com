@@ -107,9 +107,25 @@ export type Property = ES.Property;
 
 export const Property = (
   key: Expression,
-  value: Expression,
+  value: Expression | Pattern,
   options?: {method?: boolean; shorthand?: boolean; computed?: boolean}
 ): Property => ({
+  type: 'Property',
+  key,
+  value,
+  kind: 'init',
+  method: options?.method ?? false,
+  shorthand: options?.shorthand ?? false,
+  computed: options?.computed ?? false,
+});
+
+export type AssignmentProperty = ES.AssignmentProperty;
+
+export const AssignmentProperty = (
+  key: Expression,
+  value: Pattern,
+  options?: {method?: boolean; shorthand?: boolean; computed?: boolean}
+): AssignmentProperty => ({
   type: 'Property',
   key,
   value,
@@ -338,6 +354,44 @@ export const ArrowFunctionExpression = (
   params,
   body,
   expression: body.type !== 'BlockStatement',
+});
+
+export type ArrayPattern = ES.ArrayPattern;
+
+export const ArrayPattern = (
+  elements: Array<Pattern | null>,
+): ArrayPattern => ({
+  type: 'ArrayPattern',
+  elements,
+});
+
+export type ObjectPattern = ES.ObjectPattern;
+
+export const ObjectPattern = (
+  properties: Array<AssignmentProperty | RestElement>,
+): ObjectPattern => ({
+  type: 'ObjectPattern',
+  properties,
+});
+
+export type AssignmentPattern = ES.AssignmentPattern;
+
+export const AssignmentPattern = (
+  left: Pattern,
+  right: Expression,
+): AssignmentPattern => ({
+  type: 'AssignmentPattern',
+  left,
+  right,
+});
+
+export type RestElement = ES.RestElement;
+
+export const RestElement = (
+  argument: Pattern,
+): RestElement => ({
+  type: 'RestElement',
+  argument,
 });
 
 // 16.2 Modules

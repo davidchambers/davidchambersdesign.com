@@ -9,9 +9,9 @@ const text = value => ({
   render: indent => level => inline => escape(value)
 });
 const canonicalize$002Dchildren = children => (Array.isArray(children) ? children : [children]).map(child => typeof child == 'string' ? text(child.replace(new RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', '')) : child);
-const render$002Dblock$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ S.foldMap(String)(entry => ` ${ entry[0] }="${ escape(String(entry[1]).replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`)(Object.entries(attrs)) }>\n${ S.foldMap(String)(child => child.render(indent)(level + 1)(false))(children) }${ indent.repeat(level) }</${ Symbol.keyFor(tag$002Dname) }>\n`;
-const render$002Dinline$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ S.foldMap(String)(entry => ` ${ entry[0] }="${ escape(String(entry[1]).replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`)(Object.entries(attrs)) }>${ S.foldMap(String)(child => child.render(indent)(0)(true))(children) }</${ Symbol.keyFor(tag$002Dname) }>${ inline ? '' : '\n' }`;
-const render$002Dself$002Dclosing$002Delement = tag$002Dname => attrs => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ S.foldMap(String)(entry => ` ${ entry[0] }="${ escape(String(entry[1]).replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`)(Object.entries(attrs)) } />${ inline ? '' : '\n' }`;
+const render$002Dblock$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ Object.entries(attrs).map(([name, value]) => ` ${ name }="${ escape(`${ value }`.replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`).join('') }>\n${ children.map(child => child.render(indent)(level + 1)(false)).join('') }${ indent.repeat(level) }</${ Symbol.keyFor(tag$002Dname) }>\n`;
+const render$002Dinline$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ Object.entries(attrs).map(([name, value]) => ` ${ name }="${ escape(`${ value }`.replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`).join('') }>${ children.map(child => child.render(indent)(0)(true)).join('') }</${ Symbol.keyFor(tag$002Dname) }>${ inline ? '' : '\n' }`;
+const render$002Dself$002Dclosing$002Delement = tag$002Dname => attrs => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ Object.entries(attrs).map(([name, value]) => ` ${ name }="${ escape(`${ value }`.replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`).join('') } />${ inline ? '' : '\n' }`;
 const block$002Delement = tag$002Dname => attrs => children => (() => {
   const children$0027 = canonicalize$002Dchildren(children);
   return {
@@ -39,9 +39,9 @@ const self$002Dclosing$002Delement = tag$002Dname => attrs => ({
 });
 const excerpt = children => (() => {
   const children$0027 = canonicalize$002Dchildren(children);
-  const render = indent => level => inline => S.foldMap(String)(child => child.render(indent)(level)(inline))(children$0027);
+  const render = indent => level => inline => children$0027.map(child => child.render(indent)(level)(inline)).join('');
   return {
-    text: children.flatMap(child => child.text),
+    text: children$0027.flatMap(child => child.text),
     render: render
   };
 })();

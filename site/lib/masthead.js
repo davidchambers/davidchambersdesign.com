@@ -745,18 +745,33 @@ const fill$002Dchars = {
     $2191(20)
   ]
 };
-const update = positions => dir => (() => {
-  const x = S.fst(positions[0]);
-  const y = S.snd(positions[0]);
-  return [
-    dir[0] === Symbol.for('h') ? S.Pair(x + dir[1])(y) : dir[0] === Symbol.for('v') ? S.Pair(x)(y + dir[1]) : S.Pair(x + dir[1][0])(y + dir[1][1]),
-    ...positions
-  ];
-})();
+const update = ([{
+    x: x,
+    y: y
+  }, ...tail]) => dir => [
+  dir[0] === Symbol.for('h') ? {
+    x: x + dir[1],
+    y: y
+  } : dir[0] === Symbol.for('v') ? {
+    x: x,
+    y: y + dir[1]
+  } : {
+    x: x + dir[1][0],
+    y: y + dir[1][1]
+  },
+  {
+    x: x,
+    y: y
+  },
+  ...tail
+];
 const reset = path => (() => {
-  const paths = S.extend(S.I)(S.reduce(update)([S.Pair(0)(0)])(path));
-  const xs = S.chain(S.map(S.fst))(paths);
-  const ys = S.chain(S.map(S.snd))(paths);
+  const paths = S.extend(S.I)(S.reduce(update)([{
+      x: 0,
+      y: 0
+    }])(path));
+  const xs = S.chain(S.map(({x: x}) => x))(paths);
+  const ys = S.chain(S.map(({y: y}) => y))(paths);
   const dx = S.reduce(S.max)(0)(xs) - xs[0];
   const dy = 0 - ys[0];
   return [
