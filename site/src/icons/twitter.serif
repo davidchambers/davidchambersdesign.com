@@ -1,4 +1,4 @@
-import {linearGradient path stop} from "../elements.serif";
+import {linearGradient, path, stop} from "../elements.serif";
 import * from "../orthogonal.serif";
 
 export default twitter;

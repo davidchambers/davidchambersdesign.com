@@ -14,19 +14,21 @@ ImportDefaultSpecifier
     { return Serif.ImportDefaultSpecifier(local); }
 
 ImportDeclaration
-  = 'import' _ '{' _ specifiers:ImportSpecifier|.., __| _ '}' _ 'from' _ source:StringLiteral _ ';'
+  = ImportToken _ '{' _ specifiers:ImportSpecifier|.., CommaSeparator| _ '}' _ 'from' _ source:StringLiteral _ ';'
     { return Serif.ImportDeclaration(source, specifiers); }
-  / 'import' _ '*' _ 'from' _ source:StringLiteral hiding:(_ 'hiding' _ '{' _ hiding:Identifier|.., __| _ '}' { return hiding; })? _ ';'
+  / ImportToken _ '*' _ 'from' _ source:StringLiteral hiding:(_ 'hiding' _ '{' _ hiding:Identifier|.., CommaSeparator| _ '}' { return hiding; })? _ ';'
     { return Serif.ImportEverythingDeclaration(source, hiding ?? []); }
-  / 'import' __ specifier:ImportDefaultSpecifier __ 'from' _ source:StringLiteral _ ';'
+  / ImportToken _ specifier:ImportDefaultSpecifier _ 'from' _ source:StringLiteral _ ';'
     { return Serif.ImportDefaultDeclaration(source, specifier); }
 
 ExportDefaultDeclaration
-  = 'export' __ 'default' _ declaration:Expression _ ';'
+  = ExportToken _ 'default' _ declaration:Expression _ ';'
     { return Serif.ExportDefaultDeclaration(declaration); }
 
 ExportNamedDeclaration
-  = 'export' _ '{' _ specifiers:Identifier|.., __| _ '}' _ ';'
+  = ExportToken _ '{' _ '}' _ ';'
+    { return Serif.ExportNamedDeclaration([]); }
+  / ExportToken _ '{' _ specifiers:Identifier|.., CommaSeparator| _ ','? _ '}' _ ';'
     { return Serif.ExportNamedDeclaration(specifiers); }
 
 BooleanLiteral
@@ -127,7 +129,9 @@ SymbolChar
     .
 
 ElseToken           = 'else'            !IdentifierPart     { return text(); }
+ExportToken         = 'export'          !IdentifierPart     { return text(); }
 IfToken             = 'if'              !IdentifierPart     { return text(); }
+ImportToken         = 'import'          !IdentifierPart     { return text(); }
 InToken             = 'in'              !IdentifierPart     { return text(); }
 InstanceofToken     = 'instanceof'      !IdentifierPart     { return text(); }
 NewToken            = 'new'             !IdentifierPart     { return text(); }
@@ -151,6 +155,8 @@ ReservedWord
   / IfToken
   / ThenToken
   / ElseToken
+  / ImportToken
+  / ExportToken
 
 Identifier
   = !ReservedWord name:$(IdentifierStart IdentifierPart*)
@@ -221,7 +227,7 @@ AssignmentExpression
   = Expression
 
 ImportMeta
-  = meta:'import' '.' property:'meta'
+  = meta:ImportToken '.' property:'meta'
     { return Serif.MetaProperty(meta, property); }
 
 MemberExpression

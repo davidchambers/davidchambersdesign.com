@@ -4,7 +4,7 @@ import {path} from "./elements.serif";
 import * from "./orthogonal.serif";
 
 export default default;
-export {fill mask};
+export {fill, mask};
 
 mask-chars = {
   A: [→ 14, ↓ 24, ←  4, ↑ 10, ←  6, ↓ 10, ←  4, ↑ 24,

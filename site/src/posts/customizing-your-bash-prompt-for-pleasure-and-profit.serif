@@ -1,5 +1,5 @@
 import * from "../elements.serif" hiding {body};
-import {captioned-images code-block update} from "../components.serif";
+import {captioned-images, code-block, update} from "../components.serif";
 import datetime from "../datetime.serif";
 
 export default {

@@ -3,10 +3,10 @@ import S from "sanctuary";
 import * from "./elements.serif";
 
 export {
-  captioned-images
-  code-block
-  update
-  —
+  captioned-images,
+  code-block,
+  update,
+  —,
 };
 
 captioned-images images = {

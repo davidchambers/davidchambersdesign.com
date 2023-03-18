@@ -1,6 +1,6 @@
 import S from "sanctuary";
 
-export {render ⇦ ⇨ ⇧ ⇩ ← → ↑ ↓};
+export {render, ⇦, ⇨, ⇧, ⇩, ←, →, ↑, ↓};
 
 simplify paths = {
   if paths.length === 0 then [] else {
