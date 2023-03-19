@@ -11,27 +11,29 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+    strong "This post has been a long time coming.",
+  ],
+  captioned-images [{
+    alt: "Reminder message",
+    src: "/images/posts/74/email-message-screenshot.png",
+    caption: [
+     "Reminder message, dated 18 January 2010",
+    ],
+  }],
+  p [
+    strong "It's unacceptable for any website or web application
+    to output dates and times using an arbitrary time zone.", "
+    Displaying dates and times in UTC/GMT is only slightly better:
+    dates cannot be relied upon, and users must perform mental
+    gymnastics in order to localize date–time combos.",
+  ],
+];
+
 body = [
 
-  excerpt [
-    p [
-      strong "This post has been a long time coming.",
-    ],
-    captioned-images [{
-      alt: "Reminder message",
-      src: "/images/posts/74/email-message-screenshot.png",
-      caption: [
-       "Reminder message, dated 18 January 2010",
-      ],
-    }],
-    p [
-      strong "It's unacceptable for any website or web application
-      to output dates and times using an arbitrary time zone.", "
-      Displaying dates and times in UTC/GMT is only slightly better:
-      dates cannot be relied upon, and users must perform mental
-      gymnastics in order to localize date–time combos.",
-    ],
-  ],
+  ...excerpt,
 
   captioned-images [{
     alt: "Bitbucket status message",

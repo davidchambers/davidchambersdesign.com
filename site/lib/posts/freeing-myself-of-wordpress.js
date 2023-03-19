@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -91,6 +90,21 @@ import {
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
+const excerpt = [
+  p([
+    strong('I wanted to simplify everything.'),
+    '\n    I wanted to write posts in ',
+    a('http://daringfireball.net/projects/markdown/syntax')('Markdown'),
+    ',\n    not HTML. I wanted to save posts as files, not database entries.\n    I wanted to free myself of my dependence on WordPress, PHP, and MySQL\n    in one fell swoop.'
+  ]),
+  p([
+    'So, ',
+    a('http://bitbucket.org/davidchambers/mango')('Mango'),
+    '\n    was born. Mango is file-based blogging software built on ',
+    a('http://www.djangoproject.com/')('Django'),
+    ', the excellent\n    Python web framework. I conceived Mango to scratch an itch,\n    and I\'ll bet that others out there are itchy, too.'
+  ])
+];
 const body = [
   h3('WordPress'),
   p([
@@ -105,21 +119,7 @@ const body = [
     $2014,
     'and generating\n    50 or more database records for each post by frequently previewing\n    while writing.'
   ]),
-  excerpt([
-    p([
-      strong('I wanted to simplify everything.'),
-      '\n      I wanted to write posts in ',
-      a('http://daringfireball.net/projects/markdown/syntax')('Markdown'),
-      ',\n      not HTML. I wanted to save posts as files, not database entries.\n      I wanted to free myself of my dependence on WordPress, PHP, and MySQL\n      in one fell swoop.'
-    ]),
-    p([
-      'So, ',
-      a('http://bitbucket.org/davidchambers/mango')('Mango'),
-      '\n      was born. Mango is file-based blogging software built on ',
-      a('http://www.djangoproject.com/')('Django'),
-      ', the excellent\n      Python web framework. I conceived Mango to scratch an itch,\n      and I\'ll bet that others out there are itchy, too.'
-    ])
-  ]),
+  ...excerpt,
   h3('Going without'),
   p(['I kept my dependence on WordPress plug-ins to a minimum, but there\n    were a few which I found very useful.']),
   ul([

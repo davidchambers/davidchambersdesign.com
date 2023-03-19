@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -88,29 +87,30 @@ import {
 } from '../elements.js';
 import { update } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      'It\'s not uncommon to start watching a video online and discover\n      that its audio is quite quiet. This is not a problem in and of\n      itself, as one can simply crank up the output volume. What ',
-      em('is'),
-      ' a problem, however, is a message then arriving in\n      one\'s inbox and waking the neighbours!'
-    ]),
-    p([
-      'This situation could be avoided if it were possible adjust the\n      browser\'s output volume without affecting the rest of the system.\n      As it is, though, one is forced to increase the volume of ',
-      em('everything'),
-      '. Not ideal.'
-    ]),
-    h3('System Preferences > Sound > Application Volumes'),
-    p([img({
-        alt: 'Possible interface for application-specific\n              volume settings in Mac OS X',
-        src: '/images/posts/windows/application-volumes.png'
-      })]),
-    p([
-      'Wouldn\'t this be nice? Many months ago I did some Googling\n      to find out whether it\'s possible to control volume on an\n      application-by-application basis in OS X. The closest thing\n      to a solution was an X11 (read: ugly) app that ',
-      em('kinda'),
-      '\n      worked.'
-    ])
+const excerpt = [
+  p([
+    'It\'s not uncommon to start watching a video online and discover\n    that its audio is quite quiet. This is not a problem in and of\n    itself, as one can simply crank up the output volume. What ',
+    em('is'),
+    ' a problem, however, is a message then arriving in\n    one\'s inbox and waking the neighbours!'
   ]),
+  p([
+    'This situation could be avoided if it were possible adjust the\n    browser\'s output volume without affecting the rest of the system.\n    As it is, though, one is forced to increase the volume of ',
+    em('everything'),
+    '. Not ideal.'
+  ]),
+  h3('System Preferences > Sound > Application Volumes'),
+  p([img({
+      alt: 'Possible interface for application-specific\n            volume settings in Mac OS X',
+      src: '/images/posts/windows/application-volumes.png'
+    })]),
+  p([
+    'Wouldn\'t this be nice? Many months ago I did some Googling\n    to find out whether it\'s possible to control volume on an\n    application-by-application basis in OS X. The closest thing\n    to a solution was an X11 (read: ugly) app that ',
+    em('kinda'),
+    '\n    worked.'
+  ])
+];
+const body = [
+  ...excerpt,
   p([
     'Apple, I don\'t bug you often, but here I will. ',
     strong('Please\n    build this into the OS and keep the neighbours happy.'),

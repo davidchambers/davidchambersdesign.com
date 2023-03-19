@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -88,11 +87,12 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
+const excerpt = [
+  p([strong('Sticky footers should be ubiquitous. They are not.')]),
+  p(['This leads me to believe that many developers are unaware\n    of how to prevent footers from floating up on pages without\n    much content.'])
+];
 const body = [
-  excerpt([
-    p([strong('Sticky footers should be ubiquitous. They are not.')]),
-    p(['This leads me to believe that many developers are unaware\n      of how to prevent footers from floating up on pages without\n      much content.'])
-  ]),
+  ...excerpt,
   p(['I\'ll explain how it\'s done. The markup must look something like\n    the following:']),
   code$002Dblock(Symbol.for('html'))(`<body>
     <div id="wrap">

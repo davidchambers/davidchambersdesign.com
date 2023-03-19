@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -92,20 +91,21 @@ import {
   update
 } from '../components.js';
 import datetime from '../datetime.js';
+const excerpt = [
+  p(['Mac OS X\'s default bash prompt is dull and uninformative.']),
+  captioned$002Dimages([{
+      alt: 'Mac OS X\'s default bash prompt',
+      src: '/images/posts/80/windows/default-os-x-bash-prompt.png',
+      caption: ['Mac OS X\'s default bash prompt']
+    }]),
+  p([
+    'Since only the current directory name is visible, I find\n    myself running ',
+    code('pwd'),
+    ' more often than is healthy.\n    Also, I find the uneven prompt length jarring.'
+  ])
+];
 const body = [
-  excerpt([
-    p(['Mac OS X\'s default bash prompt is dull and uninformative.']),
-    captioned$002Dimages([{
-        alt: 'Mac OS X\'s default bash prompt',
-        src: '/images/posts/80/windows/default-os-x-bash-prompt.png',
-        caption: ['Mac OS X\'s default bash prompt']
-      }]),
-    p([
-      'Since only the current directory name is visible, I find\n      myself running ',
-      code('pwd'),
-      ' more often than is healthy.\n      Also, I find the uneven prompt length jarring.'
-    ])
-  ]),
+  ...excerpt,
   p([
     'My solution to both of these problems is to include the full\n    path ',
     em('on its own line'),

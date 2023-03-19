@@ -33,10 +33,11 @@ with-scores that this = {
   }
 };
 
-related-posts posts post = S.pipe [
-  S.reject this => this.slug === post.slug,
-  S.mapMaybe (with-scores post),
-  S.sort,
-  S.map S.snd,
-  posts => posts.slice(0, 5),
-] posts;
+related-posts posts post = {
+  posts
+  |> S.reject {this => this.slug === post.slug}
+  |> S.mapMaybe {with-scores post}
+  |> S.sort
+  |> S.map S.snd
+  |> ?.slice(0, 5)
+};

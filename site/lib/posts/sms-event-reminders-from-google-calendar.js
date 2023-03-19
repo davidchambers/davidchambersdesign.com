@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -88,19 +87,28 @@ import {
 } from '../elements.js';
 import { captioned$002Dimages } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      'I tend to forget things. Until recently, I had no system to\n      keep track of appointments. I began using Google Calendar,\n      but soon realised that I did not want ',
-      em('another'),
-      '\n      thing to check each day.'
-    ]),
-    p([
-      strong('Enter event reminders.'),
-      ' With Google Calendar sending\n      event reminders to my inbox, I no longer had to check my calendar\n      each day. Google Calendar can now send event reminders via text\n      message. ',
-      strong('Below is a walk through of the steps involved\n      in setting up SMS event reminders in Google Calendar.')
-    ])
+const excerpt$002Dtext = [
+  p([
+    'I tend to forget things. Until recently, I had no system to\n    keep track of appointments. I began using Google Calendar,\n    but soon realised that I did not want ',
+    em('another'),
+    '\n    thing to check each day.'
   ]),
+  p([
+    strong('Enter event reminders.'),
+    ' With Google Calendar sending\n    event reminders to my inbox, I no longer had to check my calendar\n    each day. Google Calendar can now send event reminders via text\n    message. ',
+    strong('Below is a walk through of the steps involved\n    in setting up SMS event reminders in Google Calendar.')
+  ])
+];
+const excerpt$002Dimage = [captioned$002Dimages([{
+      alt: 'Mobile Setup tab in Google Calendar',
+      src: '/images/posts/13/mobile-setup-tab-in-google-calendar.png',
+      caption: [
+        strong('Mobile Setup'),
+        ' tab in Google Calendar'
+      ]
+    }])];
+const body = [
+  ...excerpt$002Dtext,
   p([
     'The first step is to open ',
     a('http://calendar.google.com/')('Google Calendar'),
@@ -121,14 +129,7 @@ const body = [
     strong('Mobile Setup'),
     ' tab.'
   ]),
-  excerpt([captioned$002Dimages([{
-        alt: 'Mobile Setup tab in Google Calendar',
-        src: '/images/posts/13/mobile-setup-tab-in-google-calendar.png',
-        caption: [
-          strong('Mobile Setup'),
-          ' tab in Google Calendar'
-        ]
-      }])]),
+  ...excerpt$002Dimage,
   p([
     'Enter your cell phone number and click ',
     strong('Send Verification Code'),

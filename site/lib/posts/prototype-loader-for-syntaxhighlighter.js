@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -91,6 +90,21 @@ import {
   update
 } from '../components.js';
 import datetime from '../datetime.js';
+const excerpt = [
+  p([
+    a('http://alexgorbatchev.com/wiki/SyntaxHighlighter')('SyntaxHighlighter'),
+    ' is a fully functional self-contained\n    code syntax highlighter developed in JavaScript (as stated on\n    its wiki). One of its deficiencies is that it retrieves all\n    its brushes each time a page is loaded, despite the fact that\n    in many cases only one or two (or none) are required.'
+  ]),
+  p([
+    'Currently, ',
+    a('http://prototypejs.org/')('Prototype'),
+    ' is\n    my JavaScript framework of choice (although I\'m really looking\n    forward to trying ',
+    a('http://jquery.com/')('jQuery'),
+    ').\n    I have used Prototype to create a ',
+    strong('brush loader for\n    SyntaxHighlighter'),
+    ', which retrieves brushes on demand to\n    reduce page loading times (in certain circumstances).'
+  ])
+];
 const body = [
   p([
     'Skip to ',
@@ -98,21 +112,7 @@ const body = [
     ' or ',
     a('#usage')('usage')
   ]),
-  excerpt([
-    p([
-      a('http://alexgorbatchev.com/wiki/SyntaxHighlighter')('SyntaxHighlighter'),
-      ' is a fully functional self-contained\n      code syntax highlighter developed in JavaScript (as stated on\n      its wiki). One of its deficiencies is that it retrieves all\n      its brushes each time a page is loaded, despite the fact that\n      in many cases only one or two (or none) are required.'
-    ]),
-    p([
-      'Currently, ',
-      a('http://prototypejs.org/')('Prototype'),
-      ' is\n      my JavaScript framework of choice (although I\'m really looking\n      forward to trying ',
-      a('http://jquery.com/')('jQuery'),
-      ').\n      I have used Prototype to create a ',
-      strong('brush loader for\n      SyntaxHighlighter'),
-      ', which retrieves brushes on demand to\n      reduce page loading times (in certain circumstances).'
-    ])
-  ]),
+  ...excerpt,
   update(datetime('2009-06-27')('06:21:00')(Symbol.for('Pacific/Auckland')))([p(['I have completely rewritten the code so that it no longer\n      requires empty functions inside the brush files to act as\n      indicators of readiness. Instead, the required brushes are\n      retrieved in a daisy chain. This is both more elegant and\n      more reliable. Additionally, style sheets are now also\n      retrieved on demand.'])]),
   h3$0027({ id: 'setup' })('Setup'),
   p([strong('Requires Prototype!')]),

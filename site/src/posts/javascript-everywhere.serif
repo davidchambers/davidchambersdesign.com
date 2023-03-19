@@ -10,29 +10,31 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+   "Over the past few months I've reached a startling realization: ",
+    strong "JavaScript is a tremendously capable language.",
+  ],
+  p [
+   "The reason that it took me so long to discover this is that
+    the playing field has never been fair. On the one hand I've been
+    writing application code for the server, a stable, predictable
+    environment. On the other hand I've been adding interactivity
+    on the client's side, dealing with inconsistencies on multiple
+    fronts, not least of which is the DOM API.",
+  ],
+  p [
+   "Comparing Python and JavaScript, for example, by using
+    the former to quickly put together a website using the
+    excellent Django framework while using the latter to add
+    drag and drop functionality is to compare apples and oranges. ",
+    strong "Actually, it's more like comparing apples to root canals.",
+  ],
+];
+
 body = [
 
-  excerpt [
-    p [
-     "Over the past few months I've reached a startling realization: ",
-      strong "JavaScript is a tremendously capable language.",
-    ],
-    p [
-     "The reason that it took me so long to discover this is that
-      the playing field has never been fair. On the one hand I've been
-      writing application code for the server, a stable, predictable
-      environment. On the other hand I've been adding interactivity
-      on the client's side, dealing with inconsistencies on multiple
-      fronts, not least of which is the DOM API.",
-    ],
-    p [
-     "Comparing Python and JavaScript, for example, by using
-      the former to quickly put together a website using the
-      excellent Django framework while using the latter to add
-      drag and drop functionality is to compare apples and oranges. ",
-      strong "Actually, it's more like comparing apples to root canals.",
-    ],
-  ],
+  ...excerpt,
 
   p [
    "Had I been writing application code in JavaScript (without

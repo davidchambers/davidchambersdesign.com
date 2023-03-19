@@ -2,7 +2,6 @@ import S from 'sanctuary';
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -88,30 +87,20 @@ import {
   var$0027,
   video
 } from './elements.js';
-const render$002Dsection = section => li([
-  h2(section.heading),
-  ol(S.map(post => li([
-    a$0027({ href: `/${ post.slug }` })(post.title),
-    ' ',
-    time({ datetime: post.datetime.toISO() })(post.datetime.toFormat('d MMMM y | h:mm') + post.datetime.toFormat('a').toLowerCase())
-  ]))(section.posts))
+const render$002Dpost = post => li([
+  a$0027({ href: `/${ post.slug }` })(post.title),
+  ' ',
+  time({ datetime: post.datetime.toISO() })(post.datetime.toFormat('d MMMM y | h:mm') + post.datetime.toFormat('a').toLowerCase())
 ]);
-const render$002Darchives = S.pipe([
-  S.map(S.join(S.Pair)),
-  S.map(S.mapLeft(post => post.datetime)),
-  S.sortBy(S.compose(S.compose(S.negate)(Number))(S.fst)),
-  S.map(S.mapLeft(datetime => datetime.toFormat('MMMM y'))),
-  S.groupBy(S.on(S.equals)(S.fst)),
-  S.chain(S.array([])(head => tail => [{
-      heading: S.fst(head),
-      posts: S.map(S.snd)([
-        head,
-        ...tail
-      ])
-    }])),
-  sections => [
-    h1('Archives'),
-    ol$0027({ class: 'archives' })(S.map(render$002Dsection)(sections))
-  ]
+const render$002Dsection = posts => li([
+  h2(posts[0]['formatted-date']),
+  ol(posts.map(render$002Dpost))
 ]);
+const render$002Darchives = posts => [
+  h1('Archives'),
+  ol$0027({ class: 'archives' })(S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(S.map(post => ({
+    ...post,
+    ['formatted-date']: post.datetime.toFormat('MMMM y')
+  }))(posts))).map(render$002Dsection))
+];
 export default render$002Darchives;

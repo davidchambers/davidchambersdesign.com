@@ -11,17 +11,19 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+   "One question I'm fond of asking in interviews is how to create
+    a set of strings to which values may be added in an efficient
+    manner. Furthermore, membership checks must be reliable and as
+    fast as possible. This post can be considered the model answer.
+    ;)",
+  ],
+];
+
 body = [
 
-  excerpt [
-    p [
-     "One question I'm fond of asking in interviews is how to create
-      a set of strings to which values may be added in an efficient
-      manner. Furthermore, membership checks must be reliable and as
-      fast as possible. This post can be considered the model answer.
-      ;)",
-    ],
-  ],
+  ...excerpt,
 
   hr,
 

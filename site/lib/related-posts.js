@@ -13,11 +13,5 @@ const with$002Dscores = that => this_ => (() => {
   const secondary = Math.abs(seconds$002Dbetween(that.datetime)(this_.datetime));
   return score >= 0.5 ? S.Just(S.Pair(S.Pair(primary)(secondary))(this_)) : S.Nothing;
 })();
-const related$002Dposts = posts => post => S.pipe([
-  S.reject(this_ => this_.slug === post.slug),
-  S.mapMaybe(with$002Dscores(post)),
-  S.sort,
-  S.map(S.snd),
-  posts => posts.slice(0, 5)
-])(posts);
+const related$002Dposts = posts => post => S.map(S.snd)(S.sort(S.mapMaybe(with$002Dscores(post))(S.reject(this_ => this_.slug === post.slug)(posts)))).slice(0, 5);
 export default related$002Dposts;

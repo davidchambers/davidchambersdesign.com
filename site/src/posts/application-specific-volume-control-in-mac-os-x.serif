@@ -11,38 +11,40 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+   "It's not uncommon to start watching a video online and discover
+    that its audio is quite quiet. This is not a problem in and of
+    itself, as one can simply crank up the output volume. What ",
+    em "is", " a problem, however, is a message then arriving in
+    one's inbox and waking the neighbours!",
+  ],
+  p [
+   "This situation could be avoided if it were possible adjust the
+    browser's output volume without affecting the rest of the system.
+    As it is, though, one is forced to increase the volume of ",
+    em "everything", ". Not ideal.",
+  ],
+  h3 "System Preferences > Sound > Application Volumes",
+  p [
+    img {
+      alt: "Possible interface for application-specific
+            volume settings in Mac OS X",
+      src: "/images/posts/windows/application-volumes.png",
+    },
+  ],
+  p [
+   "Wouldn't this be nice? Many months ago I did some Googling
+    to find out whether it's possible to control volume on an
+    application-by-application basis in OS X. The closest thing
+    to a solution was an X11 (read: ugly) app that ", em "kinda", "
+    worked.",
+  ],
+];
+
 body = [
 
-  excerpt [
-    p [
-     "It's not uncommon to start watching a video online and discover
-      that its audio is quite quiet. This is not a problem in and of
-      itself, as one can simply crank up the output volume. What ",
-      em "is", " a problem, however, is a message then arriving in
-      one's inbox and waking the neighbours!",
-    ],
-    p [
-     "This situation could be avoided if it were possible adjust the
-      browser's output volume without affecting the rest of the system.
-      As it is, though, one is forced to increase the volume of ",
-      em "everything", ". Not ideal.",
-    ],
-    h3 "System Preferences > Sound > Application Volumes",
-    p [
-      img {
-        alt: "Possible interface for application-specific
-              volume settings in Mac OS X",
-        src: "/images/posts/windows/application-volumes.png",
-      },
-    ],
-    p [
-     "Wouldn't this be nice? Many months ago I did some Googling
-      to find out whether it's possible to control volume on an
-      application-by-application basis in OS X. The closest thing
-      to a solution was an X11 (read: ugly) app that ", em "kinda", "
-      worked.",
-    ],
-  ],
+  ...excerpt,
 
   p [
    "Apple, I don't bug you often, but here I will. ", strong "Please

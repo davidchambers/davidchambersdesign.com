@@ -11,26 +11,28 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+   "Workmates will be quick to confirm that I'm ",
+    strong "not exactly leet", " on the command line.
+    Efforts to advance beyond ", code "cd", " and ",
+    code "ls", " have been hampered by the fact that
+    many posts and discussion threads assume a level
+    of competency which as yet I lack.",
+  ],
+  p [
+   "When I sit down to write a post, oftentimes ",
+    strong "I write the post I wish I'd read an hour earlier", ".
+    As I unravel the mysteries of ack and bash and Emacs and the
+    like, I'll publish tips and explanations so that others can
+    benefit from my discoveries (or, as will likely be the case,
+    so that you people can further enlighten ", em "me", ").",
+  ],
+];
+
 body = [
 
-  excerpt [
-    p [
-     "Workmates will be quick to confirm that I'm ",
-      strong "not exactly leet", " on the command line.
-      Efforts to advance beyond ", code "cd", " and ",
-      code "ls", " have been hampered by the fact that
-      many posts and discussion threads assume a level
-      of competency which as yet I lack.",
-    ],
-    p [
-     "When I sit down to write a post, oftentimes ",
-      strong "I write the post I wish I'd read an hour earlier", ".
-      As I unravel the mysteries of ack and bash and Emacs and the
-      like, I'll publish tips and explanations so that others can
-      benefit from my discoveries (or, as will likely be the case,
-      so that you people can further enlighten ", em "me", ").",
-    ],
-  ],
+  ...excerpt,
 
   h3 "Aliases",
 

@@ -11,44 +11,46 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+   "Here's a simple animation which utilizes ", code "webkitTransition", ":",
+  ],
+  p' {
+    id: "transition-example-1",
+    style: "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;",
+  } [
+   "Click to animate",
+  ],
+  script {}
+    "(function () {
+         var element = document.getElementById('transition-example-1');
+         element.style.webkitTransitionProperty = 'left';
+         element.style.webkitTransitionDuration = '2s';
+         element.addEventListener('click', function () {
+             this.style.left = '100px';
+             this.addEventListener('webkitTransitionEnd', function () {
+                 this.style.left = 0;
+             });
+         });
+     })();",
+  p [
+   "The code behind this example is not complicated:",
+  ],
+  code-block :javascript `
+    element.style.webkitTransitionProperty = 'left';
+    element.style.webkitTransitionDuration = '2s';
+    element.addEventListener('click', function () {
+        this.style.left = '100px';
+        this.addEventListener('webkitTransitionEnd', function () {
+            this.style.left = 0;
+        });
+    });
+  `,
+];
+
 body = [
 
-  excerpt [
-    p [
-     "Here's a simple animation which utilizes ", code "webkitTransition", ":",
-    ],
-    p' {
-      id: "transition-example-1",
-      style: "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;",
-    } [
-     "Click to animate",
-    ],
-    script {}
-      "(function () {
-           var element = document.getElementById('transition-example-1');
-           element.style.webkitTransitionProperty = 'left';
-           element.style.webkitTransitionDuration = '2s';
-           element.addEventListener('click', function () {
-               this.style.left = '100px';
-               this.addEventListener('webkitTransitionEnd', function () {
-                   this.style.left = 0;
-               });
-           });
-       })();",
-    p [
-     "The code behind this example is not complicated:",
-    ],
-    code-block :javascript `
-      element.style.webkitTransitionProperty = 'left';
-      element.style.webkitTransitionDuration = '2s';
-      element.addEventListener('click', function () {
-          this.style.left = '100px';
-          this.addEventListener('webkitTransitionEnd', function () {
-              this.style.left = 0;
-          });
-      });
-    `,
-  ],
+  ...excerpt,
 
   p [
    "The following example, though, does not act as one might expect!",

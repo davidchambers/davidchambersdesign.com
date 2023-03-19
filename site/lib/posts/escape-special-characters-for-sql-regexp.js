@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -88,6 +87,11 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
+const excerpt = [p([
+    'Developers will be familiar with using PHP\'s ',
+    a('http://php.net/manual/en/function.mysql-real-escape-string.php')('mysql_real_escape_string'),
+    '\n    to escape problematic characters before submitting a query.\n    When the query in question involves MySQL\'s REGEXP function,\n    however, we need to go one step further and escape regex\'s\n    special characters.'
+  ])];
 const body = [
   p([
     'While using the ',
@@ -103,11 +107,7 @@ const body = [
     strong('\\'),
     ').'
   ]),
-  excerpt([p([
-      'Developers will be familiar with using PHP\'s ',
-      a('http://php.net/manual/en/function.mysql-real-escape-string.php')('mysql_real_escape_string'),
-      '\n      to escape problematic characters before submitting a query.\n      When the query in question involves MySQL\'s REGEXP function,\n      however, we need to go one step further and escape regex\'s\n      special characters.'
-    ])]),
+  ...excerpt,
   p(['I had a look on php.net to see whether such a function exists.\n    Having failed to find one there, I did a Google search but again\n    came away empty-handed. I wrote my own function for the job, and\n    thought I\'d share it in case others encounter the same problem:']),
   code$002Dblock(Symbol.for('php'))(`<?php
 

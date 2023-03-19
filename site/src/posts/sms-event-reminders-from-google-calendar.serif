@@ -11,23 +11,35 @@ export default {
   body: body,
 };
 
+excerpt-text = [
+  p [
+   "I tend to forget things. Until recently, I had no system to
+    keep track of appointments. I began using Google Calendar,
+    but soon realised that I did not want ", em "another", "
+    thing to check each day.",
+  ],
+  p [
+    strong "Enter event reminders.", " With Google Calendar sending
+    event reminders to my inbox, I no longer had to check my calendar
+    each day. Google Calendar can now send event reminders via text
+    message. ", strong "Below is a walk through of the steps involved
+    in setting up SMS event reminders in Google Calendar.",
+  ],
+];
+
+excerpt-image = [
+  captioned-images [{
+    alt: "Mobile Setup tab in Google Calendar",
+    src: "/images/posts/13/mobile-setup-tab-in-google-calendar.png",
+    caption: [
+      strong "Mobile Setup", " tab in Google Calendar",
+    ],
+  }],
+];
+
 body = [
 
-  excerpt [
-    p [
-     "I tend to forget things. Until recently, I had no system to
-      keep track of appointments. I began using Google Calendar,
-      but soon realised that I did not want ", em "another", "
-      thing to check each day.",
-    ],
-    p [
-      strong "Enter event reminders.", " With Google Calendar sending
-      event reminders to my inbox, I no longer had to check my calendar
-      each day. Google Calendar can now send event reminders via text
-      message. ", strong "Below is a walk through of the steps involved
-      in setting up SMS event reminders in Google Calendar.",
-    ],
-  ],
+  ...excerpt-text,
 
   p [
    "The first step is to open ",
@@ -48,15 +60,7 @@ body = [
    "Next, click on the ", strong "Mobile Setup", " tab.",
   ],
 
-  excerpt [
-    captioned-images [{
-      alt: "Mobile Setup tab in Google Calendar",
-      src: "/images/posts/13/mobile-setup-tab-in-google-calendar.png",
-      caption: [
-        strong "Mobile Setup", " tab in Google Calendar",
-      ],
-    }],
-  ],
+  ...excerpt-image,
 
   p [
    "Enter your cell phone number and click ",

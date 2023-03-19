@@ -2,7 +2,6 @@ import { $2014 } from '../components.js';
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,

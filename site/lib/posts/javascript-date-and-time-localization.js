@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -92,19 +91,20 @@ import {
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
+const excerpt = [
+  p([strong('This post has been a long time coming.')]),
+  captioned$002Dimages([{
+      alt: 'Reminder message',
+      src: '/images/posts/74/email-message-screenshot.png',
+      caption: ['Reminder message, dated 18 January 2010']
+    }]),
+  p([
+    strong('It\'s unacceptable for any website or web application\n    to output dates and times using an arbitrary time zone.'),
+    '\n    Displaying dates and times in UTC/GMT is only slightly better:\n    dates cannot be relied upon, and users must perform mental\n    gymnastics in order to localize date\u2013time combos.'
+  ])
+];
 const body = [
-  excerpt([
-    p([strong('This post has been a long time coming.')]),
-    captioned$002Dimages([{
-        alt: 'Reminder message',
-        src: '/images/posts/74/email-message-screenshot.png',
-        caption: ['Reminder message, dated 18 January 2010']
-      }]),
-    p([
-      strong('It\'s unacceptable for any website or web application\n      to output dates and times using an arbitrary time zone.'),
-      '\n      Displaying dates and times in UTC/GMT is only slightly better:\n      dates cannot be relied upon, and users must perform mental\n      gymnastics in order to localize date\u2013time combos.'
-    ])
-  ]),
+  ...excerpt,
   captioned$002Dimages([{
       alt: 'Bitbucket status message',
       src: '/images/posts/74/gmt-ftl.png',

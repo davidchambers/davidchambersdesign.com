@@ -11,30 +11,32 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+    img {
+      alt: "",
+      src: "/images/posts/decorative/right/at-sign-in-speech-bubble.png",
+    },
+  ],
+  p [
+   "Regular expressions are powerful, useful, and", —, "in my opinion", —,
+   "lots of fun! Thanks to the prevalence of Twitter, every web developer
+    will be exposed to regex sooner or later: before outputting tweets in
+    HTML, Twitter names and hyperlinks must be wrapped in anchor tags.",
+  ],
+  h3 "Matching @names",
+  p [
+   "Here's the gist: a match will begin with \"@\" and the at sign
+    must be followed by one or more word (letter / number / underscore)
+    characters. The @name must either appear at the beginning of the tweet
+    or be preceded by a space. This prevents the regular expression from
+    matching \"@example\" in \"me@example.com\".",
+  ],
+];
+
 body = [
 
-  excerpt [
-    p [
-      img {
-        alt: "",
-        src: "/images/posts/decorative/right/at-sign-in-speech-bubble.png",
-      },
-    ],
-    p [
-     "Regular expressions are powerful, useful, and", —, "in my opinion", —,
-     "lots of fun! Thanks to the prevalence of Twitter, every web developer
-      will be exposed to regex sooner or later: before outputting tweets in
-      HTML, Twitter names and hyperlinks must be wrapped in anchor tags.",
-    ],
-    h3 "Matching @names",
-    p [
-     "Here's the gist: a match will begin with \"@\" and the at sign
-      must be followed by one or more word (letter / number / underscore)
-      characters. The @name must either appear at the beginning of the tweet
-      or be preceded by a space. This prevents the regular expression from
-      matching \"@example\" in \"me@example.com\".",
-    ],
-  ],
+  ...excerpt,
 
   h4 "JavaScript implementation",
 

@@ -258,46 +258,10 @@ write$002Dfile(public_([
   width: 16,
   height: 16
 })(icon$002Fbitbucket));
-write$002Dfile(public_([
+S.range(0)(10).forEach(n => write$002Dfile(public_([
   'svg',
-  'dates-0.svg'
-]))(render$002Dsvg({})(dates[0]));
-write$002Dfile(public_([
-  'svg',
-  'dates-1.svg'
-]))(render$002Dsvg({})(dates[1]));
-write$002Dfile(public_([
-  'svg',
-  'dates-2.svg'
-]))(render$002Dsvg({})(dates[2]));
-write$002Dfile(public_([
-  'svg',
-  'dates-3.svg'
-]))(render$002Dsvg({})(dates[3]));
-write$002Dfile(public_([
-  'svg',
-  'dates-4.svg'
-]))(render$002Dsvg({})(dates[4]));
-write$002Dfile(public_([
-  'svg',
-  'dates-5.svg'
-]))(render$002Dsvg({})(dates[5]));
-write$002Dfile(public_([
-  'svg',
-  'dates-6.svg'
-]))(render$002Dsvg({})(dates[6]));
-write$002Dfile(public_([
-  'svg',
-  'dates-7.svg'
-]))(render$002Dsvg({})(dates[7]));
-write$002Dfile(public_([
-  'svg',
-  'dates-8.svg'
-]))(render$002Dsvg({})(dates[8]));
-write$002Dfile(public_([
-  'svg',
-  'dates-9.svg'
-]))(render$002Dsvg({})(dates[9]));
+  `dates-${ n }.svg`
+]))(render$002Dsvg({})(dates[n])));
 write$002Dfile(public_([
   'svg',
   'contact.svg'

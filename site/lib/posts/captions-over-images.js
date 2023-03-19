@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -88,20 +87,21 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      'This is my response to Chris Coyier\'s screencast titled ',
-      a('http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/')('jQuery Part 3 \u2013 Image Title Plugin'),
-      ' which I watched\n      a couple of days ago. Something didn\'t sit right with me\n      at the time, and I\'ve now worked out what it was: ',
-      strong('JavaScript is not required!')
-    ]),
-    p([
-      'I\'ll present a JavaScript-free approach for displaying captions\n      over images that uses ',
-      em('truly'),
-      ' meaningful markup.'
-    ])
+const excerpt = [
+  p([
+    'This is my response to Chris Coyier\'s screencast titled ',
+    a('http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/')('jQuery Part 3 \u2013 Image Title Plugin'),
+    ' which I watched\n    a couple of days ago. Something didn\'t sit right with me\n    at the time, and I\'ve now worked out what it was: ',
+    strong('JavaScript is not required!')
   ]),
+  p([
+    'I\'ll present a JavaScript-free approach for displaying captions\n    over images that uses ',
+    em('truly'),
+    ' meaningful markup.'
+  ])
+];
+const body = [
+  ...excerpt,
   p([
     'So what ',
     em('is'),

@@ -11,16 +11,18 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+   "One way to reduce the number of HTTP requests a page requires
+    is to group (non-content) images into sprites. An even better
+    way is to remove these images from the server altogether;
+    instead include them as encoded strings in your style sheet.",
+  ],
+];
+
 body = [
 
-  excerpt [
-    p [
-     "One way to reduce the number of HTTP requests a page requires
-      is to group (non-content) images into sprites. An even better
-      way is to remove these images from the server altogether;
-      instead include them as encoded strings in your style sheet.",
-    ],
-  ],
+  ...excerpt,
 
   p [
    "Instead of...",

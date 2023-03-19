@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -91,20 +90,21 @@ import {
   update
 } from '../components.js';
 import datetime from '../datetime.js';
+const excerpt = [
+  p([
+    'It\'s no secret \u2013 I love ',
+    a('http://www.panic.com/coda/')('Coda'),
+    '!\n    It\'s a pleasure to use. ',
+    strong('It looks so damn good.'),
+    ' When I\n    started using ',
+    a('http://alexgorbatchev.com/wiki/SyntaxHighlighter')('SyntaxHighlighter'),
+    ' I set out to create a Coda theme. Thankfully,\n    the good folks at Panic had done the ground work for me. All I had\n    to do was create a style sheet that would make my code snippets look\n    as sexy online as they do in my text editor.'
+  ]),
+  p(['Or so I thought.'])
+];
 const body = [
   p([a('#setup')('Skip to setup instructions')]),
-  excerpt([
-    p([
-      'It\'s no secret \u2013 I love ',
-      a('http://www.panic.com/coda/')('Coda'),
-      '!\n      It\'s a pleasure to use. ',
-      strong('It looks so damn good.'),
-      ' When I\n      started using ',
-      a('http://alexgorbatchev.com/wiki/SyntaxHighlighter')('SyntaxHighlighter'),
-      ' I set out to create a Coda theme. Thankfully,\n      the good folks at Panic had done the ground work for me. All I had\n      to do was create a style sheet that would make my code snippets look\n      as sexy online as they do in my text editor.'
-    ]),
-    p(['Or so I thought.'])
-  ]),
+  ...excerpt,
   p(['As I delved deeper, it became apparent that realising my goal would\n    require plenty of effort. In order for SyntaxHighlighter to work its\n    magic it requires at least one brush and at least one theme. A brush\n    is a JavaScript file that contains regular expressions to match the\n    syntactical features of a particular language. A theme, as you might\n    expect, is a CSS file which controls the way SyntaxHighlighter\'s\n    output is displayed. At first glance, brushes and themes appear to\n    be loosely coupled, allowing programmers to create language-specific\n    brushes, and designers to create themes that can work with any number\n    of brushes.']),
   p([
     'It soon became apparent that brushes and themes are not so loosely\n    coupled after all. For example, the bundled HTML brush does not\n    include the angled brackets when highlighting a tag. Coda does. ',

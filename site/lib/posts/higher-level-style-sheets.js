@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -88,28 +87,29 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      'Yesterday I used three things for the first time: ',
-      a('http://sass-lang.com/')('Sass'),
-      ', ',
-      a('http://compass-style.org/')('Compass'),
-      ', and Ruby.\n      To summarize:'
-    ]),
-    ul([
-      li('I \u2665 Sass'),
-      li('I \u2665 Compass'),
-      li('I \u2665 Ruby')
-    ]),
-    p([
-      'One\'s own site is a great place to play with new\n      (or in this case, not so new) web technologies.\n      I decided to get stuck in and manually convert the ',
-      a('https://bitbucket.org/davidchambers/dcd-static/src/872e932b4941/styles/screen.css')('1200 line style sheet'),
-      ' from CSS to something a bit\n      more awesome. This post documents the most interesting\n      portion of that transformation, which involved this site\'s ',
-      a('/archives/')('archives'),
-      ' styles.'
-    ])
+const excerpt = [
+  p([
+    'Yesterday I used three things for the first time: ',
+    a('http://sass-lang.com/')('Sass'),
+    ', ',
+    a('http://compass-style.org/')('Compass'),
+    ', and Ruby.\n    To summarize:'
   ]),
+  ul([
+    li('I \u2665 Sass'),
+    li('I \u2665 Compass'),
+    li('I \u2665 Ruby')
+  ]),
+  p([
+    'One\'s own site is a great place to play with new\n    (or in this case, not so new) web technologies.\n    I decided to get stuck in and manually convert the ',
+    a('https://bitbucket.org/davidchambers/dcd-static/src/872e932b4941/styles/screen.css')('1200 line style sheet'),
+    ' from CSS to something a bit\n    more awesome. This post documents the most interesting\n    portion of that transformation, which involved this site\'s ',
+    a('/archives/')('archives'),
+    ' styles.'
+  ])
+];
+const body = [
+  ...excerpt,
   h3('Original CSS'),
   code$002Dblock(Symbol.for('css'))(`ol.archives {
   margin: 0 0 0 -21px;

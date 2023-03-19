@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -88,10 +87,9 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p(['WordPress is a great piece of software, although I\'ve never been\n      satisfied with its search functionality. Last night I decided to\n      switch to a very simple solution:']),
-    code$002Dblock(Symbol.for('html'))(`<form action="http://www.google.com/search" method="get">
+const excerpt = [
+  p(['WordPress is a great piece of software, although I\'ve never been\n    satisfied with its search functionality. Last night I decided to\n    switch to a very simple solution:']),
+  code$002Dblock(Symbol.for('html'))(`<form action="http://www.google.com/search" method="get">
     <div>
         <label for="q">Search davidchambersdesign.com</label>
         <input type="search" name="q" id="q" maxlength="256" placeholder="search..." />
@@ -102,7 +100,9 @@ const body = [
     </div>
 </form>
 `)
-  ]),
+];
+const body = [
+  ...excerpt,
   p(['Search queries on this site are now submitted to Google with the\n    specification that only results from this domain are to be returned.\n    Here\'s a breakdown of the various query parameters I included:']),
   dl([
     dt$0027({ class: 'textual' })('q'),

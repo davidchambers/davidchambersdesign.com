@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -91,17 +90,16 @@ import {
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      a('http://en.wikipedia.org/wiki/Closure_(computer_science)')('Closure'),
-      '\n      is truly wonderful. JavaScript',
-      $2014,
-      'despite its plethora of quirks',
-      $2014,
-      'is now widely appreciated, thanks in large part to its lexical scoping.\n      Python 3 is lexically-scoped, too, as the following code demonstrates.'
-    ]),
-    code$002Dblock(Symbol.for('python'))(`def cache(saved=None):
+const excerpt = [
+  p([
+    a('http://en.wikipedia.org/wiki/Closure_(computer_science)')('Closure'),
+    '\n    is truly wonderful. JavaScript',
+    $2014,
+    'despite its plethora of quirks',
+    $2014,
+    'is now widely appreciated, thanks in large part to its lexical scoping.\n    Python 3 is lexically-scoped, too, as the following code demonstrates.'
+  ]),
+  code$002Dblock(Symbol.for('python'))(`def cache(saved=None):
     def _(thing=None):
         nonlocal saved
         if thing is not None:
@@ -110,30 +108,32 @@ const body = [
     return _
 cache = cache()
 `),
-    p([
-      'If (the rebound) ',
-      code('cache'),
-      ' is passed no arguments\n      (or ',
-      code('None'),
-      '), ',
-      code('saved'),
-      ' is returned.\n      Otherwise, ',
-      code('thing'),
-      ' is assigned to ',
-      code('saved'),
-      '\n      and returned.'
-    ]),
-    code$002Dblock(Symbol.for('TK'))(`>>> cache(2**3)
+  p([
+    'If (the rebound) ',
+    code('cache'),
+    ' is passed no arguments\n    (or ',
+    code('None'),
+    '), ',
+    code('saved'),
+    ' is returned.\n    Otherwise, ',
+    code('thing'),
+    ' is assigned to ',
+    code('saved'),
+    '\n    and returned.'
+  ]),
+  code$002Dblock(Symbol.for('TK'))(`>>> cache(2**3)
 8
 >>> cache()
 8
 `),
-    p([
-      'This works thanks to the ',
-      code('nonlocal'),
-      ' keyword\n      introduced in Python 3, which enables variables in outer\n      scopes to be rebound. So how would one achieve the same\n      result in earlier versions of Python?'
-    ])
-  ]),
+  p([
+    'This works thanks to the ',
+    code('nonlocal'),
+    ' keyword\n    introduced in Python 3, which enables variables in outer\n    scopes to be rebound. So how would one achieve the same\n    result in earlier versions of Python?'
+  ])
+];
+const body = [
+  ...excerpt,
   h3('Bringing lexical scoping to Python 2.x'),
   code$002Dblock(Symbol.for('python'))(`def cache(saved=None):
     def _(thing=None):

@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -91,25 +90,26 @@ import {
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      'Earlier I wrote some code which repeatedly calls a function\n      which performs a database query \u2013 often ',
-      strong('the same'),
-      '\n      query. This encouraged me to explore various ways to cache the\n      results of function calls in both Python (to solve my immediate\n      problem) and JavaScript (because I find that language endlessly\n      fascinating).'
-    ]),
-    p([
-      'I played around with ',
-      a('http://en.wikipedia.org/wiki/Fibonacci_number')('Fibonacci'),
-      ',\n      which is a well suited to the task: it can be described in just\n      a couple of lines of code yet benefits enormously from caching\n      due to its recursive nature.'
-    ]),
-    h3('JavaScript Fibonacci without caching'),
-    code$002Dblock(Symbol.for('javascript'))(`function fibonacci(n) {
+const excerpt = [
+  p([
+    'Earlier I wrote some code which repeatedly calls a function\n    which performs a database query \u2013 often ',
+    strong('the same'),
+    '\n    query. This encouraged me to explore various ways to cache the\n    results of function calls in both Python (to solve my immediate\n    problem) and JavaScript (because I find that language endlessly\n    fascinating).'
+  ]),
+  p([
+    'I played around with ',
+    a('http://en.wikipedia.org/wiki/Fibonacci_number')('Fibonacci'),
+    ',\n    which is a well suited to the task: it can be described in just\n    a couple of lines of code yet benefits enormously from caching\n    due to its recursive nature.'
+  ]),
+  h3('JavaScript Fibonacci without caching'),
+  code$002Dblock(Symbol.for('javascript'))(`function fibonacci(n) {
     if (n <= 1) return n;
     return fibonacci(n - 2) + fibonacci(n - 1);
 }
 `)
-  ]),
+];
+const body = [
+  ...excerpt,
   p(['I created a simple timer:']),
   code$002Dblock(Symbol.for('javascript'))(`function timer(func) {
     var i = 10, start;

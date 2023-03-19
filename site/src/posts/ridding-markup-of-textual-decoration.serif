@@ -11,25 +11,27 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+   "On the Web it's not uncommon to see characters with
+    no inherent meaning used for stylistic reasons. A good
+    example is the ", a "#" "Read more »", " link. Perhaps the
+    directionality of the \"»\" is suggestive of travelling to
+    another page, or perhaps the letterform is included solely
+    for its aesthetic appeal. Whatever the case, one thing is
+    certain: links do not require right-pointing double angle
+    quotation marks in order to function.",
+  ],
+  p [
+    strong "The inclusion of such a character is therefore
+    a design decision.", " It is decoration, not content.
+    It belongs in a style sheet, not in a page's markup.",
+  ],
+];
+
 body = [
 
-  excerpt [
-    p [
-     "On the Web it's not uncommon to see characters with
-      no inherent meaning used for stylistic reasons. A good
-      example is the ", a "#" "Read more »", " link. Perhaps the
-      directionality of the \"»\" is suggestive of travelling to
-      another page, or perhaps the letterform is included solely
-      for its aesthetic appeal. Whatever the case, one thing is
-      certain: links do not require right-pointing double angle
-      quotation marks in order to function.",
-    ],
-    p [
-      strong "The inclusion of such a character is therefore
-      a design decision.", " It is decoration, not content.
-      It belongs in a style sheet, not in a page's markup.",
-    ],
-  ],
+  ...excerpt,
 
   h2 "Adding decorative textual content via CSS",
 

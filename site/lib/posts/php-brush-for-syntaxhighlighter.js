@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -92,20 +91,21 @@ import {
   update
 } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      'Alex Gorbatchev\'s ',
-      a('http://alexgorbatchev.com/wiki/SyntaxHighlighter')('SyntaxHighlighter'),
-      '\n      is a well-written bundle which enables syntax highlighting of\n      code via JavaScript. More than twenty languages are supported\n      "out of the box", and brushes (JavaScript files containing\n      language-specific regular expressions) can be created to\n      support additional languages.'
-    ]),
-    p(['Unfortunately, however, several of the brushes that come bundled\n      with SyntaxHighlighter are far from perfect. Have a look at the\n      bundled PHP brush in action below.']),
-    captioned$002Dimages([{
-        alt: 'Screenshot of PHP code highlighted by SyntaxHighlighter\'s\n            PHP brush',
-        src: '/images/posts/16/bundled-php-brush-in-action.png',
-        caption: ['Screenshot of bundled PHP brush in action']
-      }])
+const excerpt = [
+  p([
+    'Alex Gorbatchev\'s ',
+    a('http://alexgorbatchev.com/wiki/SyntaxHighlighter')('SyntaxHighlighter'),
+    '\n    is a well-written bundle which enables syntax highlighting of\n    code via JavaScript. More than twenty languages are supported\n    "out of the box", and brushes (JavaScript files containing\n    language-specific regular expressions) can be created to\n    support additional languages.'
   ]),
+  p(['Unfortunately, however, several of the brushes that come bundled\n    with SyntaxHighlighter are far from perfect. Have a look at the\n    bundled PHP brush in action below.']),
+  captioned$002Dimages([{
+      alt: 'Screenshot of PHP code highlighted by SyntaxHighlighter\'s\n          PHP brush',
+      src: '/images/posts/16/bundled-php-brush-in-action.png',
+      caption: ['Screenshot of bundled PHP brush in action']
+    }])
+];
+const body = [
+  ...excerpt,
   p(['I would give this brush 6/10. Here are its deficiencies,\n    as I see them:']),
   ul([
     li('PHP opening and closing tags are not captured'),

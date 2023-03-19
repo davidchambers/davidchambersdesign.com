@@ -11,31 +11,33 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+   "Yesterday I used three things for the first time: ",
+    a "http://sass-lang.com/" "Sass", ", ",
+    a "http://compass-style.org/" "Compass", ", and Ruby.
+    To summarize:",
+  ],
+  ul [
+    li "I ♥ Sass",
+    li "I ♥ Compass",
+    li "I ♥ Ruby",
+  ],
+  p [
+   "One's own site is a great place to play with new
+    (or in this case, not so new) web technologies.
+    I decided to get stuck in and manually convert the ",
+    a "https://bitbucket.org/davidchambers/dcd-static/src/872e932b4941/styles/screen.css"
+      "1200 line style sheet", " from CSS to something a bit
+    more awesome. This post documents the most interesting
+    portion of that transformation, which involved this site's ",
+    a "/archives/" "archives", " styles.",
+  ],
+];
+
 body = [
 
-  excerpt [
-    p [
-     "Yesterday I used three things for the first time: ",
-      a "http://sass-lang.com/" "Sass", ", ",
-      a "http://compass-style.org/" "Compass", ", and Ruby.
-      To summarize:",
-    ],
-    ul [
-      li "I ♥ Sass",
-      li "I ♥ Compass",
-      li "I ♥ Ruby",
-    ],
-    p [
-     "One's own site is a great place to play with new
-      (or in this case, not so new) web technologies.
-      I decided to get stuck in and manually convert the ",
-      a "https://bitbucket.org/davidchambers/dcd-static/src/872e932b4941/styles/screen.css"
-        "1200 line style sheet", " from CSS to something a bit
-      more awesome. This post documents the most interesting
-      portion of that transformation, which involved this site's ",
-      a "/archives/" "archives", " styles.",
-    ],
-  ],
+  ...excerpt,
 
   h3 "Original CSS",
 

@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -91,20 +90,21 @@ import {
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
+const excerpt = [p([
+    'There\'s no shortage of blog posts which',
+    $2014,
+    'like this one',
+    $2014,
+    'provide an introduction to ',
+    a('http://socket.io/')('Socket.IO'),
+    '. Many, though, were\n    written prior to the release of 0.7, which ushered in ',
+    a('https://github.com/LearnBoost/Socket.IO/wiki/Migrating-0.6-to-0.7')('significant API changes'),
+    '. Here I\'ll provide examples\n    of server- and client-side code using APIs provided by the ',
+    em('current'),
+    ' version (0.7.4 at time of writing).'
+  ])];
 const body = [
-  excerpt([p([
-      'There\'s no shortage of blog posts which',
-      $2014,
-      'like this one',
-      $2014,
-      'provide an introduction to ',
-      a('http://socket.io/')('Socket.IO'),
-      '. Many, though, were\n      written prior to the release of 0.7, which ushered in ',
-      a('https://github.com/LearnBoost/Socket.IO/wiki/Migrating-0.6-to-0.7')('significant API changes'),
-      '. Here I\'ll provide examples\n      of server- and client-side code using APIs provided by the ',
-      em('current'),
-      ' version (0.7.4 at time of writing).'
-    ])]),
+  ...excerpt,
   p([
     'The code snippets are in ',
     a('http://jashkenas.github.com/coffee-script/')('CoffeeScript'),

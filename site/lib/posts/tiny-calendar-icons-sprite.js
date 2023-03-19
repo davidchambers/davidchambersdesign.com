@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -91,22 +90,23 @@ import {
   code$002Dblock
 } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      'Recently I\'ve been on a mission to minimize the number\n      of HTTP requests made while loading pages on this site.\n      Until yesterday, the ',
-      a('/archives/')('archives'),
-      '\n      page was making an HTTP request for each of the ',
-      a('/tiny-calendar-icon-set/')('tiny calendar icons'),
-      '\n      used on the page. Therefore, up to 31 HTTP requests were\n      required just to retrieve the calendar icons. Not good.'
-    ]),
-    p(['The same result can be achieved with a single HTTP request\n      through the use of a sprite:']),
-    captioned$002Dimages([{
-        alt: 'Tiny calendar icons sprite',
-        src: '/images/posts/23/calendar.png',
-        caption: ['Tiny calendar icons sprite, which you\'re welcome to save and use']
-      }])
+const excerpt = [
+  p([
+    'Recently I\'ve been on a mission to minimize the number\n    of HTTP requests made while loading pages on this site.\n    Until yesterday, the ',
+    a('/archives/')('archives'),
+    '\n    page was making an HTTP request for each of the ',
+    a('/tiny-calendar-icon-set/')('tiny calendar icons'),
+    '\n    used on the page. Therefore, up to 31 HTTP requests were\n    required just to retrieve the calendar icons. Not good.'
   ]),
+  p(['The same result can be achieved with a single HTTP request\n    through the use of a sprite:']),
+  captioned$002Dimages([{
+      alt: 'Tiny calendar icons sprite',
+      src: '/images/posts/23/calendar.png',
+      caption: ['Tiny calendar icons sprite, which you\'re welcome to save and use']
+    }])
+];
+const body = [
+  ...excerpt,
   p(['One uses a sprite by applying a background image to an element\n    using CSS. One could start with an empty span element:']),
   code$002Dblock(Symbol.for('html'))(`<span class="day-1"></span>
 `),

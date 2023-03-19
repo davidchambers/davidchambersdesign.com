@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -91,22 +90,23 @@ import {
   update
 } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      'In my post titled ',
-      a('/captions-over-images/')('Captions over images'),
-      '\n      I advocate the use of definition lists for captioning images.\n      Earlier today I was asked whether this meaningful markup could\n      be used in conjunction with an "image slider" such as ',
-      a('http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding')('Easy Slider 1.5'),
-      '.'
-    ]),
-    p(['I had a look at the Easy Slider source code and decided to\n      write my own image slider using Prototype rather than hacking\n      someone else\'s code to pieces. It\'s a proof of concept rather\n      than a full-blown "plugin", but it demonstrates that such\n      functionality is achievable using elegant, meaningful markup.']),
-    p([
-      'Check out the ',
-      a('/examples/prototype-image-slider/')('Prototype image slider demo'),
-      '\n      to see the code in action.'
-    ])
+const excerpt = [
+  p([
+    'In my post titled ',
+    a('/captions-over-images/')('Captions over images'),
+    '\n    I advocate the use of definition lists for captioning images.\n    Earlier today I was asked whether this meaningful markup could\n    be used in conjunction with an "image slider" such as ',
+    a('http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding')('Easy Slider 1.5'),
+    '.'
   ]),
+  p(['I had a look at the Easy Slider source code and decided to\n    write my own image slider using Prototype rather than hacking\n    someone else\'s code to pieces. It\'s a proof of concept rather\n    than a full-blown "plugin", but it demonstrates that such\n    functionality is achievable using elegant, meaningful markup.']),
+  p([
+    'Check out the ',
+    a('/examples/prototype-image-slider/')('Prototype image slider demo'),
+    '\n    to see the code in action.'
+  ])
+];
+const body = [
+  ...excerpt,
   update(datetime('2009-09-17')('01:17:00')(Symbol.for('Pacific/Auckland')))([
     p(['I noticed that the script was failing miserably in Safari,\n      which didn\'t like the following line:']),
     code$002Dblock(Symbol.for('javascript'))(`li: new Element('li', { class: 'prev' }),

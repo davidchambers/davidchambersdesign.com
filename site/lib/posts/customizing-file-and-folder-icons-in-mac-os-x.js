@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -91,12 +90,13 @@ import {
   code$002Dblock
 } from '../components.js';
 import datetime from '../datetime.js';
+const excerpt = [
+  p(['Customizing the appearance of files and folders in OS X is\n    a cinch. \u2318C, \u2318I, \u2318V, punctuated by a few mouse clicks.']),
+  p([strong('Actually, that\'s total bullshit.')]),
+  p(['Sure, in the simplest of cases the copy and paste approach\n    gets the job done, assuming one knows to copy from Preview.app\n    if copying from the original source fails. As soon as one decides\n    to do something a bit more advanced, such as providing versions\n    for display at different sizes, one\'s shit outta luck.'])
+];
 const body = [
-  excerpt([
-    p(['Customizing the appearance of files and folders in OS X is\n      a cinch. \u2318C, \u2318I, \u2318V, punctuated by a few mouse clicks.']),
-    p([strong('Actually, that\'s total bullshit.')]),
-    p(['Sure, in the simplest of cases the copy and paste approach\n      gets the job done, assuming one knows to copy from Preview.app\n      if copying from the original source fails. As soon as one decides\n      to do something a bit more advanced, such as providing versions\n      for display at different sizes, one\'s shit outta luck.'])
-  ]),
+  ...excerpt,
   h3('Creating .icns and applying them to files, folders, or bundles'),
   ol([
     li([

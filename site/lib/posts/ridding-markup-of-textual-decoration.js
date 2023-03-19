@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -88,18 +87,19 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      'On the Web it\'s not uncommon to see characters with\n      no inherent meaning used for stylistic reasons. A good\n      example is the ',
-      a('#')('Read more \xBB'),
-      ' link. Perhaps the\n      directionality of the "\xBB" is suggestive of travelling to\n      another page, or perhaps the letterform is included solely\n      for its aesthetic appeal. Whatever the case, one thing is\n      certain: links do not require right-pointing double angle\n      quotation marks in order to function.'
-    ]),
-    p([
-      strong('The inclusion of such a character is therefore\n      a design decision.'),
-      ' It is decoration, not content.\n      It belongs in a style sheet, not in a page\'s markup.'
-    ])
+const excerpt = [
+  p([
+    'On the Web it\'s not uncommon to see characters with\n    no inherent meaning used for stylistic reasons. A good\n    example is the ',
+    a('#')('Read more \xBB'),
+    ' link. Perhaps the\n    directionality of the "\xBB" is suggestive of travelling to\n    another page, or perhaps the letterform is included solely\n    for its aesthetic appeal. Whatever the case, one thing is\n    certain: links do not require right-pointing double angle\n    quotation marks in order to function.'
   ]),
+  p([
+    strong('The inclusion of such a character is therefore\n    a design decision.'),
+    ' It is decoration, not content.\n    It belongs in a style sheet, not in a page\'s markup.'
+  ])
+];
+const body = [
+  ...excerpt,
   h2('Adding decorative textual content via CSS'),
   (() => {
     const url = 'http://reference.sitepoint.com';

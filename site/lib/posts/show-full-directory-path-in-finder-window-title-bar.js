@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -91,16 +90,17 @@ import {
   code$002Dblock
 } from '../components.js';
 import datetime from '../datetime.js';
+const excerpt = [p([
+    'If you have ever found yourself command-clicking the\n    title of a Finder window to find out where you are (',
+    strong('/Library/Fonts'),
+    ' or ',
+    strong('~/Library/Fonts'),
+    '\n    is one I\'ve double-checked many times), you\'ll understand how\n    pleased I was to discover that there is a command which can be\n    entered in Terminal to ',
+    a('http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/')('show full directory paths in Finder window title bars'),
+    '.'
+  ])];
 const body = [
-  excerpt([p([
-      'If you have ever found yourself command-clicking the\n      title of a Finder window to find out where you are (',
-      strong('/Library/Fonts'),
-      ' or ',
-      strong('~/Library/Fonts'),
-      '\n      is one I\'ve double-checked many times), you\'ll understand how\n      pleased I was to discover that there is a command which can be\n      entered in Terminal to ',
-      a('http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/')('show full directory paths in Finder window title bars'),
-      '.'
-    ])]),
+  ...excerpt,
   captioned$002Dimages([{
       alt: 'Finder windows without paths',
       src: '/images/posts/2/finder-windows-without-paths.png',

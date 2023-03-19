@@ -11,6 +11,24 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+    strong "I wanted to simplify everything.", "
+    I wanted to write posts in ",
+    a "http://daringfireball.net/projects/markdown/syntax" "Markdown", ",
+    not HTML. I wanted to save posts as files, not database entries.
+    I wanted to free myself of my dependence on WordPress, PHP, and MySQL
+    in one fell swoop.",
+  ],
+  p [
+   "So, ", a "http://bitbucket.org/davidchambers/mango" "Mango", "
+    was born. Mango is file-based blogging software built on ",
+    a "http://www.djangoproject.com/" "Django", ", the excellent
+    Python web framework. I conceived Mango to scratch an itch,
+    and I'll bet that others out there are itchy, too.",
+  ],
+];
+
 body = [
 
   h3 "WordPress",
@@ -40,23 +58,7 @@ body = [
     while writing.",
   ],
 
-  excerpt [
-    p [
-      strong "I wanted to simplify everything.", "
-      I wanted to write posts in ",
-      a "http://daringfireball.net/projects/markdown/syntax" "Markdown", ",
-      not HTML. I wanted to save posts as files, not database entries.
-      I wanted to free myself of my dependence on WordPress, PHP, and MySQL
-      in one fell swoop.",
-    ],
-    p [
-     "So, ", a "http://bitbucket.org/davidchambers/mango" "Mango", "
-      was born. Mango is file-based blogging software built on ",
-      a "http://www.djangoproject.com/" "Django", ", the excellent
-      Python web framework. I conceived Mango to scratch an itch,
-      and I'll bet that others out there are itchy, too.",
-    ],
-  ],
+  ...excerpt,
 
   h3 "Going without",
 

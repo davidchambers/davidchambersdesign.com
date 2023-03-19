@@ -158,8 +158,13 @@ ReservedWord
   / ImportToken
   / ExportToken
 
+TopicReference
+  = '?'
+    { return Serif.Identifier('?'); }
+
 Identifier
-  = !ReservedWord name:$(IdentifierStart IdentifierPart*)
+  = TopicReference
+  / !ReservedWord name:$(IdentifierStart IdentifierPart*)
     { return Serif.Identifier(name); }
 
 IdentifierStart
@@ -374,8 +379,9 @@ RestElement
 
 Application
   = callee:ArrowFunctionExpression
-    args:(__ arg:ArrowFunctionExpression { return arg; })*
+    args:(__ arg:ArrowFunctionExpression { return arg; })+
     { return Serif.Application(callee, args); }
+  / ArrowFunctionExpression
 
 LeftHandSideExpression
   = ArrowFunctionExpression
@@ -398,7 +404,7 @@ ExponentiationOperator
 ExponentiationExpression
   = left:UnaryExpression
     tail:(_ operator:ExponentiationOperator _ right:UnaryExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.ExponentiationExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
 MultiplicativeOperator
   = '*'
@@ -408,7 +414,7 @@ MultiplicativeOperator
 MultiplicativeExpression
   = left:ExponentiationExpression
     tail:(_ operator:MultiplicativeOperator _ right:ExponentiationExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.MultiplicativeExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
 AdditiveOperator
   = '+'
@@ -417,7 +423,7 @@ AdditiveOperator
 AdditiveExpression
   = left:MultiplicativeExpression
     tail:(_ operator:AdditiveOperator _ right:MultiplicativeExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.AdditiveExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
 ShiftOperator
   = '<<'
@@ -427,7 +433,7 @@ ShiftOperator
 ShiftExpression
   = left:AdditiveExpression
     tail:(_ operator:ShiftOperator _ right:AdditiveExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.ShiftExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
 RelationalOperator
   = '<='
@@ -440,7 +446,7 @@ RelationalOperator
 RelationalExpression
   = left:ShiftExpression
     tail:(_ operator:RelationalOperator _ right:ShiftExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.RelationalExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
 EqualityOperator
   = '==='
@@ -451,7 +457,7 @@ EqualityOperator
 EqualityExpression
   = left:RelationalExpression
     tail:(_ operator:EqualityOperator _ right:RelationalExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.EqualityExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
 BitwiseANDOperator
   = '&'
@@ -459,7 +465,7 @@ BitwiseANDOperator
 BitwiseANDExpression
   = left:EqualityExpression
     tail:(_ operator:BitwiseANDOperator _ right:EqualityExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.EqualityExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
 BitwiseXOROperator
   = '^'
@@ -467,7 +473,7 @@ BitwiseXOROperator
 BitwiseXORExpression
   = left:BitwiseANDExpression
     tail:(_ operator:BitwiseXOROperator _ right:BitwiseANDExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.BitwiseXORExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
 BitwiseOROperator
   = '|'
@@ -475,7 +481,7 @@ BitwiseOROperator
 BitwiseORExpression
   = left:BitwiseXORExpression
     tail:(_ operator:BitwiseOROperator _ right:BitwiseXORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.BitwiseORExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
 LogicalANDOperator
   = '&&'
@@ -483,7 +489,7 @@ LogicalANDOperator
 LogicalANDExpression
   = left:BitwiseORExpression
     tail:(_ operator:LogicalANDOperator _ right:BitwiseORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.LogicalANDExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator, left, right), left); }
 
 LogicalOROperator
   = '||'
@@ -491,7 +497,7 @@ LogicalOROperator
 LogicalORExpression
   = left:LogicalANDExpression
     tail:(_ operator:LogicalOROperator _ right:LogicalANDExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.LogicalORExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator, left, right), left); }
 
 CoalesceOperator
   = '??'
@@ -499,7 +505,7 @@ CoalesceOperator
 CoalesceExpression
   = left:LogicalORExpression
     tail:(_ operator:CoalesceOperator _ right:LogicalORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.CoalesceExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator, left, right), left); }
 
 ConditionalExpression
   = IfToken
@@ -518,6 +524,14 @@ ApplicationExpression
   = callee:ConditionalExpression
     args:(_ ApplicationOperator _ arg:ApplicationExpression { return arg; })*
     { return args.reduce((callee, arg) => Serif.Application(callee, [arg]), callee); }
+
+PipeOperator
+  = '|>'
+
+PipeExpression
+  = head:ApplicationExpression
+    tail:(_ PipeOperator _ body:ApplicationExpression { return body; })*
+    { return tail.reduce(Serif.PipeExpression, head); }
 
 BlockExpression
   = '{' _ statements:Statement|1.., SemicolonSeparator| _ '}'
@@ -592,4 +606,4 @@ SemicolonSeparator
   = _ ';' _
 
 Expression
-  = ApplicationExpression
+  = PipeExpression

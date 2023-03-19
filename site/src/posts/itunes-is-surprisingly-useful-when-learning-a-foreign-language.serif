@@ -10,36 +10,38 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+   "I recently began learning Danish. I'm taking a weekly class, and
+    the first week's homework involved listening to the conversations
+    we covered during the lesson. I began by playing the audio files,
+    following along in the Danish transcripts. I found myself wanting
+    to listen to the difficult parts over and over, but scrubbing
+    through a timeline is rather awkward.",
+  ],
+  p [
+   "It occurred to me that I could use iTunes to solve this problem.
+    Normally, iTunes will play a track from beginning to end. It's
+    possible, though, to specify a certain portion of the track to be
+    played instead. By adding an audio file to a playlist many times
+    and specifying consecutive portions (e.g. 0:00–0:02, 0:02–0:04.8,
+    ...), a track can be broken into manageable clips for more
+    convenient navigation.",
+  ],
+  p [
+   "Here's the end result:",
+  ],
+  p [
+    img {
+      alt: "iTunes playlist for Danish dialogue",
+      src: "/images/posts/93/windows/lion/itunes-playlist-for-danish-dialogue.png",
+    },
+  ],
+];
+
 body = [
 
-  excerpt [
-    p [
-     "I recently began learning Danish. I'm taking a weekly class, and
-      the first week's homework involved listening to the conversations
-      we covered during the lesson. I began by playing the audio files,
-      following along in the Danish transcripts. I found myself wanting
-      to listen to the difficult parts over and over, but scrubbing
-      through a timeline is rather awkward.",
-    ],
-    p [
-     "It occurred to me that I could use iTunes to solve this problem.
-      Normally, iTunes will play a track from beginning to end. It's
-      possible, though, to specify a certain portion of the track to be
-      played instead. By adding an audio file to a playlist many times
-      and specifying consecutive portions (e.g. 0:00–0:02, 0:02–0:04.8,
-      ...), a track can be broken into manageable clips for more
-      convenient navigation.",
-    ],
-    p [
-     "Here's the end result:",
-    ],
-    p [
-      img {
-        alt: "iTunes playlist for Danish dialogue",
-        src: "/images/posts/93/windows/lion/itunes-playlist-for-danish-dialogue.png",
-      },
-    ],
-  ],
+  ...excerpt,
 
   h3 "Creating an iTunes playlist from a single audio file",
 

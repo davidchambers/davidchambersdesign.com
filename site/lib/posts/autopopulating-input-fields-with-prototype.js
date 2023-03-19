@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -91,12 +90,13 @@ import {
   update
 } from '../components.js';
 import datetime from '../datetime.js';
+const excerpt = [p([
+    'Yesterday I wrote a simple class which auto-populates\n    input fields, and thought it worth sharing. I was originally\n    inspired to write this code by Roger Johansson\'s post titled ',
+    a('http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/')('Autopopulating text input fields with JavaScript'),
+    '.\n    While I approached the problem from a slightly different angle,\n    I made sure to avoid the pitfalls Roger mentions.'
+  ])];
 const body = [
-  excerpt([p([
-      'Yesterday I wrote a simple class which auto-populates\n      input fields, and thought it worth sharing. I was originally\n      inspired to write this code by Roger Johansson\'s post titled ',
-      a('http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/')('Autopopulating text input fields with JavaScript'),
-      '.\n      While I approached the problem from a slightly different angle,\n      I made sure to avoid the pitfalls Roger mentions.'
-    ])]),
+  ...excerpt,
   update(datetime('2010-06-09')('23:31:00')(Symbol.for('Pacific/Auckland')))([
     'I\'ve written an update to this article for those interested in ',
     a('/autopopulating-input-fields-with-mootools/')('auto-populating input fields with MooTools'),

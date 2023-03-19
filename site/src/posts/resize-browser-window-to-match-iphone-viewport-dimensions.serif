@@ -11,48 +11,50 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+   "I've recently become interested in optimizing sites for
+    the iPhone and iPod touch. While nothing beats testing on
+    the device itself, I often find it quicker to test changes
+    on my Mac. Changing the user agent string is a piece of cake
+    in Safari (Develop > User Agent > Mobile Safari) but what
+    about adjusting the browser window's dimensions to match
+    those of the iPhone?",
+  ],
+  p [
+   "I've created two bookmarklets to allow the current page to
+    be loaded in an iPhone-sized window with a single click:",
+  ],
+  ul [
+    li [
+      p [
+        strong "Portrait", " (labelled \"⁑\")",
+      ],
+      code-block :plain-text `
+        javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
+      `,
+    ],
+    li [
+      p [
+        strong "Landscape", " (labelled \"**\")",
+      ],
+      code-block :plain-text `
+        javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
+      `,
+    ],
+  ],
+  captioned-images [{
+    alt: "iPhone testing bookmarklets",
+    src: "/images/posts/37/iphone-testing-bookmarklets.png",
+    caption: [
+     "iPhone testing bookmarklets: portrait and landscape",
+    ],
+  }],
+];
+
 body = [
 
-  excerpt [
-    p [
-     "I've recently become interested in optimizing sites for
-      the iPhone and iPod touch. While nothing beats testing on
-      the device itself, I often find it quicker to test changes
-      on my Mac. Changing the user agent string is a piece of cake
-      in Safari (Develop > User Agent > Mobile Safari) but what
-      about adjusting the browser window's dimensions to match
-      those of the iPhone?",
-    ],
-    p [
-     "I've created two bookmarklets to allow the current page to
-      be loaded in an iPhone-sized window with a single click:",
-    ],
-    ul [
-      li [
-        p [
-          strong "Portrait", " (labelled \"⁑\")",
-        ],
-        code-block :plain-text `
-          javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
-        `,
-      ],
-      li [
-        p [
-          strong "Landscape", " (labelled \"**\")",
-        ],
-        code-block :plain-text `
-          javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
-        `,
-      ],
-    ],
-    captioned-images [{
-      alt: "iPhone testing bookmarklets",
-      src: "/images/posts/37/iphone-testing-bookmarklets.png",
-      caption: [
-       "iPhone testing bookmarklets: portrait and landscape",
-      ],
-    }],
-  ],
+  ...excerpt,
 
   captioned-images [{
     alt: "Safari window resized to iPhone portrait dimensions",

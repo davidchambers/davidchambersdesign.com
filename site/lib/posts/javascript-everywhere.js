@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -87,18 +86,19 @@ import {
   video
 } from '../elements.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      'Over the past few months I\'ve reached a startling realization: ',
-      strong('JavaScript is a tremendously capable language.')
-    ]),
-    p(['The reason that it took me so long to discover this is that\n      the playing field has never been fair. On the one hand I\'ve been\n      writing application code for the server, a stable, predictable\n      environment. On the other hand I\'ve been adding interactivity\n      on the client\'s side, dealing with inconsistencies on multiple\n      fronts, not least of which is the DOM API.']),
-    p([
-      'Comparing Python and JavaScript, for example, by using\n      the former to quickly put together a website using the\n      excellent Django framework while using the latter to add\n      drag and drop functionality is to compare apples and oranges. ',
-      strong('Actually, it\'s more like comparing apples to root canals.')
-    ])
+const excerpt = [
+  p([
+    'Over the past few months I\'ve reached a startling realization: ',
+    strong('JavaScript is a tremendously capable language.')
   ]),
+  p(['The reason that it took me so long to discover this is that\n    the playing field has never been fair. On the one hand I\'ve been\n    writing application code for the server, a stable, predictable\n    environment. On the other hand I\'ve been adding interactivity\n    on the client\'s side, dealing with inconsistencies on multiple\n    fronts, not least of which is the DOM API.']),
+  p([
+    'Comparing Python and JavaScript, for example, by using\n    the former to quickly put together a website using the\n    excellent Django framework while using the latter to add\n    drag and drop functionality is to compare apples and oranges. ',
+    strong('Actually, it\'s more like comparing apples to root canals.')
+  ])
+];
+const body = [
+  ...excerpt,
   p([
     'Had I been writing application code in JavaScript (without\n    touching the DOM), I\'d have been in a much better position\n    to weigh each on its merits. Thanks to some terrifically\n    exciting developments in the JS world, it is now possible to\n    write application code ',
     em('entirely'),

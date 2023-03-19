@@ -154,7 +154,7 @@ export interface Property {
 
 export const Property = (
   key: Expression,
-  value: Expression,
+  value: Expression | Pattern,
 ): Property => ({
   type: 'Property',
   key,
@@ -237,7 +237,7 @@ export interface ArrowFunctionExpression {
 }
 
 export const ArrowFunctionExpression = (
-  parameters: ReadonlyArray<Identifier>,
+  parameters: ReadonlyArray<Pattern>,
   body: Expression,
 ): ArrowFunctionExpression => ({
   type: 'ArrowFunctionExpression',
@@ -292,334 +292,76 @@ export const UnaryExpression = (
   argument,
 });
 
-export type ExponentiationOperator =
+export type BinaryOperator =
   | '**'
-
-export type ExponentiationOperand =
-  | UnaryExpression
-  | UnaryOperand
-
-export interface ExponentiationExpression {
-  readonly type: 'BinaryExpression';
-  readonly operator: ExponentiationOperator;
-  readonly left: ExponentiationOperand;
-  readonly right: ExponentiationOperand;
-}
-
-export const ExponentiationExpression = (
-  operator: ExponentiationOperator,
-  left: ExponentiationOperand,
-  right: ExponentiationOperand,
-): ExponentiationExpression => ({
-  type: 'BinaryExpression',
-  operator,
-  left,
-  right,
-});
-
-export type MultiplicativeOperator =
   | '*'
   | '/'
   | '%'
-
-export type MultiplicativeOperand =
-  | ExponentiationExpression
-  | ExponentiationOperand
-
-export interface MultiplicativeExpression {
-  readonly type: 'BinaryExpression';
-  readonly operator: MultiplicativeOperator;
-  readonly left: MultiplicativeOperand;
-  readonly right: MultiplicativeOperand;
-}
-
-export const MultiplicativeExpression = (
-  operator: MultiplicativeOperator,
-  left: MultiplicativeOperand,
-  right: MultiplicativeOperand,
-): MultiplicativeExpression => ({
-  type: 'BinaryExpression',
-  operator,
-  left,
-  right,
-});
-
-export type AdditiveOperator =
   | '+'
   | '-'
-
-export type AdditiveOperand =
-  | MultiplicativeExpression
-  | MultiplicativeOperand
-
-export interface AdditiveExpression {
-  readonly type: 'BinaryExpression';
-  readonly operator: AdditiveOperator;
-  readonly left: AdditiveOperand;
-  readonly right: AdditiveOperand;
-}
-
-export const AdditiveExpression = (
-  operator: AdditiveOperator,
-  left: AdditiveOperand,
-  right: AdditiveOperand,
-): AdditiveExpression => ({
-  type: 'BinaryExpression',
-  operator,
-  left,
-  right,
-});
-
-export type ShiftOperator =
   | '<<'
   | '>>'
   | '>>>'
-
-export type ShiftOperand =
-  | AdditiveExpression
-  | AdditiveOperand
-
-export interface ShiftExpression {
-  readonly type: 'BinaryExpression';
-  readonly operator: ShiftOperator;
-  readonly left: ShiftOperand;
-  readonly right: ShiftOperand;
-}
-
-export const ShiftExpression = (
-  operator: ShiftOperator,
-  left: ShiftOperand,
-  right: ShiftOperand,
-): ShiftExpression => ({
-  type: 'BinaryExpression',
-  operator,
-  left,
-  right,
-});
-
-export type RelationalOperator =
   | '<'
   | '>'
   | '<='
   | '>='
   | 'instanceof'
   | 'in'
-
-export type RelationalOperand =
-  | ShiftExpression
-  | ShiftOperand
-
-export interface RelationalExpression {
-  readonly type: 'BinaryExpression';
-  readonly operator: RelationalOperator;
-  readonly left: RelationalOperand;
-  readonly right: RelationalOperand;
-}
-
-export const RelationalExpression = (
-  operator: RelationalOperator,
-  left: RelationalOperand,
-  right: RelationalOperand,
-): RelationalExpression => ({
-  type: 'BinaryExpression',
-  operator,
-  left,
-  right,
-});
-
-export type EqualityOperator =
   | '=='
   | '!='
   | '==='
   | '!=='
-
-export type EqualityOperand =
-  | RelationalExpression
-  | RelationalOperand
-
-export interface EqualityExpression {
-  readonly type: 'BinaryExpression';
-  readonly operator: EqualityOperator;
-  readonly left: EqualityOperand;
-  readonly right: EqualityOperand;
-}
-
-export const EqualityExpression = (
-  operator: EqualityOperator,
-  left: EqualityOperand,
-  right: EqualityOperand,
-): EqualityExpression => ({
-  type: 'BinaryExpression',
-  operator,
-  left,
-  right,
-});
-
-export type BitwiseANDOperator =
   | '&'
-
-export type BitwiseANDOperand =
-  | EqualityExpression
-  | EqualityOperand
-
-export interface BitwiseANDExpression {
-  readonly type: 'BinaryExpression';
-  readonly operator: BitwiseANDOperator;
-  readonly left: BitwiseANDOperand;
-  readonly right: BitwiseANDOperand;
-}
-
-export const BitwiseANDExpression = (
-  operator: BitwiseANDOperator,
-  left: BitwiseANDOperand,
-  right: BitwiseANDOperand,
-): BitwiseANDExpression => ({
-  type: 'BinaryExpression',
-  operator,
-  left,
-  right,
-});
-
-export type BitwiseXOROperator =
   | '^'
-
-export type BitwiseXOROperand =
-  | BitwiseANDExpression
-  | BitwiseANDOperand
-
-export interface BitwiseXORExpression {
-  readonly type: 'BinaryExpression';
-  readonly operator: BitwiseXOROperator;
-  readonly left: BitwiseXOROperand;
-  readonly right: BitwiseXOROperand;
-}
-
-export const BitwiseXORExpression = (
-  operator: BitwiseXOROperator,
-  left: BitwiseXOROperand,
-  right: BitwiseXOROperand,
-): BitwiseXORExpression => ({
-  type: 'BinaryExpression',
-  operator,
-  left,
-  right,
-});
-
-export type BitwiseOROperator =
   | '|'
 
-export type BitwiseOROperand =
-  | BitwiseXORExpression
-  | BitwiseXOROperand
+export type BinaryOperand =
+  | PrimaryExpression
 
-export interface BitwiseORExpression {
+export interface BinaryExpression {
   readonly type: 'BinaryExpression';
-  readonly operator: BitwiseOROperator;
-  readonly left: BitwiseOROperand;
-  readonly right: BitwiseOROperand;
+  readonly operator: BinaryOperator;
+  readonly left: BinaryOperand;
+  readonly right: BinaryOperand;
 }
 
-export const BitwiseORExpression = (
-  operator: BitwiseOROperator,
-  left: BitwiseOROperand,
-  right: BitwiseOROperand,
-): BitwiseORExpression => ({
+export const BinaryExpression = (
+  operator: BinaryOperator,
+  left: BinaryOperand,
+  right: BinaryOperand,
+): BinaryExpression => ({
   type: 'BinaryExpression',
   operator,
   left,
   right,
 });
 
-export type BinaryExpression =
-  | ExponentiationExpression
-  | MultiplicativeExpression
-  | AdditiveExpression
-  | ShiftExpression
-  | RelationalExpression
-  | EqualityExpression
-  | BitwiseANDExpression
-  | BitwiseXORExpression
-  | BitwiseORExpression
-
-export type LogicalANDOperator =
+export type LogicalOperator =
   | '&&'
-
-export type LogicalANDOperand =
-  | BitwiseORExpression
-  | BitwiseOROperand
-
-export interface LogicalANDExpression {
-  readonly type: 'LogicalExpression';
-  readonly operator: LogicalANDOperator;
-  readonly left: LogicalANDOperand;
-  readonly right: LogicalANDOperand;
-}
-
-export const LogicalANDExpression = (
-  operator: LogicalANDOperator,
-  left: LogicalANDOperand,
-  right: LogicalANDOperand,
-): LogicalANDExpression => ({
-  type: 'LogicalExpression',
-  operator,
-  left,
-  right,
-});
-
-export type LogicalOROperator =
   | '||'
-
-export type LogicalOROperand =
-  | LogicalANDExpression
-  | LogicalANDOperand
-
-export interface LogicalORExpression {
-  readonly type: 'LogicalExpression';
-  readonly operator: LogicalOROperator;
-  readonly left: LogicalOROperand;
-  readonly right: LogicalOROperand;
-}
-
-export const LogicalORExpression = (
-  operator: LogicalOROperator,
-  left: LogicalOROperand,
-  right: LogicalOROperand,
-): LogicalORExpression => ({
-  type: 'LogicalExpression',
-  operator,
-  left,
-  right,
-});
-
-export type CoalesceOperator =
   | '??'
 
-export type CoalesceOperand =
-  | LogicalORExpression
-  | LogicalOROperand
+export type LogicalOperand =
+  | BinaryExpression
 
-export interface CoalesceExpression {
+export interface LogicalExpression {
   readonly type: 'LogicalExpression';
-  readonly operator: CoalesceOperator;
-  readonly left: CoalesceOperand;
-  readonly right: CoalesceOperand;
+  readonly operator: LogicalOperator;
+  readonly left: LogicalOperand;
+  readonly right: LogicalOperand;
 }
 
-export const CoalesceExpression = (
-  operator: CoalesceOperator,
-  left: CoalesceOperand,
-  right: CoalesceOperand,
-): CoalesceExpression => ({
+export const LogicalExpression = (
+  operator: LogicalOperator,
+  left: LogicalOperand,
+  right: LogicalOperand,
+): LogicalExpression => ({
   type: 'LogicalExpression',
   operator,
   left,
   right,
 });
-
-export type LogicalExpression =
-  | LogicalANDExpression
-  | LogicalORExpression
-  | CoalesceExpression
 
 export interface ConditionalExpression {
   readonly type: 'ConditionalExpression';
@@ -637,6 +379,21 @@ export const ConditionalExpression = (
   predicate,
   consequent,
   alternative,
+});
+
+export interface PipeExpression {
+  readonly type: 'PipeExpression';
+  readonly head: Expression;
+  readonly body: Expression;
+}
+
+export const PipeExpression = (
+  head: Expression,
+  body: Expression,
+): PipeExpression => ({
+  type: 'PipeExpression',
+  head,
+  body,
 });
 
 export interface NewExpression {
@@ -662,7 +419,7 @@ export interface Application {
 
 export const Application = (
   callee: Expression,
-  args: ReadonlyArray<Expression>,
+  args: ReadonlyArray<SpreadElement | Expression>,
 ): Application => ({
   type: 'Application',
   callee,
@@ -677,7 +434,7 @@ export interface CallExpression {
 
 export const CallExpression = (
   callee: Expression,
-  args: ReadonlyArray<Expression>,
+  args: ReadonlyArray<SpreadElement | Expression>,
 ): CallExpression => ({
   type: 'CallExpression',
   callee,
@@ -701,6 +458,7 @@ export type Expression =
   | BinaryExpression
   | LogicalExpression
   | ConditionalExpression
+  | PipeExpression
   | NewExpression
   | Application
   | CallExpression

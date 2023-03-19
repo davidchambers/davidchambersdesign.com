@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -92,33 +91,34 @@ import {
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      strong('Chris Coyier has done it again.'),
-      '\n      Compelled me to stay up all night, that is\n      (it\'s 7am as I type this). In Chris\'s latest screencast, ',
-      a('http://css-tricks.com/video-screencasts/82-css-image-switcher/')('CSS Image Switcher'),
-      ', he demonstrates how to create an\n      "image switcher" using CSS. The problem, though, is that ',
-      strong('his process is wrong'),
-      '.'
-    ]),
-    h4('Incorrect process'),
-    ol([
-      li(['What effect or experience do I want to create?']),
-      li(['How can I achieve this using CSS (and JavaScript if necessary)?']),
-      li(['What can my markup do to help me?'])
-    ]),
-    h4('Correct process'),
-    ol([
-      li(['What effect or experience do I want to create?']),
-      li(['What is the most correct and meaningful way to describe\n         the content?']),
-      li([
-        'How can I achieve the desired effect or experience\n        (or something close to it) ',
-        em('without'),
-        ' altering\n        my markup?'
-      ])
-    ])
+const excerpt = [
+  p([
+    strong('Chris Coyier has done it again.'),
+    '\n    Compelled me to stay up all night, that is\n    (it\'s 7am as I type this). In Chris\'s latest screencast, ',
+    a('http://css-tricks.com/video-screencasts/82-css-image-switcher/')('CSS Image Switcher'),
+    ', he demonstrates how to create an\n    "image switcher" using CSS. The problem, though, is that ',
+    strong('his process is wrong'),
+    '.'
   ]),
+  h4('Incorrect process'),
+  ol([
+    li(['What effect or experience do I want to create?']),
+    li(['How can I achieve this using CSS (and JavaScript if necessary)?']),
+    li(['What can my markup do to help me?'])
+  ]),
+  h4('Correct process'),
+  ol([
+    li(['What effect or experience do I want to create?']),
+    li(['What is the most correct and meaningful way to describe\n       the content?']),
+    li([
+      'How can I achieve the desired effect or experience\n      (or something close to it) ',
+      em('without'),
+      ' altering\n      my markup?'
+    ])
+  ])
+];
+const body = [
+  ...excerpt,
   p([
     'Chris simply isn\'t in the right mindset. He\'s thinking\n    about ',
     em('how'),

@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -88,8 +87,9 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
+const excerpt = [p(['One question I\'m fond of asking in interviews is how to create\n    a set of strings to which values may be added in an efficient\n    manner. Furthermore, membership checks must be reliable and as\n    fast as possible. This post can be considered the model answer.\n    ;)'])];
 const body = [
-  excerpt([p(['One question I\'m fond of asking in interviews is how to create\n      a set of strings to which values may be added in an efficient\n      manner. Furthermore, membership checks must be reliable and as\n      fast as possible. This post can be considered the model answer.\n      ;)'])]),
+  ...excerpt,
   hr,
   p(['JavaScript is a small language. So small, in fact, that\n    several useful constructs are entirely absent. Just two\n    types of collection are provided: arrays and objects\n    (and even these are less different than they appear).\n    Sets (collections of unique values) and dictionaries\n    (collections which map unique values to other values)\n    are the most glaring omissions.']),
   h3('How does Python do it?'),

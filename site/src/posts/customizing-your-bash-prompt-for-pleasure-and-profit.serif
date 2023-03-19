@@ -11,25 +11,27 @@ export default {
   body: body,
 };
 
+excerpt = [
+  p [
+   "Mac OS X's default bash prompt is dull and uninformative.",
+  ],
+  captioned-images [{
+    alt: "Mac OS X's default bash prompt",
+    src: "/images/posts/80/windows/default-os-x-bash-prompt.png",
+    caption: [
+     "Mac OS X's default bash prompt",
+    ],
+  }],
+  p [
+   "Since only the current directory name is visible, I find
+    myself running ", code "pwd", " more often than is healthy.
+    Also, I find the uneven prompt length jarring.",
+  ],
+];
+
 body = [
 
-  excerpt [
-    p [
-     "Mac OS X's default bash prompt is dull and uninformative.",
-    ],
-    captioned-images [{
-      alt: "Mac OS X's default bash prompt",
-      src: "/images/posts/80/windows/default-os-x-bash-prompt.png",
-      caption: [
-       "Mac OS X's default bash prompt",
-      ],
-    }],
-    p [
-     "Since only the current directory name is visible, I find
-      myself running ", code "pwd", " more often than is healthy.
-      Also, I find the uneven prompt length jarring.",
-    ],
-  ],
+  ...excerpt,
 
   p [
    "My solution to both of these problems is to include the full

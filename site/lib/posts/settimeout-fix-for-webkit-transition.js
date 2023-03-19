@@ -1,7 +1,6 @@
 import {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
@@ -92,20 +91,19 @@ import {
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
-const body = [
-  excerpt([
-    p([
-      'Here\'s a simple animation which utilizes ',
-      code('webkitTransition'),
-      ':'
-    ]),
-    p$0027({
-      id: 'transition-example-1',
-      style: 'position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;'
-    })(['Click to animate']),
-    script({})('(function () {\n           var element = document.getElementById(\'transition-example-1\');\n           element.style.webkitTransitionProperty = \'left\';\n           element.style.webkitTransitionDuration = \'2s\';\n           element.addEventListener(\'click\', function () {\n               this.style.left = \'100px\';\n               this.addEventListener(\'webkitTransitionEnd\', function () {\n                   this.style.left = 0;\n               });\n           });\n       })();'),
-    p(['The code behind this example is not complicated:']),
-    code$002Dblock(Symbol.for('javascript'))(`element.style.webkitTransitionProperty = 'left';
+const excerpt = [
+  p([
+    'Here\'s a simple animation which utilizes ',
+    code('webkitTransition'),
+    ':'
+  ]),
+  p$0027({
+    id: 'transition-example-1',
+    style: 'position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;'
+  })(['Click to animate']),
+  script({})('(function () {\n         var element = document.getElementById(\'transition-example-1\');\n         element.style.webkitTransitionProperty = \'left\';\n         element.style.webkitTransitionDuration = \'2s\';\n         element.addEventListener(\'click\', function () {\n             this.style.left = \'100px\';\n             this.addEventListener(\'webkitTransitionEnd\', function () {\n                 this.style.left = 0;\n             });\n         });\n     })();'),
+  p(['The code behind this example is not complicated:']),
+  code$002Dblock(Symbol.for('javascript'))(`element.style.webkitTransitionProperty = 'left';
 element.style.webkitTransitionDuration = '2s';
 element.addEventListener('click', function () {
     this.style.left = '100px';
@@ -114,7 +112,9 @@ element.addEventListener('click', function () {
     });
 });
 `)
-  ]),
+];
+const body = [
+  ...excerpt,
   p(['The following example, though, does not act as one might expect!']),
   p$0027({
     id: 'transition-example-2',

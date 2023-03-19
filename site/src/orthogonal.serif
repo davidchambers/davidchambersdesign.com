@@ -28,10 +28,11 @@ simplify paths = {
 };
 
 render paths = {
-  {simplify paths}
-  .flat()
-  .map(x => if typeof x === "symbol" then Symbol.keyFor x else String x)
-  .join(" ")
+  paths
+  |> simplify
+  |> ?.flat()
+  |> ?.map(x => if typeof x === "symbol" then Symbol.keyFor x else String x)
+  |> ?.join(" ")
 };
 
 ⇦ x = [:m, [-x, 0]];

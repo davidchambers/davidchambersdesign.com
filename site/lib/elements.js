@@ -1,21 +1,26 @@
 import S from 'sanctuary';
-const escape = S.pipe([
-  s => s.replaceAll('&', '&amp;'),
-  s => s.replaceAll('<', '&lt;'),
-  s => s.replaceAll('>', '&gt;')
-]);
+const escape = s => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 const text = value => ({
+  ['text-node']: true,
+  value: value,
   text: [value],
   render: indent => level => inline => escape(value)
 });
 const canonicalize$002Dchildren = children => (Array.isArray(children) ? children : [children]).map(child => typeof child == 'string' ? text(child.replace(new RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', '')) : child);
-const render$002Dblock$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ Object.entries(attrs).map(([name, value]) => ` ${ name }="${ escape(`${ value }`.replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`).join('') }>\n${ children.map(child => child.render(indent)(level + 1)(false)).join('') }${ indent.repeat(level) }</${ Symbol.keyFor(tag$002Dname) }>\n`;
-const render$002Dinline$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ Object.entries(attrs).map(([name, value]) => ` ${ name }="${ escape(`${ value }`.replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`).join('') }>${ children.map(child => child.render(indent)(0)(true)).join('') }</${ Symbol.keyFor(tag$002Dname) }>${ inline ? '' : '\n' }`;
-const render$002Dself$002Dclosing$002Delement = tag$002Dname => attrs => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ Object.entries(attrs).map(([name, value]) => ` ${ name }="${ escape(`${ value }`.replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`).join('') } />${ inline ? '' : '\n' }`;
+const render$002Dnode = indent => level => inline => node => node['text-node'] ? escape(node.value) : node['self-closing'] ? render$002Dself$002Dclosing$002Delement(node['tag-name'])(node.attributes)(indent)(level)(inline) : inline || node.format === Symbol.for('inline') ? render$002Dinline$002Delement(node['tag-name'])(node.attributes)(node.children)(indent)(level)(inline) : render$002Dblock$002Delement(node['tag-name'])(node.attributes)(node.children)(indent)(level)(inline);
+const render$002Dattributes = attrs => Object.entries(attrs).map(([name, value]) => ` ${ name }="${ escape(`${ value }`.replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`).join('');
+const render$002Dblock$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ render$002Dattributes(attrs) }>\n${ children.map(render$002Dnode(indent)(level + 1)(inline)).join('') }${ indent.repeat(level) }</${ Symbol.keyFor(tag$002Dname) }>\n`;
+const render$002Dinline$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ render$002Dattributes(attrs) }>${ children.map(render$002Dnode(indent)(0)(true)).join('') }</${ Symbol.keyFor(tag$002Dname) }>${ inline ? '' : '\n' }`;
+const render$002Dself$002Dclosing$002Delement = tag$002Dname => attrs => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ render$002Dattributes(attrs) } />${ inline ? '' : '\n' }`;
 const block$002Delement = tag$002Dname => attrs => children => (() => {
   const children$0027 = canonicalize$002Dchildren(children);
   return {
+    ['text-node']: false,
+    ['self-closing']: false,
     format: Symbol.for('block'),
+    ['tag-name']: tag$002Dname,
+    attributes: attrs,
+    children: canonicalize$002Dchildren(children),
     text: children$0027.flatMap(child => child.text),
     render: render$002Dblock$002Delement(tag$002Dname)(attrs)(children$0027)
   };
@@ -24,7 +29,12 @@ const inline$002Delement = tag$002Dname => attrs => children => (() => {
   const children$0027 = canonicalize$002Dchildren(children);
   const format = children$0027.some(node => node.format === Symbol.for('block')) ? Symbol.for('block') : Symbol.for('inline');
   return {
+    ['text-node']: false,
+    ['self-closing']: false,
     format: format,
+    ['tag-name']: tag$002Dname,
+    attributes: attrs,
+    children: canonicalize$002Dchildren(children),
     text: children$0027.flatMap(child => child.text),
     render: indent => level => inline => (() => {
       const render = format === Symbol.for('inline') ? render$002Dinline$002Delement : render$002Dblock$002Delement;
@@ -33,18 +43,15 @@ const inline$002Delement = tag$002Dname => attrs => children => (() => {
   };
 })();
 const self$002Dclosing$002Delement = tag$002Dname => attrs => ({
+  ['text-node']: false,
+  ['self-closing']: true,
   format: Symbol.for('inline'),
+  ['tag-name']: tag$002Dname,
+  attributes: attrs,
+  children: [],
   text: [],
   render: render$002Dself$002Dclosing$002Delement(tag$002Dname)(attrs)
 });
-const excerpt = children => (() => {
-  const children$0027 = canonicalize$002Dchildren(children);
-  const render = indent => level => inline => children$0027.map(child => child.render(indent)(level)(inline)).join('');
-  return {
-    text: children$0027.flatMap(child => child.text),
-    render: render
-  };
-})();
 const html$0027 = block$002Delement(Symbol.for('html'));
 const html = html$0027({});
 const head$0027 = block$002Delement(Symbol.for('head'));
@@ -141,7 +148,6 @@ const stop = self$002Dclosing$002Delement(Symbol.for('stop'));
 export {
   canonicalize$002Dchildren,
   text,
-  excerpt,
   a,
   a$0027,
   article,
