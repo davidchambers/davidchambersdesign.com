@@ -128,7 +128,7 @@ export default {
   id: 53,
   slug: 'wmd-ftw',
   title: 'wmd ftw!',
-  datetime: datetime('2010-06-13')('11:25:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-06-13')('11:25:00')('Pacific/Auckland'),
   tags: [
     'javascript',
     'markdown',

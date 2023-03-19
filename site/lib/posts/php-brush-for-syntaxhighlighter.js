@@ -141,7 +141,7 @@ const body = [
     strong('variable'),
     ' for exactly what you\'d expect.'
   ]),
-  update(datetime('2009-08-16')('02:33:00')(Symbol.for('Pacific/Auckland')))([
+  update(datetime('2009-08-16')('02:33:00')('Pacific/Auckland'))([
     p(['Until this point I have had a class name added to each\n      div.syntaxhighlighter element to allow code to be coloured\n      in a language-specific manner. This approach fails, however,\n      when a highlighted block features two languages (PHP and HTML,\n      for example). CSS selectors cannot differentiate between\n      two code elements with the same class name in the same\n      div.syntaxhighlighter element.']),
     p([
       'Each language, therefore, needs to use its own class names.\n      It is easy to differentiate ',
@@ -174,7 +174,7 @@ const body = [
       '.'
     ])
   ]),
-  code$002Dblock(Symbol.for('php'))(`<?php
+  code$002Dblock('php')(`<?php
 
 'single-quoted string';
 
@@ -206,7 +206,7 @@ export default {
   id: 16,
   slug: 'php-brush-for-syntaxhighlighter',
   title: 'PHP brush for SyntaxHighlighter',
-  datetime: datetime('2009-06-08')('17:00:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-06-08')('17:00:00')('Pacific/Auckland'),
   tags: [
     'javascript',
     'php',

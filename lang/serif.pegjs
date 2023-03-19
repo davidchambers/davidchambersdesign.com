@@ -109,25 +109,6 @@ TemplateLiteralChar
   / '$' !'{'  { return '$'; }
   / !'`' !'$' c:.  { return c; }
 
-SymbolLiteral
-  = ':' name:$(SymbolChar)+
-    { return Serif.SymbolLiteral(name); }
-
-SymbolChar
-  = !Whitespace
-    !'\u0022' // QUOTATION MARK
-    !'\u0028' // LEFT PARENTHESIS
-    !'\u0029' // RIGHT PARENTHESIS
-    !'\u002C' // COMMA
-    !'\u002E' // FULL STOP
-    !'\u003A' // COLON
-    !'\u003B' // SEMICOLON
-    !'\u005B' // LEFT SQUARE BRACKET
-    !'\u005D' // RIGHT SQUARE BRACKET
-    !'\u007B' // LEFT CURLY BRACKET
-    !'\u007D' // RIGHT CURLY BRACKET
-    .
-
 ElseToken           = 'else'            !IdentifierPart     { return text(); }
 ExportToken         = 'export'          !IdentifierPart     { return text(); }
 IfToken             = 'if'              !IdentifierPart     { return text(); }
@@ -241,7 +222,6 @@ MemberExpression
       / NumberLiteral
       / StringLiteral
       / TemplateLiteral
-      / SymbolLiteral
       / ArrayExpression
       / ObjectExpression
       / ImportMeta
@@ -250,8 +230,7 @@ MemberExpression
       / BlockExpression
     )
     properties:(
-        SymbolLiteral
-      / _ '.' ident:Identifier          { return Serif.StringLiteral(ident.name); }
+        _ '.' ident:Identifier          { return Serif.StringLiteral(ident.name); }
       / '[' _ property:Expression _ ']' { return property; }
     )*
     { return properties.reduce(Serif.MemberExpression, object); }
@@ -264,7 +243,6 @@ CallExpression
   = head:MemberExpression
     tail:(
         _ args:Arguments                { return expr => Serif.CallExpression(expr, args); }
-      / symbol:SymbolLiteral            { return expr => Serif.MemberExpression(expr, symbol); }
       / _ '.' ident:Identifier          { return expr => Serif.MemberExpression(expr, Serif.StringLiteral(ident.name)); }
       / '[' _ property:Expression _ ']' { return expr => Serif.MemberExpression(expr, property); }
     )*

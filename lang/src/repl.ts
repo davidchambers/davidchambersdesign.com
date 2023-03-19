@@ -46,7 +46,7 @@ function print(x: any): string {
     case '[object String]':
       return `\x1B[32m${JSON.stringify(x)}\x1B[0m`;
     case '[object Symbol]':
-      return `\x1B[36m:${Symbol.keyFor(x)}\x1B[0m`;
+      return `Symbol.for ${print(Symbol.keyFor(x))}`;
     case '[object Date]':
       return `\x1B[1mnew\x1B[0m Date(${print(Number(x))})`;
     case '[object RegExp]':

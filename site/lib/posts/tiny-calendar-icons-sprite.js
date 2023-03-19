@@ -108,10 +108,10 @@ const excerpt = [
 const body = [
   ...excerpt,
   p(['One uses a sprite by applying a background image to an element\n    using CSS. One could start with an empty span element:']),
-  code$002Dblock(Symbol.for('html'))(`<span class="day-1"></span>
+  code$002Dblock('html')(`<span class="day-1"></span>
 `),
   p(['The following CSS sets the width and height of the element and\n    sets the sprite as its background image:']),
-  code$002Dblock(Symbol.for('css'))(`span.day-1
+  code$002Dblock('css')(`span.day-1
 {
     display: block;
     width: 16px;
@@ -131,7 +131,7 @@ const body = [
       ]
     }]),
   p(['To have the "1" icon displayed, the element\'s background position\n    is specified:']),
-  code$002Dblock(Symbol.for('css'))(`span.day-1
+  code$002Dblock('css')(`span.day-1
 {
     display: block;
     width: 16px;
@@ -148,7 +148,7 @@ const body = [
       caption: ['Calendar sprite applied as background image using correct positioning']
     }]),
   p(['Here\'s the final CSS:']),
-  code$002Dblock(Symbol.for('css'))(`span.day
+  code$002Dblock('css')(`span.day
 {
     display: block;
     float: left;
@@ -200,14 +200,14 @@ span.day-31 { background-position: -100px -100px; }
     strong('day'),
     ' to streamline\n    the CSS. This must appear in the HTML, as in this example:'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<span class="day day-31"></span>
+  code$002Dblock('html')(`<span class="day day-31"></span>
 `)
 ];
 export default {
   id: 23,
   slug: 'tiny-calendar-icons-sprite',
   title: 'Tiny calendar icons sprite',
-  datetime: datetime('2009-08-28')('18:04:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-08-28')('18:04:00')('Pacific/Auckland'),
   tags: [
     'css',
     'design',

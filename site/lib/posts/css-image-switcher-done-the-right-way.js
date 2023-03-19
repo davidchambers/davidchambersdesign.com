@@ -188,7 +188,7 @@ const body = [
     $2014,
     'to be tied to an image:'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<dl>
+  code$002Dblock('html')(`<dl>
     <dt><img src="images/ds81.jpg" alt="Vancouver architecture" /></dt>
     <dd>This is not like that</dd>
     <dd>Contrasting ideas engage the mind. Make a photo today that tells
@@ -217,7 +217,7 @@ export default {
   id: 43,
   slug: 'css-image-switcher-done-the-right-way',
   title: 'CSS image switcher (done the right way)',
-  datetime: datetime('2010-03-24')('12:47:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-03-24')('12:47:00')('Pacific/Auckland'),
   tags: [
     'accessibility',
     'best-practice',

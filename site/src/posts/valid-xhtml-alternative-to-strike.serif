@@ -6,7 +6,7 @@ export default {
   id: 8,
   slug: "valid-xhtml-alternative-to-strike",
   title: ["Valid XHTML alternative to ", code "<strike>"],
-  datetime: datetime "2009-03-17" "21:53:00" :Pacific/Auckland,
+  datetime: datetime "2009-03-17" "21:53:00" "Pacific/Auckland",
   tags: ["css", "html"],
   body: body,
 };
@@ -19,7 +19,7 @@ body = [
     gave the following error:",
   ],
 
-  code-block :plain-text `
+  code-block "plain-text" `
     element "strike" undefined
   `,
 
@@ -28,7 +28,7 @@ body = [
     XHTML markup for this purpose:",
   ],
 
-  code-block :html `
+  code-block "html" `
     my favourite colour is <del>red</del> <ins>white</ins>
   `,
 
@@ -42,7 +42,7 @@ body = [
     and inserted text in your style sheet:",
   ],
 
-  code-block :css `
+  code-block "css" `
     del { text-decoration: line-through; }
     ins { text-decoration: underline; }
   `,

@@ -146,13 +146,13 @@ const body = [
     a('http://projects.skurfer.com/posts/2011/chrome_shortcut/')('opening pages in Google Chrome'),
     ' lists the (very easy)\n    steps required to enable this shortcut.'
   ]),
-  update(datetime('2011-01-30')('23:30:00')(Symbol.for('America/Los_Angeles')))([p(['Chris points out that John himself mentioned this trick\n      in his aforelinked post.'])])
+  update(datetime('2011-01-30')('23:30:00')('America/Los_Angeles'))([p(['Chris points out that John himself mentioned this trick\n      in his aforelinked post.'])])
 ];
 export default {
   id: 77,
   slug: 'safari-keyboard-shortcut-to-open-current-page-in-google-chrome',
   title: 'Safari keyboard shortcut to open current page in Google Chrome',
-  datetime: datetime('2011-01-30')('21:35:00')(Symbol.for('America/Los_Angeles')),
+  datetime: datetime('2011-01-30')('21:35:00')('America/Los_Angeles'),
   tags: [
     'flash',
     'google-chrome',

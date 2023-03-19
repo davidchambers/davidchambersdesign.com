@@ -15,7 +15,7 @@ import {
   $2193
 } from '../orthogonal.js';
 const a = rx$002Dry => angle => large$002Darc$002Dflag => sweep$002Dflag => dx$002Ddy => [
-  Symbol.for('a'),
+  'a',
   rx$002Dry,
   angle,
   large$002Darc$002Dflag,

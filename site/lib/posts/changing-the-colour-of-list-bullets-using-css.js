@@ -89,7 +89,7 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['So, you\'re about to style an unordered list of some sort...']),
-  code$002Dblock(Symbol.for('html'))(`<h1>TXJS 2011 Speakers</h1>
+  code$002Dblock('html')(`<h1>TXJS 2011 Speakers</h1>
 <ul>
   <li>Brendan Eich</li>
   <li>Alex Russell</li>
@@ -98,7 +98,7 @@ const body = [
 </ul>
 `),
   p(['You\'ve decided upon hanging square bullets in a light grey \u2013\n    nothing too distracting...']),
-  code$002Dblock(Symbol.for('css'))(`ul {
+  code$002Dblock('css')(`ul {
   list-style: square outside;
   color: #ccc;
 }
@@ -108,7 +108,7 @@ li {
 `),
   p(['This should do the trick, but doesn\'t for some reason! How the heck\n    does one target the bullets and only the bullets? As far as I know\n    it\'s not possible.']),
   h3$0027({ id: 'conventional-hack' })('Conventional hack'),
-  code$002Dblock(Symbol.for('html'))(`<h1>TXJS 2011 Speakers</h1>
+  code$002Dblock('html')(`<h1>TXJS 2011 Speakers</h1>
 <ul>
   <li><span>Brendan Eich</span></li>
   <li><span>Alex Russell</span></li>
@@ -132,7 +132,7 @@ li {
     's are ugly \u2013\n    there are ways to achieve the desired visual effect without\n    hacking the markup.'
   ]),
   h3$0027({ id: 'background-image-technique' })('Background image technique'),
-  code$002Dblock(Symbol.for('css'))(`ul {
+  code$002Dblock('css')(`ul {
   list-style: none;
 }
 li {
@@ -147,7 +147,7 @@ li {
     '.'
   ]),
   h3$0027({ id: 'pseudo-element-technique' })('Pseudo-element technique'),
-  code$002Dblock(Symbol.for('css'))(`ul {
+  code$002Dblock('css')(`ul {
   list-style: none;
 }
 li {
@@ -168,7 +168,7 @@ li:before {
 `),
   p(['So it\'s possible to fashion square bullets of any colour\n    with just a handful of straightforward declarations. Nice!']),
   p(['Prefer round bullets? No problem. :)']),
-  code$002Dblock(Symbol.for('css'))(`...
+  code$002Dblock('css')(`...
 -webkit-border-radius: 2px;
 -moz-border-radius: 2px;
 border-radius: 2px;
@@ -179,7 +179,7 @@ export default {
   id: 83,
   slug: 'changing-the-colour-of-list-bullets-using-css',
   title: 'Changing the colour of list bullets using CSS',
-  datetime: datetime('2011-04-13')('17:30:00')(Symbol.for('America/Los_Angeles')),
+  datetime: datetime('2011-04-13')('17:30:00')('America/Los_Angeles'),
   tags: [
     'css',
     'meaningful-markup'

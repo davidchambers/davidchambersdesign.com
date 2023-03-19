@@ -111,7 +111,7 @@ const excerpt = [
 const body = [
   ...excerpt,
   h3('Original CSS'),
-  code$002Dblock(Symbol.for('css'))(`ol.archives {
+  code$002Dblock('css')(`ol.archives {
   margin: 0 0 0 -21px;
   list-style: none;
 }
@@ -201,7 +201,7 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
   h3('Significant whitespace and nesting'),
   p(['As in Python and CoffeeScript, whitespace is significant in Sass.\n    As a result, squiggly brackets are not required to delimit blocks,\n    and semicolons are not required to separate one rule from the next.']),
   p(['Sass allows selectors to be nested. The main advantage of this approach\n    is that selectors needn\'t include their "context" (ancestors). It also\n    means that a style sheet\'s structure resembles that of the corresponding\n    markup.']),
-  code$002Dblock(Symbol.for('sass'))(`ol.archives
+  code$002Dblock('sass')(`ol.archives
   margin: 0 0 0 -21px
   list-style: none
   li
@@ -256,7 +256,7 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
     code('compass compile'),
     '\n    is all that\'s required to update the data URI.'
   ]),
-  code$002Dblock(Symbol.for('sass'))(`ol.archives
+  code$002Dblock('sass')(`ol.archives
   ...
   time
     ...
@@ -278,7 +278,7 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
     code('background-position'),
     ' declarations not\n    so much. Compass provides helpers for generating and\n    working with sprites, but in this case all that\'s\n    required is to generate background positions for an\n    existing sprite. The first step is to add a loop:'
   ]),
-  code$002Dblock(Symbol.for('sass'))(`@for $date from 1 through 31
+  code$002Dblock('sass')(`@for $date from 1 through 31
   // do stuff
 `),
   p([
@@ -286,7 +286,7 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
     code('$date'),
     ', can be\n    interpolated to generate the selectors:'
   ]),
-  code$002Dblock(Symbol.for('sass'))(`@for $date from 1 through 31
+  code$002Dblock('sass')(`@for $date from 1 through 31
   &[datetime*="#{$date}T"]
 `),
   p([
@@ -296,7 +296,7 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
     code('datetime*="2T"'),
     ', etc. rather than their\n    zero-padded equivalents. Adding a leading zero when\n    required is not difficult:'
   ]),
-  code$002Dblock(Symbol.for('sass'))(`@for $date from 1 through 31
+  code$002Dblock('sass')(`@for $date from 1 through 31
   @if $date < 10
     $date: "0#{$date}"
   &[datetime*="#{$date}T"]
@@ -306,7 +306,7 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
     code('background-position'),
     ' of each element:'
   ]),
-  code$002Dblock(Symbol.for('sass'))(`$offset: -20px
+  code$002Dblock('sass')(`$offset: -20px
 $x: 3
 $y: 1
   @for $date from 1 through 31
@@ -339,7 +339,7 @@ export default {
   id: 91,
   slug: 'higher-level-style-sheets',
   title: 'Higher-level style sheets',
-  datetime: datetime('2011-10-02')('23:00:00')(Symbol.for('America/Los_Angeles')),
+  datetime: datetime('2011-10-02')('23:00:00')('America/Los_Angeles'),
   tags: [
     'best-practice',
     'compass',

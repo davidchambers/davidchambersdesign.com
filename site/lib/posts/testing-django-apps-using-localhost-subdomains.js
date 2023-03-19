@@ -98,7 +98,7 @@ const body = [
         code('middleware.py'),
         ' in my project directory:'
       ]),
-      code$002Dblock(Symbol.for('python'))(`class SubdomainMiddleware:
+      code$002Dblock('python')(`class SubdomainMiddleware:
     def process_request(self, request):
         '''Parse out the subdomain from the request'''
         request.subdomain = None
@@ -114,7 +114,7 @@ const body = [
         code('MIDDLEWARE_CLASSES'),
         ':'
       ]),
-      code$002Dblock(Symbol.for('python'))(`MIDDLEWARE_CLASSES = (
+      code$002Dblock('python')(`MIDDLEWARE_CLASSES = (
     ...,
     'middleware.SubdomainMiddleware',
 )
@@ -126,7 +126,7 @@ const body = [
         code('/etc/hosts'),
         ' file as per Dave\'s suggestion:'
       ]),
-      code$002Dblock(Symbol.for('plain-text'))(`127.0.0.1 test.com
+      code$002Dblock('plain-text')(`127.0.0.1 test.com
 127.0.0.1 blog.test.com
 127.0.0.1 search.test.com
 `),
@@ -146,7 +146,7 @@ const body = [
     ]),
     li([
       p(['I added the port number to the address:']),
-      code$002Dblock(Symbol.for('plain-text'))(`http://test.com:8000/
+      code$002Dblock('plain-text')(`http://test.com:8000/
 `),
       p([
         'This ',
@@ -160,7 +160,7 @@ export default {
   id: 56,
   slug: 'testing-django-apps-using-localhost-subdomains',
   title: 'Testing Django apps using localhost subdomains',
-  datetime: datetime('2010-07-04')('08:23:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-07-04')('08:23:00')('Pacific/Auckland'),
   tags: [
     'django',
     'mac-os-x'

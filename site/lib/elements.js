@@ -7,17 +7,17 @@ const text = value => ({
   render: indent => level => inline => escape(value)
 });
 const canonicalize$002Dchildren = children => (Array.isArray(children) ? children : [children]).map(child => typeof child == 'string' ? text(child.replace(new RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', '')) : child);
-const render$002Dnode = indent => level => inline => node => node['text-node'] ? escape(node.value) : node['self-closing'] ? render$002Dself$002Dclosing$002Delement(node['tag-name'])(node.attributes)(indent)(level)(inline) : inline || node.format === Symbol.for('inline') ? render$002Dinline$002Delement(node['tag-name'])(node.attributes)(node.children)(indent)(level)(inline) : render$002Dblock$002Delement(node['tag-name'])(node.attributes)(node.children)(indent)(level)(inline);
+const render$002Dnode = indent => level => inline => node => node['text-node'] ? escape(node.value) : node['self-closing'] ? render$002Dself$002Dclosing$002Delement(node['tag-name'])(node.attributes)(indent)(level)(inline) : inline || node.format === 'inline' ? render$002Dinline$002Delement(node['tag-name'])(node.attributes)(node.children)(indent)(level)(inline) : render$002Dblock$002Delement(node['tag-name'])(node.attributes)(node.children)(indent)(level)(inline);
 const render$002Dattributes = attrs => Object.entries(attrs).map(([name, value]) => ` ${ name }="${ escape(`${ value }`.replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`).join('');
-const render$002Dblock$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ render$002Dattributes(attrs) }>\n${ children.map(render$002Dnode(indent)(level + 1)(inline)).join('') }${ indent.repeat(level) }</${ Symbol.keyFor(tag$002Dname) }>\n`;
-const render$002Dinline$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ render$002Dattributes(attrs) }>${ children.map(render$002Dnode(indent)(0)(true)).join('') }</${ Symbol.keyFor(tag$002Dname) }>${ inline ? '' : '\n' }`;
-const render$002Dself$002Dclosing$002Delement = tag$002Dname => attrs => indent => level => inline => `${ indent.repeat(level) }<${ Symbol.keyFor(tag$002Dname) }${ render$002Dattributes(attrs) } />${ inline ? '' : '\n' }`;
+const render$002Dblock$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ tag$002Dname }${ render$002Dattributes(attrs) }>\n${ children.map(render$002Dnode(indent)(level + 1)(inline)).join('') }${ indent.repeat(level) }</${ tag$002Dname }>\n`;
+const render$002Dinline$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ tag$002Dname }${ render$002Dattributes(attrs) }>${ children.map(render$002Dnode(indent)(0)(true)).join('') }</${ tag$002Dname }>${ inline ? '' : '\n' }`;
+const render$002Dself$002Dclosing$002Delement = tag$002Dname => attrs => indent => level => inline => `${ indent.repeat(level) }<${ tag$002Dname }${ render$002Dattributes(attrs) } />${ inline ? '' : '\n' }`;
 const block$002Delement = tag$002Dname => attrs => children => (() => {
   const children$0027 = canonicalize$002Dchildren(children);
   return {
     ['text-node']: false,
     ['self-closing']: false,
-    format: Symbol.for('block'),
+    format: 'block',
     ['tag-name']: tag$002Dname,
     attributes: attrs,
     children: canonicalize$002Dchildren(children),
@@ -27,7 +27,7 @@ const block$002Delement = tag$002Dname => attrs => children => (() => {
 })();
 const inline$002Delement = tag$002Dname => attrs => children => (() => {
   const children$0027 = canonicalize$002Dchildren(children);
-  const format = children$0027.some(node => node.format === Symbol.for('block')) ? Symbol.for('block') : Symbol.for('inline');
+  const format = children$0027.some(node => node.format === 'block') ? 'block' : 'inline';
   return {
     ['text-node']: false,
     ['self-closing']: false,
@@ -37,7 +37,7 @@ const inline$002Delement = tag$002Dname => attrs => children => (() => {
     children: canonicalize$002Dchildren(children),
     text: children$0027.flatMap(child => child.text),
     render: indent => level => inline => (() => {
-      const render = format === Symbol.for('inline') ? render$002Dinline$002Delement : render$002Dblock$002Delement;
+      const render = format === 'inline' ? render$002Dinline$002Delement : render$002Dblock$002Delement;
       return render(tag$002Dname)(attrs)(children$0027)(indent)(level)(inline);
     })()
   };
@@ -45,106 +45,106 @@ const inline$002Delement = tag$002Dname => attrs => children => (() => {
 const self$002Dclosing$002Delement = tag$002Dname => attrs => ({
   ['text-node']: false,
   ['self-closing']: true,
-  format: Symbol.for('inline'),
+  format: 'inline',
   ['tag-name']: tag$002Dname,
   attributes: attrs,
   children: [],
   text: [],
   render: render$002Dself$002Dclosing$002Delement(tag$002Dname)(attrs)
 });
-const html$0027 = block$002Delement(Symbol.for('html'));
+const html$0027 = block$002Delement('html');
 const html = html$0027({});
-const head$0027 = block$002Delement(Symbol.for('head'));
+const head$0027 = block$002Delement('head');
 const head = head$0027({});
-const title$0027 = inline$002Delement(Symbol.for('title'));
+const title$0027 = inline$002Delement('title');
 const title = title$0027({});
-const base = self$002Dclosing$002Delement(Symbol.for('base'));
-const link = self$002Dclosing$002Delement(Symbol.for('link'));
-const meta = self$002Dclosing$002Delement(Symbol.for('meta'));
-const style$0027 = block$002Delement(Symbol.for('style'));
-const body$0027 = block$002Delement(Symbol.for('body'));
+const base = self$002Dclosing$002Delement('base');
+const link = self$002Dclosing$002Delement('link');
+const meta = self$002Dclosing$002Delement('meta');
+const style$0027 = block$002Delement('style');
+const body$0027 = block$002Delement('body');
 const body = body$0027({});
-const article$0027 = block$002Delement(Symbol.for('article'));
+const article$0027 = block$002Delement('article');
 const article = article$0027({});
-const section$0027 = block$002Delement(Symbol.for('section'));
-const nav$0027 = block$002Delement(Symbol.for('nav'));
+const section$0027 = block$002Delement('section');
+const nav$0027 = block$002Delement('nav');
 const nav = nav$0027({});
-const aside$0027 = inline$002Delement(Symbol.for('aside'));
+const aside$0027 = inline$002Delement('aside');
 const aside = aside$0027({});
-const h1$0027 = inline$002Delement(Symbol.for('h1'));
+const h1$0027 = inline$002Delement('h1');
 const h1 = h1$0027({});
-const h2$0027 = inline$002Delement(Symbol.for('h2'));
+const h2$0027 = inline$002Delement('h2');
 const h2 = h2$0027({});
-const h3$0027 = inline$002Delement(Symbol.for('h3'));
+const h3$0027 = inline$002Delement('h3');
 const h3 = h3$0027({});
-const h4$0027 = inline$002Delement(Symbol.for('h4'));
+const h4$0027 = inline$002Delement('h4');
 const h4 = h4$0027({});
-const h5$0027 = inline$002Delement(Symbol.for('h5'));
+const h5$0027 = inline$002Delement('h5');
 const h5 = h5$0027({});
-const h6$0027 = inline$002Delement(Symbol.for('h6'));
+const h6$0027 = inline$002Delement('h6');
 const h6 = h6$0027({});
-const hgroup$0027 = block$002Delement(Symbol.for('hgroup'));
-const header$0027 = block$002Delement(Symbol.for('header'));
+const hgroup$0027 = block$002Delement('hgroup');
+const header$0027 = block$002Delement('header');
 const header = header$0027({});
-const footer$0027 = block$002Delement(Symbol.for('footer'));
+const footer$0027 = block$002Delement('footer');
 const footer = footer$0027({});
-const address$0027 = block$002Delement(Symbol.for('address'));
-const p$0027 = inline$002Delement(Symbol.for('p'));
+const address$0027 = block$002Delement('address');
+const p$0027 = inline$002Delement('p');
 const p = p$0027({});
-const hr$0027 = self$002Dclosing$002Delement(Symbol.for('hr'));
+const hr$0027 = self$002Dclosing$002Delement('hr');
 const hr = hr$0027({});
-const pre$0027 = inline$002Delement(Symbol.for('pre'));
+const pre$0027 = inline$002Delement('pre');
 const pre = pre$0027({});
-const blockquote$0027 = block$002Delement(Symbol.for('blockquote'));
+const blockquote$0027 = block$002Delement('blockquote');
 const blockquote = blockquote$0027({});
-const ol$0027 = block$002Delement(Symbol.for('ol'));
+const ol$0027 = block$002Delement('ol');
 const ol = ol$0027({});
-const ul$0027 = block$002Delement(Symbol.for('ul'));
+const ul$0027 = block$002Delement('ul');
 const ul = ul$0027({});
-const menu$0027 = block$002Delement(Symbol.for('menu'));
-const li$0027 = inline$002Delement(Symbol.for('li'));
+const menu$0027 = block$002Delement('menu');
+const li$0027 = inline$002Delement('li');
 const li = li$0027({});
-const dl$0027 = block$002Delement(Symbol.for('dl'));
+const dl$0027 = block$002Delement('dl');
 const dl = dl$0027({});
-const dt$0027 = inline$002Delement(Symbol.for('dt'));
+const dt$0027 = inline$002Delement('dt');
 const dt = dt$0027({});
-const dd$0027 = inline$002Delement(Symbol.for('dd'));
+const dd$0027 = inline$002Delement('dd');
 const dd = dd$0027({});
-const figure$0027 = block$002Delement(Symbol.for('figure'));
-const figcaption$0027 = block$002Delement(Symbol.for('figcaption'));
-const main$0027 = block$002Delement(Symbol.for('main'));
-const div = block$002Delement(Symbol.for('div'));
-const b = inline$002Delement(Symbol.for('b'))({});
-const mask = block$002Delement(Symbol.for('mask'));
-const rect = self$002Dclosing$002Delement(Symbol.for('rect'));
-const linearGradient = block$002Delement(Symbol.for('linearGradient'));
-const object = block$002Delement(Symbol.for('object'));
-const svg = block$002Delement(Symbol.for('svg'));
-const a$0027 = inline$002Delement(Symbol.for('a'));
+const figure$0027 = block$002Delement('figure');
+const figcaption$0027 = block$002Delement('figcaption');
+const main$0027 = block$002Delement('main');
+const div = block$002Delement('div');
+const b = inline$002Delement('b')({});
+const mask = block$002Delement('mask');
+const rect = self$002Dclosing$002Delement('rect');
+const linearGradient = block$002Delement('linearGradient');
+const object = block$002Delement('object');
+const svg = block$002Delement('svg');
+const a$0027 = inline$002Delement('a');
 const a = href => a$0027({ href: href });
-const code$0027 = inline$002Delement(Symbol.for('code'));
-const code = inline$002Delement(Symbol.for('code'))({});
-const del$0027 = inline$002Delement(Symbol.for('del'));
-const del = inline$002Delement(Symbol.for('del'))({});
-const em$0027 = inline$002Delement(Symbol.for('em'));
-const em = inline$002Delement(Symbol.for('em'))({});
-const i$0027 = inline$002Delement(Symbol.for('i'));
-const i = inline$002Delement(Symbol.for('i'))({});
-const ins$0027 = inline$002Delement(Symbol.for('ins'));
-const ins = inline$002Delement(Symbol.for('ins'))({});
-const script = inline$002Delement(Symbol.for('script'));
-const span = inline$002Delement(Symbol.for('span'));
-const strong$0027 = inline$002Delement(Symbol.for('strong'));
-const strong = inline$002Delement(Symbol.for('strong'))({});
-const time = inline$002Delement(Symbol.for('time'));
-const var$0027 = inline$002Delement(Symbol.for('var'));
-const var_ = inline$002Delement(Symbol.for('var'))({});
-const video = inline$002Delement(Symbol.for('video'));
-const embed = self$002Dclosing$002Delement(Symbol.for('embed'));
-const img = self$002Dclosing$002Delement(Symbol.for('img'));
-const param = self$002Dclosing$002Delement(Symbol.for('param'));
-const path = self$002Dclosing$002Delement(Symbol.for('path'));
-const stop = self$002Dclosing$002Delement(Symbol.for('stop'));
+const code$0027 = inline$002Delement('code');
+const code = inline$002Delement('code')({});
+const del$0027 = inline$002Delement('del');
+const del = inline$002Delement('del')({});
+const em$0027 = inline$002Delement('em');
+const em = inline$002Delement('em')({});
+const i$0027 = inline$002Delement('i');
+const i = inline$002Delement('i')({});
+const ins$0027 = inline$002Delement('ins');
+const ins = inline$002Delement('ins')({});
+const script = inline$002Delement('script');
+const span = inline$002Delement('span');
+const strong$0027 = inline$002Delement('strong');
+const strong = inline$002Delement('strong')({});
+const time = inline$002Delement('time');
+const var$0027 = inline$002Delement('var');
+const var_ = inline$002Delement('var')({});
+const video = inline$002Delement('video');
+const embed = self$002Dclosing$002Delement('embed');
+const img = self$002Dclosing$002Delement('img');
+const param = self$002Dclosing$002Delement('param');
+const path = self$002Dclosing$002Delement('path');
+const stop = self$002Dclosing$002Delement('stop');
 export {
   canonicalize$002Dchildren,
   text,

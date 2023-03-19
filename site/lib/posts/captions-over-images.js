@@ -111,7 +111,7 @@ const body = [
     em('describes'),
     ' a term. Meaningful markup for an\n    image and its caption should look something like the following:'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<dl>
+  code$002Dblock('html')(`<dl>
     <dt><img src="images/paris.jpg" alt="View from Notre Dame de Paris" /></dt>
     <dd>View from Notre Dame de Paris</dd>
 </dl>
@@ -122,7 +122,7 @@ const body = [
     a('http://css-tricks.com/examples/TypeOverImagePlugin/')('image title plugin demo'),
     '\n    simply by styling a definition list containing images and their\n    captions. In the end, I was forced to abandon the ideal of using a\n    single definition list for multiple images and captions: the nature\n    of CSS positioning dictates that each image\u2013caption pair reside in\n    its own element. The final markup, however, is still quite clean:'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<dl class="captioned-image">
+  code$002Dblock('html')(`<dl class="captioned-image">
     <dt><img src="images/paris.jpg" alt="View from Notre Dame de Paris" /></dt>
     <dd><span>View from Notre Dame de Paris</span></dd>
 </dl>
@@ -141,7 +141,7 @@ const body = [
     a('/examples/captions-over-images/')('captions over images demo'),
     '\n    to see the approach in action. The CSS responsible for the\n    appearance of the captions is as follows:'
   ]),
-  code$002Dblock(Symbol.for('css'))(`dl.captioned-image         { position: relative; margin: 1em 0; }
+  code$002Dblock('css')(`dl.captioned-image         { position: relative; margin: 1em 0; }
 dl.captioned-image dt img  { display: block; }
 dl.captioned-image dd      { position: absolute; left: 0; bottom: 1.25em;
                              font: bold 2em/1.25em Helvetica, sans-serif; }
@@ -159,7 +159,7 @@ export default {
   id: 24,
   slug: 'captions-over-images',
   title: 'Captions over images',
-  datetime: datetime('2009-08-31')('03:36:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-08-31')('03:36:00')('Pacific/Auckland'),
   tags: [
     'best-practice',
     'css',

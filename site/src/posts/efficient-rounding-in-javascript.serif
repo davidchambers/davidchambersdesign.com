@@ -6,7 +6,7 @@ export default {
   id: 68,
   slug: "efficient-rounding-in-javascript",
   title: "Efficient rounding in JavaScript",
-  datetime: datetime "2010-08-31" "22:20:00" :Pacific/Auckland,
+  datetime: datetime "2010-08-31" "22:20:00" "Pacific/Auckland",
   tags: ["javascript", "optimization", "performance"],
   body: body,
 };
@@ -18,7 +18,7 @@ body = [
     to the nearest integer. Easy, right?",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     x = Math.round(x);
   `,
 
@@ -26,7 +26,7 @@ body = [
    "Sure, but is this the fastest option? I think not.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     x = x < 0 ? x - 0.5 >> 0 : x + 0.5 >> 0;
   `,
 

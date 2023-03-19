@@ -103,7 +103,7 @@ export default {
   id: 1,
   slug: 'beautiful-painted-alphabet',
   title: 'Beautiful painted alphabet',
-  datetime: datetime('2008-08-22')('01:56:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2008-08-22')('01:56:00')('Pacific/Auckland'),
   tags: [
     'design',
     'typography',

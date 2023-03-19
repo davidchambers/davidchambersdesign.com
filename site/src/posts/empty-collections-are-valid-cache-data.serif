@@ -6,7 +6,7 @@ export default {
   id: 57,
   slug: "empty-collections-are-valid-cache-data",
   title: "Empty collections are valid cache data",
-  datetime: datetime "2010-07-06" "09:34:00" :Pacific/Auckland,
+  datetime: datetime "2010-07-06" "09:34:00" "Pacific/Auckland",
   tags: ["django"],
   body: body,
 };
@@ -19,7 +19,7 @@ body = [
     treated as valid cache data.",
   ],
 
-  code-block :python `
+  code-block "python" `
     cached = cache.get(cache_key)
     if cached:
         return cached
@@ -37,7 +37,7 @@ body = [
    "Avoid this by explicitly comparing the return value to ", code "None", ":",
   ],
 
-  code-block :python `
+  code-block "python" `
     cached = cache.get(cache_key)
     if cached is not None: # much better!
         return cached

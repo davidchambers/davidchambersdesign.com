@@ -53,13 +53,6 @@ const esFromTemplateLiteral = (templateLiteral: Serif.TemplateLiteral): ES.Templ
   ], templateLiteral.expressions.map(esFromExpression));
 };
 
-const esFromSymbolLiteral = (symbolLiteral: Serif.SymbolLiteral): ES.CallExpression => (
-  ES.CallExpression(
-    esFromMemberExpression(Serif.MemberExpression(Serif.Identifier('Symbol'), Serif.StringLiteral('for'))),
-    [ES.Literal(symbolLiteral.name)],
-  )
-);
-
 const esFromMetaProperty = (metaProperty: Serif.MetaProperty): ES.MetaProperty => (
   ES.MetaProperty(
     esFromEscapedIdentifierName(metaProperty.meta as Escaped),
@@ -313,12 +306,11 @@ const containsTopicReference = (expr: Serif.Expression): boolean => {
     case 'NumberLiteral':               return false;
     case 'StringLiteral':               return false;
     case 'TemplateLiteral':             return expr.expressions.some(containsTopicReference);
-    case 'SymbolLiteral':               return false;
     case 'MetaProperty':                return false;
     case 'MemberExpression':            return containsTopicReference(expr.object) || containsTopicReference(expr.property);
     case 'Identifier':                  return expr.name === TOPIC_REFERENCE_NAME;
     case 'ArrayExpression':             return expr.elements.some(element => element.type === 'SpreadElement' ? containsTopicReference(element.argument) : containsTopicReference(element));
-    case 'ObjectExpression':            return expr.properties.some(property => property.type === 'SpreadElement' ? containsTopicReference(property.argument) : containsTopicReference(property.key) || (() => { switch (property.value.type) { case 'BooleanLiteral': return containsTopicReference(property.value); case 'NumberLiteral': return containsTopicReference(property.value); case 'StringLiteral': return containsTopicReference(property.value); case 'TemplateLiteral': return containsTopicReference(property.value); case 'SymbolLiteral': return containsTopicReference(property.value); case 'MetaProperty': return containsTopicReference(property.value); case 'MemberExpression': return containsTopicReference(property.value); case 'Identifier': return containsTopicReference(property.value); case 'ArrayExpression': return containsTopicReference(property.value); case 'ObjectExpression': return containsTopicReference(property.value); case 'ArrowFunctionExpression': return containsTopicReference(property.value); case 'BlockExpression': return containsTopicReference(property.value); case 'UnaryExpression': return containsTopicReference(property.value); case 'BinaryExpression': return containsTopicReference(property.value); case 'LogicalExpression': return containsTopicReference(property.value); case 'ConditionalExpression': return containsTopicReference(property.value); case 'PipeExpression': return containsTopicReference(property.value); case 'NewExpression': return containsTopicReference(property.value); case 'Application': return containsTopicReference(property.value); case 'CallExpression': return containsTopicReference(property.value); case 'ArrayPattern': return patternContainsTopicReference(property.value); case 'ObjectPattern': return patternContainsTopicReference(property.value); case 'RestElement': return patternContainsTopicReference(property.value); } })());
+    case 'ObjectExpression':            return expr.properties.some(property => property.type === 'SpreadElement' ? containsTopicReference(property.argument) : containsTopicReference(property.key) || (() => { switch (property.value.type) { case 'BooleanLiteral': return containsTopicReference(property.value); case 'NumberLiteral': return containsTopicReference(property.value); case 'StringLiteral': return containsTopicReference(property.value); case 'TemplateLiteral': return containsTopicReference(property.value); case 'MetaProperty': return containsTopicReference(property.value); case 'MemberExpression': return containsTopicReference(property.value); case 'Identifier': return containsTopicReference(property.value); case 'ArrayExpression': return containsTopicReference(property.value); case 'ObjectExpression': return containsTopicReference(property.value); case 'ArrowFunctionExpression': return containsTopicReference(property.value); case 'BlockExpression': return containsTopicReference(property.value); case 'UnaryExpression': return containsTopicReference(property.value); case 'BinaryExpression': return containsTopicReference(property.value); case 'LogicalExpression': return containsTopicReference(property.value); case 'ConditionalExpression': return containsTopicReference(property.value); case 'PipeExpression': return containsTopicReference(property.value); case 'NewExpression': return containsTopicReference(property.value); case 'Application': return containsTopicReference(property.value); case 'CallExpression': return containsTopicReference(property.value); case 'ArrayPattern': return patternContainsTopicReference(property.value); case 'ObjectPattern': return patternContainsTopicReference(property.value); case 'RestElement': return patternContainsTopicReference(property.value); } })());
     case 'ArrowFunctionExpression':     return containsTopicReference(expr.body);
     case 'BlockExpression':             return expr.statements.some(statementContainsTopicReference);
     case 'UnaryExpression':             return containsTopicReference(expr.argument);
@@ -338,7 +330,6 @@ const replaceTopicReferences = (replacement: Serif.Expression) => (expr: Serif.E
     case 'NumberLiteral':               return expr;
     case 'StringLiteral':               return expr;
     case 'TemplateLiteral':             return Serif.TemplateLiteral(expr.quasis, expr.expressions.map(replaceTopicReferences(replacement)));
-    case 'SymbolLiteral':               return expr;
     case 'MetaProperty':                return expr;
     case 'MemberExpression':            return Serif.MemberExpression(replaceTopicReferences(replacement)(expr.object), replaceTopicReferences(replacement)(expr.property));
     case 'Identifier':                  return replaceTopicReferencesInIdentifier(replacement)(expr);
@@ -431,7 +422,6 @@ const esFromExpression = (expr: Serif.Expression): ES.Expression => {
     case 'NumberLiteral':               return esFromNumberLiteral(expr);
     case 'StringLiteral':               return esFromStringLiteral(expr);
     case 'TemplateLiteral':             return esFromTemplateLiteral(expr);
-    case 'SymbolLiteral':               return esFromSymbolLiteral(expr);
     case 'MetaProperty':                return esFromMetaProperty(expr);
     case 'MemberExpression':            return esFromMemberExpression(expr);
     case 'Identifier':                  return esFromIdentifier(expr);

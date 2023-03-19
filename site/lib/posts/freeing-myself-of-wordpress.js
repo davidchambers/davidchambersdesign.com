@@ -163,7 +163,7 @@ const body = [
     $2014,
     'has a different approach,\n    which is incredibly simple. One provides Django with an ordered list\n    of places to look for templates.'
   ]),
-  code$002Dblock(Symbol.for('python'))(`TEMPLATE_DIRS = (
+  code$002Dblock('python')(`TEMPLATE_DIRS = (
     '/webapps/dcd/blog/templates',
     '/webapps/dcd/blog/mango/templates',
 )
@@ -206,7 +206,7 @@ export default {
   id: 50,
   slug: 'freeing-myself-of-wordpress',
   title: 'Freeing myself of WordPress',
-  datetime: datetime('2010-06-03')('02:56:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-06-03')('02:56:00')('Pacific/Auckland'),
   tags: [
     'django',
     'mango',

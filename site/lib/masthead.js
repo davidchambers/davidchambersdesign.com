@@ -749,10 +749,10 @@ const update = ([{
     x: x,
     y: y
   }, ...tail]) => dir => [
-  dir[0] === Symbol.for('h') ? {
+  dir[0] === 'h' ? {
     x: x + dir[1],
     y: y
-  } : dir[0] === Symbol.for('v') ? {
+  } : dir[0] === 'v' ? {
     x: x,
     y: y + dir[1]
   } : {
@@ -775,7 +775,7 @@ const reset = path => (() => {
   const dx = S.reduce(S.max)(0)(xs) - xs[0];
   const dy = 0 - ys[0];
   return [
-    Symbol.for('m'),
+    'm',
     [
       dx,
       dy
@@ -785,7 +785,7 @@ const reset = path => (() => {
 const paths = chars => [
   ...chars.slice(0, 1).flatMap(char => [
     [
-      Symbol.for('M'),
+      'M',
       [
         0,
         0
@@ -796,7 +796,7 @@ const paths = chars => [
   ]),
   ...chars.slice(1).flatMap(char => [
     [
-      Symbol.for('m'),
+      'm',
       [
         6,
         0

@@ -131,7 +131,7 @@ export default {
   id: 40,
   slug: 'cricket-field-diagrams',
   title: 'Cricket field diagrams',
-  datetime: datetime('2010-03-15')('00:58:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-03-15')('00:58:00')('Pacific/Auckland'),
   tags: [
     'design',
     'icons'

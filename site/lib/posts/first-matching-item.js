@@ -95,14 +95,14 @@ const body = [
   ]),
   p(['The task is trivial: loop through the list and compare each\n    student\'s id until a match is found or all the students in\n    the list have been inspected, whichever comes first.']),
   p(['In the past, I\'ve tended to take advantage of return statements\n    to exit the loop as soon as a match is found. The examples here\n    are in Python, but the same patterns apply to other languages.']),
-  code$002Dblock(Symbol.for('python'))(`def student_by_id(students, id):
+  code$002Dblock('python')(`def student_by_id(students, id):
     for student in students:
         if student.id == id:
             return student
     return None
 `),
   p(['This appoach strikes me as inelegant when the function is called\n    in one place only. Today a different approached occurred to me.']),
-  code$002Dblock(Symbol.for('python'))(`student = None
+  code$002Dblock('python')(`student = None
 for student in students:
     if student.id == id:
         break
@@ -124,7 +124,7 @@ export default {
   id: 54,
   slug: 'first-matching-item',
   title: 'First matching item',
-  datetime: datetime('2010-06-17')('23:17:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-06-17')('23:17:00')('Pacific/Auckland'),
   tags: ['programming'],
   body: body
 };

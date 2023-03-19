@@ -6,7 +6,7 @@ export default {
   id: 34,
   slug: "accessing-mysql-shell-via-terminal",
   title: "Accessing MySQL shell via Terminal",
-  datetime: datetime "2010-01-08" "13:49:00" :Pacific/Auckland,
+  datetime: datetime "2010-01-08" "13:49:00" "Pacific/Auckland",
   tags: ["mac-os-x", "mysql", "terminal.app"],
   body: body,
 };
@@ -33,7 +33,7 @@ body = [
       "error 1044 and 1045", ":",
   ],
 
-  code-block :console `
+  code-block "console" `
     mysql -u root -p mysql
   `,
 

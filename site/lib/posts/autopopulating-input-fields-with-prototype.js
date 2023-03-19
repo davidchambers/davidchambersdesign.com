@@ -97,7 +97,7 @@ const excerpt = [p([
   ])];
 const body = [
   ...excerpt,
-  update(datetime('2010-06-09')('23:31:00')(Symbol.for('Pacific/Auckland')))([
+  update(datetime('2010-06-09')('23:31:00')('Pacific/Auckland'))([
     'I\'ve written an update to this article for those interested in ',
     a('/autopopulating-input-fields-with-mootools/')('auto-populating input fields with MooTools'),
     '.'
@@ -125,10 +125,10 @@ const body = [
     ' attribute. In supporting\n    browsers (currently Chrome and Safari) this produces the\n    behaviour described above with no reliance on JavaScript.'
   ]),
   h3$0027({ id: 'markup' })('Markup'),
-  code$002Dblock(Symbol.for('html'))(`<input type="search" id="s" name="s" placeholder="search..." />
+  code$002Dblock('html')(`<input type="search" id="s" name="s" placeholder="search..." />
 `),
   h3$0027({ id: 'styling' })('Styling'),
-  code$002Dblock(Symbol.for('css'))(`input.placeholder { color: #a9a9a9 !important; }
+  code$002Dblock('css')(`input.placeholder { color: #a9a9a9 !important; }
 `),
   p([
     'I decided to use ',
@@ -136,7 +136,7 @@ const body = [
     ' as Safari uses this colour\n    for placeholder text.'
   ]),
   h3$0027({ id: 'placeholder-class' })('Placeholder class'),
-  code$002Dblock(Symbol.for('javascript'))(`var Placeholder = Class.create({
+  code$002Dblock('javascript')(`var Placeholder = Class.create({
     initialize: function (element) {
         this.element = element;
         this.placeholder = element.readAttribute('placeholder');
@@ -161,14 +161,14 @@ const body = [
   ]),
   h3$0027({ id: 'usage' })('Usage'),
   p(['To create a new instance of the Placeholder class, simply pass\n    the constructor a Prototype extended element:']),
-  code$002Dblock(Symbol.for('javascript'))(`new Placeholder($('s'));
+  code$002Dblock('javascript')(`new Placeholder($('s'));
 `),
   p([
     'Ensure that the DOM is ready by wrapping everything in Prototype\'s ',
     code('dom:loaded'),
     ' event listener. This also avoids polluting the\n    global namespace.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`document.observe('dom:loaded', function () {
+  code$002Dblock('javascript')(`document.observe('dom:loaded', function () {
     var Placeholder = Class.create({
         ...
     });
@@ -177,9 +177,9 @@ const body = [
     });
 });
 `),
-  update(datetime('2010-03-30')('17:17:00')(Symbol.for('Pacific/Auckland')))([p(['I\'ve updated the selector used in the above example. Selecting\n      all inputs with placeholder attributes is far more elegant than\n      listing each input explicitly. It also means that an input added\n      anywhere on the site will automatically receive this special\n      treatment (provided that it has a placeholder attribute).'])]),
+  update(datetime('2010-03-30')('17:17:00')('Pacific/Auckland'))([p(['I\'ve updated the selector used in the above example. Selecting\n      all inputs with placeholder attributes is far more elegant than\n      listing each input explicitly. It also means that an input added\n      anywhere on the site will automatically receive this special\n      treatment (provided that it has a placeholder attribute).'])]),
   p([strong('This site\'s search field shows the code in action.')]),
-  update(datetime('2010-04-16')('00:59:00')(Symbol.for('Pacific/Auckland')))([
+  update(datetime('2010-04-16')('00:59:00')('Pacific/Auckland'))([
     p([
       'For those that would like placeholder text in ',
       em('password'),
@@ -187,7 +187,7 @@ const body = [
       a('http://blog.decaf.de/2009/07/iphone-like-password-fields-using-jquery/')('iPhone-like password fields using jQuery'),
       '.'
     ]),
-    code$002Dblock(Symbol.for('javascript'))(`// provide input hints
+    code$002Dblock('javascript')(`// provide input hints
 document.observe('dom:loaded', function () {
     var PLACEHOLDER_SUFFIX = '_placeholder'; // used for password inputs
 
@@ -252,7 +252,7 @@ export default {
   id: 33,
   slug: 'autopopulating-input-fields-with-prototype',
   title: 'Auto-populating input fields with Prototype',
-  datetime: datetime('2010-01-07')('22:03:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-01-07')('22:03:00')('Pacific/Auckland'),
   tags: [
     'html5',
     'javascript',

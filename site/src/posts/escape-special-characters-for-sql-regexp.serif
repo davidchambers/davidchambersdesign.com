@@ -6,7 +6,7 @@ export default {
   id: 5,
   slug: "escape-special-characters-for-sql-regexp",
   title: "Escape special characters for SQL REGEXP",
-  datetime: datetime "2009-01-10" "22:21:00" :Pacific/Auckland,
+  datetime: datetime "2009-01-10" "22:21:00" "Pacific/Auckland",
   tags: ["php", "sql"],
   body: body,
 };
@@ -31,7 +31,7 @@ body = [
     reported as follows:",
   ],
 
-  code-block :plain-text `
+  code-block "plain-text" `
     Got error 'repetition-operator operand invalid' from regexp
   `,
 
@@ -52,7 +52,7 @@ body = [
     thought I'd share it in case others encounter the same problem:",
   ],
 
-  code-block :php `
+  code-block "php" `
     <?php
 
     function mysql_regexp_escape_string($string)

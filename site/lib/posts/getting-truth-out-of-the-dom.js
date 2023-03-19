@@ -99,7 +99,7 @@ export default {
   id: 87,
   slug: 'getting-truth-out-of-the-dom',
   title: 'Getting truth out of the DOM \u2013 Yehuda Katz',
-  datetime: datetime('2011-05-24')('22:15:00')(Symbol.for('America/Los_Angeles')),
+  datetime: datetime('2011-05-24')('22:15:00')('America/Los_Angeles'),
   tags: [
     'best-practice',
     'javascript',

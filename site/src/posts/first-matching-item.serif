@@ -6,7 +6,7 @@ export default {
   id: 54,
   slug: "first-matching-item",
   title: "First matching item",
-  datetime: datetime "2010-06-17" "23:17:00" :Pacific/Auckland,
+  datetime: datetime "2010-06-17" "23:17:00" "Pacific/Auckland",
   tags: ["programming"],
   body: body,
 };
@@ -32,7 +32,7 @@ body = [
     are in Python, but the same patterns apply to other languages.",
   ],
 
-  code-block :python `
+  code-block "python" `
     def student_by_id(students, id):
         for student in students:
             if student.id == id:
@@ -45,7 +45,7 @@ body = [
     in one place only. Today a different approached occurred to me.",
   ],
 
-  code-block :python `
+  code-block "python" `
     student = None
     for student in students:
         if student.id == id:

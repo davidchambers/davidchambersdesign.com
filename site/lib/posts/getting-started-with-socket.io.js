@@ -110,10 +110,10 @@ const body = [
     a('http://jashkenas.github.com/coffee-script/')('CoffeeScript'),
     '\n    and as such are largely free of the parentheses, squiggly brackets,\n    and semicolons that riddle the equivalent JavaScript code. For those\n    unfamiliar with CoffeeScript\'s syntax, here\'s the fifteen second\n    rundown:'
   ]),
-  code$002Dblock(Symbol.for('coffeescript'))(`qux = foo 'bar', (baz) -> 'Hello, world!'
+  code$002Dblock('coffeescript')(`qux = foo 'bar', (baz) -> 'Hello, world!'
 `),
   p(['The above is equivalent to:']),
-  code$002Dblock(Symbol.for('javascript'))(`var qux = foo('bar', function (baz) {
+  code$002Dblock('javascript')(`var qux = foo('bar', function (baz) {
   return 'Hello, world!';
 });
 `),
@@ -126,7 +126,7 @@ const body = [
   ]),
   h3('Step 1: Create a server'),
   p(['This is Node 101 stuff:']),
-  code$002Dblock(Symbol.for('coffeescript'))(`fs   = require 'fs'
+  code$002Dblock('coffeescript')(`fs   = require 'fs'
 http = require 'http'
 
 server = http.createServer (req, res) ->
@@ -138,7 +138,7 @@ server.listen 1337
 `),
   p(['The server we\'ve created simply responds to any request on\n    port 1337 with the contents of "socket.io.demo.html", which\n    must reside in the same directory as the script we\'re creating.']),
   h3('Step 2: Add server-side event handlers'),
-  code$002Dblock(Symbol.for('coffeescript'))(`io = require('socket.io').listen server
+  code$002Dblock('coffeescript')(`io = require('socket.io').listen server
 
 io.sockets.on 'connection', (socket) ->
 
@@ -180,7 +180,7 @@ io.sockets.on 'connection', (socket) ->
     '\n    to produce the actual JavaScript file we\'ll run in Node. We\'re now\n    ready to tackle the client-side component.'
   ]),
   h3('Step 3: Create the HTML file'),
-  code$002Dblock(Symbol.for('html'))(`<!doctype html>
+  code$002Dblock('html')(`<!doctype html>
 <html>
   <head>
     <title>Socket.IO demo</title>
@@ -212,7 +212,7 @@ io.sockets.on 'connection', (socket) ->
   ]),
   p(['Note the inclusion of "coffee-script.js", which enables us to\n    write our client-side logic in CoffeeScript, too. :)']),
   h3('Step 4: Add client-side Socket.IO event handlers'),
-  code$002Dblock(Symbol.for('coffeescript'))(`$status = $ '#status'
+  code$002Dblock('coffeescript')(`$status = $ '#status'
 socket = io.connect()
 
 socket.on 'connect', ->
@@ -252,7 +252,7 @@ socket.on 'secret', (message) ->
   ]),
   p(['All that remains is to have the client emit appropriate\n    custom events in response to input from users.']),
   h3('Step 5: Add DOM event handlers which emit custom events'),
-  code$002Dblock(Symbol.for('coffeescript'))(`$input = $ 'input'
+  code$002Dblock('coffeescript')(`$input = $ 'input'
 
 $('button').click ->
   socket.emit $(this).text(), $input.val()
@@ -292,7 +292,7 @@ export default {
   id: 90,
   slug: 'getting-started-with-socket.io',
   title: 'Getting started with Socket.IO',
-  datetime: datetime('2011-08-07')('00:15:00')(Symbol.for('America/Los_Angeles')),
+  datetime: datetime('2011-08-07')('00:15:00')('America/Los_Angeles'),
   tags: [
     'coffeescript',
     'html5',

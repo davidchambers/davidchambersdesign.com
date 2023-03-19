@@ -6,7 +6,7 @@ export default {
   id: 23,
   slug: "tiny-calendar-icons-sprite",
   title: "Tiny calendar icons sprite",
-  datetime: datetime "2009-08-28" "18:04:00" :Pacific/Auckland,
+  datetime: datetime "2009-08-28" "18:04:00" "Pacific/Auckland",
   tags: ["css", "design", "html", "icons"],
   body: body,
 };
@@ -43,7 +43,7 @@ body = [
     using CSS. One could start with an empty span element:",
   ],
 
-  code-block :html `
+  code-block "html" `
     <span class="day-1"></span>
   `,
 
@@ -52,7 +52,7 @@ body = [
     sets the sprite as its background image:",
   ],
 
-  code-block :css `
+  code-block "css" `
     span.day-1
     {
         display: block;
@@ -84,7 +84,7 @@ body = [
     is specified:",
   ],
 
-  code-block :css `
+  code-block "css" `
     span.day-1
     {
         display: block;
@@ -113,7 +113,7 @@ body = [
    "Here's the final CSS:",
   ],
 
-  code-block :css `
+  code-block "css" `
     span.day
     {
         display: block;
@@ -167,7 +167,7 @@ body = [
     the CSS. This must appear in the HTML, as in this example:",
   ],
 
-  code-block :html `
+  code-block "html" `
     <span class="day day-31"></span>
   `,
 

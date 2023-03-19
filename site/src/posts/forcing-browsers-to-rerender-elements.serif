@@ -6,7 +6,7 @@ export default {
   id: 42,
   slug: "forcing-browsers-to-rerender-elements",
   title: "Forcing browsers to rerender elements",
-  datetime: datetime "2010-03-22" "19:40:00" :Pacific/Auckland,
+  datetime: datetime "2010-03-22" "19:40:00" "Pacific/Auckland",
   tags: ["dom", "ie", "javascript"],
   body: body,
 };
@@ -27,7 +27,7 @@ body = [
     a "http://script.aculo.us/" "script.aculo.us", ":",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     Element.addMethods({
         redraw: function (element) {
             element = $(element);
@@ -43,7 +43,7 @@ body = [
    "The post's first comment includes an alternative approach:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     element.className = element.className;
   `,
 

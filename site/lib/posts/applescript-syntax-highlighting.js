@@ -131,7 +131,7 @@ const body = [
       caption: ['Screenshot of snippet styled by AppleScript theme for SyntaxHighlighter']
     }
   ]),
-  code$002Dblock(Symbol.for('applescript'))(`#!/usr/bin/osascript
+  code$002Dblock('applescript')(`#!/usr/bin/osascript
 
 (*
     This handler determines whether someone is happy.
@@ -193,7 +193,7 @@ end if
       ])]),
     li([
       p(['Include the brush like so:']),
-      code$002Dblock(Symbol.for('html'))(`<script src="/path/to/scripts/shCore.js"></script>
+      code$002Dblock('html')(`<script src="/path/to/scripts/shCore.js"></script>
 <script src="/path/to/scripts/shBrushAppleScript.js"></script>
 <script>SyntaxHighlighter.all()</script>
 `)
@@ -205,7 +205,7 @@ end if
     code('pre'),
     ' tags like so:'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<pre class="brush: applescript; class-name: applescript;"></pre>
+  code$002Dblock('html')(`<pre class="brush: applescript; class-name: applescript;"></pre>
 `),
   p([
     code('brush: applescript;'),
@@ -215,13 +215,13 @@ end if
     code('class-name: applescript;'),
     ' each time.)'
   ]),
-  update(datetime('2012-02-22')('23:11:00')(Symbol.for('America/Los_Angeles')))([
+  update(datetime('2012-02-22')('23:11:00')('America/Los_Angeles'))([
     p([
       'Providing a ',
       code('class-name'),
       ' in the, ahem, class name is\n      no longer necessary (apparently I made a convincing argument).\n      This is now sufficient:'
     ]),
-    code$002Dblock(Symbol.for('html'))(`<pre class="brush:applescript"></pre>
+    code$002Dblock('html')(`<pre class="brush:applescript"></pre>
 `)
   ]),
   p([
@@ -236,7 +236,7 @@ export default {
   id: 15,
   slug: 'applescript-syntax-highlighting',
   title: 'AppleScript syntax highlighting',
-  datetime: datetime('2009-06-04')('03:12:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-06-04')('03:12:00')('Pacific/Auckland'),
   tags: [
     'applescript',
     'javascript',

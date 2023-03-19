@@ -6,7 +6,7 @@ export default {
   id: 35,
   slug: "duplicating-arrays-in-javascript",
   title: "Duplicating arrays in JavaScript",
-  datetime: datetime "2010-01-09" "19:26:00" :Pacific/Auckland,
+  datetime: datetime "2010-01-09" "19:26:00" "Pacific/Auckland",
   tags: ["javascript"],
   body: body,
 };
@@ -22,7 +22,7 @@ body = [
     to memory addresses. This leads to confusion in cases such as this:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     var fruits = ['orange', 'lime'];
     var colours = fruits; // naïve attempt to duplicate array
     colours.push('yellow');
@@ -34,7 +34,7 @@ body = [
     it went wrong:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     var fruits = ['orange', 'lime'];
     // fruits points to array containing "orange" and "lime"
 
@@ -47,7 +47,7 @@ body = [
     em "Slice!",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     var colours = fruits.slice();
   `,
 

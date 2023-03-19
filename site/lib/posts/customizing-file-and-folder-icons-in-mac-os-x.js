@@ -175,7 +175,7 @@ const body = [
         strong('Downloads'),
         '\n        folder (or wherever you saved the script).'
       ]),
-      code$002Dblock(Symbol.for('console'))(`$ cd ~/Downloads
+      code$002Dblock('console')(`$ cd ~/Downloads
 $ ls
 `),
       p([
@@ -192,11 +192,11 @@ $ ls
         strong('/bin'),
         ' directory so that it can be run from\n        any directory (you\'ll be asked to enter your password).'
       ]),
-      code$002Dblock(Symbol.for('console'))(`$ chmod 555 setfileicon
+      code$002Dblock('console')(`$ chmod 555 setfileicon
 $ sudo mv setfileicon /bin/setfileicon
 `),
       p(['Finally, run the script passing in two arguments: the\n        path to the .icns file; and the path to the file, folder,\n        or bundle to which you\'d like to attach the icons.']),
-      code$002Dblock(Symbol.for('console'))(`$ setfileicon ~/icons.icns ~/example
+      code$002Dblock('console')(`$ setfileicon ~/icons.icns ~/example
 `)
     ])
   ]),
@@ -212,7 +212,7 @@ export default {
   id: 72,
   slug: 'customizing-file-and-folder-icons-in-mac-os-x',
   title: 'Customizing file and folder icons in Mac OS X',
-  datetime: datetime('2010-09-29')('00:00:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-09-29')('00:00:00')('Pacific/Auckland'),
   tags: [
     'icons',
     'mac-os-x',

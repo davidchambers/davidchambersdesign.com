@@ -103,7 +103,7 @@ const body = [
     em('a lot'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`//    reduce :: (b -> a -> b) -> b -> Array a -> b
+  code$002Dblock('javascript')(`//    reduce :: (b -> a -> b) -> b -> Array a -> b
 const reduce = f => b => as => as.reduce ((b, a) => f (b) (a), b);
 
 //    append :: a -> Array a -> Array a
@@ -123,7 +123,7 @@ const blah = id => name => ({id, name});
     code('blahs'),
     ').'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`> reduce (cont => name => id => append (blah (id) (name)) (cont (id + 1)))
+  code$002Dblock('javascript')(`> reduce (cont => name => id => append (blah (id) (name)) (cont (id + 1)))
 .        (id => [])
 .        (['foo', 'bar', 'baz'])
 .        (1)
@@ -134,7 +134,7 @@ const blah = id => name => ({id, name});
     code('id'),
     '\n    is threaded from right to left, giving the wrong result.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`> reduce (cont => name => id => blahs => cont (id + 1) (append (blah (id) (name)) (blahs)))
+  code$002Dblock('javascript')(`> reduce (cont => name => id => blahs => cont (id + 1) (append (blah (id) (name)) (blahs)))
 .        (id => blahs => blahs)
 .        (['foo', 'bar', 'baz'])
 .        (1)
@@ -161,7 +161,7 @@ const blah = id => name => ({id, name});
     code('take'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`//    take :: (Integer -> Array String -> a) -> a
+  code$002Dblock('javascript')(`//    take :: (Integer -> Array String -> a) -> a
 const take = give => give (1) ([]);
 `),
   p([
@@ -183,7 +183,7 @@ const take = give => give (1) ([]);
     code('(Integer -> Array String -> a) -> a'),
     ', we need to\n    have the reducing function return a function of that type.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`> reduce (take => name => give => give (1) ([blah (1) (name)]))
+  code$002Dblock('javascript')(`> reduce (take => name => give => give (1) ([blah (1) (name)]))
 .        (give => give (1) ([]))
 .        (['foo', 'bar', 'baz'])
 .        (id => blahs => blahs)
@@ -203,7 +203,7 @@ const take = give => give (1) ([]);
     $2014,
     'but the types align.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`> reduce (take => name => take (id => blahs => give => give (id + 1) (append (blah (id) (name)) (blahs))))
+  code$002Dblock('javascript')(`> reduce (take => name => take (id => blahs => give => give (id + 1) (append (blah (id) (name)) (blahs))))
 .        (give => give (1) ([]))
 .        (['foo', 'bar', 'baz'])
 .        (id => blahs => blahs)
@@ -244,7 +244,7 @@ export default {
     code('take'),
     ' of continuation-passing style'
   ],
-  datetime: datetime('2020-10-08')('10:41:26')(Symbol.for('Europe/Berlin')),
+  datetime: datetime('2020-10-08')('10:41:26')('Europe/Berlin'),
   tags: [
     'continuation-passing-style',
     'javascript',

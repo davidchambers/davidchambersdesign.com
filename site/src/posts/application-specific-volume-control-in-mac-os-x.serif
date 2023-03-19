@@ -6,7 +6,7 @@ export default {
   id: 47,
   slug: "application-specific-volume-control-in-mac-os-x",
   title: "Application-specific volume control in Mac OS X?",
-  datetime: datetime "2010-04-07" "02:04:00" :Pacific/Auckland,
+  datetime: datetime "2010-04-07" "02:04:00" "Pacific/Auckland",
   tags: ["mac-os-x", "ux"],
   body: body,
 };
@@ -60,7 +60,7 @@ body = [
    "+1 in the comments if you'd like to see this feature implemented. :)",
   ],
 
-  update {datetime "2010-04-15" "14:36:00" :Pacific/Auckland} [
+  update {datetime "2010-04-15" "14:36:00" "Pacific/Auckland"} [
     p [
       a "http://www.joesoft.com/products/hear.php" "Hear", "
       offers this functionality, but isn't cheap. I hope Hear's

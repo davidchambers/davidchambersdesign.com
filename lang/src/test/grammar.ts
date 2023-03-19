@@ -69,16 +69,6 @@ valid(
 );
 
 valid(
-  ':foo',
-  Serif.SymbolLiteral('foo')
-);
-
-valid(
-  ':foo-bar',
-  Serif.SymbolLiteral('foo-bar')
-);
-
-valid(
   '#[]',
   Serif.ArrayExpression([])
 );
@@ -93,50 +83,8 @@ valid(
 );
 
 valid(
-  '#[#[#[:foo :bar :baz]]]',
-  Serif.ArrayExpression([
-    Serif.ArrayExpression([
-      Serif.ArrayExpression([
-        Serif.SymbolLiteral('foo'),
-        Serif.SymbolLiteral('bar'),
-        Serif.SymbolLiteral('baz'),
-      ]),
-    ]),
-  ])
-);
-
-valid(
   '#{}',
   Serif.ObjectExpression([])
-);
-
-valid(
-  '#{:foo 1 :bar 2 :baz 3}',
-  Serif.ObjectExpression([
-    Serif.Property(Serif.SymbolLiteral('foo'), Serif.NumberLiteral(1)),
-    Serif.Property(Serif.SymbolLiteral('bar'), Serif.NumberLiteral(2)),
-    Serif.Property(Serif.SymbolLiteral('baz'), Serif.NumberLiteral(3)),
-  ])
-);
-
-valid(
-  '#{:foo #{:bar #{:baz 8}}}',
-  Serif.ObjectExpression([
-    Serif.Property(
-      Serif.SymbolLiteral('foo'),
-      Serif.ObjectExpression([
-        Serif.Property(
-          Serif.SymbolLiteral('bar'),
-          Serif.ObjectExpression([
-            Serif.Property(
-              Serif.SymbolLiteral('baz'),
-              Serif.NumberLiteral(8),
-            ),
-          ])
-        ),
-      ])
-    ),
-  ])
 );
 
 valid(

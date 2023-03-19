@@ -93,7 +93,7 @@ const body = [
     var_('list'),
     ', for example, an Array containing\n    several numbers:'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`var list = [4, -1, 3, 2, 5];
+  code$002Dblock('javascript')(`var list = [4, -1, 3, 2, 5];
 `),
   p([
     'One might wish to determine whether all the numbers in ',
@@ -119,7 +119,7 @@ const body = [
     code('for'),
     '\n    loop...'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`var allPositive = true;
+  code$002Dblock('javascript')(`var allPositive = true;
 for (var i = 0; i < list.length; i++) {
     if (list[i] <= 0) {
         allPositive = false;
@@ -132,7 +132,7 @@ for (var i = 0; i < list.length; i++) {
     code('while'),
     ' loop (which is slightly more efficient).'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`var allPositive = true, i = list.length;
+  code$002Dblock('javascript')(`var allPositive = true, i = list.length;
 while (i--) {
     if (list[i] <= 0) {
         allPositive = false;
@@ -165,7 +165,7 @@ while (i--) {
     code('while'),
     ' loop.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`var allPositive = true;
+  code$002Dblock('javascript')(`var allPositive = true;
 list.each(function (item) {
     if (item <= 0) {
         allPositive = false;
@@ -188,7 +188,7 @@ list.each(function (item) {
     a('http://mootools.net/docs/core/Native/Array#Array:every')('Array object\'s every method'),
     ' is the perfect tool for the job.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`var allPositive = list.every(function (item) {
+  code$002Dblock('javascript')(`var allPositive = list.every(function (item) {
     return item > 0;
 });
 `),
@@ -198,7 +198,7 @@ export default {
   id: 41,
   slug: 'mootools-every-method',
   title: 'MooTools every method',
-  datetime: datetime('2010-03-18')('00:40:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-03-18')('00:40:00')('Pacific/Auckland'),
   tags: [
     'javascript',
     'mootools'

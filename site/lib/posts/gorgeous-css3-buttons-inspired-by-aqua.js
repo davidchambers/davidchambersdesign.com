@@ -166,7 +166,7 @@ const body = [
     em('somewhat'),
     ' button-like. Even antiquated browsers\n    such as Internet Explorer 6 understand the rules defined\n    thus far. The next step is to make the elements more\n    appealing and more button-like in modern browsers.'
   ]),
-  code$002Dblock(Symbol.for('css'))(`-webkit-border-radius: 1em;
+  code$002Dblock('css')(`-webkit-border-radius: 1em;
 -moz-border-radius: 1em;
 border-radius: 1em;
 `),
@@ -175,7 +175,7 @@ border-radius: 1em;
       src: '/images/posts/39/start-game-button-and-hyperlink-border-radius.png',
       caption: ['Rounded corners']
     }]),
-  code$002Dblock(Symbol.for('css'))(`background: -webkit-gradient(linear, left top, left bottom,
+  code$002Dblock('css')(`background: -webkit-gradient(linear, left top, left bottom,
     from(#fc6), to(#fc6),
     color-stop(0.1, #fff), color-stop(0.2, #fc6),
     color-stop(0.5, #fc6), color-stop(0.5, #fa2));
@@ -213,7 +213,7 @@ background: -moz-linear-gradient(-90deg,
       caption: ['Here the OK button exhibits both a pulsating blue background\n      and an outer glow']
     }]),
   h4('Hover'),
-  code$002Dblock(Symbol.for('css'))(`.aqua:hover {
+  code$002Dblock('css')(`.aqua:hover {
     border-color: #740;
     background: #fb4;
     background: -webkit-gradient(linear, left top, left bottom,
@@ -232,7 +232,7 @@ background: -moz-linear-gradient(-90deg,
       caption: ['Hover state (right) alongside default state']
     }]),
   h4('Focus'),
-  code$002Dblock(Symbol.for('css'))(`.aqua:focus {
+  code$002Dblock('css')(`.aqua:focus {
     -webkit-box-shadow: #740 0 1px 0.75em;
     -moz-box-shadow: #740 0 1px 0.75em;
     color: #740;
@@ -252,7 +252,7 @@ background: -moz-linear-gradient(-90deg,
     }
   ]),
   h4('Active'),
-  code$002Dblock(Symbol.for('css'))(`.aqua:active {
+  code$002Dblock('css')(`.aqua:active {
     border-color: #630;
     background: #f90;
     background: -webkit-gradient(linear, left top, left bottom,
@@ -280,7 +280,7 @@ export default {
   id: 39,
   slug: 'gorgeous-css3-buttons-inspired-by-aqua',
   title: 'Gorgeous CSS3 buttons inspired by Aqua',
-  datetime: datetime('2010-03-08')('12:39:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-03-08')('12:39:00')('Pacific/Auckland'),
   tags: [
     'css',
     'css3',

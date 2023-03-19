@@ -6,7 +6,7 @@ export default {
   id: 95,
   slug: "give-and-take-of-continuation-passing-style",
   title: ["The ", code "give", " and ", code "take", " of continuation-passing style"],
-  datetime: datetime "2020-10-08" "10:41:26" :Europe/Berlin,
+  datetime: datetime "2020-10-08" "10:41:26" "Europe/Berlin",
   tags: ["continuation-passing-style", "javascript", "programming"],
   body: body,
 };
@@ -27,7 +27,7 @@ body = [
     em "a lot", ".",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     //    reduce :: (b -> a -> b) -> b -> Array a -> b
     const reduce = f => b => as => as.reduce ((b, a) => f (b) (a), b);
 
@@ -50,7 +50,7 @@ body = [
     whichever fields are relevant (in this case just ", code "blahs", ").",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     > reduce (cont => name => id => append (blah (id) (name)) (cont (id + 1)))
     .        (id => [])
     .        (['foo', 'bar', 'baz'])
@@ -64,7 +64,7 @@ body = [
     is threaded from right to left, giving the wrong result.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     > reduce (cont => name => id => blahs => cont (id + 1) (append (blah (id) (name)) (blahs)))
     .        (id => blahs => blahs)
     .        (['foo', 'bar', 'baz'])
@@ -87,7 +87,7 @@ body = [
     code "take", ".",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     //    take :: (Integer -> Array String -> a) -> a
     const take = give => give (1) ([]);
   `,
@@ -105,7 +105,7 @@ body = [
     have the reducing function return a function of that type.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     > reduce (take => name => give => give (1) ([blah (1) (name)]))
     .        (give => give (1) ([]))
     .        (['foo', 'bar', 'baz'])
@@ -119,7 +119,7 @@ body = [
    "but the types align.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     > reduce (take => name => take (id => blahs => give => give (id + 1) (append (blah (id) (name)) (blahs))))
     .        (give => give (1) ([]))
     .        (['foo', 'bar', 'baz'])

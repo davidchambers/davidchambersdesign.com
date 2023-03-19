@@ -6,7 +6,7 @@ export default {
   id: 90,
   slug: "getting-started-with-socket.io",
   title: "Getting started with Socket.IO",
-  datetime: datetime "2011-08-07" "00:15:00" :America/Los_Angeles,
+  datetime: datetime "2011-08-07" "00:15:00" "America/Los_Angeles",
   tags: ["coffeescript", "html5", "node.js", "socket.io", "websockets"],
   body: body,
 };
@@ -37,7 +37,7 @@ body = [
     rundown:",
   ],
 
-  code-block :coffeescript `
+  code-block "coffeescript" `
     qux = foo 'bar', (baz) -> 'Hello, world!'
   `,
 
@@ -45,7 +45,7 @@ body = [
    "The above is equivalent to:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     var qux = foo('bar', function (baz) {
       return 'Hello, world!';
     });
@@ -63,7 +63,7 @@ body = [
    "This is Node 101 stuff:",
   ],
 
-  code-block :coffeescript `
+  code-block "coffeescript" `
     fs   = require 'fs'
     http = require 'http'
 
@@ -83,7 +83,7 @@ body = [
 
   h3 "Step 2: Add server-side event handlers",
 
-  code-block :coffeescript `
+  code-block "coffeescript" `
     io = require('socket.io').listen server
 
     io.sockets.on 'connection', (socket) ->
@@ -131,7 +131,7 @@ body = [
 
   h3 "Step 3: Create the HTML file",
 
-  code-block :html `
+  code-block "html" `
     <!doctype html>
     <html>
       <head>
@@ -173,7 +173,7 @@ body = [
 
   h3 "Step 4: Add client-side Socket.IO event handlers",
 
-  code-block :coffeescript `
+  code-block "coffeescript" `
     $status = $ '#status'
     socket = io.connect()
 
@@ -223,7 +223,7 @@ body = [
 
   h3 "Step 5: Add DOM event handlers which emit custom events",
 
-  code-block :coffeescript `
+  code-block "coffeescript" `
     $input = $ 'input'
 
     $('button').click ->

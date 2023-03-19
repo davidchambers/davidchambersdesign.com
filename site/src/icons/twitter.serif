@@ -4,7 +4,7 @@ import * from "../orthogonal.serif";
 export default twitter;
 
 a rx-ry angle large-arc-flag sweep-flag dx-dy = {
-  [:a, rx-ry, angle, large-arc-flag, sweep-flag, dx-dy]
+  ["a", rx-ry, angle, large-arc-flag, sweep-flag, dx-dy]
 };
 
 twitter = [

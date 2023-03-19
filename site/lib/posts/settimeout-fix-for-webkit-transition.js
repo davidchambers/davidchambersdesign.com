@@ -103,7 +103,7 @@ const excerpt = [
   })(['Click to animate']),
   script({})('(function () {\n         var element = document.getElementById(\'transition-example-1\');\n         element.style.webkitTransitionProperty = \'left\';\n         element.style.webkitTransitionDuration = \'2s\';\n         element.addEventListener(\'click\', function () {\n             this.style.left = \'100px\';\n             this.addEventListener(\'webkitTransitionEnd\', function () {\n                 this.style.left = 0;\n             });\n         });\n     })();'),
   p(['The code behind this example is not complicated:']),
-  code$002Dblock(Symbol.for('javascript'))(`element.style.webkitTransitionProperty = 'left';
+  code$002Dblock('javascript')(`element.style.webkitTransitionProperty = 'left';
 element.style.webkitTransitionDuration = '2s';
 element.addEventListener('click', function () {
     this.style.left = '100px';
@@ -122,7 +122,7 @@ const body = [
   })(['Click to reposition']),
   script({})('(function () {\n         var element = document.getElementById(\'transition-example-2\');\n         element.addEventListener(\'click\', function () {\n             this.style.left = \'100px\';\n             this.style.webkitTransitionProperty = \'left\';\n             this.style.webkitTransitionDuration = \'2s\';\n             this.addEventListener(\'webkitTransitionEnd\', function () {\n                 this.innerHTML = "D\'oh!";\n                 this.style.left = 0;\n             });\n         });\n     })();'),
   p(['The code:']),
-  code$002Dblock(Symbol.for('javascript'))(`element.style.left = '100px';
+  code$002Dblock('javascript')(`element.style.left = '100px';
 element.style.webkitTransitionProperty = 'left';
 element.style.webkitTransitionDuration = '2s';
 `),
@@ -159,7 +159,7 @@ element.style.webkitTransitionDuration = '2s';
   })(['Click to reposition']),
   script({})('(function () {\n         var element = document.getElementById(\'transition-example-3\');\n         element.addEventListener(\'click\', function () {\n             this.style.left = \'100px\';\n             setTimeout(function () {\n                 element.style.webkitTransitionProperty = \'left\';\n                 element.style.webkitTransitionDuration = \'2s\';\n             }, 0);\n             setTimeout(function () {\n                 element.style.webkitTransitionProperty = \'none\';\n                 element.style.left = 0;\n             }, 2000);\n         });\n     })();'),
   p(['The working code:']),
-  code$002Dblock(Symbol.for('javascript'))(`element.style.left = '100px';
+  code$002Dblock('javascript')(`element.style.left = '100px';
 setTimeout(function () {
     element.style.webkitTransitionProperty = 'left';
     element.style.webkitTransitionDuration = '2s';
@@ -175,7 +175,7 @@ setTimeout(function () {
     ' seems\n    to be the remedy for this "quirk".'
   ]),
   p(['I\'d love to know whether the behaviour described here\n    is correct behaviour. If I manage to find the answer to\n    this I\'ll post an update. If you are able to enlighten me,\n    please do so by leaving a comment!']),
-  update(datetime('2010-06-02')('00:15:00')(Symbol.for('Pacific/Auckland')))([
+  update(datetime('2010-06-02')('00:15:00')('Pacific/Auckland'))([
     p([
       'I\'ve just been watching one of the ',
       a('http://developer.apple.com/videos/wwdc/2010/')('WWDC 2010 session videos'),
@@ -191,7 +191,7 @@ setTimeout(function () {
       li('Browsers optimize away redundant style changes'),
       li('This matters with transitions, because they are temporal')
     ]),
-    code$002Dblock(Symbol.for('javascript'))(`var box = document.getElementById('box');
+    code$002Dblock('javascript')(`var box = document.getElementById('box');
 box.style.backgroundColor = 'red';
 box.style.webkitTransition = 'background-color 2s';
 window.setTimeout(function() {
@@ -204,7 +204,7 @@ export default {
   id: 55,
   slug: 'settimeout-fix-for-webkit-transition',
   title: 'setTimeout fix for -webkit-transition',
-  datetime: datetime('2010-06-18')('03:12:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-06-18')('03:12:00')('Pacific/Auckland'),
   tags: [
     'css3',
     'javascript'

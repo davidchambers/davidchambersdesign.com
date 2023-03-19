@@ -6,7 +6,7 @@ export default {
   id: 16,
   slug: "php-brush-for-syntaxhighlighter",
   title: "PHP brush for SyntaxHighlighter",
-  datetime: datetime "2009-06-08" "17:00:00" :Pacific/Auckland,
+  datetime: datetime "2009-06-08" "17:00:00" "Pacific/Auckland",
   tags: ["javascript", "php", "syntaxhighlighter"],
   body: body,
 };
@@ -68,7 +68,7 @@ body = [
     strong "variable", " for exactly what you'd expect.",
   ],
 
-  update {datetime "2009-08-16" "02:33:00" :Pacific/Auckland} [
+  update {datetime "2009-08-16" "02:33:00" "Pacific/Auckland"} [
     p [
      "Until this point I have had a class name added to each
       div.syntaxhighlighter element to allow code to be coloured
@@ -94,7 +94,7 @@ body = [
     ],
   ],
 
-  code-block :php `
+  code-block "php" `
     <?php
 
     'single-quoted string';

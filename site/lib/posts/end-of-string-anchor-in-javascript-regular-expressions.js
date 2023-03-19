@@ -109,7 +109,7 @@ const body = [
     ' where they match the start and\n    end of any line.'
   ]),
   p(['It\'s possible, though, to have a lookahead act as an end of string\n    anchor in multiline mode:']),
-  code$002Dblock(Symbol.for('javascript'))(`> /bar(?![\\s\\S])/m.test('foo\\nbar')
+  code$002Dblock('javascript')(`> /bar(?![\\s\\S])/m.test('foo\\nbar')
 true
 > /bar(?![\\s\\S])/m.test('foo\\nbar\\n')
 false
@@ -133,7 +133,7 @@ export default {
   id: 86,
   slug: 'end-of-string-anchor-in-javascript-regular-expressions',
   title: 'End of string anchor in JavaScript regular expressions',
-  datetime: datetime('2011-05-22')('18:30:00')(Symbol.for('America/Los_Angeles')),
+  datetime: datetime('2011-05-22')('18:30:00')('America/Los_Angeles'),
   tags: [
     'javascript',
     'regex',

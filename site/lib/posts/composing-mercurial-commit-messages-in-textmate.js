@@ -133,9 +133,9 @@ const body = [
       code('mate'),
       '\n      command tells TextMate not to return control to the command\n      line until the editor window has been closed.'
     ])]),
-  update(datetime('2011-01-22')('15:20:00')(Symbol.for('Australia/Sydney')))([
+  update(datetime('2011-01-22')('15:20:00')('Australia/Sydney'))([
     p(['To use TextMate as your git editor, run the following command:']),
-    code$002Dblock(Symbol.for('console'))(`git config --global core.editor "mate -w"
+    code$002Dblock('console')(`git config --global core.editor "mate -w"
 `),
     p([
       'This adds ',
@@ -152,7 +152,7 @@ export default {
   id: 76,
   slug: 'composing-mercurial-commit-messages-in-textmate',
   title: 'Composing Mercurial commit messages in TextMate',
-  datetime: datetime('2011-01-10')('01:25:00')(Symbol.for('Australia/Sydney')),
+  datetime: datetime('2011-01-10')('01:25:00')('Australia/Sydney'),
   tags: [
     'hg',
     'mac-os-x',

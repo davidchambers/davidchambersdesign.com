@@ -98,14 +98,14 @@ const body = [
   ]),
   p(['Gary provides several examples of equivalent code in Python and\n    Ruby to highlight situations in which one language reads better\n    than the other, such as the following.']),
   p(['Python:']),
-  code$002Dblock(Symbol.for('python'))(`'\\n'.join(obj.name
+  code$002Dblock('python')(`'\\n'.join(obj.name
     for obj in (
         repository.retrieve(id)
         for id in ids)
     if obj)
 `),
   p(['Ruby:']),
-  code$002Dblock(Symbol.for('ruby'))(`ids.map do |id|
+  code$002Dblock('ruby')(`ids.map do |id|
   repository.retrieve(id)
 end.compact.map do |obj|
   obj.name
@@ -122,7 +122,7 @@ end.join('\\n')
     code('filter'),
     ' array method.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`ids.filter(function (id) {
+  code$002Dblock('javascript')(`ids.filter(function (id) {
     var obj = repository.retrieve(id);
     return obj && obj.name;
 }).join('\\n');
@@ -144,7 +144,7 @@ end.join('\\n')
     code('[]'),
     ') on line 5 \u2013 that\'s our\n    "accumulator".'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`ids.reduce(function (ids, id) {
+  code$002Dblock('javascript')(`ids.reduce(function (ids, id) {
     var obj = repository.retrieve(id);
     if (obj && obj.name) ids.push(obj.name);
     return ids;
@@ -156,7 +156,7 @@ export default {
   id: 69,
   slug: 'filtering-lists-in-python-ruby-and-javascript',
   title: 'Filtering lists in Python, Ruby, and JavaScript',
-  datetime: datetime('2010-09-09')('04:21:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-09-09')('04:21:00')('Pacific/Auckland'),
   tags: [
     'javascript',
     'programming',

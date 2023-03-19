@@ -107,10 +107,10 @@ const body = [
     '.'
   ]),
   p(['After reading the replies to the above post, and taking on board\n    several good suggestions, here is the PHP code I have decided upon:']),
-  code$002Dblock(Symbol.for('php'))(`href="path/to/style.css?<?php echo date('Y-m-d-H-i-s', filectime('path/to/style.css')); ?>"
+  code$002Dblock('php')(`href="path/to/style.css?<?php echo date('Y-m-d-H-i-s', filectime('path/to/style.css')); ?>"
 `),
   p(['The above generates something like this:']),
-  code$002Dblock(Symbol.for('html'))(`href="path/to/style.css?2008-12-16-20-02-53"
+  code$002Dblock('html')(`href="path/to/style.css?2008-12-16-20-02-53"
 `),
   p([
     'The nice thing about using ',
@@ -126,7 +126,7 @@ export default {
   id: 4,
   slug: 'intelligent-css-caching',
   title: 'Intelligent CSS caching',
-  datetime: datetime('2008-12-18')('14:50:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2008-12-18')('14:50:00')('Pacific/Auckland'),
   tags: [
     'css',
     'php'

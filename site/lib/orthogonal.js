@@ -1,7 +1,7 @@
 import S from 'sanctuary';
 const simplify = paths => paths.length === 0 ? [] : (() => {
   const [head, ...tail] = paths;
-  const [prev, path] = tail.reduce(([prev, path], curr) => curr[0] === Symbol.for('M') ? prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m') ? [
+  const [prev, path] = tail.reduce(([prev, path], curr) => curr[0] === 'M' ? prev[0] === 'M' || prev[0] === 'm' ? [
     curr,
     path
   ] : [
@@ -10,7 +10,7 @@ const simplify = paths => paths.length === 0 ? [] : (() => {
       ...path,
       prev
     ]
-  ] : (prev[0] === Symbol.for('M') || prev[0] === Symbol.for('m')) && curr[0] === Symbol.for('m') ? [
+  ] : (prev[0] === 'M' || prev[0] === 'm') && curr[0] === 'm' ? [
     [
       prev[0],
       [
@@ -34,49 +34,49 @@ const simplify = paths => paths.length === 0 ? [] : (() => {
     prev
   ];
 })();
-const render = paths => simplify(paths).flat().map(x => typeof x === 'symbol' ? Symbol.keyFor(x) : String(x)).join(' ');
+const render = paths => simplify(paths).flat().join(' ');
 const $21E6 = x => [
-  Symbol.for('m'),
+  'm',
   [
     -x,
     0
   ]
 ];
 const $21E8 = x => [
-  Symbol.for('m'),
+  'm',
   [
     +x,
     0
   ]
 ];
 const $21E7 = y => [
-  Symbol.for('m'),
+  'm',
   [
     0,
     -y
   ]
 ];
 const $21E9 = y => [
-  Symbol.for('m'),
+  'm',
   [
     0,
     +y
   ]
 ];
 const $2190 = x => [
-  Symbol.for('h'),
+  'h',
   -x
 ];
 const $2192 = x => [
-  Symbol.for('h'),
+  'h',
   +x
 ];
 const $2191 = y => [
-  Symbol.for('v'),
+  'v',
   -y
 ];
 const $2193 = y => [
-  Symbol.for('v'),
+  'v',
   +y
 ];
 export {

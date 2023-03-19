@@ -94,10 +94,10 @@ import datetime from '../datetime.js';
 const body = [
   p(['I write a lot of Python. I also write a lot of JavaScript. As I switch\n    between the two (often several times in a day) I sometimes find myself\n    trying to do something in one using the syntax of the other. The most\n    common example is joining a list.']),
   p(['Python:']),
-  code$002Dblock(Symbol.for('python'))(`' '.join(['foo', 'bar'])
+  code$002Dblock('python')(`' '.join(['foo', 'bar'])
 `),
   p(['JavaScript:']),
-  code$002Dblock(Symbol.for('javascript'))(`['foo', 'bar'].join(' ')
+  code$002Dblock('javascript')(`['foo', 'bar'].join(' ')
 `),
   p([
     'Often',
@@ -117,13 +117,13 @@ const body = [
     code('Array'),
     ' object.\n      This makes it possible to write some rather terse conditional\n      statements.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`var numbers = [87, 33, 21, 75];
+  code$002Dblock('javascript')(`var numbers = [87, 33, 21, 75];
 if (numbers.every(function (n) { return n % 3 == 0; })) {
     window.alert('The numbers are all divisible by 3.');
 }
 `),
   p(['Python lists have no comparable method, so how would one write\n    this in Python?']),
-  code$002Dblock(Symbol.for('python'))(`numbers = [87, 33, 21, 75]
+  code$002Dblock('python')(`numbers = [87, 33, 21, 75]
 if [n for n in numbers if n % 3 == 0] == numbers:
     print 'The numbers are all divisible by 3.'
 `),
@@ -134,7 +134,7 @@ if [n for n in numbers if n % 3 == 0] == numbers:
     code('numbers'),
     ' is divisible by 3.'
   ]),
-  update(datetime('2012-06-20')('14:15:00')(Symbol.for('America/Los_Angeles')))([
+  update(datetime('2012-06-20')('14:15:00')('America/Los_Angeles'))([
     p([
       'As ',
       a('https://twitter.com/rafael_ab/status/215428832872771584')('Rafael Almeida pointed out on Twitter'),
@@ -142,13 +142,13 @@ if [n for n in numbers if n % 3 == 0] == numbers:
       em('is'),
       ' an\n      elegant way to express this in Python:'
     ]),
-    code$002Dblock(Symbol.for('python'))(`if all((n % 3 == 0 for n in numbers)):
+    code$002Dblock('python')(`if all((n % 3 == 0 for n in numbers)):
      print 'The numbers are all divisible by 3.'
 `)
   ]),
   h3('Now for something a bit more challenging'),
   p(['Assume that we have a list of documents, and we want to know which\n    of the documents contain all the terms in a list of search terms.']),
-  code$002Dblock(Symbol.for('javascript'))(`// (MooTools) JavaScript
+  code$002Dblock('javascript')(`// (MooTools) JavaScript
 
 var terms = ['python', 'list', 'methods'], matches = [];
 documents.each(function (document) {
@@ -162,7 +162,7 @@ documents.each(function (document) {
     em('could'),
     ' use the list comprehension approach\n    as before.'
   ]),
-  code$002Dblock(Symbol.for('python'))(`# Python
+  code$002Dblock('python')(`# Python
 
 terms = ['python', 'list', 'methods']
 matches = []
@@ -183,7 +183,7 @@ for document in documents:
       '\n    clause!'
     ])
   ]),
-  code$002Dblock(Symbol.for('python'))(`terms = ['python', 'list', 'methods']
+  code$002Dblock('python')(`terms = ['python', 'list', 'methods']
 matches = []
 for document in documents:
     for term in terms:
@@ -221,7 +221,7 @@ export default {
   id: 66,
   slug: 'python-loops-can-have-else-clause',
   title: 'Python loops can have else clause?!',
-  datetime: datetime('2010-07-25')('18:11:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-07-25')('18:11:00')('Pacific/Auckland'),
   tags: [
     'javascript',
     'mootools',

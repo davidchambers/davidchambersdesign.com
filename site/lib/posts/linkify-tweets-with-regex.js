@@ -108,14 +108,14 @@ const excerpt = [
 const body = [
   ...excerpt,
   h4('JavaScript implementation'),
-  code$002Dblock(Symbol.for('javascript'))(`tweet.replace(/(^|\\s)(@\\w+)/gm, '$1<a href="http://twitter.com/$2">$2</a>');
+  code$002Dblock('javascript')(`tweet.replace(/(^|\\s)(@\\w+)/gm, '$1<a href="http://twitter.com/$2">$2</a>');
 `),
   p(['It would of course be nicer to write:']),
-  code$002Dblock(Symbol.for('javascript'))(`tweet.replace(/(?<=(?:^|\\s))(@\\w+)/gm, '<a href="http://twitter.com/$1">$1</a>');
+  code$002Dblock('javascript')(`tweet.replace(/(?<=(?:^|\\s))(@\\w+)/gm, '<a href="http://twitter.com/$1">$1</a>');
 `),
   p(['Unfortunately, JavaScript does not support lookbehinds in\n    regular expressions, so one\'s forced to capture the preceding\n    space character (if in fact there is one) and spit it out in\n    the replacement string.']),
   h4('PHP implementation'),
-  code$002Dblock(Symbol.for('php'))(`preg_replace('/(^|\\s)(@\\w+)/m', '$1<a href="http://twitter.com/$2">$2</a>', $tweet);
+  code$002Dblock('php')(`preg_replace('/(^|\\s)(@\\w+)/m', '$1<a href="http://twitter.com/$2">$2</a>', $tweet);
 `),
   h4('Python implementation'),
   p([
@@ -127,7 +127,7 @@ const body = [
     code('(?<=^|\\s)'),
     '. No matter.'
   ]),
-  code$002Dblock(Symbol.for('python'))(`import re
+  code$002Dblock('python')(`import re
 re.sub(r'(?m)(^|\\s)(@\\w+)',
         lambda m: m.group(1) + '<a href="http://twitter.com/' + m.group(2) + '">' + m.group(2) + '</a>',
         tweet)
@@ -145,7 +145,7 @@ export default {
   id: 48,
   slug: 'linkify-tweets-with-regex',
   title: 'Linkify tweets with regex',
-  datetime: datetime('2010-04-10')('03:22:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-04-10')('03:22:00')('Pacific/Auckland'),
   tags: [
     'javascript',
     'php',

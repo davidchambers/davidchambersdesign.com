@@ -6,7 +6,7 @@ export default {
   id: 51,
   slug: "optimization-via-stringification",
   title: "Optimization via stringification",
-  datetime: datetime "2010-06-03" "14:28:00" :Pacific/Auckland,
+  datetime: datetime "2010-06-03" "14:28:00" "Pacific/Auckland",
   tags: ["css", "optimization", "python"],
   body: body,
 };
@@ -28,7 +28,7 @@ body = [
    "Instead of...",
   ],
 
-  code-block :css `
+  code-block "css" `
     a[href="/contact/"] {
         background: url(/images/sprite.png) no-repeat 0 -30px;
     }
@@ -38,7 +38,7 @@ body = [
    "use something like...",
   ],
 
-  code-block :css `
+  code-block "css" `
     a[href="/contact/"] {
         background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALJJREFUeNrs1eEJgzAQBWATHKkjZAZHiCtkhKxgRnAGR+gMWSVypflRQfOeSgvlDgTxjvuSC0RTSul+EUZhhRX+bziNj0ur8tPT7OV6qEGMFJhCaNZYBA3DAKNSiyzUIs3iPEO41EgtEhbdSQtnUAo+wlmUhiWccx+4vMs3NnqmeEmpc96/norXndbc7fC28Xa0kmNwewbdPYY3fgvMjhDFm6POOUM3kf6dFFZY4a/FKsAADsZ+Lb8VFH4AAAAASUVORK5CYII=) no-repeat;
     }
@@ -49,7 +49,7 @@ body = [
     strings.",
   ],
 
-  code-block :python `
+  code-block "python" `
     #stringify.py
     import base64
     import sys
@@ -68,7 +68,7 @@ body = [
 
   h4 "Usage",
 
-  code-block :console `
+  code-block "console" `
     $ python stringify.py /path/to/image.png
   `,
 

@@ -6,7 +6,7 @@ export default {
   id: 7,
   slug: "wordpress-login-redirect",
   title: "WordPress login redirect",
-  datetime: datetime "2009-03-01" "03:01:00" :Pacific/Auckland,
+  datetime: datetime "2009-03-01" "03:01:00" "Pacific/Auckland",
   tags: ["php", "wordpress"],
   body: body,
 };
@@ -19,7 +19,7 @@ body = [
     In such instances, we can simply provide a standard login link:",
   ],
 
-  code-block :php `
+  code-block "php" `
     <a href="<?php bloginfo('url'); ?>/wp-login.php">log in</a>
   `,
 
@@ -34,7 +34,7 @@ body = [
     a value for ", code "redirect_to", " in the href:",
   ],
 
-  code-block :php `
+  code-block "php" `
     <a href="<?php bloginfo('url'); ?>/wp-login.php?redirect_to=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">log in</a>
   `,
 

@@ -6,7 +6,7 @@ export default {
   id: 41,
   slug: "mootools-every-method",
   title: "MooTools every method",
-  datetime: datetime "2010-03-18" "00:40:00" :Pacific/Auckland,
+  datetime: datetime "2010-03-18" "00:40:00" "Pacific/Auckland",
   tags: ["javascript", "mootools"],
   body: body,
 };
@@ -20,7 +20,7 @@ body = [
     several numbers:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     var list = [4, -1, 3, 2, 5];
   `,
 
@@ -44,7 +44,7 @@ body = [
     loop...",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     var allPositive = true;
     for (var i = 0; i < list.length; i++) {
         if (list[i] <= 0) {
@@ -58,7 +58,7 @@ body = [
    "... or a ", code "while", " loop (which is slightly more efficient).",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     var allPositive = true, i = list.length;
     while (i--) {
         if (list[i] <= 0) {
@@ -87,7 +87,7 @@ body = [
     instead of a ", code "for", " or ", code "while", " loop.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     var allPositive = true;
     list.each(function (item) {
         if (item <= 0) {
@@ -111,7 +111,7 @@ body = [
       "Array object's every method", " is the perfect tool for the job.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     var allPositive = list.every(function (item) {
         return item > 0;
     });

@@ -6,7 +6,7 @@ export default {
   id: 79,
   slug: "faster-terminal-navigation-via-aliases",
   title: "Faster Terminal navigation via aliases",
-  datetime: datetime "2011-02-12" "22:10:00" :America/Los_Angeles,
+  datetime: datetime "2011-02-12" "22:10:00" "America/Los_Angeles",
   tags: ["mac-os-x", "productivity", "terminal.app"],
   body: body,
 };
@@ -49,7 +49,7 @@ body = [
     one of these imports.",
   ],
 
-  code-block :bash `
+  code-block "bash" `
     alias site-packages="cd /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages"
   `,
 
@@ -59,7 +59,7 @@ body = [
     which takes you to the directory you were in most recently.",
   ],
 
-  code-block :console `
+  code-block "console" `
     $ cd ~/Desktop
     $ site-packages
     $ pwd

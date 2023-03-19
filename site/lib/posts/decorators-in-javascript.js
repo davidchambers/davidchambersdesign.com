@@ -92,14 +92,14 @@ import {
 import datetime from '../datetime.js';
 const body = [
   p(['A decorator is a function which takes a function and returns a function:']),
-  code$002Dblock(Symbol.for('coffeescript'))(`decorator = (fn) -> fn
+  code$002Dblock('coffeescript')(`decorator = (fn) -> fn
 `),
   p([
     'Obviously, this doesn\'t do anything useful. It\'s the fact that a\n    decorator can return a function which behaves ',
     em('similarly'),
     '\n    to the function passed to it that makes the pattern interesting.\n    Commonly a decorator will simply wrap a function invocation in a\n    check of some sort:'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`var loginRequired = function (fn) {
+  code$002Dblock('javascript')(`var loginRequired = function (fn) {
   return function () {
     if (!user.authenticated) {
       return window.location.replace('/login');
@@ -109,7 +109,7 @@ const body = [
 };
 `),
   p(['The above decorator could be used to "guard" actions that only\n    authenticated users are permitted to perform:']),
-  code$002Dblock(Symbol.for('javascript'))(`var changeUsername = loginRequired(function (username) {
+  code$002Dblock('javascript')(`var changeUsername = loginRequired(function (username) {
   $.ajax({
     type: 'PUT',
     url: '/api/1.0/users/' + user.id,
@@ -130,7 +130,7 @@ var deleteAccount = loginRequired(function () {
   })});
 `),
   p(['The CoffeeScript equivalent is quite a bit clearer:']),
-  code$002Dblock(Symbol.for('coffeescript'))(`changeUsername = loginRequired (username) ->
+  code$002Dblock('coffeescript')(`changeUsername = loginRequired (username) ->
   $.ajax
     type: 'PUT'
     url: "/api/1.0/users/#{user.id}"
@@ -159,7 +159,7 @@ export default {
   id: 89,
   slug: 'decorators-in-javascript',
   title: 'Decorators in JavaScript',
-  datetime: datetime('2011-07-26')('22:00:00')(Symbol.for('America/Los_Angeles')),
+  datetime: datetime('2011-07-26')('22:00:00')('America/Los_Angeles'),
   tags: [
     'coffeescript',
     'javascript',

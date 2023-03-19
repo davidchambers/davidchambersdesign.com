@@ -6,7 +6,7 @@ export default {
   id: 67,
   slug: "self-caching-functions-in-javascript-and-python",
   title: "Self-caching functions in JavaScript and Python",
-  datetime: datetime "2010-08-29" "01:10:00" :Pacific/Auckland,
+  datetime: datetime "2010-08-29" "01:10:00" "Pacific/Auckland",
   tags: ["javascript", "programming", "python"],
   body: body,
 };
@@ -28,7 +28,7 @@ excerpt = [
     due to its recursive nature.",
   ],
   h3 "JavaScript Fibonacci without caching",
-  code-block :javascript `
+  code-block "javascript" `
     function fibonacci(n) {
         if (n <= 1) return n;
         return fibonacci(n - 2) + fibonacci(n - 1);
@@ -44,7 +44,7 @@ body = [
    "I created a simple timer:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     function timer(func) {
         var i = 10, start;
         while (i--) {
@@ -59,7 +59,7 @@ body = [
    "How does the vanilla function perform?",
   ],
 
-  code-block :TK `
+  code-block "TK" `
     >>> timer(fibonacci, 35);
     fibonacci executed in 559 ms
     fibonacci executed in 559 ms
@@ -94,7 +94,7 @@ body = [
     cannot be overwritten, accidentally or otherwise.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     fibonacci = (function () {
 
         var cache = {};
@@ -115,7 +115,7 @@ body = [
    "Does caching make a difference?",
   ],
 
-  code-block :TK `
+  code-block "TK" `
     >>> timer(fibonacci, 35);
      executed in 1 ms
      executed in 0 ms
@@ -142,7 +142,7 @@ body = [
     the ", code "if (cached)", " statement is no longer appropriate.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     fibonacci = (function () {
 
         var cache = { 0:0, 1:1 };
@@ -165,7 +165,7 @@ body = [
     does not have this capability.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     function fibonacci(n) {
 
         if (!fibonacci.cache) fibonacci.cache = {};
@@ -185,7 +185,7 @@ body = [
     function definition.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     function fibonacci(n) {
         // function body
     }
@@ -199,7 +199,7 @@ body = [
 
   h3 "Python Fibonacci without caching",
 
-  code-block :python `
+  code-block "python" `
     def fibonacci(n):
         if n <= 1:
             return n
@@ -212,7 +212,7 @@ body = [
     function?",
   ],
 
-  code-block :TK `
+  code-block "TK" `
     >>> import time
     >>> for i in range(10): t = time.time(); fibonacci(35); print time.time() - t;
   `,
@@ -226,7 +226,7 @@ body = [
 
   h3 "Python Fibonacci with caching via function property",
 
-  code-block :python `
+  code-block "python" `
     def fibonacci(n):
         if n in fibonacci.cache:
             return fibonacci.cache[n]
@@ -250,7 +250,7 @@ body = [
    "For the sake of completion I'll include this unappealing approach.",
   ],
 
-  code-block :python `
+  code-block "python" `
     def fibonacci(n, _cache={}):
         if n <= 1:
             return n

@@ -6,7 +6,7 @@ export default {
   id: 17,
   slug: "php-print_filesize-function",
   title: "PHP print_filesize function",
-  datetime: datetime "2009-06-10" "21:17:00" :Pacific/Auckland,
+  datetime: datetime "2009-06-10" "21:17:00" "Pacific/Auckland",
   tags: ["best-practice", "php"],
   body: body,
 };
@@ -34,7 +34,7 @@ body = [
 
   ...excerpt,
 
-  code-block :php `
+  code-block "php" `
     <?php
 
     /**
@@ -79,7 +79,7 @@ body = [
    "Example usage:",
   ],
 
-  code-block :php `
+  code-block "php" `
     <a href="favicon.ico">favicon.ico</a><?php print_filesize('favicon.ico'); ?>
   `,
 

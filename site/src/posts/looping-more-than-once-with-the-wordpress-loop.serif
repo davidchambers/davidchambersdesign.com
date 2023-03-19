@@ -6,7 +6,7 @@ export default {
   id: 12,
   slug: "looping-more-than-once-with-the-wordpress-loop",
   title: "Looping more than once with the WordPress loop",
-  datetime: datetime "2009-04-17" "00:34:00" :Pacific/Auckland,
+  datetime: datetime "2009-04-17" "00:34:00" "Pacific/Auckland",
   tags: ["php", "wordpress"],
   body: body,
 };
@@ -21,7 +21,7 @@ body = [
     The loop looks like this:",
   ],
 
-  code-block :php `
+  code-block "php" `
     if (have_posts()) :
         while (have_posts()) : the_post();
             // code
@@ -38,7 +38,7 @@ body = [
     adding the following line of code just before the loop:",
   ],
 
-  code-block :php `
+  code-block "php" `
     query_posts('showposts=5&offset=3');
   `,
 

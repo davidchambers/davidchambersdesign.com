@@ -100,7 +100,7 @@ const body = [
       a('http://www.jslint.com/')('JSLint'),
       '\n      for the first time; I plan to use it frequently from this point\n      forward. I have one question, though, concerning the acceptability\n      of extra commas. Consider the following code snippet:'
     ]),
-    code$002Dblock(Symbol.for('javascript'))(`var ninja = {
+    code$002Dblock('javascript')(`var ninja = {
     name: 'Hattori Hanzou Masashige',
     shuriken: 5,
     attack: function () {
@@ -136,7 +136,7 @@ export default {
   id: 46,
   slug: 'extra-comma-considered-harmful',
   title: 'Extra comma considered harmful',
-  datetime: datetime('2010-03-29')('15:30:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-03-29')('15:30:00')('Pacific/Auckland'),
   tags: [
     'best-practice',
     'javascript'

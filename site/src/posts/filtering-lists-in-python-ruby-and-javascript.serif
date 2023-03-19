@@ -6,7 +6,7 @@ export default {
   id: 69,
   slug: "filtering-lists-in-python-ruby-and-javascript",
   title: "Filtering lists in Python, Ruby, and JavaScript",
-  datetime: datetime "2010-09-09" "04:21:00" :Pacific/Auckland,
+  datetime: datetime "2010-09-09" "04:21:00" "Pacific/Auckland",
   tags: ["javascript", "programming", "python", "ruby"],
   body: body,
 };
@@ -33,7 +33,7 @@ body = [
    "Python:",
   ],
 
-  code-block :python `
+  code-block "python" `
     '\\n'.join(obj.name
         for obj in (
             repository.retrieve(id)
@@ -45,7 +45,7 @@ body = [
    "Ruby:",
   ],
 
-  code-block :ruby `
+  code-block "ruby" `
     ids.map do |id|
       repository.retrieve(id)
     end.compact.map do |obj|
@@ -68,7 +68,7 @@ body = [
    "My first attempt used the ", code "filter", " array method.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     ids.filter(function (id) {
         var obj = repository.retrieve(id);
         return obj && obj.name;
@@ -94,7 +94,7 @@ body = [
     \"accumulator\".",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     ids.reduce(function (ids, id) {
         var obj = repository.retrieve(id);
         if (obj && obj.name) ids.push(obj.name);

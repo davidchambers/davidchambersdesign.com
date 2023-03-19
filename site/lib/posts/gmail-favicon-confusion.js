@@ -116,7 +116,7 @@ export default {
   id: 63,
   slug: 'gmail-favicon-confusion',
   title: 'Gmail\'s favicon confusion',
-  datetime: datetime('2010-07-21')('10:56:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-07-21')('10:56:00')('Pacific/Auckland'),
   tags: [
     'design',
     'gmail'

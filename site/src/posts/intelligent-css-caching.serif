@@ -6,7 +6,7 @@ export default {
   id: 4,
   slug: "intelligent-css-caching",
   title: "Intelligent CSS caching",
-  datetime: datetime "2008-12-18" "14:50:00" :Pacific/Auckland,
+  datetime: datetime "2008-12-18" "14:50:00" "Pacific/Auckland",
   tags: ["css", "php"],
   body: body,
 };
@@ -69,7 +69,7 @@ body = [
     several good suggestions, here is the PHP code I have decided upon:",
   ],
 
-  code-block :php `
+  code-block "php" `
     href="path/to/style.css?<?php echo date('Y-m-d-H-i-s', filectime('path/to/style.css')); ?>"
   `,
 
@@ -77,7 +77,7 @@ body = [
    "The above generates something like this:",
   ],
 
-  code-block :html `
+  code-block "html" `
     href="path/to/style.css?2008-12-16-20-02-53"
   `,
 

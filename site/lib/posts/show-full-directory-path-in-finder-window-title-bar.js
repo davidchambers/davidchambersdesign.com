@@ -115,10 +115,10 @@ const body = [
     strong('return'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('console'))(`defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES
+  code$002Dblock('console')(`defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES
 `),
   p(['For the changes to take effect, you will need to restart Finder:']),
-  code$002Dblock(Symbol.for('console'))(`killall Finder
+  code$002Dblock('console')(`killall Finder
 `),
   captioned$002Dimages([{
       alt: 'Finder windows with paths',
@@ -134,17 +134,17 @@ const body = [
     ' users.'
   ]),
   p(['To revert to the default title bar treatment, simply enter:']),
-  code$002Dblock(Symbol.for('console'))(`defaults write com.apple.finder _FXShowPosixPathInTitle -bool NO
+  code$002Dblock('console')(`defaults write com.apple.finder _FXShowPosixPathInTitle -bool NO
 `),
   p(['Then, restart Finder once again:']),
-  code$002Dblock(Symbol.for('console'))(`killall Finder
+  code$002Dblock('console')(`killall Finder
 `)
 ];
 export default {
   id: 2,
   slug: 'show-full-directory-path-in-finder-window-title-bar',
   title: 'Show full directory path in Finder window title bar',
-  datetime: datetime('2008-11-29')('19:07:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2008-11-29')('19:07:00')('Pacific/Auckland'),
   tags: ['mac-os-x'],
   body: body
 };

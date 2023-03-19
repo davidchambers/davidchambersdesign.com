@@ -89,7 +89,7 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['One might expect the following code to serialize a Django model instance:']),
-  code$002Dblock(Symbol.for('python'))(`import simplejson
+  code$002Dblock('python')(`import simplejson
 simplejson.dumps(instance)
 `),
   p([
@@ -97,12 +97,12 @@ simplejson.dumps(instance)
     em('why'),
     ' model instances are\n    not serializable, but I do have a solution: define a serialization\n    method on the instance\'s model.'
   ]),
-  code$002Dblock(Symbol.for('python'))(`def toJSON(self):
+  code$002Dblock('python')(`def toJSON(self):
     import simplejson
     return simplejson.dumps(dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]]))
 `),
   p(['Here\'s the verbose equivalent for those averse to one-liners:']),
-  code$002Dblock(Symbol.for('python'))(`def toJSON(self):
+  code$002Dblock('python')(`def toJSON(self):
     fields = []
     for field in self._meta.fields:
         fields.append(field.name)
@@ -125,7 +125,7 @@ export default {
   id: 49,
   slug: 'serializing-django-model-instances',
   title: 'Serializing Django model instances',
-  datetime: datetime('2010-04-13')('08:16:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-04-13')('08:16:00')('Pacific/Auckland'),
   tags: [
     'django',
     'python'

@@ -6,7 +6,7 @@ export default {
   id: 55,
   slug: "settimeout-fix-for-webkit-transition",
   title: "setTimeout fix for -webkit-transition",
-  datetime: datetime "2010-06-18" "03:12:00" :Pacific/Auckland,
+  datetime: datetime "2010-06-18" "03:12:00" "Pacific/Auckland",
   tags: ["css3", "javascript"],
   body: body,
 };
@@ -36,7 +36,7 @@ excerpt = [
   p [
    "The code behind this example is not complicated:",
   ],
-  code-block :javascript `
+  code-block "javascript" `
     element.style.webkitTransitionProperty = 'left';
     element.style.webkitTransitionDuration = '2s';
     element.addEventListener('click', function () {
@@ -81,7 +81,7 @@ body = [
    "The code:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     element.style.left = '100px';
     element.style.webkitTransitionProperty = 'left';
     element.style.webkitTransitionDuration = '2s';
@@ -142,7 +142,7 @@ body = [
    "The working code:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     element.style.left = '100px';
     setTimeout(function () {
         element.style.webkitTransitionProperty = 'left';
@@ -166,7 +166,7 @@ body = [
     please do so by leaving a comment!",
   ],
 
-  update {datetime "2010-06-02" "00:15:00" :Pacific/Auckland} [
+  update {datetime "2010-06-02" "00:15:00" "Pacific/Auckland"} [
     p [
      "I've just been watching one of the ",
       a "http://developer.apple.com/videos/wwdc/2010/"
@@ -182,7 +182,7 @@ body = [
       li "Browsers optimize away redundant style changes",
       li "This matters with transitions, because they are temporal",
     ],
-    code-block :javascript `
+    code-block "javascript" `
       var box = document.getElementById('box');
       box.style.backgroundColor = 'red';
       box.style.webkitTransition = 'background-color 2s';

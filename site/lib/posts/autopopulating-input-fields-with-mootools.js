@@ -93,7 +93,7 @@ const body = [
     a('/autopopulating-input-fields-with-prototype/')('Auto-populating input fields with Prototype'),
     '.\n    Looking at the code now, I realize that it\'s not very pretty.\n    I\'m rewriting this site\'s JavaScript in MooTools, and the new\n    code is quite a bit more elegant.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`// provide input hints
+  code$002Dblock('javascript')(`// provide input hints
 window.addEvent('domready', function () {
     $$('input[placeholder]').addEvents({
         focus: function () {
@@ -121,7 +121,7 @@ export default {
   id: 52,
   slug: 'autopopulating-input-fields-with-mootools',
   title: 'Auto-populating input fields with MooTools',
-  datetime: datetime('2010-06-09')('23:23:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-06-09')('23:23:00')('Pacific/Auckland'),
   tags: [
     'html5',
     'javascript',

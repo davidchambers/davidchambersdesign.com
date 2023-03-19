@@ -92,7 +92,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
-  update(datetime('2009-08-28')('18:12:00')(Symbol.for('Pacific/Auckland')))([p([
+  update(datetime('2009-08-28')('18:12:00')('Pacific/Auckland'))([p([
       'An update to this post has been published: ',
       a('/tiny-calendar-icons-sprite/')('Tiny calendar icons sprite'),
       '.'
@@ -127,7 +127,7 @@ export default {
   id: 14,
   slug: 'tiny-calendar-icon-set',
   title: 'Tiny calendar icon set',
-  datetime: datetime('2009-04-24')('21:24:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-04-24')('21:24:00')('Pacific/Auckland'),
   tags: [
     'design',
     'icons'

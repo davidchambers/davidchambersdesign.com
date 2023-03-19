@@ -116,12 +116,12 @@ const body = [
     strong('If you\'d like to see another language supported,\n    please let me know.')
   ]),
   h4('CSS'),
-  code$002Dblock(Symbol.for('css'))(`p.error.message   { border: 1px solid #c00; background-color: #fcc; }
+  code$002Dblock('css')(`p.error.message   { border: 1px solid #c00; background-color: #fcc; }
 p.info.message    { border: 1px solid #fc3; background-color: #ffc; }
 p.success.message { border: 1px solid #0b0; background-color: #cfc; }
 `),
   h4('HTML'),
-  code$002Dblock(Symbol.for('html'))(`<form id="searchform" action="http://davidchambersdesign.com/" method="get">
+  code$002Dblock('html')(`<form id="searchform" action="http://davidchambersdesign.com/" method="get">
     <div>
         <label for="s" class="structural">search davidchambersdesign.com</label>
         <input type="text" id="s" name="s" value="" class="text" />
@@ -130,7 +130,7 @@ p.success.message { border: 1px solid #0b0; background-color: #cfc; }
 </form><!--/searchform-->
 `),
   h4('JavaScript'),
-  code$002Dblock(Symbol.for('javascript'))(`// simulate textarea:focus
+  code$002Dblock('javascript')(`// simulate textarea:focus
 document.observe('dom:loaded', function () {
     $$('textarea').each(function (e) {
         Event.observe(e, 'focus', function (event) {
@@ -143,7 +143,7 @@ document.observe('dom:loaded', function () {
 });
 `),
   h4('PHP'),
-  code$002Dblock(Symbol.for('php'))(`/**
+  code$002Dblock('php')(`/**
  * echoes nicely formatted filesize
  * @param string $filename
  * @param string $before
@@ -180,7 +180,7 @@ function print_filesize($filename, $before = ' <span class="filesize">(', $after
 `),
   p(['Note that the variable names in the double-quoted string above are\n    a different colour from the rest of the string. Nice!']),
   h4('Python'),
-  code$002Dblock(Symbol.for('python'))(`# function accepts any number of arguments since *all_sales is a tuple
+  code$002Dblock('python')(`# function accepts any number of arguments since *all_sales is a tuple
 def daily_sales_total(*all_sales):
     total = 0.0
     for each_sale in all_sales:
@@ -195,7 +195,7 @@ def daily_sales_total(*all_sales):
     code('<pre class="brush: css; html-script: true;"></pre>'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<head>
+  code$002Dblock('html')(`<head>
     <title>Coda theme for SyntaxHighlighter</title>
     <style type="text/css">
         p {
@@ -220,7 +220,7 @@ def daily_sales_total(*all_sales):
     code('<pre class="brush: javascript; html-script: true;"></pre>'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<body>
+  code$002Dblock('html')(`<body>
     <p class="js-off">
         JavaScript is currently <strong>disabled</strong>.
     </p>
@@ -244,7 +244,7 @@ def daily_sales_total(*all_sales):
     code('<pre class="brush: php; html-script: true;"></pre>'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('php'))(`<ul>
+  code$002Dblock('php')(`<ul>
 <?php foreach ($names as $name): ?>
     <li><?php echo $name; ?></li>
 <?php endforeach; ?>
@@ -267,7 +267,7 @@ def daily_sales_total(*all_sales):
         code('<'),
         '\n        that is not part of a string is considered to be part of a tag.\n        This causes incorrect highlighting, as can be seen in this\n        example:'
       ]),
-      code$002Dblock(Symbol.for('html'))(`<script type="text/javascript">
+      code$002Dblock('html')(`<script type="text/javascript">
     function isLarger(x, y) {
         return (x > y);
     }
@@ -316,13 +316,13 @@ def daily_sales_total(*all_sales):
     ]),
     li(['Add a link to the Coda theme wherever you link to shCore.css.\n      If you\'re using the standard setup, this will be in the head\n      section of the document.'])
   ]),
-  update(datetime('2009-08-24')('22:51:00')(Symbol.for('Pacific/Auckland')))([p(['Coda theme has been updated so that comments are now italicized\n      (as they are in Coda). XML brush for Coda theme now applies the\n      correct class name ("xml-comment") to HTML comments.'])])
+  update(datetime('2009-08-24')('22:51:00')('Pacific/Auckland'))([p(['Coda theme has been updated so that comments are now italicized\n      (as they are in Coda). XML brush for Coda theme now applies the\n      correct class name ("xml-comment") to HTML comments.'])])
 ];
 export default {
   id: 22,
   slug: 'coda-theme-for-syntaxhighlighter',
   title: 'Coda theme for SyntaxHighlighter',
-  datetime: datetime('2009-08-16')('08:53:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-08-16')('08:53:00')('Pacific/Auckland'),
   tags: [
     'coda',
     'css',

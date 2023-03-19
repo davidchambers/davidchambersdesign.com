@@ -113,7 +113,7 @@ const body = [
     a('#usage')('usage')
   ]),
   ...excerpt,
-  update(datetime('2009-06-27')('06:21:00')(Symbol.for('Pacific/Auckland')))([p(['I have completely rewritten the code so that it no longer\n      requires empty functions inside the brush files to act as\n      indicators of readiness. Instead, the required brushes are\n      retrieved in a daisy chain. This is both more elegant and\n      more reliable. Additionally, style sheets are now also\n      retrieved on demand.'])]),
+  update(datetime('2009-06-27')('06:21:00')('Pacific/Auckland'))([p(['I have completely rewritten the code so that it no longer\n      requires empty functions inside the brush files to act as\n      indicators of readiness. Instead, the required brushes are\n      retrieved in a daisy chain. This is both more elegant and\n      more reliable. Additionally, style sheets are now also\n      retrieved on demand.'])]),
   h3$0027({ id: 'setup' })('Setup'),
   p([strong('Requires Prototype!')]),
   p([
@@ -138,7 +138,7 @@ const body = [
       ])]),
     li([
       p(['Replace:']),
-      code$002Dblock(Symbol.for('html'))(`<script src="/path/to/scripts/shCore.js"></script>
+      code$002Dblock('html')(`<script src="/path/to/scripts/shCore.js"></script>
 <script src="/path/to/scripts/shBrushAS3.js"></script>
 <script src="/path/to/scripts/shBrushBash.js"></script>
 .
@@ -150,7 +150,7 @@ const body = [
 <script>SyntaxHighlighter.all()</script>
 `),
       p(['with:']),
-      code$002Dblock(Symbol.for('html'))(`<script>
+      code$002Dblock('html')(`<script>
     function Brush(name, filename, aliases)
     {
         this.name = name;
@@ -195,7 +195,7 @@ const body = [
     code('settings.stylesheets'),
     '\n    is an array containing just the default style sheet. This can easily be\n    modified:'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`stylesheets: ['shThemeCoda', 'shThemeAppleScript'],
+  code$002Dblock('javascript')(`stylesheets: ['shThemeCoda', 'shThemeAppleScript'],
 `),
   p([
     strong('Brushes.'),
@@ -203,7 +203,7 @@ const body = [
     code('settings.brushes'),
     '\n    is an empty array. All the bundled brushes are handled automatically,\n    but additional brushes can be included by adding them to this array:'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`brushes: [
+  code$002Dblock('javascript')(`brushes: [
     new Brush('AppleScript', 'shBrushAppleScript', ['applescript'])
 ],
 `),
@@ -228,7 +228,7 @@ const body = [
     code('settings.defaults'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`defaults: {
+  code$002Dblock('javascript')(`defaults: {
     'auto-links': false,
     'html-script': true
 }
@@ -240,12 +240,12 @@ const body = [
     a('http://www.outofwhatbox.com/blog/2009/06/syntaxhighlighter-revised-again-works-on-its-own-once-again/')('SyntaxHighlighter improvements'),
     ' are well worth a look!'
   ]),
-  update(datetime('2009-06-27')('06:21:00')(Symbol.for('Pacific/Auckland')))([p([
+  update(datetime('2009-06-27')('06:21:00')('Pacific/Auckland'))([p([
       'Thanks also to Bob Matsuoka for sharing his ',
       a('http://ajaxian.com/archives/a-technique-for-lazy-script-loading')('technique for lazy script loading'),
       ' which provides\n      workarounds for browsers that do not support the onload\n      event when applied to script elements.'
     ])]),
-  update(datetime('2009-08-16')('01:24:00')(Symbol.for('Pacific/Auckland')))([
+  update(datetime('2009-08-16')('01:24:00')('Pacific/Auckland'))([
     p(['I\'ve updated the script to ensure that the XML brush is always\n      loaded when at least one of the following conditions is true:']),
     ol([
       li([
@@ -265,7 +265,7 @@ export default {
   id: 18,
   slug: 'prototype-loader-for-syntaxhighlighter',
   title: 'Prototype loader for SyntaxHighlighter',
-  datetime: datetime('2009-06-22')('01:04:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-06-22')('01:04:00')('Pacific/Auckland'),
   tags: [
     'javascript',
     'optimization',

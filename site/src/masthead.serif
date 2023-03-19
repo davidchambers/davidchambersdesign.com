@@ -158,9 +158,9 @@ fill-chars = {
 };
 
 update [{x, y}, ...tail] dir = [
-  if dir[0] === :h then {
+  if dir[0] === "h" then {
     {x: x + dir[1], y: y}
-  } else if dir[0] === :v then {
+  } else if dir[0] === "v" then {
     {x: x, y: y + dir[1]}
   } else {
     {x: x + dir[1][0], y: y + dir[1][1]}
@@ -175,12 +175,12 @@ reset path = {
   ys = S.chain {S.map {y} => y} paths;
   dx = S.reduce S.max 0 xs - xs[0];
   dy = 0 - ys[0];
-  [:m, [dx, dy]]
+  ["m", [dx, dy]]
 };
 
 paths chars = [
-  ...chars.slice(0, 1).flatMap(char => [[:M, [0, 0]], ...char, reset char]),
-  ...chars.slice(1   ).flatMap(char => [[:m, [6, 0]], ...char, reset char]),
+  ...chars.slice(0, 1).flatMap(char => [["M", [0, 0]], ...char, reset char]),
+  ...chars.slice(1   ).flatMap(char => [["m", [6, 0]], ...char, reset char]),
 ];
 
 chars = Array.from "DAVIDCHAMBERSDESIGN";

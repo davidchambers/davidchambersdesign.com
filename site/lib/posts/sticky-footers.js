@@ -94,7 +94,7 @@ const excerpt = [
 const body = [
   ...excerpt,
   p(['I\'ll explain how it\'s done. The markup must look something like\n    the following:']),
-  code$002Dblock(Symbol.for('html'))(`<body>
+  code$002Dblock('html')(`<body>
     <div id="wrap">
         <div id="main">
         </div>
@@ -104,7 +104,7 @@ const body = [
 </body>
 `),
   p(['The required CSS is also straightforward. First, set the heights\n    of the html and body elements to the height of the viewport:']),
-  code$002Dblock(Symbol.for('css'))(`html    { height: 100%; }
+  code$002Dblock('css')(`html    { height: 100%; }
 body    { height: 100%; }
 `),
   p([
@@ -112,16 +112,16 @@ body    { height: 100%; }
     em('minimum'),
     ' height of\n    the wrapper div to the height of the viewport:'
   ]),
-  code$002Dblock(Symbol.for('css'))(`#wrap   { min-height: 100%; }
+  code$002Dblock('css')(`#wrap   { min-height: 100%; }
 `),
   p(['Next, pull up the footer so that it\'s visible without scrolling\n    on pages without a lot of content:']),
-  code$002Dblock(Symbol.for('css'))(`#footer { margin-top: -5em; height: 5em; }
+  code$002Dblock('css')(`#footer { margin-top: -5em; height: 5em; }
 `),
   p(['Finally, apply bottom padding to the main content div to ensure\n    that nothing is covered by the footer:']),
-  code$002Dblock(Symbol.for('css'))(`#main   { padding-bottom: 5em; }
+  code$002Dblock('css')(`#main   { padding-bottom: 5em; }
 `),
   p(['Putting it all together gives the following:']),
-  code$002Dblock(Symbol.for('css'))(`html    { height: 100%; }
+  code$002Dblock('css')(`html    { height: 100%; }
 body    { height: 100%; }
 #wrap   { min-height: 100%; }
 #main   { padding-bottom: 5em; }
@@ -142,7 +142,7 @@ export default {
   id: 27,
   slug: 'sticky-footers',
   title: 'Sticky footers',
-  datetime: datetime('2009-09-20')('01:08:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-09-20')('01:08:00')('Pacific/Auckland'),
   tags: [
     'css',
     'html'

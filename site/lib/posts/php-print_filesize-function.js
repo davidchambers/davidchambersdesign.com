@@ -101,7 +101,7 @@ const excerpt = [
 ];
 const body = [
   ...excerpt,
-  code$002Dblock(Symbol.for('php'))(`<?php
+  code$002Dblock('php')(`<?php
 
 /**
  * echoes nicely formatted filesize
@@ -141,7 +141,7 @@ function print_filesize($filename, $before = ' <span class="filesize">(', $after
 ?>
 `),
   p(['Example usage:']),
-  code$002Dblock(Symbol.for('php'))(`<a href="favicon.ico">favicon.ico</a><?php print_filesize('favicon.ico'); ?>
+  code$002Dblock('php')(`<a href="favicon.ico">favicon.ico</a><?php print_filesize('favicon.ico'); ?>
 `),
   p([
     'This gives: ',
@@ -159,7 +159,7 @@ export default {
   id: 17,
   slug: 'php-print_filesize-function',
   title: 'PHP print_filesize function',
-  datetime: datetime('2009-06-10')('21:17:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-06-10')('21:17:00')('Pacific/Auckland'),
   tags: [
     'best-practice',
     'php'

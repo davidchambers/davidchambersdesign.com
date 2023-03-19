@@ -99,7 +99,7 @@ const excerpt = [
     $2014,
     'is now widely appreciated, thanks in large part to its lexical scoping.\n    Python 3 is lexically-scoped, too, as the following code demonstrates.'
   ]),
-  code$002Dblock(Symbol.for('python'))(`def cache(saved=None):
+  code$002Dblock('python')(`def cache(saved=None):
     def _(thing=None):
         nonlocal saved
         if thing is not None:
@@ -121,7 +121,7 @@ cache = cache()
     code('saved'),
     '\n    and returned.'
   ]),
-  code$002Dblock(Symbol.for('TK'))(`>>> cache(2**3)
+  code$002Dblock('TK')(`>>> cache(2**3)
 8
 >>> cache()
 8
@@ -135,7 +135,7 @@ cache = cache()
 const body = [
   ...excerpt,
   h3('Bringing lexical scoping to Python 2.x'),
-  code$002Dblock(Symbol.for('python'))(`def cache(saved=None):
+  code$002Dblock('python')(`def cache(saved=None):
     def _(thing=None):
         # nonlocal saved
         if thing is not None:
@@ -149,7 +149,7 @@ cache = cache()
     code('nonlocal'),
     ' line is commented out as it\'s a syntax\n    error in Python 2.x.'
   ]),
-  code$002Dblock(Symbol.for('TK'))(`>>> cache(2**3)
+  code$002Dblock('TK')(`>>> cache(2**3)
 8
 >>> cache()
 ...
@@ -180,7 +180,7 @@ UnboundLocalError: local variable 'saved' referenced before assignment
   ]),
   p(['It is possible to simulate lexical scoping in Python 2.x.\n    The approaches I find most palatable utilize a dictionary\n    or a function object as a namespace accessible to both the\n    inner and outer functions.']),
   h4('Dictionary'),
-  code$002Dblock(Symbol.for('python'))(`def cache():
+  code$002Dblock('python')(`def cache():
     ns = {'saved': None}
     def _(thing=None):
         if thing is not None:
@@ -190,7 +190,7 @@ UnboundLocalError: local variable 'saved' referenced before assignment
 cache = cache()
 `),
   h4('Function object'),
-  code$002Dblock(Symbol.for('python'))(`def cache():
+  code$002Dblock('python')(`def cache():
     def ns(): pass
     ns.saved = None
     def _(thing=None):
@@ -216,7 +216,7 @@ export default {
     code('nonlocal'),
     ' in Python 2.x'
   ],
-  datetime: datetime('2011-02-05')('19:30:00')(Symbol.for('America/Los_Angeles')),
+  datetime: datetime('2011-02-05')('19:30:00')('America/Los_Angeles'),
   tags: [
     'hacks',
     'programming',

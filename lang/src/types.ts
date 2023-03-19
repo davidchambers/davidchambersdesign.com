@@ -68,18 +68,6 @@ export const TemplateLiteral = (
   expressions,
 });
 
-export interface SymbolLiteral {
-  readonly type: 'SymbolLiteral';
-  readonly name: string;
-}
-
-export const SymbolLiteral = (
-  name: string,
-): SymbolLiteral => ({
-  type: 'SymbolLiteral',
-  name,
-});
-
 export interface MetaProperty {
   readonly type: 'MetaProperty';
   readonly meta: string;
@@ -263,7 +251,6 @@ export type PrimaryExpression =
   | NumberLiteral
   | StringLiteral
   | TemplateLiteral
-  | SymbolLiteral
   | ArrayExpression
   | ObjectExpression
 
@@ -446,7 +433,6 @@ export type Expression =
   | NumberLiteral
   | StringLiteral
   | TemplateLiteral
-  | SymbolLiteral
   | MetaProperty
   | MemberExpression
   | Identifier

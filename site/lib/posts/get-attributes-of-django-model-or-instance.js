@@ -89,7 +89,7 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['What is the best way to get the attributes of a Django model\n    or instance?']),
-  code$002Dblock(Symbol.for('python'))(`from django.db import models
+  code$002Dblock('python')(`from django.db import models
 
 class Musician(models.Model):
     first_name = models.CharField()
@@ -101,7 +101,7 @@ class Musician(models.Model):
     code('__dict__.keys()'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('python'))(`>>> m = Musician(first_name='Norah', last_name='Jones', instrument='piano')
+  code$002Dblock('python')(`>>> m = Musician(first_name='Norah', last_name='Jones', instrument='piano')
 >>> print m.__dict__.keys()
 ['last_name', 'instrument', 'first_name', 'id']
 `),
@@ -110,11 +110,11 @@ class Musician(models.Model):
     code('_meta.fields'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('python'))(`>>> print [f.name for f in m._meta.fields]
+  code$002Dblock('python')(`>>> print [f.name for f in m._meta.fields]
 ['id', 'first_name', 'last_name', 'instrument']
 `),
   p(['This approach also works on models directly:']),
-  code$002Dblock(Symbol.for('python'))(`>>> print [f.name for f in Musician._meta.fields]
+  code$002Dblock('python')(`>>> print [f.name for f in Musician._meta.fields]
 ['id', 'first_name', 'last_name', 'instrument']
 `),
   h3([
@@ -140,7 +140,7 @@ export default {
   id: 38,
   slug: 'get-attributes-of-django-model-or-instance',
   title: 'Get attributes of Django model or instance',
-  datetime: datetime('2010-02-22')('20:24:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-02-22')('20:24:00')('Pacific/Auckland'),
   tags: [
     'django',
     'python'

@@ -6,7 +6,7 @@ export default {
   id: 73,
   slug: "ridding-markup-of-textual-decoration",
   title: "Ridding markup of textual decoration",
-  datetime: datetime "2010-11-15" "01:00:00" :Australia/Sydney,
+  datetime: datetime "2010-11-15" "01:00:00" "Australia/Sydney",
   tags: ["css", "html", "meaningful-markup"],
   body: body,
 };
@@ -47,7 +47,7 @@ body = [
     ]
   },
 
-  code-block :plain-text `
+  code-block "plain-text" `
     <a class="more" href="/meaningful-markup/">Read more</a>
 
     .more:after {
@@ -66,7 +66,7 @@ body = [
     (although the change is yet to go live).",
   ],
 
-  code-block :css `
+  code-block "css" `
     .footer-nav li {
         display: inline;
         list-type: none;
@@ -89,7 +89,7 @@ body = [
     the comma-separated list.",
   ],
 
-  code-block :html `
+  code-block "html" `
     <p><strong>Tags:</strong> Apple, iOS, iPad</p>
   `,
 
@@ -108,7 +108,7 @@ body = [
     is a heading that relates to the list of tags.",
   ],
 
-  code-block :html `
+  code-block "html" `
     <h4>Tags</h4>
     <ol>
         <li>Apple</li>
@@ -123,7 +123,7 @@ body = [
     alter the list's appearance without touching the markup.",
   ],
 
-  code-block :css `
+  code-block "css" `
     h4, ol, li {
         display: inline;
     }

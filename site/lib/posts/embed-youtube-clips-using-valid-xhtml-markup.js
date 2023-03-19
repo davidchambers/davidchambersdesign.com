@@ -101,7 +101,7 @@ const body = [
     $2014,
     'the video\'s ID.'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<object class="youtube"
+  code$002Dblock('html')(`<object class="youtube"
         type="application/x-shockwave-flash"
         data="http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0">
     <param name="movie" value="http://www.youtube.com/v/video_id&hl=en&fs=1&rel=0" />
@@ -124,7 +124,7 @@ const body = [
     code('height'),
     ' attributes in the markup.'
   ]),
-  code$002Dblock(Symbol.for('css'))(`object.youtube
+  code$002Dblock('css')(`object.youtube
 {
     width: 100%;
     height: 385px;
@@ -135,7 +135,7 @@ export default {
   id: 25,
   slug: 'embed-youtube-clips-using-valid-xhtml-markup',
   title: 'Embed YouTube clips using valid XHTML markup',
-  datetime: datetime('2009-09-14')('14:17:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-09-14')('14:17:00')('Pacific/Auckland'),
   tags: [
     'css',
     'html',

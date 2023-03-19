@@ -6,7 +6,7 @@ export default {
   id: 49,
   slug: "serializing-django-model-instances",
   title: "Serializing Django model instances",
-  datetime: datetime "2010-04-13" "08:16:00" :Pacific/Auckland,
+  datetime: datetime "2010-04-13" "08:16:00" "Pacific/Auckland",
   tags: ["django", "python"],
   body: body,
 };
@@ -17,7 +17,7 @@ body = [
    "One might expect the following code to serialize a Django model instance:",
   ],
 
-  code-block :python `
+  code-block "python" `
     import simplejson
     simplejson.dumps(instance)
   `,
@@ -29,7 +29,7 @@ body = [
     method on the instance's model.",
   ],
 
-  code-block :python `
+  code-block "python" `
     def toJSON(self):
         import simplejson
         return simplejson.dumps(dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]]))
@@ -39,7 +39,7 @@ body = [
    "Here's the verbose equivalent for those averse to one-liners:",
   ],
 
-  code-block :python `
+  code-block "python" `
     def toJSON(self):
         fields = []
         for field in self._meta.fields:

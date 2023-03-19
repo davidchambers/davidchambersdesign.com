@@ -129,7 +129,7 @@ const body = [
     strong('.bash_profile'),
     ', or in a separate file which either\n    one of these imports.'
   ]),
-  code$002Dblock(Symbol.for('bash'))(`alias site-packages="cd /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages"
+  code$002Dblock('bash')(`alias site-packages="cd /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages"
 `),
   p([
     'Thanks to this alias I can enter ',
@@ -138,7 +138,7 @@ const body = [
     code('cd -'),
     ',\n    which takes you to the directory you were in most recently.'
   ]),
-  code$002Dblock(Symbol.for('console'))(`$ cd ~/Desktop
+  code$002Dblock('console')(`$ cd ~/Desktop
 $ site-packages
 $ pwd
 /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages
@@ -156,7 +156,7 @@ export default {
   id: 79,
   slug: 'faster-terminal-navigation-via-aliases',
   title: 'Faster Terminal navigation via aliases',
-  datetime: datetime('2011-02-12')('22:10:00')(Symbol.for('America/Los_Angeles')),
+  datetime: datetime('2011-02-12')('22:10:00')('America/Los_Angeles'),
   tags: [
     'mac-os-x',
     'productivity',

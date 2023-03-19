@@ -96,10 +96,10 @@ const body = [
     strong('datetime'),
     '\n    attribute, provides a machine-readable version of dates and times.'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<time datetime="2009-11-01T16:41:53+13:00">1 November 2009</time>
+  code$002Dblock('html')(`<time datetime="2009-11-01T16:41:53+13:00">1 November 2009</time>
 `),
   p(['I wrote a function to generate the machine-readable dates and times\n    for blog comments.']),
-  code$002Dblock(Symbol.for('php'))(`<?php
+  code$002Dblock('php')(`<?php
 
 /**
  * echoes comment's date and time in format 2009-11-01T03:41:53+13:00
@@ -127,14 +127,14 @@ function comment_datetime()
 ?>
 `),
   p(['While looping through comments in your WordPress theme,\n    call the above function to print a valid datetime string.']),
-  code$002Dblock(Symbol.for('php'))(`<time datetime="<?php comment_datetime(); ?>">
+  code$002Dblock('php')(`<time datetime="<?php comment_datetime(); ?>">
 `)
 ];
 export default {
   id: 31,
   slug: 'using-html5-time-element-in-wordpress-themes',
   title: 'Using HTML5 time element in WordPress themes',
-  datetime: datetime('2009-11-02')('02:04:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-11-02')('02:04:00')('Pacific/Auckland'),
   tags: [
     'html5',
     'php',

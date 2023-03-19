@@ -7,14 +7,14 @@ simplify paths = {
     [head, ...tail] = paths;
     [prev, path] = tail.reduce(
       ([prev, path], curr) => {
-        if curr[0] === :M then {
-          if {prev[0] === :M || prev[0] === :m} then {
+        if curr[0] === "M" then {
+          if {prev[0] === "M" || prev[0] === "m"} then {
             [curr, path]  ;; ignore previous move
           } else {
             [curr, [...path, prev]]
           }
         } else {
-          if {prev[0] === :M || prev[0] === :m} && curr[0] === :m then {
+          if {prev[0] === "M" || prev[0] === "m"} && curr[0] === "m" then {
             [[prev[0], [prev[1][0] + curr[1][0], prev[1][1] + curr[1][1]]], path]
           } else {
             [curr, [...path, prev]]
@@ -31,16 +31,15 @@ render paths = {
   paths
   |> simplify
   |> ?.flat()
-  |> ?.map(x => if typeof x === "symbol" then Symbol.keyFor x else String x)
   |> ?.join(" ")
 };
 
-⇦ x = [:m, [-x, 0]];
-⇨ x = [:m, [+x, 0]];
-⇧ y = [:m, [0, -y]];
-⇩ y = [:m, [0, +y]];
+⇦ x = ["m", [-x, 0]];
+⇨ x = ["m", [+x, 0]];
+⇧ y = ["m", [0, -y]];
+⇩ y = ["m", [0, +y]];
 
-← x = [:h, -x];
-→ x = [:h, +x];
-↑ y = [:v, -y];
-↓ y = [:v, +y];
+← x = ["h", -x];
+→ x = ["h", +x];
+↑ y = ["v", -y];
+↓ y = ["v", +y];

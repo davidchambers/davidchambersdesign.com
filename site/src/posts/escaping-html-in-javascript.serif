@@ -6,7 +6,7 @@ export default {
   id: 88,
   slug: "escaping-html-in-javascript",
   title: "Escaping HTML in JavaScript",
-  datetime: datetime "2011-05-30" "15:00:00" :America/Los_Angeles,
+  datetime: datetime "2011-05-30" "15:00:00" "America/Los_Angeles",
   tags: ["best-practice", "javascript", "security"],
   body: body,
 };
@@ -21,7 +21,7 @@ body = [
     (invoked from within Underscore templates):",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     function makeSafe(text) {
       return text.replace(/[&<>"'\`]/g, function (chr) {
         return '&#' + chr.charCodeAt(0) + ';';
@@ -50,7 +50,7 @@ body = [
     be used instead:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     function makeSafe(text) {
       return text.replace(/\\W/g, function (chr) {
         return '&#' + chr.charCodeAt(0) + ';';

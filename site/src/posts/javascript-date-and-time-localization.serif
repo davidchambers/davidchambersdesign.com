@@ -6,7 +6,7 @@ export default {
   id: 74,
   slug: "javascript-date-and-time-localization",
   title: "JavaScript date and time localization",
-  datetime: datetime "2010-11-28" "01:45:00" :Australia/Sydney,
+  datetime: datetime "2010-11-28" "01:45:00" "Australia/Sydney",
   tags: ["html5", "i18n", "javascript", "jquery", "localization", "meaningful-markup"],
   body: body,
 };
@@ -69,7 +69,7 @@ body = [
     representation of a point in time.",
   ],
 
-  code-block :html `
+  code-block "html" `
     <time datetime="1984-04-26">26 April 1984</time>
   `,
 
@@ -115,7 +115,7 @@ body = [
    "Assume that a page contains the following ", code "time", " element.",
   ],
 
-  code-block :html `
+  code-block "html" `
     <time datetime="2010-11-27T13:30-00:00">27 November 2010</time>
   `,
 
@@ -124,7 +124,7 @@ body = [
     elements on the page) with a simple call to ", code "localize", ".",
   ],
 
-  code-block :html `
+  code-block "html" `
     $('time').localize();
   `,
 
@@ -133,7 +133,7 @@ body = [
     code "datetime", " attribute.",
   ],
 
-  code-block :html `
+  code-block "html" `
     <time datetime="2010-11-28T00:30+11:00">28 November 2010</time>
   `,
 

@@ -114,7 +114,7 @@ const body = [
       '\n      pseudo-elements.'
     ]);
   })(),
-  code$002Dblock(Symbol.for('plain-text'))(`<a class="more" href="/meaningful-markup/">Read more</a>
+  code$002Dblock('plain-text')(`<a class="more" href="/meaningful-markup/">Read more</a>
 
 .more:after {
     content: " »";
@@ -133,7 +133,7 @@ const body = [
     a('http://bitbucket.org/')('Bitbucket'),
     '\n    is guilty of this. I\'ve since rectified the situation\n    (although the change is yet to go live).'
   ]),
-  code$002Dblock(Symbol.for('css'))(`.footer-nav li {
+  code$002Dblock('css')(`.footer-nav li {
     display: inline;
     list-type: none;
 }
@@ -153,7 +153,7 @@ const body = [
     '.'
   ]),
   p(['Another case in which there\'s a temptation to mark up content in\n    a certain way in order to achieve a certain visual appearance is\n    the comma-separated list.']),
-  code$002Dblock(Symbol.for('html'))(`<p><strong>Tags:</strong> Apple, iOS, iPad</p>
+  code$002Dblock('html')(`<p><strong>Tags:</strong> Apple, iOS, iPad</p>
 `),
   p(['This approach is inflexible. Displaying the tags as Twitter-style\n    hashtags, for example, would require fiddling with the markup.\n    Adding a tag icon beside each tag would require rewriting the\n    markup completely.']),
   p([
@@ -163,7 +163,7 @@ const body = [
     em('list'),
     ' of tags, we should\n    use a list of some sort. Since the list is in non-arbitrary order\n    (alphabetical), an ordered list is probably appropriate. "Tags"\n    is a heading that relates to the list of tags.'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<h4>Tags</h4>
+  code$002Dblock('html')(`<h4>Tags</h4>
 <ol>
     <li>Apple</li>
     <li>iOS</li>
@@ -171,7 +171,7 @@ const body = [
 </ol>
 `),
   p(['It takes a bit of work to display this markup as a simple\n    comma-separated list, but it gives us the freedom to dramatically\n    alter the list\'s appearance without touching the markup.']),
-  code$002Dblock(Symbol.for('css'))(`h4, ol, li {
+  code$002Dblock('css')(`h4, ol, li {
     display: inline;
 }
 h4:after {
@@ -205,7 +205,7 @@ export default {
   id: 73,
   slug: 'ridding-markup-of-textual-decoration',
   title: 'Ridding markup of textual decoration',
-  datetime: datetime('2010-11-15')('01:00:00')(Symbol.for('Australia/Sydney')),
+  datetime: datetime('2010-11-15')('01:00:00')('Australia/Sydney'),
   tags: [
     'css',
     'html',

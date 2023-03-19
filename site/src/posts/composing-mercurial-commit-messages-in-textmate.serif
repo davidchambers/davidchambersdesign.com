@@ -6,7 +6,7 @@ export default {
   id: 76,
   slug: "composing-mercurial-commit-messages-in-textmate",
   title: "Composing Mercurial commit messages in TextMate",
-  datetime: datetime "2011-01-10" "01:25:00" :Australia/Sydney,
+  datetime: datetime "2011-01-10" "01:25:00" "Australia/Sydney",
   tags: ["hg", "mac-os-x", "markdown", "mercurial", "textmate"],
   body: body,
 };
@@ -61,11 +61,11 @@ body = [
     ],
   ],
 
-  update {datetime "2011-01-22" "15:20:00" :Australia/Sydney} [
+  update {datetime "2011-01-22" "15:20:00" "Australia/Sydney"} [
     p [
      "To use TextMate as your git editor, run the following command:",
     ],
-    code-block :console `
+    code-block "console" `
       git config --global core.editor "mate -w"
     `,
     p [

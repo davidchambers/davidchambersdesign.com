@@ -103,7 +103,7 @@ export default {
   id: 10,
   slug: 'inserting-images-in-gmail-messages',
   title: 'Inserting images in Gmail messages',
-  datetime: datetime('2009-04-15')('20:27:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-04-15')('20:27:00')('Pacific/Auckland'),
   tags: [
     'gmail',
     'html'

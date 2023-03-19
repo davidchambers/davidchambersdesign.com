@@ -6,7 +6,7 @@ export default {
   id: 94,
   slug: "the-perils-of-using-javascript-objects-as-sets",
   title: "The perils of using JavaScript objects as sets",
-  datetime: datetime "2012-09-03" "20:00:00" :America/Los_Angeles,
+  datetime: datetime "2012-09-03" "20:00:00" "America/Los_Angeles",
   tags: ["best-practice", "data-structures", "javascript", "programming", "python"],
   body: body,
 };
@@ -44,7 +44,7 @@ body = [
     membership checks via the ", code "in", " keyword:",
   ],
 
-  code-block :python `
+  code-block "python" `
     >>> usernames = {'brodie', 'jespern', 'nvenegas'}
     >>> 'brodie' in usernames
     True
@@ -59,7 +59,7 @@ body = [
     dictionary's keys:",
   ],
 
-  code-block :python `
+  code-block "python" `
     >>> settings = {'lines': 50, 'number': False, 'spell': True}
     >>> 'number' in settings
     True
@@ -76,7 +76,7 @@ body = [
     One could use a string:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     > usernames = ',brodie,jespern,nvenegas,'
     > /,brodie,/.test(usernames)
     true
@@ -96,7 +96,7 @@ body = [
    "An array is clearly a better choice:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     > usernames = ['brodie', 'jespern', 'nvenegas']
     > usernames.indexOf('brodie') >= 0
     true
@@ -117,7 +117,7 @@ body = [
    "An object, then, is the ", em "best", " choice:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     > usernames = {'brodie': 1, 'jespern': 1, 'nvenegas': 1}
     > 'brodie' in usernames
     true
@@ -134,7 +134,7 @@ body = [
    "But it also introduces a subtle bug:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     > 'constructor' in usernames
     true
     > 'toString' in usernames
@@ -153,7 +153,7 @@ body = [
     property exists on the object itself:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     > usernames.hasOwnProperty('brodie')
     true
     > usernames.hasOwnProperty('davidchambers')
@@ -165,7 +165,7 @@ body = [
     another subtle error:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     > usernames['davidchambers'] = 1 // add "davidchambers" to set
     1
     > usernames['hasOwnProperty'] = 1 // add "hasOwnProperty" to set
@@ -181,7 +181,7 @@ body = [
     function from a reliable source (", code "Object.prototype", "):",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     > Object.prototype.hasOwnProperty.call(usernames, 'davidchambers')
     true
   `,
@@ -200,7 +200,7 @@ body = [
     reason to favour it:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     > sentinel = {}
     > usernames = {'brodie': sentinel, 'jespern': sentinel, 'nvenegas': sentinel}
     > usernames['brodie'] === sentinel

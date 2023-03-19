@@ -91,17 +91,17 @@ const excerpt = [p(['One way to reduce the number of HTTP requests a page requir
 const body = [
   ...excerpt,
   p(['Instead of...']),
-  code$002Dblock(Symbol.for('css'))(`a[href="/contact/"] {
+  code$002Dblock('css')(`a[href="/contact/"] {
     background: url(/images/sprite.png) no-repeat 0 -30px;
 }
 `),
   p(['use something like...']),
-  code$002Dblock(Symbol.for('css'))(`a[href="/contact/"] {
+  code$002Dblock('css')(`a[href="/contact/"] {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALJJREFUeNrs1eEJgzAQBWATHKkjZAZHiCtkhKxgRnAGR+gMWSVypflRQfOeSgvlDgTxjvuSC0RTSul+EUZhhRX+bziNj0ur8tPT7OV6qEGMFJhCaNZYBA3DAKNSiyzUIs3iPEO41EgtEhbdSQtnUAo+wlmUhiWccx+4vMs3NnqmeEmpc96/norXndbc7fC28Xa0kmNwewbdPYY3fgvMjhDFm6POOUM3kf6dFFZY4a/FKsAADsZ+Lb8VFH4AAAAASUVORK5CYII=) no-repeat;
 }
 `),
   p(['I threw together a Python script which converts images to encoded\n    strings.']),
-  code$002Dblock(Symbol.for('python'))(`#stringify.py
+  code$002Dblock('python')(`#stringify.py
 import base64
 import sys
 
@@ -117,14 +117,14 @@ except IndexError:
 print base64.b64encode(s, altchars)
 `),
   h4('Usage'),
-  code$002Dblock(Symbol.for('console'))(`$ python stringify.py /path/to/image.png
+  code$002Dblock('console')(`$ python stringify.py /path/to/image.png
 `)
 ];
 export default {
   id: 51,
   slug: 'optimization-via-stringification',
   title: 'Optimization via stringification',
-  datetime: datetime('2010-06-03')('14:28:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-06-03')('14:28:00')('Pacific/Auckland'),
   tags: [
     'css',
     'optimization',

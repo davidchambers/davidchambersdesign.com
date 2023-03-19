@@ -6,7 +6,7 @@ export default {
   id: 15,
   slug: "applescript-syntax-highlighting",
   title: "AppleScript syntax highlighting",
-  datetime: datetime "2009-06-04" "03:12:00" :Pacific/Auckland,
+  datetime: datetime "2009-06-04" "03:12:00" "Pacific/Auckland",
   tags: ["applescript", "javascript", "mac-os-x", "syntaxhighlighter"],
   body: body,
 };
@@ -68,7 +68,7 @@ body = [
     ],
   }],
 
-  code-block :applescript `
+  code-block "applescript" `
     #!/usr/bin/osascript
 
     (*
@@ -148,7 +148,7 @@ body = [
       p [
        "Include the brush like so:",
       ],
-      code-block :html `
+      code-block "html" `
         <script src="/path/to/scripts/shCore.js"></script>
         <script src="/path/to/scripts/shBrushAppleScript.js"></script>
         <script>SyntaxHighlighter.all()</script>
@@ -163,7 +163,7 @@ body = [
     wrap the code in ", code "pre", " tags like so:",
   ],
 
-  code-block :html `
+  code-block "html" `
     <pre class="brush: applescript; class-name: applescript;"></pre>
   `,
 
@@ -178,13 +178,13 @@ body = [
     include ", code "class-name: applescript;", " each time.)",
   ],
 
-  update {datetime "2012-02-22" "23:11:00" :America/Los_Angeles} [
+  update {datetime "2012-02-22" "23:11:00" "America/Los_Angeles"} [
     p [
      "Providing a ", code "class-name", " in the, ahem, class name is
       no longer necessary (apparently I made a convincing argument).
       This is now sufficient:",
     ],
-    code-block :html `
+    code-block "html" `
       <pre class="brush:applescript"></pre>
     `,
   ],

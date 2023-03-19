@@ -89,7 +89,7 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['JavaScript is a wonderful language. Its syntax, though, leaves a\n    lot to be desired at times. String pattern matching, for example,\n    is rather ugly.']),
-  code$002Dblock(Symbol.for('javascript'))(`// ugly option 1
+  code$002Dblock('javascript')(`// ugly option 1
 if (text.indexOf('✈') != -1)
 
 // ugly option 2
@@ -103,7 +103,7 @@ if (text.indexOf('✈') > -1)
     code('text.contains(\'\u2708\')'),
     ', which\n    is both intuitive and self-documenting. The language does provide a way\n    to make such expressions terser, but it\'s far from obvious.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`// bitwise NOT
+  code$002Dblock('javascript')(`// bitwise NOT
 if (~text.indexOf('✈'))
 `),
   p([
@@ -114,7 +114,7 @@ if (~text.indexOf('✈'))
     a('https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/indexOf')([code('indexOf')]),
     '.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`function bitwiseNot(n) {
+  code$002Dblock('javascript')(`function bitwiseNot(n) {
     return -n - 1;
 }
 `),
@@ -131,7 +131,7 @@ export default {
   id: 75,
   slug: 'bitwise-not-operator-proves-useful-in-javascript',
   title: 'Bitwise NOT operator proves useful in JavaScript',
-  datetime: datetime('2010-12-11')('15:00:00')(Symbol.for('Australia/Sydney')),
+  datetime: datetime('2010-12-11')('15:00:00')('Australia/Sydney'),
   tags: [
     'javascript',
     'programming'

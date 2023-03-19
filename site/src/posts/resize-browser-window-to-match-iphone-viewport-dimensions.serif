@@ -6,7 +6,7 @@ export default {
   id: 37,
   slug: "resize-browser-window-to-match-iphone-viewport-dimensions",
   title: "Resize browser window to match iPhone viewport dimensions",
-  datetime: datetime "2010-02-16" "03:20:00" :Pacific/Auckland,
+  datetime: datetime "2010-02-16" "03:20:00" "Pacific/Auckland",
   tags: ["bookmarklets", "iphone", "javascript"],
   body: body,
 };
@@ -30,7 +30,7 @@ excerpt = [
       p [
         strong "Portrait", " (labelled \"⁑\")",
       ],
-      code-block :plain-text `
+      code-block "plain-text" `
         javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
       `,
     ],
@@ -38,7 +38,7 @@ excerpt = [
       p [
         strong "Landscape", " (labelled \"**\")",
       ],
-      code-block :plain-text `
+      code-block "plain-text" `
         javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
       `,
     ],

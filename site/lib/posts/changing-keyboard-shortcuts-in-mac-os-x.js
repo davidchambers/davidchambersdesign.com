@@ -123,7 +123,7 @@ export default {
   id: 9,
   slug: 'changing-keyboard-shortcuts-in-mac-os-x',
   title: 'Changing keyboard shortcuts in Mac OS X',
-  datetime: datetime('2009-03-25')('16:36:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-03-25')('16:36:00')('Pacific/Auckland'),
   tags: [
     'keyboard-shortcuts',
     'mac-os-x'

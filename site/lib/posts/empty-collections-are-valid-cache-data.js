@@ -97,7 +97,7 @@ const body = [
     code('{}'),
     ') are\n    treated as valid cache data.'
   ]),
-  code$002Dblock(Symbol.for('python'))(`cached = cache.get(cache_key)
+  code$002Dblock('python')(`cached = cache.get(cache_key)
 if cached:
     return cached
 
@@ -113,7 +113,7 @@ if cached:
     code('None'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('python'))(`cached = cache.get(cache_key)
+  code$002Dblock('python')(`cached = cache.get(cache_key)
 if cached is not None: # much better!
     return cached
 `),
@@ -131,7 +131,7 @@ export default {
   id: 57,
   slug: 'empty-collections-are-valid-cache-data',
   title: 'Empty collections are valid cache data',
-  datetime: datetime('2010-07-06')('09:34:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-07-06')('09:34:00')('Pacific/Auckland'),
   tags: ['django'],
   body: body
 };

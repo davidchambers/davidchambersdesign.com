@@ -108,7 +108,7 @@ const body = [
     li(['Additional markup may be used only if the requirements above\n      cannot be met without extra markup.'])
   ]),
   p(['The CSS for the header initially looked like this:']),
-  code$002Dblock(Symbol.for('css'))(`#header
+  code$002Dblock('css')(`#header
 {
     position: fixed;
     top: 0;
@@ -118,7 +118,7 @@ const body = [
 `),
   h3('Approach 1: positive top padding + negative bottom margins'),
   p(['Here\'s the CSS:']),
-  code$002Dblock(Symbol.for('css'))(`h1, h2, h3, h4, h5, h6, p
+  code$002Dblock('css')(`h1, h2, h3, h4, h5, h6, p
 {
     padding-top: 160px;
     margin-bottom: -160px;
@@ -133,19 +133,19 @@ const body = [
   ]),
   h3('Approach 2: preceding divs'),
   p(['Again, the CSS:']),
-  code$002Dblock(Symbol.for('css'))(`div.id
+  code$002Dblock('css')(`div.id
 {
     position: relative;
     top: -160px;
 }
 `),
   p(['This approach introduces meaningless markup. Where previously we may\n    have had something like this:']),
-  code$002Dblock(Symbol.for('html'))(`<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus volutpat risus nec mollis. Integer dapibus dictum ultrices. Aenean vel lectus odio. Nam a mi ligula. Nam in dolor quis metus pretium imperdiet sit amet sed elit.</p>
+  code$002Dblock('html')(`<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus volutpat risus nec mollis. Integer dapibus dictum ultrices. Aenean vel lectus odio. Nam a mi ligula. Nam in dolor quis metus pretium imperdiet sit amet sed elit.</p>
 <h3 id="example">Example</h3>
 <p>Suspendisse potenti. Proin convallis lacinia nibh, nec auctor ligula mattis consectetur. Mauris vel elit sit amet nibh volutpat varius id vel sem. Pellentesque id purus ligula. Vivamus vel nulla vel justo tempor ultricies.</p>
 `),
   p(['We now have the following:']),
-  code$002Dblock(Symbol.for('html'))(`<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus volutpat risus nec mollis. Integer dapibus dictum ultrices. Aenean vel lectus odio. Nam a mi ligula. Nam in dolor quis metus pretium imperdiet sit amet sed elit.</p>
+  code$002Dblock('html')(`<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus volutpat risus nec mollis. Integer dapibus dictum ultrices. Aenean vel lectus odio. Nam a mi ligula. Nam in dolor quis metus pretium imperdiet sit amet sed elit.</p>
 <div id="example" class="id"></div>
 <h3>Example</h3>
 <p>Suspendisse potenti. Proin convallis lacinia nibh, nec auctor ligula mattis consectetur. Mauris vel elit sit amet nibh volutpat varius id vel sem. Pellentesque id purus ligula. Vivamus vel nulla vel justo tempor ultricies.</p>
@@ -170,7 +170,7 @@ const body = [
   ]),
   h3('Approach 3: JavaScript trickery'),
   p(['The previous approach got the job done, but introduced meaningless\n    elements. This task is best performed with JavaScript.']),
-  code$002Dblock(Symbol.for('javascript'))(`// accommodate fixed-position header
+  code$002Dblock('javascript')(`// accommodate fixed-position header
 document.observe('dom:loaded', function () {
     $$('h2[id]', 'h3[id]', 'h4[id]', 'h5[id]', 'h6[id]').each(function (e) {
         var div = new Element('div', { id: e.id });
@@ -182,7 +182,7 @@ document.observe('dom:loaded', function () {
 `),
   p(['The above snippet locates all the h2, h3, h4, h5, and h6 elements\n    on the page that have an id attribute. It then loops through this\n    collection of elements and inserts an empty div element into each\n    one. This div "steals" its parent\'s id.']),
   p(['CSS can be used to position these empty divs in such a way that\n    headings are visible when jumped to:']),
-  code$002Dblock(Symbol.for('css'))(`h2.unidentified div, h3.unidentified div
+  code$002Dblock('css')(`h2.unidentified div, h3.unidentified div
 {
     float: left;
     margin: -160px 0 0 0;
@@ -206,7 +206,7 @@ export default {
   id: 30,
   slug: 'css-fixed-position-headers',
   title: 'CSS fixed-position headers',
-  datetime: datetime('2009-10-30')('18:25:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-10-30')('18:25:00')('Pacific/Auckland'),
   tags: [
     'css',
     'html',

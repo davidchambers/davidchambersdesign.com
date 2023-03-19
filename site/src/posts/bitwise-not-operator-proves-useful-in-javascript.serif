@@ -6,7 +6,7 @@ export default {
   id: 75,
   slug: "bitwise-not-operator-proves-useful-in-javascript",
   title: "Bitwise NOT operator proves useful in JavaScript",
-  datetime: datetime "2010-12-11" "15:00:00" :Australia/Sydney,
+  datetime: datetime "2010-12-11" "15:00:00" "Australia/Sydney",
   tags: ["javascript", "programming"],
   body: body,
 };
@@ -19,7 +19,7 @@ body = [
     is rather ugly.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     // ugly option 1
     if (text.indexOf('✈') != -1)
 
@@ -36,7 +36,7 @@ body = [
     to make such expressions terser, but it's far from obvious.",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     // bitwise NOT
     if (~text.indexOf('✈'))
   `,
@@ -52,7 +52,7 @@ body = [
       [code "indexOf"], ".",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     function bitwiseNot(n) {
         return -n - 1;
     }

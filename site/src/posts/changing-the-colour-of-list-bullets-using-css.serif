@@ -6,7 +6,7 @@ export default {
   id: 83,
   slug: "changing-the-colour-of-list-bullets-using-css",
   title: "Changing the colour of list bullets using CSS",
-  datetime: datetime "2011-04-13" "17:30:00" :America/Los_Angeles,
+  datetime: datetime "2011-04-13" "17:30:00" "America/Los_Angeles",
   tags: ["css", "meaningful-markup"],
   body: body,
 };
@@ -17,7 +17,7 @@ body = [
    "So, you're about to style an unordered list of some sort...",
   ],
 
-  code-block :html `
+  code-block "html" `
     <h1>TXJS 2011 Speakers</h1>
     <ul>
       <li>Brendan Eich</li>
@@ -32,7 +32,7 @@ body = [
     nothing too distracting...",
   ],
 
-  code-block :css `
+  code-block "css" `
     ul {
       list-style: square outside;
       color: #ccc;
@@ -50,7 +50,7 @@ body = [
 
   h3' {id: "conventional-hack"} "Conventional hack",
 
-  code-block :html `
+  code-block "html" `
     <h1>TXJS 2011 Speakers</h1>
     <ul>
       <li><span>Brendan Eich</span></li>
@@ -78,7 +78,7 @@ body = [
 
   h3' {id: "background-image-technique"} "Background image technique",
 
-  code-block :css `
+  code-block "css" `
     ul {
       list-style: none;
     }
@@ -97,7 +97,7 @@ body = [
 
   h3' {id: "pseudo-element-technique"} "Pseudo-element technique",
 
-  code-block :css `
+  code-block "css" `
     ul {
       list-style: none;
     }
@@ -127,7 +127,7 @@ body = [
    "Prefer round bullets? No problem. :)",
   ],
 
-  code-block :css `
+  code-block "css" `
     ...
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;

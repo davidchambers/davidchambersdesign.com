@@ -102,7 +102,7 @@ const body = [
     a('http://script.aculo.us/')('script.aculo.us'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`Element.addMethods({
+  code$002Dblock('javascript')(`Element.addMethods({
     redraw: function (element) {
         element = $(element);
         var n = document.createTextNode(' ');
@@ -113,7 +113,7 @@ const body = [
 });
 `),
   p(['The post\'s first comment includes an alternative approach:']),
-  code$002Dblock(Symbol.for('javascript'))(`element.className = element.className;
+  code$002Dblock('javascript')(`element.className = element.className;
 `),
   p([
     'I gather that there are situations in which this simple solution fails',
@@ -127,7 +127,7 @@ export default {
   id: 42,
   slug: 'forcing-browsers-to-rerender-elements',
   title: 'Forcing browsers to rerender elements',
-  datetime: datetime('2010-03-22')('19:40:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-03-22')('19:40:00')('Pacific/Auckland'),
   tags: [
     'dom',
     'ie',

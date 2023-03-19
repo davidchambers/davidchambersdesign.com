@@ -99,7 +99,7 @@ const excerpt = [
         strong('Portrait'),
         ' (labelled "\u2051")'
       ]),
-      code$002Dblock(Symbol.for('plain-text'))(`javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
+      code$002Dblock('plain-text')(`javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
 `)
     ]),
     li([
@@ -107,7 +107,7 @@ const excerpt = [
         strong('Landscape'),
         ' (labelled "**")'
       ]),
-      code$002Dblock(Symbol.for('plain-text'))(`javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
+      code$002Dblock('plain-text')(`javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
 `)
     ])
   ]),
@@ -137,7 +137,7 @@ export default {
   id: 37,
   slug: 'resize-browser-window-to-match-iphone-viewport-dimensions',
   title: 'Resize browser window to match iPhone viewport dimensions',
-  datetime: datetime('2010-02-16')('03:20:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-02-16')('03:20:00')('Pacific/Auckland'),
   tags: [
     'bookmarklets',
     'iphone',

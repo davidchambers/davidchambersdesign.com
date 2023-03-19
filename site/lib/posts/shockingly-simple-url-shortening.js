@@ -155,7 +155,7 @@ const body = [
     strong('simple, elegant solution'),
     ' which took all\n    of ten minutes to implement.'
   ]),
-  code$002Dblock(Symbol.for('TK'))(`RewriteEngine On
+  code$002Dblock('TK')(`RewriteEngine On
 RewriteRule ^(.*)$ http://davidchambersdesign.com/$1 [R=301,L]
 `),
   p([
@@ -185,7 +185,7 @@ export default {
   id: 36,
   slug: 'shockingly-simple-url-shortening',
   title: 'Shockingly simple URL shortening',
-  datetime: datetime('2010-01-26')('03:34:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-01-26')('03:34:00')('Pacific/Auckland'),
   tags: [
     '.htaccess',
     'twitter'

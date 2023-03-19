@@ -89,7 +89,7 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const excerpt = [
   p(['WordPress is a great piece of software, although I\'ve never been\n    satisfied with its search functionality. Last night I decided to\n    switch to a very simple solution:']),
-  code$002Dblock(Symbol.for('html'))(`<form action="http://www.google.com/search" method="get">
+  code$002Dblock('html')(`<form action="http://www.google.com/search" method="get">
     <div>
         <label for="q">Search davidchambersdesign.com</label>
         <input type="search" name="q" id="q" maxlength="256" placeholder="search..." />
@@ -124,7 +124,7 @@ export default {
   id: 45,
   slug: 'using-google-for-site-search',
   title: 'Using Google for site search',
-  datetime: datetime('2010-03-25')('22:06:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-03-25')('22:06:00')('Pacific/Auckland'),
   tags: [
     'google',
     'search'

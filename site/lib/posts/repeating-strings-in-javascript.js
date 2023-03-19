@@ -90,24 +90,24 @@ import datetime from '../datetime.js';
 const body = [
   p(['Python and Ruby share beautiful syntax for repeating strings;\n    PHP\'s syntax is characteristically ugly.']),
   h3$0027({ id: 'python' })('Python'),
-  code$002Dblock(Symbol.for('python'))(`'=' * 5
+  code$002Dblock('python')(`'=' * 5
 `),
   h3$0027({ id: 'ruby' })('Ruby'),
-  code$002Dblock(Symbol.for('ruby'))(`'=' * 5
+  code$002Dblock('ruby')(`'=' * 5
 `),
   h3$0027({ id: 'php' })('PHP'),
-  code$002Dblock(Symbol.for('php'))(`str_repeat('=', 5)
+  code$002Dblock('php')(`str_repeat('=', 5)
 `),
   h3$0027({ id: 'javascript' })('JavaScript?'),
   p(['True to form, repeating strings in JavaScript is ugly and\n      counterintuitive, but kinda cool.']),
-  code$002Dblock(Symbol.for('javascript'))(`new Array(5 + 1).join('=')
+  code$002Dblock('javascript')(`new Array(5 + 1).join('=')
 `)
 ];
 export default {
   id: 82,
   slug: 'repeating-strings-in-javascript',
   title: 'Repeating strings in JavaScript',
-  datetime: datetime('2011-03-31')('17:30:00')(Symbol.for('America/Los_Angeles')),
+  datetime: datetime('2011-03-31')('17:30:00')('America/Los_Angeles'),
   tags: [
     'javascript',
     'programming'

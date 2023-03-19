@@ -6,7 +6,7 @@ export default {
   id: 18,
   slug: "prototype-loader-for-syntaxhighlighter",
   title: "Prototype loader for SyntaxHighlighter",
-  datetime: datetime "2009-06-22" "01:04:00" :Pacific/Auckland,
+  datetime: datetime "2009-06-22" "01:04:00" "Pacific/Auckland",
   tags: ["javascript", "optimization", "prototype", "syntaxhighlighter"],
   body: body,
 };
@@ -38,7 +38,7 @@ body = [
 
   ...excerpt,
 
-  update {datetime "2009-06-27" "06:21:00" :Pacific/Auckland} [
+  update {datetime "2009-06-27" "06:21:00" "Pacific/Auckland"} [
     p [
      "I have completely rewritten the code so that it no longer
       requires empty functions inside the brush files to act as
@@ -80,7 +80,7 @@ body = [
       p [
        "Replace:",
       ],
-      code-block :html `
+      code-block "html" `
         <script src="/path/to/scripts/shCore.js"></script>
         <script src="/path/to/scripts/shBrushAS3.js"></script>
         <script src="/path/to/scripts/shBrushBash.js"></script>
@@ -95,7 +95,7 @@ body = [
       p [
        "with:",
       ],
-      code-block :html `
+      code-block "html" `
         <script>
             function Brush(name, filename, aliases)
             {
@@ -144,7 +144,7 @@ body = [
     modified:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     stylesheets: ['shThemeCoda', 'shThemeAppleScript'],
   `,
 
@@ -154,7 +154,7 @@ body = [
     but additional brushes can be included by adding them to this array:",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     brushes: [
         new Brush('AppleScript', 'shBrushAppleScript', ['applescript'])
     ],
@@ -178,7 +178,7 @@ body = [
     modifying ", code "settings.defaults", ":",
   ],
 
-  code-block :javascript `
+  code-block "javascript" `
     defaults: {
         'auto-links': false,
         'html-script': true
@@ -193,7 +193,7 @@ body = [
       "SyntaxHighlighter improvements", " are well worth a look!",
   ],
 
-  update {datetime "2009-06-27" "06:21:00" :Pacific/Auckland} [
+  update {datetime "2009-06-27" "06:21:00" "Pacific/Auckland"} [
     p [
      "Thanks also to Bob Matsuoka for sharing his ",
       a "http://ajaxian.com/archives/a-technique-for-lazy-script-loading"
@@ -203,7 +203,7 @@ body = [
     ],
   ],
 
-  update {datetime "2009-08-16" "01:24:00" :Pacific/Auckland} [
+  update {datetime "2009-08-16" "01:24:00" "Pacific/Auckland"} [
     p [
      "I've updated the script to ensure that the XML brush is always
       loaded when at least one of the following conditions is true:",

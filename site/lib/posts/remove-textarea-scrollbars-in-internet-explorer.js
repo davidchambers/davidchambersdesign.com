@@ -107,7 +107,7 @@ const body = [
     code('overflow'),
     '\n    to the rescue.'
   ]),
-  code$002Dblock(Symbol.for('css'))(`textarea { overflow: auto; }
+  code$002Dblock('css')(`textarea { overflow: auto; }
 `),
   p([
     'The ',
@@ -130,7 +130,7 @@ export default {
   id: 59,
   slug: 'remove-textarea-scrollbars-in-internet-explorer',
   title: 'Remove textarea scrollbars in Internet Explorer',
-  datetime: datetime('2010-07-18')('22:00:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-07-18')('22:00:00')('Pacific/Auckland'),
   tags: ['css'],
   body: body
 };

@@ -94,7 +94,7 @@ const body = [
     ' recently I\n    wrote a function to do this, first in Python, later in JavaScript.'
   ]),
   h3('Python'),
-  code$002Dblock(Symbol.for('python'))(`def ordinal(n):
+  code$002Dblock('python')(`def ordinal(n):
     if 10 < n < 14: return u'%sth' % n
     if n % 10 == 1: return u'%sst' % n
     if n % 10 == 2: return u'%snd' % n
@@ -102,7 +102,7 @@ const body = [
     return u'%sth' % n
 `),
   h3('JavaScript'),
-  code$002Dblock(Symbol.for('javascript'))(`function ordinal(n) {
+  code$002Dblock('javascript')(`function ordinal(n) {
     if (10 < n && n < 14) return n + 'th';
     switch (n % 10) {
         case 1: return n + 'st';
@@ -129,7 +129,7 @@ export default {
   id: 70,
   slug: 'converting-integers-to-ordinals',
   title: 'Converting integers to ordinals',
-  datetime: datetime('2010-09-16')('13:00:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-09-16')('13:00:00')('Pacific/Auckland'),
   tags: [
     'javascript',
     'programming',

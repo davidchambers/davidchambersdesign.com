@@ -93,10 +93,10 @@ const body = [
     code('x'),
     ', which you want to round\n    to the nearest integer. Easy, right?'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`x = Math.round(x);
+  code$002Dblock('javascript')(`x = Math.round(x);
 `),
   p(['Sure, but is this the fastest option? I think not.']),
-  code$002Dblock(Symbol.for('javascript'))(`x = x < 0 ? x - 0.5 >> 0 : x + 0.5 >> 0;
+  code$002Dblock('javascript')(`x = x < 0 ? x - 0.5 >> 0 : x + 0.5 >> 0;
 `),
   p([
     'What the heck\'s going on here? ',
@@ -136,7 +136,7 @@ export default {
   id: 68,
   slug: 'efficient-rounding-in-javascript',
   title: 'Efficient rounding in JavaScript',
-  datetime: datetime('2010-08-31')('22:20:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2010-08-31')('22:20:00')('Pacific/Auckland'),
   tags: [
     'javascript',
     'optimization',

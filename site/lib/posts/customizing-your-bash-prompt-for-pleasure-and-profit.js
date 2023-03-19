@@ -124,7 +124,7 @@ const body = [
     strong('~/.bashrc'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('bash'))(`PS1="\\n\\[\\e[1;36m\\]\\w\\n\\[\\e[1;32m\\]> \\[\\e[0m\\]"
+  code$002Dblock('bash')(`PS1="\\n\\[\\e[1;36m\\]\\w\\n\\[\\e[1;32m\\]> \\[\\e[0m\\]"
 `),
   h4('What the heck does all this mean?'),
   p([
@@ -175,18 +175,18 @@ const body = [
     code('\\[\\e[0m\\]'),
     ' puts an end to the colouring,\n    preventing it from "spilling out".'
   ]),
-  update(datetime('2011-04-03')('21:00:00')(Symbol.for('America/Los_Angeles')))([p([
+  update(datetime('2011-04-03')('21:00:00')('America/Los_Angeles'))([p([
       'When first this post was published colour codes were not\n      preceded by ',
       code('\\['),
       '. The colour codes themselves\n      were thus considered when calculating the prompt\'s length,\n      meaning that the first several characters of a command\n      would sometimes remain visible when arrowing up and down.\n      >.<'
     ])]),
-  update(datetime('2012-04-20')('01:15:00')(Symbol.for('America/Los_Angeles')))([
+  update(datetime('2012-04-20')('01:15:00')('America/Los_Angeles'))([
     p([
       'I\'ve recently taken up Vim. In Vim, one can enter ',
       code(':shell'),
       ' while in command mode to open a shell.\n      The first time I did so I noticed that the colour codes\n      appeared in the prompt. Feature detection can be used to\n      ensure that colour codes are only provided to "smart"\n      terminals:'
     ]),
-    code$002Dblock(Symbol.for('bash'))(`[[ "$TERM" == dumb ]] && PS1="\\n\\w\\n> "
+    code$002Dblock('bash')(`[[ "$TERM" == dumb ]] && PS1="\\n\\w\\n> "
 [[ "$TERM" != dumb ]] && PS1="\\n\\[\\e[1;36m\\]\\w\\n\\[\\e[1;32m\\]> \\[\\e[0m\\]"
 `)
   ]),
@@ -200,7 +200,7 @@ const body = [
     strong('~/.bash_profile'),
     '\n    should contain the following snippet.'
   ]),
-  code$002Dblock(Symbol.for('bash'))(`if [ -f ~/.bashrc ]; then
+  code$002Dblock('bash')(`if [ -f ~/.bashrc ]; then
   source ~/.bashrc
 fi
 `)
@@ -209,7 +209,7 @@ export default {
   id: 80,
   slug: 'customizing-your-bash-prompt-for-pleasure-and-profit',
   title: 'Customizing your bash prompt for pleasure and profit',
-  datetime: datetime('2011-02-13')('01:30:00')(Symbol.for('America/Los_Angeles')),
+  datetime: datetime('2011-02-13')('01:30:00')('America/Los_Angeles'),
   tags: [
     'mac-os-x',
     'productivity',

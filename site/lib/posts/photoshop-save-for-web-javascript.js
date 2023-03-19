@@ -95,7 +95,7 @@ const body = [
     code('PNGSaveOptions()'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('javascript'))(`function saveForWebPNG(outputFolderStr, filename)
+  code$002Dblock('javascript')(`function saveForWebPNG(outputFolderStr, filename)
 {
     var opts, file;
     opts = new ExportOptionsSaveForWeb();
@@ -125,7 +125,7 @@ export default {
   id: 20,
   slug: 'photoshop-save-for-web-javascript',
   title: 'Photoshop "save for web" JavaScript',
-  datetime: datetime('2009-07-28')('03:27:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-07-28')('03:27:00')('Pacific/Auckland'),
   tags: [
     'javascript',
     'mac-os-x',

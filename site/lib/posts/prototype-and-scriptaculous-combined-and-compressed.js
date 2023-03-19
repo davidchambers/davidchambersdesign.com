@@ -111,7 +111,7 @@ const body = [
     code('src'),
     ':'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<script src="/scripts/prototype+scriptaculous.min.js?p=1.6.1&amp;s=1.8.3"></script>
+  code$002Dblock('html')(`<script src="/scripts/prototype+scriptaculous.min.js?p=1.6.1&amp;s=1.8.3"></script>
 `),
   p([
     'This prevents caching issues that might otherwise arise\n    upon updating to a newer version of prototype+scriptaculous\n    (I\'ll update the three files',
@@ -125,7 +125,7 @@ export default {
   id: 32,
   slug: 'prototype-and-scriptaculous-combined-and-compressed',
   title: 'Prototype and script.aculo.us, combined and compressed',
-  datetime: datetime('2009-11-09')('23:14:00')(Symbol.for('Pacific/Auckland')),
+  datetime: datetime('2009-11-09')('23:14:00')('Pacific/Auckland'),
   tags: [
     'javascript',
     'optimization',

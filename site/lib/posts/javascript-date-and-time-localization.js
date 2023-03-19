@@ -134,7 +134,7 @@ const body = [
     code('datetime'),
     ' attribute provides the canonical\n    representation of a point in time.'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<time datetime="1984-04-26">26 April 1984</time>
+  code$002Dblock('html')(`<time datetime="1984-04-26">26 April 1984</time>
 `),
   p([
     'Simply by using the ',
@@ -177,7 +177,7 @@ const body = [
     code('time'),
     ' element.'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<time datetime="2010-11-27T13:30-00:00">27 November 2010</time>
+  code$002Dblock('html')(`<time datetime="2010-11-27T13:30-00:00">27 November 2010</time>
 `),
   p([
     'We could localize this element (along with any other ',
@@ -186,14 +186,14 @@ const body = [
     code('localize'),
     '.'
   ]),
-  code$002Dblock(Symbol.for('html'))(`$('time').localize();
+  code$002Dblock('html')(`$('time').localize();
 `),
   p([
     'This updates both the visible text and the value of the ',
     code('datetime'),
     ' attribute.'
   ]),
-  code$002Dblock(Symbol.for('html'))(`<time datetime="2010-11-28T00:30+11:00">28 November 2010</time>
+  code$002Dblock('html')(`<time datetime="2010-11-28T00:30+11:00">28 November 2010</time>
 `),
   (() => {
     const url = 'http://bitbucket.org/davidchambers/jquery.localize';
@@ -213,7 +213,7 @@ export default {
   id: 74,
   slug: 'javascript-date-and-time-localization',
   title: 'JavaScript date and time localization',
-  datetime: datetime('2010-11-28')('01:45:00')(Symbol.for('Australia/Sydney')),
+  datetime: datetime('2010-11-28')('01:45:00')('Australia/Sydney'),
   tags: [
     'html5',
     'i18n',
