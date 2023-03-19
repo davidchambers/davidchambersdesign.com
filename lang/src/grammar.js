@@ -452,8 +452,8 @@ function peg$parse(input, options) {
   var peg$f62 = function() { return null; };
   var peg$f63 = function() { return Serif.ObjectPattern([]); };
   var peg$f64 = function(properties) { return Serif.ObjectPattern(properties); };
-  var peg$f65 = function(ident, element) { return Serif.AssignmentProperty(ident, element); };
-  var peg$f66 = function(ident) { return Serif.AssignmentProperty(ident, ident); };
+  var peg$f65 = function(ident, element) { return Serif.Property(Serif.StringLiteral(ident.name), element); };
+  var peg$f66 = function(ident) { return Serif.Property(Serif.StringLiteral(ident.name), ident); };
   var peg$f67 = function(argument) { return Serif.RestElement(argument); };
   var peg$f68 = function(callee, arg) { return arg; };
   var peg$f69 = function(callee, args) { return Serif.Application(callee, args); };

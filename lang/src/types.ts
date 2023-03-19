@@ -56,12 +56,12 @@ export const TemplateElement = (
 export interface TemplateLiteral {
   readonly type: 'TemplateLiteral';
   readonly quasis: ReadonlyNonEmptyArray<TemplateElement>;
-  readonly expressions: ReadonlyArray<Expression>;
+  readonly expressions: ReadonlyArray<Node>;
 }
 
 export const TemplateLiteral = (
   quasis: ReadonlyNonEmptyArray<TemplateElement>,
-  expressions: ReadonlyArray<Expression>,
+  expressions: ReadonlyArray<Node>,
 ): TemplateLiteral => ({
   type: 'TemplateLiteral',
   quasis,
@@ -85,13 +85,13 @@ export const MetaProperty = (
 
 export interface MemberExpression {
   readonly type: 'MemberExpression';
-  readonly object: Expression;
-  readonly property: Expression;
+  readonly object: Node;
+  readonly property: Node;
 }
 
 export const MemberExpression = (
-  object: Expression,
-  property: Expression,
+  object: Node,
+  property: Node,
 ): MemberExpression => ({
   type: 'MemberExpression',
   object,
@@ -112,11 +112,11 @@ export const Identifier = (
 
 export interface SpreadElement {
   readonly type: 'SpreadElement';
-  readonly argument: Expression;
+  readonly argument: Node;
 }
 
 export const SpreadElement = (
-  argument: Expression,
+  argument: Node,
 ): SpreadElement => ({
   type: 'SpreadElement',
   argument,
@@ -124,11 +124,11 @@ export const SpreadElement = (
 
 export interface ArrayExpression {
   readonly type: 'ArrayExpression';
-  readonly elements: ReadonlyArray<SpreadElement | Expression>;
+  readonly elements: ReadonlyArray<Node>;
 }
 
 export const ArrayExpression = (
-  elements: ReadonlyArray<SpreadElement | Expression>,
+  elements: ReadonlyArray<Node>,
 ): ArrayExpression => ({
   type: 'ArrayExpression',
   elements,
@@ -136,13 +136,13 @@ export const ArrayExpression = (
 
 export interface Property {
   readonly type: 'Property';
-  readonly key: Expression;
-  readonly value: Expression | Pattern;
+  readonly key: Node;
+  readonly value: Node;
 }
 
 export const Property = (
-  key: Expression,
-  value: Expression | Pattern,
+  key: Node,
+  value: Node,
 ): Property => ({
   type: 'Property',
   key,
@@ -154,7 +154,7 @@ export interface AssignmentProperty extends Property {
 }
 
 export const AssignmentProperty = (
-  key: Expression,
+  key: Node,
   value: Pattern,
 ): AssignmentProperty => ({
   type: 'Property',
@@ -184,11 +184,11 @@ export type Pattern =
 
 export interface ArrayPattern {
   type: 'ArrayPattern';
-  elements: ReadonlyArray<Pattern | null>;
+  elements: ReadonlyArray<Node | null>;
 }
 
 export const ArrayPattern = (
-  elements: ReadonlyArray<Pattern | null>,
+  elements: ReadonlyArray<Node | null>,
 ): ArrayPattern => ({
   type: 'ArrayPattern',
   elements,
@@ -196,11 +196,11 @@ export const ArrayPattern = (
 
 export interface ObjectPattern {
   type: 'ObjectPattern';
-  properties: ReadonlyArray<AssignmentProperty | RestElement>;
+  properties: ReadonlyArray<Node>;
 }
 
 export const ObjectPattern = (
-  properties: ReadonlyArray<AssignmentProperty | RestElement>,
+  properties: ReadonlyArray<Node>,
 ): ObjectPattern => ({
   type: 'ObjectPattern',
   properties,
@@ -221,12 +221,12 @@ export const RestElement = (
 export interface ArrowFunctionExpression {
   readonly type: 'ArrowFunctionExpression';
   readonly parameters: ReadonlyArray<Pattern>;
-  readonly body: Expression;
+  readonly body: Node;
 }
 
 export const ArrowFunctionExpression = (
   parameters: ReadonlyArray<Pattern>,
-  body: Expression,
+  body: Node,
 ): ArrowFunctionExpression => ({
   type: 'ArrowFunctionExpression',
   parameters,
@@ -235,11 +235,11 @@ export const ArrowFunctionExpression = (
 
 export interface BlockExpression {
   readonly type: 'BlockExpression';
-  readonly statements: ReadonlyNonEmptyArray<Statement>;
+  readonly statements: ReadonlyNonEmptyArray<Node>;
 }
 
 export const BlockExpression = (
-  statements: ReadonlyNonEmptyArray<Statement>,
+  statements: ReadonlyNonEmptyArray<Node>,
 ): BlockExpression => ({
   type: 'BlockExpression',
   statements,
@@ -350,15 +350,15 @@ export const LogicalExpression = (
 
 export interface ConditionalExpression {
   readonly type: 'ConditionalExpression';
-  readonly predicate: Expression;
-  readonly consequent: Expression;
-  readonly alternative: Expression;
+  readonly predicate: Node;
+  readonly consequent: Node;
+  readonly alternative: Node;
 }
 
 export const ConditionalExpression = (
-  predicate: Expression,
-  consequent: Expression,
-  alternative: Expression,
+  predicate: Node,
+  consequent: Node,
+  alternative: Node,
 ): ConditionalExpression => ({
   type: 'ConditionalExpression',
   predicate,
@@ -368,13 +368,13 @@ export const ConditionalExpression = (
 
 export interface PipeExpression {
   readonly type: 'PipeExpression';
-  readonly head: Expression;
-  readonly body: Expression;
+  readonly head: Node;
+  readonly body: Node;
 }
 
 export const PipeExpression = (
-  head: Expression,
-  body: Expression,
+  head: Node,
+  body: Node,
 ): PipeExpression => ({
   type: 'PipeExpression',
   head,
@@ -383,13 +383,13 @@ export const PipeExpression = (
 
 export interface NewExpression {
   readonly type: 'NewExpression';
-  readonly callee: Expression;
-  readonly arguments: ReadonlyArray<Expression>;
+  readonly callee: Node;
+  readonly arguments: ReadonlyArray<Node>;
 }
 
 export const NewExpression = (
-  callee: Expression,
-  args: ReadonlyArray<Expression>,
+  callee: Node,
+  args: ReadonlyArray<Node>,
 ): NewExpression => ({
   type: 'NewExpression',
   callee,
@@ -398,13 +398,13 @@ export const NewExpression = (
 
 export interface Application {
   readonly type: 'Application';
-  readonly callee: Expression;
-  readonly arguments: ReadonlyArray<SpreadElement | Expression>;
+  readonly callee: Node;
+  readonly arguments: ReadonlyArray<Node>;
 }
 
 export const Application = (
-  callee: Expression,
-  args: ReadonlyArray<SpreadElement | Expression>,
+  callee: Node,
+  args: ReadonlyArray<Node>,
 ): Application => ({
   type: 'Application',
   callee,
@@ -413,20 +413,20 @@ export const Application = (
 
 export interface CallExpression {
   readonly type: 'CallExpression';
-  readonly callee: Expression;
-  readonly arguments: ReadonlyArray<SpreadElement | Expression>;
+  readonly callee: Node;
+  readonly arguments: ReadonlyArray<Node>;
 }
 
 export const CallExpression = (
-  callee: Expression,
-  args: ReadonlyArray<SpreadElement | Expression>,
+  callee: Node,
+  args: ReadonlyArray<Node>,
 ): CallExpression => ({
   type: 'CallExpression',
   callee,
   arguments: args,
 });
 
-export type Expression =
+export type Node =
   | BooleanLiteral
   | NumberLiteral
   | StringLiteral
@@ -446,6 +446,15 @@ export type Expression =
   | NewExpression
   | Application
   | CallExpression
+  | SpreadElement
+  | VariableDeclaration
+  | FunctionDeclaration
+  | ExpressionStatement
+  | Pattern
+  | Property
+  | ImportDeclaration
+  | ExportNamedDeclaration
+  | ExportDefaultDeclaration
 
 interface _ImportDeclarationBase {
   readonly type: 'ImportDeclaration';
@@ -539,11 +548,11 @@ export const ExportNamedDeclaration = (
 
 export interface ExportDefaultDeclaration {
   readonly type: 'ExportDefaultDeclaration';
-  readonly declaration: Expression;
+  readonly declaration: Node;
 }
 
 export const ExportDefaultDeclaration = (
-  declaration: Expression,
+  declaration: Node,
 ): ExportDefaultDeclaration => ({
   type: 'ExportDefaultDeclaration',
   declaration,
@@ -552,12 +561,12 @@ export const ExportDefaultDeclaration = (
 export interface VariableDeclaration {
   readonly type: 'VariableDeclaration';
   readonly pattern: Pattern;
-  readonly expression: Expression;
+  readonly expression: Node;
 }
 
 export const VariableDeclaration = (
   pattern: Pattern,
-  expression: Expression,
+  expression: Node,
 ): VariableDeclaration => ({
   type: 'VariableDeclaration',
   pattern,
@@ -568,13 +577,13 @@ export interface FunctionDeclaration {
   readonly type: 'FunctionDeclaration';
   readonly name: string;
   readonly parameters: ReadonlyNonEmptyArray<Pattern>;
-  readonly body: Expression;
+  readonly body: Node;
 }
 
 export const FunctionDeclaration = (
   name: string,
   parameters: ReadonlyNonEmptyArray<Pattern>,
-  body: Expression,
+  body: Node,
 ): FunctionDeclaration => ({
   type: 'FunctionDeclaration',
   name,
@@ -582,43 +591,25 @@ export const FunctionDeclaration = (
   body,
 });
 
-export type Declaration =
-  | VariableDeclaration
-  | FunctionDeclaration
-
 export interface ExpressionStatement {
   readonly type: 'ExpressionStatement';
-  readonly expression: Expression;
+  readonly expression: Node;
 }
 
 export const ExpressionStatement = (
-  expression: Expression,
+  expression: Node,
 ): ExpressionStatement => ({
   type: 'ExpressionStatement',
   expression,
 });
 
-export type Statement =
-  | Declaration
-  | ExpressionStatement
-
 export interface Module {
   readonly type: 'Module';
-  readonly statements: ReadonlyArray<
-    | ImportDeclaration
-    | ExportNamedDeclaration
-    | ExportDefaultDeclaration
-    | Statement
-  >;
+  readonly statements: ReadonlyArray<Node>;
 }
 
 export const Module = (
-  statements: ReadonlyArray<
-    | ImportDeclaration
-    | ExportNamedDeclaration
-    | ExportDefaultDeclaration
-    | Statement
-  >,
+  statements: ReadonlyArray<Node>,
 ): Module => ({
   type: 'Module',
   statements,

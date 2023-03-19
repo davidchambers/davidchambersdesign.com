@@ -304,9 +304,9 @@ ObjectPattern
 
 ObjectPatternProperty
   = ident:Identifier _ ':' _ element:LeftHandSideExpression
-    { return Serif.AssignmentProperty(ident, element); }
+    { return Serif.Property(Serif.StringLiteral(ident.name), element); }
   / ident:Identifier
-    { return Serif.AssignmentProperty(ident, ident); }
+    { return Serif.Property(Serif.StringLiteral(ident.name), ident); }
 
 RestElement
   = '...' argument:Identifier
