@@ -1,17 +1,15 @@
-import path from 'node:path';
 import S from 'sanctuary';
-const intersection = set$002D1 => set$002D2 => new Set([...set$002D2].filter(x => set$002D1.has(x)));
-const union = set$002D1 => set$002D2 => new Set([
-  ...set$002D1,
-  ...set$002D2
-]);
-const similarity = set$002D1 => set$002D2 => intersection(set$002D1)(set$002D2).size / Math.sqrt(union(set$002D1)(set$002D2).size);
-const seconds$002Dbetween = from => to => to.diff(from, 'seconds').seconds;
-const with$002Dscores = that => this_ => (() => {
-  const score = similarity(new Set(that.tags))(new Set(this_.tags));
-  const primary = S.negate(score);
-  const secondary = Math.abs(seconds$002Dbetween(that.datetime)(this_.datetime));
-  return score >= 0.5 ? S.Just(S.Pair(S.Pair(primary)(secondary))(this_)) : S.Nothing;
+const related$002Dposts = posts => post => (() => {
+  const tags = new Set(post.tags);
+  return S.sortBy(this_ => S.Pair(-this_.score)(Math.abs(this_.datetime.diff(post.datetime).milliseconds)))(S.mapMaybe(this_ => this_.slug === post.slug ? S.Nothing : (() => {
+    const score = this_.tags.filter(x => tags.has(x)).length / Math.sqrt(new Set([
+      ...tags,
+      ...this_.tags
+    ]).size);
+    return score < 0.5 ? S.Nothing : S.Just({
+      ...this_,
+      score: score
+    });
+  })())(posts)).slice(0, 5);
 })();
-const related$002Dposts = posts => post => S.map(S.snd)(S.sort(S.mapMaybe(with$002Dscores(post))(S.reject(this_ => this_.slug === post.slug)(posts)))).slice(0, 5);
 export default related$002Dposts;

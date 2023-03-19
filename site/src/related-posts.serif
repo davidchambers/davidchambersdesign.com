@@ -1,43 +1,20 @@
-import path from "node:path";
-
 import S from "sanctuary";
 
 export default related-posts;
 
-intersection set-1 set-2 = {
-  new Set([...set-2].filter(x => set-1.has(x)))
-};
-
-union set-1 set-2 = {
-  new Set([...set-1, ...set-2])
-};
-
-similarity set-1 set-2 = {
-  {intersection set-1 set-2}.size / Math.sqrt {union set-1 set-2}.size
-};
-
-seconds-between from to = {
-  to.diff(from, "seconds").seconds
-};
-
-with-scores that this = {
-  score = similarity new Set(that.tags)
-                     new Set(this.tags);
-  primary = S.negate score;
-  secondary = Math.abs {seconds-between that.datetime
-                                        this.datetime};
-  if score >= 0.5 then {
-    S.Just {S.Pair {S.Pair primary secondary} this}
-  } else {
-    S.Nothing
-  }
-};
-
 related-posts posts post = {
+  tags = new Set(post.tags);
   posts
-  |> S.reject {this => this.slug == post.slug}
-  |> S.mapMaybe {with-scores post}
-  |> S.sort
-  |> S.map S.snd
+  |> S.mapMaybe {this => {
+       if this.slug == post.slug then S.Nothing else {
+         score = this.tags.filter(x => tags.has(x)).length
+                 / Math.sqrt new Set([...tags, ...this.tags]).size;
+         if score < 0.5 then S.Nothing else S.Just {...this, score: score}
+       }
+     }}
+  |> S.sortBy {this => {
+       S.Pair {-this.score}
+              {Math.abs this.datetime.diff(post.datetime).milliseconds}
+     }}
   |> ?.slice(0, 5)
 };
