@@ -42,15 +42,15 @@ NumberLiteral
   / DecimalNumber
 
 BinaryNumber
-  = '0' 'b' digits:$([0-1])+
+  = '0' 'b' digits:$[0-1]+
     { return Serif.NumberLiteral(parseInt(digits, 2)); }
 
 OctalNumber
-  = '0' 'o' digits:$([0-7])+
+  = '0' 'o' digits:$[0-7]+
     { return Serif.NumberLiteral(parseInt(digits, 8)); }
 
 HexadecimalNumber
-  = '0' 'x' digits:$([0-9A-F])+
+  = '0' 'x' digits:$[0-9A-F]+
     { return Serif.NumberLiteral(parseInt(digits, 16)); }
 
 DecimalNumber
@@ -59,21 +59,31 @@ DecimalNumber
     { return Serif.NumberLiteral(parseFloat(text())); }
 
 StringLiteral
-  = '"' chars:StringChar* '"'
+  = '"' chars:StringCharacter* '"'
     { return Serif.StringLiteral(chars.join('')); }
 
-StringChar
-  = '\\' '"'  { return '"'; }
-  / '\\' '\\' { return '\\'; }
-  / '\\' 'b'  { return '\b'; }
-  / '\\' 'f'  { return '\f'; }
-  / '\\' 'n'  { return '\n'; }
-  / '\\' 'r'  { return '\r'; }
-  / '\\' 't'  { return '\t'; }
-  / '\\' 'u' digits:$[0-9A-F]|4|
-              { return String.fromCharCode(parseInt(digits, 16)); }
-  / '\\'      { expected('valid escape sequence'); }
-  / !'"' c:.  { return c; }
+StringCharacter
+  = !('"' / '\\') character:.
+    { return character; }
+  / '\\' sequence:('"' / EscapeSequence)
+    { return sequence; }
+
+EscapeSequence
+  = CharacterEscapeSequence
+  / UnicodeEscapeSequence
+
+CharacterEscapeSequence
+  = '\\'
+  / 'b' { return '\b'; }
+  / 'f' { return '\f'; }
+  / 'n' { return '\n'; }
+  / 'r' { return '\r'; }
+  / 't' { return '\t'; }
+  / 'v' { return '\v'; }
+
+UnicodeEscapeSequence
+  = 'u' digits:$[0-9A-F]|4|
+    { return String.fromCharCode(parseInt(digits, 16)); }
 
 TemplateLiteral
   = '`'
@@ -92,22 +102,13 @@ TemplateLiteral
     }
 
 Quasi
-  = $(TemplateLiteralChar*)
+  = $TemplateLiteralCharacter*
 
-TemplateLiteralChar
-  = '\\' '`'  { return '\\`'; }
-  / '\\' '$'  { return '\\$'; }
-  / '\\' '\\' { return '\\\\'; }
-  / '\\' 'b'  { return '\\b'; }
-  / '\\' 'f'  { return '\\f'; }
-  / '\\' 'n'  { return '\\n'; }
-  / '\\' 'r'  { return '\\r'; }
-  / '\\' 't'  { return '\\t'; }
-  / '\\' 'u' digits:$[0-9A-F]|4|
-              { return '\\u' + digits; }
-  / '\\'      { expected('valid escape sequence'); }
-  / '$' !'{'  { return '$'; }
-  / !'`' !'$' c:.  { return c; }
+TemplateLiteralCharacter
+  = !('`' / '${' / '\\') character:.
+    { return character; }
+  / '\\' sequence:('`' / '$' / EscapeSequence)
+    { return sequence; }
 
 AndToken            = @$'and'           !IdentifierPart
 ElseToken           = @$'else'          !IdentifierPart
@@ -151,29 +152,28 @@ Identifier
     { return Serif.Identifier(name); }
 
 IdentifierStart
-  = 'A' / 'B' / 'C' / 'D' / 'E' / 'F' / 'G' / 'H' / 'I' / 'J' / 'K' / 'L' / 'M' / 'N' / 'O' / 'P' / 'Q' / 'R' / 'S' / 'T' / 'U' / 'V' / 'W' / 'X' / 'Y' / 'Z'
-  / 'a' / 'b' / 'c' / 'd' / 'e' / 'f' / 'g' / 'h' / 'i' / 'j' / 'k' / 'l' / 'm' / 'n' / 'o' / 'p' / 'q' / 'r' / 's' / 't' / 'u' / 'v' / 'w' / 'x' / 'y' / 'z'
-  / "'"
-  / '%'
-  / '!'
-  / '~'
-  / '<'
-  / '>'
-  / '↑'
-  / '↓'
-  / '←'
-  / '→'
-  / '⇧'
-  / '⇩'
-  / '⇦'
-  / '⇨'
-  / '—'
+  = !Whitespace
+    ![0-9]
+    !'('
+    !')'
+    !'['
+    !']'
+    !'{'
+    !'}'
+    !'.'
+    !','
+    !':'
+    !';'
+    !'"'
+    !'-'
+    !'='
+    !'$'
+    .
 
 IdentifierPart
   = IdentifierStart
-  / '0' / '1' / '2' / '3' / '4' / '5' / '6' / '7' / '8' / '9'
+  / [0-9]
   / '-'
-  / '/'
 
 ArrayExpression
   = '[' _ ']'
@@ -268,51 +268,6 @@ ArrowFunctionParameters
     { return parameters; }
   / parameter:Pattern
     { return [parameter]; }
-
-// AssignmentPattern
-//   = ObjectAssignmentPattern
-//   / ArrayAssignmentPattern
-//
-// ObjectAssignmentPattern
-//   = '{' _ '}'
-//   / '{' _ AssignmentRestProperty _ '}'
-//   / '{' _ AssignmentPropertyList _ '}'
-//   / '{' _ AssignmentPropertyList _ ',' _ AssignmentRestProperty _ '}'
-//
-// ArrayAssignmentPattern
-//   = '[' _ Elision? _ AssignmentRestElement? _ ']'
-//   / '[' _ AssignmentElementList _ ']'
-//   / '[' _ AssignmentElementList _ ',' _ Elision|.., _| _ AssignmentRestElement _ ']'
-//
-// AssignmentRestProperty
-//   = '...' DestructuringAssignmentTarget
-//
-// AssignmentPropertyList
-//   = AssignmentElisionElement
-//   / AssignmentElementList _ ',' _ AssignmentElisionElement
-//
-// AssignmentElementList
-//   = AssignmentElisionElement
-//   / AssignmentElementList _ ',' _ AssignmentElisionElement
-//
-// AssignmentElisionElement
-//   = Elision|.., _| _ AssignmentElement
-//
-// AssignmentProperty
-//   = IdentifierReference // _ Initializer?
-//   / PropertyName _ ':' _ AssignmentElement
-//
-// AssignmentElement
-//   = DestructuringAssignmentTarget // _ Initializer?
-//
-// AssignmentRestElement
-//   = '...' DestructuringAssignmentTarget
-//
-// DestructuringAssignmentTarget
-//   = LeftHandSideExpression
-//
-// Elision
-//   = ','
 
 Pattern
   = ArrayPattern
