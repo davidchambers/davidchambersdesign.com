@@ -491,12 +491,12 @@ export const ImportDefaultDeclaration = (
 });
 
 interface _ImportDeclaration extends _ImportDeclarationBase {
-  readonly specifiers: ReadonlyArray<ImportSpecifier>
+  readonly specifiers: ReadonlyArray<ImportSpecifier | ImportNamespaceSpecifier>
 }
 
 export const ImportDeclaration = (
   source: StringLiteral,
-  specifiers: ReadonlyArray<ImportSpecifier>,
+  specifiers: ReadonlyArray<ImportSpecifier | ImportNamespaceSpecifier>,
 ): _ImportDeclaration => ({
   type: 'ImportDeclaration',
   source,
@@ -548,6 +548,18 @@ export const ImportSpecifier = (
   type: 'ImportSpecifier',
   local,
   imported,
+});
+
+export interface ImportNamespaceSpecifier {
+  readonly type: 'ImportNamespaceSpecifier';
+  readonly local: Identifier;
+}
+
+export const ImportNamespaceSpecifier = (
+  local: Identifier,
+): ImportNamespaceSpecifier => ({
+  type: 'ImportNamespaceSpecifier',
+  local,
 });
 
 export interface ExportNamedDeclaration {

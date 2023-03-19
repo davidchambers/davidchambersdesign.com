@@ -364,6 +364,11 @@ const esFromImportDeclaration = (exportedNames: (source: string) => ReadonlyArra
               esFromIdentifier(specifier.local)
             );
           }
+          case 'ImportNamespaceSpecifier': {
+            return ES.ImportNamespaceSpecifier(
+              esFromIdentifier(specifier.local)
+            );
+          }
           case 'ImportSpecifier': {
             return ES.ImportSpecifier(
               esFromIdentifier(specifier.local),

@@ -4,7 +4,7 @@ import url from 'node:url';
 import S from 'sanctuary';
 import { svg } from '../elements.js';
 import base$002Dtemplate from '../base-template.js';
-import masthead from '../masthead.js';
+import * as masthead from '../masthead.js';
 import related$002Dposts from '../related-posts.js';
 import render$002Darchives from '../render-archives.js';
 import render$002Dpage from '../render-page.js';

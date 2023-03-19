@@ -808,25 +808,20 @@ const paths = chars => [
 ];
 const chars = Array.from('DAVIDCHAMBERSDESIGN');
 const mask = [path({
-    d: render(paths(chars.map(char => mask$002Dchars[char]))),
+    d: render(paths(chars.map($0024 => (char => mask$002Dchars[char])($0024)))),
     fill: '#000',
     ['fill-rule']: 'evenodd'
   })];
 const fill = [
   path({
-    d: render(paths(chars.map(char => line$002Dchars[char]))),
+    d: render(paths(chars.map($0024 => (char => line$002Dchars[char])($0024)))),
     fill: '#999'
   }),
   path({
-    d: render(paths(chars.map(char => fill$002Dchars[char]))),
+    d: render(paths(chars.map($0024 => (char => fill$002Dchars[char])($0024)))),
     fill: '#666'
   })
 ];
-const default_ = {
-  mask: mask,
-  fill: fill
-};
-export default default_;
 export {
   fill,
   mask

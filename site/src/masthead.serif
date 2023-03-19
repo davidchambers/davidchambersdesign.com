@@ -3,7 +3,6 @@ import S from "sanctuary";
 import {path} from "./elements.serif";
 import * from "./orthogonal.serif";
 
-export default default;
 export {fill, mask};
 
 mask-chars = {
@@ -185,8 +184,6 @@ paths chars = [
 
 chars = Array.from "DAVIDCHAMBERSDESIGN";
 
-mask = [path {d: render $ paths chars.map(char => mask-chars[char]), fill: "#000", fill-rule: "evenodd"}];
-fill = [path {d: render $ paths chars.map(char => line-chars[char]), fill: "#999"},
-        path {d: render $ paths chars.map(char => fill-chars[char]), fill: "#666"}];
-
-default = {mask: mask, fill: fill};
+mask = [path {d: render $ paths $ {char => mask-chars[char]} <$> chars, fill: "#000", fill-rule: "evenodd"}];
+fill = [path {d: render $ paths $ {char => line-chars[char]} <$> chars, fill: "#999"},
+        path {d: render $ paths $ {char => fill-chars[char]} <$> chars, fill: "#666"}];

@@ -433,6 +433,15 @@ export const ImportDefaultSpecifier = (
   local,
 });
 
+export type ImportNamespaceSpecifier = ES.ImportNamespaceSpecifier;
+
+export const ImportNamespaceSpecifier = (
+  local: Identifier,
+): ImportNamespaceSpecifier => ({
+  type: 'ImportNamespaceSpecifier',
+  local,
+});
+
 export type ImportSpecifier = ES.ImportSpecifier;
 
 export const ImportSpecifier = (

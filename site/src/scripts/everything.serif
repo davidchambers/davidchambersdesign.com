@@ -6,7 +6,7 @@ import S from "sanctuary";
 
 import {svg} from "../elements.serif";
 import base-template from "../base-template.serif";
-import masthead from "../masthead.serif";
+import * as masthead from "../masthead.serif";
 import related-posts from "../related-posts.serif";
 import render-archives from "../render-archives.serif";
 import render-page from "../render-page.serif";

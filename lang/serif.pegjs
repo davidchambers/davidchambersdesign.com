@@ -9,6 +9,10 @@ ImportSpecifier
   = local:Identifier
     { return Serif.ImportSpecifier(local, local); }
 
+ImportNamespaceSpecifier
+  = local:Identifier
+    { return Serif.ImportNamespaceSpecifier(local); }
+
 ImportDefaultSpecifier
   = local:Identifier
     { return Serif.ImportDefaultSpecifier(local); }
@@ -16,6 +20,8 @@ ImportDefaultSpecifier
 ImportDeclaration
   = ImportToken _ '{' _ specifiers:ImportSpecifier|.., CommaSeparator| _ '}' _ 'from' _ source:StringLiteral _ ';'
     { return Serif.ImportDeclaration(source, specifiers); }
+  / ImportToken _ '*' _ 'as' _ specifier:ImportNamespaceSpecifier _ 'from' _ source:StringLiteral _ ';'
+    { return Serif.ImportDeclaration(source, [specifier]); }
   / ImportToken _ '*' _ 'from' _ source:StringLiteral hiding:(_ 'hiding' _ '{' _ hiding:Identifier|.., CommaSeparator| _ '}' { return hiding; })? _ ';'
     { return Serif.ImportEverythingDeclaration(source, hiding ?? []); }
   / ImportToken _ specifier:ImportDefaultSpecifier _ 'from' _ source:StringLiteral _ ';'
