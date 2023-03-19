@@ -123,7 +123,7 @@ render-node indent level inline node = {
     escape node.value
   } else if node.self-closing then {
     render-self-closing-element node.tag-name node.attributes indent level inline
-  } else if inline || node.format == "inline" then {
+  } else if inline or node.format == "inline" then {
     render-inline-element node.tag-name node.attributes node.children indent level inline
   } else {
     render-block-element node.tag-name node.attributes node.children indent level inline

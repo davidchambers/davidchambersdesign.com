@@ -109,6 +109,7 @@ TemplateLiteralChar
   / '$' !'{'  { return '$'; }
   / !'`' !'$' c:.  { return c; }
 
+AndToken            = 'and'             !IdentifierPart     { return text(); }
 ElseToken           = 'else'            !IdentifierPart     { return text(); }
 ExportToken         = 'export'          !IdentifierPart     { return text(); }
 IfToken             = 'if'              !IdentifierPart     { return text(); }
@@ -116,6 +117,7 @@ ImportToken         = 'import'          !IdentifierPart     { return text(); }
 InToken             = 'in'              !IdentifierPart     { return text(); }
 InstanceofToken     = 'instanceof'      !IdentifierPart     { return text(); }
 NewToken            = 'new'             !IdentifierPart     { return text(); }
+OrToken             = 'or'              !IdentifierPart     { return text(); }
 ThenToken           = 'then'            !IdentifierPart     { return text(); }
 TypeofToken         = 'typeof'          !IdentifierPart     { return text(); }
 
@@ -460,7 +462,7 @@ BitwiseORExpression
     { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
 LogicalANDOperator
-  = '&&'
+  = AndToken
 
 LogicalANDExpression
   = left:BitwiseORExpression
@@ -468,7 +470,7 @@ LogicalANDExpression
     { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator, left, right), left); }
 
 LogicalOROperator
-  = '||'
+  = OrToken
 
 LogicalORExpression
   = left:LogicalANDExpression

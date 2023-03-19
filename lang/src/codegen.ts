@@ -182,14 +182,15 @@ const esFromUnaryExpression = (unaryExpression: Serif.UnaryExpression): ES.Unary
   )
 );
 
-const binaryOperatorMap = new Map<Serif.BinaryOperator, ES.BinaryOperator>([
-  ['==', '==='],
-  ['!=', '!=='],
-]);
-
 const esFromBinaryExpression = (binaryExpression: Serif.BinaryExpression): ES.BinaryExpression => (
   ES.BinaryExpression(
-    binaryOperatorMap.get(binaryExpression.operator) ?? binaryExpression.operator,
+    (() => {
+      switch (binaryExpression.operator) {
+        case '==':  return '===';
+        case '!=':  return '!==';
+        default:    return binaryExpression.operator;
+      }
+    })(),
     esFromExpression(binaryExpression.left),
     esFromExpression(binaryExpression.right)
   )
@@ -197,7 +198,13 @@ const esFromBinaryExpression = (binaryExpression: Serif.BinaryExpression): ES.Bi
 
 const esFromLogicalExpression = (logicalExpression: Serif.LogicalExpression): ES.LogicalExpression => (
   ES.LogicalExpression(
-    logicalExpression.operator,
+    (() => {
+      switch (logicalExpression.operator) {
+        case 'and': return '&&';
+        case 'or':  return '||';
+        case '??':  return '??';
+      }
+    })(),
     esFromExpression(logicalExpression.left),
     esFromExpression(logicalExpression.right),
   )

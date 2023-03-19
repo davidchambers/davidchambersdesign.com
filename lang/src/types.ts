@@ -323,8 +323,8 @@ export const BinaryExpression = (
 });
 
 export type LogicalOperator =
-  | '&&'
-  | '||'
+  | 'and'
+  | 'or'
   | '??'
 
 export type LogicalOperand =
