@@ -101,6 +101,6 @@ const render$002Darchives = posts => [
   ol$0027({ class: 'archives' })(S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(S.map(post => ({
     ...post,
     ['formatted-date']: post.datetime.toFormat('MMMM y')
-  }))(posts))).map(render$002Dsection))
+  }))(posts))).map($0024 => render$002Dsection($0024)))
 ];
 export default render$002Darchives;

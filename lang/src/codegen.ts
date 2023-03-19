@@ -158,6 +158,15 @@ const esFromBinaryExpression = (binaryExpression: Serif.BinaryExpression): ES.Bi
   )
 );
 
+const esFromMapExpression = (mapExpression: Serif.MapExpression): ES.CallExpression => {
+  const $ = Serif.Identifier('$');
+  const callExpression = Serif.CallExpression(
+    Serif.MemberExpression(mapExpression.right, Serif.StringLiteral('map')),
+    [Serif.ArrowFunctionExpression([$], Serif.CallExpression(mapExpression.left, [$]))]
+  );
+  return esFromCallExpression(callExpression);
+};
+
 const esFromLogicalExpression = (logicalExpression: Serif.LogicalExpression): ES.LogicalExpression => (
   ES.LogicalExpression(
     (() => {
@@ -197,6 +206,7 @@ const containsTopicReference = (expr: Serif.Node): boolean => {
     case 'BlockExpression':             return expr.statements.some(containsTopicReference);
     case 'UnaryExpression':             return containsTopicReference(expr.argument);
     case 'BinaryExpression':            return containsTopicReference(expr.left) || containsTopicReference(expr.right);
+    case 'MapExpression':               return containsTopicReference(expr.left) || containsTopicReference(expr.right);
     case 'LogicalExpression':           return containsTopicReference(expr.left) || containsTopicReference(expr.right);
     case 'ConditionalExpression':       return containsTopicReference(expr.predicate) || containsTopicReference(expr.consequent) || containsTopicReference(expr.alternative);
     case 'PipeExpression':              return false;
@@ -232,6 +242,7 @@ const replaceTopicReferences = (replacement: Serif.Node) => (expr: Serif.Node): 
     case 'BlockExpression':             return Serif.BlockExpression([replaceTopicReferences(replacement)(expr.statements[0]), ...expr.statements.slice(1).map(replaceTopicReferences(replacement))]);
     case 'UnaryExpression':             return Serif.UnaryExpression(expr.operator, replaceTopicReferences(replacement)(expr.argument) as Serif.UnaryOperand);
     case 'BinaryExpression':            return Serif.BinaryExpression(expr.operator, replaceTopicReferences(replacement)(expr.left) as Serif.BinaryOperand, replaceTopicReferences(replacement)(expr.right) as Serif.BinaryOperand);
+    case 'MapExpression':               return Serif.MapExpression(replaceTopicReferences(replacement)(expr.left), replaceTopicReferences(replacement)(expr.right));
     case 'LogicalExpression':           return Serif.LogicalExpression(expr.operator, replaceTopicReferences(replacement)(expr.left) as Serif.LogicalOperand, replaceTopicReferences(replacement)(expr.right) as Serif.LogicalOperand);
     case 'ConditionalExpression':       return Serif.ConditionalExpression(replaceTopicReferences(replacement)(expr.predicate), replaceTopicReferences(replacement)(expr.consequent), replaceTopicReferences(replacement)(expr.alternative));
     case 'PipeExpression':              return replaceTopicReferences(replaceTopicReferences(replacement)(expr.head))(containsTopicReference(expr.body) ? expr.body : Serif.Application(expr.body, [Serif.Identifier(TOPIC_REFERENCE_NAME)]));
@@ -280,7 +291,7 @@ const esFromApplication = (application: Serif.Application): ES.Expression => (
   )
 );
 
-const esFromCallExpression = (callExpression: Serif.CallExpression): ES.Expression => (
+const esFromCallExpression = (callExpression: Serif.CallExpression): ES.CallExpression => (
   ES.CallExpression(
     esFromNode(callExpression.callee),
     callExpression.arguments.map(esFromNode),
@@ -391,6 +402,7 @@ const esFromNode = (expr: Serif.Node): ES.Expression => {
     case 'BlockExpression':             return esFromBlockExpression(expr);
     case 'UnaryExpression':             return esFromUnaryExpression(expr);
     case 'BinaryExpression':            return esFromBinaryExpression(expr);
+    case 'MapExpression':               return esFromMapExpression(expr);
     case 'LogicalExpression':           return esFromLogicalExpression(expr);
     case 'ConditionalExpression':       return esFromConditionalExpression(expr);
     case 'PipeExpression':              return esFromPipeExpression(expr);

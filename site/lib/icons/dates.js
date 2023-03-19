@@ -1,4 +1,3 @@
-import S from 'sanctuary';
 import { path } from '../elements.js';
 import {
   render,
@@ -11,7 +10,7 @@ import {
   $2191,
   $2193
 } from '../orthogonal.js';
-const dates = S.map(d => path({
+const render$002Dpath = d => path({
   ['fill-rule']: 'evenodd',
   fill: '#000',
   d: render([
@@ -19,7 +18,8 @@ const dates = S.map(d => path({
     $21E9(0),
     ...d
   ])
-}))([
+});
+const dates = [
   [
     $2192(4),
     $2193(7),
@@ -152,5 +152,5 @@ const dates = S.map(d => path({
     $2190(2),
     $2191(2)
   ]
-]);
+].map($0024 => render$002Dpath($0024));
 export default dates;

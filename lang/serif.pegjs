@@ -392,12 +392,19 @@ EqualityExpression
     tail:(_ operator:EqualityOperator _ right:RelationalExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
+MapOperator
+  = '<$>'
+
+MapExpression
+  = exprs:EqualityExpression|1.., _ MapOperator _|
+    { return exprs.reduce(Serif.MapExpression); }
+
 BitwiseANDOperator
   = '&'
 
 BitwiseANDExpression
-  = left:EqualityExpression
-    tail:(_ operator:BitwiseANDOperator _ right:EqualityExpression { return {operator, right}; })*
+  = left:MapExpression
+    tail:(_ operator:BitwiseANDOperator _ right:MapExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
 BitwiseXOROperator

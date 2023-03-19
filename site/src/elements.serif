@@ -130,11 +130,12 @@ render-node indent level inline node = {
   }
 };
 
+render-attribute [name, value] = {
+  ` ${name}="${escape `${value}`.replace(new RegExp("\n[ ]*", "g"), " ")}"`
+};
+
 render-attributes attrs = {
-  attrs
-  |> Object.entries
-  |> ?.map([name, value] => ` ${name}="${escape `${value}`.replace(new RegExp("\n[ ]*", "g"), " ")}"`)
-  |> ?.join("")
+  {render-attribute <$> Object.entries attrs}.join("")
 };
 
 render-block-element tag-name attrs children indent level inline = {
@@ -145,9 +146,7 @@ render-block-element tag-name attrs children indent level inline = {
   }${
     render-attributes attrs
   }>\n${
-    children
-    |> ?.map(render-node indent {level + 1} inline)
-    |> ?.join("")
+    {render-node indent {level + 1} inline <$> children}.join("")
   }${
     indent.repeat(level)
   }</${
@@ -163,9 +162,7 @@ render-inline-element tag-name attrs children indent level inline = {
   }${
     render-attributes attrs
   }>${
-    children
-    |> ?.map(render-node indent 0 true)
-    |> ?.join("")
+    {render-node indent 0 true <$> children}.join("")
   }</${
     tag-name
   }>${

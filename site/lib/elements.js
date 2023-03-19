@@ -8,9 +8,10 @@ const text = value => ({
 });
 const canonicalize$002Dchildren = children => (Array.isArray(children) ? children : [children]).map(child => typeof child === 'string' ? text(child.replace(new RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', '')) : child);
 const render$002Dnode = indent => level => inline => node => node['text-node'] ? escape(node.value) : node['self-closing'] ? render$002Dself$002Dclosing$002Delement(node['tag-name'])(node.attributes)(indent)(level)(inline) : inline || node.format === 'inline' ? render$002Dinline$002Delement(node['tag-name'])(node.attributes)(node.children)(indent)(level)(inline) : render$002Dblock$002Delement(node['tag-name'])(node.attributes)(node.children)(indent)(level)(inline);
-const render$002Dattributes = attrs => Object.entries(attrs).map(([name, value]) => ` ${ name }="${ escape(`${ value }`.replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`).join('');
-const render$002Dblock$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ tag$002Dname }${ render$002Dattributes(attrs) }>\n${ children.map(render$002Dnode(indent)(level + 1)(inline)).join('') }${ indent.repeat(level) }</${ tag$002Dname }>\n`;
-const render$002Dinline$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ tag$002Dname }${ render$002Dattributes(attrs) }>${ children.map(render$002Dnode(indent)(0)(true)).join('') }</${ tag$002Dname }>${ inline ? '' : '\n' }`;
+const render$002Dattribute = ([name, value]) => ` ${ name }="${ escape(`${ value }`.replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`;
+const render$002Dattributes = attrs => Object.entries(attrs).map($0024 => render$002Dattribute($0024)).join('');
+const render$002Dblock$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ tag$002Dname }${ render$002Dattributes(attrs) }>\n${ children.map($0024 => render$002Dnode(indent)(level + 1)(inline)($0024)).join('') }${ indent.repeat(level) }</${ tag$002Dname }>\n`;
+const render$002Dinline$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ tag$002Dname }${ render$002Dattributes(attrs) }>${ children.map($0024 => render$002Dnode(indent)(0)(true)($0024)).join('') }</${ tag$002Dname }>${ inline ? '' : '\n' }`;
 const render$002Dself$002Dclosing$002Delement = tag$002Dname => attrs => indent => level => inline => `${ indent.repeat(level) }<${ tag$002Dname }${ render$002Dattributes(attrs) } />${ inline ? '' : '\n' }`;
 const block$002Delement = tag$002Dname => attrs => children => (() => {
   const children$0027 = canonicalize$002Dchildren(children);

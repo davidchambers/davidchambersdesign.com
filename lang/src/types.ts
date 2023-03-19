@@ -322,6 +322,21 @@ export const BinaryExpression = (
   right,
 });
 
+export interface MapExpression {
+  readonly type: 'MapExpression';
+  readonly left: Node;
+  readonly right: Node;
+}
+
+export const MapExpression = (
+  left: Node,
+  right: Node,
+): MapExpression => ({
+  type: 'MapExpression',
+  left,
+  right,
+});
+
 export type LogicalOperator =
   | 'and'
   | 'or'
@@ -440,6 +455,7 @@ export type Node =
   | BlockExpression
   | UnaryExpression
   | BinaryExpression
+  | MapExpression
   | LogicalExpression
   | ConditionalExpression
   | PipeExpression
