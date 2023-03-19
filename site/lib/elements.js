@@ -6,7 +6,7 @@ const text = value => ({
   text: [value],
   render: indent => level => inline => escape(value)
 });
-const canonicalize$002Dchildren = children => (Array.isArray(children) ? children : [children]).map(child => typeof child == 'string' ? text(child.replace(new RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', '')) : child);
+const canonicalize$002Dchildren = children => (Array.isArray(children) ? children : [children]).map(child => typeof child === 'string' ? text(child.replace(new RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', '')) : child);
 const render$002Dnode = indent => level => inline => node => node['text-node'] ? escape(node.value) : node['self-closing'] ? render$002Dself$002Dclosing$002Delement(node['tag-name'])(node.attributes)(indent)(level)(inline) : inline || node.format === 'inline' ? render$002Dinline$002Delement(node['tag-name'])(node.attributes)(node.children)(indent)(level)(inline) : render$002Dblock$002Delement(node['tag-name'])(node.attributes)(node.children)(indent)(level)(inline);
 const render$002Dattributes = attrs => Object.entries(attrs).map(([name, value]) => ` ${ name }="${ escape(`${ value }`.replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`).join('');
 const render$002Dblock$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ tag$002Dname }${ render$002Dattributes(attrs) }>\n${ children.map(render$002Dnode(indent)(level + 1)(inline)).join('') }${ indent.repeat(level) }</${ tag$002Dname }>\n`;

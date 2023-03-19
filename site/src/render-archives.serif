@@ -25,7 +25,7 @@ render-archives posts = {
   posts
   |> S.map {post => {...post, formatted-date: post.datetime.toFormat("MMMM y")}}
   |> S.sortBy {post => -post.datetime}
-  |> S.groupBy {this => that => this.formatted-date === that.formatted-date}
+  |> S.groupBy {this => that => this.formatted-date == that.formatted-date}
   |> [
     h1 "Archives",
     ol' {class: "archives"} ?.map(render-section),

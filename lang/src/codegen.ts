@@ -182,9 +182,14 @@ const esFromUnaryExpression = (unaryExpression: Serif.UnaryExpression): ES.Unary
   )
 );
 
+const binaryOperatorMap = new Map<Serif.BinaryOperator, ES.BinaryOperator>([
+  ['==', '==='],
+  ['!=', '!=='],
+]);
+
 const esFromBinaryExpression = (binaryExpression: Serif.BinaryExpression): ES.BinaryExpression => (
   ES.BinaryExpression(
-    binaryExpression.operator,
+    binaryOperatorMap.get(binaryExpression.operator) ?? binaryExpression.operator,
     esFromExpression(binaryExpression.left),
     esFromExpression(binaryExpression.right)
   )

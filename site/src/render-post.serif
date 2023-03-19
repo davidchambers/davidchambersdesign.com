@@ -18,14 +18,14 @@ render-post post related-posts = [
     footer' {class: "metadata"} [
       ul {li' {class: "shorturl"} {a `http://dċd.ws/${post.id}/` "Short URL"}},
       ...{
-        if post.tags.length === 0 then [] else [
+        if post.tags.length == 0 then [] else [
           h4 "This post has the following tags:",
           ol post.tags.map(tag => li [a `/tag/${tag}/` tags[tag]]),
         ]
       },
     ],
     ...{
-      if related-posts.length === 0 then [] else [
+      if related-posts.length == 0 then [] else [
         h3' {id: "related"} "Possibly related posts",
         ul {related-posts.map(post => li [a `/${post.slug}/` post.title])},
       ]

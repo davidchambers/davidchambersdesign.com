@@ -297,8 +297,6 @@ export type BinaryOperator =
   | 'in'
   | '=='
   | '!='
-  | '==='
-  | '!=='
   | '&'
   | '^'
   | '|'

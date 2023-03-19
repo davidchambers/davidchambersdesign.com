@@ -35,7 +35,7 @@ with-scores that this = {
 
 related-posts posts post = {
   posts
-  |> S.reject {this => this.slug === post.slug}
+  |> S.reject {this => this.slug == post.slug}
   |> S.mapMaybe {with-scores post}
   |> S.sort
   |> S.map S.snd

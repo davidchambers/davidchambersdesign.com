@@ -427,9 +427,7 @@ RelationalExpression
     { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
 
 EqualityOperator
-  = '==='
-  / '=='
-  / '!=='
+  = '=='
   / '!='
 
 EqualityExpression
