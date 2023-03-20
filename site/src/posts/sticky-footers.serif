@@ -94,13 +94,13 @@ body = [
   p [
    "This CSS works in all modern browsers. If you need to support
     antiquated browsers, you should have a look at the hacks suggested
-    at ", a "http://www.cssstickyfooter.com/" ["CSS Sticky Footer"], ".",
+    at ", a {href: "http://www.cssstickyfooter.com/"} ["CSS Sticky Footer"], ".",
   ],
 
   p [
     strong [
      "Check out the ",
-      a "/examples/sticky-footers/" ["sticky footer demo"], "
+      a {href: "/examples/sticky-footers/"} ["sticky footer demo"], "
       to see all this theory in action.",
     ],
   ],

@@ -178,7 +178,7 @@ body = [
   update {datetime "2010-06-02" "00:15:00" "Pacific/Auckland"} [
     p [
      "I've just been watching one of the ",
-      a "http://developer.apple.com/videos/wwdc/2010/"
+      a {href: "http://developer.apple.com/videos/wwdc/2010/"}
         ["WWDC 2010 session videos"], ", and it turns out the fix
       I stumbled upon is actually the \"correct\" solution.",
     ],

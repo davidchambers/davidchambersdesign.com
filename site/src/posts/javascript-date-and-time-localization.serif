@@ -81,15 +81,14 @@ body = [
   h3 ["jQuery"],
 
   p [
-   "I was not quick to embrace ", a "http://jquery.com/" ["jQuery"], ".
-    Soon after I discovered DOM scripting and the incompatible DOM
-    APIs provided by the various browsers, I understood the need for
-    a JavaScript library. Soon after that I ", del ["decided"], " ",
-    ins ["stumbled"], " upon ", a "http://prototypejs.org/" ["Prototype"], ".
-    More recently I became an advocate of ",
-    a "http://mootools.net/" ["MooTools"], " which", —, "like Prototype", —,
-   "fixes deficiencies in the JavaScript language itself, in addition
-    to fixing the DOM.",
+   "I was not quick to embrace ", a {href: "http://jquery.com/"} ["jQuery"], ".
+    Soon after I discovered DOM scripting and the incompatible DOM APIs
+    provided by the various browsers, I understood the need for a JavaScript
+    library. Soon after that I ", del ["decided"], " ", ins ["stumbled"], "
+    upon ", a {href: "http://prototypejs.org/"} ["Prototype"], ". More recently
+    I became an advocate of ", a {href: "http://mootools.net/"} ["MooTools"], "
+    which", —, "like Prototype", —, "fixes deficiencies in the JavaScript
+    language itself, in addition to fixing the DOM.",
   ],
 
   p [
@@ -102,12 +101,11 @@ body = [
   h3 ["jQuery.localize"],
 
   p [
-   "At ", a "http://www.atlassian.com/" ["Atlassian"], " we're lucky enough
-    to have \"20 percent time\". A couple of weeks ago I spent the day
-    working on ", a "http://bitbucket.org/davidchambers/jquery.localize"
-    ["jQuery.localize"], ", my first jQuery plugin. I've spent much of the
-    last two weekends making the plugin more flexible and documenting its
-    relatively simple API.",
+   "At ", a {href: "http://www.atlassian.com/"} ["Atlassian"], " we're lucky enough
+    to have \"20 percent time\". A couple of weeks ago I spent the day working on ",
+    a {href: "http://bitbucket.org/davidchambers/jquery.localize"} ["jQuery.localize"], ",
+    my first jQuery plugin. I've spent much of the last two weekends making the plugin
+    more flexible and documenting its relatively simple API.",
   ],
 
   p [
@@ -136,17 +134,14 @@ body = [
     <time datetime="2010-11-28T00:30+11:00">28 November 2010</time>
   `,
 
-  {
-    url = "http://bitbucket.org/davidchambers/jquery.localize";
-    link path = a [url + path];
-    p [
-     "Date and time formats are fully customizable via ",
-      link "/src#directives" ["directives"], ", and there is
-      support for ", link "/src#i18n" ["internationalization"], ".
-      I won't go into the details here; there's extensive ",
-      link "/src#wiki" ["documentation"], " at the project's
-      home on Bitbucket.",
-    ]
-  },
+  p [
+   "Date and time formats are fully customizable via ",
+    a {href: "http://bitbucket.org/davidchambers/jquery.localize/src#directives"}
+      ["directives"], ", and there is support for ",
+    a {href: "http://bitbucket.org/davidchambers/jquery.localize/src#i18n"}
+      ["internationalization"], ". I won't go into the details here; there's extensive ",
+    a {href: "http://bitbucket.org/davidchambers/jquery.localize/src#wiki"}
+      ["documentation"], " at the project's home on Bitbucket.",
+  ],
 
 ];

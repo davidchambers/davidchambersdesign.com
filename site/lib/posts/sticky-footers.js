@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -128,12 +127,12 @@ body    { height: 100%; }
 `),
   p([
     'This CSS works in all modern browsers. If you need to support\n    antiquated browsers, you should have a look at the hacks suggested\n    at ',
-    a('http://www.cssstickyfooter.com/')(['CSS Sticky Footer']),
+    a({ href: 'http://www.cssstickyfooter.com/' })(['CSS Sticky Footer']),
     '.'
   ]),
   p([strong([
       'Check out the ',
-      a('/examples/sticky-footers/')(['sticky footer demo']),
+      a({ href: '/examples/sticky-footers/' })(['sticky footer demo']),
       '\n      to see all this theory in action.'
     ])])
 ];

@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -105,10 +104,10 @@ const body = [
   ]),
   p(['When I was first exposed to the idea of having JavaScript on\n    the server, the thing that appealed to me was the potential to\n    share code between server and client. This seemed preferable\n    to the situation that is currently prevalent, whereby objects\n    are created on the server (probably using an ORM such as that\n    provided by Rails or Django) and are then sent down the wire\n    as JSON (or XML for the masochists) at which point they are\n    parsed to create JS objects.']),
   p([
-    a('http://www.sproutcore.com/')(['SproutCore']),
-    ' rewrites the\n    client\u2013server relationship by moving ',
+    a({ href: 'http://www.sproutcore.com/' })(['SproutCore']),
+    '\n    rewrites the client\u2013server relationship by moving ',
     em(['all']),
-    ' programming\n    logic to the client. This new approach was motivated by a desire\n    to improve performance, but has two consequential benefits. No\n    longer do objects need to be represented on both sides of the\n    wire (in violation of the DRY principle). This brings another\n    benefit, which is the separation of concerns: the server is\n    freed to focus on serving, and the decoupling of service and\n    application code allow the service to be used (simultaneously)\n    by other applications.'
+    '\n    programming logic to the client. This new approach was motivated\n    by a desire to improve performance, but has two consequential\n    benefits. No longer do objects need to be represented on both\n    sides of the wire (in violation of the DRY principle). This\n    brings another benefit, which is the separation of concerns:\n    the server is freed to focus on serving, and the decoupling\n    of service and application code allow the service to be used\n    (simultaneously) by other applications.'
   ]),
   p(['SproutCore is server-agnostic, which allows it to connect to\n    existing services, and allows new services to be created using\n    the most appropriate server-side technologies.']),
   dl([
@@ -124,7 +123,7 @@ const body = [
   ]),
   p([
     'Exciting JavaScript-related developments are not limited to the\n    client-side, however. There are several options available if you\'re\n    interested in running JavaScript on the server, but the one that\'s\n    caught my attention is ',
-    a('http://nodejs.org/')(['Node.js']),
+    a({ href: 'http://nodejs.org/' })(['Node.js']),
     '.'
   ]),
   dl([

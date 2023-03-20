@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -99,9 +98,9 @@ const excerpt = [
 const body = [
   p([
     'The two cornerstones of the Web as an interactive medium are the ',
-    a('http://en.wikipedia.org/wiki/Form_(web)')(['form']),
+    a({ href: 'http://en.wikipedia.org/wiki/Form_(web)' })(['form']),
     ',\n    which facilitates the submission and retrieval of data, and the ',
-    a('http://en.wikipedia.org/wiki/Hyperlink')(['hyperlink']),
+    a({ href: 'http://en.wikipedia.org/wiki/Hyperlink' })(['hyperlink']),
     ',\n    which facilitates navigation.'
   ]),
   p([
@@ -116,9 +115,9 @@ const body = [
     }]),
   p([
     'Web applications, however, sometimes blur the line between\n    doing things and going places; visually distinguishing\n    links from buttons, therefore, is not always appropriate.\n    As Stephen Anderson explains in his article ',
-    a('http://www.alistapart.com/articles/indefenseofeyecandy')(['In Defense of Eye Candy']),
+    a({ href: 'http://www.alistapart.com/articles/indefenseofeyecandy' })(['In Defense of Eye Candy']),
     ' on ',
-    a('http://www.alistapart.com/')(['A List Apart']),
+    a({ href: 'http://www.alistapart.com/' })(['A List Apart']),
     ', an element\'s\n    appearance should suggest appropriate modes of interaction.'
   ]),
   captioned$002Dimages([{
@@ -188,7 +187,7 @@ background: -moz-linear-gradient(-90deg,
   h3(['Styling different states']),
   p([
     'It is important to consider the different states a button may have.\n    Apple\'s ',
-    a('http://en.wikipedia.org/wiki/Aqua_(user_interface)')(['Aqua']),
+    a({ href: 'http://en.wikipedia.org/wiki/Aqua_(user_interface)' })(['Aqua']),
     '\n    GUI provides three different effects, any or all of which may be\n    applied to a button: a pulsating blue background indicates that ',
     strong(['return']),
     ' activates the button; a button with an outer glow\n    can be activated via the space bar; and a static blue background is\n    used for a button\'s "active" state (which occurs while the button\n    is being clicked).'
@@ -270,7 +269,7 @@ background: -moz-linear-gradient(-90deg,
   h3(['Demo']),
   p([
     'Interact with the finished styled button on the ',
-    a('/examples/hyperlinks-as-buttons/')(['Hyperlinks as buttons']),
+    a({ href: '/examples/hyperlinks-as-buttons/' })(['Hyperlinks as buttons']),
     '\n    demo page.'
   ])
 ];

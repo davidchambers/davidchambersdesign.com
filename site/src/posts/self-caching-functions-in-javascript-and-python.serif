@@ -22,7 +22,7 @@ excerpt = [
   ],
   p [
    "I played around with ",
-    a "http://en.wikipedia.org/wiki/Fibonacci_number" ["Fibonacci"], ",
+    a {href: "http://en.wikipedia.org/wiki/Fibonacci_number"} ["Fibonacci"], ",
     which is a well suited to the task: it can be described in just
     a couple of lines of code yet benefits enormously from caching
     due to its recursive nature.",

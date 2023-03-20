@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -100,7 +99,7 @@ const body = [
   ]),
   p([
     'I decided that it was time to find a reliable solution\n    to the above problems. I came across an article on ',
-    a('http://css-tricks.com/can-we-prevent-css-caching/')(['timestamping CSS']),
+    a({ href: 'http://css-tricks.com/can-we-prevent-css-caching/' })(['timestamping CSS']),
     '\n    which suggests appending a unique string to a style sheet\'s\n    href when linking to it in a page\'s ',
     code(['<head>']),
     '.'
@@ -113,7 +112,7 @@ const body = [
 `),
   p([
     'The nice thing about using ',
-    a('http://php.net/manual/en/function.filectime.php')(['PHP\'s filectime function']),
+    a({ href: 'http://php.net/manual/en/function.filectime.php' })(['PHP\'s filectime function']),
     '\n    is that the timestamp is dependent on the time at which the CSS file\n    was last modified. This means that the cached style sheet is used when\n    it is ',
     strong(['up to date']),
     ', but the file is retrieved from the\n    server when it has been ',

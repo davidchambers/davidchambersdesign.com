@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -106,11 +105,11 @@ if (text.indexOf('✈') > -1)
 if (~text.indexOf('✈'))
 `),
   p([
-    a('https://developer.mozilla.org/en/JavaScript/Reference/Operators/Bitwise_Operators')(['Bitwise operators']),
+    a({ href: 'https://developer.mozilla.org/en/JavaScript/Reference/Operators/Bitwise_Operators' })(['Bitwise operators']),
     ' make my head spin, but the Perl programmer in\n    me thinks they\'re awesome. I don\'t profess to understand ',
     em(['why']),
     '\n    exactly the bitwise NOT operator does what it does, but I\'ve played\n    with it enough to know how it behaves. It\'s equivalent to the following\n    function, at least for the values that can be returned by ',
-    a('https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/indexOf')([code(['indexOf'])]),
+    a({ href: 'https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/indexOf' })([code(['indexOf'])]),
     '.'
   ]),
   code$002Dblock('javascript')(`function bitwiseNot(n) {

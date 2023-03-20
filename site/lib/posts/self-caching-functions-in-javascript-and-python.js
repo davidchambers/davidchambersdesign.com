@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -97,7 +96,7 @@ const excerpt = [
   ]),
   p([
     'I played around with ',
-    a('http://en.wikipedia.org/wiki/Fibonacci_number')(['Fibonacci']),
+    a({ href: 'http://en.wikipedia.org/wiki/Fibonacci_number' })(['Fibonacci']),
     ',\n    which is a well suited to the task: it can be described in just\n    a couple of lines of code yet benefits enormously from caching\n    due to its recursive nature.'
   ]),
   h3(['JavaScript Fibonacci without caching']),

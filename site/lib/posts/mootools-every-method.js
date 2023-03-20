@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -146,18 +145,18 @@ while (i--) {
       '\n    JavaScript in 2010?'
     ]),
     ' Everyone and their grandmothers are\n    using JavaScript frameworks these days, and there are plenty\n    of good ones out there. I recently made the switch to ',
-    a('http://mootools.net/')(['MooTools']),
+    a({ href: 'http://mootools.net/' })(['MooTools']),
     ' from ',
-    a('http://prototypejs.org/')(['Prototype']),
-    ', after deciding that\n    while ',
-    a('http://jquery.com/')(['jQuery']),
+    a({ href: 'http://prototypejs.org/' })(['Prototype']),
+    ',\n    after deciding that while ',
+    a({ href: 'http://jquery.com/' })(['jQuery']),
     ' is fantastic, the ',
-    a('http://jqueryvsmootools.com/#jsfun')(['MooTools philosophy']),
+    a({ href: 'http://jqueryvsmootools.com/#jsfun' })(['MooTools philosophy']),
     '\n    is more to my liking.'
   ]),
   p([
     'With MooTools, one might consider using the ',
-    a('http://mootools.net/docs/core/Native/Array#Array:each')(['Array object\'s each method']),
+    a({ href: 'http://mootools.net/docs/core/Native/Array#Array:each' })(['Array object\'s each method']),
     '\n    instead of a ',
     code(['for']),
     ' or ',
@@ -184,7 +183,7 @@ list.each(function (item) {
   ]),
   p([
     'As is so often the case in programming, if something seems fiddly and\n    difficult there\'s probably a better tool for the job. In this case the ',
-    a('http://mootools.net/docs/core/Native/Array#Array:every')(['Array object\'s every method']),
+    a({ href: 'http://mootools.net/docs/core/Native/Array#Array:every' })(['Array object\'s every method']),
     ' is the perfect tool for the job.'
   ]),
   code$002Dblock('javascript')(`var allPositive = list.every(function (item) {

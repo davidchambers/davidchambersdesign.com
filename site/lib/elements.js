@@ -128,8 +128,7 @@ const rect = self$002Dclosing$002Delement('rect');
 const linearGradient = block$002Delement('linearGradient');
 const object = block$002Delement('object');
 const svg = block$002Delement('svg');
-const a$0027 = inline$002Delement('a');
-const a = href => a$0027({ href: href });
+const a = inline$002Delement('a');
 const code$0027 = inline$002Delement('code');
 const code = inline$002Delement('code')({});
 const del$0027 = inline$002Delement('del');
@@ -156,7 +155,6 @@ const stop = self$002Dclosing$002Delement('stop');
 export {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,

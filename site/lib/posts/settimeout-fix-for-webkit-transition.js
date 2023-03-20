@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -214,7 +213,7 @@ setTimeout(function () {
   update(datetime('2010-06-02')('00:15:00')('Pacific/Auckland'))([
     p([
       'I\'ve just been watching one of the ',
-      a('http://developer.apple.com/videos/wwdc/2010/')(['WWDC 2010 session videos']),
+      a({ href: 'http://developer.apple.com/videos/wwdc/2010/' })(['WWDC 2010 session videos']),
       ', and it turns out the fix\n      I stumbled upon is actually the "correct" solution.'
     ]),
     p([

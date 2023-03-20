@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -89,9 +88,9 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'Yesterday I used three things for the first time: ',
-    a('http://sass-lang.com/')(['Sass']),
+    a({ href: 'http://sass-lang.com/' })(['Sass']),
     ', ',
-    a('http://compass-style.org/')(['Compass']),
+    a({ href: 'http://compass-style.org/' })(['Compass']),
     ', and Ruby.\n    To summarize:'
   ]),
   ul([
@@ -101,9 +100,9 @@ const excerpt = [
   ]),
   p([
     'One\'s own site is a great place to play with new\n    (or in this case, not so new) web technologies.\n    I decided to get stuck in and manually convert the ',
-    a('https://bitbucket.org/davidchambers/dcd-static/src/872e932b4941/styles/screen.css')(['1200 line style sheet']),
+    a({ href: 'https://bitbucket.org/davidchambers/dcd-static/src/872e932b4941/styles/screen.css' })(['1200 line style sheet']),
     ' from CSS to something a bit\n    more awesome. This post documents the most interesting\n    portion of that transformation, which involved this site\'s ',
-    a('/archives/')(['archives']),
+    a({ href: '/archives/' })(['archives']),
     ' styles.'
   ])
 ];
@@ -237,18 +236,18 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
   p(['Until yesterday, I\'d always done this by hand. It\'s a bit of a pain,\n    but I\'m pretty familiar with the routine:']),
   ol([
     li(['Export image file as PNG']),
-    li([a('http://www.smushit.com/ysmush.it/')(['Smush.it'])]),
+    li([a({ href: 'http://www.smushit.com/ysmush.it/' })(['Smush.it'])]),
     li(['Save smushed image']),
     li([
       'Drop smushed image into Hashify\n      (e.g. ',
-      a('http://bit.ly/pbovZI')(['calendar.png']),
+      a({ href: 'http://bit.ly/pbovZI' })(['calendar.png']),
       ')'
     ]),
     li(['Copy data URI from Hashify and paste it into style sheet'])
   ]),
   p([
     'Having to perform these steps each time the source\n    image is changed is a real nuisance. Compass offers\n    an extremely elegant solution: a Sass function named ',
-    a('http://compass-style.org/reference/compass/helpers/inline-data/#inline-image')([code(['inline-image'])]),
+    a({ href: 'http://compass-style.org/reference/compass/helpers/inline-data/#inline-image' })([code(['inline-image'])]),
     '. When compiled, ',
     code([`inline-image("calendar.png")`]),
     ' becomes a data\n    URI \u2013 the Base64-encoded representation of calendar.png.\n    If calendar.png is changed, ',
@@ -323,9 +322,9 @@ $y: 1
   h3(['The right level of abstraction']),
   p([
     'In ',
-    a('http://5by5.tv/hypercritical/14')(['A Dark Age of Objective-C']),
+    a({ href: 'http://5by5.tv/hypercritical/14' })(['A Dark Age of Objective-C']),
     '\n    and in ',
-    a('http://5by5.tv/hypercritical/15')(['The Bridges of Siracusa County']),
+    a({ href: 'http://5by5.tv/hypercritical/15' })(['The Bridges of Siracusa County']),
     ',\n    John Siracusa made the claim that software developers have an\n    insatiable desire for ever higher-level programming languages\n    and frameworks. In and of itself, though, abstraction is not\n    a virtue. Most abstractions fail for one reason or another:\n    they aren\'t sufficiently flexible, or they are so generic\n    that they provide very little utility, or they don\'t fit\n    well with people\'s mental models.'
   ]),
   p([

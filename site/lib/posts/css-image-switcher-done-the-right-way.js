@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -94,7 +93,7 @@ const excerpt = [
   p([
     strong(['Chris Coyier has done it again.']),
     '\n    Compelled me to stay up all night, that is\n    (it\'s 7am as I type this). In Chris\'s latest screencast, ',
-    a('http://css-tricks.com/video-screencasts/82-css-image-switcher/')(['CSS Image Switcher']),
+    a({ href: 'http://css-tricks.com/video-screencasts/82-css-image-switcher/' })(['CSS Image Switcher']),
     ', he demonstrates how to create an\n    "image switcher" using CSS. The problem, though, is that ',
     strong(['his process is wrong']),
     '.'
@@ -122,7 +121,7 @@ const body = [
     'Chris simply isn\'t in the right mindset. He\'s thinking\n    about ',
     em(['how']),
     ' he\'s going to present the content\n    on the page, but he\'s forgetting to consider the content\n    itself. This is a crucial error. If one views Chris\'s ',
-    a('http://css-tricks.com/examples/CSSImageSwitcher/')(['CSS image switcher demo']),
+    a({ href: 'http://css-tricks.com/examples/CSSImageSwitcher/' })(['CSS image switcher demo']),
     ' with styles disabled,\n    one sees something most unhelpful:'
   ]),
   captioned$002Dimages([{
@@ -145,7 +144,7 @@ but four unhelpful links when styles are disabled
     'I assume that Chris opted to use anchor elements to allow him to\n    employ the ',
     strong([':hover']),
     ' pseudo-class and have it work\n    in IE6. It\'s well and truly time, however, to stop bending over\n    backwards to accommodate IE6\'s shortcomings, and Google agrees: ',
-    a('http://www.sitepoint.com/blogs/2009/07/20/youtube-drop-ie6/')(['YouTube to drop support for IE6']),
+    a({ href: 'http://www.sitepoint.com/blogs/2009/07/20/youtube-drop-ie6/' })(['YouTube to drop support for IE6']),
     '.'
   ]),
   h3(['Why meaningful markup matters']),
@@ -153,7 +152,7 @@ but four unhelpful links when styles are disabled
     'Meaningful HTML is not just important to markup geeks who like\n    to use the word "semantic". ',
     strong(['It\'s vitally important\n    to search engines.']),
     ' While in most cases discussion of the\n    relationship between structured content and search engines\n    centres on whether Google favours sites with clean, descriptive\n    markup, in the case of Chris\'s CSS image switcher it\'s a matter of\n    whether the content is indexable at all! Consider the consequences\n    of a site such as ',
-    a('http://www.flickr.com/')(['Flickr']),
+    a({ href: 'http://www.flickr.com/' })(['Flickr']),
     '\n    adopting this approach: any new photo uploaded to the site would\n    be invisible to web crawlers.'
   ]),
   p([
@@ -164,7 +163,7 @@ but four unhelpful links when styles are disabled
   h3(['Meaningful markup for image\u2013caption pairs']),
   p([
     'As I state in ',
-    a('/captions-over-images/')(['Captions over images']),
+    a({ href: '/captions-over-images/' })(['Captions over images']),
     ',\n    my response to an earlier CSS-Tricks screencast, the ',
     strong(['definition list']),
     ' is the most appropriate tool\n    in our toolbox.'
@@ -206,7 +205,7 @@ but four unhelpful links when styles are disabled
   h3(['Demo']),
   p([
     'Check out the ',
-    a('/examples/css-image-switcher/')(['CSS image switcher demo']),
+    a({ href: '/examples/css-image-switcher/' })(['CSS image switcher demo']),
     '\n    to see what\'s possible with straightforward, structured markup\n    (and some rather less straightforward CSS). The demo works in\n    the latest versions of Firefox, Internet Explorer, Opera, and\n    Camino. Unfortunately the core feature does ',
     em(['not']),
     ' work\n    in Safari or Google Chrome, as these WebKit-based browsers fail\n    to handle the ',

@@ -18,7 +18,7 @@ excerpt = [
     content for the Web, a reasonably common task is to provide links
     to files that can be downloaded. It is considered good practice
     to include an indication of a file's size; for example: ",
-    a "/favicon.ico" ["favicon.ico"], " (3 KB).",
+    a {href: "/favicon.ico"} ["favicon.ico"], " (3 KB).",
   ],
   p [
    "As I was about to hard-code a file's size into a blog post
@@ -84,7 +84,7 @@ body = [
   `,
 
   p [
-   "This gives: ", a "/favicon.ico" ["favicon.ico"], " ",
+   "This gives: ", a {href: "/favicon.ico"} ["favicon.ico"], " ",
     span {class: "filesize"} ["(≈1.1 kB)"], ". By default,
     the function wraps the file's size in a ", code ["span"], "
     element with ", code [`class="filesize"`], ", to provide

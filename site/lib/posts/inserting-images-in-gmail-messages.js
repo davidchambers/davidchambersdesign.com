@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -89,7 +88,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'Hooray! It\'s now possible to ',
-    a('http://gmailblog.blogspot.com/2009/04/new-in-labs-inserting-images.html')(['insert images into Gmail messages']),
+    a({ href: 'http://gmailblog.blogspot.com/2009/04/new-in-labs-inserting-images.html' })(['insert images into Gmail messages']),
     '. About time, I say.'
   ]),
   captioned$002Dimages([{

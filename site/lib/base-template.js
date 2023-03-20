@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -118,37 +117,37 @@ const base$002Dtemplate = document$002Dtitle => main => html([
     script({})([text('try{Typekit.load();}catch(e){}')])
   ]),
   body([
-    div({ id: 'skip' })([a$0027({ href: '#main' })(['Skip to main content'])]),
+    div({ id: 'skip' })([a({ href: '#main' })(['Skip to main content'])]),
     div({ id: 'wrap' })([
       div({ id: 'header' })([header([
-          a$0027({
+          a({
             id: 'title',
             href: '/'
           })(['David Chambers Design']),
           hr,
           p(['It\'s where I share interesting info with other web geeks']),
           nav$0027({ id: 'nav' })([ul([
-              li([a$0027({ href: '/about/' })([span({})([
+              li([a({ href: '/about/' })([span({})([
                     strong(['About.']),
                     '\n                      Who I am and what I do.'
                   ])])]),
-              li([a$0027({ href: '/contact/' })([span({})([
+              li([a({ href: '/contact/' })([span({})([
                     strong(['Contact.']),
                     '\n                      Just in case you want to get in touch.'
                   ])])]),
-              li([a$0027({ href: '/archives/' })([span({})([
+              li([a({ href: '/archives/' })([span({})([
                     strong(['Archives.']),
                     '\n                      Old posts, recent posts, they\'re all here.'
                   ])])]),
-              li([a$0027({ href: '/tags/' })([span({})([
+              li([a({ href: '/tags/' })([span({})([
                     strong(['Tags.']),
                     '\n                      Helpful if you\'re after posts on a particular topic.'
                   ])])]),
-              li([a$0027({ href: 'https://bitbucket.org/davidchambers' })([span({})([
+              li([a({ href: 'https://bitbucket.org/davidchambers' })([span({})([
                     strong(['Bitbucket.']),
                     '\n                      Home to most of my open-source projects.'
                   ])])]),
-              li([a$0027({ href: '/twitter/' })([span({})([
+              li([a({ href: '/twitter/' })([span({})([
                     strong(['Twitter.']),
                     '\n                      It\'s where I chirrup\u2026 or chirp\u2026 or something.'
                   ])])])
@@ -158,14 +157,14 @@ const base$002Dtemplate = document$002Dtitle => main => html([
     ]),
     footer([p([
         'Powered by ',
-        a$0027({
+        a({
           href: 'http://mango.io/wtf?',
           ['data-version']: '0.9dev'
         })(['Mango']),
         '. Hosted on ',
-        a$0027({ href: 'http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d' })(['Linode']),
+        a({ href: 'http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d' })(['Linode']),
         '. Original content ',
-        a$0027({ href: '/copying/' })(['WTFPL-licensed']),
+        a({ href: '/copying/' })(['WTFPL-licensed']),
         '.'
       ])])
   ])

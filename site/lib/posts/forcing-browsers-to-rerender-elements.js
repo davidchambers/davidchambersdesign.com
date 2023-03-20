@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -96,9 +95,9 @@ const body = [
     '\n    needs a gentle nudge.'
   ]),
   p([
-    a('http://ajaxian.com/archives/forcing-a-ui-redraw-from-javascript')(['Forcing a UI redraw from JavaScript']),
+    a({ href: 'http://ajaxian.com/archives/forcing-a-ui-redraw-from-javascript' })(['Forcing a UI redraw from JavaScript']),
     ' highlights the solution\n    employed by Thomas Fuchs, creator of the popular JavaScript library ',
-    a('http://script.aculo.us/')(['script.aculo.us']),
+    a({ href: 'http://script.aculo.us/' })(['script.aculo.us']),
     ':'
   ]),
   code$002Dblock('javascript')(`Element.addMethods({

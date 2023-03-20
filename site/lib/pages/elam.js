@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -91,9 +90,9 @@ export default {
   body: [
     p(['I attended Elam School of Fine Arts in Auckland between 2002 and 2005.\n      After the general first-year course I majored in graphic design. Below\n      are examples of the work I produced as part of that programme.']),
     ul([
-      li([a('#2003')(['2003'])]),
-      li([a('#2004')(['2004'])]),
-      li([a('#2005')(['2005'])])
+      li([a({ href: '#2003' })(['2003'])]),
+      li([a({ href: '#2004' })(['2004'])]),
+      li([a({ href: '#2005' })(['2005'])])
     ]),
     h3$0027({ id: '2003' })(['2003']),
     h4(['Design philosophies poster']),

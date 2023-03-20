@@ -15,7 +15,7 @@ body = [
 
   p [
    "Recently I listened to ",
-    a "http://blog.extracheese.org/2010/02/python-vs-ruby-a-battle-to-the-death.html"
+    a {href: "http://blog.extracheese.org/2010/02/python-vs-ruby-a-battle-to-the-death.html"}
       ["Gary Bernhardt comparing Python and Ruby"], ". In the talk Gary
     states that he finds Ruby code ugly and Python code beautiful.
     He then goes on to say that the things which reduce Ruby's
@@ -76,14 +76,14 @@ body = [
   `,
 
   p [
-    a "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Filter"
+    a {href: "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Filter"}
       [code ["filter"]], ", though, just removes from an array the
     items which fail the provided \"test\". So the code above is
     on the right track, but fails to produce a list of names.",
   ],
 
   p [
-    a "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Reduce"
+    a {href: "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Reduce"}
       [code ["reduce"]], " is the correct method for the job. ",
     code ["reduce"], " \"reduces\" an array to a single value, which
     could be a string, an object, another array", —, "whatever!",

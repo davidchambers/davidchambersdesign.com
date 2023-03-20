@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -87,7 +86,7 @@ import {
 import datetime from '../datetime.js';
 const body = [
   p(['Recording of Yehuda Katz\'s presentation from Bay Area jQuery Conf 2011.']),
-  p([a('http://vimeo.com/22687694')(['Getting truth out of the DOM'])]),
+  p([a({ href: 'http://vimeo.com/22687694' })(['Getting truth out of the DOM'])]),
   p([
     'While watching this it ',
     em(['finally']),

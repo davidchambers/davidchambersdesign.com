@@ -403,7 +403,7 @@ MapOperator
 
 MapExpression
   = exprs:EqualityExpression|1.., _ MapOperator _|
-    { return exprs.reduce(Serif.MapExpression); }
+    { return exprs.reduceRight((right, left) => Serif.MapExpression(left, right)); }
 
 BitwiseANDOperator
   = '&'

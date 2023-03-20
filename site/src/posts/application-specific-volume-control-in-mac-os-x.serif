@@ -62,7 +62,7 @@ body = [
 
   update {datetime "2010-04-15" "14:36:00" "Pacific/Auckland"} [
     p [
-      a "http://www.joesoft.com/products/hear.php" ["Hear"], "
+      a {href: "http://www.joesoft.com/products/hear.php"} ["Hear"], "
       offers this functionality, but isn't cheap. I hope Hear's
       developers decide to release a preference pane that provides
       the functionality of Hear's mixer pane and nothing more

@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -107,7 +106,7 @@ const body = [
       caption: ['32x32 Gmail icon at 1000%']
     }]),
   p([
-    a('http://blog.cocoia.com/')(['Sebastiaan de With']),
+    a({ href: 'http://blog.cocoia.com/' })(['Sebastiaan de With']),
     '\n    would not stand for this!'
   ])
 ];

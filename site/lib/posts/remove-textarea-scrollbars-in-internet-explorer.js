@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -89,7 +88,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'I was delighted to discover this "trick"\n    over on CSS-Tricks in a post titled ',
-    a('http://css-tricks.com/textarea-tricks/')(['Textarea Tricks']),
+    a({ href: 'http://css-tricks.com/textarea-tricks/' })(['Textarea Tricks']),
     '.\n    (See, Chris, I ',
     em(['do']),
     ' like you!)'

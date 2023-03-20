@@ -69,7 +69,7 @@ body = [
   `,
 
   p [
-    a "https://github.com/r00k/dotfiles/blob/master/bash/aliases"
+    a {href: "https://github.com/r00k/dotfiles/blob/master/bash/aliases"}
       ["r00k's bash aliases"], " provide some ideas as to other ways
     in which aliases can be put to use. :D",
   ],

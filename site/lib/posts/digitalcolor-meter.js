@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -92,7 +91,7 @@ const body = [
     })]),
   p([
     'I thought this recent ',
-    a('http://minimalmac.com/post/836796290/')(['post on the Minimal Mac blog']),
+    a({ href: 'http://minimalmac.com/post/836796290/' })(['post on the Minimal Mac blog']),
     ' well worth sharing:'
   ]),
   blockquote([
@@ -110,7 +109,7 @@ const body = [
     ])
   ]),
   p([
-    a('http://tumblr.frijole.info/post/836825948/')(['Reblogged by \xA1ɜɿoɾɪɹℲ']),
+    a({ href: 'http://tumblr.frijole.info/post/836825948/' })(['Reblogged by \xA1ɜɿoɾɪɹℲ']),
     ' with this extremely nifty addition:'
   ]),
   blockquote([

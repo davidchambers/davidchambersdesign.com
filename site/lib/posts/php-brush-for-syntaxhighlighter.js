@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -93,7 +92,7 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'Alex Gorbatchev\'s ',
-    a('http://alexgorbatchev.com/wiki/SyntaxHighlighter')(['SyntaxHighlighter']),
+    a({ href: 'http://alexgorbatchev.com/wiki/SyntaxHighlighter' })(['SyntaxHighlighter']),
     '\n    is a well-written bundle which enables syntax highlighting of\n    code via JavaScript. More than twenty languages are supported\n    "out of the box", and brushes (JavaScript files containing\n    language-specific regular expressions) can be created to\n    support additional languages.'
   ]),
   p(['Unfortunately, however, several of the brushes that come bundled\n    with SyntaxHighlighter are far from perfect. Have a look at the\n    bundled PHP brush in action below.']),
@@ -116,7 +115,7 @@ const body = [
   ]),
   p([
     'I\'ve created an ',
-    a('/downloads/shBrushPhp.js')(['improved PHP brush']),
+    a({ href: '/downloads/shBrushPhp.js' })(['improved PHP brush']),
     '\n    which remedies these deficiencies. It uses the following class names: ',
     strong(['phptag']),
     ' for opening and closing PHP tags, including short\n    tags; ',
@@ -130,7 +129,7 @@ const body = [
     ' for numerical values; ',
     strong(['function']),
     ' for ',
-    a('http://www.php.net/quickref.php')(['documented PHP functions']),
+    a({ href: 'http://www.php.net/quickref.php' })(['documented PHP functions']),
     '; ',
     strong(['custfunc']),
     ' for custom (user-defined) functions; and ',

@@ -14,7 +14,7 @@ export default {
 excerpt = [
   p [
    "This is my response to Chris Coyier's screencast titled ",
-    a "http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/"
+    a {href: "http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/"}
       ["jQuery Part 3 – Image Title Plugin"], " which I watched
     a couple of days ago. Something didn't sit right with me
     at the time, and I've now worked out what it was: ",
@@ -54,7 +54,7 @@ body = [
 
   p [
    "My aim was to achieve a result similar to Chris's ",
-    a "http://css-tricks.com/examples/TypeOverImagePlugin/"
+    a {href: "http://css-tricks.com/examples/TypeOverImagePlugin/"}
       ["image title plugin demo"], "
     simply by styling a definition list containing images and their
     captions. In the end, I was forced to abandon the ideal of using a
@@ -87,9 +87,9 @@ body = [
 
   p [
    "Check out the ",
-    a "/examples/captions-over-images/" ["captions over images demo"], "
-    to see the approach in action. The CSS responsible for the
-    appearance of the captions is as follows:",
+    a {href: "/examples/captions-over-images/"}
+      ["captions over images demo"], " to see the approach in action.
+    The CSS responsible for the appearance of the captions is as follows:",
   ],
 
   code-block "css" `

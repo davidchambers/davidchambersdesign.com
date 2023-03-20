@@ -4,7 +4,6 @@ export {
   text,
 
   a,
-  a',
   article,
   article',
   aside,
@@ -291,8 +290,7 @@ svg                      = block-element "svg";
 ;; The opening and closing tags of each of the following elements
 ;; are rendered inline unless the element contains an element
 ;; whose opening and closing tags are rendered on their own lines.
-a'                      = inline-element "a";
-a href                  = a' {href: href};
+a                       = inline-element "a";
 code'                   = inline-element "code";
 code                    = inline-element "code" {};
 del'                    = inline-element "del";

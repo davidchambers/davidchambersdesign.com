@@ -92,7 +92,8 @@ body = [
   p [
    "This requires very little CSS. To avoid incurring the overhead
     of an extra HTTP request, one could Base64-encode the image in a ",
-    a "http://en.wikipedia.org/wiki/Data_URI_scheme#CSS" ["data URI"], ".",
+    a {href: "http://en.wikipedia.org/wiki/Data_URI_scheme#CSS"}
+      ["data URI"], ".",
   ],
 
   h3' {id: "pseudo-element-technique"} ["Pseudo-element technique"],

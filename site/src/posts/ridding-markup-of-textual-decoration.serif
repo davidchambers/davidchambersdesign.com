@@ -15,12 +15,12 @@ excerpt = [
   p [
    "On the Web it's not uncommon to see characters with
     no inherent meaning used for stylistic reasons. A good
-    example is the ", a "#" ["Read more »"], " link. Perhaps
-    the directionality of the \"»\" is suggestive of travelling
-    to another page, or perhaps the letterform is included solely
-    for its aesthetic appeal. Whatever the case, one thing is
-    certain: links do not require right-pointing double angle
-    quotation marks in order to function.",
+    example is the ", a {href: "#"} ["Read more »"], " link.
+    Perhaps the directionality of the \"»\" is suggestive of
+    travelling to another page, or perhaps the letterform is
+    included solely for its aesthetic appeal. Whatever the case,
+    one thing is certain: links do not require right-pointing
+    double angle quotation marks in order to function.",
   ],
   p [
     strong ["The inclusion of such a character is therefore
@@ -35,17 +35,16 @@ body = [
 
   h2 ["Adding decorative textual content via CSS"],
 
-  {
-    url = "http://reference.sitepoint.com";
-    sitepoint path = a {url + path};
-    p [
-     "The ", sitepoint "/css/content" [code ["content"]], " property
-      is extremely powerful. It's used in conjunction with
-      the ", sitepoint "/css/pseudoelement-before" [code [":before"]], "
-      and ", sitepoint "/css/pseudoelement-after" [code [":after"]], "
-      pseudo-elements.",
-    ]
-  },
+  p [
+   "The ",
+    a {href: "http://reference.sitepoint.com/css/content"}
+      [code ["content"]], " property is extremely powerful.
+    It's used in conjunction with the ",
+    a {href: "http://reference.sitepoint.com/css/pseudoelement-before"}
+      [code [":before"]], " and ",
+    a {href: "http://reference.sitepoint.com/css/pseudoelement-after"}
+      [code [":after"]], " pseudo-elements.",
+  ],
 
   code-block "plain-text" `
     <a class="more" href="/meaningful-markup/">Read more</a>
@@ -61,7 +60,7 @@ body = [
     effect. Often sites have footer links separated by \"pipes\".
     These pipes commonly appear in the site's markup. ",
     strong ["This is wrong!"], " Last week I was horrified to
-    discover that ", a "http://bitbucket.org/" ["Bitbucket"], "
+    discover that ", a {href: "http://bitbucket.org/"} ["Bitbucket"], "
     is guilty of this. I've since rectified the situation
     (although the change is yet to go live).",
   ],

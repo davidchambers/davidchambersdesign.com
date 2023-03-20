@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -115,7 +114,7 @@ const body = [
   ]),
   p([
     'If you decide to implement this yourself you may find the documentation on ',
-    a('http://www.google.com/cse/docs/resultsxml.html#wsRequestParameters')(['Google custom search request parameters']),
+    a({ href: 'http://www.google.com/cse/docs/resultsxml.html#wsRequestParameters' })(['Google custom search request parameters']),
     ' useful.'
   ])
 ];

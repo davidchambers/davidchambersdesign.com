@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -142,7 +141,7 @@ li {
 `),
   p([
     'This requires very little CSS. To avoid incurring the overhead\n    of an extra HTTP request, one could Base64-encode the image in a ',
-    a('http://en.wikipedia.org/wiki/Data_URI_scheme#CSS')(['data URI']),
+    a({ href: 'http://en.wikipedia.org/wiki/Data_URI_scheme#CSS' })(['data URI']),
     '.'
   ]),
   h3$0027({ id: 'pseudo-element-technique' })(['Pseudo-element technique']),

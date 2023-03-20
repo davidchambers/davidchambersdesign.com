@@ -23,10 +23,12 @@ body = [
      "Hi Douglas,",
     ],
     p [
-     "[...] Moments ago I used ", a "http://www.jslint.com/" ["JSLint"], "
-      for the first time; I plan to use it frequently from this point
-      forward. I have one question, though, concerning the acceptability
-      of extra commas. Consider the following code snippet:",
+     "[...] Moments ago I used ",
+      a {href: "http://www.jslint.com/"} ["JSLint"], "
+      for the first time; I plan to use it frequently
+      from this point forward. I have one question,
+      though, concerning the acceptability of extra
+      commas. Consider the following code snippet:",
     ],
     code-block "javascript" `
       var ninja = {

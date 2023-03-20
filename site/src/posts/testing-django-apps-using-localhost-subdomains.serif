@@ -22,7 +22,7 @@ body = [
     li [
       p [
        "I saved ",
-        a "http://thingsilearned.com/2009/01/05/using-subdomains-in-django/"
+        a {href: "http://thingsilearned.com/2009/01/05/using-subdomains-in-django/"}
           ["Dave Fowler's subdomain middleware"], "
         as ", code ["middleware.py"], " in my project directory:",
       ],

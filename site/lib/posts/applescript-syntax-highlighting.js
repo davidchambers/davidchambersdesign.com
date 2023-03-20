@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -94,15 +93,15 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'I\'ve been using Alex Gorbatchev\'s ',
-    a('http://alexgorbatchev.com/wiki/SyntaxHighlighter')(['SyntaxHighlighter']),
+    a({ href: 'http://alexgorbatchev.com/wiki/SyntaxHighlighter' })(['SyntaxHighlighter']),
     '\n    to syntactically display code of various languages for several\n    months now. When I decided to post an AppleScript snippet, however,\n    I realised that I was out of luck. SyntaxHighlighter does not\n    include an AppleScript "brush", and a quick flick through the ',
-    a('http://alexgorbatchev.com/forums/')(['SyntaxHighlighter forums']),
-    '\n    did not bring me any joy.'
+    a({ href: 'http://alexgorbatchev.com/forums/' })(['SyntaxHighlighter forums']),
+    ' did not bring me any joy.'
   ]),
   p([
     strong(['How hard could it be to write a brush for AppleScript?']),
     ',\n    I wondered. The handy guide to ',
-    a('http://alexgorbatchev.com/wiki/SyntaxHighlighter:Brushes:Custom')(['developing a custom brush']),
+    a({ href: 'http://alexgorbatchev.com/wiki/SyntaxHighlighter:Brushes:Custom' })(['developing a custom brush']),
     ' got me started, and I was soon\n    busy trying to encapsulate AppleScript\'s syntax',
     $2014,
     'along with its\n    keywords and countless words and phrases with special meanings',
@@ -111,7 +110,7 @@ const excerpt = [
   ])
 ];
 const body = [
-  p([a('#setup')(['Skip to setup instructions'])]),
+  p([a({ href: '#setup' })(['Skip to setup instructions'])]),
   ...excerpt,
   p([
     'Having created the brush (that\'s SyntaxHighlighter lingo for\n    the JavaScript file containing the language-specific regular\n    expressions), I proceeded to create a style sheet that would\n    display AppleScript snippets on the Web as they appear on OS X.\n    You can judge my success by comparing the three snippets below:\n    the first is a screenshot of Script Editor\'s rendering; the\n    second is a screenshot of the same snippet as it appears in my\n    browser; and the final snippet is text rendered by ',
@@ -173,19 +172,19 @@ end if
   ol([
     li([p([
         'Download ',
-        a('http://alexgorbatchev.com/wiki/SyntaxHighlighter')(['SyntaxHighlighter']),
+        a({ href: 'http://alexgorbatchev.com/wiki/SyntaxHighlighter' })(['SyntaxHighlighter']),
         ', and follow the setup instructions.'
       ])]),
     li([p([
         'Download ',
-        a('https://bitbucket.org/davidchambers/applescript-theme/raw/default/shBrushAppleScript.js')(['AppleScript brush']),
+        a({ href: 'https://bitbucket.org/davidchambers/applescript-theme/raw/default/shBrushAppleScript.js' })(['AppleScript brush']),
         ',\n        and upload it to your SyntaxHighlighter ',
         strong(['scripts']),
         '\n        directory.'
       ])]),
     li([p([
         'Download ',
-        a('https://bitbucket.org/davidchambers/applescript-theme/raw/default/shThemeAppleScript.css')(['AppleScript theme']),
+        a({ href: 'https://bitbucket.org/davidchambers/applescript-theme/raw/default/shThemeAppleScript.css' })(['AppleScript theme']),
         ',\n        and upload it to your SyntaxHighlighter ',
         strong(['styles']),
         '\n        directory.'

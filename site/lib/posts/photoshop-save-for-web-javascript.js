@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -116,7 +115,7 @@ const body = [
     'Photoshop on Mac limits the length of a ',
     code(['File']),
     '\n    object\'s file name to 31 characters. Credit for the rename\n    workaround should go to Mark Walsh who posted the solution\n    on the Adobe forums in a thread titled ',
-    a('http://forums.adobe.com/thread/290409')(['Save for web filename problems']),
+    a({ href: 'http://forums.adobe.com/thread/290409' })(['Save for web filename problems']),
     '.'
   ])
 ];

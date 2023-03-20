@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -89,7 +88,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'Early this year I wrote a post titled ',
-    a('/autopopulating-input-fields-with-prototype/')(['Auto-populating input fields with Prototype']),
+    a({ href: '/autopopulating-input-fields-with-prototype/' })(['Auto-populating input fields with Prototype']),
     '.\n    Looking at the code now, I realize that it\'s not very pretty.\n    I\'m rewriting this site\'s JavaScript in MooTools, and the new\n    code is quite a bit more elegant.'
   ]),
   code$002Dblock('javascript')(`// provide input hints

@@ -14,9 +14,9 @@ export default {
 body = [
 
   p [
-   "I love ", a "http://www.panic.com/coda/" ["Coda"], ".
+   "I love ", a {href: "http://www.panic.com/coda/"} ["Coda"], ".
     It's just so... sexy, somehow. I've just discovered ",
-    a "http://www.djangoproject.com/" ["Django"], ", with which
+    a {href: "http://www.djangoproject.com/"} ["Django"], ", with which
     I'm fast falling in love as well. Naturally, when I came to write
     my first Django template I opened Coda.app and started coding.",
   ],
@@ -24,7 +24,7 @@ body = [
   p [
    "It soon became apparent, however, that ", strong ["Coda does not apply
     syntax highlighting to Django"], ". The solution? Juan Pablo Claude's ",
-    a "http://weblog.bignerdranch.com/?p=49"
+    a {href: "http://weblog.bignerdranch.com/?p=49"}
       ["Django and Django-template bundles for Coda"], ".",
   ],
 
@@ -40,7 +40,7 @@ body = [
     p [
      "I've since discovered an alternative mode which
       is actively maintained over on GitHub. I now use ",
-      a "https://github.com/jbergantine/Django-Template"
+      a {href: "https://github.com/jbergantine/Django-Template"}
         ["jbergantine's Django-Template"], ".",
     ],
   ],

@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -93,7 +92,7 @@ const body = [
     })]),
   p([
     'The days of the compact disc are surely numbered. The ',
-    a('http://www.apple.com/macbookair/')(['MacBook Air']),
+    a({ href: 'http://www.apple.com/macbookair/' })(['MacBook Air']),
     '\n    is the first computer from Apple to jettison the optical\n    drive; others will undoubtedly follow, eventually.'
   ]),
   p([

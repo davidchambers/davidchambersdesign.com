@@ -46,7 +46,7 @@ body = [
     object's file name to 31 characters. Credit for the rename
     workaround should go to Mark Walsh who posted the solution
     on the Adobe forums in a thread titled ",
-    a "http://forums.adobe.com/thread/290409"
+    a {href: "http://forums.adobe.com/thread/290409"}
       ["Save for web filename problems"], ".",
   ],
 

@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -92,9 +91,9 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'Recently I\'ve been on a mission to minimize the number\n    of HTTP requests made while loading pages on this site.\n    Until yesterday, the ',
-    a('/archives/')(['archives']),
+    a({ href: '/archives/' })(['archives']),
     '\n    page was making an HTTP request for each of the ',
-    a('/tiny-calendar-icon-set/')(['tiny calendar icons']),
+    a({ href: '/tiny-calendar-icon-set/' })(['tiny calendar icons']),
     '\n    used on the page. Therefore, up to 31 HTTP requests were\n    required just to retrieve the calendar icons. Not good.'
   ]),
   p(['The same result can be achieved with a single HTTP request\n    through the use of a sprite:']),

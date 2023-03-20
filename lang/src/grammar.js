@@ -476,7 +476,7 @@ function peg$parse(input, options) {
   var peg$f82 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); };
   var peg$f83 = function(left, operator, right) { return {operator, right}; };
   var peg$f84 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); };
-  var peg$f85 = function(exprs) { return exprs.reduce(Serif.MapExpression); };
+  var peg$f85 = function(exprs) { return exprs.reduceRight((right, left) => Serif.MapExpression(left, right)); };
   var peg$f86 = function(left, operator, right) { return {operator, right}; };
   var peg$f87 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); };
   var peg$f88 = function(left, operator, right) { return {operator, right}; };

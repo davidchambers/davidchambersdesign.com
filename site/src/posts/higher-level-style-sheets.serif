@@ -14,8 +14,8 @@ export default {
 excerpt = [
   p [
    "Yesterday I used three things for the first time: ",
-    a "http://sass-lang.com/" ["Sass"], ", ",
-    a "http://compass-style.org/" ["Compass"], ", and Ruby.
+    a {href: "http://sass-lang.com/"} ["Sass"], ", ",
+    a {href: "http://compass-style.org/"} ["Compass"], ", and Ruby.
     To summarize:",
   ],
   ul [
@@ -27,11 +27,11 @@ excerpt = [
    "One's own site is a great place to play with new
     (or in this case, not so new) web technologies.
     I decided to get stuck in and manually convert the ",
-    a "https://bitbucket.org/davidchambers/dcd-static/src/872e932b4941/styles/screen.css"
+    a {href: "https://bitbucket.org/davidchambers/dcd-static/src/872e932b4941/styles/screen.css"}
       ["1200 line style sheet"], " from CSS to something a bit
     more awesome. This post documents the most interesting
     portion of that transformation, which involved this site's ",
-    a "/archives/" ["archives"], " styles.",
+    a {href: "/archives/"} ["archives"], " styles.",
   ],
 ];
 
@@ -192,14 +192,14 @@ body = [
      "Export image file as PNG",
     ],
     li [
-      a "http://www.smushit.com/ysmush.it/" ["Smush.it"],
+      a {href: "http://www.smushit.com/ysmush.it/"} ["Smush.it"],
     ],
     li [
      "Save smushed image",
     ],
     li [
      "Drop smushed image into Hashify
-      (e.g. ", a "http://bit.ly/pbovZI" ["calendar.png"], ")",
+      (e.g. ", a {href: "http://bit.ly/pbovZI"} ["calendar.png"], ")",
     ],
     li [
      "Copy data URI from Hashify and paste it into style sheet",
@@ -210,7 +210,7 @@ body = [
    "Having to perform these steps each time the source
     image is changed is a real nuisance. Compass offers
     an extremely elegant solution: a Sass function named ",
-    a "http://compass-style.org/reference/compass/helpers/inline-data/#inline-image"
+    a {href: "http://compass-style.org/reference/compass/helpers/inline-data/#inline-image"}
       [code ["inline-image"]], ". When compiled, ",
     code [`inline-image("calendar.png")`], " becomes a data
     URI – the Base64-encoded representation of calendar.png.
@@ -306,9 +306,11 @@ body = [
 
   p [
    "In ",
-    a "http://5by5.tv/hypercritical/14" ["A Dark Age of Objective-C"], "
+    a {href: "http://5by5.tv/hypercritical/14"}
+      ["A Dark Age of Objective-C"], "
     and in ",
-    a "http://5by5.tv/hypercritical/15" ["The Bridges of Siracusa County"], ",
+    a {href: "http://5by5.tv/hypercritical/15"}
+      ["The Bridges of Siracusa County"], ",
     John Siracusa made the claim that software developers have an
     insatiable desire for ever higher-level programming languages
     and frameworks. In and of itself, though, abstraction is not

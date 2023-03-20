@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -95,7 +94,7 @@ const excerpt = [p([
     ' or ',
     strong(['~/Library/Fonts']),
     '\n    is one I\'ve double-checked many times), you\'ll understand how\n    pleased I was to discover that there is a command which can be\n    entered in Terminal to ',
-    a('http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/')(['show full directory paths in Finder window title bars']),
+    a({ href: 'http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/' })(['show full directory paths in Finder window title bars']),
     '.'
   ])];
 const body = [

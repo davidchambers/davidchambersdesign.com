@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -88,7 +87,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'From Wikipedia on Mies van der Rohe\'s ',
-    a('http://en.wikipedia.org/wiki/Seagram_Building')(['Seagram Building']),
+    a({ href: 'http://en.wikipedia.org/wiki/Seagram_Building' })(['Seagram Building']),
     ':'
   ]),
   blockquote([p(['[An] interesting feature of the Seagram Building is the window blinds.\n      As was common with International Style architects, Mies wanted the\n      building to have a uniform appearance. One aspect of a façade which\n      Mies disliked, was the disordered irregularity when window blinds are\n      drawn. Inevitably, people using different windows will draw blinds to\n      different heights, making the building appear disorganized. To reduce\n      this disproportionate appearance, Mies specified window blinds which\n      only operated in three positions \u2013 fully open, halfway open/closed,\n      or fully closed.'])]),

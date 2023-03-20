@@ -6,7 +6,7 @@ export default render-archives;
 
 render-post post = {
   li [
-    a' {href: `/${post.slug}`} post.title,
+    a {href: `/${post.slug}`} post.title,
     " ",
     time {datetime: post.datetime.toISO()} [
       post.datetime.toFormat("d MMMM y | h:mm") +

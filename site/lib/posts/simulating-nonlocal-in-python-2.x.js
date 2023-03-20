@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -91,12 +90,12 @@ import {
 import datetime from '../datetime.js';
 const excerpt = [
   p([
-    a('http://en.wikipedia.org/wiki/Closure_(computer_science)')(['Closure']),
-    '\n    is truly wonderful. JavaScript',
+    a({ href: 'http://en.wikipedia.org/wiki/Closure_(computer_science)' })(['Closure']),
+    ' is truly wonderful. JavaScript',
     $2014,
-    'despite its plethora of quirks',
+    'despite its\n    plethora of quirks',
     $2014,
-    'is now widely appreciated, thanks in large part to its lexical scoping.\n    Python 3 is lexically-scoped, too, as the following code demonstrates.'
+    'is now widely appreciated, thanks in large\n    part to its lexical scoping. Python 3 is lexically-scoped, too, as\n    the following code demonstrates.'
   ]),
   code$002Dblock('python')(`def cache(saved=None):
     def _(thing=None):

@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -88,14 +87,14 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const excerpt = [p([
     'Developers will be familiar with using PHP\'s ',
-    a('http://php.net/manual/en/function.mysql-real-escape-string.php')(['mysql_real_escape_string']),
+    a({ href: 'http://php.net/manual/en/function.mysql-real-escape-string.php' })(['mysql_real_escape_string']),
     '\n    to escape problematic characters before submitting a query.\n    When the query in question involves MySQL\'s REGEXP function,\n    however, we need to go one step further and escape regex\'s\n    special characters.'
   ])];
 const body = [
   p([
     'While using the ',
-    a('http://search.mtg-apps.com/')(['MTG card search']),
-    '\n    that I\'ve been developing recently, I encountered an error that MySQL\n    reported as follows:'
+    a({ href: 'http://search.mtg-apps.com/' })(['MTG card search']),
+    '\n    that I\'ve been developing recently, I encountered an error that\n    MySQL reported as follows:'
   ]),
   code$002Dblock('plain-text')(`Got error 'repetition-operator operand invalid' from regexp
 `),

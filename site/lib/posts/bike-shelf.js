@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -93,9 +92,9 @@ const body = [
     })]),
   p([
     'The article from which this photograph is lifted, entitled ',
-    a('http://knifeandsaw.wordpress.com/furniture/bike-shelf/')(['Bike Shelf']),
+    a({ href: 'http://knifeandsaw.wordpress.com/furniture/bike-shelf/' })(['Bike Shelf']),
     ',\n    is over on ',
-    a('http://knifeandsaw.wordpress.com/')(['Knife & Saw']),
+    a({ href: 'http://knifeandsaw.wordpress.com/' })(['Knife & Saw']),
     '.'
   ])
 ];

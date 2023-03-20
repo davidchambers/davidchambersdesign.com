@@ -16,8 +16,8 @@ body = [
   p [
    "When dealing with dates, it's not uncommon to need to convert an
     integer into an ordinal number (1st, 2nd, 3rd, etc.). While making
-    improvements to ", a "http://mango.io/wtf?" ["Mango"], " recently I
-    wrote a function to do this, first in Python, later in JavaScript.",
+    improvements to ", a {href: "http://mango.io/wtf?"} ["Mango"], " recently
+    I wrote a function to do this, first in Python, later in JavaScript.",
   ],
 
   h3 ["Python"],

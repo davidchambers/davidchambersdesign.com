@@ -14,7 +14,7 @@ body = [
 
   p [
    "From Wikipedia on Mies van der Rohe's ",
-    a "http://en.wikipedia.org/wiki/Seagram_Building"
+    a {href: "http://en.wikipedia.org/wiki/Seagram_Building"}
       ["Seagram Building"], ":",
   ],
 

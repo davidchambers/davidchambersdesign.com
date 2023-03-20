@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -90,7 +89,7 @@ const body = [
   ...excerpt,
   p([
     'I stumbled upon this useful information while reading ',
-    a('http://caminobrowser.org/documentation/faq/#cust_change')(['Camino\'s FAQ']),
+    a({ href: 'http://caminobrowser.org/documentation/faq/#cust_change' })(['Camino\'s FAQ']),
     '. I have reproduced its step-by-step instructions\n    below, since they are right on the money.'
   ]),
   ul([

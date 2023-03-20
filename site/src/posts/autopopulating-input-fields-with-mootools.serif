@@ -15,7 +15,7 @@ body = [
 
   p [
    "Early this year I wrote a post titled ",
-    a "/autopopulating-input-fields-with-prototype/"
+    a {href: "/autopopulating-input-fields-with-prototype/"}
       ["Auto-populating input fields with Prototype"], ".
     Looking at the code now, I realize that it's not very pretty.
     I'm rewriting this site's JavaScript in MooTools, and the new

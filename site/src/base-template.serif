@@ -17,12 +17,12 @@ base-template document-title main = {
     ],
     body [
       div {id: "skip"} [
-        a' {href: "#main"} ["Skip to main content"],
+        a {href: "#main"} ["Skip to main content"],
       ],
       div {id: "wrap"} [
         div {id: "header"} [
           header [
-            a' {id: "title", href: "/"} ["David Chambers Design"],
+            a {id: "title", href: "/"} ["David Chambers Design"],
             hr,
             p [
               "It's where I share interesting info with other web geeks",
@@ -30,7 +30,7 @@ base-template document-title main = {
             nav' {id: "nav"} [
               ul [
                 li [
-                  a' {href: "/about/"} [
+                  a {href: "/about/"} [
                     span {} [
                       strong ["About."], "
                       Who I am and what I do.",
@@ -38,7 +38,7 @@ base-template document-title main = {
                   ],
                 ],
                 li [
-                  a' {href: "/contact/"} [
+                  a {href: "/contact/"} [
                     span {} [
                       strong ["Contact."], "
                       Just in case you want to get in touch.",
@@ -46,7 +46,7 @@ base-template document-title main = {
                   ],
                 ],
                 li [
-                  a' {href: "/archives/"} [
+                  a {href: "/archives/"} [
                     span {} [
                       strong ["Archives."], "
                       Old posts, recent posts, they're all here.",
@@ -54,7 +54,7 @@ base-template document-title main = {
                   ],
                 ],
                 li [
-                  a' {href: "/tags/"} [
+                  a {href: "/tags/"} [
                     span {} [
                       strong ["Tags."], "
                       Helpful if you're after posts on a particular topic.",
@@ -62,14 +62,14 @@ base-template document-title main = {
                   ],
                 ],
                 li [
-                  a' {href: "https://bitbucket.org/davidchambers"} [
+                  a {href: "https://bitbucket.org/davidchambers"} [
                     span {} [
                       strong ["Bitbucket."], "
                       Home to most of my open-source projects."],
                     ],
                 ],
                 li [
-                  a' {href: "/twitter/"} [
+                  a {href: "/twitter/"} [
                     span {} [
                       strong ["Twitter."], "
                       It's where I chirrup… or chirp… or something.",
@@ -85,11 +85,11 @@ base-template document-title main = {
       footer [
         p [
           "Powered by ",
-          a' {href: "http://mango.io/wtf?", data-version: "0.9dev"} ["Mango"],
+          a {href: "http://mango.io/wtf?", data-version: "0.9dev"} ["Mango"],
           ". Hosted on ",
-          a' {href: "http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d"} ["Linode"],
+          a {href: "http://www.linode.com/?r=ce523c9eeda64e4bceaf7011dc9e8558b909711d"} ["Linode"],
           ". Original content ",
-          a' {href: "/copying/"} ["WTFPL-licensed"],
+          a {href: "/copying/"} ["WTFPL-licensed"],
           ".",
         ],
       ],

@@ -13,7 +13,8 @@ export default {
 body = [
 
   p [
-    a "http://www.youtube.com/watch?v=A6-wA-7QIeE" ["Dieter Rams – Gestalten"],
+    a {href: "http://www.youtube.com/watch?v=A6-wA-7QIeE"}
+      ["Dieter Rams – Gestalten"],
   ],
 
   blockquote [
@@ -25,7 +26,7 @@ body = [
   ],
 
   p [
-   "via ", a "http://kottke.org/" ["kottke"],
+   "via ", a {href: "http://kottke.org/"} ["kottke"],
   ],
 
 ];

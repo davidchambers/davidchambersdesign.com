@@ -16,7 +16,7 @@ body = [
   p [
    "I was delighted to discover this \"trick\"
     over on CSS-Tricks in a post titled ",
-    a "http://css-tricks.com/textarea-tricks/"
+    a {href: "http://css-tricks.com/textarea-tricks/"}
       ["Textarea Tricks"], ".
     (See, Chris, I ", em ["do"], " like you!)",
   ],

@@ -22,7 +22,7 @@ body = [
 
   p [
    "The days of the compact disc are surely numbered. The ",
-    a "http://www.apple.com/macbookair/" ["MacBook Air"], "
+    a {href: "http://www.apple.com/macbookair/"} ["MacBook Air"], "
     is the first computer from Apple to jettison the optical
     drive; others will undoubtedly follow, eventually.",
   ],

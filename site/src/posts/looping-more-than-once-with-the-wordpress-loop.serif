@@ -33,7 +33,7 @@ body = [
    "As well as displaying the three most recent posts on the
     home page, I wanted to display links to slightly older
     posts on the sidebar. I discovered a WpRecipes post on ",
-    a "http://www.wprecipes.com/avinash-asked-how-to-use-two-different-wordpress-loops"
+    a {href: "http://www.wprecipes.com/avinash-asked-how-to-use-two-different-wordpress-loops"}
       ["using two different WordPress loops"], " which suggests
     adding the following line of code just before the loop:",
   ],

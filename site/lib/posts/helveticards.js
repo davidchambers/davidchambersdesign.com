@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -91,9 +90,9 @@ const body = [
       src: '/images/posts/92/helveticards.jpg'
     })]),
   blockquote([p([
-      a('http://helveticards.uberdm.com/')(['Helveticards']),
-      ' are a\n      set of über minimalist typographic playing cards by designer ',
-      a('https://twitter.com/uberryan')(['Ryan Myers']),
+      a({ href: 'http://helveticards.uberdm.com/' })(['Helveticards']),
+      '\n      are a set of über minimalist typographic playing cards by designer ',
+      a({ href: 'https://twitter.com/uberryan' })(['Ryan Myers']),
       '.'
     ])]),
   p([
@@ -103,7 +102,7 @@ const body = [
   ]),
   p([
     'Via ',
-    a('http://laughingsquid.com/helveticards-minimalist-typographic-playing-cards/')(['Laughing Squid']),
+    a({ href: 'http://laughingsquid.com/helveticards-minimalist-typographic-playing-cards/' })(['Laughing Squid']),
     '.'
   ])
 ];

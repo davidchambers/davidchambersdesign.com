@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -92,16 +91,16 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'In my post titled ',
-    a('/captions-over-images/')(['Captions over images']),
+    a({ href: '/captions-over-images/' })(['Captions over images']),
     '\n    I advocate the use of definition lists for captioning images.\n    Earlier today I was asked whether this meaningful markup could\n    be used in conjunction with an "image slider" such as ',
-    a('http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding')(['Easy Slider 1.5']),
+    a({ href: 'http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding' })(['Easy Slider 1.5']),
     '.'
   ]),
   p(['I had a look at the Easy Slider source code and decided to\n    write my own image slider using Prototype rather than hacking\n    someone else\'s code to pieces. It\'s a proof of concept rather\n    than a full-blown "plugin", but it demonstrates that such\n    functionality is achievable using elegant, meaningful markup.']),
   p([
     'Check out the ',
-    a('/examples/prototype-image-slider/')(['Prototype image slider demo']),
-    '\n    to see the code in action.'
+    a({ href: '/examples/prototype-image-slider/' })(['Prototype image slider demo']),
+    ' to see the code in action.'
   ])
 ];
 const body = [
@@ -112,14 +111,14 @@ const body = [
 `),
     p([
       'Wrapping the word "class" in quotes as per this ',
-      a('http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777')(['recommendation by Tobie Langel']),
+      a({ href: 'http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777' })(['recommendation by Tobie Langel']),
       ' did the trick!'
     ])
   ]),
   h3$0027({ id: 'usage' })(['Usage']),
   p([
     'First, you\'ll need to save a copy of ',
-    a('/examples/prototype-image-slider/prototype-image-slider.js')(['prototype-image-slider.js']),
+    a({ href: '/examples/prototype-image-slider/prototype-image-slider.js' })(['prototype-image-slider.js']),
     '.'
   ]),
   p([
@@ -154,7 +153,7 @@ new Slider('slider', 1.5, -1); // slower transitions; last slide displayed first
   p(['If you find this code useful and would like me to flesh it out,\n    let me know.']),
   update(datetime('2009-09-21')('11:53:00')('Pacific/Auckland'))([p([
       'I neglected to mention that this code also requires ',
-      a('http://script.aculo.us/')(['script.aculo.us']),
+      a({ href: 'http://script.aculo.us/' })(['script.aculo.us']),
       '.'
     ])])
 ];

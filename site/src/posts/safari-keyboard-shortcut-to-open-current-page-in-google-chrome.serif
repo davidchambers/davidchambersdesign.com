@@ -15,7 +15,7 @@ body = [
 
   p [
    "I followed ",
-    a "http://daringfireball.net/2010/11/flash_free_and_cheating_with_google_chrome"
+    a {href: "http://daringfireball.net/2010/11/flash_free_and_cheating_with_google_chrome"}
       ["John Gruber's suggestion"], " and removed Flash Player from my Mac.
     Like John, I've come to rely upon Google Chrome for viewing the
     occasional Flash movie. As a result I've become proficient at the
@@ -68,7 +68,7 @@ body = [
   p [
    "Credit for this simple but brilliant idea goes to Rob McBroom.
     Rob's post on ",
-    a "http://projects.skurfer.com/posts/2011/chrome_shortcut/"
+    a {href: "http://projects.skurfer.com/posts/2011/chrome_shortcut/"}
       ["opening pages in Google Chrome"], " lists the (very easy)
     steps required to enable this shortcut.",
   ],

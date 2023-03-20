@@ -2,7 +2,6 @@ import S from 'sanctuary';
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -88,13 +87,11 @@ import {
 } from './elements.js';
 import tags from './tags.js';
 const render$002Dtags = posts => (() => {
-  const counts = S.reduce(counts => tag => ({
-    ...counts,
-    [tag]: counts[tag] + 1
-  }))(S.map(x => 0)(tags))(posts.flatMap(post => post.tags));
+  const slugs = S.chain(post => post.tags)(posts);
+  const from$002Dentry = ([slug, name]) => li$0027({ ['data-count']: S.size(S.filter(S.equals(slug))(slugs)) })([a({ href: `/tag/${ slug }/` })([name])]);
   return [
     h1(['Tags']),
-    ol$0027({ id: 'tags' })(Object.keys(tags).map($0024 => (tag => li$0027({ ['data-count']: counts[tag] })([a(`/tag/${ tag }/`)([tags[tag]])]))($0024))),
+    ol$0027({ id: 'tags' })(Object.entries(tags).map($0024 => from$002Dentry($0024))),
     div({ class: 'clearfix' })([])
   ];
 })();

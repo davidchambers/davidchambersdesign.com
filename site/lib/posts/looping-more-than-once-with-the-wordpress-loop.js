@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -96,7 +95,7 @@ endif;
 `),
   p([
     'As well as displaying the three most recent posts on the\n    home page, I wanted to display links to slightly older\n    posts on the sidebar. I discovered a WpRecipes post on ',
-    a('http://www.wprecipes.com/avinash-asked-how-to-use-two-different-wordpress-loops')(['using two different WordPress loops']),
+    a({ href: 'http://www.wprecipes.com/avinash-asked-how-to-use-two-different-wordpress-loops' })(['using two different WordPress loops']),
     ' which suggests\n    adding the following line of code just before the loop:'
   ]),
   code$002Dblock('php')(`query_posts('showposts=5&offset=3');

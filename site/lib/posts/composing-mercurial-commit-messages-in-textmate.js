@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -105,9 +104,9 @@ const body = [
     li(['No need to escape quotation marks'])
   ]),
   p([
-    a('http://macromates.com/')(['TextMate']),
+    a({ href: 'http://macromates.com/' })(['TextMate']),
     '\n    is particularly well suited to my needs due to its built-in ',
-    a('http://daringfireball.net/projects/markdown/syntax')(['Markdown']),
+    a({ href: 'http://daringfireball.net/projects/markdown/syntax' })(['Markdown']),
     '\n    highlighting and previewing \u2013 yes, I write commit messages in Markdown!'
   ]),
   p([strong([
@@ -120,7 +119,7 @@ const body = [
       ' file.'
     ])]),
   p([
-    a('http://vincecima.com/post/578017364/using-textmate-as-mercurials-editor')(['Vince Cima explains']),
+    a({ href: 'http://vincecima.com/post/578017364/using-textmate-as-mercurials-editor' })(['Vince Cima explains']),
     ':'
   ]),
   blockquote([p([

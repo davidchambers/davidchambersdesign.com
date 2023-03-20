@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -89,9 +88,9 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'I recently came across an interesting article at ',
-    a('http://wonko.com/')(['wonko.com']),
+    a({ href: 'http://wonko.com/' })(['wonko.com']),
     ' on ',
-    a('http://wonko.com/post/html-escaping')(['HTML escaping']),
+    a({ href: 'http://wonko.com/post/html-escaping' })(['HTML escaping']),
     ',\n    which provoked me to rewrite Bitbucket\'s escape function\n    (invoked from within Underscore templates):'
   ]),
   code$002Dblock('javascript')(`function makeSafe(text) {
@@ -111,7 +110,7 @@ const body = [
 `),
   p([
     'I created a ',
-    a('http://jsperf.com/html-escaping-perf')(['jsPerf test case']),
+    a({ href: 'http://jsperf.com/html-escaping-perf' })(['jsPerf test case']),
     '\n    which confirms that there\'s a performance hit associated with using\n    this more liberal regular expression. Keep in mind, though, that if\n    \u201CA\u201D takes 1ms to execute and \u201CB\u201D takes ten times as long, \u201CB\u201D still\n    only takes 10ms. Quite often a significant ',
     em(['comparative']),
     '\n    speed difference is insignificant in absolute terms; I\'d argue that\n    this is the case here.'

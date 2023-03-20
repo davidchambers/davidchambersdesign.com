@@ -42,13 +42,13 @@ body = [
   `,
 
   p [
-    a "https://developer.mozilla.org/en/JavaScript/Reference/Operators/Bitwise_Operators"
+    a {href: "https://developer.mozilla.org/en/JavaScript/Reference/Operators/Bitwise_Operators"}
       ["Bitwise operators"], " make my head spin, but the Perl programmer in
     me thinks they're awesome. I don't profess to understand ", em ["why"], "
     exactly the bitwise NOT operator does what it does, but I've played
     with it enough to know how it behaves. It's equivalent to the following
     function, at least for the values that can be returned by ",
-    a "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/indexOf"
+    a {href: "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/indexOf"}
       [code ["indexOf"]], ".",
   ],
 

@@ -82,13 +82,13 @@ body = [
       ],
       p [
        "Open ",
-        a "http://en.wikipedia.org/wiki/Apple_Developer_Tools#Icon_Composer"
+        a {href: "http://en.wikipedia.org/wiki/Apple_Developer_Tools#Icon_Composer"}
           ["Icon Composer"], ",
         located in ", strong ["/Developer/Applications/Utilities"], ".
         This is part of the ",
-        a "http://developer.apple.com/technologies/tools/"
+        a {href: "http://developer.apple.com/technologies/tools/"}
           ["Apple Developer Tools"], ", which are free to ",
-        a "http://developer.apple.com/technologies/xcode.html"
+        a {href: "http://developer.apple.com/technologies/xcode.html"}
           ["download from Apple"], ". If you're bandwidth-conscious
         you can dig out your Mac OS X installation DVD to save
         yourself a few GBs.",
@@ -129,10 +129,10 @@ body = [
       p [
        "I scoured the Web for a way to edit this metadata
         directly. I failed to find one, but came across ",
-        a "http://www.cocoabuilder.com/archive/xcode/250445-custom-icon-for-bundle.html#250519"
+        a {href: "http://www.cocoabuilder.com/archive/xcode/250445-custom-icon-for-bundle.html#250519"}
           ["the next best thing"], ": a shell script written and
         kindly shared by Damien Bobillot. ",
-        a "http://maxao.free.fr/telechargements/setfileicon.gz"
+        a {href: "http://maxao.free.fr/telechargements/setfileicon.gz"}
           ["Download setfileicon.gz"], " then crack open Terminal.app,
         located in ", strong ["/Applications/Utilities"], ".",
       ],

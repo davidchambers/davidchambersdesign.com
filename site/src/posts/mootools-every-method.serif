@@ -73,16 +73,17 @@ body = [
     JavaScript in 2010?"], " Everyone and their grandmothers are
     using JavaScript frameworks these days, and there are plenty
     of good ones out there. I recently made the switch to ",
-    a "http://mootools.net/" ["MooTools"], " from ",
-    a "http://prototypejs.org/" ["Prototype"], ", after deciding that
-    while ", a "http://jquery.com/" ["jQuery"], " is fantastic, the ",
-    a "http://jqueryvsmootools.com/#jsfun" ["MooTools philosophy"], "
+    a {href: "http://mootools.net/"} ["MooTools"], " from ",
+    a {href: "http://prototypejs.org/"} ["Prototype"], ",
+    after deciding that while ",
+    a {href: "http://jquery.com/"} ["jQuery"], " is fantastic, the ",
+    a {href: "http://jqueryvsmootools.com/#jsfun"} ["MooTools philosophy"], "
     is more to my liking.",
   ],
 
   p [
    "With MooTools, one might consider using the ",
-    a "http://mootools.net/docs/core/Native/Array#Array:each"
+    a {href: "http://mootools.net/docs/core/Native/Array#Array:each"}
       ["Array object's each method"], "
     instead of a ", code ["for"], " or ", code ["while"], " loop.",
   ],
@@ -107,7 +108,7 @@ body = [
   p [
    "As is so often the case in programming, if something seems fiddly and
     difficult there's probably a better tool for the job. In this case the ",
-    a "http://mootools.net/docs/core/Native/Array#Array:every"
+    a {href: "http://mootools.net/docs/core/Native/Array#Array:every"}
       ["Array object's every method"], " is the perfect tool for the job.",
   ],
 

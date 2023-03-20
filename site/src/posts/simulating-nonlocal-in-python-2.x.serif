@@ -13,10 +13,11 @@ export default {
 
 excerpt = [
   p [
-    a "http://en.wikipedia.org/wiki/Closure_(computer_science)" ["Closure"], "
-    is truly wonderful. JavaScript", —, "despite its plethora of quirks", —,
-   "is now widely appreciated, thanks in large part to its lexical scoping.
-    Python 3 is lexically-scoped, too, as the following code demonstrates.",
+    a {href: "http://en.wikipedia.org/wiki/Closure_(computer_science)"}
+      ["Closure"], " is truly wonderful. JavaScript", —, "despite its
+    plethora of quirks", —, "is now widely appreciated, thanks in large
+    part to its lexical scoping. Python 3 is lexically-scoped, too, as
+    the following code demonstrates.",
   ],
   code-block "python" `
     def cache(saved=None):

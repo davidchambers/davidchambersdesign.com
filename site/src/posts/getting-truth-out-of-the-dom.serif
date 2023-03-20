@@ -17,7 +17,7 @@ body = [
   ],
 
   p [
-    a "http://vimeo.com/22687694" ["Getting truth out of the DOM"],
+    a {href: "http://vimeo.com/22687694"} ["Getting truth out of the DOM"],
   ],
 
   p [

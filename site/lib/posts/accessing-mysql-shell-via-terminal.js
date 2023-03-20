@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -95,7 +94,7 @@ const body = [
   ]),
   p([
     'I managed to find the solution in a thread with subject ',
-    a('http://www.oreillynet.com/cs/user/view/cs_msg/7078#id_7118')(['error 1044 and 1045']),
+    a({ href: 'http://www.oreillynet.com/cs/user/view/cs_msg/7078#id_7118' })(['error 1044 and 1045']),
     ':'
   ]),
   code$002Dblock('console')(`mysql -u root -p mysql

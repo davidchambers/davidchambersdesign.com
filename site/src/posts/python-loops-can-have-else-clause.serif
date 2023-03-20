@@ -42,8 +42,8 @@ body = [
   ],
 
   p [
-    a "http://mootools.net/" ["MooTools"], ", for example, adds the ",
-    a "http://mootools.net/docs/core/Native/Array#Array:every"
+    a {href: "http://mootools.net/"} ["MooTools"], ", for example, adds the ",
+    a {href: "http://mootools.net/docs/core/Native/Array#Array:every"}
       [code ["every"], " method"], "
     to the ", code ["Array"], " object. This makes it possible
     to write some rather terse conditional statements.",
@@ -77,7 +77,7 @@ body = [
   update {datetime "2012-06-20" "14:15:00" "America/Los_Angeles"} [
     p [
      "As ",
-     a "https://twitter.com/rafael_ab/status/215428832872771584"
+     a {href: "https://twitter.com/rafael_ab/status/215428832872771584"}
        ["Rafael Almeida pointed out on Twitter"], ",
      there ", em ["is"], " an elegant way to express this in Python:",
     ],
@@ -147,7 +147,7 @@ body = [
 
   p [
    "From ",
-    a "http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops"
+    a {href: "http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops"}
       ["4. More Control Flow Tools"], ":",
   ],
 

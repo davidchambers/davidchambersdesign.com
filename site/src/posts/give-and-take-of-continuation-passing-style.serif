@@ -18,7 +18,7 @@ body = [
 
   p [
    "I have been experimenting with ",
-    a "https://en.wikipedia.org/wiki/Continuation-passing_style"
+    a {href: "https://en.wikipedia.org/wiki/Continuation-passing_style"}
       ["continuation-passing style"], " recently. Writing code in
     this style feels strange but exciting! I recently discovered
     that one can use functions in place of objects.",

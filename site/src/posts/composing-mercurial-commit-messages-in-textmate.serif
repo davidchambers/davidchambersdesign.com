@@ -32,9 +32,9 @@ body = [
   ],
 
   p [
-    a "http://macromates.com/" ["TextMate"], "
+    a {href: "http://macromates.com/"} ["TextMate"], "
     is particularly well suited to my needs due to its built-in ",
-    a "http://daringfireball.net/projects/markdown/syntax" ["Markdown"], "
+    a {href: "http://daringfireball.net/projects/markdown/syntax"} ["Markdown"], "
     highlighting and previewing – yes, I write commit messages in Markdown!",
   ],
 
@@ -47,7 +47,7 @@ body = [
   ],
 
   p [
-    a "http://vincecima.com/post/578017364/using-textmate-as-mercurials-editor"
+    a {href: "http://vincecima.com/post/578017364/using-textmate-as-mercurials-editor"}
       ["Vince Cima explains"], ":",
   ],
 

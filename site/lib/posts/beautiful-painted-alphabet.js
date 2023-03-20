@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -88,11 +87,11 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'I came across this recently while browsing ',
-    a('http://markboulton.co.uk/')(['Mark Boulton\'s site']),
+    a({ href: 'http://markboulton.co.uk/' })(['Mark Boulton\'s site']),
     '.\n    The style and control of Job\'s hand is played off against\n    the exuberance of his son\'s approach. An upbeat soundtrack\n    accompanies the performance.'
   ]),
   dl([
-    dt([a('http://www.youtube.com/watch?v=ajjg3faIQ5A')(['abcdefghijklmnopqrstuvwxyz'])]),
+    dt([a({ href: 'http://www.youtube.com/watch?v=ajjg3faIQ5A' })(['abcdefghijklmnopqrstuvwxyz'])]),
     dd(['Video by Job & Roel Wouters'])
   ]),
   p(['From the director:']),

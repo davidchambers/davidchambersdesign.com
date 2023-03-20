@@ -43,7 +43,7 @@ body = [
 
   p [
    "The first step is to open ",
-    a "http://calendar.google.com/" ["Google Calendar"], ".
+    a {href: "http://calendar.google.com/"} ["Google Calendar"], ".
     Once you have signed in, you will see several links at the
     top right of the page. Click on ", strong ["Settings"], ".",
   ],

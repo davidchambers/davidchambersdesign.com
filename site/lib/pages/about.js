@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -93,17 +92,17 @@ export default {
     p([b(['Greetings! My name is David Chambers and I\'m a software developer\n      based in San Francisco.'])]),
     p([
       'I work at ',
-      a('http://www.atlassian.com/')(['Atlassian']),
+      a({ href: 'http://www.atlassian.com/' })(['Atlassian']),
       '\n      with a great group of people dedicated to making ',
-      a('https://bitbucket.org/')(['Bitbucket']),
-      ' awesome.\n      Our efforts benefit tens of thousands of software\n      developers, which makes the job incredibly rewarding.'
+      a({ href: 'https://bitbucket.org/' })(['Bitbucket']),
+      ' awesome.\n      Our efforts benefit tens of thousands of software developers,\n      which makes the job incredibly rewarding.'
     ]),
     p([
       'I\'ve created several dozen ',
-      a('https://bitbucket.org/davidchambers')(['open source projects']),
+      a({ href: 'https://bitbucket.org/davidchambers' })(['open source projects']),
       ',\n      many of which are small, self-contained JavaScript utilities\n      written in CoffeeScript. In 2011 I created and released ',
-      a('http://hashify.me/')(['Hashify']),
-      ', a little gift to the\n      Internet. :)'
+      a({ href: 'http://hashify.me/' })(['Hashify']),
+      ',\n      a little gift to the Internet. :)'
     ]),
     captioned$002Dimages([{
         alt: 'Me with friends Jo and Shaun at the Luge in Rotorua',
@@ -112,7 +111,7 @@ export default {
       }]),
     p([
       'Feel free to ',
-      a('http://twitter.com/davidchambers')(['follow me on Twitter']),
+      a({ href: 'http://twitter.com/davidchambers' })(['follow me on Twitter']),
       '.\n      I tweet sporadically and infrequently.'
     ])
   ]

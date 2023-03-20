@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -91,7 +90,7 @@ const body = [
     i(['Ukraine\'s Got Talent']),
     ',\n    Kseniya Simonova uses the simplest of tools (a lightbox,\n    sand, and her own body) to create a captivating animation.\n    I really enjoyed the accompanying "Nothing Else Matters"\n    instrumental, as well.'
   ]),
-  p([a('http://www.youtube.com/watch?v=518XP8prwZo')(['Kseniya Simonova on Ukraine\'s Got Talent'])])
+  p([a({ href: 'http://www.youtube.com/watch?v=518XP8prwZo' })(['Kseniya Simonova on Ukraine\'s Got Talent'])])
 ];
 export default {
   id: 21,

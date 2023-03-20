@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -96,8 +95,8 @@ const body = [
     p(['Hi Douglas,']),
     p([
       '[...] Moments ago I used ',
-      a('http://www.jslint.com/')(['JSLint']),
-      '\n      for the first time; I plan to use it frequently from this point\n      forward. I have one question, though, concerning the acceptability\n      of extra commas. Consider the following code snippet:'
+      a({ href: 'http://www.jslint.com/' })(['JSLint']),
+      '\n      for the first time; I plan to use it frequently\n      from this point forward. I have one question,\n      though, concerning the acceptability of extra\n      commas. Consider the following code snippet:'
     ]),
     code$002Dblock('javascript')(`var ninja = {
     name: 'Hattori Hanzou Masashige',

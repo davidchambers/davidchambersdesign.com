@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -89,7 +88,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'Today I noticed that a page on this site failed validation. ',
-    a('http://validator.w3.org/')(['W3C\'s markup validation service']),
+    a({ href: 'http://validator.w3.org/' })(['W3C\'s markup validation service']),
     '\n    gave the following error:'
   ]),
   code$002Dblock('plain-text')(`element "strike" undefined

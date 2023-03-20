@@ -21,9 +21,9 @@ body = [
 
   blockquote [
     p [
-      a "http://helveticards.uberdm.com/" ["Helveticards"], " are a
-      set of über minimalist typographic playing cards by designer ",
-      a "https://twitter.com/uberryan" ["Ryan Myers"], ".",
+      a {href: "http://helveticards.uberdm.com/"} ["Helveticards"], "
+      are a set of über minimalist typographic playing cards by designer ",
+      a {href: "https://twitter.com/uberryan"} ["Ryan Myers"], ".",
     ],
   ],
 
@@ -34,7 +34,7 @@ body = [
 
   p [
    "Via ",
-    a "http://laughingsquid.com/helveticards-minimalist-typographic-playing-cards/"
+    a {href: "http://laughingsquid.com/helveticards-minimalist-typographic-playing-cards/"}
       ["Laughing Squid"], ".",
   ],
 

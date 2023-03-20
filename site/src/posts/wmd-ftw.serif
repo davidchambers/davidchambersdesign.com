@@ -25,10 +25,10 @@ body = [
   p [
    "Despite my appreciation of the preview, not one of my sites
     provided this service until a few hours ago. Now that I've
-    migrated from WordPress to ", a "http://mango.io/" ["Mango"], "
+    migrated from WordPress to ", a {href: "http://mango.io/"} ["Mango"], "
     I'm able to spend some time working on front-end code. My first
     two challenges were localizing dates and times, and integrating ",
-    a "http://wmd-editor.com/" ["wmd"], ".",
+    a {href: "http://wmd-editor.com/"} ["wmd"], ".",
   ],
 
   p [
@@ -50,7 +50,7 @@ body = [
     ],
     p [
      "It should be possible to access ",
-      a "/images/posts/53/wmd.mp4" ["wmd.mp4"], " directly.",
+      a {href: "/images/posts/53/wmd.mp4"} ["wmd.mp4"], " directly.",
     ],
   ],
 

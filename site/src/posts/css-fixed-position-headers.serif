@@ -26,7 +26,7 @@ excerpt = [
     altogether) to the header. I decided to fix the header in
     place so that the navigation and search form would always be
     visible. This required very little effort, but overcoming the ",
-    a "http://css-tricks.com/forums/viewtopic.php?t=3496"
+    a {href: "http://css-tricks.com/forums/viewtopic.php?t=3496"}
       ["problem posed by fixed-position headers"], " took a great
     deal of trial and error. To save others from going through
     this tortuous process I'll describe my various approaches,
@@ -238,7 +238,7 @@ body = [
     ],
     li' {class: "con"} [
      "JavaScript (and in this case ",
-      a "http://prototypejs.org/" ["Prototype"], ") required.",
+      a {href: "http://prototypejs.org/"} ["Prototype"], ") required.",
     ],
     li' {class: "con"} [
      "Association between an id and the element it identifies

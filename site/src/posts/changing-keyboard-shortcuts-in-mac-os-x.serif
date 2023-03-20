@@ -31,7 +31,7 @@ body = [
 
   p [
    "I stumbled upon this useful information while reading ",
-    a "http://caminobrowser.org/documentation/faq/#cust_change"
+    a {href: "http://caminobrowser.org/documentation/faq/#cust_change"}
       ["Camino's FAQ"], ". I have reproduced its step-by-step instructions
     below, since they are right on the money.",
   ],

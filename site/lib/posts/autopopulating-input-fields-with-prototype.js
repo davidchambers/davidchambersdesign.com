@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -91,24 +90,24 @@ import {
 import datetime from '../datetime.js';
 const excerpt = [p([
     'Yesterday I wrote a simple class which auto-populates\n    input fields, and thought it worth sharing. I was originally\n    inspired to write this code by Roger Johansson\'s post titled ',
-    a('http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/')(['Autopopulating text input fields with JavaScript']),
+    a({ href: 'http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/' })(['Autopopulating text input fields with JavaScript']),
     '.\n    While I approached the problem from a slightly different angle,\n    I made sure to avoid the pitfalls Roger mentions.'
   ])];
 const body = [
   ...excerpt,
   update(datetime('2010-06-09')('23:31:00')('Pacific/Auckland'))([
     'I\'ve written an update to this article for those interested in ',
-    a('/autopopulating-input-fields-with-mootools/')(['auto-populating input fields with MooTools']),
+    a({ href: '/autopopulating-input-fields-with-mootools/' })(['auto-populating input fields with MooTools']),
     '.'
   ]),
   h3(['Contents']),
   ul([
-    li([a('#behaviour')(['Behaviour'])]),
-    li([a('#html5-placeholder-text')(['HTML5 placeholder text'])]),
-    li([a('#markup')(['Markup'])]),
-    li([a('#styling')(['Styling'])]),
-    li([a('#placeholder-class')(['Placeholder class'])]),
-    li([a('#usage')(['Usage'])])
+    li([a({ href: '#behaviour' })(['Behaviour'])]),
+    li([a({ href: '#html5-placeholder-text' })(['HTML5 placeholder text'])]),
+    li([a({ href: '#markup' })(['Markup'])]),
+    li([a({ href: '#styling' })(['Styling'])]),
+    li([a({ href: '#placeholder-class' })(['Placeholder class'])]),
+    li([a({ href: '#usage' })(['Usage'])])
   ]),
   h3$0027({ id: 'behaviour' })(['Behaviour']),
   ul([
@@ -155,7 +154,7 @@ const body = [
 `),
   p([
     'The Placeholder class requires ',
-    a('http://prototypejs.org/')(['Prototype']),
+    a({ href: 'http://prototypejs.org/' })(['Prototype']),
     '.'
   ]),
   h3$0027({ id: 'usage' })(['Usage']),
@@ -183,7 +182,7 @@ const body = [
       'For those that would like placeholder text in ',
       em(['password']),
       '\n      input fields not to appear as dots or asterisks in older browsers,\n      I\'ve written an alternative snippet. I drew inspiration from a post on ',
-      a('http://blog.decaf.de/2009/07/iphone-like-password-fields-using-jquery/')(['iPhone-like password fields using jQuery']),
+      a({ href: 'http://blog.decaf.de/2009/07/iphone-like-password-fields-using-jquery/' })(['iPhone-like password fields using jQuery']),
       '.'
     ]),
     code$002Dblock('javascript')(`// provide input hints

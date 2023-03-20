@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -88,7 +87,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'One of my flatmates linked me to this clip recently. It\'s titled ',
-    a('http://www.ted.com/index.php/talks/david_carson_on_design.html')(['Design, discovery and humor']),
+    a({ href: 'http://www.ted.com/index.php/talks/david_carson_on_design.html' })(['Design, discovery and humor']),
     ' and certainly delivers the\n    entertainment it promises. It\'s well worth a look.'
   ]),
   dl([

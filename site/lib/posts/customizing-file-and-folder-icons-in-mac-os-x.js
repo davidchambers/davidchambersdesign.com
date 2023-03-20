@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -133,13 +132,13 @@ const body = [
         })]),
       p([
         'Open ',
-        a('http://en.wikipedia.org/wiki/Apple_Developer_Tools#Icon_Composer')(['Icon Composer']),
+        a({ href: 'http://en.wikipedia.org/wiki/Apple_Developer_Tools#Icon_Composer' })(['Icon Composer']),
         ',\n        located in ',
         strong(['/Developer/Applications/Utilities']),
         '.\n        This is part of the ',
-        a('http://developer.apple.com/technologies/tools/')(['Apple Developer Tools']),
+        a({ href: 'http://developer.apple.com/technologies/tools/' })(['Apple Developer Tools']),
         ', which are free to ',
-        a('http://developer.apple.com/technologies/xcode.html')(['download from Apple']),
+        a({ href: 'http://developer.apple.com/technologies/xcode.html' })(['download from Apple']),
         '. If you\'re bandwidth-conscious\n        you can dig out your Mac OS X installation DVD to save\n        yourself a few GBs.'
       ]),
       captioned$002Dimages([{
@@ -162,9 +161,9 @@ const body = [
       p(['The final step is to apply attach the .icns file as\n        metadata to the file, folder, or bundle of interest.\n        There are a plethora of apps which provide this\n        functionality via attractive GUIs, but one shouldn\'t\n        need third-party software to change the appearance\n        of a folder!']),
       p([
         'I scoured the Web for a way to edit this metadata\n        directly. I failed to find one, but came across ',
-        a('http://www.cocoabuilder.com/archive/xcode/250445-custom-icon-for-bundle.html#250519')(['the next best thing']),
+        a({ href: 'http://www.cocoabuilder.com/archive/xcode/250445-custom-icon-for-bundle.html#250519' })(['the next best thing']),
         ': a shell script written and\n        kindly shared by Damien Bobillot. ',
-        a('http://maxao.free.fr/telechargements/setfileicon.gz')(['Download setfileicon.gz']),
+        a({ href: 'http://maxao.free.fr/telechargements/setfileicon.gz' })(['Download setfileicon.gz']),
         ' then crack open Terminal.app,\n        located in ',
         strong(['/Applications/Utilities']),
         '.'

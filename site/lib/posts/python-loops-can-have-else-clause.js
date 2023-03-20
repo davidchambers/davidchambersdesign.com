@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -106,9 +105,9 @@ const body = [
     'the syntactical differences\n    are minor, but there are times when there\'s no direct translation.'
   ]),
   p([
-    a('http://mootools.net/')(['MooTools']),
+    a({ href: 'http://mootools.net/' })(['MooTools']),
     ', for example, adds the ',
-    a('http://mootools.net/docs/core/Native/Array#Array:every')([
+    a({ href: 'http://mootools.net/docs/core/Native/Array#Array:every' })([
       code(['every']),
       ' method'
     ]),
@@ -136,7 +135,7 @@ if [n for n in numbers if n % 3 == 0] == numbers:
   update(datetime('2012-06-20')('14:15:00')('America/Los_Angeles'))([
     p([
       'As ',
-      a('https://twitter.com/rafael_ab/status/215428832872771584')(['Rafael Almeida pointed out on Twitter']),
+      a({ href: 'https://twitter.com/rafael_ab/status/215428832872771584' })(['Rafael Almeida pointed out on Twitter']),
       ',\n     there ',
       em(['is']),
       ' an elegant way to express this in Python:'
@@ -193,7 +192,7 @@ for document in documents:
 `),
   p([
     'From ',
-    a('http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops')(['4. More Control Flow Tools']),
+    a({ href: 'http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops' })(['4. More Control Flow Tools']),
     ':'
   ]),
   blockquote([p([

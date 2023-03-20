@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -145,7 +144,7 @@ $ cd -
 /Users/dc/Desktop
 `),
   p([
-    a('https://github.com/r00k/dotfiles/blob/master/bash/aliases')(['r00k\'s bash aliases']),
+    a({ href: 'https://github.com/r00k/dotfiles/blob/master/bash/aliases' })(['r00k\'s bash aliases']),
     ' provide some ideas as to other ways\n    in which aliases can be put to use. :D'
   ]),
   h3(['Finder.app']),

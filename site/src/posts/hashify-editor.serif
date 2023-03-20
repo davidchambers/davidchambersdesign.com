@@ -20,14 +20,14 @@ body = [
   blockquote [
     p [
      "Hashify is officially live as of now! ",
-      a "http://bit.ly/dXYxGU" ["bit.ly/dXYxGU"],
+      a {href: "http://bit.ly/dXYxGU"} ["bit.ly/dXYxGU"],
     ],
   ],
 
   p [
    "Quite to my surprise word of the release spread
     incredibly quickly, thanks in large part to the ",
-    a "http://news.ycombinator.com/item?id=2464213"
+    a {href: "http://news.ycombinator.com/item?id=2464213"}
       ["Hacker News thread"], " that sprang up and
     received a great deal of attention.",
   ],
@@ -44,11 +44,12 @@ body = [
 
   p [
    "Before dropping off the face of the earth, John Fraser created ",
-    a "https://bitbucket.org/davidchambers/showdown.js" ["Showdown"], "
-    and ", a "http://code.google.com/p/wmd/" ["wmd"], ".
+    a {href: "https://bitbucket.org/davidchambers/showdown.js"} ["Showdown"], "
+    and ", a {href: "http://code.google.com/p/wmd/"} ["wmd"], ".
     The latter is a WYSIWYM Markdown editor, popularized by ",
-    a "http://stackoverflow.com/" ["Stack Overflow"], ". I've long been
-    supportive of wmd's goals, but I've never liked its implementation.",
+    a {href: "http://stackoverflow.com/"} ["Stack Overflow"], ".
+    I've long been supportive of wmd's goals, but I've never
+    liked its implementation.",
   ],
 
   p [
@@ -72,7 +73,7 @@ body = [
   ],
 
   p [
-    a "https://bitbucket.org/davidchambers/hashify-editor"
+    a {href: "https://bitbucket.org/davidchambers/hashify-editor"}
       ["Hashify Editor"], "
     addresses these concerns. Styles are applied via a style sheet, and
     selector specificity has been kept low to make overriding default
@@ -89,8 +90,8 @@ body = [
   ],
 
   p [
-   "Best of all is the preview option: one is able to view", —, "and of
-    course, edit", —, "the text at ", a "http://hashify.me/" ["hashify.me"], "
+   "Best of all is the preview option: one is able to view", —, "and of course,
+    edit", —, "the text at ", a {href: "http://hashify.me/"} ["hashify.me"], "
     with a single click.",
   ],
 
@@ -112,12 +113,12 @@ body = [
 
   p [
    "I love sites which support Markdown commenting. Unfortunately many of
-    those that do", —, "even ", a "http://forrst.com/" ["Forrst"], —, "don't
-    provide previews. As a result, each time I'm about to submit a lengthy
-    comment I select all, copy, open a new tab, go to hashify.me, tab into
-    the editor, and paste in my comment. Were Forrst to integrate Hashify
-    Editor, six of these steps could be replaced by a single mouse click.
-    :D",
+    those that do", —, "even ", a {href: "http://forrst.com/"} ["Forrst"],
+    —, "don't provide previews. As a result, each time I'm about to submit
+    a lengthy comment I select all, copy, open a new tab, go to hashify.me,
+    tab into the editor, and paste in my comment. Were Forrst to integrate
+    Hashify Editor, six of these steps could be replaced by a single mouse
+    click. :D",
   ],
 
 ];

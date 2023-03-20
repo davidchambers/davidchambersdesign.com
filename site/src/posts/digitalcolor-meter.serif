@@ -21,7 +21,7 @@ body = [
 
   p [
    "I thought this recent ",
-    a "http://minimalmac.com/post/836796290/"
+    a {href: "http://minimalmac.com/post/836796290/"}
       ["post on the Minimal Mac blog"], " well worth sharing:",
   ],
 
@@ -57,7 +57,7 @@ body = [
   ],
 
   p [
-    a "http://tumblr.frijole.info/post/836825948/"
+    a {href: "http://tumblr.frijole.info/post/836825948/"}
       ["Reblogged by ¡ɜɿoɾɪɹℲ"], " with this extremely nifty addition:",
   ],
 

@@ -15,9 +15,9 @@ excerpt = [
   p [
    "There's no shortage of blog posts which", —, "like this one", —,
    "provide an introduction to ",
-    a "http://socket.io/" ["Socket.IO"], ". Many, though, were
+    a {href: "http://socket.io/"} ["Socket.IO"], ". Many, though, were
     written prior to the release of 0.7, which ushered in ",
-    a "https://github.com/LearnBoost/Socket.IO/wiki/Migrating-0.6-to-0.7"
+    a {href: "https://github.com/LearnBoost/Socket.IO/wiki/Migrating-0.6-to-0.7"}
       ["significant API changes"], ". Here I'll provide examples
     of server- and client-side code using APIs provided by the ",
     em ["current"], " version (0.7.4 at time of writing).",
@@ -30,7 +30,7 @@ body = [
 
   p [
    "The code snippets are in ",
-    a "http://jashkenas.github.com/coffee-script/" ["CoffeeScript"], "
+    a {href: "http://jashkenas.github.com/coffee-script/"} ["CoffeeScript"], "
     and as such are largely free of the parentheses, squiggly brackets,
     and semicolons that riddle the equivalent JavaScript code. For those
     unfamiliar with CoffeeScript's syntax, here's the fifteen second
@@ -272,7 +272,7 @@ body = [
 
   p [
    "The ",
-    a "https://bitbucket.org/davidchambers/socket.io.demo"
+    a {href: "https://bitbucket.org/davidchambers/socket.io.demo"}
       ["code used in this tutorial"], " is available on Bitbucket.",
   ],
 

@@ -2,7 +2,6 @@ import S from 'sanctuary';
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -87,7 +86,7 @@ import {
   video
 } from './elements.js';
 const render$002Dpost = post => li([
-  a$0027({ href: `/${ post.slug }` })(post.title),
+  a({ href: `/${ post.slug }` })(post.title),
   ' ',
   time({ datetime: post.datetime.toISO() })([post.datetime.toFormat('d MMMM y | h:mm') + post.datetime.toFormat('a').toLowerCase()])
 ]);

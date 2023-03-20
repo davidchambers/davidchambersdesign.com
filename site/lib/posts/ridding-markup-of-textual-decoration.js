@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -89,8 +88,8 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'On the Web it\'s not uncommon to see characters with\n    no inherent meaning used for stylistic reasons. A good\n    example is the ',
-    a('#')(['Read more \xBB']),
-    ' link. Perhaps\n    the directionality of the "\xBB" is suggestive of travelling\n    to another page, or perhaps the letterform is included solely\n    for its aesthetic appeal. Whatever the case, one thing is\n    certain: links do not require right-pointing double angle\n    quotation marks in order to function.'
+    a({ href: '#' })(['Read more \xBB']),
+    ' link.\n    Perhaps the directionality of the "\xBB" is suggestive of\n    travelling to another page, or perhaps the letterform is\n    included solely for its aesthetic appeal. Whatever the case,\n    one thing is certain: links do not require right-pointing\n    double angle quotation marks in order to function.'
   ]),
   p([
     strong(['The inclusion of such a character is therefore\n    a design decision.']),
@@ -100,19 +99,15 @@ const excerpt = [
 const body = [
   ...excerpt,
   h2(['Adding decorative textual content via CSS']),
-  (() => {
-    const url = 'http://reference.sitepoint.com';
-    const sitepoint = path => a(url + path);
-    return p([
-      'The ',
-      sitepoint('/css/content')([code(['content'])]),
-      ' property\n      is extremely powerful. It\'s used in conjunction with\n      the ',
-      sitepoint('/css/pseudoelement-before')([code([':before'])]),
-      '\n      and ',
-      sitepoint('/css/pseudoelement-after')([code([':after'])]),
-      '\n      pseudo-elements.'
-    ]);
-  })(),
+  p([
+    'The ',
+    a({ href: 'http://reference.sitepoint.com/css/content' })([code(['content'])]),
+    ' property is extremely powerful.\n    It\'s used in conjunction with the ',
+    a({ href: 'http://reference.sitepoint.com/css/pseudoelement-before' })([code([':before'])]),
+    ' and ',
+    a({ href: 'http://reference.sitepoint.com/css/pseudoelement-after' })([code([':after'])]),
+    ' pseudo-elements.'
+  ]),
   code$002Dblock('plain-text')(`<a class="more" href="/meaningful-markup/">Read more</a>
 
 .more:after {
@@ -129,7 +124,7 @@ const body = [
     ' can team up to great\n    effect. Often sites have footer links separated by "pipes".\n    These pipes commonly appear in the site\'s markup. ',
     strong(['This is wrong!']),
     ' Last week I was horrified to\n    discover that ',
-    a('http://bitbucket.org/')(['Bitbucket']),
+    a({ href: 'http://bitbucket.org/' })(['Bitbucket']),
     '\n    is guilty of this. I\'ve since rectified the situation\n    (although the change is yet to go live).'
   ]),
   code$002Dblock('css')(`.footer-nav li {

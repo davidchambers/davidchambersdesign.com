@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -92,7 +91,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'I have been experimenting with ',
-    a('https://en.wikipedia.org/wiki/Continuation-passing_style')(['continuation-passing style']),
+    a({ href: 'https://en.wikipedia.org/wiki/Continuation-passing_style' })(['continuation-passing style']),
     ' recently. Writing code in\n    this style feels strange but exciting! I recently discovered\n    that one can use functions in place of objects.'
   ]),
   p([

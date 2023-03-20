@@ -56,16 +56,16 @@ body = [
   ],
 
   p [
-    a "http://www.sproutcore.com/" ["SproutCore"], " rewrites the
-    client–server relationship by moving ", em ["all"], " programming
-    logic to the client. This new approach was motivated by a desire
-    to improve performance, but has two consequential benefits. No
-    longer do objects need to be represented on both sides of the
-    wire (in violation of the DRY principle). This brings another
-    benefit, which is the separation of concerns: the server is
-    freed to focus on serving, and the decoupling of service and
-    application code allow the service to be used (simultaneously)
-    by other applications.",
+    a {href: "http://www.sproutcore.com/"} ["SproutCore"], "
+    rewrites the client–server relationship by moving ", em ["all"], "
+    programming logic to the client. This new approach was motivated
+    by a desire to improve performance, but has two consequential
+    benefits. No longer do objects need to be represented on both
+    sides of the wire (in violation of the DRY principle). This
+    brings another benefit, which is the separation of concerns:
+    the server is freed to focus on serving, and the decoupling
+    of service and application code allow the service to be used
+    (simultaneously) by other applications.",
   ],
 
   p [
@@ -94,7 +94,7 @@ body = [
    "Exciting JavaScript-related developments are not limited to the
     client-side, however. There are several options available if you're
     interested in running JavaScript on the server, but the one that's
-    caught my attention is ", a "http://nodejs.org/" ["Node.js"], ".",
+    caught my attention is ", a {href: "http://nodejs.org/"} ["Node.js"], ".",
   ],
 
   dl [

@@ -14,11 +14,11 @@ export default {
 excerpt = [
   p [
    "In my post titled ",
-    a "/captions-over-images/" ["Captions over images"], "
+    a {href: "/captions-over-images/"} ["Captions over images"], "
     I advocate the use of definition lists for captioning images.
     Earlier today I was asked whether this meaningful markup could
     be used in conjunction with an \"image slider\" such as ",
-    a "http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding"
+    a {href: "http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding"}
       ["Easy Slider 1.5"], ".",
   ],
   p [
@@ -30,8 +30,8 @@ excerpt = [
   ],
   p [
    "Check out the ",
-    a "/examples/prototype-image-slider/" ["Prototype image slider demo"], "
-    to see the code in action.",
+    a {href: "/examples/prototype-image-slider/"}
+      ["Prototype image slider demo"], " to see the code in action.",
   ],
 ];
 
@@ -49,7 +49,7 @@ body = [
     `,
     p [
      "Wrapping the word \"class\" in quotes as per this ",
-      a "http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777"
+      a {href: "http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777"}
         ["recommendation by Tobie Langel"], " did the trick!",
     ],
   ],
@@ -58,7 +58,7 @@ body = [
 
   p [
    "First, you'll need to save a copy of ",
-    a "/examples/prototype-image-slider/prototype-image-slider.js"
+    a {href: "/examples/prototype-image-slider/prototype-image-slider.js"}
       ["prototype-image-slider.js"], ".",
   ],
 
@@ -120,7 +120,7 @@ body = [
   update {datetime "2009-09-21" "11:53:00" "Pacific/Auckland"} [
     p [
      "I neglected to mention that this code also requires ",
-      a "http://script.aculo.us/" ["script.aculo.us"], ".",
+      a {href: "http://script.aculo.us/"} ["script.aculo.us"], ".",
     ],
   ],
 

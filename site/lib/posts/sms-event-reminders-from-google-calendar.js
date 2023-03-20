@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -110,7 +109,7 @@ const body = [
   ...excerpt$002Dtext,
   p([
     'The first step is to open ',
-    a('http://calendar.google.com/')(['Google Calendar']),
+    a({ href: 'http://calendar.google.com/' })(['Google Calendar']),
     '.\n    Once you have signed in, you will see several links at the\n    top right of the page. Click on ',
     strong(['Settings']),
     '.'

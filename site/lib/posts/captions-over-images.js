@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -89,7 +88,7 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'This is my response to Chris Coyier\'s screencast titled ',
-    a('http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/')(['jQuery Part 3 \u2013 Image Title Plugin']),
+    a({ href: 'http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/' })(['jQuery Part 3 \u2013 Image Title Plugin']),
     ' which I watched\n    a couple of days ago. Something didn\'t sit right with me\n    at the time, and I\'ve now worked out what it was: ',
     strong(['JavaScript is not required!'])
   ]),
@@ -118,7 +117,7 @@ const body = [
   p(['Ideally, images appearing one after the other should belong to the\n    same definition list.']),
   p([
     'My aim was to achieve a result similar to Chris\'s ',
-    a('http://css-tricks.com/examples/TypeOverImagePlugin/')(['image title plugin demo']),
+    a({ href: 'http://css-tricks.com/examples/TypeOverImagePlugin/' })(['image title plugin demo']),
     '\n    simply by styling a definition list containing images and their\n    captions. In the end, I was forced to abandon the ideal of using a\n    single definition list for multiple images and captions: the nature\n    of CSS positioning dictates that each image\u2013caption pair reside in\n    its own element. The final markup, however, is still quite clean:'
   ]),
   code$002Dblock('html')(`<dl class="captioned-image">
@@ -137,8 +136,8 @@ const body = [
   ]),
   p([
     'Check out the ',
-    a('/examples/captions-over-images/')(['captions over images demo']),
-    '\n    to see the approach in action. The CSS responsible for the\n    appearance of the captions is as follows:'
+    a({ href: '/examples/captions-over-images/' })(['captions over images demo']),
+    ' to see the approach in action.\n    The CSS responsible for the appearance of the captions is as follows:'
   ]),
   code$002Dblock('css')(`dl.captioned-image         { position: relative; margin: 1em 0; }
 dl.captioned-image dt img  { display: block; }

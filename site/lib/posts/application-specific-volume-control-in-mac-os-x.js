@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -121,7 +120,7 @@ const body = [
   p(['+1 in the comments if you\'d like to see this feature implemented. :)']),
   update(datetime('2010-04-15')('14:36:00')('Pacific/Auckland'))([
     p([
-      a('http://www.joesoft.com/products/hear.php')(['Hear']),
+      a({ href: 'http://www.joesoft.com/products/hear.php' })(['Hear']),
       '\n      offers this functionality, but isn\'t cheap. I hope Hear\'s\n      developers decide to release a preference pane that provides\n      the functionality of Hear\'s mixer pane and nothing more\n      (I\'m about to make this request).'
     ]),
     p([img({

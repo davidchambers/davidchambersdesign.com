@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -92,7 +91,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'Recently I listened to ',
-    a('http://blog.extracheese.org/2010/02/python-vs-ruby-a-battle-to-the-death.html')(['Gary Bernhardt comparing Python and Ruby']),
+    a({ href: 'http://blog.extracheese.org/2010/02/python-vs-ruby-a-battle-to-the-death.html' })(['Gary Bernhardt comparing Python and Ruby']),
     '. In the talk Gary\n    states that he finds Ruby code ugly and Python code beautiful.\n    He then goes on to say that the things which reduce Ruby\'s\n    aesthetic appeal are the very things which allow Ruby to do\n    beautiful things impossible in Python.'
   ]),
   p(['Gary provides several examples of equivalent code in Python and\n    Ruby to highlight situations in which one language reads better\n    than the other, such as the following.']),
@@ -127,11 +126,11 @@ end.join('\\n')
 }).join('\\n');
 `),
   p([
-    a('https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Filter')([code(['filter'])]),
+    a({ href: 'https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Filter' })([code(['filter'])]),
     ', though, just removes from an array the\n    items which fail the provided "test". So the code above is\n    on the right track, but fails to produce a list of names.'
   ]),
   p([
-    a('https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Reduce')([code(['reduce'])]),
+    a({ href: 'https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Reduce' })([code(['reduce'])]),
     ' is the correct method for the job. ',
     code(['reduce']),
     ' "reduces" an array to a single value, which\n    could be a string, an object, another array',

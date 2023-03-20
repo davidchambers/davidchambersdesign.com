@@ -2,7 +2,6 @@ import { $2014 } from '../components.js';
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -96,9 +95,9 @@ const body = [
   ]),
   p([
     'Despite my appreciation of the preview, not one of my sites\n    provided this service until a few hours ago. Now that I\'ve\n    migrated from WordPress to ',
-    a('http://mango.io/')(['Mango']),
+    a({ href: 'http://mango.io/' })(['Mango']),
     '\n    I\'m able to spend some time working on front-end code. My first\n    two challenges were localizing dates and times, and integrating ',
-    a('http://wmd-editor.com/')(['wmd']),
+    a({ href: 'http://wmd-editor.com/' })(['wmd']),
     '.'
   ]),
   p([
@@ -117,7 +116,7 @@ const body = [
     ]),
     p([
       'It should be possible to access ',
-      a('/images/posts/53/wmd.mp4')(['wmd.mp4']),
+      a({ href: '/images/posts/53/wmd.mp4' })(['wmd.mp4']),
       ' directly.'
     ])
   ]),

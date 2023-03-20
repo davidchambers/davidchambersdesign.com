@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -93,7 +92,7 @@ import datetime from '../datetime.js';
 const body = [
   update(datetime('2009-08-28')('18:12:00')('Pacific/Auckland'))([p([
       'An update to this post has been published: ',
-      a('/tiny-calendar-icons-sprite/')(['Tiny calendar icons sprite']),
+      a({ href: '/tiny-calendar-icons-sprite/' })(['Tiny calendar icons sprite']),
       '.'
     ])]),
   p([
@@ -118,7 +117,7 @@ const body = [
   ]),
   p([
     'You are welcome to ',
-    a('/downloads/tiny-calendar-icon-set.zip')(['download the tiny calendar icon set']),
+    a({ href: '/downloads/tiny-calendar-icon-set.zip' })(['download the tiny calendar icon set']),
     '.'
   ])
 ];

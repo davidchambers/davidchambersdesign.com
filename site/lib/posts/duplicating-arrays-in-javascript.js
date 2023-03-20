@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -89,7 +88,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'Many of those who write JavaScript do not come from programming\n    backgrounds (while I\'ve written plenty of PHP, Python, and\n    JavaScript, I don\'t have much experience with "real" programming\n    languages',
-    a('#footnote')(['*']),
+    a({ href: '#footnote' })(['*']),
     '). As a result, a significant\n    portion of JavaScript coders do not think of variables as pointers\n    to memory addresses. This leads to confusion in cases such as this:'
   ]),
   code$002Dblock('javascript')(`var fruits = ['orange', 'lime'];
@@ -115,7 +114,7 @@ var colours = fruits;
 `),
   aside$0027({ id: 'footnote' })([
     '* Languages such as C.\n    Like ',
-    a('http://www.quirksmode.org/about/')(['ppk']),
+    a({ href: 'http://www.quirksmode.org/about/' })(['ppk']),
     ',\n    I take care to include quotation marks. ;)'
   ])
 ];

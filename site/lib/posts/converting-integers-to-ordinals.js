@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -89,8 +88,8 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'When dealing with dates, it\'s not uncommon to need to convert an\n    integer into an ordinal number (1st, 2nd, 3rd, etc.). While making\n    improvements to ',
-    a('http://mango.io/wtf?')(['Mango']),
-    ' recently I\n    wrote a function to do this, first in Python, later in JavaScript.'
+    a({ href: 'http://mango.io/wtf?' })(['Mango']),
+    ' recently\n    I wrote a function to do this, first in Python, later in JavaScript.'
   ]),
   h3(['Python']),
   code$002Dblock('python')(`def ordinal(n):

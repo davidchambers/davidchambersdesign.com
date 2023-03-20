@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -109,7 +108,7 @@ const body = [
     'To gain a more detailed understanding of why JavaScript ',
     em(['appears']),
     ' to have associative arrays, read ',
-    a('http://andrewdupont.net/2006/05/18/javascript-associative-arrays-considered-harmful/')([`JavaScript "Associative Arrays" Considered Harmful`]),
+    a({ href: 'http://andrewdupont.net/2006/05/18/javascript-associative-arrays-considered-harmful/' })([`JavaScript "Associative Arrays" Considered Harmful`]),
     '.'
   ])
 ];

@@ -25,10 +25,10 @@ body = [
 
   p [
    "The article from which this photograph is lifted, entitled ",
-    a "http://knifeandsaw.wordpress.com/furniture/bike-shelf/"
+    a {href: "http://knifeandsaw.wordpress.com/furniture/bike-shelf/"}
       ["Bike Shelf"], ",
     is over on ",
-    a "http://knifeandsaw.wordpress.com/" ["Knife & Saw"], ".",
+    a {href: "http://knifeandsaw.wordpress.com/"} ["Knife & Saw"], ".",
   ],
 
 ];

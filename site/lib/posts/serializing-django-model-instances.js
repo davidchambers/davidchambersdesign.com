@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -116,7 +115,7 @@ simplejson.dumps(instance)
   p([
     code(['_meta.fields']),
     ' is an ordered list of model fields\n    which can be accessed from instances and from the model itself. ',
-    a('http://www.djangofoo.com/tag/meta-fields')(['_meta.fields']),
+    a({ href: 'http://www.djangofoo.com/tag/meta-fields' })(['_meta.fields']),
     '\n    is one of the few features not covered in Django\'s excellent\n    documentation.'
   ])
 ];

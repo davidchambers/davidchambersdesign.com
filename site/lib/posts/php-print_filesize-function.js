@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -89,7 +88,7 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'Recently I\'ve been on a drive to eliminate dependencies from my\n    code and other areas, such as blog posts. For those who create\n    content for the Web, a reasonably common task is to provide links\n    to files that can be downloaded. It is considered good practice\n    to include an indication of a file\'s size; for example: ',
-    a('/favicon.ico')(['favicon.ico']),
+    a({ href: '/favicon.ico' })(['favicon.ico']),
     ' (3 KB).'
   ]),
   p([
@@ -144,7 +143,7 @@ function print_filesize($filename, $before = ' <span class="filesize">(', $after
 `),
   p([
     'This gives: ',
-    a('/favicon.ico')(['favicon.ico']),
+    a({ href: '/favicon.ico' })(['favicon.ico']),
     ' ',
     span({ class: 'filesize' })(['(\u22481.1 kB)']),
     '. By default,\n    the function wraps the file\'s size in a ',

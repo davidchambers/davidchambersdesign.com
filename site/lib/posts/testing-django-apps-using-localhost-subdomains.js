@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -92,7 +91,7 @@ const body = [
     li([
       p([
         'I saved ',
-        a('http://thingsilearned.com/2009/01/05/using-subdomains-in-django/')(['Dave Fowler\'s subdomain middleware']),
+        a({ href: 'http://thingsilearned.com/2009/01/05/using-subdomains-in-django/' })(['Dave Fowler\'s subdomain middleware']),
         '\n        as ',
         code(['middleware.py']),
         ' in my project directory:'

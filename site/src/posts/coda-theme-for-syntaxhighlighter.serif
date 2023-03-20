@@ -13,13 +13,14 @@ export default {
 
 excerpt = [
   p [
-   "It's no secret – I love ", a "http://www.panic.com/coda/" ["Coda"], "!
-    It's a pleasure to use. ", strong ["It looks so damn good."], " When I
-    started using ", a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
-    ["SyntaxHighlighter"], " I set out to create a Coda theme. Thankfully,
-    the good folks at Panic had done the ground work for me. All I had
-    to do was create a style sheet that would make my code snippets look
-    as sexy online as they do in my text editor.",
+   "It's no secret – I love ",
+    a {href: "http://www.panic.com/coda/"} ["Coda"], "! It's a pleasure
+    to use. ", strong ["It looks so damn good."], " When I started using ",
+    a {href: "http://alexgorbatchev.com/wiki/SyntaxHighlighter"}
+      ["SyntaxHighlighter"], " I set out to create a Coda theme. Thankfully,
+    the good folks at Panic had done the ground work for me. All I had to
+    do was create a style sheet that would make my code snippets look as
+    sexy online as they do in my text editor.",
   ],
   p [
    "Or so I thought.",
@@ -29,7 +30,7 @@ excerpt = [
 body = [
 
   p [
-    a "#setup" ["Skip to setup instructions"],
+    a {href: "#setup"} ["Skip to setup instructions"],
   ],
 
   ...excerpt,
@@ -282,7 +283,7 @@ body = [
   ol [
     li [
      "Download and unzip ",
-      a "/downloads/coda-theme-for-syntaxhighlighter.zip"
+      a {href: "/downloads/coda-theme-for-syntaxhighlighter.zip"}
         ["coda-theme-for-syntaxhighlighter.zip"], ".",
     ],
     li [

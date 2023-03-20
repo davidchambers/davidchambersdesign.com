@@ -51,7 +51,7 @@ body = [
   }],
 
   p [
-    a "http://blog.cocoia.com/" ["Sebastiaan de With"], "
+    a {href: "http://blog.cocoia.com/"} ["Sebastiaan de With"], "
     would not stand for this!",
   ],
 

@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -92,16 +91,16 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'I love ',
-    a('http://www.panic.com/coda/')(['Coda']),
+    a({ href: 'http://www.panic.com/coda/' })(['Coda']),
     '.\n    It\'s just so... sexy, somehow. I\'ve just discovered ',
-    a('http://www.djangoproject.com/')(['Django']),
+    a({ href: 'http://www.djangoproject.com/' })(['Django']),
     ', with which\n    I\'m fast falling in love as well. Naturally, when I came to write\n    my first Django template I opened Coda.app and started coding.'
   ]),
   p([
     'It soon became apparent, however, that ',
     strong(['Coda does not apply\n    syntax highlighting to Django']),
     '. The solution? Juan Pablo Claude\'s ',
-    a('http://weblog.bignerdranch.com/?p=49')(['Django and Django-template bundles for Coda']),
+    a({ href: 'http://weblog.bignerdranch.com/?p=49' })(['Django and Django-template bundles for Coda']),
     '.'
   ]),
   captioned$002Dimages([{
@@ -111,7 +110,7 @@ const body = [
     }]),
   update(datetime('2010-11-14')('14:00:00')('Australia/Sydney'))([p([
       'I\'ve since discovered an alternative mode which\n      is actively maintained over on GitHub. I now use ',
-      a('https://github.com/jbergantine/Django-Template')(['jbergantine\'s Django-Template']),
+      a({ href: 'https://github.com/jbergantine/Django-Template' })(['jbergantine\'s Django-Template']),
       '.'
     ])])
 ];

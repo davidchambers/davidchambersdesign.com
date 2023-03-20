@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -143,20 +142,20 @@ const body = [
   h3(['jQuery']),
   p([
     'I was not quick to embrace ',
-    a('http://jquery.com/')(['jQuery']),
-    '.\n    Soon after I discovered DOM scripting and the incompatible DOM\n    APIs provided by the various browsers, I understood the need for\n    a JavaScript library. Soon after that I ',
+    a({ href: 'http://jquery.com/' })(['jQuery']),
+    '.\n    Soon after I discovered DOM scripting and the incompatible DOM APIs\n    provided by the various browsers, I understood the need for a JavaScript\n    library. Soon after that I ',
     del(['decided']),
     ' ',
     ins(['stumbled']),
-    ' upon ',
-    a('http://prototypejs.org/')(['Prototype']),
-    '.\n    More recently I became an advocate of ',
-    a('http://mootools.net/')(['MooTools']),
-    ' which',
+    '\n    upon ',
+    a({ href: 'http://prototypejs.org/' })(['Prototype']),
+    '. More recently\n    I became an advocate of ',
+    a({ href: 'http://mootools.net/' })(['MooTools']),
+    '\n    which',
     $2014,
     'like Prototype',
     $2014,
-    'fixes deficiencies in the JavaScript language itself, in addition\n    to fixing the DOM.'
+    'fixes deficiencies in the JavaScript\n    language itself, in addition to fixing the DOM.'
   ]),
   p([
     'While reading John Resig\'s ',
@@ -166,10 +165,10 @@ const body = [
   h3(['jQuery.localize']),
   p([
     'At ',
-    a('http://www.atlassian.com/')(['Atlassian']),
-    ' we\'re lucky enough\n    to have "20 percent time". A couple of weeks ago I spent the day\n    working on ',
-    a('http://bitbucket.org/davidchambers/jquery.localize')(['jQuery.localize']),
-    ', my first jQuery plugin. I\'ve spent much of the\n    last two weekends making the plugin more flexible and documenting its\n    relatively simple API.'
+    a({ href: 'http://www.atlassian.com/' })(['Atlassian']),
+    ' we\'re lucky enough\n    to have "20 percent time". A couple of weeks ago I spent the day working on ',
+    a({ href: 'http://bitbucket.org/davidchambers/jquery.localize' })(['jQuery.localize']),
+    ',\n    my first jQuery plugin. I\'ve spent much of the last two weekends making the plugin\n    more flexible and documenting its relatively simple API.'
   ]),
   p([
     'Assume that a page contains the following ',
@@ -194,19 +193,15 @@ const body = [
   ]),
   code$002Dblock('html')(`<time datetime="2010-11-28T00:30+11:00">28 November 2010</time>
 `),
-  (() => {
-    const url = 'http://bitbucket.org/davidchambers/jquery.localize';
-    const link = path => a([url + path]);
-    return p([
-      'Date and time formats are fully customizable via ',
-      link('/src#directives')(['directives']),
-      ', and there is\n      support for ',
-      link('/src#i18n')(['internationalization']),
-      '.\n      I won\'t go into the details here; there\'s extensive ',
-      link('/src#wiki')(['documentation']),
-      ' at the project\'s\n      home on Bitbucket.'
-    ]);
-  })()
+  p([
+    'Date and time formats are fully customizable via ',
+    a({ href: 'http://bitbucket.org/davidchambers/jquery.localize/src#directives' })(['directives']),
+    ', and there is support for ',
+    a({ href: 'http://bitbucket.org/davidchambers/jquery.localize/src#i18n' })(['internationalization']),
+    '. I won\'t go into the details here; there\'s extensive ',
+    a({ href: 'http://bitbucket.org/davidchambers/jquery.localize/src#wiki' })(['documentation']),
+    ' at the project\'s home on Bitbucket.'
+  ])
 ];
 export default {
   id: 74,

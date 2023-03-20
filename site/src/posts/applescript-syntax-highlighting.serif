@@ -14,19 +14,19 @@ export default {
 excerpt = [
   p [
    "I've been using Alex Gorbatchev's ",
-    a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
+    a {href: "http://alexgorbatchev.com/wiki/SyntaxHighlighter"}
       ["SyntaxHighlighter"], "
     to syntactically display code of various languages for several
     months now. When I decided to post an AppleScript snippet, however,
     I realised that I was out of luck. SyntaxHighlighter does not
     include an AppleScript \"brush\", and a quick flick through the ",
-    a "http://alexgorbatchev.com/forums/" ["SyntaxHighlighter forums"], "
-    did not bring me any joy.",
+    a {href: "http://alexgorbatchev.com/forums/"}
+      ["SyntaxHighlighter forums"], " did not bring me any joy.",
   ],
   p [
     strong ["How hard could it be to write a brush for AppleScript?"], ",
     I wondered. The handy guide to ",
-    a "http://alexgorbatchev.com/wiki/SyntaxHighlighter:Brushes:Custom"
+    a {href: "http://alexgorbatchev.com/wiki/SyntaxHighlighter:Brushes:Custom"}
       ["developing a custom brush"], " got me started, and I was soon
     busy trying to encapsulate AppleScript's syntax", —, "along with its
     keywords and countless words and phrases with special meanings", —,
@@ -37,7 +37,7 @@ excerpt = [
 body = [
 
   p [
-    a "#setup" ["Skip to setup instructions"],
+    a {href: "#setup"} ["Skip to setup instructions"],
   ],
 
   ...excerpt,
@@ -122,14 +122,14 @@ body = [
     li [
       p [
        "Download ",
-        a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
+        a {href: "http://alexgorbatchev.com/wiki/SyntaxHighlighter"}
           ["SyntaxHighlighter"], ", and follow the setup instructions.",
       ],
     ],
     li [
       p [
        "Download ",
-        a "https://bitbucket.org/davidchambers/applescript-theme/raw/default/shBrushAppleScript.js"
+        a {href: "https://bitbucket.org/davidchambers/applescript-theme/raw/default/shBrushAppleScript.js"}
           ["AppleScript brush"], ",
         and upload it to your SyntaxHighlighter ", strong ["scripts"], "
         directory.",
@@ -138,7 +138,7 @@ body = [
     li [
       p [
        "Download ",
-        a "https://bitbucket.org/davidchambers/applescript-theme/raw/default/shThemeAppleScript.css"
+        a {href: "https://bitbucket.org/davidchambers/applescript-theme/raw/default/shThemeAppleScript.css"}
           ["AppleScript theme"], ",
         and upload it to your SyntaxHighlighter ", strong ["styles"], "
         directory.",

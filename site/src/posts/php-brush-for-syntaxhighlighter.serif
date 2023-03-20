@@ -14,7 +14,7 @@ export default {
 excerpt = [
   p [
    "Alex Gorbatchev's ",
-    a "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
+    a {href: "http://alexgorbatchev.com/wiki/SyntaxHighlighter"}
       ["SyntaxHighlighter"], "
     is a well-written bundle which enables syntax highlighting of
     code via JavaScript. More than twenty languages are supported
@@ -56,14 +56,14 @@ body = [
   ],
 
   p [
-   "I've created an ", a "/downloads/shBrushPhp.js" ["improved PHP brush"], "
+   "I've created an ", a {href: "/downloads/shBrushPhp.js"} ["improved PHP brush"], "
     which remedies these deficiencies. It uses the following class names: ",
     strong ["phptag"], " for opening and closing PHP tags, including short
     tags; ", strong ["comments"], " for both single- and multi-line comments; ",
     strong ["string"], " for both single- and double-quoted strings; ",
     strong ["varinstr"], " for variables within double-quoted strings; ",
     strong ["numval"], " for numerical values; ", strong ["function"], " for ",
-    a "http://www.php.net/quickref.php" ["documented PHP functions"], "; ",
+    a {href: "http://www.php.net/quickref.php"} ["documented PHP functions"], "; ",
     strong ["custfunc"], " for custom (user-defined) functions; and ",
     strong ["constant"], ", ", strong ["keyword"], ", and ",
     strong ["variable"], " for exactly what you'd expect.",

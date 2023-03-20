@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -140,7 +139,7 @@ re.sub(r'(?m)(^|\\s)(@\\w+)',
   h3(['Matching hyperlinks']),
   p([
     'The regular expression involved in matching\n    hyperlinks is more complex. I\'ll point you to John Gruber\'s ',
-    a('http://daringfireball.net/2009/11/liberal_regex_for_matching_urls')(['liberal regex for matching URLs']),
+    a({ href: 'http://daringfireball.net/2009/11/liberal_regex_for_matching_urls' })(['liberal regex for matching URLs']),
     ' as he\'s clearly put a great\n    deal of thought into what is essentially a single line of code!'
   ])
 ];

@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -95,9 +94,9 @@ const excerpt = [p([
     'like this one',
     $2014,
     'provide an introduction to ',
-    a('http://socket.io/')(['Socket.IO']),
+    a({ href: 'http://socket.io/' })(['Socket.IO']),
     '. Many, though, were\n    written prior to the release of 0.7, which ushered in ',
-    a('https://github.com/LearnBoost/Socket.IO/wiki/Migrating-0.6-to-0.7')(['significant API changes']),
+    a({ href: 'https://github.com/LearnBoost/Socket.IO/wiki/Migrating-0.6-to-0.7' })(['significant API changes']),
     '. Here I\'ll provide examples\n    of server- and client-side code using APIs provided by the ',
     em(['current']),
     ' version (0.7.4 at time of writing).'
@@ -106,7 +105,7 @@ const body = [
   ...excerpt,
   p([
     'The code snippets are in ',
-    a('http://jashkenas.github.com/coffee-script/')(['CoffeeScript']),
+    a({ href: 'http://jashkenas.github.com/coffee-script/' })(['CoffeeScript']),
     '\n    and as such are largely free of the parentheses, squiggly brackets,\n    and semicolons that riddle the equivalent JavaScript code. For those\n    unfamiliar with CoffeeScript\'s syntax, here\'s the fifteen second\n    rundown:'
   ]),
   code$002Dblock('coffeescript')(`qux = foo 'bar', (baz) -> 'Hello, world!'
@@ -293,7 +292,7 @@ $('button').click ->
   h3(['Code']),
   p([
     'The ',
-    a('https://bitbucket.org/davidchambers/socket.io.demo')(['code used in this tutorial']),
+    a({ href: 'https://bitbucket.org/davidchambers/socket.io.demo' })(['code used in this tutorial']),
     ' is available on Bitbucket.'
   ])
 ];

@@ -1,7 +1,6 @@
 import {
   text,
   a,
-  a$0027,
   article,
   article$0027,
   aside,
@@ -91,14 +90,14 @@ import {
 import datetime from '../datetime.js';
 const excerpt = [
   p([
-    a('http://alexgorbatchev.com/wiki/SyntaxHighlighter')(['SyntaxHighlighter']),
+    a({ href: 'http://alexgorbatchev.com/wiki/SyntaxHighlighter' })(['SyntaxHighlighter']),
     ' is a fully functional self-contained\n    code syntax highlighter developed in JavaScript (as stated on\n    its wiki). One of its deficiencies is that it retrieves all\n    its brushes each time a page is loaded, despite the fact that\n    in many cases only one or two (or none) are required.'
   ]),
   p([
     'Currently, ',
-    a('http://prototypejs.org/')(['Prototype']),
-    ' is\n    my JavaScript framework of choice (although I\'m really looking\n    forward to trying ',
-    a('http://jquery.com/')(['jQuery']),
+    a({ href: 'http://prototypejs.org/' })(['Prototype']),
+    '\n    is my JavaScript framework of choice (although I\'m really looking\n    forward to trying ',
+    a({ href: 'http://jquery.com/' })(['jQuery']),
     ').\n    I have used Prototype to create a ',
     strong(['brush loader for\n    SyntaxHighlighter']),
     ', which retrieves brushes on demand to\n    reduce page loading times (in certain circumstances).'
@@ -107,9 +106,9 @@ const excerpt = [
 const body = [
   p([
     'Skip to ',
-    a('#setup')(['setup']),
-    ' or ',
-    a('#usage')(['usage'])
+    a({ href: '#setup' })(['setup']),
+    '\n    or ',
+    a({ href: '#usage' })(['usage'])
   ]),
   ...excerpt,
   update(datetime('2009-06-27')('06:21:00')('Pacific/Auckland'))([p(['I have completely rewritten the code so that it no longer\n      requires empty functions inside the brush files to act as\n      indicators of readiness. Instead, the required brushes are\n      retrieved in a daisy chain. This is both more elegant and\n      more reliable. Additionally, style sheets are now also\n      retrieved on demand.'])]),
@@ -128,12 +127,12 @@ const body = [
   ol([
     li([p([
         'Download ',
-        a('/downloads/loader.js')(['loader.js']),
+        a({ href: '/downloads/loader.js' })(['loader.js']),
         ' or the ',
-        a('/downloads/loader.min.js.gz')(['minified and gzipped version']),
+        a({ href: '/downloads/loader.min.js.gz' })(['minified and gzipped version']),
         '\n        and upload it to your SyntaxHighlighter ',
         strong(['scripts']),
-        '\n        directory.'
+        ' directory.'
       ])]),
     li([
       p(['Replace:']),
@@ -236,12 +235,12 @@ const body = [
     'Many thanks to Dan Breslau for letting me know about ',
     code(['SyntaxHighlighter.highlight()']),
     ' and for his thorough\n    testing of each of the early iterations of this code. Dan\'s ',
-    a('http://www.outofwhatbox.com/blog/2009/06/syntaxhighlighter-revised-again-works-on-its-own-once-again/')(['SyntaxHighlighter improvements']),
+    a({ href: 'http://www.outofwhatbox.com/blog/2009/06/syntaxhighlighter-revised-again-works-on-its-own-once-again/' })(['SyntaxHighlighter improvements']),
     ' are well worth a look!'
   ]),
   update(datetime('2009-06-27')('06:21:00')('Pacific/Auckland'))([p([
       'Thanks also to Bob Matsuoka for sharing his ',
-      a('http://ajaxian.com/archives/a-technique-for-lazy-script-loading')(['technique for lazy script loading']),
+      a({ href: 'http://ajaxian.com/archives/a-technique-for-lazy-script-loading' })(['technique for lazy script loading']),
       ' which provides\n      workarounds for browsers that do not support the onload\n      event when applied to script elements.'
     ])]),
   update(datetime('2009-08-16')('01:24:00')('Pacific/Auckland'))([

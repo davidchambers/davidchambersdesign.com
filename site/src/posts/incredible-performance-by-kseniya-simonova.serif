@@ -21,7 +21,7 @@ body = [
   ],
 
   p [
-    a "http://www.youtube.com/watch?v=518XP8prwZo"
+    a {href: "http://www.youtube.com/watch?v=518XP8prwZo"}
       ["Kseniya Simonova on Ukraine's Got Talent"],
   ],
 
