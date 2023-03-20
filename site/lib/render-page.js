@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,

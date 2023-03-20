@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -94,7 +93,7 @@ const body = [
   p(['There are blog posts all over the Web explaining how to\n    write valid XHTML markup to embed YouTube videos. There\n    are also a number of online converters that generate this\n    markup automatically.']),
   p([
     'I\'ve always found it easier to write the markup myself,\n    as there\'s really nothing to it. Simply replace both\n    instances of ',
-    code('video_id'),
+    code(['video_id']),
     ' in the following\n    code with',
     $2014,
     'you guessed it',
@@ -109,19 +108,19 @@ const body = [
 </object>
 `),
   p([
-    code('rel=0'),
+    code(['rel=0']),
     ' is often useful to include (as I\'ve done\n    in the example above) as it prevents thumbnails for related\n    videos from being displayed at the end of the clip.'
   ]),
   p([
     'One important point to remember when you\'re "rolling your own"\n    markup is that the character entity ',
-    code('&amp;'),
+    code(['&amp;']),
     ' must be\n    used for all ampersands.'
   ]),
   p([
     'Finally, be aware of the fact that it\'s possible to change the size\n    of the YouTube object using CSS. There\'s no need to include the ',
-    code('width'),
+    code(['width']),
     ' and ',
-    code('height'),
+    code(['height']),
     ' attributes in the markup.'
   ]),
   code$002Dblock('css')(`object.youtube
@@ -134,7 +133,7 @@ const body = [
 export default {
   id: 25,
   slug: 'embed-youtube-clips-using-valid-xhtml-markup',
-  title: 'Embed YouTube clips using valid XHTML markup',
+  title: ['Embed YouTube clips using valid XHTML markup'],
   datetime: datetime('2009-09-14')('14:17:00')('Pacific/Auckland'),
   tags: [
     'css',

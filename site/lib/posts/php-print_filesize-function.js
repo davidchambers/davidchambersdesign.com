@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -90,12 +89,12 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'Recently I\'ve been on a drive to eliminate dependencies from my\n    code and other areas, such as blog posts. For those who create\n    content for the Web, a reasonably common task is to provide links\n    to files that can be downloaded. It is considered good practice\n    to include an indication of a file\'s size; for example: ',
-    a('/favicon.ico')('favicon.ico'),
+    a('/favicon.ico')(['favicon.ico']),
     ' (3 KB).'
   ]),
   p([
     'As I was about to hard-code a file\'s size into a blog post\n    recently, I thought to myself: ',
-    strong('Will I remember to\n    update this if the file\'s size changes?'),
+    strong(['Will I remember to\n    update this if the file\'s size changes?']),
     ' More importantly,\n    should I be required to remember such things? The answer,\n    of course, is no. I set about writing a function that would\n    allow the file\'s size to be displayed dynamically.'
   ])
 ];
@@ -145,20 +144,20 @@ function print_filesize($filename, $before = ' <span class="filesize">(', $after
 `),
   p([
     'This gives: ',
-    a('/favicon.ico')('favicon.ico'),
+    a('/favicon.ico')(['favicon.ico']),
     ' ',
-    span({ class: 'filesize' })('(\u22481.1 kB)'),
-    '. By default, the function\n    wraps the file\'s size in a ',
-    code('span'),
-    ' element with ',
-    code('class="filesize"'),
-    ', to provide a hook for styling\n    if required.'
+    span({ class: 'filesize' })(['(\u22481.1 kB)']),
+    '. By default,\n    the function wraps the file\'s size in a ',
+    code(['span']),
+    '\n    element with ',
+    code([`class="filesize"`]),
+    ', to provide\n    a hook for styling if required.'
   ])
 ];
 export default {
   id: 17,
   slug: 'php-print_filesize-function',
-  title: 'PHP print_filesize function',
+  title: ['PHP print_filesize function'],
   datetime: datetime('2009-06-10')('21:17:00')('Pacific/Auckland'),
   tags: [
     'best-practice',

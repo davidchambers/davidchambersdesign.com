@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -94,7 +93,7 @@ import datetime from '../datetime.js';
 const body = [
   update(datetime('2009-08-28')('18:12:00')('Pacific/Auckland'))([p([
       'An update to this post has been published: ',
-      a('/tiny-calendar-icons-sprite/')('Tiny calendar icons sprite'),
+      a('/tiny-calendar-icons-sprite/')(['Tiny calendar icons sprite']),
       '.'
     ])]),
   p([
@@ -119,14 +118,14 @@ const body = [
   ]),
   p([
     'You are welcome to ',
-    a('/downloads/tiny-calendar-icon-set.zip')('download the tiny calendar icon set'),
+    a('/downloads/tiny-calendar-icon-set.zip')(['download the tiny calendar icon set']),
     '.'
   ])
 ];
 export default {
   id: 14,
   slug: 'tiny-calendar-icon-set',
-  title: 'Tiny calendar icon set',
+  title: ['Tiny calendar icon set'],
   datetime: datetime('2009-04-24')('21:24:00')('Pacific/Auckland'),
   tags: [
     'design',

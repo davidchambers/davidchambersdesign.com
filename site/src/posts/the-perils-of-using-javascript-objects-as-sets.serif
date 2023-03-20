@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 94,
   slug: "the-perils-of-using-javascript-objects-as-sets",
-  title: "The perils of using JavaScript objects as sets",
+  title: ["The perils of using JavaScript objects as sets"],
   datetime: datetime "2012-09-03" "20:00:00" "America/Los_Angeles",
   tags: ["best-practice", "data-structures", "javascript", "programming", "python"],
   body: body,
@@ -37,11 +37,11 @@ body = [
     are the most glaring omissions.",
   ],
 
-  h3 "How does Python do it?",
+  h3 ["How does Python do it?"],
 
   p [
    "Python has literal syntax for sets, and supports
-    membership checks via the ", code "in", " keyword:",
+    membership checks via the ", code ["in"], " keyword:",
   ],
 
   code-block "python" `
@@ -67,12 +67,14 @@ body = [
     False
   `,
 
-  h3 "Fashioning a poor man’s set from the limited materials
-      JavaScript provides",
+  h3 [
+   "Fashioning a poor man’s set from the limited materials
+    JavaScript provides",
+  ],
 
   p [
    "How might one create a set of strings in JavaScript given the
-    limited, ahem, ", em "set", " of data structures at our disposal?
+    limited, ahem, ", em ["set"], " of data structures at our disposal?
     One could use a string:",
   ],
 
@@ -114,7 +116,7 @@ body = [
   ],
 
   p [
-   "An object, then, is the ", em "best", " choice:",
+   "An object, then, is the ", em ["best"], " choice:",
   ],
 
   code-block "javascript" `
@@ -126,7 +128,7 @@ body = [
   `,
 
   p [
-   "This addresses the outstanding problems, and the ", code "in", "
+   "This addresses the outstanding problems, and the ", code ["in"], "
     keyword makes the intent of these expressions clear.",
   ],
 
@@ -144,12 +146,12 @@ body = [
   `,
 
   p [
-   "The ", code "in", " check tells us whether the property exists on
-    the object ", em "or anywhere in its prototype chain", ". Ugh.",
+   "The ", code ["in"], " check tells us whether the property exists on
+    the object ", em ["or anywhere in its prototype chain"], ". Ugh.",
   ],
 
   p [
-    code "in", " is out, then, but there is a way to ask whether a
+    code ["in"], " is out, then, but there is a way to ask whether a
     property exists on the object itself:",
   ],
 
@@ -175,10 +177,10 @@ body = [
   `,
 
   p [
-   "If we rely on ", code "usernames.hasOwnProperty", " we lose
+   "If we rely on ", code ["usernames.hasOwnProperty"], " we lose
     the ability to perform membership checks as soon as we add
     \"hasOwnProperty\" as a member. The solution is to grab the
-    function from a reliable source (", code "Object.prototype", "):",
+    function from a reliable source (", code ["Object.prototype"], "):",
   ],
 
   code-block "javascript" `
@@ -192,7 +194,7 @@ body = [
     and avoids the pitfalls of the aforementioned approaches.",
   ],
 
-  h3 "Bonus section",
+  h3 ["Bonus section"],
 
   p [
    "In working through this question with a candidate I realized

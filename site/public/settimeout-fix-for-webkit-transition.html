@@ -41,7 +41,7 @@
           </header>
           <p>Here's a simple animation which utilizes <code>webkitTransition</code>:</p>
           <p id="transition-example-1" style="position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;">Click to animate</p>
-          <script>(function () { var element = document.getElementById('transition-example-1'); element.style.webkitTransitionProperty = 'left'; element.style.webkitTransitionDuration = '2s'; element.addEventListener('click', function () { this.style.left = '100px'; this.addEventListener('webkitTransitionEnd', function () { this.style.left = 0; }); }); })();</script>
+          <script>(function () { var element = document.getElementById('transition-example-1'); element.style.webkitTransitionProperty = 'left'; element.style.webkitTransitionDuration = '2s'; element.addEventListener('click', function () { this.style.left = '100px'; this.addEventListener('webkitTransitionEnd', function () { this.style.left = 0; }); });})();</script>
           <p>The code behind this example is not complicated:</p>
           <pre><code>element.style.webkitTransitionProperty = 'left';
 element.style.webkitTransitionDuration = '2s';
@@ -54,7 +54,7 @@ element.addEventListener('click', function () {
 </code></pre>
           <p>The following example, though, does not act as one might expect!</p>
           <p id="transition-example-2" style="position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;">Click to reposition</p>
-          <script>(function () { var element = document.getElementById('transition-example-2'); element.addEventListener('click', function () { this.style.left = '100px'; this.style.webkitTransitionProperty = 'left'; this.style.webkitTransitionDuration = '2s'; this.addEventListener('webkitTransitionEnd', function () { this.innerHTML = "D'oh!"; this.style.left = 0; }); }); })();</script>
+          <script>(function () { var element = document.getElementById('transition-example-2'); element.addEventListener('click', function () { this.style.left = '100px'; this.style.webkitTransitionProperty = 'left'; this.style.webkitTransitionDuration = '2s'; this.addEventListener('webkitTransitionEnd', function () { this.innerHTML = "D'oh!"; this.style.left = 0; }); });})();</script>
           <p>The code:</p>
           <pre><code>element.style.left = '100px';
 element.style.webkitTransitionProperty = 'left';
@@ -68,7 +68,7 @@ element.style.webkitTransitionDuration = '2s';
           <p>What actually happens — as you'll have seen if you're viewing this page in a recent version of Safari or Chrome — is that the transition is applied to the preceding update. This behaviour strikes me as strange, but I have very little understanding of how these transitions are meant to be effected by the browser.</p>
           <p>I did manage to get the element to behave as I had intended:</p>
           <p id="transition-example-3" style="position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;">Click to reposition</p>
-          <script>(function () { var element = document.getElementById('transition-example-3'); element.addEventListener('click', function () { this.style.left = '100px'; setTimeout(function () { element.style.webkitTransitionProperty = 'left'; element.style.webkitTransitionDuration = '2s'; }, 0); setTimeout(function () { element.style.webkitTransitionProperty = 'none'; element.style.left = 0; }, 2000); }); })();</script>
+          <script>(function () { var element = document.getElementById('transition-example-3'); element.addEventListener('click', function () { this.style.left = '100px'; setTimeout(function () { element.style.webkitTransitionProperty = 'left'; element.style.webkitTransitionDuration = '2s'; }, 0); setTimeout(function () { element.style.webkitTransitionProperty = 'none'; element.style.left = 0; }, 2000); });})();</script>
           <p>The working code:</p>
           <pre><code>element.style.left = '100px';
 setTimeout(function () {

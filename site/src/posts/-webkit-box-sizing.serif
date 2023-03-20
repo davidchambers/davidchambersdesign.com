@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 58,
   slug: "-webkit-box-sizing",
-  title: "-webkit-box-sizing",
+  title: ["-webkit-box-sizing"],
   datetime: datetime "2010-07-18" "21:30:00" "Pacific/Auckland",
   tags: ["css", "webkit"],
   body: body,
@@ -34,15 +34,15 @@ body = [
   ],
 
   p [
-   "I then noticed a curious property, ", code "-webkit-box-sizing", ".
+   "I then noticed a curious property, ", code ["-webkit-box-sizing"], ".
     Sure enough, this was the culprit. Safari and Chrome both use ",
-    code "border-box", " as the default value, which means that padding
-    does not add to an element's dimensions the way it does in the
-    standard box model.",
+    code ["border-box"], " as the default value, which means that
+    padding does not add to an element's dimensions the way it does
+    in the standard box model.",
   ],
 
   p [
-   "Specifying ", code "content-box", " fixed the problem.",
+   "Specifying ", code ["content-box"], " fixed the problem.",
   ],
 
   captioned-images [{
@@ -60,8 +60,8 @@ body = [
 
   p [
    "The question remains as to why these browsers default to ",
-    code "border-box", " as the ", code "box-sizing", " for ",
-    code "input", " elements with ", code "type=\"search\"", ".
+    code ["border-box"], " as the ", code ["box-sizing"], " for ",
+    code ["input"], " elements with ", code [`type="search"`], ".
     I don't know whether default styles are specified at the
     rendering engine level or at the browser level, but either
     way I would say that it's the result of Apple fiddling with

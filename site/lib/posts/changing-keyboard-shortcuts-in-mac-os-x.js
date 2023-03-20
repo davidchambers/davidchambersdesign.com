@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -91,38 +90,41 @@ const body = [
   ...excerpt,
   p([
     'I stumbled upon this useful information while reading ',
-    a('http://caminobrowser.org/documentation/faq/#cust_change')('Camino\'s FAQ'),
+    a('http://caminobrowser.org/documentation/faq/#cust_change')(['Camino\'s FAQ']),
     '. I have reproduced its step-by-step instructions\n    below, since they are right on the money.'
   ]),
   ul([
     li(['First, quit \xABapplication\xBB; if it is running.']),
     li([
       'Open ',
-      strong('System Preferences'),
+      strong(['System Preferences']),
       '.'
     ]),
     li([
       'Choose the ',
-      strong('"Keyboard & Mouse"'),
+      strong([`"Keyboard & Mouse"`]),
       ' pane.'
     ]),
-    li(['Select the "Keyboard Shortcuts" tab.']),
-    li(['Press the "+" button at the bottom of that tab.']),
+    li([`Select the "Keyboard Shortcuts" tab.`]),
+    li([`Press the "+" button at the bottom of that tab.`]),
     li([
       'In the ',
-      strong('Application'),
+      strong(['Application']),
       ' pop-up menu, choose ',
-      strong('<application>'),
+      strong(['<application>']),
       '.'
     ]),
-    li(['In the "Menu Title" field, type the exact name of the menu\n         item you want to change, and in the "Keyboard Shortcut" field,\n         type the new shortcut you want that menu item to have. Press the\n         "OK" button to save the new shortcut.']),
+    li([`In the "Menu Title" field, type the exact name of the menu
+      item you want to change, and in the "Keyboard Shortcut" field,
+      type the new shortcut you want that menu item to have. Press
+      the "OK" button to save the new shortcut.`]),
     li(['You may now relaunch <application>.'])
   ])
 ];
 export default {
   id: 9,
   slug: 'changing-keyboard-shortcuts-in-mac-os-x',
-  title: 'Changing keyboard shortcuts in Mac OS X',
+  title: ['Changing keyboard shortcuts in Mac OS X'],
   datetime: datetime('2009-03-25')('16:36:00')('Pacific/Auckland'),
   tags: [
     'keyboard-shortcuts',

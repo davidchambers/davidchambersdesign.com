@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 3,
   slug: "rounded-rectangles-in-adobe-illustrator-cs3",
-  title: "Rounded rectangles in Adobe Illustrator CS3",
+  title: ["Rounded rectangles in Adobe Illustrator CS3"],
   datetime: datetime "2008-12-03" "12:49:00" "Pacific/Auckland",
   tags: ["adobe", "cs3", "illustrator"],
   body: body,
@@ -29,23 +29,23 @@ excerpt = [
   ],
   ol [
     li' {class: "interviewer"} [
-      strong "him:", "
+      strong ["him:"], "
       if I have a rounded rectangle and resize it, it there a
       way to stop it from changing the rounding of the corners
       (which I want constant for all my rectangles)?"
     ],
     li [
-      strong "me:", "
+      strong ["me:"], "
       you can work out how large you want it to be and then
       double-click with the rectangle tool and you'll be able
       to enter all the correct values"
     ],
     li' {class: "interviewer"} [
-      strong "him:", "
+      strong ["him:"], "
       is there a way to change how curved they are after placing them?"
     ],
     li [
-      strong "me:", "
+      strong ["me:"], "
       InDesign has a much better was of dealing with this issue than
       does Illustrator... in InDesign, the rectangle is treated as an
       object, and its corner radius is treated as a property in just
@@ -53,7 +53,7 @@ excerpt = [
       that you can change the corner radius at any time..."
     ],
     li' {class: "interviewer"} [
-      strong "him:", "
+      strong ["him:"], "
       that's how it should be"
     ],
   ],
@@ -76,13 +76,13 @@ body = [
      "draw a rectangle of any size",
     ],
     li [
-     "select it and go to ", strong "Effect", " > ",
-      strong "Convert to Shape", " > ", strong "Rounded Rectangle...",
+     "select it and go to ", strong ["Effect"], " > ",
+      strong ["Convert to Shape"], " > ", strong ["Rounded Rectangle..."],
     ],
     li [
-     "in the ", strong "Shape Options", " dialogue, check the ",
-      strong "Relative", " radio button, and set ",
-      strong "Extra Width", " and ", strong "Extra Height", " to 0",
+     "in the ", strong ["Shape Options"], " dialogue, check the ",
+      strong ["Relative"], " radio button, and set ",
+      strong ["Extra Width"], " and ", strong ["Extra Height"], " to 0",
     ],
     li [
      "enter your desired corner radius, and off you go!",
@@ -93,15 +93,16 @@ body = [
     alt: "Illustrator's Shape Options dialog",
     src: "/images/posts/windows/illustrator-shape-options-dialog.png",
     caption: [
-     "Illustrator's ", strong "Shape Options", " dialog,
+     "Illustrator's ", strong ["Shape Options"], " dialog,
       set up to enable rounded rectangles which scale correctly",
     ],
   }],
 
   p [
-   "Now that the shape has been converted to a rounded rectangle, the ",
-    strong "Shape Options", " dialog can be accessed by double-clicking on ",
-    strong "Rounded Rectangle", " in the ", strong "Appearance", " palette.",
+   "Now that the shape has been converted to a rounded rectangle,
+    the ", strong ["Shape Options"], " dialog can be accessed by
+    double-clicking on ", strong ["Rounded Rectangle"], " in the ",
+    strong ["Appearance"], " palette.",
   ],
 
 ];

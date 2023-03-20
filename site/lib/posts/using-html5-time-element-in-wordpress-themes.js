@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -91,9 +90,9 @@ const body = [
   p(['I\'ve begun retrofitting this site with HTML5 elements.\n    I\'m thoroughly enjoying the process (I love meaningful markup).']),
   p([
     'One of the first HTML5 elements I\'ve introduced is the ',
-    strong('time'),
+    strong(['time']),
     ' element which, through its ',
-    strong('datetime'),
+    strong(['datetime']),
     '\n    attribute, provides a machine-readable version of dates and times.'
   ]),
   code$002Dblock('html')(`<time datetime="2009-11-01T16:41:53+13:00">1 November 2009</time>
@@ -133,7 +132,7 @@ function comment_datetime()
 export default {
   id: 31,
   slug: 'using-html5-time-element-in-wordpress-themes',
-  title: 'Using HTML5 time element in WordPress themes',
+  title: ['Using HTML5 time element in WordPress themes'],
   datetime: datetime('2009-11-02')('02:04:00')('Pacific/Auckland'),
   tags: [
     'html5',

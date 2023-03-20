@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 60,
   slug: "positioning-elements-using-mootools",
-  title: "Positioning elements using MooTools",
+  title: ["Positioning elements using MooTools"],
   datetime: datetime "2010-07-19" "17:45:00" "Pacific/Auckland",
   tags: ["javascript", "mootools"],
   body: body,
@@ -43,8 +43,8 @@ body = [
   `,
 
   p [
-   "Frustratingly, ", code "setStyle('left', offset)", " ",
-    em "appeared", " to work, but its behaviour was unpredictable.
+   "Frustratingly, ", code ["setStyle('left', offset)"], " ",
+    em ["appeared"], " to work, but its behaviour was unpredictable.
     I'm still confused by this, but at least I'm no longer stuck.",
   ],
 

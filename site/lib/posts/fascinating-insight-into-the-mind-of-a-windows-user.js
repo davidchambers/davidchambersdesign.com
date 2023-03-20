@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -98,19 +97,19 @@ const body = [
   p(['The following conversation took place a couple of days ago in\n    my apartment. Matt\'s my flatmate, Doug\'s one of Matt\'s friends.\n    I was in the room at the time.']),
   ol([
     li$0027({ class: 'interviewer' })([
-      strong('Matt:'),
+      strong(['Matt:']),
       '\n      So, Doug, do you think you could go the way of Mac?'
     ]),
     li([
-      strong('Doug:'),
+      strong(['Doug:']),
       '\n      I already have, really, but I\'d never buy one.'
     ]),
     li$0027({ class: 'interviewer' })([
-      strong('Matt:'),
+      strong(['Matt:']),
       '\n      Why\'s that?'
     ]),
     li([
-      strong('Doug:'),
+      strong(['Doug:']),
       '\n      Well',
       $2014,
       'no offense, David',
@@ -120,7 +119,7 @@ const body = [
   ]),
   p([
     'I found this exchange both entertaining and enlightening. Never had\n    I considered the possibility that certain individuals use Windows ',
-    em('because'),
+    em(['because']),
     ' it\'s poorly designed and difficult to use!'
   ]),
   p(['There\'s certainly some sound reasoning behind Doug\'s stance: Doug\n    is proficient in Windows; gaining proficiency in Windows requires\n    a certain level of intelligence; Doug\'s proficiency in Windows is\n    therefore indicative of his intelligence.']),
@@ -135,7 +134,7 @@ const body = [
 export default {
   id: 44,
   slug: 'fascinating-insight-into-the-mind-of-a-windows-user',
-  title: 'Fascinating insight into the mind of a Windows user',
+  title: ['Fascinating insight into the mind of a Windows user'],
   datetime: datetime('2010-03-25')('15:06:00')('Pacific/Auckland'),
   tags: [
     'mac-os-x',

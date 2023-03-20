@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 12,
   slug: "looping-more-than-once-with-the-wordpress-loop",
-  title: "Looping more than once with the WordPress loop",
+  title: ["Looping more than once with the WordPress loop"],
   datetime: datetime "2009-04-17" "00:34:00" "Pacific/Auckland",
   tags: ["php", "wordpress"],
   body: body,
@@ -34,7 +34,7 @@ body = [
     home page, I wanted to display links to slightly older
     posts on the sidebar. I discovered a WpRecipes post on ",
     a "http://www.wprecipes.com/avinash-asked-how-to-use-two-different-wordpress-loops"
-      "using two different WordPress loops", " which suggests
+      ["using two different WordPress loops"], " which suggests
     adding the following line of code just before the loop:",
   ],
 
@@ -43,7 +43,7 @@ body = [
   `,
 
   p [
-   "The ", code "offset", " ensures that posts do not appear
+   "The ", code ["offset"], " ensures that posts do not appear
     in both places.",
   ],
 

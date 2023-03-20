@@ -4,7 +4,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 64,
   slug: "man-after-my-own-heart",
-  title: "Man after my own heart",
+  title: ["Man after my own heart"],
   datetime: datetime "2010-07-23" "00:07:00" "Pacific/Auckland",
   tags: ["architecture", "design"],
   body: body,
@@ -15,7 +15,7 @@ body = [
   p [
    "From Wikipedia on Mies van der Rohe's ",
     a "http://en.wikipedia.org/wiki/Seagram_Building"
-      "Seagram Building", ":",
+      ["Seagram Building"], ":",
   ],
 
   blockquote [
@@ -33,7 +33,7 @@ body = [
   ],
 
   p [
-   "This, taken from Werner Blaser's ", i "Mies van der Rohe", ",
+   "This, taken from Werner Blaser's ", i ["Mies van der Rohe"], ",
     is also brilliant:",
   ],
 

@@ -4,7 +4,7 @@ export default {
 
   slug: "elam",
 
-  title: "Elam",
+  title: ["Elam"],
 
   body: [
 
@@ -15,17 +15,17 @@ export default {
     ],
 
     ul [
-      li (a "#2003" "2003"),
-      li (a "#2004" "2004"),
-      li (a "#2005" "2005"),
+      li [a "#2003" ["2003"]],
+      li [a "#2004" ["2004"]],
+      li [a "#2005" ["2005"]],
     ],
 
-    h3' {id: "2003"} "2003",
+    h3' {id: "2003"} ["2003"],
 
-    h4 "Design philosophies poster",
+    h4 ["Design philosophies poster"],
 
     p [
-      b "Brief.", " Express your personal design philosophies in a design
+      b ["Brief."], " Express your personal design philosophies in a design
       manifesto. This may take the form of a booklet, pamphlet or poster.",
     ],
 
@@ -36,10 +36,10 @@ export default {
       },
     ],
 
-    h4 "Sugar awareness billboard campaign",
+    h4 ["Sugar awareness billboard campaign"],
 
     p [
-      b "Brief.", " Create a billboard campaign to increase public awareness
+      b ["Brief."], " Create a billboard campaign to increase public awareness
       of the dangers of excessive sugar consumption. The aim is to present the
       dangers without coming across as \"preachy\".",
     ],
@@ -65,15 +65,15 @@ export default {
       },
     ],
 
-    h3' {id: "2004"} "2004",
+    h3' {id: "2004"} ["2004"],
 
-    h4 [i "Caligula", " poster"],
+    h4 [i ["Caligula"], " poster"],
 
     p [
-      b "Brief.", " Design a poster to promote the Auckland Theatre Company's
-      production of ", i "Caligula", ". The poster must appeal to young people,
-      as this play was chosen as part of an effort to attract more young people
-      to theatre. Copy provided. A1.",
+      b ["Brief."], " Design a poster to promote the Auckland Theatre
+      Company's production of ", i ["Caligula"], ". The poster must appeal
+      to young people, as this play was chosen as part of an effort to
+      attract more young people to theatre. Copy provided. A1.",
     ],
 
     p [
@@ -90,12 +90,12 @@ export default {
       },
     ],
 
-    h4 [i "tyypo", " magazine"],
+    h4 [i ["tyypo"], " magazine"],
 
     p [
-      b "Brief.", " Design a magazine of any size and any nature.
-      (I chose to design a typography magazine, which I named ", i "tyypo", ".
-      Actual size: A4.)",
+      b ["Brief."], " Design a magazine of any size and any nature.
+      (I chose to design a typography magazine, which I named ",
+      i ["tyypo"], ". Actual size: A4.)",
     ],
 
     p [
@@ -105,10 +105,10 @@ export default {
       },
     ],
 
-    h4 "Elam open days poster",
+    h4 ["Elam open days poster"],
 
     p [
-      b "Brief.", " Design a poster to advertise the 2004 Elam open days.
+      b ["Brief."], " Design a poster to advertise the 2004 Elam open days.
       To be displayed around the city, and sent to secondary schools. A1.",
     ],
 
@@ -119,10 +119,10 @@ export default {
       },
     ],
 
-    h4 "Panprint calendar competition",
+    h4 ["Panprint calendar competition"],
 
     p [
-      b "Brief.", " Design a page for possible inclusion in the 2004 Panprint
+      b ["Brief."], " Design a page for possible inclusion in the 2004 Panprint
       calendar. Panprint produces a calendar each year as a way to promote its
       services, and the work of young designers. This year the theme is \"true
       colours\". A1.",
@@ -135,16 +135,18 @@ export default {
       },
     ],
 
-    h3' {id: "2005"} "2005",
+    h3' {id: "2005"} ["2005"],
 
-    h4 "Gameplayer brand identity",
+    h4 ["Gameplayer brand identity"],
 
     p [
-      b "Brief.", " Design a brand identity for Gameplayer, a company
-      that runs tournaments in Auckland for four trading card games: ",
-      i "Magic: The Gathering", ", ", i "Duel Masters", ", ", i "Yu-Gi-Oh!", "
-      and ", i "VS System", ". The identity must appeal to those between 12
-      and 24 years of age, without marginalizing older players of the games.",
+      b ["Brief."], " Design a brand identity for Gameplayer,
+      a company that runs tournaments in Auckland for four
+      trading card games: ", i ["Magic: The Gathering"], ", ",
+      i ["Duel Masters"], ", ", i ["Yu-Gi-Oh!"], " and ",
+      i ["VS System"], ". The identity must appeal to those
+      between 12 and 24 years of age, without marginalizing
+      older players of the games.",
     ],
 
     p [
@@ -168,7 +170,7 @@ export default {
       },
     ],
 
-    h4 "Playing card design",
+    h4 ["Playing card design"],
 
     p [
      "Playing cards are an example of graphic design in its purest form.
@@ -210,10 +212,10 @@ export default {
       },
     ],
 
-    h4 [i "Exposure05", " catalogue"],
+    h4 [i ["Exposure05"], " catalogue"],
 
     p [
-      b "Brief.", " Design the catalogue for the annual end-of-year
+      b ["Brief."], " Design the catalogue for the annual end-of-year
       exposition organized by the University of Auckland Postgraduate
       Students' Association.",
     ],
@@ -232,7 +234,7 @@ export default {
       },
     ],
 
-    h4 "\"Insight Drive\"",
+    h4 [`"Insight Drive"`],
 
     p [
      "While at Insight, I was asked to design the packaging for an unusual

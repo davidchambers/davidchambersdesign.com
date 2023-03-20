@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -91,18 +90,18 @@ const excerpt = [
   p(['I began this post three months ago, got stuck, and put it in\n    the too hard basket. I wanted to devise a workable solution\n    to my stumbling block before publishing this information.\n    I\'m getting ahead of myself, though. First, the background.']),
   p([
     'As I began writing this post, I had just completed a redesign\n    of this site. The new design removed unnecessary distractions\n    to allow readers to focus on the clearly presented content.\n    I moved site navigation from the sidebar (which I axed\n    altogether) to the header. I decided to fix the header in\n    place so that the navigation and search form would always be\n    visible. This required very little effort, but overcoming the ',
-    a('http://css-tricks.com/forums/viewtopic.php?t=3496')('problem posed by fixed-position headers'),
+    a('http://css-tricks.com/forums/viewtopic.php?t=3496')(['problem posed by fixed-position headers']),
     ' took a great\n    deal of trial and error. To save others from going through\n    this tortuous process I\'ll describe my various approaches,\n    and list the benefits and drawbacks of each.'
   ])
 ];
 const body = [
   ...excerpt,
-  h3('Requirements'),
+  h3(['Requirements']),
   ul([
     li(['An additional vertical scrollbar must not be introduced.']),
     li([
       'Appending ',
-      strong('#example'),
+      strong(['#example']),
       ' to a URL should result in\n      the element whose id is "example" being displayed at the\n      top of the content area (not hidden behind the header).'
     ]),
     li(['Additional markup may be used only if the requirements above\n      cannot be met without extra markup.'])
@@ -116,7 +115,7 @@ const body = [
     height: 160px;
 }
 `),
-  h3('Approach 1: positive top padding + negative bottom margins'),
+  h3(['Approach 1: positive top padding + negative bottom margins']),
   p(['Here\'s the CSS:']),
   code$002Dblock('css')(`h1, h2, h3, h4, h5, h6, p
 {
@@ -129,9 +128,9 @@ const body = [
     li$0027({ class: 'pro' })(['No additional markup is required.']),
     li$0027({ class: 'pro' })(['Straightforward CSS.']),
     li$0027({ class: 'con' })(['The CSS selector needs to contain all block-level elements\n      that may have ids in some instances. This is likely to include\n      elements such as divs and forms. Since it is hard to foresee\n      all the situations in which a link may direct a user to a\n      uniquely identified element, it is difficult to ensure that\n      this approach will work in all cases.']),
-    li$0027({ class: 'con' })([strong('The negative bottom margin causes each block-level\n      element to overlap the preceding element, making "overlapped"\n      links unclickable!')])
+    li$0027({ class: 'con' })([strong(['The negative bottom margin causes each block-level\n      element to overlap the preceding element, making "overlapped"\n      links unclickable!'])])
   ]),
-  h3('Approach 2: preceding divs'),
+  h3(['Approach 2: preceding divs']),
   p(['Again, the CSS:']),
   code$002Dblock('css')(`div.id
 {
@@ -157,18 +156,18 @@ const body = [
     li$0027({ class: 'con' })(['Additional markup is required, necessitating that\n      existing content be updated (or JavaScript used to\n      insert the additional elements dynamically).']),
     li$0027({ class: 'con' })([
       'Not only is this extra markup meaningless,\n      but it actually removes ids from the elements\n      to which they were additionally assigned. Any\n      existing CSS selectors that refer to one of these\n      elements will need to be updated. (For example, ',
-      code('h3#comments'),
+      code(['h3#comments']),
       ' would need to change to ',
-      code('div#comments + h3'),
+      code(['div#comments + h3']),
       '.'
     ])
   ]),
   p([
     'This approach does not have any fatal flaws, but it may require\n    template files, static HTML files, style sheets, and database\n    records to be updated. Additionally, it is inelegant. In other\n    words, it ',
-    em('is'),
+    em(['is']),
     ' as option, but not a good one.'
   ]),
-  h3('Approach 3: JavaScript trickery'),
+  h3(['Approach 3: JavaScript trickery']),
   p(['The previous approach got the job done, but introduced meaningless\n    elements. This task is best performed with JavaScript.']),
   code$002Dblock('javascript')(`// accommodate fixed-position header
 document.observe('dom:loaded', function () {
@@ -180,7 +179,10 @@ document.observe('dom:loaded', function () {
     })
 });
 `),
-  p(['The above snippet locates all the h2, h3, h4, h5, and h6 elements\n    on the page that have an id attribute. It then loops through this\n    collection of elements and inserts an empty div element into each\n    one. This div "steals" its parent\'s id.']),
+  p([`The above snippet locates all the h2, h3, h4, h5, and h6 elements
+    on the page that have an id attribute. It then loops through this
+    collection of elements and inserts an empty div element into each
+    one. This div "steals" its parent's id.`]),
   p(['CSS can be used to position these empty divs in such a way that\n    headings are visible when jumped to:']),
   code$002Dblock('css')(`h2.unidentified div, h3.unidentified div
 {
@@ -194,18 +196,18 @@ document.observe('dom:loaded', function () {
     li$0027({ class: 'pro' })(['Links are always clickable.']),
     li$0027({ class: 'con' })([
       'JavaScript (and in this case ',
-      a('http://prototypejs.org/')('Prototype'),
+      a('http://prototypejs.org/')(['Prototype']),
       ') required.'
     ]),
     li$0027({ class: 'con' })(['Association between an id and the element it identifies\n      is broken.'])
   ]),
-  h3('Summary'),
+  h3(['Summary']),
   p(['I have implemented the JavaScript approach, and it works nicely.\n    I am still hopeful that there exists a simpler and/or more universal\n    solution to the problem posed by fixed-position headers. Please let\n    me know if you have any ideas or suggestions.'])
 ];
 export default {
   id: 30,
   slug: 'css-fixed-position-headers',
-  title: 'CSS fixed-position headers',
+  title: ['CSS fixed-position headers'],
   datetime: datetime('2009-10-30')('18:25:00')('Pacific/Auckland'),
   tags: [
     'css',

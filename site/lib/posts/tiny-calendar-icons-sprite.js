@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -93,9 +92,9 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'Recently I\'ve been on a mission to minimize the number\n    of HTTP requests made while loading pages on this site.\n    Until yesterday, the ',
-    a('/archives/')('archives'),
+    a('/archives/')(['archives']),
     '\n    page was making an HTTP request for each of the ',
-    a('/tiny-calendar-icon-set/')('tiny calendar icons'),
+    a('/tiny-calendar-icon-set/')(['tiny calendar icons']),
     '\n    used on the page. Therefore, up to 31 HTTP requests were\n    required just to retrieve the calendar icons. Not good.'
   ]),
   p(['The same result can be achieved with a single HTTP request\n    through the use of a sprite:']),
@@ -122,15 +121,17 @@ const body = [
 `),
   p(['By default the top left corner of an element\'s background image\n    is aligned with the element\'s top left corner, so at this stage\n    all that\'s displayed is a 16px by 16px white box:']),
   captioned$002Dimages([{
-      alt: 'Calendar sprite applied as background image using\n          default positioning',
+      alt: `Calendar sprite applied as background image using default positioning
+`,
       src: '/images/posts/23/calendar-span-default-bg-pos.png',
       caption: [
         'Calendar sprite applied as background image using ',
-        strong('default'),
+        strong(['default']),
         ' positioning'
       ]
     }]),
-  p(['To have the "1" icon displayed, the element\'s background position\n    is specified:']),
+  p([`To have the "1" icon displayed, the element's background position
+    is specified:`]),
   code$002Dblock('css')(`span.day-1
 {
     display: block;
@@ -143,7 +144,8 @@ const body = [
 `),
   p(['This drags the background image 60px to the left, and lifts it 20px:']),
   captioned$002Dimages([{
-      alt: 'Calendar sprite applied as background image using\n          correct positioning',
+      alt: `Calendar sprite applied as background image using correct positioning
+`,
       src: '/images/posts/23/calendar-span-specified-bg-pos.png',
       caption: ['Calendar sprite applied as background image using correct positioning']
     }]),
@@ -197,7 +199,7 @@ span.day-31 { background-position: -100px -100px; }
 `),
   p([
     'Note that I introduced the class name ',
-    strong('day'),
+    strong(['day']),
     ' to streamline\n    the CSS. This must appear in the HTML, as in this example:'
   ]),
   code$002Dblock('html')(`<span class="day day-31"></span>
@@ -206,7 +208,7 @@ span.day-31 { background-position: -100px -100px; }
 export default {
   id: 23,
   slug: 'tiny-calendar-icons-sprite',
-  title: 'Tiny calendar icons sprite',
+  title: ['Tiny calendar icons sprite'],
   datetime: datetime('2009-08-28')('18:04:00')('Pacific/Auckland'),
   tags: [
     'css',

@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -92,26 +91,26 @@ const body = [
       src: '/images/posts/92/helveticards.jpg'
     })]),
   blockquote([p([
-      a('http://helveticards.uberdm.com/')('Helveticards'),
+      a('http://helveticards.uberdm.com/')(['Helveticards']),
       ' are a\n      set of über minimalist typographic playing cards by designer ',
-      a('https://twitter.com/uberryan')('Ryan Myers'),
+      a('https://twitter.com/uberryan')(['Ryan Myers']),
       '.'
     ])]),
   p([
     'I love these! I designed a set of playing cards several years ago while\n    at university, but I certainly didn\'t think of doing ',
-    em('this'),
+    em(['this']),
     '.'
   ]),
   p([
     'Via ',
-    a('http://laughingsquid.com/helveticards-minimalist-typographic-playing-cards/')('Laughing Squid'),
+    a('http://laughingsquid.com/helveticards-minimalist-typographic-playing-cards/')(['Laughing Squid']),
     '.'
   ])
 ];
 export default {
   id: 92,
   slug: 'helveticards',
-  title: 'Helveticards',
+  title: ['Helveticards'],
   datetime: datetime('2011-11-20')('22:00:00')('America/Los_Angeles'),
   tags: [
     'design',

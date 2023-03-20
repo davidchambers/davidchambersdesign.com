@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -92,10 +91,10 @@ const body = [
   ...excerpt,
   hr,
   p(['JavaScript is a small language. So small, in fact, that\n    several useful constructs are entirely absent. Just two\n    types of collection are provided: arrays and objects\n    (and even these are less different than they appear).\n    Sets (collections of unique values) and dictionaries\n    (collections which map unique values to other values)\n    are the most glaring omissions.']),
-  h3('How does Python do it?'),
+  h3(['How does Python do it?']),
   p([
     'Python has literal syntax for sets, and supports\n    membership checks via the ',
-    code('in'),
+    code(['in']),
     ' keyword:'
   ]),
   code$002Dblock('python')(`>>> usernames = {'brodie', 'jespern', 'nvenegas'}
@@ -111,10 +110,10 @@ True
 >>> 'wrap' in settings
 False
 `),
-  h3('Fashioning a poor man\u2019s set from the limited materials\n      JavaScript provides'),
+  h3(['Fashioning a poor man\u2019s set from the limited materials\n    JavaScript provides']),
   p([
     'How might one create a set of strings in JavaScript given the\n    limited, ahem, ',
-    em('set'),
+    em(['set']),
     ' of data structures at our disposal?\n    One could use a string:'
   ]),
   code$002Dblock('javascript')(`> usernames = ',brodie,jespern,nvenegas,'
@@ -134,7 +133,7 @@ false
   p(['Though this is an improvement, membership checks are still\n    inefficient, and each insert still requires a member check if\n    we\'re to avoid having the array grow needlessly. If we kept the\n    array ordered we could use binary search, but inserts would be\n    even slower as each member would need to be inserted in the\n    correct position.']),
   p([
     'An object, then, is the ',
-    em('best'),
+    em(['best']),
     ' choice:'
   ]),
   code$002Dblock('javascript')(`> usernames = {'brodie': 1, 'jespern': 1, 'nvenegas': 1}
@@ -145,7 +144,7 @@ false
 `),
   p([
     'This addresses the outstanding problems, and the ',
-    code('in'),
+    code(['in']),
     '\n    keyword makes the intent of these expressions clear.'
   ]),
   p(['But it also introduces a subtle bug:']),
@@ -158,13 +157,13 @@ true
 `),
   p([
     'The ',
-    code('in'),
+    code(['in']),
     ' check tells us whether the property exists on\n    the object ',
-    em('or anywhere in its prototype chain'),
+    em(['or anywhere in its prototype chain']),
     '. Ugh.'
   ]),
   p([
-    code('in'),
+    code(['in']),
     ' is out, then, but there is a way to ask whether a\n    property exists on the object itself:'
   ]),
   code$002Dblock('javascript')(`> usernames.hasOwnProperty('brodie')
@@ -182,16 +181,16 @@ TypeError: Property 'hasOwnProperty' of object #<Object> is not a function
 `),
   p([
     'If we rely on ',
-    code('usernames.hasOwnProperty'),
+    code(['usernames.hasOwnProperty']),
     ' we lose\n    the ability to perform membership checks as soon as we add\n    "hasOwnProperty" as a member. The solution is to grab the\n    function from a reliable source (',
-    code('Object.prototype'),
+    code(['Object.prototype']),
     '):'
   ]),
   code$002Dblock('javascript')(`> Object.prototype.hasOwnProperty.call(usernames, 'davidchambers')
 true
 `),
   p(['What a mouthful! This is, though, the correct way to maintain\n    a collection of unique strings in JavaScript. It\'s efficient,\n    and avoids the pitfalls of the aforementioned approaches.']),
-  h3('Bonus section'),
+  h3(['Bonus section']),
   p(['In working through this question with a candidate I realized\n    there\'s another solution, though I can\'t think of a compelling\n    reason to favour it:']),
   code$002Dblock('javascript')(`> sentinel = {}
 > usernames = {'brodie': sentinel, 'jespern': sentinel, 'nvenegas': sentinel}
@@ -206,7 +205,7 @@ false
 export default {
   id: 94,
   slug: 'the-perils-of-using-javascript-objects-as-sets',
-  title: 'The perils of using JavaScript objects as sets',
+  title: ['The perils of using JavaScript objects as sets'],
   datetime: datetime('2012-09-03')('20:00:00')('America/Los_Angeles'),
   tags: [
     'best-practice',

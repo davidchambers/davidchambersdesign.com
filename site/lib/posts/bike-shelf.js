@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -94,16 +93,16 @@ const body = [
     })]),
   p([
     'The article from which this photograph is lifted, entitled ',
-    a('http://knifeandsaw.wordpress.com/furniture/bike-shelf/')('Bike Shelf'),
+    a('http://knifeandsaw.wordpress.com/furniture/bike-shelf/')(['Bike Shelf']),
     ',\n    is over on ',
-    a('http://knifeandsaw.wordpress.com/')('Knife & Saw'),
+    a('http://knifeandsaw.wordpress.com/')(['Knife & Saw']),
     '.'
   ])
 ];
 export default {
   id: 71,
   slug: 'bike-shelf',
-  title: 'Bike shelf',
+  title: ['Bike shelf'],
   datetime: datetime('2010-09-20')('19:53:00')('Pacific/Auckland'),
   tags: ['design'],
   body: body

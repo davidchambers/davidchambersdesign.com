@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -94,7 +93,7 @@ simplejson.dumps(instance)
 `),
   p([
     'Unforunately, this raises a TypeError, as the instance is not JSON\n    serializable. I don\'t understand ',
-    em('why'),
+    em(['why']),
     ' model instances are\n    not serializable, but I do have a solution: define a serialization\n    method on the instance\'s model.'
   ]),
   code$002Dblock('python')(`def toJSON(self):
@@ -115,16 +114,16 @@ simplejson.dumps(instance)
     return simplejson.dumps(d)
 `),
   p([
-    code('_meta.fields'),
+    code(['_meta.fields']),
     ' is an ordered list of model fields\n    which can be accessed from instances and from the model itself. ',
-    a('http://www.djangofoo.com/tag/meta-fields')('_meta.fields'),
+    a('http://www.djangofoo.com/tag/meta-fields')(['_meta.fields']),
     '\n    is one of the few features not covered in Django\'s excellent\n    documentation.'
   ])
 ];
 export default {
   id: 49,
   slug: 'serializing-django-model-instances',
-  title: 'Serializing Django model instances',
+  title: ['Serializing Django model instances'],
   datetime: datetime('2010-04-13')('08:16:00')('Pacific/Auckland'),
   tags: [
     'django',

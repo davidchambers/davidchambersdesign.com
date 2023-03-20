@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 24,
   slug: "captions-over-images",
-  title: "Captions over images",
+  title: ["Captions over images"],
   datetime: datetime "2009-08-31" "03:36:00" "Pacific/Auckland",
   tags: ["best-practice", "css", "html", "javascript", "jquery", "meaningful-markup"],
   body: body,
@@ -15,14 +15,14 @@ excerpt = [
   p [
    "This is my response to Chris Coyier's screencast titled ",
     a "http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/"
-      "jQuery Part 3 – Image Title Plugin", " which I watched
+      ["jQuery Part 3 – Image Title Plugin"], " which I watched
     a couple of days ago. Something didn't sit right with me
     at the time, and I've now worked out what it was: ",
-    strong "JavaScript is not required!",
+    strong ["JavaScript is not required!"],
   ],
   p [
    "I'll present a JavaScript-free approach for displaying captions
-    over images that uses ", em "truly", " meaningful markup.",
+    over images that uses ", em ["truly"], " meaningful markup.",
   ],
 ];
 
@@ -31,12 +31,13 @@ body = [
   ...excerpt,
 
   p [
-   "So what ", em "is", " meaningful markup for images and image captions?
-    This is a debated issue, but I believe the definition list to be the
-    most appropriate element at our disposal. While an image is clearly
-    not a \"term\", a caption does ", em "describe", " an image, just as
-    a definition ", em "describes", " a term. Meaningful markup for an
-    image and its caption should look something like the following:",
+   "So what ", em ["is"], " meaningful markup for images and image
+    captions? This is a debated issue, but I believe the definition
+    list to be the most appropriate element at our disposal. While
+    an image is clearly not a \"term\", a caption does ", em ["describe"], "
+    an image, just as a definition ", em ["describes"], " a term.
+    Meaningful markup for an image and its caption should look
+    something like the following:",
   ],
 
   code-block "html" `
@@ -54,7 +55,7 @@ body = [
   p [
    "My aim was to achieve a result similar to Chris's ",
     a "http://css-tricks.com/examples/TypeOverImagePlugin/"
-      "image title plugin demo", "
+      ["image title plugin demo"], "
     simply by styling a definition list containing images and their
     captions. In the end, I was forced to abandon the ideal of using a
     single definition list for multiple images and captions: the nature
@@ -76,7 +77,7 @@ body = [
   ul [
     li [
      "Each definition list must have a class name of ",
-      strong "captioned-image", " applied",
+      strong ["captioned-image"], " applied",
     ],
     li [
      "Each caption must be wrapped in a span element (captions to
@@ -86,7 +87,7 @@ body = [
 
   p [
    "Check out the ",
-    a "/examples/captions-over-images/" "captions over images demo", "
+    a "/examples/captions-over-images/" ["captions over images demo"], "
     to see the approach in action. The CSS responsible for the
     appearance of the captions is as follows:",
   ],
@@ -105,7 +106,7 @@ body = [
   p [
    "I set out to display captions over images without the use
     of JavaScript while keeping meaningless markup to a minimum. ",
-    strong "Have I succeeded, do you think?",
+    strong ["Have I succeeded, do you think?"],
   ],
 
 ];

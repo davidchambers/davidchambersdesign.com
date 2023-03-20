@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -97,40 +96,40 @@ const body = [
     })]),
   p([
     'Using the ',
-    code('-m'),
+    code(['-m']),
     ' flag can be a timesaver, but for several\n    reasons I prefer to write my commit messages in a text editor:'
   ]),
   ul([
-    li('Spell-checking'),
-    li('Familiar keyboard navigation'),
-    li('No need to escape quotation marks')
+    li(['Spell-checking']),
+    li(['Familiar keyboard navigation']),
+    li(['No need to escape quotation marks'])
   ]),
   p([
-    a('http://macromates.com/')('TextMate'),
+    a('http://macromates.com/')(['TextMate']),
     '\n    is particularly well suited to my needs due to its built-in ',
-    a('http://daringfireball.net/projects/markdown/syntax')('Markdown'),
+    a('http://daringfireball.net/projects/markdown/syntax')(['Markdown']),
     '\n    highlighting and previewing \u2013 yes, I write commit messages in Markdown!'
   ]),
   p([strong([
       'To set TextMate as Mercurial\'s editor, add ',
-      code('editor = mate -w'),
-      '\n      to the ',
-      code('[ui]'),
-      ' section of your ',
-      code('~/.hgrc'),
+      code(['editor = mate -w']),
+      ' to the ',
+      code(['[ui]']),
+      '\n      section of your ',
+      code(['~/.hgrc']),
       ' file.'
     ])]),
   p([
-    a('http://vincecima.com/post/578017364/using-textmate-as-mercurials-editor')('Vince Cima explains'),
+    a('http://vincecima.com/post/578017364/using-textmate-as-mercurials-editor')(['Vince Cima explains']),
     ':'
   ]),
   blockquote([p([
       'Next time you do ',
-      code('hg commit'),
-      ' TextMate will open a\n      temporary file you write your commit message into. Type your\n      message, save the file and then close the window to finish\n      the commit. The ',
-      code('-w'),
+      code(['hg commit']),
+      ' TextMate will open\n      a temporary file you write your commit message into. Type your\n      message, save the file and then close the window to finish the\n      commit. The ',
+      code(['-w']),
       ' flag on the ',
-      code('mate'),
+      code(['mate']),
       '\n      command tells TextMate not to return control to the command\n      line until the editor window has been closed.'
     ])]),
   update(datetime('2011-01-22')('15:20:00')('Australia/Sydney'))([
@@ -139,11 +138,11 @@ const body = [
 `),
     p([
       'This adds ',
-      code('editor = mate -w'),
+      code(['editor = mate -w']),
       ' to the ',
-      code('[core]'),
+      code(['[core]']),
       '\n      section of your ',
-      code('~/.gitconfig'),
+      code(['~/.gitconfig']),
       ' file.'
     ])
   ])
@@ -151,7 +150,7 @@ const body = [
 export default {
   id: 76,
   slug: 'composing-mercurial-commit-messages-in-textmate',
-  title: 'Composing Mercurial commit messages in TextMate',
+  title: ['Composing Mercurial commit messages in TextMate'],
   datetime: datetime('2011-01-10')('01:25:00')('Australia/Sydney'),
   tags: [
     'hg',

@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 23,
   slug: "tiny-calendar-icons-sprite",
-  title: "Tiny calendar icons sprite",
+  title: ["Tiny calendar icons sprite"],
   datetime: datetime "2009-08-28" "18:04:00" "Pacific/Auckland",
   tags: ["css", "design", "html", "icons"],
   body: body,
@@ -15,9 +15,9 @@ excerpt = [
   p [
    "Recently I've been on a mission to minimize the number
     of HTTP requests made while loading pages on this site.
-    Until yesterday, the ", a "/archives/" "archives", "
+    Until yesterday, the ", a "/archives/" ["archives"], "
     page was making an HTTP request for each of the ",
-    a "/tiny-calendar-icon-set/" "tiny calendar icons", "
+    a "/tiny-calendar-icon-set/" ["tiny calendar icons"], "
     used on the page. Therefore, up to 31 HTTP requests were
     required just to retrieve the calendar icons. Not good.",
   ],
@@ -70,18 +70,19 @@ body = [
   ],
 
   captioned-images [{
-    alt: "Calendar sprite applied as background image using
-          default positioning",
+    alt: `
+      Calendar sprite applied as background image using default positioning
+    `,
     src: "/images/posts/23/calendar-span-default-bg-pos.png",
     caption: [
      "Calendar sprite applied as background image using ",
-      strong "default", " positioning",
+      strong ["default"], " positioning",
     ],
   }],
 
   p [
-   "To have the \"1\" icon displayed, the element's background position
-    is specified:",
+   `To have the "1" icon displayed, the element's background position
+    is specified:`,
   ],
 
   code-block "css" `
@@ -101,8 +102,9 @@ body = [
   ],
 
   captioned-images [{
-    alt: "Calendar sprite applied as background image using
-          correct positioning",
+    alt: `
+      Calendar sprite applied as background image using correct positioning
+    `,
     src: "/images/posts/23/calendar-span-specified-bg-pos.png",
     caption: [
      "Calendar sprite applied as background image using correct positioning",
@@ -163,7 +165,7 @@ body = [
   `,
 
   p [
-   "Note that I introduced the class name ", strong "day", " to streamline
+   "Note that I introduced the class name ", strong ["day"], " to streamline
     the CSS. This must appear in the HTML, as in this example:",
   ],
 

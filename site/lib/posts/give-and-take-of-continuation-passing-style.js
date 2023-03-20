@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -93,14 +92,14 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'I have been experimenting with ',
-    a('https://en.wikipedia.org/wiki/Continuation-passing_style')('continuation-passing style'),
-    ' recently. Writing code in this\n    style feels strange but exciting! I recently discovered that one\n    can use functions in place of objects.'
+    a('https://en.wikipedia.org/wiki/Continuation-passing_style')(['continuation-passing style']),
+    ' recently. Writing code in\n    this style feels strange but exciting! I recently discovered\n    that one can use functions in place of objects.'
   ]),
   p([
     'Local mutation and reassignment are acceptable, but I avoid them\n    whenever practical. As a result I use ',
-    code('reduce'),
+    code(['reduce']),
     ' ',
-    em('a lot'),
+    em(['a lot']),
     '.'
   ]),
   code$002Dblock('javascript')(`//    reduce :: (b -> a -> b) -> b -> Array a -> b
@@ -120,7 +119,7 @@ const blah = id => name => ({id, name});
 `),
   p([
     '\u261D️ This has been my approach for the past several years. The accumulator\n    contains all necessary state, and at the end of the reduction I access\n    whichever fields are relevant (in this case just ',
-    code('blahs'),
+    code(['blahs']),
     ').'
   ]),
   code$002Dblock('javascript')(`> reduce (cont => name => id => append (blah (id) (name)) (cont (id + 1)))
@@ -131,7 +130,7 @@ const blah = id => name => ({id, name});
 `),
   p([
     '\u261D️ This was my first attempt at using continuations. The problem is\n    that function wrapping happens from left to right, so the ',
-    code('id'),
+    code(['id']),
     '\n    is threaded from right to left, giving the wrong result.'
   ]),
   code$002Dblock('javascript')(`> reduce (cont => name => id => blahs => cont (id + 1) (append (blah (id) (name)) (blahs)))
@@ -143,44 +142,44 @@ const blah = id => name => ({id, name});
 `),
   p([
     '\u261D️ This was my second attempt. The order is reversed, but the ',
-    code('id'),
+    code(['id']),
     ' and ',
-    code('name'),
+    code(['name']),
     ' values are still mismatched.'
   ]),
   p([
     'I needed more control. What if the initial accumulator were ',
-    code('give => give (1) ([])'),
-    '? In the base case, this would mean using ',
-    code('(give => give (1) ([])) (id => blahs => blahs)'),
-    ' to get ',
-    code('[]'),
+    code(['give => give (1) ([])']),
+    '? In the base case, this would mean\n    using ',
+    code(['(give => give (1) ([])) (id => blahs => blahs)']),
+    '\n    to get ',
+    code(['[]']),
     ', the empty list of blahs. What is the type of ',
-    code('give => give (1) ([])'),
+    code(['give => give (1) ([])']),
     '? I will refer to this function as ',
-    code('take'),
+    code(['take']),
     '.'
   ]),
   code$002Dblock('javascript')(`//    take :: (Integer -> Array String -> a) -> a
 const take = give => give (1) ([]);
 `),
   p([
-    code('a'),
+    code(['a']),
     ' is a type variable. We have no idea what ',
-    code('give'),
-    ',\n    the continuation provided to ',
-    code('take'),
-    ', will return. ',
-    code('take'),
-    ' returns whatever give returns, though, so the return\n    type of ',
-    code('take'),
-    ' matches the return type of ',
-    code('give'),
+    code(['give']),
+    ', the continuation provided to ',
+    code(['take']),
+    ',\n    will return. ',
+    code(['take']),
+    ' returns whatever give returns,\n    though, so the return type of ',
+    code(['take']),
+    ' matches the\n    return type of ',
+    code(['give']),
     '.'
   ]),
   p([
     'Having established that the type of the accumulator is ',
-    code('(Integer -> Array String -> a) -> a'),
+    code(['(Integer -> Array String -> a) -> a']),
     ', we need to\n    have the reducing function return a function of that type.'
   ]),
   code$002Dblock('javascript')(`> reduce (take => name => give => give (1) ([blah (1) (name)]))
@@ -193,13 +192,13 @@ const take = give => give (1) ([]);
     '\u261D️ The answer is wrong',
     $2014,
     'we lost ',
-    code('\'foo\''),
+    code(['\'foo\'']),
     ' and ',
-    code('\'bar\''),
+    code(['\'bar\'']),
     ', and ',
-    code('\'baz\''),
+    code(['\'baz\'']),
     ' has the wrong ',
-    code('id'),
+    code(['id']),
     $2014,
     'but the types align.'
   ]),
@@ -211,26 +210,26 @@ const take = give => give (1) ([]);
 `),
   p([
     '\u261D️ Success! We receive a continuation we refer to as ',
-    code('take'),
+    code(['take']),
     '.\n    We apply ',
-    code('take'),
+    code(['take']),
     ' to gain access to ',
-    code('id'),
+    code(['id']),
     ' and ',
-    code('blahs'),
+    code(['blahs']),
     ', and we then return a new continuation, ',
-    code('give => give (id + 1) (append (blah (id) (name)) (blahs))'),
+    code(['give => give (id + 1) (append (blah (id) (name)) (blahs))']),
     ',\n    which is the ',
-    code('take'),
+    code(['take']),
     ' function for the next iteration.'
   ]),
   p([
     'This approach extends to an arbitrary number of state variables\n    (e.g. ',
-    code('give => give (0) (\'\') ([]) ({})'),
+    code(['give => give (0) (\'\') ([]) ({})']),
     '). I find the\n    names ',
-    code('give'),
+    code(['give']),
     ' and ',
-    code('take'),
+    code(['take']),
     ' helpful for\n    remembering which continuation is which. :)'
   ])
 ];
@@ -239,10 +238,10 @@ export default {
   slug: 'give-and-take-of-continuation-passing-style',
   title: [
     'The ',
-    code('give'),
+    code(['give']),
     ' and ',
-    code('take'),
-    ' of continuation-passing style'
+    code(['take']),
+    '\n    of continuation-passing style'
   ],
   datetime: datetime('2020-10-08')('10:41:26')('Europe/Berlin'),
   tags: [

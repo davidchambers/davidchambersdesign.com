@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -89,7 +88,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'One of my flatmates linked me to this clip recently. It\'s titled ',
-    a('http://www.ted.com/index.php/talks/david_carson_on_design.html')('Design, discovery and humor'),
+    a('http://www.ted.com/index.php/talks/david_carson_on_design.html')(['Design, discovery and humor']),
     ' and certainly delivers the\n    entertainment it promises. It\'s well worth a look.'
   ]),
   dl([
@@ -118,7 +117,7 @@ const body = [
       ])]),
     dd([p([
         'David Carson presents ',
-        strong('Design, discovery and humor'),
+        strong(['Design, discovery and humor']),
         '\n        at TED, February 2003'
       ])])
   ])
@@ -126,7 +125,7 @@ const body = [
 export default {
   id: 6,
   slug: 'david-carsons-2003-ted-lecture',
-  title: 'David Carson\'s 2003 TED lecture',
+  title: ['David Carson\'s 2003 TED lecture'],
   datetime: datetime('2009-02-10')('11:21:00')('Pacific/Auckland'),
   tags: [
     'design',

@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -116,14 +115,14 @@ except IndexError:
 
 print base64.b64encode(s, altchars)
 `),
-  h4('Usage'),
+  h4(['Usage']),
   code$002Dblock('console')(`$ python stringify.py /path/to/image.png
 `)
 ];
 export default {
   id: 51,
   slug: 'optimization-via-stringification',
-  title: 'Optimization via stringification',
+  title: ['Optimization via stringification'],
   datetime: datetime('2010-06-03')('14:28:00')('Pacific/Auckland'),
   tags: [
     'css',

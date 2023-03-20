@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -90,13 +89,13 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'This is my response to Chris Coyier\'s screencast titled ',
-    a('http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/')('jQuery Part 3 \u2013 Image Title Plugin'),
+    a('http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/')(['jQuery Part 3 \u2013 Image Title Plugin']),
     ' which I watched\n    a couple of days ago. Something didn\'t sit right with me\n    at the time, and I\'ve now worked out what it was: ',
-    strong('JavaScript is not required!')
+    strong(['JavaScript is not required!'])
   ]),
   p([
     'I\'ll present a JavaScript-free approach for displaying captions\n    over images that uses ',
-    em('truly'),
+    em(['truly']),
     ' meaningful markup.'
   ])
 ];
@@ -104,12 +103,12 @@ const body = [
   ...excerpt,
   p([
     'So what ',
-    em('is'),
-    ' meaningful markup for images and image captions?\n    This is a debated issue, but I believe the definition list to be the\n    most appropriate element at our disposal. While an image is clearly\n    not a "term", a caption does ',
-    em('describe'),
-    ' an image, just as\n    a definition ',
-    em('describes'),
-    ' a term. Meaningful markup for an\n    image and its caption should look something like the following:'
+    em(['is']),
+    ' meaningful markup for images and image\n    captions? This is a debated issue, but I believe the definition\n    list to be the most appropriate element at our disposal. While\n    an image is clearly not a "term", a caption does ',
+    em(['describe']),
+    '\n    an image, just as a definition ',
+    em(['describes']),
+    ' a term.\n    Meaningful markup for an image and its caption should look\n    something like the following:'
   ]),
   code$002Dblock('html')(`<dl>
     <dt><img src="images/paris.jpg" alt="View from Notre Dame de Paris" /></dt>
@@ -119,7 +118,7 @@ const body = [
   p(['Ideally, images appearing one after the other should belong to the\n    same definition list.']),
   p([
     'My aim was to achieve a result similar to Chris\'s ',
-    a('http://css-tricks.com/examples/TypeOverImagePlugin/')('image title plugin demo'),
+    a('http://css-tricks.com/examples/TypeOverImagePlugin/')(['image title plugin demo']),
     '\n    simply by styling a definition list containing images and their\n    captions. In the end, I was forced to abandon the ideal of using a\n    single definition list for multiple images and captions: the nature\n    of CSS positioning dictates that each image\u2013caption pair reside in\n    its own element. The final markup, however, is still quite clean:'
   ]),
   code$002Dblock('html')(`<dl class="captioned-image">
@@ -131,14 +130,14 @@ const body = [
   ul([
     li([
       'Each definition list must have a class name of ',
-      strong('captioned-image'),
+      strong(['captioned-image']),
       ' applied'
     ]),
     li(['Each caption must be wrapped in a span element (captions to\n      appear on multiple lines require multiple span elements)'])
   ]),
   p([
     'Check out the ',
-    a('/examples/captions-over-images/')('captions over images demo'),
+    a('/examples/captions-over-images/')(['captions over images demo']),
     '\n    to see the approach in action. The CSS responsible for the\n    appearance of the captions is as follows:'
   ]),
   code$002Dblock('css')(`dl.captioned-image         { position: relative; margin: 1em 0; }
@@ -152,13 +151,13 @@ dl.captioned-image dd span { display: block; float: left; clear: both;
 `),
   p([
     'I set out to display captions over images without the use\n    of JavaScript while keeping meaningless markup to a minimum. ',
-    strong('Have I succeeded, do you think?')
+    strong(['Have I succeeded, do you think?'])
   ])
 ];
 export default {
   id: 24,
   slug: 'captions-over-images',
-  title: 'Captions over images',
+  title: ['Captions over images'],
   datetime: datetime('2009-08-31')('03:36:00')('Pacific/Auckland'),
   tags: [
     'best-practice',

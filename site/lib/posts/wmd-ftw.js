@@ -1,6 +1,5 @@
 import { $2014 } from '../components.js';
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -97,14 +96,14 @@ const body = [
   ]),
   p([
     'Despite my appreciation of the preview, not one of my sites\n    provided this service until a few hours ago. Now that I\'ve\n    migrated from WordPress to ',
-    a('http://mango.io/')('Mango'),
+    a('http://mango.io/')(['Mango']),
     '\n    I\'m able to spend some time working on front-end code. My first\n    two challenges were localizing dates and times, and integrating ',
-    a('http://wmd-editor.com/')('wmd'),
+    a('http://wmd-editor.com/')(['wmd']),
     '.'
   ]),
   p([
     'Getting wmd working turned out to be extremely easy, but I was\n    not content with a live preview of the ',
-    em('comment'),
+    em(['comment']),
     ' only.\n    No, I wanted the preview to resemble as closely as possible\n    the published result, which meant updating the preview area in\n    response to changes to "name", "e-mail", and "website"\n    as well as to changes to the comment itself.'
   ]),
   video({
@@ -113,12 +112,12 @@ const body = [
   })([
     p([
       'Get with the programme; this video\'s in an HTML5 ',
-      code('video'),
+      code(['video']),
       ' tag!'
     ]),
     p([
       'It should be possible to access ',
-      a('/images/posts/53/wmd.mp4')('wmd.mp4'),
+      a('/images/posts/53/wmd.mp4')(['wmd.mp4']),
       ' directly.'
     ])
   ]),
@@ -127,7 +126,7 @@ const body = [
 export default {
   id: 53,
   slug: 'wmd-ftw',
-  title: 'wmd ftw!',
+  title: ['wmd ftw!'],
   datetime: datetime('2010-06-13')('11:25:00')('Pacific/Auckland'),
   tags: [
     'javascript',

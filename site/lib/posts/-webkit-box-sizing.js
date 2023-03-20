@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -97,14 +96,14 @@ const body = [
   p(['I did my best to get these browsers to respect the padding values\n    that I\'d assigned in my style sheet, getting aggressive in the Web\n    Inspector. No joy.']),
   p([
     'I then noticed a curious property, ',
-    code('-webkit-box-sizing'),
+    code(['-webkit-box-sizing']),
     '.\n    Sure enough, this was the culprit. Safari and Chrome both use ',
-    code('border-box'),
-    ' as the default value, which means that padding\n    does not add to an element\'s dimensions the way it does in the\n    standard box model.'
+    code(['border-box']),
+    ' as the default value, which means that\n    padding does not add to an element\'s dimensions the way it does\n    in the standard box model.'
   ]),
   p([
     'Specifying ',
-    code('content-box'),
+    code(['content-box']),
     ' fixed the problem.'
   ]),
   captioned$002Dimages([{
@@ -115,20 +114,20 @@ const body = [
   p(['This is an extremely satisfying solution as it neatly targets\n    the source of the problem.']),
   p([
     'The question remains as to why these browsers default to ',
-    code('border-box'),
+    code(['border-box']),
     ' as the ',
-    code('box-sizing'),
+    code(['box-sizing']),
     ' for ',
-    code('input'),
+    code(['input']),
     ' elements with ',
-    code('type="search"'),
+    code([`type="search"`]),
     '.\n    I don\'t know whether default styles are specified at the\n    rendering engine level or at the browser level, but either\n    way I would say that it\'s the result of Apple fiddling with\n    the controls to make search inputs look sexy on Mac OS X\n    (where they\'re rendered very differently).'
   ])
 ];
 export default {
   id: 58,
   slug: '-webkit-box-sizing',
-  title: '-webkit-box-sizing',
+  title: ['-webkit-box-sizing'],
   datetime: datetime('2010-07-18')('21:30:00')('Pacific/Auckland'),
   tags: [
     'css',

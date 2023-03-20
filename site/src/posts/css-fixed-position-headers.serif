@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 30,
   slug: "css-fixed-position-headers",
-  title: "CSS fixed-position headers",
+  title: ["CSS fixed-position headers"],
   datetime: datetime "2009-10-30" "18:25:00" "Pacific/Auckland",
   tags: ["css", "html", "javascript", "prototype"],
   body: body,
@@ -27,7 +27,7 @@ excerpt = [
     place so that the navigation and search form would always be
     visible. This required very little effort, but overcoming the ",
     a "http://css-tricks.com/forums/viewtopic.php?t=3496"
-      "problem posed by fixed-position headers", " took a great
+      ["problem posed by fixed-position headers"], " took a great
     deal of trial and error. To save others from going through
     this tortuous process I'll describe my various approaches,
     and list the benefits and drawbacks of each.",
@@ -38,14 +38,14 @@ body = [
 
   ...excerpt,
 
-  h3 "Requirements",
+  h3 ["Requirements"],
 
   ul [
     li [
      "An additional vertical scrollbar must not be introduced.",
     ],
     li [
-     "Appending ", strong "#example", " to a URL should result in
+     "Appending ", strong ["#example"], " to a URL should result in
       the element whose id is \"example\" being displayed at the
       top of the content area (not hidden behind the header).",
     ],
@@ -69,7 +69,7 @@ body = [
     }
   `,
 
-  h3 "Approach 1: positive top padding + negative bottom margins",
+  h3 ["Approach 1: positive top padding + negative bottom margins"],
 
   p [
    "Here's the CSS:",
@@ -107,13 +107,13 @@ body = [
       this approach will work in all cases.",
     ],
     li' {class: "con"} [
-      strong "The negative bottom margin causes each block-level
+      strong ["The negative bottom margin causes each block-level
       element to overlap the preceding element, making \"overlapped\"
-      links unclickable!",
+      links unclickable!"],
     ],
   ],
 
-  h3 "Approach 2: preceding divs",
+  h3 ["Approach 2: preceding divs"],
 
   p [
    "Again, the CSS:",
@@ -175,8 +175,8 @@ body = [
       to which they were additionally assigned. Any
       existing CSS selectors that refer to one of these
       elements will need to be updated. (For example, ",
-      code "h3#comments", " would need to change to ",
-      code "div#comments + h3", ".",
+      code ["h3#comments"], " would need to change to ",
+      code ["div#comments + h3"], ".",
     ],
   ],
 
@@ -184,10 +184,10 @@ body = [
    "This approach does not have any fatal flaws, but it may require
     template files, static HTML files, style sheets, and database
     records to be updated. Additionally, it is inelegant. In other
-    words, it ", em "is", " as option, but not a good one.",
+    words, it ", em ["is"], " as option, but not a good one.",
   ],
 
-  h3 "Approach 3: JavaScript trickery",
+  h3 ["Approach 3: JavaScript trickery"],
 
   p [
    "The previous approach got the job done, but introduced meaningless
@@ -207,10 +207,10 @@ body = [
   `,
 
   p [
-   "The above snippet locates all the h2, h3, h4, h5, and h6 elements
+   `The above snippet locates all the h2, h3, h4, h5, and h6 elements
     on the page that have an id attribute. It then loops through this
     collection of elements and inserts an empty div element into each
-    one. This div \"steals\" its parent's id.",
+    one. This div "steals" its parent's id.`,
   ],
 
   p [
@@ -238,7 +238,7 @@ body = [
     ],
     li' {class: "con"} [
      "JavaScript (and in this case ",
-      a "http://prototypejs.org/" "Prototype", ") required.",
+      a "http://prototypejs.org/" ["Prototype"], ") required.",
     ],
     li' {class: "con"} [
      "Association between an id and the element it identifies
@@ -246,7 +246,7 @@ body = [
     ],
   ],
 
-  h3 "Summary",
+  h3 ["Summary"],
 
   p [
    "I have implemented the JavaScript approach, and it works nicely.

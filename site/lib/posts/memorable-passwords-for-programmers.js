@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -97,7 +96,7 @@ const body = [
 export default {
   id: 28,
   slug: 'memorable-passwords-for-programmers',
-  title: 'Memorable passwords for programmers',
+  title: ['Memorable passwords for programmers'],
   datetime: datetime('2009-10-21')('00:42:00')('Pacific/Auckland'),
   tags: ['security'],
   body: body

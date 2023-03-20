@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -93,15 +92,15 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'In my post titled ',
-    a('/captions-over-images/')('Captions over images'),
+    a('/captions-over-images/')(['Captions over images']),
     '\n    I advocate the use of definition lists for captioning images.\n    Earlier today I was asked whether this meaningful markup could\n    be used in conjunction with an "image slider" such as ',
-    a('http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding')('Easy Slider 1.5'),
+    a('http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding')(['Easy Slider 1.5']),
     '.'
   ]),
   p(['I had a look at the Easy Slider source code and decided to\n    write my own image slider using Prototype rather than hacking\n    someone else\'s code to pieces. It\'s a proof of concept rather\n    than a full-blown "plugin", but it demonstrates that such\n    functionality is achievable using elegant, meaningful markup.']),
   p([
     'Check out the ',
-    a('/examples/prototype-image-slider/')('Prototype image slider demo'),
+    a('/examples/prototype-image-slider/')(['Prototype image slider demo']),
     '\n    to see the code in action.'
   ])
 ];
@@ -113,26 +112,26 @@ const body = [
 `),
     p([
       'Wrapping the word "class" in quotes as per this ',
-      a('http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777')('recommendation by Tobie Langel'),
+      a('http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777')(['recommendation by Tobie Langel']),
       ' did the trick!'
     ])
   ]),
-  h3$0027({ id: 'usage' })('Usage'),
+  h3$0027({ id: 'usage' })(['Usage']),
   p([
     'First, you\'ll need to save a copy of ',
-    a('/examples/prototype-image-slider/prototype-image-slider.js')('prototype-image-slider.js'),
+    a('/examples/prototype-image-slider/prototype-image-slider.js')(['prototype-image-slider.js']),
     '.'
   ]),
   p([
     'To create a new ',
-    code('Slider'),
+    code(['Slider']),
     ' simply call the constructor.\n    The constructor requires one argument, either a DOM node or a string\n    that references a node\'s ID.'
   ]),
   code$002Dblock('javascript')(`new Slider('slider');
 `),
   p([
     'There\'s nothing to prevent multiple image sliders from appearing\n    on a page. The following code turns each div with class of \'slider\'\n    into a ',
-    code('Slider'),
+    code(['Slider']),
     ' object.'
   ]),
   code$002Dblock('javascript')(`$$('div.slider').each(function (e) {
@@ -155,14 +154,14 @@ new Slider('slider', 1.5, -1); // slower transitions; last slide displayed first
   p(['If you find this code useful and would like me to flesh it out,\n    let me know.']),
   update(datetime('2009-09-21')('11:53:00')('Pacific/Auckland'))([p([
       'I neglected to mention that this code also requires ',
-      a('http://script.aculo.us/')('script.aculo.us'),
+      a('http://script.aculo.us/')(['script.aculo.us']),
       '.'
     ])])
 ];
 export default {
   id: 26,
   slug: 'prototype-image-slider',
-  title: 'Prototype image slider',
+  title: ['Prototype image slider'],
   datetime: datetime('2009-09-16')('23:43:00')('Pacific/Auckland'),
   tags: [
     'css',

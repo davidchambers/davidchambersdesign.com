@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 72,
   slug: "customizing-file-and-folder-icons-in-mac-os-x",
-  title: "Customizing file and folder icons in Mac OS X",
+  title: ["Customizing file and folder icons in Mac OS X"],
   datetime: datetime "2010-09-29" "00:00:00" "Pacific/Auckland",
   tags: ["icons", "mac-os-x", "terminal.app"],
   body: body,
@@ -17,7 +17,7 @@ excerpt = [
     a cinch. ⌘C, ⌘I, ⌘V, punctuated by a few mouse clicks.",
   ],
   p [
-    strong "Actually, that's total bullshit.",
+    strong ["Actually, that's total bullshit."],
   ],
   p [
    "Sure, in the simplest of cases the copy and paste approach
@@ -32,7 +32,7 @@ body = [
 
   ...excerpt,
 
-  h3 "Creating .icns and applying them to files, folders, or bundles",
+  h3 ["Creating .icns and applying them to files, folders, or bundles"],
 
   ol [
     li [
@@ -62,9 +62,9 @@ body = [
       p [
        "Save the images in a lossless format such as PNG.
         (If saving from Photoshop, make sure to use ",
-        strong "Save for Web & Devices", ". Icon Composer
+        strong ["Save for Web & Devices"], ". Icon Composer
         doesn't like PNG files generated via Photoshop's ",
-        strong "Save", " / ", strong "Save As", ".)",
+        strong ["Save"], " / ", strong ["Save As"], ".)",
       ],
       p [
         img {
@@ -83,13 +83,13 @@ body = [
       p [
        "Open ",
         a "http://en.wikipedia.org/wiki/Apple_Developer_Tools#Icon_Composer"
-          "Icon Composer", ",
-        located in ", strong "/Developer/Applications/Utilities", ".
+          ["Icon Composer"], ",
+        located in ", strong ["/Developer/Applications/Utilities"], ".
         This is part of the ",
         a "http://developer.apple.com/technologies/tools/"
-          "Apple Developer Tools", ", which are free to ",
+          ["Apple Developer Tools"], ", which are free to ",
         a "http://developer.apple.com/technologies/xcode.html"
-          "download from Apple", ". If you're bandwidth-conscious
+          ["download from Apple"], ". If you're bandwidth-conscious
         you can dig out your Mac OS X installation DVD to save
         yourself a few GBs.",
       ],
@@ -107,7 +107,7 @@ body = [
       ],
       p [
        "Save the Icon Composer file. This'll create a single ",
-        strong ".icns", " file containing all the different
+        strong [".icns"], " file containing all the different
         versions you included.",
       ],
     ],
@@ -130,14 +130,14 @@ body = [
        "I scoured the Web for a way to edit this metadata
         directly. I failed to find one, but came across ",
         a "http://www.cocoabuilder.com/archive/xcode/250445-custom-icon-for-bundle.html#250519"
-          "the next best thing", ": a shell script written and
+          ["the next best thing"], ": a shell script written and
         kindly shared by Damien Bobillot. ",
         a "http://maxao.free.fr/telechargements/setfileicon.gz"
-          "Download setfileicon.gz", " then crack open Terminal.app,
-        located in ", strong "/Applications/Utilities", ".",
+          ["Download setfileicon.gz"], " then crack open Terminal.app,
+        located in ", strong ["/Applications/Utilities"], ".",
       ],
       p [
-       "In Terminal, navigate to your ", strong "Downloads", "
+       "In Terminal, navigate to your ", strong ["Downloads"], "
         folder (or wherever you saved the script).",
       ],
       code-block "console" `
@@ -145,15 +145,15 @@ body = [
         $ ls
       `,
       p [
-       "Run the ", code "ls", " command to inspect the contents of
+       "Run the ", code ["ls"], " command to inspect the contents of
         the directory. If you used Safari to download the script, you
-        should see a file named ", code "setfileicon", ". If you used
-        another browser you'll likely see ", code "setfileicon.gz", ";
+        should see a file named ", code ["setfileicon"], ". If you used
+        another browser you'll likely see ", code ["setfileicon.gz"], ";
         unzip it by double-clicking the file in Finder.",
       ],
       p [
        "Make the script executable and move it to your ",
-        strong "/bin", " directory so that it can be run from
+        strong ["/bin"], " directory so that it can be run from
         any directory (you'll be asked to enter your password).",
       ],
       code-block "console" `
@@ -171,7 +171,7 @@ body = [
     ],
   ],
 
-  h3 "TL;DR",
+  h3 ["TL;DR"],
 
   p [
    "I agree. It shouldn't be this difficult. At least I've now

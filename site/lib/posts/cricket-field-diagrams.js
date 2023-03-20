@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -90,7 +89,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'While creating documentation for ',
-    i('Dice Cricket'),
+    i(['Dice Cricket']),
     ',\n    a game a friend and I designed many years ago, I produced\n    a set of diagrams which represent the segments of a cricket\n    field. The isolated nature of this small design challenge\n    provided a refreshing break from the various and interrelated\n    considerations involved in designing for the Web.'
   ]),
   captioned$002Dimages([
@@ -130,7 +129,7 @@ const body = [
 export default {
   id: 40,
   slug: 'cricket-field-diagrams',
-  title: 'Cricket field diagrams',
+  title: ['Cricket field diagrams'],
   datetime: datetime('2010-03-15')('00:58:00')('Pacific/Auckland'),
   tags: [
     'design',

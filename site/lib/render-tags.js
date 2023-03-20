@@ -1,6 +1,5 @@
 import S from 'sanctuary';
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -94,8 +93,8 @@ const render$002Dtags = posts => (() => {
     [tag]: counts[tag] + 1
   }))(S.map(x => 0)(tags))(posts.flatMap(post => post.tags));
   return [
-    h1('Tags'),
-    ol$0027({ id: 'tags' })(Object.keys(tags).map(tag => li$0027({ ['data-count']: counts[tag] })([a(`/tag/${ tag }/`)(tags[tag])]))),
+    h1(['Tags']),
+    ol$0027({ id: 'tags' })(Object.keys(tags).map($0024 => (tag => li$0027({ ['data-count']: counts[tag] })([a(`/tag/${ tag }/`)([tags[tag]])]))($0024))),
     div({ class: 'clearfix' })([])
   ];
 })();

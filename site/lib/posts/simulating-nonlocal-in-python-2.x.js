@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -92,7 +91,7 @@ import {
 import datetime from '../datetime.js';
 const excerpt = [
   p([
-    a('http://en.wikipedia.org/wiki/Closure_(computer_science)')('Closure'),
+    a('http://en.wikipedia.org/wiki/Closure_(computer_science)')(['Closure']),
     '\n    is truly wonderful. JavaScript',
     $2014,
     'despite its plethora of quirks',
@@ -110,15 +109,15 @@ cache = cache()
 `),
   p([
     'If (the rebound) ',
-    code('cache'),
+    code(['cache']),
     ' is passed no arguments\n    (or ',
-    code('None'),
+    code(['None']),
     '), ',
-    code('saved'),
+    code(['saved']),
     ' is returned.\n    Otherwise, ',
-    code('thing'),
+    code(['thing']),
     ' is assigned to ',
-    code('saved'),
+    code(['saved']),
     '\n    and returned.'
   ]),
   code$002Dblock('TK')(`>>> cache(2**3)
@@ -128,13 +127,13 @@ cache = cache()
 `),
   p([
     'This works thanks to the ',
-    code('nonlocal'),
+    code(['nonlocal']),
     ' keyword\n    introduced in Python 3, which enables variables in outer\n    scopes to be rebound. So how would one achieve the same\n    result in earlier versions of Python?'
   ])
 ];
 const body = [
   ...excerpt,
-  h3('Bringing lexical scoping to Python 2.x'),
+  h3(['Bringing lexical scoping to Python 2.x']),
   code$002Dblock('python')(`def cache(saved=None):
     def _(thing=None):
         # nonlocal saved
@@ -146,7 +145,7 @@ cache = cache()
 `),
   p([
     'The ',
-    code('nonlocal'),
+    code(['nonlocal']),
     ' line is commented out as it\'s a syntax\n    error in Python 2.x.'
   ]),
   code$002Dblock('TK')(`>>> cache(2**3)
@@ -157,29 +156,29 @@ UnboundLocalError: local variable 'saved' referenced before assignment
 `),
   p([
     'When ',
-    code('cache'),
+    code(['cache']),
     ' is passed a (non-',
-    code('None'),
+    code(['None']),
     ') ',
-    code('thing'),
+    code(['thing']),
     ', a ',
-    em('new'),
+    em(['new']),
     ' ',
-    code('saved'),
+    code(['saved']),
     ' is\n    created within the local scope. When ',
-    code('cache'),
+    code(['cache']),
     ' is\n    passed no arguments (or ',
-    code('None'),
+    code(['None']),
     '), execution skips\n    to ',
-    code('return saved'),
+    code(['return saved']),
     '. At this point, ',
-    code('saved'),
+    code(['saved']),
     '\n    is expected to exist within the local scope \u2013 it does not,\n    which explains the ',
-    code('UnboundLocalError'),
+    code(['UnboundLocalError']),
     '.'
   ]),
   p(['It is possible to simulate lexical scoping in Python 2.x.\n    The approaches I find most palatable utilize a dictionary\n    or a function object as a namespace accessible to both the\n    inner and outer functions.']),
-  h4('Dictionary'),
+  h4(['Dictionary']),
   code$002Dblock('python')(`def cache():
     ns = {'saved': None}
     def _(thing=None):
@@ -189,7 +188,7 @@ UnboundLocalError: local variable 'saved' referenced before assignment
     return _
 cache = cache()
 `),
-  h4('Function object'),
+  h4(['Function object']),
   code$002Dblock('python')(`def cache():
     def ns(): pass
     ns.saved = None
@@ -202,9 +201,9 @@ cache = cache()
 `),
   p([
     'The dictionary approach is arguably more correct, but subscript\n    notation hurts my eyes so I prefer to stick things on a function\n    object. It\'s useful that ',
-    code('def ns(): pass'),
+    code(['def ns(): pass']),
     ' looks odd, as\n    it alerts the reader to the fact that something ',
-    em('is'),
+    em(['is']),
     ' odd.'
   ])
 ];
@@ -213,7 +212,7 @@ export default {
   slug: 'simulating-nonlocal-in-python-2.x',
   title: [
     'Simulating ',
-    code('nonlocal'),
+    code(['nonlocal']),
     ' in Python 2.x'
   ],
   datetime: datetime('2011-02-05')('19:30:00')('America/Los_Angeles'),

@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -90,9 +89,9 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'Gmail currently serves up two possible favicons, a 16x16 ',
-    code('shortcut icon'),
+    code(['shortcut icon']),
     ' and a 32x32 ',
-    code('icon'),
+    code(['icon']),
     '.\n    I\'ve no idea why the latter is included, but my browser\n    is happy to accept either version, which can lead to a\n    rather amusing situation.'
   ]),
   captioned$002Dimages([{
@@ -108,14 +107,14 @@ const body = [
       caption: ['32x32 Gmail icon at 1000%']
     }]),
   p([
-    a('http://blog.cocoia.com/')('Sebastiaan de With'),
+    a('http://blog.cocoia.com/')(['Sebastiaan de With']),
     '\n    would not stand for this!'
   ])
 ];
 export default {
   id: 63,
   slug: 'gmail-favicon-confusion',
-  title: 'Gmail\'s favicon confusion',
+  title: ['Gmail\'s favicon confusion'],
   datetime: datetime('2010-07-21')('10:56:00')('Pacific/Auckland'),
   tags: [
     'design',

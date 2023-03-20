@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 85,
   slug: "hashify-editor",
-  title: "Hashify Editor",
+  title: ["Hashify Editor"],
   datetime: datetime "2011-04-24" "06:15:00" "America/Los_Angeles",
   tags: ["hashify", "markdown", "showdown", "ux"],
   body: body,
@@ -20,7 +20,7 @@ body = [
   blockquote [
     p [
      "Hashify is officially live as of now! ",
-      a "http://bit.ly/dXYxGU" "bit.ly/dXYxGU",
+      a "http://bit.ly/dXYxGU" ["bit.ly/dXYxGU"],
     ],
   ],
 
@@ -28,26 +28,26 @@ body = [
    "Quite to my surprise word of the release spread
     incredibly quickly, thanks in large part to the ",
     a "http://news.ycombinator.com/item?id=2464213"
-      "Hacker News thread", " that sprang up and
+      ["Hacker News thread"], " that sprang up and
     received a great deal of attention.",
   ],
 
   p [
-   "The vast majority of the ensuing discussion focused on the
+   `The vast majority of the ensuing discussion focused on the
     implications of stuffing documents into URLs, and of using bit.ly
     as a document store. While there was much debate as to whether this
-    \"cool hack\" will turn out to have practical application, the one
-    undoubtedly useful component was overlooked.",
+    "cool hack" will turn out to have practical application, the one
+    undoubtedly useful component was overlooked.`,
   ],
 
-  h3 "Markdown editing for the masses",
+  h3 ["Markdown editing for the masses"],
 
   p [
    "Before dropping off the face of the earth, John Fraser created ",
-    a "https://bitbucket.org/davidchambers/showdown.js" "Showdown", "
-    and ", a "http://code.google.com/p/wmd/" "wmd", ".
+    a "https://bitbucket.org/davidchambers/showdown.js" ["Showdown"], "
+    and ", a "http://code.google.com/p/wmd/" ["wmd"], ".
     The latter is a WYSIWYM Markdown editor, popularized by ",
-    a "http://stackoverflow.com/" "Stack Overflow", ". I've long been
+    a "http://stackoverflow.com/" ["Stack Overflow"], ". I've long been
     supportive of wmd's goals, but I've never liked its implementation.",
   ],
 
@@ -72,24 +72,25 @@ body = [
   ],
 
   p [
-    a "https://bitbucket.org/davidchambers/hashify-editor" "Hashify Editor", "
+    a "https://bitbucket.org/davidchambers/hashify-editor"
+      ["Hashify Editor"], "
     addresses these concerns. Styles are applied via a style sheet, and
-    selector specificity has been kept low to make overriding default styling
-    simple. Selectors are prefixed with ", code "hashify-editor", " to prevent
-    erroneous matches. Additionally, the images have been sprited, optimized,
-    Base64 encoded, and included in the style sheet as a data URI.",
+    selector specificity has been kept low to make overriding default
+    styling simple. Selectors are prefixed with ", code ["hashify-editor"], "
+    to prevent erroneous matches. Additionally, the images have been sprited,
+    optimized, Base64 encoded, and included in the style sheet as a data URI.",
   ],
 
   p [
-   "Hashify Editor does not require Showdown, as its focus is on turning the
-    humble ", code "textarea", " into a useful Markdown editor. TextMate-style
-    keyboard shortcuts make it a joy to work with metacharacters and text
-    selections.",
+   "Hashify Editor does not require Showdown, as its focus is on turning
+    the humble ", code ["textarea"], " into a useful Markdown editor.
+    TextMate-style keyboard shortcuts make it a joy to work with
+    metacharacters and text selections.",
   ],
 
   p [
    "Best of all is the preview option: one is able to view", —, "and of
-    course, edit", —, "the text at ", a "http://hashify.me/" "hashify.me", "
+    course, edit", —, "the text at ", a "http://hashify.me/" ["hashify.me"], "
     with a single click.",
   ],
 
@@ -107,11 +108,11 @@ body = [
     ],
   }],
 
-  h3 "Adoption",
+  h3 ["Adoption"],
 
   p [
    "I love sites which support Markdown commenting. Unfortunately many of
-    those that do", —, "even ", a "http://forrst.com/" "Forrst", —, "don't
+    those that do", —, "even ", a "http://forrst.com/" ["Forrst"], —, "don't
     provide previews. As a result, each time I'm about to submit a lengthy
     comment I select all, copy, open a new tab, go to hashify.me, tab into
     the editor, and paste in my comment. Were Forrst to integrate Hashify

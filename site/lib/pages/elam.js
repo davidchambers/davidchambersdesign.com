@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -88,27 +87,27 @@ import {
 } from '../elements.js';
 export default {
   slug: 'elam',
-  title: 'Elam',
+  title: ['Elam'],
   body: [
     p(['I attended Elam School of Fine Arts in Auckland between 2002 and 2005.\n      After the general first-year course I majored in graphic design. Below\n      are examples of the work I produced as part of that programme.']),
     ul([
-      li(a('#2003')('2003')),
-      li(a('#2004')('2004')),
-      li(a('#2005')('2005'))
+      li([a('#2003')(['2003'])]),
+      li([a('#2004')(['2004'])]),
+      li([a('#2005')(['2005'])])
     ]),
-    h3$0027({ id: '2003' })('2003'),
-    h4('Design philosophies poster'),
+    h3$0027({ id: '2003' })(['2003']),
+    h4(['Design philosophies poster']),
     p([
-      b('Brief.'),
+      b(['Brief.']),
       ' Express your personal design philosophies in a design\n      manifesto. This may take the form of a booklet, pamphlet or poster.'
     ]),
     p([img({
         alt: 'Design philosophies: simple, sensible, sustainable',
         src: '/images/elam/lightbox/design-philosophies-poster.png'
       })]),
-    h4('Sugar awareness billboard campaign'),
+    h4(['Sugar awareness billboard campaign']),
     p([
-      b('Brief.'),
+      b(['Brief.']),
       ' Create a billboard campaign to increase public awareness\n      of the dangers of excessive sugar consumption. The aim is to present the\n      dangers without coming across as "preachy".'
     ]),
     p([img({
@@ -123,16 +122,16 @@ export default {
         alt: 'Excessive sugar consumption can impair concentration',
         src: '/images/elam/sugar-billboards/plane-crash.jpg'
       })]),
-    h3$0027({ id: '2004' })('2004'),
+    h3$0027({ id: '2004' })(['2004']),
     h4([
-      i('Caligula'),
+      i(['Caligula']),
       ' poster'
     ]),
     p([
-      b('Brief.'),
-      ' Design a poster to promote the Auckland Theatre Company\'s\n      production of ',
-      i('Caligula'),
-      '. The poster must appeal to young people,\n      as this play was chosen as part of an effort to attract more young people\n      to theatre. Copy provided. A1.'
+      b(['Brief.']),
+      ' Design a poster to promote the Auckland Theatre\n      Company\'s production of ',
+      i(['Caligula']),
+      '. The poster must appeal\n      to young people, as this play was chosen as part of an effort to\n      attract more young people to theatre. Copy provided. A1.'
     ]),
     p([img({
         alt: 'Poster for the play Caligula',
@@ -143,50 +142,50 @@ export default {
         src: '/images/elam/caligula-typography.png'
       })]),
     h4([
-      i('tyypo'),
+      i(['tyypo']),
       ' magazine'
     ]),
     p([
-      b('Brief.'),
+      b(['Brief.']),
       ' Design a magazine of any size and any nature.\n      (I chose to design a typography magazine, which I named ',
-      i('tyypo'),
-      '.\n      Actual size: A4.)'
+      i(['tyypo']),
+      '. Actual size: A4.)'
     ]),
     p([img({
         alt: 'tyypo magazine cover',
         src: '/images/elam/lightbox/tyypo-cover.png'
       })]),
-    h4('Elam open days poster'),
+    h4(['Elam open days poster']),
     p([
-      b('Brief.'),
+      b(['Brief.']),
       ' Design a poster to advertise the 2004 Elam open days.\n      To be displayed around the city, and sent to secondary schools. A1.'
     ]),
     p([img({
         alt: 'Elam open days poster',
         src: '/images/elam/lightbox/elam-open-days-poster.png'
       })]),
-    h4('Panprint calendar competition'),
+    h4(['Panprint calendar competition']),
     p([
-      b('Brief.'),
+      b(['Brief.']),
       ' Design a page for possible inclusion in the 2004 Panprint\n      calendar. Panprint produces a calendar each year as a way to promote its\n      services, and the work of young designers. This year the theme is "true\n      colours". A1.'
     ]),
     p([img({
         alt: 'Panprint poster',
         src: '/images/elam/lightbox/panprint-poster.jpg'
       })]),
-    h3$0027({ id: '2005' })('2005'),
-    h4('Gameplayer brand identity'),
+    h3$0027({ id: '2005' })(['2005']),
+    h4(['Gameplayer brand identity']),
     p([
-      b('Brief.'),
-      ' Design a brand identity for Gameplayer, a company\n      that runs tournaments in Auckland for four trading card games: ',
-      i('Magic: The Gathering'),
+      b(['Brief.']),
+      ' Design a brand identity for Gameplayer,\n      a company that runs tournaments in Auckland for four\n      trading card games: ',
+      i(['Magic: The Gathering']),
       ', ',
-      i('Duel Masters'),
+      i(['Duel Masters']),
       ', ',
-      i('Yu-Gi-Oh!'),
-      '\n      and ',
-      i('VS System'),
-      '. The identity must appeal to those between 12\n      and 24 years of age, without marginalizing older players of the games.'
+      i(['Yu-Gi-Oh!']),
+      ' and ',
+      i(['VS System']),
+      '. The identity must appeal to those\n      between 12 and 24 years of age, without marginalizing\n      older players of the games.'
     ]),
     p([img({
         alt: 'Gameplayer business card (James)',
@@ -200,7 +199,7 @@ export default {
         alt: 'Gameplayer promotional card',
         src: '/images/elam/gameplayer-promotional-card.png'
       })]),
-    h4('Playing card design'),
+    h4(['Playing card design']),
     p(['Playing cards are an example of graphic design in its purest form.\n      Balance, composition and consistency are all vitally important\n      ingredients in playing card design. Typography, too, plays an\n      important role.']),
     p(['Rockwell was used as the starting point for the characters on each card.\n      As an eccentric, slab-serif typeface Rockwell has few applications, but\n      the consistent weight and overall blackness of its letterforms make it\n      suitable for this purpose. Several of the characters were tweaked to iron\n      out idiosyncrasies: Rockwell\'s "A" is not symmetrical, for example.\n      The "J" and the "Q" required complete remodelling.']),
     p(['Geometry was the driving force behind the design of the suit symbols.\n      Initially, the diamond was a square rotated forty-five degrees, and\n      the heart-shaped element of the spade was identical in shape and size\n      to the heart itself.']),
@@ -210,11 +209,11 @@ export default {
         src: '/images/elam/playing-cards.jpg'
       })]),
     h4([
-      i('Exposure05'),
+      i(['Exposure05']),
       ' catalogue'
     ]),
     p([
-      b('Brief.'),
+      b(['Brief.']),
       ' Design the catalogue for the annual end-of-year\n      exposition organized by the University of Auckland Postgraduate\n      Students\' Association.'
     ]),
     p([img({
@@ -225,7 +224,7 @@ export default {
         alt: 'Exposure magazine spread',
         src: '/images/elam/exposure-spread.jpg'
       })]),
-    h4('"Insight Drive"'),
+    h4([`"Insight Drive"`]),
     p(['While at Insight, I was asked to design the packaging for an unusual\n      Christmas gift. Earlier in the year, Insight had sent branded model\n      Mini Coopers to its most valued clients. These cars had proven\n      extremely popular, so it was decided that a faster motor would be\n      sent to each Mini owner at the end of the year (to get a little more\n      mileage from the initiative). The engines themselves did not possess\n      much aesthetic appeal, so the challenge was to package them in an\n      exciting way.']),
     p([img({
         alt: 'Packaged motors ready to send',

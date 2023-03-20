@@ -1,6 +1,5 @@
 import S from 'sanctuary';
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -94,13 +93,13 @@ const captioned$002Dimages = images => dl(images.flatMap(image => [
     })]),
   dd(image.caption)
 ]));
-const code$002Dblock = language => source$002Dcode => pre(code(text(source$002Dcode)));
+const code$002Dblock = language => source$002Dcode => pre([code([text(source$002Dcode)])]);
 const update = datetime => body => div({ class: 'update' })([
   h4([
     'Update \u2014 ',
     time({ datetime: datetime.toISO() })([datetime.toFormat('d MMMM y')])
   ]),
-  ...canonicalize$002Dchildren(body)
+  ...body
 ]);
 const $2014 = text('\u2009\u2014\u2009');
 export {

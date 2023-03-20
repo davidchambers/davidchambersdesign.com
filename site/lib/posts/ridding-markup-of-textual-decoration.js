@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -90,27 +89,27 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'On the Web it\'s not uncommon to see characters with\n    no inherent meaning used for stylistic reasons. A good\n    example is the ',
-    a('#')('Read more \xBB'),
-    ' link. Perhaps the\n    directionality of the "\xBB" is suggestive of travelling to\n    another page, or perhaps the letterform is included solely\n    for its aesthetic appeal. Whatever the case, one thing is\n    certain: links do not require right-pointing double angle\n    quotation marks in order to function.'
+    a('#')(['Read more \xBB']),
+    ' link. Perhaps\n    the directionality of the "\xBB" is suggestive of travelling\n    to another page, or perhaps the letterform is included solely\n    for its aesthetic appeal. Whatever the case, one thing is\n    certain: links do not require right-pointing double angle\n    quotation marks in order to function.'
   ]),
   p([
-    strong('The inclusion of such a character is therefore\n    a design decision.'),
+    strong(['The inclusion of such a character is therefore\n    a design decision.']),
     ' It is decoration, not content.\n    It belongs in a style sheet, not in a page\'s markup.'
   ])
 ];
 const body = [
   ...excerpt,
-  h2('Adding decorative textual content via CSS'),
+  h2(['Adding decorative textual content via CSS']),
   (() => {
     const url = 'http://reference.sitepoint.com';
-    const sitepoint = path => text => a(url + path)(code(text));
+    const sitepoint = path => a(url + path);
     return p([
       'The ',
-      sitepoint('/css/content')('content'),
+      sitepoint('/css/content')([code(['content'])]),
       ' property\n      is extremely powerful. It\'s used in conjunction with\n      the ',
-      sitepoint('/css/pseudoelement-before')(':before'),
+      sitepoint('/css/pseudoelement-before')([code([':before'])]),
       '\n      and ',
-      sitepoint('/css/pseudoelement-after')(':after'),
+      sitepoint('/css/pseudoelement-after')([code([':after'])]),
       '\n      pseudo-elements.'
     ]);
   })(),
@@ -122,15 +121,15 @@ const body = [
 `),
   p([
     'There are many other situations in which ',
-    code(':before'),
+    code([':before']),
     '/',
-    code(':after'),
+    code([':after']),
     ' and ',
-    code('content'),
+    code(['content']),
     ' can team up to great\n    effect. Often sites have footer links separated by "pipes".\n    These pipes commonly appear in the site\'s markup. ',
-    strong('This is wrong!'),
+    strong(['This is wrong!']),
     ' Last week I was horrified to\n    discover that ',
-    a('http://bitbucket.org/')('Bitbucket'),
+    a('http://bitbucket.org/')(['Bitbucket']),
     '\n    is guilty of this. I\'ve since rectified the situation\n    (although the change is yet to go live).'
   ]),
   code$002Dblock('css')(`.footer-nav li {
@@ -143,13 +142,13 @@ const body = [
 `),
   p([
     'The second selector above may look strange unless you\'re\n    familiar with this approach. By using ',
-    code('li+li'),
+    code(['li+li']),
     ' we\n    target every ',
-    code('li'),
+    code(['li']),
     ' inside ',
-    code('.footer-nav'),
+    code(['.footer-nav']),
     ' ',
-    em('except the first'),
+    em(['except the first']),
     '.'
   ]),
   p(['Another case in which there\'s a temptation to mark up content in\n    a certain way in order to achieve a certain visual appearance is\n    the comma-separated list.']),
@@ -158,9 +157,9 @@ const body = [
   p(['This approach is inflexible. Displaying the tags as Twitter-style\n    hashtags, for example, would require fiddling with the markup.\n    Adding a tag icon beside each tag would require rewriting the\n    markup completely.']),
   p([
     'A better approach would be to let the ',
-    em('content'),
+    em(['content']),
     ' dictate\n    the markup used. Since we have a ',
-    em('list'),
+    em(['list']),
     ' of tags, we should\n    use a list of some sort. Since the list is in non-arbitrary order\n    (alphabetical), an ordered list is probably appropriate. "Tags"\n    is a heading that relates to the list of tags.'
   ]),
   code$002Dblock('html')(`<h4>Tags</h4>
@@ -184,27 +183,27 @@ li:last-child:after {
     content: "";
 }
 `),
-  h2('Summary'),
+  h2(['Summary']),
   p([
-    'When marking up content, one should use the elements which best ',
-    em('describe'),
+    'When marking up content, one should use the elements which\n    best ',
+    em(['describe']),
     ' that content. ',
-    em('Styling'),
-    ' content is a\n    separate (though not unrelated) issue. With ',
-    code(':before'),
+    em(['Styling']),
+    '\n    content is a separate (though not unrelated) issue. With ',
+    code([':before']),
     ', ',
-    code(':after'),
+    code([':after']),
     ', and ',
-    code('content'),
-    ' at our disposal, let us bid\n    farewell to ',
-    code('<span class="pipe">|</span>'),
+    code(['content']),
+    ' at our disposal, let us bid farewell to ',
+    code([`<span class="pipe">|</span>`]),
     ' and friends.'
   ])
 ];
 export default {
   id: 73,
   slug: 'ridding-markup-of-textual-decoration',
-  title: 'Ridding markup of textual decoration',
+  title: ['Ridding markup of textual decoration'],
   datetime: datetime('2010-11-15')('01:00:00')('Australia/Sydney'),
   tags: [
     'css',

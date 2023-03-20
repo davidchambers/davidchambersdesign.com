@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -94,16 +93,16 @@ const body = [
   p(['Each of these workarounds is problematic in some way: browsers do\n    not agree on exactly what a page refresh should do; quitting and\n    relaunching a browser is time-consuming (particularly with Firefox\n    on OS X); emptying the cache gobbles up bandwidth; and disabling\n    caching slows down the testing process by forcing a bunch of static\n    files to be retrieved from the server every time the page is loaded.']),
   p([
     'While the problem of cached style sheets is largely an annoyance\n    confined to the development environment, it occasionally causes\n    problems at other times. For example, let\'s say that you\'ve made\n    a minor change to a site\'s source code \u2013 you\'ve changed ',
-    code('<div id="wrapper">'),
+    code([`<div id="wrapper">`]),
     ' to ',
-    code('<div id="wrap">'),
+    code([`<div id="wrap">`]),
     '. You\'ve also done a find and replace on the style sheet, and\n    rolled both changes live. A new visitor to the site will have\n    no problems, but a returning visitor may see the site through\n    the lens of an out-of-date style sheet. Yikes!'
   ]),
   p([
     'I decided that it was time to find a reliable solution\n    to the above problems. I came across an article on ',
-    a('http://css-tricks.com/can-we-prevent-css-caching/')('timestamping CSS'),
+    a('http://css-tricks.com/can-we-prevent-css-caching/')(['timestamping CSS']),
     '\n    which suggests appending a unique string to a style sheet\'s\n    href when linking to it in a page\'s ',
-    code('<head>'),
+    code(['<head>']),
     '.'
   ]),
   p(['After reading the replies to the above post, and taking on board\n    several good suggestions, here is the PHP code I have decided upon:']),
@@ -114,18 +113,18 @@ const body = [
 `),
   p([
     'The nice thing about using ',
-    a('http://php.net/manual/en/function.filectime.php')('PHP\'s filectime function'),
+    a('http://php.net/manual/en/function.filectime.php')(['PHP\'s filectime function']),
     '\n    is that the timestamp is dependent on the time at which the CSS file\n    was last modified. This means that the cached style sheet is used when\n    it is ',
-    strong('up to date'),
+    strong(['up to date']),
     ', but the file is retrieved from the\n    server when it has been ',
-    strong('changed in any way'),
+    strong(['changed in any way']),
     '.'
   ])
 ];
 export default {
   id: 4,
   slug: 'intelligent-css-caching',
-  title: 'Intelligent CSS caching',
+  title: ['Intelligent CSS caching'],
   datetime: datetime('2008-12-18')('14:50:00')('Pacific/Auckland'),
   tags: [
     'css',

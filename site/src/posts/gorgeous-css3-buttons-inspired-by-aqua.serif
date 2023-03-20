@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 39,
   slug: "gorgeous-css3-buttons-inspired-by-aqua",
-  title: "Gorgeous CSS3 buttons inspired by Aqua",
+  title: ["Gorgeous CSS3 buttons inspired by Aqua"],
   datetime: datetime "2010-03-08" "12:39:00" "Pacific/Auckland",
   tags: ["css", "css3", "html", "mac-os-x"],
   excerpt: excerpt,
@@ -35,14 +35,14 @@ body = [
 
   p [
    "The two cornerstones of the Web as an interactive medium are the ",
-    a "http://en.wikipedia.org/wiki/Form_(web)" "form", ",
+    a "http://en.wikipedia.org/wiki/Form_(web)" ["form"], ",
     which facilitates the submission and retrieval of data, and the ",
-    a "http://en.wikipedia.org/wiki/Hyperlink" "hyperlink", ",
+    a "http://en.wikipedia.org/wiki/Hyperlink" ["hyperlink"], ",
     which facilitates navigation.",
   ],
 
   p [
-   "Since form submission buttons and hyperlinks ", em "do", "
+   "Since form submission buttons and hyperlinks ", em ["do"], "
     different things, it makes sense that browsers display them
     differently (by default).",
   ],
@@ -61,8 +61,8 @@ body = [
     links from buttons, therefore, is not always appropriate.
     As Stephen Anderson explains in his article ",
     a "http://www.alistapart.com/articles/indefenseofeyecandy"
-      "In Defense of Eye Candy", " on ",
-    a "http://www.alistapart.com/" "A List Apart", ", an element's
+      ["In Defense of Eye Candy"], " on ",
+    a "http://www.alistapart.com/" ["A List Apart"], ", an element's
     appearance should suggest appropriate modes of interaction.",
   ],
 
@@ -70,16 +70,16 @@ body = [
     alt: "WordPress Publish pane",
     src: "/images/posts/39/wordpress-publish-pane.png",
     caption: [
-     "In WordPress's ", strong "Publish", " pane \"Save Draft\" is a
+     "In WordPress's ", strong ["Publish"], " pane \"Save Draft\" is a
       submit input, \"Preview\" is a link; both are styled as buttons",
     ],
   }],
 
-  h3 "Styling links to look like buttons",
+  h3 ["Styling links to look like buttons"],
 
   p [
     em [
-      strong "Beware!", " There's quite a bit involved in styling
+      strong ["Beware!"], " There's quite a bit involved in styling
       form elements – be sure that there's a compelling reason to
       override default browser styling before doing so.",
     ],
@@ -101,29 +101,27 @@ body = [
     alt: "Button and hyperlink with border",
     src: "/images/posts/39/start-game-button-and-hyperlink-border.png",
     caption: [
-      code "border: 1px solid #850; color: #850;",
+      code ["border: 1px solid #850; color: #850;"],
     ],
   }, {
     alt: "Button and hyperlink with background colour",
     src: "/images/posts/39/start-game-button-and-hyperlink-background-color.png",
     caption: [
-      code "background: #fc6; text-decoration: none;",
+      code ["background: #fc6; text-decoration: none;"],
     ],
   }, {
     alt: "Button and hyperlink with consistent padding and font properties",
     src: "/images/posts/39/start-game-button-and-hyperlink-padding-font.png",
     caption: [
-      code `
-        padding: 0.25em 0.5em; font: bold 12px/15px "Lucida Grande", "Lucida Sans Unicode", sans-serif;
-      `,
+      code [`padding: 0.25em 0.5em; font: bold 12px/15px "Lucida Grande", "Lucida Sans Unicode", sans-serif;`],
     ],
   }],
 
-  h4 "Progressive enhancement",
+  h4 ["Progressive enhancement"],
 
   p [
    "The submit input and the link now look the same, and ",
-    em "somewhat", " button-like. Even antiquated browsers
+    em ["somewhat"], " button-like. Even antiquated browsers
     such as Internet Explorer 6 understand the rules defined
     thus far. The next step is to make the elements more
     appealing and more button-like in modern browsers.",
@@ -160,14 +158,15 @@ body = [
     ],
   }],
 
-  h3 "Styling different states",
+  h3 ["Styling different states"],
 
   p [
    "It is important to consider the different states a button may have.
-    Apple's ", a "http://en.wikipedia.org/wiki/Aqua_(user_interface)" "Aqua", "
+    Apple's ",
+    a "http://en.wikipedia.org/wiki/Aqua_(user_interface)" ["Aqua"], "
     GUI provides three different effects, any or all of which may be
     applied to a button: a pulsating blue background indicates that ",
-    strong "return", " activates the button; a button with an outer glow
+    strong ["return"], " activates the button; a button with an outer glow
     can be activated via the space bar; and a static blue background is
     used for a button's \"active\" state (which occurs while the button
     is being clicked).",
@@ -177,8 +176,8 @@ body = [
     alt: "TextEdit dialog featuring two different button states",
     src: "/images/posts/39/textedit-save-dialog.png",
     caption: [
-     "In Aqua, ", strong "return", " activates the blue button; ",
-      strong "space bar", " activates the button with the outer glow",
+     "In Aqua, ", strong ["return"], " activates the blue button; ",
+      strong ["space bar"], " activates the button with the outer glow",
     ],
   }],
 
@@ -198,7 +197,7 @@ body = [
     ],
   }],
 
-  h4 "Hover",
+  h4 ["Hover"],
 
   code-block "css" `
     .aqua:hover {
@@ -223,7 +222,7 @@ body = [
     ],
   }],
 
-  h4 "Focus",
+  h4 ["Focus"],
 
   code-block "css" `
     .aqua:focus {
@@ -248,7 +247,7 @@ body = [
     ],
   }],
 
-  h4 "Active",
+  h4 ["Active"],
 
   code-block "css" `
     .aqua:active {
@@ -272,11 +271,11 @@ body = [
     ],
   }],
 
-  h3 "Demo",
+  h3 ["Demo"],
 
   p [
    "Interact with the finished styled button on the ",
-    a "/examples/hyperlinks-as-buttons/" "Hyperlinks as buttons", "
+    a "/examples/hyperlinks-as-buttons/" ["Hyperlinks as buttons"], "
     demo page.",
   ],
 

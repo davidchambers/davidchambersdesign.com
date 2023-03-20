@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 26,
   slug: "prototype-image-slider",
-  title: "Prototype image slider",
+  title: ["Prototype image slider"],
   datetime: datetime "2009-09-16" "23:43:00" "Pacific/Auckland",
   tags: ["css", "html", "javascript", "meaningful-markup", "prototype"],
   body: body,
@@ -14,12 +14,12 @@ export default {
 excerpt = [
   p [
    "In my post titled ",
-    a "/captions-over-images/" "Captions over images", "
+    a "/captions-over-images/" ["Captions over images"], "
     I advocate the use of definition lists for captioning images.
     Earlier today I was asked whether this meaningful markup could
     be used in conjunction with an \"image slider\" such as ",
     a "http://cssglobe.com/post/4004/easy-slider-15-the-easiest-jquery-plugin-for-sliding"
-      "Easy Slider 1.5", ".",
+      ["Easy Slider 1.5"], ".",
   ],
   p [
    "I had a look at the Easy Slider source code and decided to
@@ -30,7 +30,7 @@ excerpt = [
   ],
   p [
    "Check out the ",
-    a "/examples/prototype-image-slider/" "Prototype image slider demo", "
+    a "/examples/prototype-image-slider/" ["Prototype image slider demo"], "
     to see the code in action.",
   ],
 ];
@@ -50,20 +50,20 @@ body = [
     p [
      "Wrapping the word \"class\" in quotes as per this ",
       a "http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777"
-        "recommendation by Tobie Langel", " did the trick!",
+        ["recommendation by Tobie Langel"], " did the trick!",
     ],
   ],
 
-  h3' {id: "usage"} "Usage",
+  h3' {id: "usage"} ["Usage"],
 
   p [
    "First, you'll need to save a copy of ",
     a "/examples/prototype-image-slider/prototype-image-slider.js"
-      "prototype-image-slider.js", ".",
+      ["prototype-image-slider.js"], ".",
   ],
 
   p [
-   "To create a new ", code "Slider", " simply call the constructor.
+   "To create a new ", code ["Slider"], " simply call the constructor.
     The constructor requires one argument, either a DOM node or a string
     that references a node's ID.",
   ],
@@ -75,7 +75,7 @@ body = [
   p [
    "There's nothing to prevent multiple image sliders from appearing
     on a page. The following code turns each div with class of 'slider'
-    into a ", code "Slider", " object.",
+    into a ", code ["Slider"], " object.",
   ],
 
   code-block "javascript" `
@@ -120,7 +120,7 @@ body = [
   update {datetime "2009-09-21" "11:53:00" "Pacific/Auckland"} [
     p [
      "I neglected to mention that this code also requires ",
-      a "http://script.aculo.us/" "script.aculo.us", ".",
+      a "http://script.aculo.us/" ["script.aculo.us"], ".",
     ],
   ],
 

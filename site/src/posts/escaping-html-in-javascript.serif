@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 88,
   slug: "escaping-html-in-javascript",
-  title: "Escaping HTML in JavaScript",
+  title: ["Escaping HTML in JavaScript"],
   datetime: datetime "2011-05-30" "15:00:00" "America/Los_Angeles",
   tags: ["best-practice", "javascript", "security"],
   body: body,
@@ -15,8 +15,8 @@ body = [
 
   p [
    "I recently came across an interesting article at ",
-    a "http://wonko.com/" "wonko.com", " on ",
-    a "http://wonko.com/post/html-escaping" "HTML escaping", ",
+    a "http://wonko.com/" ["wonko.com"], " on ",
+    a "http://wonko.com/post/html-escaping" ["HTML escaping"], ",
     which provoked me to rewrite Bitbucket's escape function
     (invoked from within Underscore templates):",
   ],
@@ -60,11 +60,11 @@ body = [
 
   p [
    "I created a ",
-    a "http://jsperf.com/html-escaping-perf" "jsPerf test case", "
+    a "http://jsperf.com/html-escaping-perf" ["jsPerf test case"], "
     which confirms that there's a performance hit associated with using
     this more liberal regular expression. Keep in mind, though, that if
     “A” takes 1ms to execute and “B” takes ten times as long, “B” still
-    only takes 10ms. Quite often a significant ", em "comparative", "
+    only takes 10ms. Quite often a significant ", em ["comparative"], "
     speed difference is insignificant in absolute terms; I'd argue that
     this is the case here.",
   ],

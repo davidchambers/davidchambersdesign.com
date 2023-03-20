@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 37,
   slug: "resize-browser-window-to-match-iphone-viewport-dimensions",
-  title: "Resize browser window to match iPhone viewport dimensions",
+  title: ["Resize browser window to match iPhone viewport dimensions"],
   datetime: datetime "2010-02-16" "03:20:00" "Pacific/Auckland",
   tags: ["bookmarklets", "iphone", "javascript"],
   body: body,
@@ -28,7 +28,7 @@ excerpt = [
   ul [
     li [
       p [
-        strong "Portrait", " (labelled \"⁑\")",
+        strong ["Portrait"], ` (labelled "⁑")`,
       ],
       code-block "plain-text" `
         javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
@@ -36,7 +36,7 @@ excerpt = [
     ],
     li [
       p [
-        strong "Landscape", " (labelled \"**\")",
+        strong ["Landscape"], ` (labelled "**")`,
       ],
       code-block "plain-text" `
         javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');

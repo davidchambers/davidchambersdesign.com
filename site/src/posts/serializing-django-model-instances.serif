@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 49,
   slug: "serializing-django-model-instances",
-  title: "Serializing Django model instances",
+  title: ["Serializing Django model instances"],
   datetime: datetime "2010-04-13" "08:16:00" "Pacific/Auckland",
   tags: ["django", "python"],
   body: body,
@@ -24,7 +24,7 @@ body = [
 
   p [
    "Unforunately, this raises a TypeError, as the instance is not JSON
-    serializable. I don't understand ", em "why", " model instances are
+    serializable. I don't understand ", em ["why"], " model instances are
     not serializable, but I do have a solution: define a serialization
     method on the instance's model.",
   ],
@@ -54,9 +54,9 @@ body = [
   `,
 
   p [
-    code "_meta.fields", " is an ordered list of model fields
+    code ["_meta.fields"], " is an ordered list of model fields
     which can be accessed from instances and from the model itself. ",
-    a "http://www.djangofoo.com/tag/meta-fields" "_meta.fields", "
+    a "http://www.djangofoo.com/tag/meta-fields" ["_meta.fields"], "
     is one of the few features not covered in Django's excellent
     documentation.",
   ],

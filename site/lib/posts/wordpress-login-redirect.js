@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -90,24 +89,24 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'Sometimes we require users to log in to a WordPress site in order\n    to access ',
-    em('front-end'),
+    em(['front-end']),
     ' functionality hidden from guests.\n    In such instances, we can simply provide a standard login link:'
   ]),
   code$002Dblock('php')(`<a href="<?php bloginfo('url'); ?>/wp-login.php">log in</a>
 `),
   p([
     'While this gets the job done, it takes users to the dashboard after\n    they have logged in: they must then click on a link to return to the\n    front-end, at which point an additional click may be required to get\n    them back to the page they were viewing. Since WordPress 2.6.2 it has\n    been possible to circumvent this round trip from ',
-    strong('origin'),
+    strong(['origin']),
     '\n    to ',
-    strong('wp-login.php'),
+    strong(['wp-login.php']),
     ' to ',
-    strong('wp-admin/'),
+    strong(['wp-admin/']),
     ' to ',
-    strong('/'),
+    strong(['/']),
     ' and finally back to ',
-    strong('origin'),
-    ' by including\n    a value for ',
-    code('redirect_to'),
+    strong(['origin']),
+    ' by\n    including a value for ',
+    code(['redirect_to']),
     ' in the href:'
   ]),
   code$002Dblock('php')(`<a href="<?php bloginfo('url'); ?>/wp-login.php?redirect_to=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">log in</a>
@@ -117,7 +116,7 @@ const body = [
 export default {
   id: 7,
   slug: 'wordpress-login-redirect',
-  title: 'WordPress login redirect',
+  title: ['WordPress login redirect'],
   datetime: datetime('2009-03-01')('03:01:00')('Pacific/Auckland'),
   tags: [
     'php',

@@ -18,7 +18,7 @@ captioned-images images = {
 };
 
 code-block language source-code = {
-  pre $ code $ text source-code
+  pre [code [text source-code]]
 };
 
 update datetime body = {
@@ -29,7 +29,7 @@ update datetime body = {
         datetime.toFormat("d MMMM y")
       ],
     ],
-    ...{canonicalize-children body},
+    ...body,
   ]
 };
 

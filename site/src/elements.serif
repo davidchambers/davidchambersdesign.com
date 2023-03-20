@@ -1,8 +1,6 @@
 import S from "sanctuary";
 
 export {
-  canonicalize-children,
-
   text,
 
   a,
@@ -99,130 +97,117 @@ escape s = {
 };
 
 text value = {
-  text-node: true,
-  value: value,
-  text: [value],
-  render: indent => level => inline => escape value,
-};
-
-canonicalize-children children = {
-  {if Array.isArray children then children else [children]}.map(child => {
-    if typeof child == "string" then {
-      child
-      |> ?.replace(new RegExp("^[ ]+", "gm"), " ")
-      |> ?.replaceAll("\n", "")
-      |> text
-    } else {
-      child
-    }
-  })
-};
-
-render-node indent level inline node = {
-  if node.text-node then {
-    escape node.value
-  } else if node.self-closing then {
-    render-self-closing-element node.tag-name node.attributes indent level inline
-  } else if inline or node.format == "inline" then {
-    render-inline-element node.tag-name node.attributes node.children indent level inline
-  } else {
-    render-block-element node.tag-name node.attributes node.children indent level inline
-  }
+  type: "text",
+  toString: () => value,
+  render: context => escape value,
 };
 
 render-attribute [name, value] = {
-  ` ${name}="${escape `${value}`.replace(new RegExp("\n[ ]*", "g"), " ")}"`
+  ` ${name}="${escape `${value}`.trim().replaceAll("\n", " ")}"`
 };
 
 render-attributes attrs = {
   {render-attribute <$> Object.entries attrs}.join("")
 };
 
-render-block-element tag-name attrs children indent level inline = {
+render-block-element context element = {
   `${
-    indent.repeat(level)
+    context.indent.repeat(context.level)
   }<${
-    tag-name
+    element.name
   }${
-    render-attributes attrs
+    render-attributes element.attributes
   }>\n${
-    {render-node indent {level + 1} inline <$> children}.join("")
+    element.children
+    |> {node => node.render {indent: context.indent, level: context.level + 1, inline: context.inline}} <$> ?
+    |> ?.join("")
   }${
-    indent.repeat(level)
+    context.indent.repeat(context.level)
   }</${
-    tag-name
+    element.name
   }>\n`
 };
 
-render-inline-element tag-name attrs children indent level inline = {
+render-inline-element context element = {
   `${
-    indent.repeat(level)
+    context.indent.repeat(context.level)
   }<${
-    tag-name
+    element.name
   }${
-    render-attributes attrs
+    render-attributes element.attributes
   }>${
-    {render-node indent 0 true <$> children}.join("")
+    {{node => node.render {indent: context.indent, level: 0, inline: true}} <$> element.children}.join("")
   }</${
-    tag-name
+    element.name
   }>${
-    if inline then "" else "\n"
+    if context.inline then "" else "\n"
   }`
 };
 
-render-self-closing-element tag-name attrs indent level inline = {
-  `${
-    indent.repeat(level)
-  }<${
-    tag-name
-  }${
-    render-attributes attrs
-  } />${
-    if inline then "" else "\n"
-  }`
+string-to-text-node string-or-node = {
+  if typeof string-or-node == "object" then string-or-node else {
+    string-or-node
+    |> ?.replace(new RegExp("^[ ]+", "gm"), " ")
+    |> ?.replaceAll("\n", "")
+    |> text
+  }
 };
 
-block-element tag-name attrs children = {
-  children' = canonicalize-children children;
-  {
-    text-node: false,
-    self-closing: false,
+block-element name attributes children! = {
+  children = string-to-text-node <$> children!;
+  element = {
+    type: "element",
     format: "block",
-    tag-name: tag-name,
-    attributes: attrs,
-    children: canonicalize-children children,
-    text: children'.flatMap(child => child.text),
-    render: render-block-element tag-name attrs children',
-  }
+    name: name,
+    attributes: attributes,
+    children: children,
+    toString: () => {String <$> children}.join(""),
+    render: context => render-block-element context element,
+  };
+  element
 };
 
-inline-element tag-name attrs children = {
-  children' = canonicalize-children children;
-  format = if children'.some(node => node.format == "block") then "block" else "inline";
-  {
-    text-node: false,
-    self-closing: false,
+inline-element name attributes children! = {
+  children = string-to-text-node <$> children!;
+  format = if children.some(node => node.format == "block") then "block" else "inline";
+  element = {
+    type: "element",
     format: format,
-    tag-name: tag-name,
-    attributes: attrs,
-    children: canonicalize-children children,
-    text: children'.flatMap(child => child.text),
-    render: indent => level => inline => {
-      render = if format == "inline" then render-inline-element else render-block-element;
-      render tag-name attrs children' indent level inline
+    name: name,
+    attributes: attributes,
+    children: children,
+    toString: () => {String <$> children}.join(""),
+    render: context => {
+      if format == "inline" then {
+        render-inline-element context element
+      } else {
+        render-block-element context element
+      }
     },
-  }
+  };
+  element
 };
 
-self-closing-element tag-name attrs = {
-  text-node: false,
-  self-closing: true,
-  format: "inline",
-  tag-name: tag-name,
-  attributes: attrs,
-  children: [],
-  text: [],
-  render: render-self-closing-element tag-name attrs,
+self-closing-element name attributes = {
+  element = {
+    type: "element",
+    format: "inline",
+    name: name,
+    attributes: attributes,
+    toString: () => "",
+    render: {indent, level, inline} => {
+      `${
+        indent.repeat(level)
+      }<${
+        name
+      }${
+        render-attributes attributes
+      } />${
+        if inline then "" else "\n"
+      }`
+    },
+  };
+  element
 };
 
 ;; 4.1 The document element

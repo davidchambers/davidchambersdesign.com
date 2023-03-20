@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -97,7 +96,7 @@ const body = [
 `),
   p([
     'Adding the above snippet to my ',
-    strong('~/.emacs'),
+    strong(['~/.emacs']),
     ' file did\n    the trick. :)'
   ]),
   captioned$002Dimages([{
@@ -109,7 +108,7 @@ const body = [
 export default {
   id: 81,
   slug: 'mapping-file-extensions-to-emacs-syntax-modes',
-  title: 'Mapping file extensions to Emacs syntax modes',
+  title: ['Mapping file extensions to Emacs syntax modes'],
   datetime: datetime('2011-02-18')('23:15:00')('America/Los_Angeles'),
   tags: [
     'emacs',

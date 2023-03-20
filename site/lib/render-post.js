@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -97,15 +96,15 @@ const render$002Dpost = post => related$002Dposts => [article$0027('article-id' 
     ]),
     ...post.body,
     footer$0027({ class: 'metadata' })([
-      ul(li$0027({ class: 'shorturl' })(a(`http://dċd.ws/${ post.id }/`)('Short URL'))),
+      ul([li$0027({ class: 'shorturl' })([a(`http://dċd.ws/${ post.id }/`)(['Short URL'])])]),
       ...post.tags.length === 0 ? [] : [
-        h4('This post has the following tags:'),
-        ol(post.tags.map(tag => li([a(`/tag/${ tag }/`)(tags[tag])])))
+        h4(['This post has the following tags:']),
+        ol(post.tags.map($0024 => (tag => li([a(`/tag/${ tag }/`)([tags[tag]])]))($0024)))
       ]
     ]),
     ...related$002Dposts.length === 0 ? [] : [
-      h3$0027({ id: 'related' })('Possibly related posts'),
-      ul(related$002Dposts.map(post => li([a(`/${ post.slug }/`)(post.title)])))
+      h3$0027({ id: 'related' })(['Possibly related posts']),
+      ul(related$002Dposts.map($0024 => (post => li([a(`/${ post.slug }/`)(post.title)]))($0024)))
     ]
   ])];
 export default render$002Dpost;

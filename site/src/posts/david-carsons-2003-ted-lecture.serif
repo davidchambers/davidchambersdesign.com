@@ -4,7 +4,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 6,
   slug: "david-carsons-2003-ted-lecture",
-  title: "David Carson's 2003 TED lecture",
+  title: ["David Carson's 2003 TED lecture"],
   datetime: datetime "2009-02-10" "11:21:00" "Pacific/Auckland",
   tags: ["design", "typography", "video"],
   body: body,
@@ -15,7 +15,7 @@ body = [
   p [
    "One of my flatmates linked me to this clip recently. It's titled ",
     a "http://www.ted.com/index.php/talks/david_carson_on_design.html"
-      "Design, discovery and humor", " and certainly delivers the
+      ["Design, discovery and humor"], " and certainly delivers the
     entertainment it promises. It's well worth a look.",
   ],
 
@@ -35,7 +35,7 @@ body = [
     ],
     dd [
       p [
-       "David Carson presents ", strong "Design, discovery and humor", "
+       "David Carson presents ", strong ["Design, discovery and humor"], "
         at TED, February 2003",
       ],
     ],

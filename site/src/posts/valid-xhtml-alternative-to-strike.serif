@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 8,
   slug: "valid-xhtml-alternative-to-strike",
-  title: ["Valid XHTML alternative to ", code "<strike>"],
+  title: ["Valid XHTML alternative to ", code ["<strike>"]],
   datetime: datetime "2009-03-17" "21:53:00" "Pacific/Auckland",
   tags: ["css", "html"],
   body: body,
@@ -15,7 +15,7 @@ body = [
 
   p [
    "Today I noticed that a page on this site failed validation. ",
-    a "http://validator.w3.org/" "W3C's markup validation service", "
+    a "http://validator.w3.org/" ["W3C's markup validation service"], "
     gave the following error:",
   ],
 
@@ -24,7 +24,7 @@ body = [
   `,
 
   p [
-    code "<strike>", " is not valid XHTML; I'd forgotten the correct
+    code ["<strike>"], " is not valid XHTML; I'd forgotten the correct
     XHTML markup for this purpose:",
   ],
 
@@ -34,7 +34,7 @@ body = [
 
   p [
    "The above gives:
-    my favourite colour is ", del "red", " ", ins "white",
+    my favourite colour is ", del ["red"], " ", ins ["white"],
   ],
 
   p [

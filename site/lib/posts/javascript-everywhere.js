@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -89,26 +88,26 @@ import datetime from '../datetime.js';
 const excerpt = [
   p([
     'Over the past few months I\'ve reached a startling realization: ',
-    strong('JavaScript is a tremendously capable language.')
+    strong(['JavaScript is a tremendously capable language.'])
   ]),
   p(['The reason that it took me so long to discover this is that\n    the playing field has never been fair. On the one hand I\'ve been\n    writing application code for the server, a stable, predictable\n    environment. On the other hand I\'ve been adding interactivity\n    on the client\'s side, dealing with inconsistencies on multiple\n    fronts, not least of which is the DOM API.']),
   p([
     'Comparing Python and JavaScript, for example, by using\n    the former to quickly put together a website using the\n    excellent Django framework while using the latter to add\n    drag and drop functionality is to compare apples and oranges. ',
-    strong('Actually, it\'s more like comparing apples to root canals.')
+    strong(['Actually, it\'s more like comparing apples to root canals.'])
   ])
 ];
 const body = [
   ...excerpt,
   p([
     'Had I been writing application code in JavaScript (without\n    touching the DOM), I\'d have been in a much better position\n    to weigh each on its merits. Thanks to some terrifically\n    exciting developments in the JS world, it is now possible to\n    write application code ',
-    em('entirely'),
+    em(['entirely']),
     ' in JavaScript.'
   ]),
   p(['When I was first exposed to the idea of having JavaScript on\n    the server, the thing that appealed to me was the potential to\n    share code between server and client. This seemed preferable\n    to the situation that is currently prevalent, whereby objects\n    are created on the server (probably using an ORM such as that\n    provided by Rails or Django) and are then sent down the wire\n    as JSON (or XML for the masochists) at which point they are\n    parsed to create JS objects.']),
   p([
-    a('http://www.sproutcore.com/')('SproutCore'),
+    a('http://www.sproutcore.com/')(['SproutCore']),
     ' rewrites the\n    client\u2013server relationship by moving ',
-    em('all'),
+    em(['all']),
     ' programming\n    logic to the client. This new approach was motivated by a desire\n    to improve performance, but has two consequential benefits. No\n    longer do objects need to be represented on both sides of the\n    wire (in violation of the DRY principle). This brings another\n    benefit, which is the separation of concerns: the server is\n    freed to focus on serving, and the decoupling of service and\n    application code allow the service to be used (simultaneously)\n    by other applications.'
   ]),
   p(['SproutCore is server-agnostic, which allows it to connect to\n    existing services, and allows new services to be created using\n    the most appropriate server-side technologies.']),
@@ -125,7 +124,7 @@ const body = [
   ]),
   p([
     'Exciting JavaScript-related developments are not limited to the\n    client-side, however. There are several options available if you\'re\n    interested in running JavaScript on the server, but the one that\'s\n    caught my attention is ',
-    a('http://nodejs.org/')('Node.js'),
+    a('http://nodejs.org/')(['Node.js']),
     '.'
   ]),
   dl([
@@ -141,7 +140,7 @@ const body = [
   ]),
   p([
     'The idea of using an event loop on the ',
-    em('server'),
+    em(['server']),
     '-side\n    is surprising at first, but obvious in hindsight. JavaScript\n    is extremely well suited to event-driven programming, and the\n    performance gains that can be made with non-blocking request\n    handling are significant.'
   ]),
   p(['JavaScript is at last recieving the attention and respect it\n    has long deserved. I\'m greatly looking forward to building an\n    application using non-blocking, event-driven JavaScript on both\n    sides of the wire.'])
@@ -149,7 +148,7 @@ const body = [
 export default {
   id: 61,
   slug: 'javascript-everywhere',
-  title: 'JavaScript, JavaScript, everywhere',
+  title: ['JavaScript, JavaScript, everywhere'],
   datetime: datetime('2010-07-20')('19:05:00')('Pacific/Auckland'),
   tags: [
     'javascript',

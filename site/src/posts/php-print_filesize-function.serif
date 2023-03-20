@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 17,
   slug: "php-print_filesize-function",
-  title: "PHP print_filesize function",
+  title: ["PHP print_filesize function"],
   datetime: datetime "2009-06-10" "21:17:00" "Pacific/Auckland",
   tags: ["best-practice", "php"],
   body: body,
@@ -18,12 +18,12 @@ excerpt = [
     content for the Web, a reasonably common task is to provide links
     to files that can be downloaded. It is considered good practice
     to include an indication of a file's size; for example: ",
-    a "/favicon.ico" "favicon.ico", " (3 KB).",
+    a "/favicon.ico" ["favicon.ico"], " (3 KB).",
   ],
   p [
    "As I was about to hard-code a file's size into a blog post
-    recently, I thought to myself: ", strong "Will I remember to
-    update this if the file's size changes?", " More importantly,
+    recently, I thought to myself: ", strong ["Will I remember to
+    update this if the file's size changes?"], " More importantly,
     should I be required to remember such things? The answer,
     of course, is no. I set about writing a function that would
     allow the file's size to be displayed dynamically.",
@@ -84,11 +84,11 @@ body = [
   `,
 
   p [
-   "This gives: ", a "/favicon.ico" "favicon.ico", " ",
-    span {class: "filesize"} "(≈1.1 kB)", ". By default, the function
-    wraps the file's size in a ", code "span", " element with ",
-    code "class=\"filesize\"", ", to provide a hook for styling
-    if required.",
+   "This gives: ", a "/favicon.ico" ["favicon.ico"], " ",
+    span {class: "filesize"} ["(≈1.1 kB)"], ". By default,
+    the function wraps the file's size in a ", code ["span"], "
+    element with ", code [`class="filesize"`], ", to provide
+    a hook for styling if required.",
   ],
 
 ];

@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -93,9 +92,9 @@ const body = [
     li([
       p([
         'I saved ',
-        a('http://thingsilearned.com/2009/01/05/using-subdomains-in-django/')('Dave Fowler\'s subdomain middleware'),
+        a('http://thingsilearned.com/2009/01/05/using-subdomains-in-django/')(['Dave Fowler\'s subdomain middleware']),
         '\n        as ',
-        code('middleware.py'),
+        code(['middleware.py']),
         ' in my project directory:'
       ]),
       code$002Dblock('python')(`class SubdomainMiddleware:
@@ -111,7 +110,7 @@ const body = [
     li([
       p([
         'I added this to my project\'s ',
-        code('MIDDLEWARE_CLASSES'),
+        code(['MIDDLEWARE_CLASSES']),
         ':'
       ]),
       code$002Dblock('python')(`MIDDLEWARE_CLASSES = (
@@ -123,7 +122,7 @@ const body = [
     li([
       p([
         'I edited my ',
-        code('/etc/hosts'),
+        code(['/etc/hosts']),
         ' file as per Dave\'s suggestion:'
       ]),
       code$002Dblock('plain-text')(`127.0.0.1 test.com
@@ -132,9 +131,9 @@ const body = [
 `),
       p([
         'Initially I replaced ',
-        code('test.com'),
+        code(['test.com']),
         ' with the\n        site\'s domain name, but I decided that it\'s useful to\n        be able to access both the live site and the test site\n        without editing the ',
-        code('/etc/hosts'),
+        code(['/etc/hosts']),
         ' file.'
       ]),
       p(['At this point I expected everything to work as advertised.\n        Instead, I got this:']),
@@ -142,7 +141,8 @@ const body = [
           alt: 'It works!',
           src: '/images/posts/windows/it-works!.png'
         })]),
-      p(['That would depend on one\'s definition of "works".\n        I wanted my Django site to appear, which required a\n        very simple tweak...'])
+      p([`That would depend on one's definition of "works". I wanted my
+        Django site to appear, which required a very simple tweak...`])
     ]),
     li([
       p(['I added the port number to the address:']),
@@ -150,7 +150,7 @@ const body = [
 `),
       p([
         'This ',
-        em('actually'),
+        em(['actually']),
         ' worked. :)'
       ])
     ])
@@ -159,7 +159,7 @@ const body = [
 export default {
   id: 56,
   slug: 'testing-django-apps-using-localhost-subdomains',
-  title: 'Testing Django apps using localhost subdomains',
+  title: ['Testing Django apps using localhost subdomains'],
   datetime: datetime('2010-07-04')('08:23:00')('Pacific/Auckland'),
   tags: [
     'django',

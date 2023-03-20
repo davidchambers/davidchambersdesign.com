@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -90,60 +89,60 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'I followed ',
-    a('http://daringfireball.net/2010/11/flash_free_and_cheating_with_google_chrome')('John Gruber\'s suggestion'),
+    a('http://daringfireball.net/2010/11/flash_free_and_cheating_with_google_chrome')(['John Gruber\'s suggestion']),
     ' and removed Flash Player from my Mac.\n    Like John, I\'ve come to rely upon Google Chrome for viewing the\n    occasional Flash movie. As a result I\'ve become proficient at the\n    keyboard dance required to open in Chrome the page I\'m currently\n    viewing in Safari:'
   ]),
   ol([
     li([
-      strong('\u2318L'),
-      ' (',
-      strong('File'),
+      strong(['\u2318L']),
+      '\n      (',
+      strong(['File']),
       ' > ',
-      strong('Open Location...'),
+      strong(['Open Location...']),
       ')'
     ]),
     li([
-      strong('\u2318C'),
-      ' (',
-      strong('Edit'),
+      strong(['\u2318C']),
+      '\n      (',
+      strong(['Edit']),
       ' > ',
-      strong('Copy'),
+      strong(['Copy']),
       ')'
     ]),
     li([
-      strong('\u2318Space'),
-      ' (invoke Quicksilver/Spotlight)'
+      strong(['\u2318Space']),
+      '\n      (invoke Quicksilver/Spotlight)'
     ]),
     li([
-      strong('C-H-R-\u21A9'),
-      ' (open Google Chrome)'
+      strong(['C-H-R-\u21A9']),
+      '\n      (open Google Chrome)'
     ]),
     li([
-      strong('\u2318L'),
-      ' (',
-      strong('File'),
+      strong(['\u2318L']),
+      '\n      (',
+      strong(['File']),
       ' > ',
-      strong('Open Location...'),
+      strong(['Open Location...']),
       ')'
     ]),
     li([
-      strong('\u2318V'),
-      ' (',
-      strong('Edit'),
+      strong(['\u2318V']),
+      '\n      (',
+      strong(['Edit']),
       ' > ',
-      strong('Paste'),
+      strong(['Paste']),
       ')'
     ]),
     li([
-      strong('\u21A9'),
-      ' (go, go, go!)'
+      strong(['\u21A9']),
+      '\n      (go, go, go!)'
     ])
   ]),
   p(['Well, I\'ve performed this dance for the last time.\n    I now do this instead:']),
-  ol([li([strong('\u2325\u2318G')])]),
+  ol([li([strong(['\u2325\u2318G'])])]),
   p([
     'Credit for this simple but brilliant idea goes to Rob McBroom.\n    Rob\'s post on ',
-    a('http://projects.skurfer.com/posts/2011/chrome_shortcut/')('opening pages in Google Chrome'),
+    a('http://projects.skurfer.com/posts/2011/chrome_shortcut/')(['opening pages in Google Chrome']),
     ' lists the (very easy)\n    steps required to enable this shortcut.'
   ]),
   update(datetime('2011-01-30')('23:30:00')('America/Los_Angeles'))([p(['Chris points out that John himself mentioned this trick\n      in his aforelinked post.'])])
@@ -151,7 +150,7 @@ const body = [
 export default {
   id: 77,
   slug: 'safari-keyboard-shortcut-to-open-current-page-in-google-chrome',
-  title: 'Safari keyboard shortcut to open current page in Google Chrome',
+  title: ['Safari keyboard shortcut to open current page in Google Chrome'],
   datetime: datetime('2011-01-30')('21:35:00')('America/Los_Angeles'),
   tags: [
     'flash',

@@ -8,15 +8,16 @@ render-post post = {
   li [
     a' {href: `/${post.slug}`} post.title,
     " ",
-    time {datetime: post.datetime.toISO()}
-         {post.datetime.toFormat("d MMMM y | h:mm") +
-          post.datetime.toFormat("a").toLowerCase()},
+    time {datetime: post.datetime.toISO()} [
+      post.datetime.toFormat("d MMMM y | h:mm") +
+      post.datetime.toFormat("a").toLowerCase(),
+    ],
   ]
 };
 
 render-section posts = {
   li [
-    h2 posts[0].formatted-date,
+    h2 [posts[0].formatted-date],
     ol posts.map(render-post),
   ]
 };
@@ -27,7 +28,7 @@ render-archives posts = {
   |> S.sortBy {post => -post.datetime}
   |> S.groupBy {this => that => this.formatted-date == that.formatted-date}
   |> [
-    h1 "Archives",
+    h1 ["Archives"],
     ol' {class: "archives"} {render-section <$> ?},
   ]
 };

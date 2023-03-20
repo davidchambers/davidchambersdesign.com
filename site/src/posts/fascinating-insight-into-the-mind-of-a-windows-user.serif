@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 44,
   slug: "fascinating-insight-into-the-mind-of-a-windows-user",
-  title: "Fascinating insight into the mind of a Windows user",
+  title: ["Fascinating insight into the mind of a Windows user"],
   datetime: datetime "2010-03-25" "15:06:00" "Pacific/Auckland",
   tags: ["mac-os-x", "windows"],
   body: body,
@@ -28,19 +28,19 @@ body = [
 
   ol [
     li' {class: "interviewer"} [
-      strong "Matt:", "
+      strong ["Matt:"], "
       So, Doug, do you think you could go the way of Mac?",
     ],
     li [
-      strong "Doug:", "
+      strong ["Doug:"], "
       I already have, really, but I'd never buy one.",
     ],
     li' {class: "interviewer"} [
-      strong "Matt:", "
+      strong ["Matt:"], "
       Why's that?",
     ],
     li [
-      strong "Doug:", "
+      strong ["Doug:"], "
       Well", —, "no offense, David", —, "if I were to buy one I'd be
       getting something a retard could use, and I'm not a retard.",
     ],
@@ -49,7 +49,7 @@ body = [
   p [
    "I found this exchange both entertaining and enlightening. Never had
     I considered the possibility that certain individuals use Windows ",
-    em "because", " it's poorly designed and difficult to use!",
+    em ["because"], " it's poorly designed and difficult to use!",
   ],
 
   p [

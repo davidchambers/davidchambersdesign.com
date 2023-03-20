@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 4,
   slug: "intelligent-css-caching",
-  title: "Intelligent CSS caching",
+  title: ["Intelligent CSS caching"],
   datetime: datetime "2008-12-18" "14:50:00" "Pacific/Auckland",
   tags: ["css", "php"],
   body: body,
@@ -48,7 +48,7 @@ body = [
     confined to the development environment, it occasionally causes
     problems at other times. For example, let's say that you've made
     a minor change to a site's source code – you've changed ",
-    code "<div id=\"wrapper\">", " to ", code "<div id=\"wrap\">",
+    code [`<div id="wrapper">`], " to ", code [`<div id="wrap">`],
    ". You've also done a find and replace on the style sheet, and
     rolled both changes live. A new visitor to the site will have
     no problems, but a returning visitor may see the site through
@@ -59,9 +59,9 @@ body = [
    "I decided that it was time to find a reliable solution
     to the above problems. I came across an article on ",
     a "http://css-tricks.com/can-we-prevent-css-caching/"
-      "timestamping CSS", "
+      ["timestamping CSS"], "
     which suggests appending a unique string to a style sheet's
-    href when linking to it in a page's ", code "<head>", ".",
+    href when linking to it in a page's ", code ["<head>"], ".",
   ],
 
   p [
@@ -84,11 +84,11 @@ body = [
   p [
    "The nice thing about using ",
     a "http://php.net/manual/en/function.filectime.php"
-      "PHP's filectime function", "
+      ["PHP's filectime function"], "
     is that the timestamp is dependent on the time at which the CSS file
     was last modified. This means that the cached style sheet is used when
-    it is ", strong "up to date", ", but the file is retrieved from the
-    server when it has been ", strong "changed in any way", ".",
+    it is ", strong ["up to date"], ", but the file is retrieved from the
+    server when it has been ", strong ["changed in any way"], ".",
   ],
 
 ];

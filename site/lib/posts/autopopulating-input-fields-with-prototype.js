@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -92,50 +91,50 @@ import {
 import datetime from '../datetime.js';
 const excerpt = [p([
     'Yesterday I wrote a simple class which auto-populates\n    input fields, and thought it worth sharing. I was originally\n    inspired to write this code by Roger Johansson\'s post titled ',
-    a('http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/')('Autopopulating text input fields with JavaScript'),
+    a('http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/')(['Autopopulating text input fields with JavaScript']),
     '.\n    While I approached the problem from a slightly different angle,\n    I made sure to avoid the pitfalls Roger mentions.'
   ])];
 const body = [
   ...excerpt,
   update(datetime('2010-06-09')('23:31:00')('Pacific/Auckland'))([
     'I\'ve written an update to this article for those interested in ',
-    a('/autopopulating-input-fields-with-mootools/')('auto-populating input fields with MooTools'),
+    a('/autopopulating-input-fields-with-mootools/')(['auto-populating input fields with MooTools']),
     '.'
   ]),
-  h3('Contents'),
+  h3(['Contents']),
   ul([
-    li([a('#behaviour')('Behaviour')]),
-    li([a('#html5-placeholder-text')('HTML5 placeholder text')]),
-    li([a('#markup')('Markup')]),
-    li([a('#styling')('Styling')]),
-    li([a('#placeholder-class')('Placeholder class')]),
-    li([a('#usage')('Usage')])
+    li([a('#behaviour')(['Behaviour'])]),
+    li([a('#html5-placeholder-text')(['HTML5 placeholder text'])]),
+    li([a('#markup')(['Markup'])]),
+    li([a('#styling')(['Styling'])]),
+    li([a('#placeholder-class')(['Placeholder class'])]),
+    li([a('#usage')(['Usage'])])
   ]),
-  h3$0027({ id: 'behaviour' })('Behaviour'),
+  h3$0027({ id: 'behaviour' })(['Behaviour']),
   ul([
     li(['Placeholder text should be inserted into input field\n      upon page load.']),
     li(['Placeholder text should be targetable via CSS.']),
     li(['Clicking or tabbing into input field should remove\n      placeholder text.']),
     li(['Placeholder text should be reinserted if input field\n      is empty when it loses focus.'])
   ]),
-  h3$0027({ id: 'html5-placeholder-text' })('HTML5 placeholder text'),
+  h3$0027({ id: 'html5-placeholder-text' })(['HTML5 placeholder text']),
   p([
     'HTML5 allows placeholder text to be specified in the markup\n    through the ',
-    code('placeholder'),
+    code(['placeholder']),
     ' attribute. In supporting\n    browsers (currently Chrome and Safari) this produces the\n    behaviour described above with no reliance on JavaScript.'
   ]),
-  h3$0027({ id: 'markup' })('Markup'),
+  h3$0027({ id: 'markup' })(['Markup']),
   code$002Dblock('html')(`<input type="search" id="s" name="s" placeholder="search..." />
 `),
-  h3$0027({ id: 'styling' })('Styling'),
+  h3$0027({ id: 'styling' })(['Styling']),
   code$002Dblock('css')(`input.placeholder { color: #a9a9a9 !important; }
 `),
   p([
     'I decided to use ',
-    code('#a9a9a9'),
+    code(['#a9a9a9']),
     ' as Safari uses this colour\n    for placeholder text.'
   ]),
-  h3$0027({ id: 'placeholder-class' })('Placeholder class'),
+  h3$0027({ id: 'placeholder-class' })(['Placeholder class']),
   code$002Dblock('javascript')(`var Placeholder = Class.create({
     initialize: function (element) {
         this.element = element;
@@ -156,16 +155,16 @@ const body = [
 `),
   p([
     'The Placeholder class requires ',
-    a('http://prototypejs.org/')('Prototype'),
+    a('http://prototypejs.org/')(['Prototype']),
     '.'
   ]),
-  h3$0027({ id: 'usage' })('Usage'),
+  h3$0027({ id: 'usage' })(['Usage']),
   p(['To create a new instance of the Placeholder class, simply pass\n    the constructor a Prototype extended element:']),
   code$002Dblock('javascript')(`new Placeholder($('s'));
 `),
   p([
     'Ensure that the DOM is ready by wrapping everything in Prototype\'s ',
-    code('dom:loaded'),
+    code(['dom:loaded']),
     ' event listener. This also avoids polluting the\n    global namespace.'
   ]),
   code$002Dblock('javascript')(`document.observe('dom:loaded', function () {
@@ -178,13 +177,13 @@ const body = [
 });
 `),
   update(datetime('2010-03-30')('17:17:00')('Pacific/Auckland'))([p(['I\'ve updated the selector used in the above example. Selecting\n      all inputs with placeholder attributes is far more elegant than\n      listing each input explicitly. It also means that an input added\n      anywhere on the site will automatically receive this special\n      treatment (provided that it has a placeholder attribute).'])]),
-  p([strong('This site\'s search field shows the code in action.')]),
+  p([strong(['This site\'s search field shows the code in action.'])]),
   update(datetime('2010-04-16')('00:59:00')('Pacific/Auckland'))([
     p([
       'For those that would like placeholder text in ',
-      em('password'),
+      em(['password']),
       '\n      input fields not to appear as dots or asterisks in older browsers,\n      I\'ve written an alternative snippet. I drew inspiration from a post on ',
-      a('http://blog.decaf.de/2009/07/iphone-like-password-fields-using-jquery/')('iPhone-like password fields using jQuery'),
+      a('http://blog.decaf.de/2009/07/iphone-like-password-fields-using-jquery/')(['iPhone-like password fields using jQuery']),
       '.'
     ]),
     code$002Dblock('javascript')(`// provide input hints
@@ -251,7 +250,7 @@ document.observe('dom:loaded', function () {
 export default {
   id: 33,
   slug: 'autopopulating-input-fields-with-prototype',
-  title: 'Auto-populating input fields with Prototype',
+  title: ['Auto-populating input fields with Prototype'],
   datetime: datetime('2010-01-07')('22:03:00')('Pacific/Auckland'),
   tags: [
     'html5',

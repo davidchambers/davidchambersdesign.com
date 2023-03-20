@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 31,
   slug: "using-html5-time-element-in-wordpress-themes",
-  title: "Using HTML5 time element in WordPress themes",
+  title: ["Using HTML5 time element in WordPress themes"],
   datetime: datetime "2009-11-02" "02:04:00" "Pacific/Auckland",
   tags: ["html5", "php", "wordpress"],
   body: body,
@@ -20,7 +20,7 @@ body = [
 
   p [
    "One of the first HTML5 elements I've introduced is the ",
-    strong "time", " element which, through its ", strong "datetime", "
+    strong ["time"], " element which, through its ", strong ["datetime"], "
     attribute, provides a machine-readable version of dates and times.",
   ],
 

@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -96,7 +95,7 @@ const body = [
 `),
   p([
     'Obviously, this doesn\'t do anything useful. It\'s the fact that a\n    decorator can return a function which behaves ',
-    em('similarly'),
+    em(['similarly']),
     '\n    to the function passed to it that makes the pattern interesting.\n    Commonly a decorator will simply wrap a function invocation in a\n    check of some sort:'
   ]),
   code$002Dblock('javascript')(`var loginRequired = function (fn) {
@@ -158,7 +157,7 @@ deleteAccount = loginRequired ->
 export default {
   id: 89,
   slug: 'decorators-in-javascript',
-  title: 'Decorators in JavaScript',
+  title: ['Decorators in JavaScript'],
   datetime: datetime('2011-07-26')('22:00:00')('America/Los_Angeles'),
   tags: [
     'coffeescript',

@@ -1,58 +1,65 @@
 import S from 'sanctuary';
 const escape = s => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 const text = value => ({
-  ['text-node']: true,
-  value: value,
-  text: [value],
-  render: indent => level => inline => escape(value)
+  type: 'text',
+  toString: () => value,
+  render: context => escape(value)
 });
-const canonicalize$002Dchildren = children => (Array.isArray(children) ? children : [children]).map(child => typeof child === 'string' ? text(child.replace(new RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', '')) : child);
-const render$002Dnode = indent => level => inline => node => node['text-node'] ? escape(node.value) : node['self-closing'] ? render$002Dself$002Dclosing$002Delement(node['tag-name'])(node.attributes)(indent)(level)(inline) : inline || node.format === 'inline' ? render$002Dinline$002Delement(node['tag-name'])(node.attributes)(node.children)(indent)(level)(inline) : render$002Dblock$002Delement(node['tag-name'])(node.attributes)(node.children)(indent)(level)(inline);
-const render$002Dattribute = ([name, value]) => ` ${ name }="${ escape(`${ value }`.replace(new RegExp('\n[ ]*', 'g'), ' ')) }"`;
+const render$002Dattribute = ([name, value]) => ` ${ name }="${ escape(`${ value }`.trim().replaceAll('\n', ' ')) }"`;
 const render$002Dattributes = attrs => Object.entries(attrs).map($0024 => render$002Dattribute($0024)).join('');
-const render$002Dblock$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ tag$002Dname }${ render$002Dattributes(attrs) }>\n${ children.map($0024 => render$002Dnode(indent)(level + 1)(inline)($0024)).join('') }${ indent.repeat(level) }</${ tag$002Dname }>\n`;
-const render$002Dinline$002Delement = tag$002Dname => attrs => children => indent => level => inline => `${ indent.repeat(level) }<${ tag$002Dname }${ render$002Dattributes(attrs) }>${ children.map($0024 => render$002Dnode(indent)(0)(true)($0024)).join('') }</${ tag$002Dname }>${ inline ? '' : '\n' }`;
-const render$002Dself$002Dclosing$002Delement = tag$002Dname => attrs => indent => level => inline => `${ indent.repeat(level) }<${ tag$002Dname }${ render$002Dattributes(attrs) } />${ inline ? '' : '\n' }`;
-const block$002Delement = tag$002Dname => attrs => children => (() => {
-  const children$0027 = canonicalize$002Dchildren(children);
-  return {
-    ['text-node']: false,
-    ['self-closing']: false,
+const render$002Dblock$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>\n${ element.children.map($0024 => (node => node.render({
+  indent: context.indent,
+  level: context.level + 1,
+  inline: context.inline
+}))($0024)).join('') }${ context.indent.repeat(context.level) }</${ element.name }>\n`;
+const render$002Dinline$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>${ element.children.map($0024 => (node => node.render({
+  indent: context.indent,
+  level: 0,
+  inline: true
+}))($0024)).join('') }</${ element.name }>${ context.inline ? '' : '\n' }`;
+const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => typeof string$002Dor$002Dnode === 'object' ? string$002Dor$002Dnode : text(string$002Dor$002Dnode.replace(new RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', ''));
+const block$002Delement = name => attributes => children$0021 => (() => {
+  const children = children$0021.map($0024 => string$002Dto$002Dtext$002Dnode($0024));
+  const element = {
+    type: 'element',
     format: 'block',
-    ['tag-name']: tag$002Dname,
-    attributes: attrs,
-    children: canonicalize$002Dchildren(children),
-    text: children$0027.flatMap(child => child.text),
-    render: render$002Dblock$002Delement(tag$002Dname)(attrs)(children$0027)
+    name: name,
+    attributes: attributes,
+    children: children,
+    toString: () => children.map($0024 => String($0024)).join(''),
+    render: context => render$002Dblock$002Delement(context)(element)
   };
+  return element;
 })();
-const inline$002Delement = tag$002Dname => attrs => children => (() => {
-  const children$0027 = canonicalize$002Dchildren(children);
-  const format = children$0027.some(node => node.format === 'block') ? 'block' : 'inline';
-  return {
-    ['text-node']: false,
-    ['self-closing']: false,
+const inline$002Delement = name => attributes => children$0021 => (() => {
+  const children = children$0021.map($0024 => string$002Dto$002Dtext$002Dnode($0024));
+  const format = children.some(node => node.format === 'block') ? 'block' : 'inline';
+  const element = {
+    type: 'element',
     format: format,
-    ['tag-name']: tag$002Dname,
-    attributes: attrs,
-    children: canonicalize$002Dchildren(children),
-    text: children$0027.flatMap(child => child.text),
-    render: indent => level => inline => (() => {
-      const render = format === 'inline' ? render$002Dinline$002Delement : render$002Dblock$002Delement;
-      return render(tag$002Dname)(attrs)(children$0027)(indent)(level)(inline);
-    })()
+    name: name,
+    attributes: attributes,
+    children: children,
+    toString: () => children.map($0024 => String($0024)).join(''),
+    render: context => format === 'inline' ? render$002Dinline$002Delement(context)(element) : render$002Dblock$002Delement(context)(element)
   };
+  return element;
 })();
-const self$002Dclosing$002Delement = tag$002Dname => attrs => ({
-  ['text-node']: false,
-  ['self-closing']: true,
-  format: 'inline',
-  ['tag-name']: tag$002Dname,
-  attributes: attrs,
-  children: [],
-  text: [],
-  render: render$002Dself$002Dclosing$002Delement(tag$002Dname)(attrs)
-});
+const self$002Dclosing$002Delement = name => attributes => (() => {
+  const element = {
+    type: 'element',
+    format: 'inline',
+    name: name,
+    attributes: attributes,
+    toString: () => '',
+    render: ({
+      indent: indent,
+      level: level,
+      inline: inline
+    }) => `${ indent.repeat(level) }<${ name }${ render$002Dattributes(attributes) } />${ inline ? '' : '\n' }`
+  };
+  return element;
+})();
 const html$0027 = block$002Delement('html');
 const html = html$0027({});
 const head$0027 = block$002Delement('head');
@@ -147,7 +154,6 @@ const param = self$002Dclosing$002Delement('param');
 const path = self$002Dclosing$002Delement('path');
 const stop = self$002Dclosing$002Delement('stop');
 export {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,

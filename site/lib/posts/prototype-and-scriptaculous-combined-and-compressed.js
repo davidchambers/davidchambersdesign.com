@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -92,23 +91,23 @@ import {
 import datetime from '../datetime.js';
 const body = [
   p([
-    strong('Nothing new here.'),
+    strong(['Nothing new here.']),
     ' I\'ve combined ',
-    a('http://prototypejs.org/2009/9/1/prototype-1-6-1-released')('Prototype 1.6.1'),
+    a('http://prototypejs.org/2009/9/1/prototype-1-6-1-released')(['Prototype 1.6.1']),
     ' and the various files that make up ',
-    a('http://script.aculo.us/downloads')('script.aculo.us 1.8.3'),
+    a('http://script.aculo.us/downloads')(['script.aculo.us 1.8.3']),
     '\n    (except unittest.js) into one file, which I\'ve minified using the ',
-    a('http://developer.yahoo.com/yui/compressor/')('YUI Compressor'),
+    a('http://developer.yahoo.com/yui/compressor/')(['YUI Compressor']),
     '.\n    Further compression has been achieved by gzipping the minified file.\n    All three versions are available for download:'
   ]),
   ul([
-    li([a('http://static.davidchambersdesign.com/scripts/prototype+scriptaculous.js?p=1.6.1&s=1.8.3')('prototype+scriptaculous.js')]),
-    li([a('http://static.davidchambersdesign.com/scripts/prototype+scriptaculous.min.js?p=1.6.1&s=1.8.3')('prototype+scriptaculous.min.js')]),
-    li([a('http://static.davidchambersdesign.com/scripts/prototype+scriptaculous.min.js.gz?p=1.6.1&s=1.8.3')('prototype+scriptaculous.min.js.gz')])
+    li([a('http://static.davidchambersdesign.com/scripts/prototype+scriptaculous.js?p=1.6.1&s=1.8.3')(['prototype+scriptaculous.js'])]),
+    li([a('http://static.davidchambersdesign.com/scripts/prototype+scriptaculous.min.js?p=1.6.1&s=1.8.3')(['prototype+scriptaculous.min.js'])]),
+    li([a('http://static.davidchambersdesign.com/scripts/prototype+scriptaculous.min.js.gz?p=1.6.1&s=1.8.3')(['prototype+scriptaculous.min.js.gz'])])
   ]),
   p([
     'I suggest including the Prototype and script.aculo.us version\n    numbers in the ',
-    code('src'),
+    code(['src']),
     ':'
   ]),
   code$002Dblock('html')(`<script src="/scripts/prototype+scriptaculous.min.js?p=1.6.1&amp;s=1.8.3"></script>
@@ -124,7 +123,7 @@ const body = [
 export default {
   id: 32,
   slug: 'prototype-and-scriptaculous-combined-and-compressed',
-  title: 'Prototype and script.aculo.us, combined and compressed',
+  title: ['Prototype and script.aculo.us, combined and compressed'],
   datetime: datetime('2009-11-09')('23:14:00')('Pacific/Auckland'),
   tags: [
     'javascript',

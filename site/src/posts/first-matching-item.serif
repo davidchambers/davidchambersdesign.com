@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 54,
   slug: "first-matching-item",
-  title: "First matching item",
+  title: ["First matching item"],
   datetime: datetime "2010-06-17" "23:17:00" "Pacific/Auckland",
   tags: ["programming"],
   body: body,
@@ -16,8 +16,8 @@ body = [
   p [
    "When writing code one often needs to grab the first item in
     a collection that has certain characteristics. For example,
-    one may have a list of ", code "Student", " objects and need
-    to fetch the one with a certain id.",
+    one may have a list of ", code ["Student"], " objects and
+    need to fetch the one with a certain id.",
   ],
 
   p [
@@ -56,9 +56,9 @@ body = [
   p [
    "Here, we break out of the loop as soon as a match
     is found, preserving the student of interest in the
-    variable ", code "student", ". Each time through the
-    loop ", code "student", " is cleared to ensure that ",
-    code "student", " is empty once we've finished looping
+    variable ", code ["student"], ". Each time through the
+    loop ", code ["student"], " is cleared to ensure that ",
+    code ["student"], " is empty once we've finished looping
     if there are no matches.",
   ],
 

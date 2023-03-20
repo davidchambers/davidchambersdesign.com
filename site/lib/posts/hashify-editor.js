@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -94,22 +93,26 @@ const body = [
   p(['On 19 April 2011, at around noon Pacific time, I published a short tweet.']),
   blockquote([p([
       'Hashify is officially live as of now! ',
-      a('http://bit.ly/dXYxGU')('bit.ly/dXYxGU')
+      a('http://bit.ly/dXYxGU')(['bit.ly/dXYxGU'])
     ])]),
   p([
     'Quite to my surprise word of the release spread\n    incredibly quickly, thanks in large part to the ',
-    a('http://news.ycombinator.com/item?id=2464213')('Hacker News thread'),
+    a('http://news.ycombinator.com/item?id=2464213')(['Hacker News thread']),
     ' that sprang up and\n    received a great deal of attention.'
   ]),
-  p(['The vast majority of the ensuing discussion focused on the\n    implications of stuffing documents into URLs, and of using bit.ly\n    as a document store. While there was much debate as to whether this\n    "cool hack" will turn out to have practical application, the one\n    undoubtedly useful component was overlooked.']),
-  h3('Markdown editing for the masses'),
+  p([`The vast majority of the ensuing discussion focused on the
+    implications of stuffing documents into URLs, and of using bit.ly
+    as a document store. While there was much debate as to whether this
+    "cool hack" will turn out to have practical application, the one
+    undoubtedly useful component was overlooked.`]),
+  h3(['Markdown editing for the masses']),
   p([
     'Before dropping off the face of the earth, John Fraser created ',
-    a('https://bitbucket.org/davidchambers/showdown.js')('Showdown'),
+    a('https://bitbucket.org/davidchambers/showdown.js')(['Showdown']),
     '\n    and ',
-    a('http://code.google.com/p/wmd/')('wmd'),
+    a('http://code.google.com/p/wmd/')(['wmd']),
     '.\n    The latter is a WYSIWYM Markdown editor, popularized by ',
-    a('http://stackoverflow.com/')('Stack Overflow'),
+    a('http://stackoverflow.com/')(['Stack Overflow']),
     '. I\'ve long been\n    supportive of wmd\'s goals, but I\'ve never liked its implementation.'
   ]),
   p(['Several drawbacks of wmd encouraged me to write my own Markdown editor:']),
@@ -120,15 +123,15 @@ const body = [
     li(['Unnatural keyboard shortcuts.'])
   ]),
   p([
-    a('https://bitbucket.org/davidchambers/hashify-editor')('Hashify Editor'),
-    '\n    addresses these concerns. Styles are applied via a style sheet, and\n    selector specificity has been kept low to make overriding default styling\n    simple. Selectors are prefixed with ',
-    code('hashify-editor'),
-    ' to prevent\n    erroneous matches. Additionally, the images have been sprited, optimized,\n    Base64 encoded, and included in the style sheet as a data URI.'
+    a('https://bitbucket.org/davidchambers/hashify-editor')(['Hashify Editor']),
+    '\n    addresses these concerns. Styles are applied via a style sheet, and\n    selector specificity has been kept low to make overriding default\n    styling simple. Selectors are prefixed with ',
+    code(['hashify-editor']),
+    '\n    to prevent erroneous matches. Additionally, the images have been sprited,\n    optimized, Base64 encoded, and included in the style sheet as a data URI.'
   ]),
   p([
-    'Hashify Editor does not require Showdown, as its focus is on turning the\n    humble ',
-    code('textarea'),
-    ' into a useful Markdown editor. TextMate-style\n    keyboard shortcuts make it a joy to work with metacharacters and text\n    selections.'
+    'Hashify Editor does not require Showdown, as its focus is on turning\n    the humble ',
+    code(['textarea']),
+    ' into a useful Markdown editor.\n    TextMate-style keyboard shortcuts make it a joy to work with\n    metacharacters and text selections.'
   ]),
   p([
     'Best of all is the preview option: one is able to view',
@@ -136,7 +139,7 @@ const body = [
     'and of\n    course, edit',
     $2014,
     'the text at ',
-    a('http://hashify.me/')('hashify.me'),
+    a('http://hashify.me/')(['hashify.me']),
     '\n    with a single click.'
   ]),
   captioned$002Dimages([
@@ -151,12 +154,12 @@ const body = [
       caption: ['Comment preview at hashify.me']
     }
   ]),
-  h3('Adoption'),
+  h3(['Adoption']),
   p([
     'I love sites which support Markdown commenting. Unfortunately many of\n    those that do',
     $2014,
     'even ',
-    a('http://forrst.com/')('Forrst'),
+    a('http://forrst.com/')(['Forrst']),
     $2014,
     'don\'t\n    provide previews. As a result, each time I\'m about to submit a lengthy\n    comment I select all, copy, open a new tab, go to hashify.me, tab into\n    the editor, and paste in my comment. Were Forrst to integrate Hashify\n    Editor, six of these steps could be replaced by a single mouse click.\n    :D'
   ])
@@ -164,7 +167,7 @@ const body = [
 export default {
   id: 85,
   slug: 'hashify-editor',
-  title: 'Hashify Editor',
+  title: ['Hashify Editor'],
   datetime: datetime('2011-04-24')('06:15:00')('America/Los_Angeles'),
   tags: [
     'hashify',

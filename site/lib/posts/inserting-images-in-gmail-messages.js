@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -90,7 +89,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'Hooray! It\'s now possible to ',
-    a('http://gmailblog.blogspot.com/2009/04/new-in-labs-inserting-images.html')('insert images into Gmail messages'),
+    a('http://gmailblog.blogspot.com/2009/04/new-in-labs-inserting-images.html')(['insert images into Gmail messages']),
     '. About time, I say.'
   ]),
   captioned$002Dimages([{
@@ -102,7 +101,7 @@ const body = [
 export default {
   id: 10,
   slug: 'inserting-images-in-gmail-messages',
-  title: 'Inserting images in Gmail messages',
+  title: ['Inserting images in Gmail messages'],
   datetime: datetime('2009-04-15')('20:27:00')('Pacific/Auckland'),
   tags: [
     'gmail',

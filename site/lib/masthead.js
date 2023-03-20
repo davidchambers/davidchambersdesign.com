@@ -748,17 +748,26 @@ const fill$002Dchars = {
 const update = ([{
     x: x,
     y: y
-  }, ...tail]) => dir => [
-  dir[0] === 'h' ? {
-    x: x + dir[1],
-    y: y
-  } : dir[0] === 'v' ? {
-    x: x,
-    y: y + dir[1]
-  } : {
-    x: x + dir[1][0],
-    y: y + dir[1][1]
-  },
+  }, ...tail]) => ([dir, mag]) => [
+  dir === 'h' ? (() => {
+    const dx = mag;
+    return {
+      x: x + mag,
+      y: y
+    };
+  })() : dir === 'v' ? (() => {
+    const dy = mag;
+    return {
+      x: x,
+      y: y + dy
+    };
+  })() : (() => {
+    const [dx, dy] = mag;
+    return {
+      x: x + dx,
+      y: y + dy
+    };
+  })(),
   {
     x: x,
     y: y

@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -89,22 +88,22 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const excerpt = [p([
     'Developers will be familiar with using PHP\'s ',
-    a('http://php.net/manual/en/function.mysql-real-escape-string.php')('mysql_real_escape_string'),
+    a('http://php.net/manual/en/function.mysql-real-escape-string.php')(['mysql_real_escape_string']),
     '\n    to escape problematic characters before submitting a query.\n    When the query in question involves MySQL\'s REGEXP function,\n    however, we need to go one step further and escape regex\'s\n    special characters.'
   ])];
 const body = [
   p([
     'While using the ',
-    a('http://search.mtg-apps.com/')('MTG card search'),
+    a('http://search.mtg-apps.com/')(['MTG card search']),
     '\n    that I\'ve been developing recently, I encountered an error that MySQL\n    reported as follows:'
   ]),
   code$002Dblock('plain-text')(`Got error 'repetition-operator operand invalid' from regexp
 `),
   p([
     'The problem resulted from an unescaped ',
-    strong('{'),
+    strong(['{']),
     ' being\n    passed to MySQL\'s REGEXP function. Because this character has a\n    special meaning in regex, it must be escaped when it is being\n    used literally within a string. This is done by preceding it\n    with a backslash (',
-    strong('\\'),
+    strong(['\\']),
     ').'
   ]),
   ...excerpt,
@@ -131,7 +130,7 @@ function mysql_regexp_escape_string($string)
 export default {
   id: 5,
   slug: 'escape-special-characters-for-sql-regexp',
-  title: 'Escape special characters for SQL REGEXP',
+  title: ['Escape special characters for SQL REGEXP'],
   datetime: datetime('2009-01-10')('22:21:00')('Pacific/Auckland'),
   tags: [
     'php',

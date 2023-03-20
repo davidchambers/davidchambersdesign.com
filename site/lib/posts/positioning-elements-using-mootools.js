@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -98,16 +97,16 @@ const body = [
 `),
   p([
     'Frustratingly, ',
-    code('setStyle(\'left\', offset)'),
+    code(['setStyle(\'left\', offset)']),
     ' ',
-    em('appeared'),
+    em(['appeared']),
     ' to work, but its behaviour was unpredictable.\n    I\'m still confused by this, but at least I\'m no longer stuck.'
   ])
 ];
 export default {
   id: 60,
   slug: 'positioning-elements-using-mootools',
-  title: 'Positioning elements using MooTools',
+  title: ['Positioning elements using MooTools'],
   datetime: datetime('2010-07-19')('17:45:00')('Pacific/Auckland'),
   tags: [
     'javascript',

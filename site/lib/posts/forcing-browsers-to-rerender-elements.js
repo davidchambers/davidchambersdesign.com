@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -92,14 +91,14 @@ import {
 import datetime from '../datetime.js';
 const body = [
   p([
-    'Generally speaking browsers rerender elements as required \u2013\n    in response to DOM changes effected via JavaScript, for instance.\n    There are times, though, when the browser ',
-    em('Internet Explorer,\n    I\'m looking at you!'),
-    ' needs a gentle nudge.'
+    'Generally speaking browsers rerender elements as required\n    \u2013 in response to DOM changes effected via JavaScript, for\n    instance. There are times, though, when the browser ',
+    em(['Internet Explorer, I\'m looking at you!']),
+    '\n    needs a gentle nudge.'
   ]),
   p([
-    a('http://ajaxian.com/archives/forcing-a-ui-redraw-from-javascript')('Forcing a UI redraw from JavaScript'),
+    a('http://ajaxian.com/archives/forcing-a-ui-redraw-from-javascript')(['Forcing a UI redraw from JavaScript']),
     ' highlights the solution\n    employed by Thomas Fuchs, creator of the popular JavaScript library ',
-    a('http://script.aculo.us/')('script.aculo.us'),
+    a('http://script.aculo.us/')(['script.aculo.us']),
     ':'
   ]),
   code$002Dblock('javascript')(`Element.addMethods({
@@ -126,7 +125,7 @@ const body = [
 export default {
   id: 42,
   slug: 'forcing-browsers-to-rerender-elements',
-  title: 'Forcing browsers to rerender elements',
+  title: ['Forcing browsers to rerender elements'],
   datetime: datetime('2010-03-22')('19:40:00')('Pacific/Auckland'),
   tags: [
     'dom',

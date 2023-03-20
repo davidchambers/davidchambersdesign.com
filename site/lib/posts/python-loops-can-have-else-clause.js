@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -107,15 +106,15 @@ const body = [
     'the syntactical differences\n    are minor, but there are times when there\'s no direct translation.'
   ]),
   p([
-    a('http://mootools.net/')('MooTools'),
+    a('http://mootools.net/')(['MooTools']),
     ', for example, adds the ',
     a('http://mootools.net/docs/core/Native/Array#Array:every')([
-      code('every'),
+      code(['every']),
       ' method'
     ]),
-    ' to the ',
-    code('Array'),
-    ' object.\n      This makes it possible to write some rather terse conditional\n      statements.'
+    '\n    to the ',
+    code(['Array']),
+    ' object. This makes it possible\n    to write some rather terse conditional statements.'
   ]),
   code$002Dblock('javascript')(`var numbers = [87, 33, 21, 75];
 if (numbers.every(function (n) { return n % 3 == 0; })) {
@@ -129,24 +128,24 @@ if [n for n in numbers if n % 3 == 0] == numbers:
 `),
   p([
     'This approach involves using a list comprehension to create a\n    list of numbers which are divisible by 3, and comparing this list\n    to ',
-    code('numbers'),
+    code(['numbers']),
     '. If the lists are equal, everything in ',
-    code('numbers'),
+    code(['numbers']),
     ' is divisible by 3.'
   ]),
   update(datetime('2012-06-20')('14:15:00')('America/Los_Angeles'))([
     p([
       'As ',
-      a('https://twitter.com/rafael_ab/status/215428832872771584')('Rafael Almeida pointed out on Twitter'),
-      ', there ',
-      em('is'),
-      ' an\n      elegant way to express this in Python:'
+      a('https://twitter.com/rafael_ab/status/215428832872771584')(['Rafael Almeida pointed out on Twitter']),
+      ',\n     there ',
+      em(['is']),
+      ' an elegant way to express this in Python:'
     ]),
     code$002Dblock('python')(`if all((n % 3 == 0 for n in numbers)):
      print 'The numbers are all divisible by 3.'
 `)
   ]),
-  h3('Now for something a bit more challenging'),
+  h3(['Now for something a bit more challenging']),
   p(['Assume that we have a list of documents, and we want to know which\n    of the documents contain all the terms in a list of search terms.']),
   code$002Dblock('javascript')(`// (MooTools) JavaScript
 
@@ -159,7 +158,7 @@ documents.each(function (document) {
 `),
   p([
     'Here, we ',
-    em('could'),
+    em(['could']),
     ' use the list comprehension approach\n    as before.'
   ]),
   code$002Dblock('python')(`# Python
@@ -171,15 +170,15 @@ for document in documents:
         matches.append(document)
 `),
   p([
-    'This is reasonably succinct, but not terribly efficient since\n    each document is checked for ',
-    em('every'),
-    ' search term. Given\n    that we\'re not interested in documents that lack even a single\n    search term, it should be possible to rewrite this code so that\n    we don\'t waste time on lost causes.'
+    'This is reasonably succinct, but not terribly efficient since each\n    document is checked for ',
+    em(['every']),
+    ' search term. Given that\n    we\'re not interested in documents that lack even a single search\n    term, it should be possible to rewrite this code so that we don\'t\n    waste time on lost causes.'
   ]),
   p([
     'It turns out that Python has just the thing for the job: ',
     strong([
       'in Python, a loop statements may have an ',
-      code('else'),
+      code(['else']),
       '\n    clause!'
     ])
   ]),
@@ -194,24 +193,24 @@ for document in documents:
 `),
   p([
     'From ',
-    a('http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops')('4. More Control Flow Tools'),
+    a('http://docs.python.org/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops')(['4. More Control Flow Tools']),
     ':'
   ]),
   blockquote([p([
       'Loop statements may have an ',
-      code('else'),
+      code(['else']),
       ' clause; it is\n      executed when the loop terminates through exhaustion of the\n      list (with ',
-      code('for'),
+      code(['for']),
       ') or when the condition becomes\n      false (with ',
-      code('while'),
+      code(['while']),
       '), but not when the loop is\n      terminated by a ',
-      code('break'),
+      code(['break']),
       ' statement.'
     ])]),
   p([
     strong([
       'I\'m looking forward to finding more good spots to make\n    use of ',
-      code('else'),
+      code(['else']),
       ' clauses with my Python loops.'
     ]),
     ' :D'
@@ -220,7 +219,7 @@ for document in documents:
 export default {
   id: 66,
   slug: 'python-loops-can-have-else-clause',
-  title: 'Python loops can have else clause?!',
+  title: ['Python loops can have else clause?!'],
   datetime: datetime('2010-07-25')('18:11:00')('Pacific/Auckland'),
   tags: [
     'javascript',

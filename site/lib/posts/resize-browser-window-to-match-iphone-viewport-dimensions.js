@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -96,16 +95,16 @@ const excerpt = [
   ul([
     li([
       p([
-        strong('Portrait'),
-        ' (labelled "\u2051")'
+        strong(['Portrait']),
+        ` (labelled "⁑")`
       ]),
       code$002Dblock('plain-text')(`javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
 `)
     ]),
     li([
       p([
-        strong('Landscape'),
-        ' (labelled "**")'
+        strong(['Landscape']),
+        ` (labelled "**")`
       ]),
       code$002Dblock('plain-text')(`javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
 `)
@@ -136,7 +135,7 @@ const body = [
 export default {
   id: 37,
   slug: 'resize-browser-window-to-match-iphone-viewport-dimensions',
-  title: 'Resize browser window to match iPhone viewport dimensions',
+  title: ['Resize browser window to match iPhone viewport dimensions'],
   datetime: datetime('2010-02-16')('03:20:00')('Pacific/Auckland'),
   tags: [
     'bookmarklets',

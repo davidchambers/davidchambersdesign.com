@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -89,16 +88,16 @@ import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const body = [
   p(['Python and Ruby share beautiful syntax for repeating strings;\n    PHP\'s syntax is characteristically ugly.']),
-  h3$0027({ id: 'python' })('Python'),
+  h3$0027({ id: 'python' })(['Python']),
   code$002Dblock('python')(`'=' * 5
 `),
-  h3$0027({ id: 'ruby' })('Ruby'),
+  h3$0027({ id: 'ruby' })(['Ruby']),
   code$002Dblock('ruby')(`'=' * 5
 `),
-  h3$0027({ id: 'php' })('PHP'),
+  h3$0027({ id: 'php' })(['PHP']),
   code$002Dblock('php')(`str_repeat('=', 5)
 `),
-  h3$0027({ id: 'javascript' })('JavaScript?'),
+  h3$0027({ id: 'javascript' })(['JavaScript?']),
   p(['True to form, repeating strings in JavaScript is ugly and\n      counterintuitive, but kinda cool.']),
   code$002Dblock('javascript')(`new Array(5 + 1).join('=')
 `)
@@ -106,7 +105,7 @@ const body = [
 export default {
   id: 82,
   slug: 'repeating-strings-in-javascript',
-  title: 'Repeating strings in JavaScript',
+  title: ['Repeating strings in JavaScript'],
   datetime: datetime('2011-03-31')('17:30:00')('America/Los_Angeles'),
   tags: [
     'javascript',

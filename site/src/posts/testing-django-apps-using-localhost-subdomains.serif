@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 56,
   slug: "testing-django-apps-using-localhost-subdomains",
-  title: "Testing Django apps using localhost subdomains",
+  title: ["Testing Django apps using localhost subdomains"],
   datetime: datetime "2010-07-04" "08:23:00" "Pacific/Auckland",
   tags: ["django", "mac-os-x"],
   body: body,
@@ -23,8 +23,8 @@ body = [
       p [
        "I saved ",
         a "http://thingsilearned.com/2009/01/05/using-subdomains-in-django/"
-          "Dave Fowler's subdomain middleware", "
-        as ", code "middleware.py", " in my project directory:",
+          ["Dave Fowler's subdomain middleware"], "
+        as ", code ["middleware.py"], " in my project directory:",
       ],
       code-block "python" `
         class SubdomainMiddleware:
@@ -39,7 +39,7 @@ body = [
     ],
     li [
       p [
-       "I added this to my project's ", code "MIDDLEWARE_CLASSES", ":",
+       "I added this to my project's ", code ["MIDDLEWARE_CLASSES"], ":",
       ],
       code-block "python" `
         MIDDLEWARE_CLASSES = (
@@ -50,7 +50,7 @@ body = [
     ],
     li [
       p [
-       "I edited my ", code "/etc/hosts", " file as per Dave's suggestion:",
+       "I edited my ", code ["/etc/hosts"], " file as per Dave's suggestion:",
       ],
       code-block "plain-text" `
         127.0.0.1 test.com
@@ -58,10 +58,10 @@ body = [
         127.0.0.1 search.test.com
       `,
       p [
-       "Initially I replaced ", code "test.com", " with the
+       "Initially I replaced ", code ["test.com"], " with the
         site's domain name, but I decided that it's useful to
         be able to access both the live site and the test site
-        without editing the ", code "/etc/hosts", " file.",
+        without editing the ", code ["/etc/hosts"], " file.",
       ],
       p [
        "At this point I expected everything to work as advertised.
@@ -74,9 +74,8 @@ body = [
         },
       ],
       p [
-       "That would depend on one's definition of \"works\".
-        I wanted my Django site to appear, which required a
-        very simple tweak...",
+       `That would depend on one's definition of "works". I wanted my
+        Django site to appear, which required a very simple tweak...`,
       ],
     ],
     li [
@@ -87,7 +86,7 @@ body = [
         http://test.com:8000/
       `,
       p [
-       "This ", em "actually", " worked. :)",
+       "This ", em ["actually"], " worked. :)",
       ],
     ],
   ],

@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -95,23 +94,23 @@ const excerpt = [
   p(['Not so long ago I was talking to my brother online as he\n    worked on a poster for a presentation. He is an engineer;\n    using Illustrator was a new experience for him. He generally\n    picks up new things easily, but as you may appreciate,\n    Illustrator is often far from logical. We reached a point\n    where he asked me about scaling rounded rectangles \u2013 this\n    is where things started to get hairy.']),
   ol([
     li$0027({ class: 'interviewer' })([
-      strong('him:'),
+      strong(['him:']),
       '\n      if I have a rounded rectangle and resize it, it there a\n      way to stop it from changing the rounding of the corners\n      (which I want constant for all my rectangles)?'
     ]),
     li([
-      strong('me:'),
+      strong(['me:']),
       '\n      you can work out how large you want it to be and then\n      double-click with the rectangle tool and you\'ll be able\n      to enter all the correct values'
     ]),
     li$0027({ class: 'interviewer' })([
-      strong('him:'),
+      strong(['him:']),
       '\n      is there a way to change how curved they are after placing them?'
     ]),
     li([
-      strong('me:'),
+      strong(['me:']),
       '\n      InDesign has a much better was of dealing with this issue than\n      does Illustrator... in InDesign, the rectangle is treated as an\n      object, and its corner radius is treated as a property in just\n      the same way as its width, height, and position... this means\n      that you can change the corner radius at any time...'
     ]),
     li$0027({ class: 'interviewer' })([
-      strong('him:'),
+      strong(['him:']),
       '\n      that\'s how it should be'
     ])
   ])
@@ -123,21 +122,21 @@ const body = [
     li(['draw a rectangle of any size']),
     li([
       'select it and go to ',
-      strong('Effect'),
+      strong(['Effect']),
       ' > ',
-      strong('Convert to Shape'),
+      strong(['Convert to Shape']),
       ' > ',
-      strong('Rounded Rectangle...')
+      strong(['Rounded Rectangle...'])
     ]),
     li([
       'in the ',
-      strong('Shape Options'),
+      strong(['Shape Options']),
       ' dialogue, check the ',
-      strong('Relative'),
+      strong(['Relative']),
       ' radio button, and set ',
-      strong('Extra Width'),
+      strong(['Extra Width']),
       ' and ',
-      strong('Extra Height'),
+      strong(['Extra Height']),
       ' to 0'
     ]),
     li(['enter your desired corner radius, and off you go!'])
@@ -147,24 +146,24 @@ const body = [
       src: '/images/posts/windows/illustrator-shape-options-dialog.png',
       caption: [
         'Illustrator\'s ',
-        strong('Shape Options'),
+        strong(['Shape Options']),
         ' dialog,\n      set up to enable rounded rectangles which scale correctly'
       ]
     }]),
   p([
-    'Now that the shape has been converted to a rounded rectangle, the ',
-    strong('Shape Options'),
-    ' dialog can be accessed by double-clicking on ',
-    strong('Rounded Rectangle'),
+    'Now that the shape has been converted to a rounded rectangle,\n    the ',
+    strong(['Shape Options']),
+    ' dialog can be accessed by\n    double-clicking on ',
+    strong(['Rounded Rectangle']),
     ' in the ',
-    strong('Appearance'),
+    strong(['Appearance']),
     ' palette.'
   ])
 ];
 export default {
   id: 3,
   slug: 'rounded-rectangles-in-adobe-illustrator-cs3',
-  title: 'Rounded rectangles in Adobe Illustrator CS3',
+  title: ['Rounded rectangles in Adobe Illustrator CS3'],
   datetime: datetime('2008-12-03')('12:49:00')('Pacific/Auckland'),
   tags: [
     'adobe',

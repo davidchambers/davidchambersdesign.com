@@ -5,7 +5,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 29,
   slug: "multisession-cd-burning-in-snow-leopard",
-  title: "Multisession CD burning in Snow Leopard",
+  title: ["Multisession CD burning in Snow Leopard"],
   datetime: datetime "2009-10-27" "08:58:00" "Pacific/Auckland",
   tags: ["mac-os-x", "snow-leopard"],
   body: body,
@@ -22,7 +22,7 @@ body = [
 
   p [
    "The days of the compact disc are surely numbered. The ",
-    a "http://www.apple.com/macbookair/" "MacBook Air", "
+    a "http://www.apple.com/macbookair/" ["MacBook Air"], "
     is the first computer from Apple to jettison the optical
     drive; others will undoubtedly follow, eventually.",
   ],
@@ -36,7 +36,7 @@ body = [
     recent ones, at any rate).",
   ],
 
-  h3 "Recording on a recordable CD more than once",
+  h3 ["Recording on a recordable CD more than once"],
 
   p [
    "Normally, you can burn items to a recordable CD, such
@@ -52,7 +52,7 @@ body = [
     using a remote optical drive.",
   ],
 
-  h3 "To burn to a recordable CD so you can burn to it again:",
+  h3 ["To burn to a recordable CD so you can burn to it again:"],
 
   ol [
     li [
@@ -75,9 +75,9 @@ body = [
     ],
     li [
       p [
-       "Select the \"Leave disc appendable\" checkbox.
+       `Select the "Leave disc appendable" checkbox.
         If you don’t see this option, click the triangle
-        in the upper-right corner.",
+        in the upper-right corner.`,
       ],
     ],
     li [

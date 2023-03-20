@@ -4,7 +4,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 61,
   slug: "javascript-everywhere",
-  title: "JavaScript, JavaScript, everywhere",
+  title: ["JavaScript, JavaScript, everywhere"],
   datetime: datetime "2010-07-20" "19:05:00" "Pacific/Auckland",
   tags: ["javascript", "node.js", "sproutcore"],
   body: body,
@@ -13,7 +13,7 @@ export default {
 excerpt = [
   p [
    "Over the past few months I've reached a startling realization: ",
-    strong "JavaScript is a tremendously capable language.",
+    strong ["JavaScript is a tremendously capable language."],
   ],
   p [
    "The reason that it took me so long to discover this is that
@@ -28,7 +28,7 @@ excerpt = [
     the former to quickly put together a website using the
     excellent Django framework while using the latter to add
     drag and drop functionality is to compare apples and oranges. ",
-    strong "Actually, it's more like comparing apples to root canals.",
+    strong ["Actually, it's more like comparing apples to root canals."],
   ],
 ];
 
@@ -41,7 +41,7 @@ body = [
     touching the DOM), I'd have been in a much better position
     to weigh each on its merits. Thanks to some terrifically
     exciting developments in the JS world, it is now possible to
-    write application code ", em "entirely", " in JavaScript.",
+    write application code ", em ["entirely"], " in JavaScript.",
   ],
 
   p [
@@ -56,8 +56,8 @@ body = [
   ],
 
   p [
-    a "http://www.sproutcore.com/" "SproutCore", " rewrites the
-    client–server relationship by moving ", em "all", " programming
+    a "http://www.sproutcore.com/" ["SproutCore"], " rewrites the
+    client–server relationship by moving ", em ["all"], " programming
     logic to the client. This new approach was motivated by a desire
     to improve performance, but has two consequential benefits. No
     longer do objects need to be represented on both sides of the
@@ -94,7 +94,7 @@ body = [
    "Exciting JavaScript-related developments are not limited to the
     client-side, however. There are several options available if you're
     interested in running JavaScript on the server, but the one that's
-    caught my attention is ", a "http://nodejs.org/" "Node.js", ".",
+    caught my attention is ", a "http://nodejs.org/" ["Node.js"], ".",
   ],
 
   dl [
@@ -114,7 +114,7 @@ body = [
   ],
 
   p [
-   "The idea of using an event loop on the ", em "server", "-side
+   "The idea of using an event loop on the ", em ["server"], "-side
     is surprising at first, but obvious in hindsight. JavaScript
     is extremely well suited to event-driven programming, and the
     performance gains that can be made with non-blocking request

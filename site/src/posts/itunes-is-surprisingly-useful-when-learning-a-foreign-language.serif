@@ -4,7 +4,7 @@ import datetime from "../datetime.serif";
 export default {
   id: 93,
   slug: "itunes-is-surprisingly-useful-when-learning-a-foreign-language",
-  title: "iTunes: Surprisingly useful when learning a foreign language",
+  title: ["iTunes: Surprisingly useful when learning a foreign language"],
   datetime: datetime "2012-01-29" "19:20:00" "America/Los_Angeles",
   tags: ["itunes", "language", "mac-os-x"],
   body: body,
@@ -43,7 +43,7 @@ body = [
 
   ...excerpt,
 
-  h3 "Creating an iTunes playlist from a single audio file",
+  h3 ["Creating an iTunes playlist from a single audio file"],
 
   ol [
     li [
@@ -71,14 +71,14 @@ body = [
     ],
     li [
       p [
-       "Select the track in iTunes, then hit ", strong "⌘I", " (or select ",
-        strong "Get Info", " from the ", strong "File", " menu).",
+       "Select the track in iTunes, then hit ", strong ["⌘I"], " (or select ",
+        strong ["Get Info"], " from the ", strong ["File"], " menu).",
       ],
     ],
     li [
       p [
-       "Click the ", strong "Options", " tab and enter a ",
-        strong "Stop Time", ". Click ", strong "OK", ".",
+       "Click the ", strong ["Options"], " tab and enter a ",
+        strong ["Stop Time"], ". Click ", strong ["OK"], ".",
       ],
       p [
         img {
@@ -95,9 +95,9 @@ body = [
     ],
     li [
       p [
-       "Hit ", strong "⌘I", " again, and this time click the ",
-        strong "Info", " tab. Type the clip's transcription
-        into the ", strong "Name", " field.",
+       "Hit ", strong ["⌘I"], " again, and this time click the ",
+        strong ["Info"], " tab. Type the clip's transcription
+        into the ", strong ["Name"], " field.",
       ],
       p [
         img {
@@ -115,19 +115,19 @@ body = [
     ],
     li [
       p [
-       "Select all of the newly added clips. Hit ", strong "⌘I", ".
-        In the ", strong "Album", " field, type the name of the
-        audio file. Click ", strong "OK", ".",
+       "Select all of the newly added clips. Hit ", strong ["⌘I"], ".
+        In the ", strong ["Album"], " field, type the name of the
+        audio file. Click ", strong ["OK"], ".",
       ],
     ],
   ],
 
   p [
-   "Having a dialog comprised of many short clips is very useful.
+   `Having a dialog comprised of many short clips is very useful.
     It enables one to listen to a clip repeatedly to practise a
     difficult word or phrase, or to say each sentence aloud before
-    listening to the \"answer\". And since the clips are contiguous
-    one can still listen to the dialog from beginning to end.",
+    listening to the "answer". And since the clips are contiguous
+    one can still listen to the dialog from beginning to end.`,
   ],
 
 ];

@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -97,7 +96,7 @@ const excerpt = [
 ];
 const body = [
   ...excerpt,
-  h3('Creating an iTunes playlist from a single audio file'),
+  h3(['Creating an iTunes playlist from a single audio file']),
   ol([
     li([p(['Open iTunes and create a playlist. I named mine "danske".'])]),
     li([p(['Locate the audio file in Finder.'])]),
@@ -105,21 +104,21 @@ const body = [
     li([p(['Drag the file from the Finder window, and drop it onto\n        the newly created playlist in the iTunes sidebar.'])]),
     li([p([
         'Select the track in iTunes, then hit ',
-        strong('\u2318I'),
+        strong(['\u2318I']),
         ' (or select ',
-        strong('Get Info'),
+        strong(['Get Info']),
         ' from the ',
-        strong('File'),
+        strong(['File']),
         ' menu).'
       ])]),
     li([
       p([
         'Click the ',
-        strong('Options'),
+        strong(['Options']),
         ' tab and enter a ',
-        strong('Stop Time'),
+        strong(['Stop Time']),
         '. Click ',
-        strong('OK'),
+        strong(['OK']),
         '.'
       ]),
       p([img({
@@ -131,11 +130,11 @@ const body = [
     li([
       p([
         'Hit ',
-        strong('\u2318I'),
+        strong(['\u2318I']),
         ' again, and this time click the ',
-        strong('Info'),
+        strong(['Info']),
         ' tab. Type the clip\'s transcription\n        into the ',
-        strong('Name'),
+        strong(['Name']),
         ' field.'
       ]),
       p([img({
@@ -146,20 +145,24 @@ const body = [
     li([p(['Repeat steps 4 through 8 as necessary. Ensure that\n        each clip\'s start time is the same as the previous\n        clip\'s stop time.'])]),
     li([p([
         'Select all of the newly added clips. Hit ',
-        strong('\u2318I'),
+        strong(['\u2318I']),
         '.\n        In the ',
-        strong('Album'),
+        strong(['Album']),
         ' field, type the name of the\n        audio file. Click ',
-        strong('OK'),
+        strong(['OK']),
         '.'
       ])])
   ]),
-  p(['Having a dialog comprised of many short clips is very useful.\n    It enables one to listen to a clip repeatedly to practise a\n    difficult word or phrase, or to say each sentence aloud before\n    listening to the "answer". And since the clips are contiguous\n    one can still listen to the dialog from beginning to end.'])
+  p([`Having a dialog comprised of many short clips is very useful.
+    It enables one to listen to a clip repeatedly to practise a
+    difficult word or phrase, or to say each sentence aloud before
+    listening to the "answer". And since the clips are contiguous
+    one can still listen to the dialog from beginning to end.`])
 ];
 export default {
   id: 93,
   slug: 'itunes-is-surprisingly-useful-when-learning-a-foreign-language',
-  title: 'iTunes: Surprisingly useful when learning a foreign language',
+  title: ['iTunes: Surprisingly useful when learning a foreign language'],
   datetime: datetime('2012-01-29')('19:20:00')('America/Los_Angeles'),
   tags: [
     'itunes',

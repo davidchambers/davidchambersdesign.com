@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -88,7 +87,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const excerpt = [
-  p([strong('Sticky footers should be ubiquitous. They are not.')]),
+  p([strong(['Sticky footers should be ubiquitous. They are not.'])]),
   p(['This leads me to believe that many developers are unaware\n    of how to prevent footers from floating up on pages without\n    much content.'])
 ];
 const body = [
@@ -109,7 +108,7 @@ body    { height: 100%; }
 `),
   p([
     'This makes it possible to set the ',
-    em('minimum'),
+    em(['minimum']),
     ' height of\n    the wrapper div to the height of the viewport:'
   ]),
   code$002Dblock('css')(`#wrap   { min-height: 100%; }
@@ -129,19 +128,19 @@ body    { height: 100%; }
 `),
   p([
     'This CSS works in all modern browsers. If you need to support\n    antiquated browsers, you should have a look at the hacks suggested\n    at ',
-    a('http://www.cssstickyfooter.com/')('CSS Sticky Footer'),
+    a('http://www.cssstickyfooter.com/')(['CSS Sticky Footer']),
     '.'
   ]),
   p([strong([
       'Check out the ',
-      a('/examples/sticky-footers/')('sticky footer demo'),
+      a('/examples/sticky-footers/')(['sticky footer demo']),
       '\n      to see all this theory in action.'
     ])])
 ];
 export default {
   id: 27,
   slug: 'sticky-footers',
-  title: 'Sticky footers',
+  title: ['Sticky footers'],
   datetime: datetime('2009-09-20')('01:08:00')('Pacific/Auckland'),
   tags: [
     'css',

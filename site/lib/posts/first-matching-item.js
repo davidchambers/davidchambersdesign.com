@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -90,8 +89,8 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'When writing code one often needs to grab the first item in\n    a collection that has certain characteristics. For example,\n    one may have a list of ',
-    code('Student'),
-    ' objects and need\n    to fetch the one with a certain id.'
+    code(['Student']),
+    ' objects and\n    need to fetch the one with a certain id.'
   ]),
   p(['The task is trivial: loop through the list and compare each\n    student\'s id until a match is found or all the students in\n    the list have been inspected, whichever comes first.']),
   p(['In the past, I\'ve tended to take advantage of return statements\n    to exit the loop as soon as a match is found. The examples here\n    are in Python, but the same patterns apply to other languages.']),
@@ -110,11 +109,11 @@ for student in students:
 `),
   p([
     'Here, we break out of the loop as soon as a match\n    is found, preserving the student of interest in the\n    variable ',
-    code('student'),
+    code(['student']),
     '. Each time through the\n    loop ',
-    code('student'),
+    code(['student']),
     ' is cleared to ensure that ',
-    code('student'),
+    code(['student']),
     ' is empty once we\'ve finished looping\n    if there are no matches.'
   ]),
   p(['The first line is required to handle empty lists.']),
@@ -123,7 +122,7 @@ for student in students:
 export default {
   id: 54,
   slug: 'first-matching-item',
-  title: 'First matching item',
+  title: ['First matching item'],
   datetime: datetime('2010-06-17')('23:17:00')('Pacific/Auckland'),
   tags: ['programming'],
   body: body

@@ -10,9 +10,9 @@ render-tags posts = {
                     {S.map {x => 0} tags}
                     posts.flatMap(post => post.tags);
   [
-    h1 "Tags",
+    h1 ["Tags"],
     ol' {id: "tags"}
-        {{Object.keys tags}.map {tag => li' {data-count: counts[tag]} [a `/tag/${tag}/` tags[tag]]}},
+        {{tag => li' {data-count: counts[tag]} [a `/tag/${tag}/` [tags[tag]]]} <$> Object.keys tags},
     div {class: "clearfix"} [],
   ]
 };

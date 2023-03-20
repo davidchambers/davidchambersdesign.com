@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -90,7 +89,7 @@ import datetime from '../datetime.js';
 const body = [
   p([
     'So you have some number, ',
-    code('x'),
+    code(['x']),
     ', which you want to round\n    to the nearest integer. Easy, right?'
   ]),
   code$002Dblock('javascript')(`x = Math.round(x);
@@ -100,42 +99,42 @@ const body = [
 `),
   p([
     'What the heck\'s going on here? ',
-    code('>>'),
+    code(['>>']),
     ' is JavaScript\'s\n    right shift operator. It shifts a number\'s binary representation ',
-    code('n'),
+    code(['n']),
     ' bits to the right, where ',
-    code('n'),
+    code(['n']),
     ' is the\n    value to the right of the operator. Since ',
-    code('n'),
+    code(['n']),
     ' is ',
-    code('0'),
+    code(['0']),
     ' in this case, no shifting will occur, although ',
-    strong('the resulting value will be an integer'),
+    strong(['the resulting value will be an integer']),
     '.'
   ]),
   p([
     'Note that this approach results in ',
-    code('-82.5'),
+    code(['-82.5']),
     ' being\n    rounded to ',
-    code('-83'),
+    code(['-83']),
     '.'
   ]),
   p([
     'If, for some reason, your code calls ',
-    code('Math.round()'),
+    code(['Math.round()']),
     '\n    millions of times, it may be worth investigating the bitwise\n    approach to avoid the overhead of all those function calls.'
   ]),
   p([
     'Stick to ',
-    code('Math.round()'),
+    code(['Math.round()']),
     ' the rest of the\n    time, though, as it makes for much clearer code. ',
-    strong('Never optimize prematurely.')
+    strong(['Never optimize prematurely.'])
   ])
 ];
 export default {
   id: 68,
   slug: 'efficient-rounding-in-javascript',
-  title: 'Efficient rounding in JavaScript',
+  title: ['Efficient rounding in JavaScript'],
   datetime: datetime('2010-08-31')('22:20:00')('Pacific/Auckland'),
   tags: [
     'javascript',

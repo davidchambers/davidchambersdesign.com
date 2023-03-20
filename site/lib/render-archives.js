@@ -1,6 +1,5 @@
 import S from 'sanctuary';
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -90,14 +89,14 @@ import {
 const render$002Dpost = post => li([
   a$0027({ href: `/${ post.slug }` })(post.title),
   ' ',
-  time({ datetime: post.datetime.toISO() })(post.datetime.toFormat('d MMMM y | h:mm') + post.datetime.toFormat('a').toLowerCase())
+  time({ datetime: post.datetime.toISO() })([post.datetime.toFormat('d MMMM y | h:mm') + post.datetime.toFormat('a').toLowerCase()])
 ]);
 const render$002Dsection = posts => li([
-  h2(posts[0]['formatted-date']),
+  h2([posts[0]['formatted-date']]),
   ol(posts.map(render$002Dpost))
 ]);
 const render$002Darchives = posts => [
-  h1('Archives'),
+  h1(['Archives']),
   ol$0027({ class: 'archives' })(S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(S.map(post => ({
     ...post,
     ['formatted-date']: post.datetime.toFormat('MMMM y')

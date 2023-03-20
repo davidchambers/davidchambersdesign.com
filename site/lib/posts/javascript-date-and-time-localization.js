@@ -1,5 +1,4 @@
 import {
-  canonicalize$002Dchildren,
   text,
   a,
   a$0027,
@@ -92,14 +91,14 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const excerpt = [
-  p([strong('This post has been a long time coming.')]),
+  p([strong(['This post has been a long time coming.'])]),
   captioned$002Dimages([{
       alt: 'Reminder message',
       src: '/images/posts/74/email-message-screenshot.png',
       caption: ['Reminder message, dated 18 January 2010']
     }]),
   p([
-    strong('It\'s unacceptable for any website or web application\n    to output dates and times using an arbitrary time zone.'),
+    strong(['It\'s unacceptable for any website or web application\n    to output dates and times using an arbitrary time zone.']),
     '\n    Displaying dates and times in UTC/GMT is only slightly better:\n    dates cannot be relied upon, and users must perform mental\n    gymnastics in order to localize date\u2013time combos.'
   ])
 ];
@@ -117,42 +116,42 @@ const body = [
     $2014,
     'but it\'s a challenge to do so in\n    a simple, reusable manner.'
   ]),
-  h3('HTML5'),
+  h3(['HTML5']),
   p([
     'For localization to be possible date, time, and time zone\n    information must be stored somewhere. In the past we\'d\n    have been forced to misappropriate ',
-    code('title'),
+    code(['title']),
     ' or ',
-    code('rel'),
+    code(['rel']),
     ', or use an unsupported attribute and accept\n    invalid markup. We can now have our cake and eat it too:\n    HTML5 sanctions arbitrary attribute names, prefixed with ',
-    code('data-'),
+    code(['data-']),
     '.'
   ]),
   p([
     'As it turns out, though, HTML5 provides the perfect hook for\n    date and time localization: the ',
-    code('time'),
+    code(['time']),
     ' element,\n    whose ',
-    code('datetime'),
+    code(['datetime']),
     ' attribute provides the canonical\n    representation of a point in time.'
   ]),
   code$002Dblock('html')(`<time datetime="1984-04-26">26 April 1984</time>
 `),
   p([
     'Simply by using the ',
-    code('time'),
-    ' element correctly our scripts\n    gain access to date, time, and even time zone information.'
+    code(['time']),
+    ' element correctly our\n    scripts gain access to date, time, and even time zone information.'
   ]),
-  h3('jQuery'),
+  h3(['jQuery']),
   p([
     'I was not quick to embrace ',
-    a('http://jquery.com/')('jQuery'),
+    a('http://jquery.com/')(['jQuery']),
     '.\n    Soon after I discovered DOM scripting and the incompatible DOM\n    APIs provided by the various browsers, I understood the need for\n    a JavaScript library. Soon after that I ',
-    del('decided'),
+    del(['decided']),
     ' ',
-    ins('stumbled'),
+    ins(['stumbled']),
     ' upon ',
-    a('http://prototypejs.org/')('Prototype'),
+    a('http://prototypejs.org/')(['Prototype']),
     '.\n    More recently I became an advocate of ',
-    a('http://mootools.net/')('MooTools'),
+    a('http://mootools.net/')(['MooTools']),
     ' which',
     $2014,
     'like Prototype',
@@ -161,50 +160,50 @@ const body = [
   ]),
   p([
     'While reading John Resig\'s ',
-    i('Secrets of the JavaScript Ninja'),
-    '\n    I began at last to appreciate the beauty of jQuery\'s design.\n    Having embraced jQuery I set out to encapsulate the site-specific\n    localization code I\'d been writing again and again in an elagant,\n    reusable package.'
+    i(['Secrets of the JavaScript Ninja']),
+    '\n    I began at last to appreciate the beauty of jQuery\'s design. Having\n    embraced jQuery I set out to encapsulate the site-specific localization\n    code I\'d been writing again and again in an elagant, reusable package.'
   ]),
-  h3('jQuery.localize'),
+  h3(['jQuery.localize']),
   p([
     'At ',
-    a('http://www.atlassian.com/')('Atlassian'),
+    a('http://www.atlassian.com/')(['Atlassian']),
     ' we\'re lucky enough\n    to have "20 percent time". A couple of weeks ago I spent the day\n    working on ',
-    a('http://bitbucket.org/davidchambers/jquery.localize')('jQuery.localize'),
+    a('http://bitbucket.org/davidchambers/jquery.localize')(['jQuery.localize']),
     ', my first jQuery plugin. I\'ve spent much of the\n    last two weekends making the plugin more flexible and documenting its\n    relatively simple API.'
   ]),
   p([
     'Assume that a page contains the following ',
-    code('time'),
+    code(['time']),
     ' element.'
   ]),
   code$002Dblock('html')(`<time datetime="2010-11-27T13:30-00:00">27 November 2010</time>
 `),
   p([
     'We could localize this element (along with any other ',
-    code('time'),
+    code(['time']),
     '\n    elements on the page) with a simple call to ',
-    code('localize'),
+    code(['localize']),
     '.'
   ]),
   code$002Dblock('html')(`$('time').localize();
 `),
   p([
     'This updates both the visible text and the value of the ',
-    code('datetime'),
+    code(['datetime']),
     ' attribute.'
   ]),
   code$002Dblock('html')(`<time datetime="2010-11-28T00:30+11:00">28 November 2010</time>
 `),
   (() => {
     const url = 'http://bitbucket.org/davidchambers/jquery.localize';
-    const link = path => a(url + path);
+    const link = path => a([url + path]);
     return p([
       'Date and time formats are fully customizable via ',
-      link('/src#directives')('directives'),
+      link('/src#directives')(['directives']),
       ', and there is\n      support for ',
-      link('/src#i18n')('internationalization'),
+      link('/src#i18n')(['internationalization']),
       '.\n      I won\'t go into the details here; there\'s extensive ',
-      link('/src#wiki')('documentation'),
+      link('/src#wiki')(['documentation']),
       ' at the project\'s\n      home on Bitbucket.'
     ]);
   })()
@@ -212,7 +211,7 @@ const body = [
 export default {
   id: 74,
   slug: 'javascript-date-and-time-localization',
-  title: 'JavaScript date and time localization',
+  title: ['JavaScript date and time localization'],
   datetime: datetime('2010-11-28')('01:45:00')('Australia/Sydney'),
   tags: [
     'html5',
