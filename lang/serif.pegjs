@@ -76,6 +76,7 @@ StringCharacter
 
 EscapeSequence
   = CharacterEscapeSequence
+  / HexEscapeSequence
   / UnicodeEscapeSequence
 
 CharacterEscapeSequence
@@ -86,6 +87,10 @@ CharacterEscapeSequence
   / 'r' { return '\r'; }
   / 't' { return '\t'; }
   / 'v' { return '\v'; }
+
+HexEscapeSequence
+  = 'x' digits:$[0-9A-F]|2|
+    { return String.fromCharCode(parseInt(digits, 16)); }
 
 UnicodeEscapeSequence
   = 'u' digits:$[0-9A-F]|4|

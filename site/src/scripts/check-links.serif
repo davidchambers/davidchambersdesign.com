@@ -1,0 +1,61 @@
+import {attemptP, bichain, fork, parallel, resolve} from "fluture";
+import S from "sanctuary";
+
+import posts from "../posts/index.serif";
+
+absolute? url = {
+  url.startsWith("http:") or
+  url.startsWith("https:")
+};
+
+links node = {
+  if node.name == "a" then {
+    [node.attributes.href].filter(absolute?)
+  } else if "children" in node then {
+    node.children.flatMap(links)
+  } else {
+    []
+  }
+};
+
+status url = {
+  bichain {err => resolve {url: url, status: err.cause.code}}
+          {res => resolve {url: url, status: res.status}}
+          {attemptP $ () => fetch(url, {method: "HEAD", redirect: "manual"})}
+};
+
+bold   text = `\x1B[1m${text}\x1B[22m`;
+invert text = `\x1B[7m${text}\x1B[27m`;
+red    text = `\x1B[31m${text}\x1B[0m`;
+yellow text = `\x1B[33m${text}\x1B[0m`;
+cyan   text = `\x1B[36m${text}\x1B[0m`;
+
+format {url, status} = {
+  if typeof status == "string" then {
+    indent = " ".repeat (Math.max (0, 15 - status.length));
+    red `${indent}${invert $ bold status} ${url}`
+  } else if status >= 200 and status < 300 then {
+              `            ${bold status} ${url}`
+  } else if status >= 300 and status < 400 then {
+    yellow    `            ${bold status} ${url}`
+  } else if status >= 400 and status < 500 then {
+    red       `            ${bold status} ${url}`
+  } else {
+    cyan      `            ${bold status} ${url}`
+  }
+};
+
+program = {
+  posts
+  |> S.chain {post => S.chain links post.body}
+  |> Reflect.construct (Set, [?])
+  |> ?.values()
+  |> Array.from
+  |> S.sort
+  |> S.map status
+  |> parallel 16
+  |> S.map $ S.map format
+  |> S.map $ S.joinWith "\n"
+};
+
+fork console.error console.log program;
