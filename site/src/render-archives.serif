@@ -18,7 +18,7 @@ render-post post = {
 render-section posts = {
   li [
     h2 [posts[0].formatted-date],
-    ol posts.map(render-post),
+    ol $ render-post <$> posts,
   ]
 };
 

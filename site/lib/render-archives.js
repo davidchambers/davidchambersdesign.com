@@ -92,7 +92,7 @@ const render$002Dpost = post => li([
 ]);
 const render$002Dsection = posts => li([
   h2([posts[0]['formatted-date']]),
-  ol(posts.map(render$002Dpost))
+  ol(posts.map($0024 => render$002Dpost($0024)))
 ]);
 const render$002Darchives = posts => [
   h1(['Archives']),

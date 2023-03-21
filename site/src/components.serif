@@ -10,7 +10,7 @@ export {
 };
 
 captioned-images images = {
-  dl
+  dl $
     images.flatMap(image => [
       dt [img {alt: image.alt, src: image.src}],
       dd image.caption,

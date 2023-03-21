@@ -14,7 +14,7 @@ related-posts posts post = {
      }}
   |> S.sortBy {this => {
        S.Pair {-this.score}
-              {Math.abs this.datetime.diff(post.datetime).milliseconds}
+              {Math.abs $ this.datetime.diff(post.datetime).milliseconds}
      }}
   |> ?.slice(0, 5)
 };

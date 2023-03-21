@@ -122,6 +122,7 @@ TemplateLiteralCharacter
     { return sequence; }
 
 AndToken            = @$'and'           !IdentifierPart
+ArrowToken          = @$'=>'            !IdentifierPart
 ElseToken           = @$'else'          !IdentifierPart
 ExportToken         = @$'export'        !IdentifierPart
 IfToken             = @$'if'            !IdentifierPart
@@ -228,28 +229,38 @@ ImportMeta
   = meta:ImportToken '.' property:'meta'
     { return Serif.MetaProperty(meta, property); }
 
+PrimaryExpression
+  = BooleanLiteral
+  / NumberLiteral
+  / StringLiteral
+  / TemplateLiteral
+  / ArrayExpression
+  / ObjectExpression
+  / ImportMeta
+  / Identifier
+  / BlockExpression
+
 MemberExpression
-  = object:(
-        BooleanLiteral
-      / NumberLiteral
-      / StringLiteral
-      / TemplateLiteral
-      / ArrayExpression
-      / ObjectExpression
-      / ImportMeta
-      / Identifier
-      / BlockExpression
-    )
+  = object:PrimaryExpression
     properties:(
         _ '.' ident:Identifier          { return Serif.StringLiteral(ident.name); }
       / '[' _ property:Expression _ ']' { return property; }
     )*
     { return properties.reduce(Serif.MemberExpression, object); }
 
+ArrowFunctionExpression
+  = parameters:ArrowFunctionParameters _ ArrowToken _ body:Expression
+    { return Serif.ArrowFunctionExpression(parameters, body); }
+
+LeftHandSideExpression
+  = ArrowFunctionExpression
+  / MemberExpression
+
 CallExpression
-  = head:MemberExpression
+  = head:LeftHandSideExpression
     tail:(
-        _ args:Arguments                { return expr => Serif.CallExpression(expr, args); }
+        __ arg:LeftHandSideExpression   { return expr => Serif.CallExpression(expr, [arg]); }
+      / _ args:Arguments                { return expr => Serif.CallExpression(expr, args); }
       / _ '.' ident:Identifier          { return expr => Serif.MemberExpression(expr, Serif.StringLiteral(ident.name)); }
       / '[' _ property:Expression _ ']' { return expr => Serif.MemberExpression(expr, property); }
     )*
@@ -260,11 +271,6 @@ Arguments
     { return []; }
   / '(' _ args:(SpreadElement / Expression)|1.., CommaSeparator| _ ')'
     { return args; }
-
-ArrowFunctionExpression
-  = parameters:ArrowFunctionParameters _ '=>' _ body:Expression
-    { return Serif.ArrowFunctionExpression(parameters, body); }
-  / CallExpression
 
 ArrowFunctionParameters
   = '(' _ ')'
@@ -317,15 +323,6 @@ RestElement
   = '...' argument:Identifier
     { return Serif.RestElement(argument); }
 
-Application
-  = callee:ArrowFunctionExpression
-    args:(__ arg:ArrowFunctionExpression { return arg; })+
-    { return Serif.Application(callee, args); }
-  / ArrowFunctionExpression
-
-LeftHandSideExpression
-  = ArrowFunctionExpression
-
 UnaryOperator
   = TypeofToken
   / '+'
@@ -334,9 +331,9 @@ UnaryOperator
   / '!'
 
 UnaryExpression
-  = operator:UnaryOperator _ argument:Application
+  = operator:UnaryOperator _ argument:CallExpression
     { return Serif.UnaryExpression(operator, argument); }
-  / Application
+  / CallExpression
 
 ExponentiationOperator
   = '**'
@@ -468,7 +465,7 @@ ApplicationOperator
 ApplicationExpression
   = callee:ConditionalExpression
     args:(_ ApplicationOperator _ arg:ApplicationExpression { return arg; })*
-    { return args.reduce((callee, arg) => Serif.Application(callee, [arg]), callee); }
+    { return args.reduce((callee, arg) => Serif.CallExpression(callee, [arg]), callee); }
 
 PipeOperator
   = '|>'
