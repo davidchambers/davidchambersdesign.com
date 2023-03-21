@@ -10,18 +10,18 @@ import serif        from './index.js';
 
 async function evaluateModule(source: string): Promise<unknown> {
   const context = vm.createContext(global);
-  const module = new (vm as any).SourceTextModule(source, {context});
+  const module: any = Reflect.construct((vm as any).SourceTextModule, [source, {context}]);
   await module.link(async (specifier: string, referencingModule: any) => {
     const entries = Object.entries(await import(specifier));
-    const module = new (vm as any).SyntheticModule(
+    const module: any = Reflect.construct((vm as any).SyntheticModule, [
       entries.map(([name]) => name),
       () => {
         for (const [name, value] of entries) {
           module.setExport(name, value);
         }
       },
-      {identifier: specifier, context: referencingModule.context}
-    );
+      {identifier: specifier, context: referencingModule.context},
+    ]);
     return module;
   });
   await module.evaluate();
@@ -48,13 +48,13 @@ function print(x: any): string {
     case '[object Symbol]':
       return `Symbol.for ${print(Symbol.keyFor(x))}`;
     case '[object Date]':
-      return `\x1B[1mnew\x1B[0m Date(${print(Number(x))})`;
+      return `Reflect.construct (Date, [${print(Number(x))}])`;
     case '[object RegExp]':
-      return `\x1B[1mnew\x1B[0m RegExp(${print(x.source)}, ${print(x.flags)})`;
+      return `RegExp (${print(x.source)}, ${print(x.flags)})`;
     case '[object Set]':
-      return `\x1B[1mnew\x1B[0m Set(${print(Array.from(x))})`;
+      return `Reflect.construct (Set, [${print(Array.from(x))}])`;
     case '[object Map]':
-      return `\x1B[1mnew\x1B[0m Map(${print(Array.from(x))})`;
+      return `Reflect.construct (Map, [${print(Array.from(x))}])`;
     case '[object Array]':
       return '[' + x.map(print).join(', ') + ']';
     case '[object Object]':

@@ -396,21 +396,6 @@ export const PipeExpression = (
   body,
 });
 
-export interface NewExpression {
-  readonly type: 'NewExpression';
-  readonly callee: Node;
-  readonly arguments: ReadonlyArray<Node>;
-}
-
-export const NewExpression = (
-  callee: Node,
-  args: ReadonlyArray<Node>,
-): NewExpression => ({
-  type: 'NewExpression',
-  callee,
-  arguments: args,
-});
-
 export interface Application {
   readonly type: 'Application';
   readonly callee: Node;
@@ -459,7 +444,6 @@ export type Node =
   | LogicalExpression
   | ConditionalExpression
   | PipeExpression
-  | NewExpression
   | Application
   | CallExpression
   | SpreadElement

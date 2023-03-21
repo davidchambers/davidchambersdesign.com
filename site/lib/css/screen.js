@@ -23,7 +23,7 @@ const tag$002Dbackground = count => (() => {
   return `#${ hex }${ hex }${ hex }`;
 })();
 const tag$002Dcolor = count => (() => {
-  const inconsequential = new RegExp('[.]000$|0*$');
+  const inconsequential = RegExp('[.]000$|0*$');
   return `rgba(0, 0, 0, ${ (Math.log2(count) * 0.1 + 0.3).toFixed(3).replace(inconsequential, '') })`;
 })();
 const screen = `html {

@@ -29,7 +29,7 @@ tag-background count = {
 };
 
 tag-color count = {
-  inconsequential = new RegExp("[.]000$|0*$");
+  inconsequential = RegExp ("[.]000$|0*$");
   `rgba(0, 0, 0, ${
     {Math.log2 count * 0.1 + 0.3}.toFixed(3).replace(inconsequential, "")
   })`

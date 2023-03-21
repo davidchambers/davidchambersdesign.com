@@ -16,7 +16,7 @@ interface ResolvedModule {
 type Tree = Map<string, ResolvedModule>
 
 async function findDependencies(entryPoint: string): Promise<Tree> {
-  const tree: Tree = new Map([]);
+  const tree = Reflect.construct(Map, [[]]) as Tree;
   await recur(entryPoint);
   return tree;
 
@@ -85,7 +85,7 @@ async function findDependencies(entryPoint: string): Promise<Tree> {
 }
 
 function orderDependencies(tree: Tree): Array<string> {
-  const sorted: Set<string> = new Set([]);
+  const sorted = Reflect.construct(Set, [[]]) as Set<string>;
   const unsorted = Array.from(tree.keys());
   while (unsorted.length > 0) {
     const filename = unsorted[0];

@@ -20,7 +20,7 @@ export const SpreadElement = (
 export type Identifier = ES.Identifier;
 
 // https://262.ecma-international.org/13.0/#sec-keywords-and-reserved-words
-export const RESERVED_WORDS = new Set([
+export const RESERVED_WORDS = Reflect.construct(Set, [[
   // reserved words
   'await',
   'break',
@@ -68,7 +68,7 @@ export const RESERVED_WORDS = new Set([
   'private',
   'protected',
   'public',
-]);
+]]);
 
 // 13.2.3 Literals
 
@@ -175,19 +175,6 @@ export const MemberExpression = (
   property,
   computed: options?.computed ?? false,
   optional: options?.optional ?? false,
-});
-
-// 13.3.5 The new Operator
-
-export type NewExpression = ES.NewExpression;
-
-export const NewExpression = (
-  callee: Expression,
-  args: Array<Expression | SpreadElement>,
-): NewExpression => ({
-  type: 'NewExpression',
-  callee,
-  arguments: args,
 });
 
 // 13.3.6 Function Calls

@@ -17,7 +17,7 @@ const render$002Dinline$002Delement = context => element => `${ context.indent.r
   level: 0,
   inline: true
 }))($0024)).join('') }</${ element.name }>${ context.inline ? '' : '\n' }`;
-const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => typeof string$002Dor$002Dnode === 'object' ? string$002Dor$002Dnode : text(string$002Dor$002Dnode.replace(new RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', ''));
+const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => typeof string$002Dor$002Dnode === 'object' ? string$002Dor$002Dnode : text(string$002Dor$002Dnode.replace(RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', ''));
 const block$002Delement = name => attributes => children$0021 => (() => {
   const children = children$0021.map($0024 => string$002Dto$002Dtext$002Dnode($0024));
   const element = {

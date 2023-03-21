@@ -128,7 +128,6 @@ IfToken             = @$'if'            !IdentifierPart
 ImportToken         = @$'import'        !IdentifierPart
 InToken             = @$'in'            !IdentifierPart
 InstanceofToken     = @$'instanceof'    !IdentifierPart
-NewToken            = @$'new'           !IdentifierPart
 OrToken             = @$'or'            !IdentifierPart
 ThenToken           = @$'then'          !IdentifierPart
 TypeofToken         = @$'typeof'        !IdentifierPart
@@ -238,7 +237,6 @@ MemberExpression
       / ArrayExpression
       / ObjectExpression
       / ImportMeta
-      / NewExpression
       / Identifier
       / BlockExpression
     )
@@ -247,10 +245,6 @@ MemberExpression
       / '[' _ property:Expression _ ']' { return property; }
     )*
     { return properties.reduce(Serif.MemberExpression, object); }
-
-NewExpression
-  = NewToken _ callee:MemberExpression _ args:Arguments
-    { return Serif.NewExpression(callee, args); }
 
 CallExpression
   = head:MemberExpression

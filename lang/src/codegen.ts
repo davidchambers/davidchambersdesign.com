@@ -45,7 +45,7 @@ const esFromTemplateLiteral = (templateLiteral: Serif.TemplateLiteral): ES.Templ
     templateLiteral.expressions.map(esFromNode),
   );
   const indent = quasi.raw.slice(lineEnding.length).search(/(?! )/);
-  const pattern = new RegExp(`${lineEnding}[ ]{0,${indent}}`, 'g');
+  const pattern = RegExp(`${lineEnding}[ ]{0,${indent}}`, 'g');
   const dedent = (text: string): string => text.replace(pattern, lineEnding);
   return ES.TemplateLiteral([
     ES.TemplateElement(dedent(quasi.raw).slice(lineEnding.length), quasi.tail),
@@ -201,7 +201,7 @@ const containsTopicReference = (expr: Serif.Node): boolean => {
     case 'MemberExpression':            return containsTopicReference(expr.object) || containsTopicReference(expr.property);
     case 'Identifier':                  return expr.name === TOPIC_REFERENCE_NAME;
     case 'ArrayExpression':             return expr.elements.some(element => element.type === 'SpreadElement' ? containsTopicReference(element.argument) : containsTopicReference(element));
-    case 'ObjectExpression':            return expr.properties.some(property => property.type === 'SpreadElement' ? containsTopicReference(property) : containsTopicReference(property.key) || (() => { switch (property.value.type) { case 'BooleanLiteral': return containsTopicReference(property.value); case 'NumberLiteral': return containsTopicReference(property.value); case 'StringLiteral': return containsTopicReference(property.value); case 'TemplateLiteral': return containsTopicReference(property.value); case 'MetaProperty': return containsTopicReference(property.value); case 'MemberExpression': return containsTopicReference(property.value); case 'Identifier': return containsTopicReference(property.value); case 'ArrayExpression': return containsTopicReference(property.value); case 'ObjectExpression': return containsTopicReference(property.value); case 'ArrowFunctionExpression': return containsTopicReference(property.value); case 'BlockExpression': return containsTopicReference(property.value); case 'UnaryExpression': return containsTopicReference(property.value); case 'BinaryExpression': return containsTopicReference(property.value); case 'LogicalExpression': return containsTopicReference(property.value); case 'ConditionalExpression': return containsTopicReference(property.value); case 'PipeExpression': return containsTopicReference(property.value); case 'NewExpression': return containsTopicReference(property.value); case 'Application': return containsTopicReference(property.value); case 'CallExpression': return containsTopicReference(property.value); case 'ArrayPattern': return containsTopicReference(property.value); case 'ObjectPattern': return containsTopicReference(property.value); case 'RestElement': return containsTopicReference(property.value); } })());
+    case 'ObjectExpression':            return expr.properties.some(property => property.type === 'SpreadElement' ? containsTopicReference(property) : containsTopicReference(property.key) || (() => { switch (property.value.type) { case 'BooleanLiteral': return containsTopicReference(property.value); case 'NumberLiteral': return containsTopicReference(property.value); case 'StringLiteral': return containsTopicReference(property.value); case 'TemplateLiteral': return containsTopicReference(property.value); case 'MetaProperty': return containsTopicReference(property.value); case 'MemberExpression': return containsTopicReference(property.value); case 'Identifier': return containsTopicReference(property.value); case 'ArrayExpression': return containsTopicReference(property.value); case 'ObjectExpression': return containsTopicReference(property.value); case 'ArrowFunctionExpression': return containsTopicReference(property.value); case 'BlockExpression': return containsTopicReference(property.value); case 'UnaryExpression': return containsTopicReference(property.value); case 'BinaryExpression': return containsTopicReference(property.value); case 'LogicalExpression': return containsTopicReference(property.value); case 'ConditionalExpression': return containsTopicReference(property.value); case 'PipeExpression': return containsTopicReference(property.value); case 'Application': return containsTopicReference(property.value); case 'CallExpression': return containsTopicReference(property.value); case 'ArrayPattern': return containsTopicReference(property.value); case 'ObjectPattern': return containsTopicReference(property.value); case 'RestElement': return containsTopicReference(property.value); } })());
     case 'ArrowFunctionExpression':     return containsTopicReference(expr.body);
     case 'BlockExpression':             return expr.statements.some(containsTopicReference);
     case 'UnaryExpression':             return containsTopicReference(expr.argument);
@@ -210,7 +210,6 @@ const containsTopicReference = (expr: Serif.Node): boolean => {
     case 'LogicalExpression':           return containsTopicReference(expr.left) || containsTopicReference(expr.right);
     case 'ConditionalExpression':       return containsTopicReference(expr.predicate) || containsTopicReference(expr.consequent) || containsTopicReference(expr.alternative);
     case 'PipeExpression':              return false;
-    case 'NewExpression':               return containsTopicReference(expr.callee) || expr.arguments.some(containsTopicReference);
     case 'Application':                 return containsTopicReference(expr.callee) || expr.arguments.some(argument => argument.type === 'SpreadElement' ? containsTopicReference(argument.argument) : containsTopicReference(argument));
     case 'CallExpression':              return containsTopicReference(expr.callee) || expr.arguments.some(argument => argument.type === 'SpreadElement' ? containsTopicReference(argument.argument) : containsTopicReference(argument));
     case 'SpreadElement':               return false;
@@ -246,7 +245,6 @@ const replaceTopicReferences = (replacement: Serif.Node) => (expr: Serif.Node): 
     case 'LogicalExpression':           return Serif.LogicalExpression(expr.operator, replaceTopicReferences(replacement)(expr.left) as Serif.LogicalOperand, replaceTopicReferences(replacement)(expr.right) as Serif.LogicalOperand);
     case 'ConditionalExpression':       return Serif.ConditionalExpression(replaceTopicReferences(replacement)(expr.predicate), replaceTopicReferences(replacement)(expr.consequent), replaceTopicReferences(replacement)(expr.alternative));
     case 'PipeExpression':              return replaceTopicReferences(replaceTopicReferences(replacement)(expr.head))(containsTopicReference(expr.body) ? expr.body : Serif.Application(expr.body, [Serif.Identifier(TOPIC_REFERENCE_NAME)]));
-    case 'NewExpression':               return Serif.NewExpression(replaceTopicReferences(replacement)(expr.callee), expr.arguments.map(replaceTopicReferences(replacement)));
     case 'Application':                 return Serif.Application(replaceTopicReferences(replacement)(expr.callee), expr.arguments.map(replaceTopicReferences(replacement)));
     case 'CallExpression':              return Serif.CallExpression(replaceTopicReferences(replacement)(expr.callee), expr.arguments.map(replaceTopicReferences(replacement)));
     case 'SpreadElement':               return expr;
@@ -274,13 +272,6 @@ const esFromPipeExpression = ({head, body}: Serif.PipeExpression): ES.Expression
       ? body
       : Serif.Application(body, [Serif.Identifier(TOPIC_REFERENCE_NAME)])
     )
-  )
-);
-
-const esFromNewExpression = (newExpression: Serif.NewExpression): ES.NewExpression => (
-  ES.NewExpression(
-    esFromNode(newExpression.callee),
-    newExpression.arguments.map(esFromNode),
   )
 );
 
@@ -344,7 +335,7 @@ const esFromImportDeclaration = (exportedNames: (source: string) => ReadonlyArra
   if (importDeclaration.specifiers === '*') {
     const source = importDeclaration.source.value;
     const hiding = importDeclaration.hiding.map(ident => ident.name);
-    const $hiding = new Set(importDeclaration.hiding.map(ident => ident.name));
+    const $hiding = Reflect.construct(Set, [importDeclaration.hiding.map(ident => ident.name)]) as Set<string>;
     const visible = (name: string): boolean => !$hiding.delete(name);
     if (source.endsWith('.serif')) {
       const names = exportedNames(source).filter(visible);
@@ -411,7 +402,6 @@ const esFromNode = (expr: Serif.Node): ES.Expression => {
     case 'LogicalExpression':           return esFromLogicalExpression(expr);
     case 'ConditionalExpression':       return esFromConditionalExpression(expr);
     case 'PipeExpression':              return esFromPipeExpression(expr);
-    case 'NewExpression':               return esFromNewExpression(expr);
     case 'Application':                 return esFromApplication(expr);
     case 'CallExpression':              return esFromCallExpression(expr);
     case 'SpreadElement':               return esFromSpreadElement(expr) as unknown as ES.Expression;
@@ -432,7 +422,7 @@ const unnecessaryHiding = (
   source: string,
   hiding: ReadonlyArray<string>,
   names: ReadonlyArray<string>,
-): Error => new Error(
+): Error => Reflect.construct(Error, [
   `import * from "${
     source
   }" hiding {${
@@ -443,8 +433,8 @@ const unnecessaryHiding = (
     : names.join(' and ')
   } ${
     names.length === 1 ? 'is' : 'are'
-  } not exported so need not be hidden.\n`
-);
+  } not exported so need not be hidden.\n`,
+]);
 
 export async function toModule(
   module: Serif.Module,
