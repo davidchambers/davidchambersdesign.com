@@ -84,8 +84,11 @@ import {
   var$0027,
   video
 } from './elements.js';
-const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
-const {map} = Prelude;
+const Prelude = {
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain['fantasy-land/chain'](f),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f)
+};
+const {chain, map} = Prelude;
 const base$002Dtemplate = document$002Dtitle => main => html([
   head([
     meta({ charset: 'utf-8' }),

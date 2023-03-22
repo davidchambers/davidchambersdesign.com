@@ -11,8 +11,11 @@ import {
   $2191,
   $2193
 } from './orthogonal.js';
-const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
-const {map} = Prelude;
+const Prelude = {
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain['fantasy-land/chain'](f),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f)
+};
+const {chain, map} = Prelude;
 const mask$002Dchars = {
   A: [
     $2192(14),
@@ -778,8 +781,8 @@ const reset = path => (() => {
       x: 0,
       y: 0
     }])(path));
-  const xs = S.chain(map(({x}) => x))(paths);
-  const ys = S.chain(map(({y}) => y))(paths);
+  const xs = Prelude.chain(map(({x}) => x))(paths);
+  const ys = Prelude.chain(map(({y}) => y))(paths);
   const dx = S.reduce(S.max)(0)(xs) - xs[0];
   const dy = 0 - ys[0];
   return [
@@ -791,7 +794,7 @@ const reset = path => (() => {
   ];
 })();
 const paths = chars => [
-  ...chars.slice(0, 1).flatMap(char => [
+  ...Prelude.chain(char => [
     [
       'M',
       [
@@ -801,8 +804,8 @@ const paths = chars => [
     ],
     ...char,
     reset(char)
-  ]),
-  ...chars.slice(1).flatMap(char => [
+  ])(chars.slice(0, 1)),
+  ...Prelude.chain(char => [
     [
       'm',
       [
@@ -812,7 +815,7 @@ const paths = chars => [
     ],
     ...char,
     reset(char)
-  ])
+  ])(chars.slice(1))
 ];
 const chars = Array.from('DAVIDCHAMBERSDESIGN');
 const mask = [path({

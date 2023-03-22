@@ -447,6 +447,13 @@ CoalesceExpression
     tail:(_ operator:CoalesceOperator _ right:LogicalORExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator, left, right), left); }
 
+BindOperator
+  = '>>='
+
+BindExpression
+  = exprs:CoalesceExpression|1.., _ BindOperator _|
+    { return exprs.reduceRight((right, left) => Serif.BindExpression(left, right)); }
+
 ConditionalExpression
   = IfToken
     _ predicate:ConditionalExpression
@@ -455,7 +462,7 @@ ConditionalExpression
     _ ElseToken
     _ alternative:ConditionalExpression
     { return Serif.ConditionalExpression(predicate, consequent, alternative); }
-  / CoalesceExpression
+  / BindExpression
 
 ApplicationOperator
   = '$'

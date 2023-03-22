@@ -88,8 +88,11 @@ import {
   code$002Dblock
 } from '../components.js';
 import datetime from '../datetime.js';
-const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
-const {map} = Prelude;
+const Prelude = {
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain['fantasy-land/chain'](f),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f)
+};
+const {chain, map} = Prelude;
 const excerpt = [
   p(['I\'ve recently become interested in optimizing sites for\n    the iPhone and iPod touch. While nothing beats testing on\n    the device itself, I often find it quicker to test changes\n    on my Mac. Changing the user agent string is a piece of cake\n    in Safari (Develop > User Agent > Mobile Safari) but what\n    about adjusting the browser window\'s dimensions to match\n    those of the iPhone?']),
   p(['I\'ve created two bookmarklets to allow the current page to\n    be loaded in an iPhone-sized window with a single click:']),

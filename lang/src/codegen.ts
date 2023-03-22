@@ -298,6 +298,7 @@ const esFromNode = (expr: Serif.Node): ES.Expression => {
     case 'UnaryExpression':             return esFromUnaryExpression(expr);
     case 'BinaryExpression':            return esFromBinaryExpression(expr);
     case 'MapExpression':               return ES.Literal('never');
+    case 'BindExpression':              return ES.Literal('never');
     case 'LogicalExpression':           return esFromLogicalExpression(expr);
     case 'ConditionalExpression':       return esFromConditionalExpression(expr);
     case 'PipeExpression':              return esFromPipeExpression(expr);

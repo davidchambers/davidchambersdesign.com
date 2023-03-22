@@ -85,15 +85,18 @@ import {
   var$0027,
   video
 } from './elements.js';
-const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
-const {map} = Prelude;
-const captioned$002Dimages = images => dl(images.flatMap(image => [
+const Prelude = {
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain['fantasy-land/chain'](f),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f)
+};
+const {chain, map} = Prelude;
+const captioned$002Dimages = images => dl(Prelude.chain(({alt, src, caption}) => [
   dt([img({
-      alt: image.alt,
-      src: image.src
+      alt,
+      src
     })]),
-  dd(image.caption)
-]));
+  dd(caption)
+])(images));
 const code$002Dblock = language => source$002Dcode => pre([code([text(source$002Dcode)])]);
 const update = datetime => body => div({ class: 'update' })([
   h4([

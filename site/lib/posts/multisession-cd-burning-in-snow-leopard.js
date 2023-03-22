@@ -85,8 +85,11 @@ import {
 } from '../elements.js';
 import { $2014 } from '../components.js';
 import datetime from '../datetime.js';
-const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
-const {map} = Prelude;
+const Prelude = {
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain['fantasy-land/chain'](f),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f)
+};
+const {chain, map} = Prelude;
 const body = [
   p([img({
       alt: '',

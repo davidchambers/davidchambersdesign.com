@@ -1,6 +1,9 @@
 import S from 'sanctuary';
-const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
-const {map} = Prelude;
+const Prelude = {
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain['fantasy-land/chain'](f),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f)
+};
+const {chain, map} = Prelude;
 const related$002Dposts = posts => post => (() => {
   const tags = Reflect.construct(Set, [post.tags]);
   return (posts => posts.slice(0, 5))(S.sortBy(this_ => S.Pair(-this_.score)(Math.abs(this_.datetime.diff(post.datetime).milliseconds)))(S.mapMaybe(this_ => this_.slug === post.slug ? S.Nothing : (() => {

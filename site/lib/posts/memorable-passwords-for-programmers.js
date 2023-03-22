@@ -85,8 +85,11 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
-const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
-const {map} = Prelude;
+const Prelude = {
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain['fantasy-land/chain'](f),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f)
+};
+const {chain, map} = Prelude;
 const body = [
   p(['Those of us running Mac OS X are spoilt by Keychain Access.\n    It\'s no help, of course, to have a password stored in your Mac\'s\n    keychain if you\'re at an Internet café unable to access it.\n    Thus, memorable passwords are still useful.']),
   p(['Those of us who write code can create passwords riddled with\n    spaces and punctuation without resorting to the use of random\n    strings of characters. Here\'s a "JavaScript" password,\n    for example:']),

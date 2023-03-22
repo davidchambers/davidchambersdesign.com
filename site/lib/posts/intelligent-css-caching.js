@@ -85,8 +85,11 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
-const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
-const {map} = Prelude;
+const Prelude = {
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain['fantasy-land/chain'](f),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f)
+};
+const {chain, map} = Prelude;
 const body = [
   p(['If you\'ve ever worked with CSS, you\'ll understand how frustrating\n    it is to edit a style sheet and be unable to view the change because\n    a cached version of the file is being used. One line of PHP will fix\n    this problem, and will also ensure that visitors never view your site\n    through the lens of an outdated style sheet.']),
   p(['If you\'ve ever worked with CSS, you\'ll understand how frustrating\n    it is to edit a style sheet and be unable to view the change because\n    a cached version of the file is being used.']),

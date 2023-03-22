@@ -51,6 +51,15 @@ function rewriteNode(node: Serif.Node): Serif.Node {
         [rewriteNode(node.right)],
       );
     }
+    case 'BindExpression': {
+      return Serif.CallExpression(
+        Serif.CallExpression(
+          Serif.MemberExpression(Serif.Identifier('Prelude'), Serif.StringLiteral('chain')),
+          [rewriteNode(node.right)],
+        ),
+        [rewriteNode(node.left)],
+      );
+    }
     case 'LogicalExpression': {
       return Serif.LogicalExpression(
         node.operator,

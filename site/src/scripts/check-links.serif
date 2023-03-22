@@ -4,15 +4,15 @@ import S from "sanctuary";
 import posts from "../posts/index.serif";
 
 absolute? url = {
-  url.startsWith("http:") or
-  url.startsWith("https:")
+  url.startsWith "http:" or
+  url.startsWith "https:"
 };
 
 links node = {
   if node.name == "a" then {
-    [node.attributes.href].filter(absolute?)
+    [node.attributes.href].filter absolute?
   } else if "children" in node then {
-    node.children.flatMap(links)
+    node.children >>= links
   } else {
     []
   }
@@ -21,7 +21,7 @@ links node = {
 status url = {
   bichain {err => resolve {url: url, status: err.cause.code}}
           {res => resolve {url: url, status: res.status}}
-          {attemptP $ () => fetch(url, {method: "HEAD", redirect: "manual"})}
+          {attemptP $ () => fetch (url, {method: "HEAD", redirect: "manual"})}
 };
 
 bold   text = `\x1B[1m${text}\x1B[22m`;
@@ -47,7 +47,7 @@ format {url, status} = {
 
 program = {
   posts
-  |> S.chain {post => S.chain links post.body}
+  |> chain {post => post.body >>= links}
   |> links => Array.from $ {Reflect.construct (Set, [links])}.values ()
   |> S.sort
   |> map status

@@ -10,11 +10,10 @@ export {
 };
 
 captioned-images images = {
-  dl $
-    images.flatMap(image => [
-      dt [img {alt: image.alt, src: image.src}],
-      dd image.caption,
-    ])
+  dl $ images >>= {alt, src, caption} => [
+    dt [img {alt: alt, src: src}],
+    dd caption,
+  ]
 };
 
 code-block language source-code = {

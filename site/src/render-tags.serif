@@ -6,7 +6,7 @@ import tags from "./tags.serif";
 export default render-tags;
 
 render-tags posts = {
-  slugs = S.chain {post => post.tags} posts;
+  slugs = posts >>= post => post.tags;
   from-entry = [slug, name] => {
     li' {data-count: S.size $ S.filter {S.equals slug} slugs} [
       a {href: `/tag/${slug}/`} [name],

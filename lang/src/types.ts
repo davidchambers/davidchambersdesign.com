@@ -336,6 +336,21 @@ export const MapExpression = (
   right,
 });
 
+export interface BindExpression {
+  readonly type: 'BindExpression';
+  readonly left: Node;
+  readonly right: Node;
+}
+
+export const BindExpression = (
+  left: Node,
+  right: Node,
+): BindExpression => ({
+  type: 'BindExpression',
+  left,
+  right,
+});
+
 export type LogicalOperator =
   | 'and'
   | 'or'
@@ -425,6 +440,7 @@ export type Node =
   | UnaryExpression
   | BinaryExpression
   | MapExpression
+  | BindExpression
   | LogicalExpression
   | ConditionalExpression
   | PipeExpression
