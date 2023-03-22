@@ -4,36 +4,46 @@ import repl         from 'node:repl';
 import vm           from 'node:vm';
 
 import escodegen    from 'escodegen';
+import {attemptP, chain, fork, map, promise} from 'fluture';
 
 import serif        from './index.js';
 import rewrite      from './rewrite.js';
 
 
-async function evaluateModule(source) {
+function evaluateModule(source) {
   const context = vm.createContext(global);
   const module = Reflect.construct(vm.SourceTextModule, [source, {context}]);
-  await module.link(async (specifier, referencingModule) => {
-    const entries = Object.entries(await import(specifier));
-    const module = Reflect.construct(vm.SyntheticModule, [
-      entries.map(([name]) => name),
-      () => {
-        for (const [name, value] of entries) {
-          module.setExport(name, value);
-        }
-      },
-      {identifier: specifier, context: referencingModule.context},
-    ]);
-    return module;
-  });
-  await module.evaluate();
-  return module.namespace.default;
+  return (
+    chain (_ => map(_ => module.namespace.default)
+                   (attemptP(() => module.evaluate())))
+          (attemptP(() => module.link((specifier, referencingModule) =>
+                      promise(map(entries => {
+                                    const module = Reflect.construct(vm.SyntheticModule, [
+                                      entries.map(([name]) => name),
+                                      () => {
+                                        for (const [name, value] of entries) {
+                                          module.setExport(name, value);
+                                        }
+                                      },
+                                      {identifier: specifier, context: referencingModule.context},
+                                    ]);
+                                    return module;
+                                  })
+                                 (map(Object.entries)
+                                     (attemptP(() => import(specifier)))))
+                    )))
+  );
 }
 
-async function read(serifSource) {
+function read(serifSource) {
   const serifAst = serif.parse(`export default ${serifSource};`, '[repl]');
-  const jsAst = await serif.trans(rewrite(serifAst), _importPath => []);
-  const jsSource = escodegen.generate(jsAst);
-  return evaluateModule(jsSource);
+  return (
+    chain(jsAst => {
+            const jsSource = escodegen.generate(jsAst);
+            return evaluateModule(jsSource);
+          })
+         (serif.trans(rewrite(serifAst), _importPath => []))
+  );
 }
 
 function print(x) {
@@ -67,14 +77,16 @@ function print(x) {
 
 const server = repl.start({
   prompt: '>>> ',
-  eval: async (code, _context, _filename, callback) => {
-    try {
-      callback(null, await read(code));
-    } catch (err) {
-      console.error(err);
-      console.log();
-      server.displayPrompt(false);
-    }
+  eval: (code, _context, _filename, callback) => {
+    fork(err => {
+           console.error(err);
+           console.log();
+           server.displayPrompt(false);
+         })
+        (result => {
+           callback(null, result);
+         })
+        (read(code))
   },
   writer: value => print(value) + '\n',
 });

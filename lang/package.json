@@ -9,7 +9,8 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "escodegen": "2.0.0"
+    "escodegen": "2.0.0",
+    "fluture": "14.0.0"
   },
   "devDependencies": {
     "oletus": "3.3.x",

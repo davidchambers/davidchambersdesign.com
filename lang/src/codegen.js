@@ -1,3 +1,5 @@
+import {attemptP, chain, map, parallel, reject, resolve} from 'fluture';
+
 import * as ES from './es.js';
 import * as Prelude from './prelude.js';
 import * as Serif from './types.js';
@@ -228,7 +230,7 @@ const esFromRestElement = restElement => (
   ES.RestElement(esFromIdentifier(restElement.argument))
 );
 
-const esFromImportDeclaration = exportedNames => async importDeclaration => {
+const esFromImportDeclaration = exportedNames => importDeclaration => {
   if (importDeclaration.specifiers === '*') {
     const source = importDeclaration.source.value;
     const hiding = importDeclaration.hiding.map(ident => ident.name);
@@ -236,36 +238,45 @@ const esFromImportDeclaration = exportedNames => async importDeclaration => {
     const visible = name => !$hiding.delete(name);
     if (source.endsWith('.serif')) {
       const names = exportedNames(source).filter(visible);
-      if ($hiding.size > 0) throw unnecessaryHiding(source, hiding, Array.from($hiding.values()));
-      return ES.ImportDeclaration(names.map(esFromIdentifierName).map(local => ES.ImportSpecifier(local, local)), source.replace(/[.]serif$/, '.js'));
+      return (
+        $hiding.size > 0
+        ? reject(unnecessaryHiding(source, hiding, Array.from($hiding.values())))
+        : resolve(ES.ImportDeclaration(names.map(esFromIdentifierName).map(local => ES.ImportSpecifier(local, local)), source.replace(/[.]serif$/, '.js')))
+      );
     } else {
-      const names = Object.keys(await import(source)).filter(visible);
-      if ($hiding.size > 0) throw unnecessaryHiding(source, hiding, Array.from($hiding.values()));
-      return ES.ImportDeclaration(names.map(esFromEscapedIdentifierName).map(local => ES.ImportSpecifier(local, local)), source);
+      return (
+        chain(names => $hiding.size > 0
+                       ? reject(unnecessaryHiding(source, hiding, Array.from($hiding.values())))
+                       : resolve(ES.ImportDeclaration(names.map(esFromEscapedIdentifierName).map(local => ES.ImportSpecifier(local, local)), source)))
+             (map(module => Object.keys(module).filter(visible))
+                 (attemptP(() => import(source))))
+      );
     }
   } else {
-    return ES.ImportDeclaration(
-      importDeclaration.specifiers.map(specifier => {
-        switch (specifier.type) {
-          case 'ImportDefaultSpecifier': {
-            return ES.ImportDefaultSpecifier(
-              esFromIdentifier(specifier.local)
-            );
+    return resolve(
+      ES.ImportDeclaration(
+        importDeclaration.specifiers.map(specifier => {
+          switch (specifier.type) {
+            case 'ImportDefaultSpecifier': {
+              return ES.ImportDefaultSpecifier(
+                esFromIdentifier(specifier.local)
+              );
+            }
+            case 'ImportNamespaceSpecifier': {
+              return ES.ImportNamespaceSpecifier(
+                esFromIdentifier(specifier.local)
+              );
+            }
+            case 'ImportSpecifier': {
+              return ES.ImportSpecifier(
+                esFromIdentifier(specifier.local),
+                esFromIdentifier(specifier.imported)
+              );
+            }
           }
-          case 'ImportNamespaceSpecifier': {
-            return ES.ImportNamespaceSpecifier(
-              esFromIdentifier(specifier.local)
-            );
-          }
-          case 'ImportSpecifier': {
-            return ES.ImportSpecifier(
-              esFromIdentifier(specifier.local),
-              esFromIdentifier(specifier.imported)
-            );
-          }
-        }
-      }),
-      importDeclaration.source.value.replace(/[.]serif$/, '.js')
+        }),
+        importDeclaration.source.value.replace(/[.]serif$/, '.js')
+      )
     );
   }
 };
@@ -341,7 +352,7 @@ function namesInPattern(node) {
   }
 }
 
-export async function toModule(module, exportedNames) {
+export function toModule(module, exportedNames) {
   const topLevelNames = new Set(
     module.statements.flatMap(statement => {
       switch (statement.type) {
@@ -351,48 +362,47 @@ export async function toModule(module, exportedNames) {
       }
     })
   );
-  return ES.Program([
-    ...(
-      await Promise.all(
-        module.imports.map(async statement => esFromImportDeclaration(exportedNames)(statement))
-      )
-    ),
-    esFromVariableDeclaration(
-      Serif.VariableDeclaration(
-        Serif.Identifier('Prelude'),
-        Serif.ObjectExpression(
-          Object.entries(Prelude).map(([name, expr]) => Serif.Property(Serif.StringLiteral(name), expr)),
-        ),
+  return (
+    map(imports => ES.Program([
+      ...imports,
+      esFromVariableDeclaration(
+        Serif.VariableDeclaration(
+          Serif.Identifier('Prelude'),
+          Serif.ObjectExpression(
+            Object.entries(Prelude).map(([name, expr]) => Serif.Property(Serif.StringLiteral(name), expr))
+          )
+        )
       ),
-    ),
-    esFromVariableDeclaration(
-      Serif.VariableDeclaration(
-        Serif.ObjectPattern(
-          Object.keys(Prelude)
-          // Do not unpack if name conflicts with a top-level binding:
-          .filter(name => !topLevelNames.has(name))
-          .map(name => Serif.Property(Serif.StringLiteral(name), Serif.Identifier(name)))
-        ),
-        Serif.Identifier('Prelude'),
+      esFromVariableDeclaration(
+        Serif.VariableDeclaration(
+          Serif.ObjectPattern(
+            Object.keys(Prelude)
+            // Do not unpack if name conflicts with a top-level binding:
+            .filter(name => !topLevelNames.has(name))
+            .map(name => Serif.Property(Serif.StringLiteral(name), Serif.Identifier(name)))
+          ),
+          Serif.Identifier('Prelude')
+        )
       ),
-    ),
-    ...(
-      module.statements.flatMap(statement => {
-        switch (statement.type) {
-          case 'VariableDeclaration':
-          case 'FunctionDeclaration':
-          case 'ExpressionStatement':       return [esFromNode(statement)];
-          default:                          return [];
-        }
-      })
-    ),
-    ...(
-      module.exports.map(statement => {
-        switch (statement.type) {
-          case 'ExportNamedDeclaration':    return esFromExportNamedDeclaration(statement);
-          case 'ExportDefaultDeclaration':  return esFromExportDefaultDeclaration(statement);
-        }
-      })
-    ),
-  ]);
+      ...(
+        module.statements.flatMap(statement => {
+          switch (statement.type) {
+            case 'VariableDeclaration':
+            case 'FunctionDeclaration':
+            case 'ExpressionStatement':       return [esFromNode(statement)];
+            default:                          return [];
+          }
+        })
+      ),
+      ...(
+        module.exports.map(statement => {
+          switch (statement.type) {
+            case 'ExportNamedDeclaration':    return esFromExportNamedDeclaration(statement);
+            case 'ExportDefaultDeclaration':  return esFromExportDefaultDeclaration(statement);
+          }
+        })
+      ),
+    ]))
+    (parallel(16)(module.imports.map(statement => esFromImportDeclaration(exportedNames)(statement))))
+  );
 }

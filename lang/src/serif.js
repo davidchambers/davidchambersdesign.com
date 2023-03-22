@@ -2,74 +2,83 @@ import {mkdir, readFile, writeFile} from 'node:fs/promises';
 import {basename, dirname, join, relative} from 'node:path';
 
 import escodegen from 'escodegen';
+import {attempt, attemptP, chain, chainRej, fork, map, parallel, reject, resolve} from 'fluture';
 
 import serif from './index.js';
 
 
-async function findDependencies(entryPoint) {
-  const tree = Reflect.construct(Map, [[]]);
-  await recur(entryPoint);
-  return tree;
+const parse = filename => source => (
+  chainRej(({message, location: {source, start}}) =>
+             chain(sourceText => {
+                     const lines = (
+                       sourceText
+                       .split(/^/m)
+                       .map((text, idx) => ({number: idx + 1, text: text.trimEnd()}))
+                       .filter(line => {
+                         const offset = line.number - start.line;
+                         return offset > -5 && offset <= 0;
+                       })
+                     );
+                     const renderLineNumber = number => number.toString().padStart(4);
+                     return reject(
+                       `\n\x1B[1m${
+                         relative(process.cwd(), source)
+                       }\x1B[0m\n\n${
+                         lines
+                         .map((line, idx, lines) =>
+                           `\x1B[7m${
+                             renderLineNumber(line.number)
+                           }\x1B[0m${
+                             idx === lines.length - 1 ?
+                             `${
+                               line.text.slice(0, start.column - 1)
+                             }\x1B[7m${
+                               line.text.charAt(start.column - 1)
+                             }\x1B[0m${
+                               line.text.slice(start.column)
+                             }` :
+                             line.text
+                           }\n`
+                         )
+                         .join('')
+                       }${
+                         ' '.repeat(renderLineNumber(lines[lines.length - 1].number).length + start.column - 1)
+                       }^\n${
+                         message
+                       }\n`
+                     );
+                   })
+                  (attemptP(() => readFile(source, 'utf8'))))
+          (attempt(() => serif.parse(source, filename)))
+);
 
-  async function recur(filename) {
-    if (tree.has(filename)) return;
-    const source = await readFile(filename, 'utf8');
-    let ast;
-    try {
-      ast = serif.parse(source, filename);
-    } catch (err) {
-      const {source, start} = err.location;
-      const lines = (
-        (await readFile(source, 'utf8'))
-        .split(/^/m)
-        .map((text, idx) => ({number: idx + 1, text: text.trimEnd()}))
-        .filter(line => {
-          const offset = line.number - start.line;
-          return offset > -5 && offset <= 0;
+const findDependencies = (filename, tree) => (
+  tree.has(filename) ?
+  resolve(tree) :
+  chain(ast => {
+          const dependencies = ast.imports.flatMap(({source: {value}}) =>
+            value.startsWith('/') || value.startsWith('.')
+            ? [join(filename, '..', value)]
+            : []
+          );
+          const exportedNames = ast.exports.flatMap(exportDeclaration =>
+            exportDeclaration.type === 'ExportNamedDeclaration'
+            ? exportDeclaration.specifiers.map(specifier => specifier.name)
+            : []
+          );
+          const newTree = Reflect.construct(Map, [[
+            ...tree.entries(),
+            [filename, {ast, dependencies, exportedNames}],
+          ]]);
+          return dependencies.reduce(
+            (futureTree, dependency) => chain(tree => findDependencies(dependency, tree))(futureTree),
+            resolve(newTree)
+          );
         })
-      );
-      const renderLineNumber = number => number.toString().padStart(4);
-      console.error(`\n\x1B[1m${
-        relative(process.cwd(), source)
-      }\x1B[0m\n\n${
-        lines
-        .map((line, idx, lines) =>
-          `\x1B[7m${
-            renderLineNumber(line.number)
-          }\x1B[0m${
-            idx === lines.length - 1 ?
-            `${
-              line.text.slice(0, start.column - 1)
-            }\x1B[7m${
-              line.text.charAt(start.column - 1)
-            }\x1B[0m${
-              line.text.slice(start.column)
-            }` :
-            line.text
-          }\n`
-        )
-        .join('')
-      }${
-        ' '.repeat(renderLineNumber(lines[lines.length - 1].number).length + start.column - 1)
-      }^\n${
-        err.message
-      }\n`);
-      throw err;
-    }
-    const dependencies = ast.imports.flatMap(({source: {value}}) =>
-      value.startsWith('/') || value.startsWith('.')
-      ? [join(filename, '..', value)]
-      : []
-    );
-    const exportedNames = ast.exports.flatMap(exportDeclaration =>
-      exportDeclaration.type === 'ExportNamedDeclaration'
-      ? exportDeclaration.specifiers.map(specifier => specifier.name)
-      : []
-    );
-    tree.set(filename, {ast, dependencies, exportedNames});
-    for (const dependency of dependencies) await recur(dependency);
-  }
-}
+       (chain(parse(filename))
+             (chainRej(err => reject(err.message))
+                      (attemptP(() => readFile(filename, 'utf8')))))
+);
 
 function orderDependencies(tree) {
   const sorted = Reflect.construct(Set, [[]]);
@@ -90,37 +99,45 @@ function orderDependencies(tree) {
 {
   const cwd = process.cwd();
   const [,, src, lib, filename] = process.argv;
-  let tree;
-  try {
-    tree = await findDependencies(filename);
-  } catch (err) {
-    process.exit(1);
-  }
-  // Create JavaScript module for each Serif module:
-  const filenames = await Promise.all(
-    orderDependencies(tree).map(async serifFilename => {
-      const serifDirname = dirname(serifFilename);
-      const serifAst = tree.get(serifFilename).ast;
-      const jsAst = await serif.trans(
-        serifAst,
-        importPath => {
-          const importFilename = join(serifDirname, ...importPath.split('/'));
-          return tree.get(importFilename).exportedNames;
-        }
-      );
-      const options = {format: {indent: {style: '  '}}};
-      const jsSource = escodegen.generate(jsAst, options) + '\n';
-      const jsDirname = dirname(serifFilename);
-      const jsBasename = basename(serifFilename, '.serif') + '.js';
-      const jsFilename = join(lib, relative(src, jsDirname), jsBasename);
-      await mkdir(jsDirname, {recursive: true});
-      await writeFile(jsFilename, jsSource, 'utf8');
-      return {serifFilename, jsFilename};
-    })
+  const program = (
+    chain(tree =>
+            // Create JavaScript module for each Serif module:
+            parallel(16)(
+              orderDependencies(tree).map(serifFilename => {
+                const serifDirname = dirname(serifFilename);
+                const serifAst = tree.get(serifFilename).ast;
+                return (
+                  chain(jsAst => {
+                          const options = {format: {indent: {style: '  '}}};
+                          const jsSource = escodegen.generate(jsAst, options) + '\n';
+                          const jsDirname = dirname(serifFilename);
+                          const jsBasename = basename(serifFilename, '.serif') + '.js';
+                          const jsFilename = join(lib, relative(src, jsDirname), jsBasename);
+                          return (
+                            chain(_ => map(_ => ({serifFilename, jsFilename}))
+                                          (attemptP(() => writeFile(jsFilename, jsSource, 'utf8'))))
+                                 (attemptP(() => mkdir(jsDirname, {recursive: true})))
+                          );
+                        })
+                       (serif.trans(
+                          serifAst,
+                          importPath => {
+                            const importFilename = join(serifDirname, ...importPath.split('/'));
+                            return tree.get(importFilename).exportedNames;
+                          }
+                        ))
+                );
+              })))
+         (findDependencies(filename, Reflect.construct(Map, [[]])))
   );
-  // List files created:
-  for (const {serifFilename, jsFilename} of filenames) {
-    console.log('• ' + relative(cwd, serifFilename));
-    console.log('  ➔ ' + relative(cwd, jsFilename));
-  }
+
+  fork(console.error)
+      (filenames => {
+         // List files created:
+         for (const {serifFilename, jsFilename} of filenames) {
+           console.log('• ' + relative(cwd, serifFilename));
+           console.log('  ➔ ' + relative(cwd, jsFilename));
+         }
+       })
+      (program);
 }
