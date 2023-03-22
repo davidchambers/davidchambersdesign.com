@@ -86,6 +86,7 @@ import {
 } from '../elements.js';
 import { captioned$002Dimages } from '../components.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 export default {
   slug: 'about',
   title: ['About'],

@@ -86,6 +86,7 @@ import {
 import { $2014 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([img({
       alt: '',
@@ -129,5 +130,5 @@ export default {
     'mac-os-x',
     'snow-leopard'
   ],
-  body: body
+  body
 };

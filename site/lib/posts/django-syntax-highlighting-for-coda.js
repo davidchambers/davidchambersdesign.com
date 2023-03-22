@@ -89,6 +89,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'I love ',
@@ -125,5 +126,5 @@ export default {
     'django',
     'mac-os-x'
   ],
-  body: body
+  body
 };

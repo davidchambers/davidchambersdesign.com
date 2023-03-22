@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p(['What is the best way to get the attributes of a Django model\n    or instance?']),
   code$002Dblock('python')(`from django.db import models
@@ -144,5 +145,5 @@ export default {
     'django',
     'python'
   ],
-  body: body
+  body
 };

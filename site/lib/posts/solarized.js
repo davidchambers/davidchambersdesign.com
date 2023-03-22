@@ -86,6 +86,7 @@ import {
 import { captioned$002Dimages } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'Earlier this week I discovered ',
@@ -121,5 +122,5 @@ export default {
     'programming',
     'solarized'
   ],
-  body: body
+  body
 };

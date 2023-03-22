@@ -12,6 +12,7 @@ import {
   $2193
 } from './orthogonal.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const mask$002Dchars = {
   A: [
     $2192(14),
@@ -746,20 +747,17 @@ const fill$002Dchars = {
     $2191(20)
   ]
 };
-const update = ([{
-    x: x,
-    y: y
-  }, ...tail]) => ([dir, mag]) => [
+const update = ([{x, y}, ...tail]) => ([dir, mag]) => [
   dir === 'h' ? (() => {
     const dx = mag;
     return {
       x: x + mag,
-      y: y
+      y
     };
   })() : dir === 'v' ? (() => {
     const dy = mag;
     return {
-      x: x,
+      x,
       y: y + dy
     };
   })() : (() => {
@@ -770,8 +768,8 @@ const update = ([{
     };
   })(),
   {
-    x: x,
-    y: y
+    x,
+    y
   },
   ...tail
 ];
@@ -780,8 +778,8 @@ const reset = path => (() => {
       x: 0,
       y: 0
     }])(path));
-  const xs = S.chain(path => Prelude.map(({x: x}) => x)(path))(paths);
-  const ys = S.chain(path => Prelude.map(({y: y}) => y)(path))(paths);
+  const xs = S.chain(map(({x}) => x))(paths);
+  const ys = S.chain(map(({y}) => y))(paths);
   const dx = S.reduce(S.max)(0)(xs) - xs[0];
   const dy = 0 - ys[0];
   return [

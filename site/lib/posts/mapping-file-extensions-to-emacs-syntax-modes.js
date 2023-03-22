@@ -89,6 +89,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p(['I spent much of my day at work editing Django templates in Emacs,\n    which does a decent job of applying syntax highlighting to HTML.\n    When I got home, though, and resumed work on a new Mango feature,\n    my Django templates lacked colour. :\\']),
   p(['Emacs doesn\'t recognize the "dhtml" extension, but it\'s easy to\n    add a custom mapping (when the appropriate snippet is sitting in a\n    chat window waiting to be copied (ty, Brodie)).']),
@@ -114,5 +115,5 @@ export default {
     'emacs',
     'syntax-highlighting'
   ],
-  body: body
+  body
 };

@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'When using Django\'s cache, ensure that empty collections\n    (',
@@ -132,5 +133,5 @@ export default {
   title: ['Empty collections are valid cache data'],
   datetime: datetime('2010-07-06')('09:34:00')('Pacific/Auckland'),
   tags: ['django'],
-  body: body
+  body
 };

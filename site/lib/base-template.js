@@ -85,6 +85,7 @@ import {
   video
 } from './elements.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const base$002Dtemplate = document$002Dtitle => main => html([
   head([
     meta({ charset: 'utf-8' }),

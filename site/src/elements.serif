@@ -118,7 +118,7 @@ render-block-element context element = {
     render-attributes element.attributes
   }>\n${
     element.children
-    |> {node => node.render {indent: context.indent, level: context.level + 1, inline: context.inline}} <$> ?
+    |> map {node => node.render {indent: context.indent, level: context.level + 1, inline: context.inline}}
     |> ?.join("")
   }${
     context.indent.repeat(context.level)
@@ -135,7 +135,9 @@ render-inline-element context element = {
   }${
     render-attributes element.attributes
   }>${
-    {{node => node.render {indent: context.indent, level: 0, inline: true}} <$> element.children}.join("")
+    element.children
+    |> map {node => node.render {indent: context.indent, level: 0, inline: true}}
+    |> ?.join("")
   }</${
     element.name
   }>${

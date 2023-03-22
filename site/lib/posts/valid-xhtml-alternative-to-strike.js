@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'Today I noticed that a page on this site failed validation. ',
@@ -123,5 +124,5 @@ export default {
     'css',
     'html'
   ],
-  body: body
+  body
 };

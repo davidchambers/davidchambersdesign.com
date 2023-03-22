@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'I recently came across an interesting article at ',
@@ -127,5 +128,5 @@ export default {
     'javascript',
     'security'
   ],
-  body: body
+  body
 };

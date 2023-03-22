@@ -1,5 +1,5 @@
 import * as ES from './es.js';
-import prelude from './prelude.js';
+import * as Prelude from './prelude.js';
 import * as Serif from './types.js';
 
 
@@ -414,10 +414,30 @@ const unnecessaryHiding = (
   } not exported so need not be hidden.\n`,
 ]);
 
+function namesInPattern(node: Serif.Node): Array<string> {
+  switch (node.type) {
+    case 'Identifier':    return [node.name];
+    case 'ArrayPattern':  return node.elements.flatMap(element => element == null ? [] : namesInPattern(element));
+    case 'ObjectPattern': return node.properties.flatMap(namesInPattern);
+    case 'Property':      return namesInPattern(node.key);
+    case 'RestElement':   return namesInPattern(node.argument);
+    default:              return [];
+  }
+}
+
 export async function toModule(
   module: Serif.Module,
   exportedNames: (source: string) => ReadonlyArray<string>,
 ): Promise<ES.Program> {
+  const topLevelNames = new Set(
+    module.statements.flatMap(statement => {
+      switch (statement.type) {
+        case 'VariableDeclaration': return namesInPattern(statement.pattern);
+        case 'FunctionDeclaration': return [statement.name];
+        default:                    return [];
+      }
+    })
+  );
   return ES.Program([
     ...(
       await Promise.all(
@@ -425,7 +445,23 @@ export async function toModule(
       )
     ),
     esFromVariableDeclaration(
-      Serif.VariableDeclaration(Serif.Identifier('Prelude'), prelude),
+      Serif.VariableDeclaration(
+        Serif.Identifier('Prelude'),
+        Serif.ObjectExpression(
+          Object.entries(Prelude).map(([name, expr]) => Serif.Property(Serif.StringLiteral(name), expr)),
+        ),
+      ),
+    ),
+    esFromVariableDeclaration(
+      Serif.VariableDeclaration(
+        Serif.ObjectPattern(
+          Object.keys(Prelude)
+          // Do not unpack if name conflicts with a top-level binding:
+          .filter(name => !topLevelNames.has(name))
+          .map(name => Serif.Property(Serif.StringLiteral(name), Serif.Identifier(name)))
+        ),
+        Serif.Identifier('Prelude'),
+      ),
     ),
     ...(
       module.statements.flatMap(statement => {

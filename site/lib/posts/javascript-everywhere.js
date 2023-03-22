@@ -85,6 +85,7 @@ import {
 } from '../elements.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const excerpt = [
   p([
     'Over the past few months I\'ve reached a startling realization: ',
@@ -155,5 +156,5 @@ export default {
     'node.js',
     'sproutcore'
   ],
-  body: body
+  body
 };

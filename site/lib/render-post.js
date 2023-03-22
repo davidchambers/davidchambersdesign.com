@@ -86,6 +86,7 @@ import {
 } from './elements.js';
 import tags from './tags.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const render$002Dpost = post => related$002Dposts => [article$0027('article-id' in post ? { id: post['article-id'] } : {})([
     header([
       h1(post.title),

@@ -86,6 +86,7 @@ import {
 } from '../elements.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'Comment forms that don\'t provide previews',
@@ -134,5 +135,5 @@ export default {
     'ux',
     'wmd'
   ],
-  body: body
+  body
 };

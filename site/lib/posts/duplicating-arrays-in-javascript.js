@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'Many of those who write JavaScript do not come from programming\n    backgrounds (while I\'ve written plenty of PHP, Python, and\n    JavaScript, I don\'t have much experience with "real" programming\n    languages',
@@ -125,5 +126,5 @@ export default {
   title: ['Duplicating arrays in JavaScript'],
   datetime: datetime('2010-01-09')('19:26:00')('Pacific/Auckland'),
   tags: ['javascript'],
-  body: body
+  body
 };

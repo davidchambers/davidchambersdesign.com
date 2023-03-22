@@ -90,6 +90,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const excerpt = [
   p([strong(['This post has been a long time coming.'])]),
   captioned$002Dimages([{
@@ -217,5 +218,5 @@ export default {
     'localization',
     'meaningful-markup'
   ],
-  body: body
+  body
 };

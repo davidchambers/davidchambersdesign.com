@@ -89,6 +89,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const excerpt = [p([
     'There\'s no shortage of blog posts which',
     $2014,
@@ -309,5 +310,5 @@ export default {
     'socket.io',
     'websockets'
   ],
-  body: body
+  body
 };

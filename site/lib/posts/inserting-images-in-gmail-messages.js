@@ -86,6 +86,7 @@ import {
 import { captioned$002Dimages } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'Hooray! It\'s now possible to ',
@@ -107,5 +108,5 @@ export default {
     'gmail',
     'html'
   ],
-  body: body
+  body
 };

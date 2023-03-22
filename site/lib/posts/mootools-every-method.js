@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'A reasonably common task is to determine whether a particular\n    statement evaluates as true for every item in a collection.\n    Take ',
@@ -202,5 +203,5 @@ export default {
     'javascript',
     'mootools'
   ],
-  body: body
+  body
 };

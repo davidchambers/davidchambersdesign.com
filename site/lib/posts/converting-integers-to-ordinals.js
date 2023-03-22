@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'When dealing with dates, it\'s not uncommon to need to convert an\n    integer into an ordinal number (1st, 2nd, 3rd, etc.). While making\n    improvements to ',
@@ -134,5 +135,5 @@ export default {
     'programming',
     'python'
   ],
-  body: body
+  body
 };

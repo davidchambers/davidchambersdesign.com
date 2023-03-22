@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const excerpt = [
   p([
     'On the Web it\'s not uncommon to see characters with\n    no inherent meaning used for stylistic reasons. A good\n    example is the ',
@@ -206,5 +207,5 @@ export default {
     'html',
     'meaningful-markup'
   ],
-  body: body
+  body
 };

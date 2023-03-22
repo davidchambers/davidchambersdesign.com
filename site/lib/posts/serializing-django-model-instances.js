@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p(['One might expect the following code to serialize a Django model instance:']),
   code$002Dblock('python')(`import simplejson
@@ -129,5 +130,5 @@ export default {
     'django',
     'python'
   ],
-  body: body
+  body
 };

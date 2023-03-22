@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p(['This turned out to be quite a bit easier than I\'d imagined.\n    Here are the things I did:']),
   ol([
@@ -165,5 +166,5 @@ export default {
     'django',
     'mac-os-x'
   ],
-  body: body
+  body
 };

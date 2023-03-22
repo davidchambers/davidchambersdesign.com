@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p(['Certain things are extremely well documented on the Web; certain\n    other things, however, seem to appear only deep in the comments\n    of obscure blog entries.']),
   p([
@@ -111,5 +112,5 @@ export default {
     'mysql',
     'terminal.app'
   ],
-  body: body
+  body
 };

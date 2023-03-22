@@ -23,11 +23,13 @@ render-section posts = {
 };
 
 render-archives posts = {
-  {post => {...post, formatted-date: post.datetime.toFormat("MMMM y")}} <$> posts
+  posts
+  |> map {post => {...post, formatted-date: post.datetime.toFormat("MMMM y")}}
   |> S.sortBy {post => -post.datetime}
   |> S.groupBy {this => that => this.formatted-date == that.formatted-date}
+  |> map render-section
   |> [
     h1 ["Archives"],
-    ol' {class: "archives"} {render-section <$> ?},
+    ol' {class: "archives"} ?,
   ]
 };

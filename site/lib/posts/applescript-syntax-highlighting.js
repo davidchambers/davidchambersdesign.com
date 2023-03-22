@@ -91,6 +91,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const excerpt = [
   p([
     'I\'ve been using Alex Gorbatchev\'s ',
@@ -242,5 +243,5 @@ export default {
     'mac-os-x',
     'syntaxhighlighter'
   ],
-  body: body
+  body
 };

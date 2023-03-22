@@ -108,14 +108,14 @@ export type Property = ES.Property;
 export const Property = (
   key: Expression,
   value: Expression | Pattern,
-  options?: {method?: boolean; shorthand?: boolean; computed?: boolean}
+  options?: {method?: boolean; computed?: boolean}
 ): Property => ({
   type: 'Property',
   key,
   value,
   kind: 'init',
   method: options?.method ?? false,
-  shorthand: options?.shorthand ?? false,
+  shorthand: key.type === 'Identifier' && value.type === 'Identifier' && key.name === value.name,
   computed: options?.computed ?? false,
 });
 

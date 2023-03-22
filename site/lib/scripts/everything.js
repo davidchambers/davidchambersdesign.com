@@ -32,6 +32,7 @@ import {
 import pages from '../pages/index.js';
 import posts from '../posts/index.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const public_ = components => path.join(dirname, '..', '..', 'public', ...components);
 const write$002Dfile = filename => data => fs.writeFileSync(filename, data);

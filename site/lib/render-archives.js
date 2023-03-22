@@ -86,6 +86,7 @@ import {
   video
 } from './elements.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const render$002Dpost = post => li([
   a({ href: `/${ post.slug }` })(post.title),
   ' ',
@@ -97,7 +98,7 @@ const render$002Dsection = posts => li([
 ]);
 const render$002Darchives = posts => [
   h1(['Archives']),
-  ol$0027({ class: 'archives' })(Prelude.map(render$002Dsection)(S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(Prelude.map(post => ({
+  ol$0027({ class: 'archives' })(map(render$002Dsection)(S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(map(post => ({
     ...post,
     ['formatted-date']: post.datetime.toFormat('MMMM y')
   }))(posts)))))

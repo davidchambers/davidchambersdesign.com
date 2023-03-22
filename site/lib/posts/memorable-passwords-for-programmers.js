@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p(['Those of us running Mac OS X are spoilt by Keychain Access.\n    It\'s no help, of course, to have a password stored in your Mac\'s\n    keychain if you\'re at an Internet café unable to access it.\n    Thus, memorable passwords are still useful.']),
   p(['Those of us who write code can create passwords riddled with\n    spaces and punctuation without resorting to the use of random\n    strings of characters. Here\'s a "JavaScript" password,\n    for example:']),
@@ -99,5 +100,5 @@ export default {
   title: ['Memorable passwords for programmers'],
   datetime: datetime('2009-10-21')('00:42:00')('Pacific/Auckland'),
   tags: ['security'],
-  body: body
+  body
 };

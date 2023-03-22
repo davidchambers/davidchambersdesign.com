@@ -89,6 +89,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const excerpt = [
   p([
     'It\'s no secret \u2013 I love ',
@@ -331,5 +332,5 @@ export default {
     'prototype',
     'syntaxhighlighter'
   ],
-  body: body
+  body
 };

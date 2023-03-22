@@ -89,6 +89,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const excerpt = [
   p([
     'Earlier I wrote some code which repeatedly calls a function\n    which performs a database query \u2013 often ',
@@ -294,5 +295,5 @@ export default {
     'programming',
     'python'
   ],
-  body: body
+  body
 };

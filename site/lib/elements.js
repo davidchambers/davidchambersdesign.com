@@ -1,5 +1,6 @@
 import S from 'sanctuary';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const escape = s => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 const text = value => ({
   type: 'text',
@@ -8,12 +9,12 @@ const text = value => ({
 });
 const render$002Dattribute = ([name, value]) => ` ${ name }="${ escape(`${ value }`.trim().replaceAll('\n', ' ')) }"`;
 const render$002Dattributes = attrs => Prelude.map(render$002Dattribute)(Object.entries(attrs)).join('');
-const render$002Dblock$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>\n${ Prelude.map(node => node.render({
+const render$002Dblock$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>\n${ map(node => node.render({
   indent: context.indent,
   level: context.level + 1,
   inline: context.inline
 }))(element.children).join('') }${ context.indent.repeat(context.level) }</${ element.name }>\n`;
-const render$002Dinline$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>${ Prelude.map(node => node.render({
+const render$002Dinline$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>${ map(node => node.render({
   indent: context.indent,
   level: 0,
   inline: true
@@ -24,9 +25,9 @@ const block$002Delement = name => attributes => children$0021 => (() => {
   const element = {
     type: 'element',
     format: 'block',
-    name: name,
-    attributes: attributes,
-    children: children,
+    name,
+    attributes,
+    children,
     toString: () => Prelude.map(String)(children).join(''),
     render: context => render$002Dblock$002Delement(context)(element)
   };
@@ -37,10 +38,10 @@ const inline$002Delement = name => attributes => children$0021 => (() => {
   const format = children.some(node => node.format === 'block') ? 'block' : 'inline';
   const element = {
     type: 'element',
-    format: format,
-    name: name,
-    attributes: attributes,
-    children: children,
+    format,
+    name,
+    attributes,
+    children,
     toString: () => Prelude.map(String)(children).join(''),
     render: context => format === 'inline' ? render$002Dinline$002Delement(context)(element) : render$002Dblock$002Delement(context)(element)
   };
@@ -50,14 +51,10 @@ const self$002Dclosing$002Delement = name => attributes => (() => {
   const element = {
     type: 'element',
     format: 'inline',
-    name: name,
-    attributes: attributes,
+    name,
+    attributes,
     toString: () => '',
-    render: ({
-      indent: indent,
-      level: level,
-      inline: inline
-    }) => `${ indent.repeat(level) }<${ name }${ render$002Dattributes(attributes) } />${ inline ? '' : '\n' }`
+    render: ({indent, level, inline}) => `${ indent.repeat(level) }<${ name }${ render$002Dattributes(attributes) } />${ inline ? '' : '\n' }`
   };
   return element;
 })();

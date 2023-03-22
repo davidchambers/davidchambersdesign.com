@@ -283,7 +283,6 @@ ArrowFunctionParameters
 Pattern
   = ArrayPattern
   / ObjectPattern
-  / RestElement
   / Identifier
 
 ArrayPattern
@@ -305,7 +304,10 @@ Elision
     { return null; }
 
 ArrayPatternElement
-  = Pattern
+  = ArrayPattern
+  / ObjectPattern
+  / RestElement
+  / Identifier
 
 ObjectPattern
   = '{' _ '}'

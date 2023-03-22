@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const excerpt = [
   p(['I began this post three months ago, got stuck, and put it in\n    the too hard basket. I wanted to devise a workable solution\n    to my stumbling block before publishing this information.\n    I\'m getting ahead of myself, though. First, the background.']),
   p([
@@ -215,5 +216,5 @@ export default {
     'javascript',
     'prototype'
   ],
-  body: body
+  body
 };

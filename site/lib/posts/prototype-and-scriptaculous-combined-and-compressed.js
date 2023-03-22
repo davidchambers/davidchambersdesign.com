@@ -89,6 +89,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     strong(['Nothing new here.']),
@@ -131,5 +132,5 @@ export default {
     'prototype',
     'script.aculo.us'
   ],
-  body: body
+  body
 };

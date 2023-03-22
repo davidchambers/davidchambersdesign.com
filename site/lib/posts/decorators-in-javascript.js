@@ -89,6 +89,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p(['A decorator is a function which takes a function and returns a function:']),
   code$002Dblock('coffeescript')(`decorator = (fn) -> fn
@@ -164,5 +165,5 @@ export default {
     'javascript',
     'programming'
   ],
-  body: body
+  body
 };

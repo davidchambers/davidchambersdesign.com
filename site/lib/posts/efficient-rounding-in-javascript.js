@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'So you have some number, ',
@@ -141,5 +142,5 @@ export default {
     'optimization',
     'performance'
   ],
-  body: body
+  body
 };

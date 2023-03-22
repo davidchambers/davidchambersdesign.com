@@ -89,6 +89,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const excerpt = [
   p(['Modern browsers can display exciting visual effects such\n    as drop shadows (without the use of background images).\n    CSS3 makes it possible to turn submit inputs and even links\n    into rich, Aqua-like buttons in these browsers (alternative\n    style rules can be provided for older browsers).']),
   p([img({
@@ -285,6 +286,6 @@ export default {
     'html',
     'mac-os-x'
   ],
-  excerpt: excerpt,
-  body: body
+  excerpt,
+  body
 };

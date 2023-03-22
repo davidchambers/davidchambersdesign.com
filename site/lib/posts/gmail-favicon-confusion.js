@@ -86,6 +86,7 @@ import {
 import { captioned$002Dimages } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'Gmail currently serves up two possible favicons, a 16x16 ',
@@ -120,5 +121,5 @@ export default {
     'design',
     'gmail'
   ],
-  body: body
+  body
 };

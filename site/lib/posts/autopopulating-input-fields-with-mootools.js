@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'Early this year I wrote a post titled ',
@@ -127,5 +128,5 @@ export default {
     'mootools',
     'ux'
   ],
-  body: body
+  body
 };

@@ -89,6 +89,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const excerpt = [p([
     'If you have ever found yourself command-clicking the\n    title of a Finder window to find out where you are (',
     strong(['/Library/Fonts']),
@@ -145,5 +146,5 @@ export default {
   title: ['Show full directory path in Finder window title bar'],
   datetime: datetime('2008-11-29')('19:07:00')('Pacific/Auckland'),
   tags: ['mac-os-x'],
-  body: body
+  body
 };

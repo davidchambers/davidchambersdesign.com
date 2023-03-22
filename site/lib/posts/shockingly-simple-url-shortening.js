@@ -89,6 +89,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const excerpt = [
   p([
     'URL shortening is something that\'s been\n    at the back of my mind since listening to ',
@@ -189,5 +190,5 @@ export default {
     '.htaccess',
     'twitter'
   ],
-  body: body
+  body
 };

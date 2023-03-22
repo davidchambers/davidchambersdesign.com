@@ -177,7 +177,6 @@ export const ObjectExpression = (
 export type Pattern =
   | ArrayPattern
   | ObjectPattern
-  | RestElement
   | Identifier
 //| AssignmentPattern
 //| MemberExpression
@@ -435,6 +434,7 @@ export type Node =
   | FunctionDeclaration
   | ExpressionStatement
   | Pattern
+  | RestElement
   | Property
   | ImportDeclaration
   | ExportNamedDeclaration

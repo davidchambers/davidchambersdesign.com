@@ -89,6 +89,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const excerpt = [
   p([
     strong(['I wanted to simplify everything.']),
@@ -212,5 +213,5 @@ export default {
     'mango',
     'wordpress'
   ],
-  body: body
+  body
 };

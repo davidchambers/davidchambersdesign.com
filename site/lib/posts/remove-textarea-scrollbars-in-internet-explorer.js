@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p([
     'I was delighted to discover this "trick"\n    over on CSS-Tricks in a post titled ',
@@ -131,5 +132,5 @@ export default {
   title: ['Remove textarea scrollbars in Internet Explorer'],
   datetime: datetime('2010-07-18')('22:00:00')('Pacific/Auckland'),
   tags: ['css'],
-  body: body
+  body
 };

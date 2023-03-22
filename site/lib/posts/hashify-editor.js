@@ -89,6 +89,7 @@ import {
 } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p(['On 19 April 2011, at around noon Pacific time, I published a short tweet.']),
   blockquote([p([
@@ -175,5 +176,5 @@ export default {
     'showdown',
     'ux'
   ],
-  body: body
+  body
 };

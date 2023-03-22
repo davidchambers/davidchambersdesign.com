@@ -11,6 +11,7 @@ import {
   $2193
 } from '../orthogonal.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const skin = [
   $21E8(3),
   $21E9(4),

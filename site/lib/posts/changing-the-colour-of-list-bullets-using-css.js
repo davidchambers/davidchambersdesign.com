@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p(['So, you\'re about to style an unordered list of some sort...']),
   code$002Dblock('html')(`<h1>TXJS 2011 Speakers</h1>
@@ -183,5 +184,5 @@ export default {
     'css',
     'meaningful-markup'
   ],
-  body: body
+  body
 };

@@ -86,6 +86,7 @@ import {
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
+const {map} = Prelude;
 const body = [
   p(['I\'ve begun retrofitting this site with HTML5 elements.\n    I\'m thoroughly enjoying the process (I love meaningful markup).']),
   p([
@@ -139,5 +140,5 @@ export default {
     'php',
     'wordpress'
   ],
-  body: body
+  body
 };
