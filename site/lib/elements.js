@@ -1,7 +1,7 @@
 import S from 'sanctuary';
 const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const {map} = Prelude;
-const escape = s => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+const escape = s => (s => (s => (s => s.replaceAll('>', '&gt;'))(s.replaceAll('<', '&lt;')))(s.replaceAll('&', '&amp;')))(s);
 const text = value => ({
   type: 'text',
   toString: () => value,
@@ -9,17 +9,17 @@ const text = value => ({
 });
 const render$002Dattribute = ([name, value]) => ` ${ name }="${ escape(`${ value }`.trim().replaceAll('\n', ' ')) }"`;
 const render$002Dattributes = attrs => Prelude.map(render$002Dattribute)(Object.entries(attrs)).join('');
-const render$002Dblock$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>\n${ map(node => node.render({
+const render$002Dblock$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>\n${ S.joinWith('')(map(node => node.render({
   indent: context.indent,
   level: context.level + 1,
   inline: context.inline
-}))(element.children).join('') }${ context.indent.repeat(context.level) }</${ element.name }>\n`;
-const render$002Dinline$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>${ map(node => node.render({
+}))(element.children)) }${ context.indent.repeat(context.level) }</${ element.name }>\n`;
+const render$002Dinline$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>${ S.joinWith('')(map(node => node.render({
   indent: context.indent,
   level: 0,
   inline: true
-}))(element.children).join('') }</${ element.name }>${ context.inline ? '' : '\n' }`;
-const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => typeof string$002Dor$002Dnode === 'object' ? string$002Dor$002Dnode : text(string$002Dor$002Dnode.replace(RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', ''));
+}))(element.children)) }</${ element.name }>${ context.inline ? '' : '\n' }`;
+const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => typeof string$002Dor$002Dnode === 'object' ? string$002Dor$002Dnode : (s => (s => text(s.replaceAll('\n', '')))(s.replace(RegExp('^[ ]+', 'gm'), ' ')))(string$002Dor$002Dnode);
 const block$002Delement = name => attributes => children$0021 => (() => {
   const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
   const element = {

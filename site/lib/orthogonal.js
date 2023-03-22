@@ -36,7 +36,7 @@ const simplify = paths => paths.length === 0 ? [] : (() => {
     prev
   ];
 })();
-const render = paths => simplify(paths).flat().join(' ');
+const render = paths => S.unwords(S.join(simplify(paths)));
 const $21E6 = x => [
   'm',
   [

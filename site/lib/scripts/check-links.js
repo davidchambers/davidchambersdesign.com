@@ -30,5 +30,5 @@ const format = ({url, status}) => typeof status === 'string' ? (() => {
   const indent = ' '.repeat(Math.max(0, 15 - status.length));
   return red(`${ indent }${ invert(bold(status)) } ${ url }`);
 })() : status >= 200 && status < 300 ? `            ${ bold(status) } ${ url }` : status >= 300 && status < 400 ? yellow(`            ${ bold(status) } ${ url }`) : status >= 400 && status < 500 ? red(`            ${ bold(status) } ${ url }`) : cyan(`            ${ bold(status) } ${ url }`);
-const program = map(S.joinWith('\n'))(map(map(format))(parallel(16)(map(status)(S.sort(Array.from(Reflect.construct(Set, [S.chain(post => S.chain(links)(post.body))(posts)]).values()))))));
+const program = (links => map(S.joinWith('\n'))(map(map(format))(parallel(16)(map(status)(S.sort(Array.from(Reflect.construct(Set, [links]).values())))))))(S.chain(post => S.chain(links)(post.body))(posts));
 fork(console.error)(console.log)(program);

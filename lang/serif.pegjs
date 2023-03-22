@@ -153,13 +153,8 @@ ReservedWord
   / ImportToken
   / ExportToken
 
-TopicReference
-  = '?'
-    { return Serif.Identifier('?'); }
-
 Identifier
-  = TopicReference
-  / !ReservedWord name:$(IdentifierStart IdentifierPart*)
+  = !ReservedWord name:$(IdentifierStart IdentifierPart*)
     { return Serif.Identifier(name); }
 
 IdentifierStart
@@ -176,6 +171,7 @@ IdentifierStart
     !':'
     !';'
     !'"'
+    !'`'
     !'-'
     !'='
     !'$'

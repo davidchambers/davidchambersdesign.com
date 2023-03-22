@@ -16,5 +16,5 @@ related-posts posts post = {
        S.Pair {-this.score}
               {Math.abs $ this.datetime.diff(post.datetime).milliseconds}
      }}
-  |> ?.slice(0, 5)
+  |> posts => posts.slice (0, 5)
 };

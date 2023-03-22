@@ -177,88 +177,8 @@ const esFromConditionalExpression = (conditionalExpression: Serif.ConditionalExp
   )
 );
 
-const TOPIC_REFERENCE_NAME = '?';
-
-const containsTopicReference = (expr: Serif.Node): boolean => {
-  switch (expr.type) {
-    case 'BooleanLiteral':              return false;
-    case 'NumberLiteral':               return false;
-    case 'StringLiteral':               return false;
-    case 'TemplateLiteral':             return expr.expressions.some(containsTopicReference);
-    case 'MetaProperty':                return false;
-    case 'MemberExpression':            return containsTopicReference(expr.object) || containsTopicReference(expr.property);
-    case 'Identifier':                  return expr.name === TOPIC_REFERENCE_NAME;
-    case 'ArrayExpression':             return expr.elements.some(element => element.type === 'SpreadElement' ? containsTopicReference(element.argument) : containsTopicReference(element));
-    case 'ObjectExpression':            return expr.properties.some(property => property.type === 'SpreadElement' ? containsTopicReference(property) : containsTopicReference(property.key) || (() => { switch (property.value.type) { case 'BooleanLiteral': return containsTopicReference(property.value); case 'NumberLiteral': return containsTopicReference(property.value); case 'StringLiteral': return containsTopicReference(property.value); case 'TemplateLiteral': return containsTopicReference(property.value); case 'MetaProperty': return containsTopicReference(property.value); case 'MemberExpression': return containsTopicReference(property.value); case 'Identifier': return containsTopicReference(property.value); case 'ArrayExpression': return containsTopicReference(property.value); case 'ObjectExpression': return containsTopicReference(property.value); case 'ArrowFunctionExpression': return containsTopicReference(property.value); case 'BlockExpression': return containsTopicReference(property.value); case 'UnaryExpression': return containsTopicReference(property.value); case 'BinaryExpression': return containsTopicReference(property.value); case 'LogicalExpression': return containsTopicReference(property.value); case 'ConditionalExpression': return containsTopicReference(property.value); case 'PipeExpression': return containsTopicReference(property.value); case 'CallExpression': return containsTopicReference(property.value); case 'ArrayPattern': return containsTopicReference(property.value); case 'ObjectPattern': return containsTopicReference(property.value); case 'RestElement': return containsTopicReference(property.value); } })());
-    case 'ArrowFunctionExpression':     return containsTopicReference(expr.body);
-    case 'BlockExpression':             return expr.statements.some(containsTopicReference);
-    case 'UnaryExpression':             return containsTopicReference(expr.argument);
-    case 'BinaryExpression':            return containsTopicReference(expr.left) || containsTopicReference(expr.right);
-    case 'MapExpression':               return containsTopicReference(expr.left) || containsTopicReference(expr.right);
-    case 'LogicalExpression':           return containsTopicReference(expr.left) || containsTopicReference(expr.right);
-    case 'ConditionalExpression':       return containsTopicReference(expr.predicate) || containsTopicReference(expr.consequent) || containsTopicReference(expr.alternative);
-    case 'PipeExpression':              return false;
-    case 'CallExpression':              return containsTopicReference(expr.callee) || expr.arguments.some(argument => argument.type === 'SpreadElement' ? containsTopicReference(argument.argument) : containsTopicReference(argument));
-    case 'SpreadElement':               return false;
-    case 'VariableDeclaration':         return containsTopicReference(expr.expression);
-    case 'FunctionDeclaration':         return containsTopicReference(expr.body);
-    case 'ExpressionStatement':         return containsTopicReference(expr.expression);
-    case 'ArrayPattern':                return expr.elements.some(element => element != null && containsTopicReference(element));
-    case 'ObjectPattern':               return expr.properties.some(property => { switch (property.type) { case 'RestElement': return containsTopicReference(property); case 'Property': return containsTopicReference(property.key) || containsTopicReference(property.value); } });
-    case 'RestElement':                 return containsTopicReference(expr.argument);
-    case 'Property':                    return containsTopicReference(expr.key) || containsTopicReference(expr.value);
-    case 'ImportDeclaration':           return false;
-    case 'ExportNamedDeclaration':      return false;
-    case 'ExportDefaultDeclaration':    return false;
-  }
-};
-
-const replaceTopicReferences = (replacement: Serif.Node) => (expr: Serif.Node): Serif.Node => {
-  switch (expr.type) {
-    case 'BooleanLiteral':              return expr;
-    case 'NumberLiteral':               return expr;
-    case 'StringLiteral':               return expr;
-    case 'TemplateLiteral':             return Serif.TemplateLiteral(expr.quasis, expr.expressions.map(replaceTopicReferences(replacement)));
-    case 'MetaProperty':                return expr;
-    case 'MemberExpression':            return Serif.MemberExpression(replaceTopicReferences(replacement)(expr.object), replaceTopicReferences(replacement)(expr.property));
-    case 'Identifier':                  return expr.name === TOPIC_REFERENCE_NAME ? replacement : expr;
-    case 'ArrayExpression':             return Serif.ArrayExpression(expr.elements.map(replaceTopicReferences(replacement)));
-    case 'ObjectExpression':            return Serif.ObjectExpression(expr.properties.map(replaceTopicReferences(replacement)) as Array<Serif.Property>);
-    case 'ArrowFunctionExpression':     return Serif.ArrowFunctionExpression(expr.parameters, replaceTopicReferences(replacement)(expr.body));
-    case 'BlockExpression':             return Serif.BlockExpression([replaceTopicReferences(replacement)(expr.statements[0]), ...expr.statements.slice(1).map(replaceTopicReferences(replacement))]);
-    case 'UnaryExpression':             return Serif.UnaryExpression(expr.operator, replaceTopicReferences(replacement)(expr.argument) as Serif.UnaryOperand);
-    case 'BinaryExpression':            return Serif.BinaryExpression(expr.operator, replaceTopicReferences(replacement)(expr.left) as Serif.BinaryOperand, replaceTopicReferences(replacement)(expr.right) as Serif.BinaryOperand);
-    case 'MapExpression':               return Serif.MapExpression(replaceTopicReferences(replacement)(expr.left), replaceTopicReferences(replacement)(expr.right));
-    case 'LogicalExpression':           return Serif.LogicalExpression(expr.operator, replaceTopicReferences(replacement)(expr.left) as Serif.LogicalOperand, replaceTopicReferences(replacement)(expr.right) as Serif.LogicalOperand);
-    case 'ConditionalExpression':       return Serif.ConditionalExpression(replaceTopicReferences(replacement)(expr.predicate), replaceTopicReferences(replacement)(expr.consequent), replaceTopicReferences(replacement)(expr.alternative));
-    case 'PipeExpression':              return replaceTopicReferences(replaceTopicReferences(replacement)(expr.head))(containsTopicReference(expr.body) ? expr.body : Serif.CallExpression(expr.body, [Serif.Identifier(TOPIC_REFERENCE_NAME)]));
-    case 'CallExpression':              return Serif.CallExpression(replaceTopicReferences(replacement)(expr.callee), expr.arguments.map(replaceTopicReferences(replacement)));
-    case 'SpreadElement':               return expr;
-    case 'VariableDeclaration':         return Serif.VariableDeclaration(expr.pattern, replaceTopicReferences(replacement)(expr.expression));
-    case 'FunctionDeclaration':         return Serif.FunctionDeclaration(expr.name, expr.parameters, replaceTopicReferences(replacement)(expr.body));
-    case 'ExpressionStatement':         return Serif.ExpressionStatement(replaceTopicReferences(replacement)(expr.expression));
-    case 'ArrayPattern':                return Serif.ArrayPattern(expr.elements.map(element => element == null ? null : replaceTopicReferences(replacement)(element)));
-    case 'ObjectPattern':               return Serif.ObjectPattern(expr.properties.map(replaceTopicReferences(replacement)));
-    case 'RestElement':                 return expr;
-    case 'Identifier':                  return expr;
-    case 'Property':                    return Serif.Property(replaceTopicReferences(replacement)(expr.key), replaceTopicReferences(replacement)(expr.value));
-    case 'ArrayPattern':                return Serif.ArrayPattern(expr.elements.map(element => element == null ? null : replaceTopicReferences(replacement)(element)));
-    case 'ObjectPattern':               return Serif.ObjectPattern(expr.properties.map(replaceTopicReferences(replacement)));
-    case 'RestElement':                 return expr;
-    case 'ImportDeclaration':           return expr;
-    case 'ExportNamedDeclaration':      return expr;
-    case 'ExportDefaultDeclaration':    return expr;
-  }
-};
-
 const esFromPipeExpression = ({head, body}: Serif.PipeExpression): ES.Expression => (
-  esFromNode(
-    replaceTopicReferences(head)(
-      containsTopicReference(body)
-      ? body
-      : Serif.CallExpression(body, [Serif.Identifier(TOPIC_REFERENCE_NAME)])
-    )
-  )
+  esFromNode(Serif.CallExpression(body, [head]))
 );
 
 const esFromCallExpression = (callExpression: Serif.CallExpression): ES.CallExpression => (

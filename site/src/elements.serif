@@ -90,9 +90,9 @@ export {
 
 escape s = {
   s
-  |> ?.replaceAll("&", "&amp;")
-  |> ?.replaceAll("<", "&lt;")
-  |> ?.replaceAll(">", "&gt;")
+  |> s => s.replaceAll ("&", "&amp;")
+  |> s => s.replaceAll ("<", "&lt;")
+  |> s => s.replaceAll (">", "&gt;")
 };
 
 text value = {
@@ -119,7 +119,7 @@ render-block-element context element = {
   }>\n${
     element.children
     |> map {node => node.render {indent: context.indent, level: context.level + 1, inline: context.inline}}
-    |> ?.join("")
+    |> S.joinWith ""
   }${
     context.indent.repeat(context.level)
   }</${
@@ -137,7 +137,7 @@ render-inline-element context element = {
   }>${
     element.children
     |> map {node => node.render {indent: context.indent, level: 0, inline: true}}
-    |> ?.join("")
+    |> S.joinWith ""
   }</${
     element.name
   }>${
@@ -148,8 +148,8 @@ render-inline-element context element = {
 string-to-text-node string-or-node = {
   if typeof string-or-node == "object" then string-or-node else {
     string-or-node
-    |> ?.replace(RegExp ("^[ ]+", "gm"), " ")
-    |> ?.replaceAll("\n", "")
+    |> s => s.replace (RegExp ("^[ ]+", "gm"), " ")
+    |> s => s.replaceAll ("\n", "")
     |> text
   }
 };

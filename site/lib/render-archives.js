@@ -96,11 +96,11 @@ const render$002Dsection = posts => li([
   h2([posts[0]['formatted-date']]),
   ol(Prelude.map(render$002Dpost)(posts))
 ]);
-const render$002Darchives = posts => [
+const render$002Darchives = posts => (archives => [
   h1(['Archives']),
-  ol$0027({ class: 'archives' })(map(render$002Dsection)(S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(map(post => ({
-    ...post,
-    ['formatted-date']: post.datetime.toFormat('MMMM y')
-  }))(posts)))))
-];
+  ol$0027({ class: 'archives' })(archives)
+])(map(render$002Dsection)(S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(map(post => ({
+  ...post,
+  ['formatted-date']: post.datetime.toFormat('MMMM y')
+}))(posts)))));
 export default render$002Darchives;

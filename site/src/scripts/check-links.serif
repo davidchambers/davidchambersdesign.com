@@ -48,9 +48,7 @@ format {url, status} = {
 program = {
   posts
   |> S.chain {post => S.chain links post.body}
-  |> Reflect.construct (Set, [?])
-  |> ?.values()
-  |> Array.from
+  |> links => Array.from $ {Reflect.construct (Set, [links])}.values ()
   |> S.sort
   |> map status
   |> parallel 16

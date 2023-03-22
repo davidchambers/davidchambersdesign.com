@@ -28,8 +28,8 @@ render-archives posts = {
   |> S.sortBy {post => -post.datetime}
   |> S.groupBy {this => that => this.formatted-date == that.formatted-date}
   |> map render-section
-  |> [
+  |> archives => [
     h1 ["Archives"],
-    ol' {class: "archives"} ?,
+    ol' {class: "archives"} archives,
   ]
 };

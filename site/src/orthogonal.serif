@@ -30,8 +30,8 @@ simplify paths = {
 render paths = {
   paths
   |> simplify
-  |> ?.flat()
-  |> ?.join(" ")
+  |> S.join
+  |> S.unwords
 };
 
 ⇦ x = ["m", [-x, 0]];
