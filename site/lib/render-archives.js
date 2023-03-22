@@ -92,13 +92,28 @@ const render$002Dpost = post => li([
 ]);
 const render$002Dsection = posts => li([
   h2([posts[0]['formatted-date']]),
-  ol(posts.map($0024 => render$002Dpost($0024)))
+  ol(Array.isArray(posts) ? posts.map($0024 => render$002Dpost($0024)) : posts['fantasy-land/map'](render$002Dpost))
 ]);
 const render$002Darchives = posts => [
   h1(['Archives']),
-  ol$0027({ class: 'archives' })(S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(S.map(post => ({
+  ol$0027({ class: 'archives' })(Array.isArray(S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(Array.isArray(posts) ? posts.map($0024 => (post => ({
     ...post,
     ['formatted-date']: post.datetime.toFormat('MMMM y')
-  }))(posts))).map($0024 => render$002Dsection($0024)))
+  }))($0024)) : posts['fantasy-land/map'](post => ({
+    ...post,
+    ['formatted-date']: post.datetime.toFormat('MMMM y')
+  }))))) ? S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(Array.isArray(posts) ? posts.map($0024 => (post => ({
+    ...post,
+    ['formatted-date']: post.datetime.toFormat('MMMM y')
+  }))($0024)) : posts['fantasy-land/map'](post => ({
+    ...post,
+    ['formatted-date']: post.datetime.toFormat('MMMM y')
+  })))).map($0024 => render$002Dsection($0024)) : S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(Array.isArray(posts) ? posts.map($0024 => (post => ({
+    ...post,
+    ['formatted-date']: post.datetime.toFormat('MMMM y')
+  }))($0024)) : posts['fantasy-land/map'](post => ({
+    ...post,
+    ['formatted-date']: post.datetime.toFormat('MMMM y')
+  }))))['fantasy-land/map'](render$002Dsection))
 ];
 export default render$002Darchives;

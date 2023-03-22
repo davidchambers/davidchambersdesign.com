@@ -158,13 +158,23 @@ const esFromBinaryExpression = (binaryExpression: Serif.BinaryExpression): ES.Bi
   )
 );
 
-const esFromMapExpression = (mapExpression: Serif.MapExpression): ES.CallExpression => {
+const esFromMapExpression = (mapExpression: Serif.MapExpression): ES.ConditionalExpression => {
   const $ = Serif.Identifier('$');
-  const callExpression = Serif.CallExpression(
-    Serif.MemberExpression(mapExpression.right, Serif.StringLiteral('map')),
-    [Serif.ArrowFunctionExpression([$], Serif.CallExpression(mapExpression.left, [$]))]
-  );
-  return esFromCallExpression(callExpression);
+  const conditionalExpression = Serif.ConditionalExpression(
+    Serif.CallExpression(
+      Serif.MemberExpression(Serif.Identifier('Array'), Serif.StringLiteral('isArray')),
+      [mapExpression.right],
+    ),
+    Serif.CallExpression(
+      Serif.MemberExpression(mapExpression.right, Serif.StringLiteral('map')),
+      [Serif.ArrowFunctionExpression([$], Serif.CallExpression(mapExpression.left, [$]))],
+    ),
+    Serif.CallExpression(
+      Serif.MemberExpression(mapExpression.right, Serif.StringLiteral('fantasy-land/map')),
+      [mapExpression.left],
+    ),
+  )
+  return esFromConditionalExpression(conditionalExpression);
 };
 
 const esFromLogicalExpression = (logicalExpression: Serif.LogicalExpression): ES.LogicalExpression => (

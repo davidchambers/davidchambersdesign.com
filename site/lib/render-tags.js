@@ -91,7 +91,7 @@ const render$002Dtags = posts => (() => {
   const from$002Dentry = ([slug, name]) => li$0027({ ['data-count']: S.size(S.filter(S.equals(slug))(slugs)) })([a({ href: `/tag/${ slug }/` })([name])]);
   return [
     h1(['Tags']),
-    ol$0027({ id: 'tags' })(Object.entries(tags).map($0024 => from$002Dentry($0024))),
+    ol$0027({ id: 'tags' })(Array.isArray(Object.entries(tags)) ? Object.entries(tags).map($0024 => from$002Dentry($0024)) : Object.entries(tags)['fantasy-land/map'](from$002Dentry)),
     div({ class: 'clearfix' })([])
   ];
 })();

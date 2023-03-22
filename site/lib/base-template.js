@@ -87,7 +87,7 @@ import {
 const base$002Dtemplate = document$002Dtitle => main => html([
   head([
     meta({ charset: 'utf-8' }),
-    title(document$002Dtitle.map($0024 => String($0024))),
+    title(Array.isArray(document$002Dtitle) ? document$002Dtitle.map($0024 => String($0024)) : document$002Dtitle['fantasy-land/map'](String)),
     link({
       rel: 'alternate',
       type: 'application/atom+xml',

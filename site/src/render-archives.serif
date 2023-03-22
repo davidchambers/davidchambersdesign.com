@@ -23,8 +23,7 @@ render-section posts = {
 };
 
 render-archives posts = {
-  posts
-  |> S.map {post => {...post, formatted-date: post.datetime.toFormat("MMMM y")}}
+  {post => {...post, formatted-date: post.datetime.toFormat("MMMM y")}} <$> posts
   |> S.sortBy {post => -post.datetime}
   |> S.groupBy {this => that => this.formatted-date == that.formatted-date}
   |> [

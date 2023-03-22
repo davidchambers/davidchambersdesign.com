@@ -52,10 +52,10 @@ program = {
   |> ?.values()
   |> Array.from
   |> S.sort
-  |> S.map status
+  |> status <$> ?
   |> parallel 16
-  |> S.map $ S.map format
-  |> S.map $ S.joinWith "\n"
+  |> {result => format <$> result} <$> ?
+  |> S.joinWith "\n" <$> ?
 };
 
 fork console.error console.log program;
