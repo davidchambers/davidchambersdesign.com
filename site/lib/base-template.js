@@ -84,10 +84,11 @@ import {
   var$0027,
   video
 } from './elements.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const base$002Dtemplate = document$002Dtitle => main => html([
   head([
     meta({ charset: 'utf-8' }),
-    title(Array.isArray(document$002Dtitle) ? document$002Dtitle.map($0024 => String($0024)) : document$002Dtitle['fantasy-land/map'](String)),
+    title(Prelude.map(String)(document$002Dtitle)),
     link({
       rel: 'alternate',
       type: 'application/atom+xml',

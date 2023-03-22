@@ -85,6 +85,7 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const body = [
   p([
     'Today I noticed that a page on this site failed validation. ',

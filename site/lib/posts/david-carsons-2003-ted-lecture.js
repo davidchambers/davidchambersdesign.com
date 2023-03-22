@@ -84,6 +84,7 @@ import {
   video
 } from '../elements.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const body = [
   p([
     'One of my flatmates linked me to this clip recently. It\'s titled ',

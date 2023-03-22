@@ -88,6 +88,7 @@ import {
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const excerpt = [
   p([
     a({ href: 'http://en.wikipedia.org/wiki/Closure_(computer_science)' })(['Closure']),

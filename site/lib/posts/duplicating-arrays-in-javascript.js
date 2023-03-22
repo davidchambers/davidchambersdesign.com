@@ -85,6 +85,7 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const body = [
   p([
     'Many of those who write JavaScript do not come from programming\n    backgrounds (while I\'ve written plenty of PHP, Python, and\n    JavaScript, I don\'t have much experience with "real" programming\n    languages',

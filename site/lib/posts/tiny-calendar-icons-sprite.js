@@ -88,6 +88,7 @@ import {
   code$002Dblock
 } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const excerpt = [
   p([
     'Recently I\'ve been on a mission to minimize the number\n    of HTTP requests made while loading pages on this site.\n    Until yesterday, the ',

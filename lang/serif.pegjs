@@ -3,7 +3,7 @@ Module
     exports:(_ exportDeclaration:(ExportNamedDeclaration / ExportDefaultDeclaration) { return exportDeclaration; })*
     statements:(_ statement:Statement _ ';' { return statement; })*
     _
-    { return Serif.Module([...imports, ...statements, ...exports]); }
+    { return Serif.Module({imports, exports, statements}); }
 
 ImportSpecifier
   = local:Identifier

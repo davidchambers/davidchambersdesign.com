@@ -85,6 +85,7 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const excerpt = [p(['One question I\'m fond of asking in interviews is how to create\n    a set of strings to which values may be added in an efficient\n    manner. Furthermore, membership checks must be reliable and as\n    fast as possible. This post can be considered the model answer.\n    ;)'])];
 const body = [
   ...excerpt,

@@ -84,5 +84,6 @@ import {
   var$0027,
   video
 } from './elements.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const render$002Dpage = page => [article(page.body)];
 export default render$002Dpage;

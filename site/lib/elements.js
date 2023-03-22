@@ -1,4 +1,5 @@
 import S from 'sanctuary';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const escape = s => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 const text = value => ({
   type: 'text',
@@ -6,41 +7,33 @@ const text = value => ({
   render: context => escape(value)
 });
 const render$002Dattribute = ([name, value]) => ` ${ name }="${ escape(`${ value }`.trim().replaceAll('\n', ' ')) }"`;
-const render$002Dattributes = attrs => (Array.isArray(Object.entries(attrs)) ? Object.entries(attrs).map($0024 => render$002Dattribute($0024)) : Object.entries(attrs)['fantasy-land/map'](render$002Dattribute)).join('');
-const render$002Dblock$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>\n${ (Array.isArray(element.children) ? element.children.map($0024 => (node => node.render({
+const render$002Dattributes = attrs => Prelude.map(render$002Dattribute)(Object.entries(attrs)).join('');
+const render$002Dblock$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>\n${ Prelude.map(node => node.render({
   indent: context.indent,
   level: context.level + 1,
   inline: context.inline
-}))($0024)) : element.children['fantasy-land/map'](node => node.render({
-  indent: context.indent,
-  level: context.level + 1,
-  inline: context.inline
-}))).join('') }${ context.indent.repeat(context.level) }</${ element.name }>\n`;
-const render$002Dinline$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>${ (Array.isArray(element.children) ? element.children.map($0024 => (node => node.render({
+}))(element.children).join('') }${ context.indent.repeat(context.level) }</${ element.name }>\n`;
+const render$002Dinline$002Delement = context => element => `${ context.indent.repeat(context.level) }<${ element.name }${ render$002Dattributes(element.attributes) }>${ Prelude.map(node => node.render({
   indent: context.indent,
   level: 0,
   inline: true
-}))($0024)) : element.children['fantasy-land/map'](node => node.render({
-  indent: context.indent,
-  level: 0,
-  inline: true
-}))).join('') }</${ element.name }>${ context.inline ? '' : '\n' }`;
+}))(element.children).join('') }</${ element.name }>${ context.inline ? '' : '\n' }`;
 const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => typeof string$002Dor$002Dnode === 'object' ? string$002Dor$002Dnode : text(string$002Dor$002Dnode.replace(RegExp('^[ ]+', 'gm'), ' ').replaceAll('\n', ''));
 const block$002Delement = name => attributes => children$0021 => (() => {
-  const children = Array.isArray(children$0021) ? children$0021.map($0024 => string$002Dto$002Dtext$002Dnode($0024)) : children$0021['fantasy-land/map'](string$002Dto$002Dtext$002Dnode);
+  const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
   const element = {
     type: 'element',
     format: 'block',
     name: name,
     attributes: attributes,
     children: children,
-    toString: () => (Array.isArray(children) ? children.map($0024 => String($0024)) : children['fantasy-land/map'](String)).join(''),
+    toString: () => Prelude.map(String)(children).join(''),
     render: context => render$002Dblock$002Delement(context)(element)
   };
   return element;
 })();
 const inline$002Delement = name => attributes => children$0021 => (() => {
-  const children = Array.isArray(children$0021) ? children$0021.map($0024 => string$002Dto$002Dtext$002Dnode($0024)) : children$0021['fantasy-land/map'](string$002Dto$002Dtext$002Dnode);
+  const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
   const format = children.some(node => node.format === 'block') ? 'block' : 'inline';
   const element = {
     type: 'element',
@@ -48,7 +41,7 @@ const inline$002Delement = name => attributes => children$0021 => (() => {
     name: name,
     attributes: attributes,
     children: children,
-    toString: () => (Array.isArray(children) ? children.map($0024 => String($0024)) : children['fantasy-land/map'](String)).join(''),
+    toString: () => Prelude.map(String)(children).join(''),
     render: context => format === 'inline' ? render$002Dinline$002Delement(context)(element) : render$002Dblock$002Delement(context)(element)
   };
   return element;

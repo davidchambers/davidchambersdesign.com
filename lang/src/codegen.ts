@@ -1,4 +1,5 @@
 import * as ES from './es.js';
+import prelude from './prelude.js';
 import * as Serif from './types.js';
 
 
@@ -119,10 +120,6 @@ const esFromArrowFunctionExpression = (arrowFunctionExpression: Serif.ArrowFunct
 );
 
 const esFromBlockExpression = (blockExpression: Serif.BlockExpression): ES.Expression => {
-  if (blockExpression.statements.length === 1 &&
-      blockExpression.statements[0].type === 'ExpressionStatement') {
-    return esFromNode(blockExpression.statements[0].expression);
-  }
   const last = blockExpression.statements[blockExpression.statements.length - 1];
   return ES.CallExpression(
     ES.ArrowFunctionExpression(
@@ -157,25 +154,6 @@ const esFromBinaryExpression = (binaryExpression: Serif.BinaryExpression): ES.Bi
     esFromNode(binaryExpression.right)
   )
 );
-
-const esFromMapExpression = (mapExpression: Serif.MapExpression): ES.ConditionalExpression => {
-  const $ = Serif.Identifier('$');
-  const conditionalExpression = Serif.ConditionalExpression(
-    Serif.CallExpression(
-      Serif.MemberExpression(Serif.Identifier('Array'), Serif.StringLiteral('isArray')),
-      [mapExpression.right],
-    ),
-    Serif.CallExpression(
-      Serif.MemberExpression(mapExpression.right, Serif.StringLiteral('map')),
-      [Serif.ArrowFunctionExpression([$], Serif.CallExpression(mapExpression.left, [$]))],
-    ),
-    Serif.CallExpression(
-      Serif.MemberExpression(mapExpression.right, Serif.StringLiteral('fantasy-land/map')),
-      [mapExpression.left],
-    ),
-  )
-  return esFromConditionalExpression(conditionalExpression);
-};
 
 const esFromLogicalExpression = (logicalExpression: Serif.LogicalExpression): ES.LogicalExpression => (
   ES.LogicalExpression(
@@ -399,7 +377,7 @@ const esFromNode = (expr: Serif.Node): ES.Expression => {
     case 'BlockExpression':             return esFromBlockExpression(expr);
     case 'UnaryExpression':             return esFromUnaryExpression(expr);
     case 'BinaryExpression':            return esFromBinaryExpression(expr);
-    case 'MapExpression':               return esFromMapExpression(expr);
+    case 'MapExpression':               return ES.Literal('never');
     case 'LogicalExpression':           return esFromLogicalExpression(expr);
     case 'ConditionalExpression':       return esFromConditionalExpression(expr);
     case 'PipeExpression':              return esFromPipeExpression(expr);
@@ -440,29 +418,32 @@ export async function toModule(
   module: Serif.Module,
   exportedNames: (source: string) => ReadonlyArray<string>,
 ): Promise<ES.Program> {
-  return ES.Program(
-    await Promise.all(
-      module.statements.map(async statement => {
+  return ES.Program([
+    ...(
+      await Promise.all(
+        module.imports.map(async statement => esFromImportDeclaration(exportedNames)(statement))
+      )
+    ),
+    esFromVariableDeclaration(
+      Serif.VariableDeclaration(Serif.Identifier('Prelude'), prelude),
+    ),
+    ...(
+      module.statements.flatMap(statement => {
         switch (statement.type) {
-          case 'ImportDeclaration': {
-            return esFromImportDeclaration(exportedNames)(statement);
-          }
-          case 'ExportNamedDeclaration': {
-            return esFromExportNamedDeclaration(statement);
-          }
-          case 'ExportDefaultDeclaration': {
-            return esFromExportDefaultDeclaration(statement);
-          }
           case 'VariableDeclaration':
           case 'FunctionDeclaration':
-          case 'ExpressionStatement': {
-            return esFromNode(statement) as unknown as ES.ExpressionStatement | ES.VariableDeclaration;
-          }
-          default: {
-            return null as unknown as ES.ExpressionStatement;
-          }
+          case 'ExpressionStatement':       return [esFromNode(statement)];
+          default:                          return [];
         }
       })
-    )
-  );
+    ),
+    ...(
+      module.exports.map(statement => {
+        switch (statement.type) {
+          case 'ExportNamedDeclaration':    return esFromExportNamedDeclaration(statement);
+          case 'ExportDefaultDeclaration':  return esFromExportDefaultDeclaration(statement);
+        }
+      })
+    ),
+  ] as any);
 }

@@ -89,6 +89,7 @@ import {
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const excerpt = [
   p([strong(['This post has been a long time coming.'])]),
   captioned$002Dimages([{

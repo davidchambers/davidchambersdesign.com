@@ -84,6 +84,7 @@ import {
   video
 } from '../elements.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const body = [
   p([a({ href: 'http://www.youtube.com/watch?v=A6-wA-7QIeE' })(['Dieter Rams \u2013 Gestalten'])]),
   blockquote([p(['The media have to learn [...] that the spectacular things are not\n      the important things \u2013 the unspectacular things are the important\n      things, especially in the future.'])]),

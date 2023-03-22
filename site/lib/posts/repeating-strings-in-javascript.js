@@ -85,6 +85,7 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const body = [
   p(['Python and Ruby share beautiful syntax for repeating strings;\n    PHP\'s syntax is characteristically ugly.']),
   h3$0027({ id: 'python' })(['Python']),

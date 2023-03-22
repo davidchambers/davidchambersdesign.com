@@ -85,6 +85,7 @@ import {
 } from '../elements.js';
 import { captioned$002Dimages } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const excerpt$002Dtext = [
   p([
     'I tend to forget things. Until recently, I had no system to\n    keep track of appointments. I began using Google Calendar,\n    but soon realised that I did not want ',

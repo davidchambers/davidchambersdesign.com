@@ -86,12 +86,13 @@ import {
   video
 } from './elements.js';
 import tags from './tags.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const render$002Dtags = posts => (() => {
   const slugs = S.chain(post => post.tags)(posts);
   const from$002Dentry = ([slug, name]) => li$0027({ ['data-count']: S.size(S.filter(S.equals(slug))(slugs)) })([a({ href: `/tag/${ slug }/` })([name])]);
   return [
     h1(['Tags']),
-    ol$0027({ id: 'tags' })(Array.isArray(Object.entries(tags)) ? Object.entries(tags).map($0024 => from$002Dentry($0024)) : Object.entries(tags)['fantasy-land/map'](from$002Dentry)),
+    ol$0027({ id: 'tags' })(Prelude.map(from$002Dentry)(Object.entries(tags))),
     div({ class: 'clearfix' })([])
   ];
 })();

@@ -6,6 +6,7 @@ import vm           from 'node:vm';
 import escodegen    from 'escodegen';
 
 import serif        from './index.js';
+import rewrite      from './rewrite.js';
 
 
 async function evaluateModule(source: string): Promise<unknown> {
@@ -30,7 +31,7 @@ async function evaluateModule(source: string): Promise<unknown> {
 
 async function read(serifSource: string): Promise<unknown> {
   const serifAst = serif.parse(`export default ${serifSource};`, '[repl]');
-  const jsAst = await serif.trans(serifAst, _importPath => []);
+  const jsAst = await serif.trans(rewrite(serifAst), _importPath => []);
   const jsSource = escodegen.generate(jsAst);
   return evaluateModule(jsSource);
 }

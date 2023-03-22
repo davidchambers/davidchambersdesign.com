@@ -1,4 +1,5 @@
 import S from 'sanctuary';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const simplify = paths => paths.length === 0 ? [] : (() => {
   const [head, ...tail] = paths;
   const [prev, path] = tail.reduce(([prev, path], curr) => curr[0] === 'M' ? prev[0] === 'M' || prev[0] === 'm' ? [

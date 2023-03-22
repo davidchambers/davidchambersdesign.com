@@ -88,6 +88,7 @@ import {
   code$002Dblock
 } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const excerpt = [p([
     'If you have ever found yourself command-clicking the\n    title of a Finder window to find out where you are (',
     strong(['/Library/Fonts']),

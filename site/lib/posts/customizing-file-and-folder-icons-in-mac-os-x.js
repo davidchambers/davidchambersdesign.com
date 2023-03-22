@@ -88,6 +88,7 @@ import {
   code$002Dblock
 } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const excerpt = [
   p(['Customizing the appearance of files and folders in OS X is\n    a cinch. \u2318C, \u2318I, \u2318V, punctuated by a few mouse clicks.']),
   p([strong(['Actually, that\'s total bullshit.'])]),

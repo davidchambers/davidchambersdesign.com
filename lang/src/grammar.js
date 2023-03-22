@@ -383,7 +383,7 @@ function peg$parse(input, options) {
   var peg$f0 = function(importDeclaration) { return importDeclaration; };
   var peg$f1 = function(imports, exportDeclaration) { return exportDeclaration; };
   var peg$f2 = function(imports, exports, statement) { return statement; };
-  var peg$f3 = function(imports, exports, statements) { return Serif.Module([...imports, ...statements, ...exports]); };
+  var peg$f3 = function(imports, exports, statements) { return Serif.Module({imports, exports, statements}); };
   var peg$f4 = function(local) { return Serif.ImportSpecifier(local, local); };
   var peg$f5 = function(local) { return Serif.ImportNamespaceSpecifier(local); };
   var peg$f6 = function(local) { return Serif.ImportDefaultSpecifier(local); };

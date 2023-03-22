@@ -1,4 +1,5 @@
 import S from 'sanctuary';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const base03 = '#002b36';
 const base02 = '#073642';
 const base01 = '#586e75';

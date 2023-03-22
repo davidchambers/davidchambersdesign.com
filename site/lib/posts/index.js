@@ -93,6 +93,7 @@ import helveticards from './helveticards.js';
 import itunes$002Dis$002Dsurprisingly$002Duseful$002Dwhen$002Dlearning$002Da$002Dforeign$002Dlanguage from './itunes-is-surprisingly-useful-when-learning-a-foreign-language.js';
 import the$002Dperils$002Dof$002Dusing$002Djavascript$002Dobjects$002Das$002Dsets from './the-perils-of-using-javascript-objects-as-sets.js';
 import give$002Dand$002Dtake$002Dof$002Dcontinuation$002Dpassing$002Dstyle from './give-and-take-of-continuation-passing-style.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 export default [
   beautiful$002Dpainted$002Dalphabet,
   show$002Dfull$002Ddirectory$002Dpath$002Din$002Dfinder$002Dwindow$002Dtitle$002Dbar,

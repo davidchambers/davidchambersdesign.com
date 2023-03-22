@@ -85,6 +85,7 @@ import {
 } from '../elements.js';
 import { code$002Dblock } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const excerpt = [p(['One way to reduce the number of HTTP requests a page requires\n    is to group (non-content) images into sprites. An even better\n    way is to remove these images from the server altogether;\n    instead include them as encoded strings in your style sheet.'])];
 const body = [
   ...excerpt,

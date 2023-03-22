@@ -88,6 +88,7 @@ import {
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const body = [
   p([
     'Generally speaking browsers rerender elements as required\n    \u2013 in response to DOM changes effected via JavaScript, for\n    instance. There are times, though, when the browser ',

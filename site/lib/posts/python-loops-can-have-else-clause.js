@@ -89,6 +89,7 @@ import {
   $2014
 } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const body = [
   p(['I write a lot of Python. I also write a lot of JavaScript. As I switch\n    between the two (often several times in a day) I sometimes find myself\n    trying to do something in one using the syntax of the other. The most\n    common example is joining a list.']),
   p(['Python:']),

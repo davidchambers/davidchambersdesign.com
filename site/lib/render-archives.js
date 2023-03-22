@@ -85,6 +85,7 @@ import {
   var$0027,
   video
 } from './elements.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const render$002Dpost = post => li([
   a({ href: `/${ post.slug }` })(post.title),
   ' ',
@@ -92,28 +93,13 @@ const render$002Dpost = post => li([
 ]);
 const render$002Dsection = posts => li([
   h2([posts[0]['formatted-date']]),
-  ol(Array.isArray(posts) ? posts.map($0024 => render$002Dpost($0024)) : posts['fantasy-land/map'](render$002Dpost))
+  ol(Prelude.map(render$002Dpost)(posts))
 ]);
 const render$002Darchives = posts => [
   h1(['Archives']),
-  ol$0027({ class: 'archives' })(Array.isArray(S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(Array.isArray(posts) ? posts.map($0024 => (post => ({
+  ol$0027({ class: 'archives' })(Prelude.map(render$002Dsection)(S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(Prelude.map(post => ({
     ...post,
     ['formatted-date']: post.datetime.toFormat('MMMM y')
-  }))($0024)) : posts['fantasy-land/map'](post => ({
-    ...post,
-    ['formatted-date']: post.datetime.toFormat('MMMM y')
-  }))))) ? S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(Array.isArray(posts) ? posts.map($0024 => (post => ({
-    ...post,
-    ['formatted-date']: post.datetime.toFormat('MMMM y')
-  }))($0024)) : posts['fantasy-land/map'](post => ({
-    ...post,
-    ['formatted-date']: post.datetime.toFormat('MMMM y')
-  })))).map($0024 => render$002Dsection($0024)) : S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(Array.isArray(posts) ? posts.map($0024 => (post => ({
-    ...post,
-    ['formatted-date']: post.datetime.toFormat('MMMM y')
-  }))($0024)) : posts['fantasy-land/map'](post => ({
-    ...post,
-    ['formatted-date']: post.datetime.toFormat('MMMM y')
-  }))))['fantasy-land/map'](render$002Dsection))
+  }))(posts)))))
 ];
 export default render$002Darchives;

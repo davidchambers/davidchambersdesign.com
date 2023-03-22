@@ -10,6 +10,7 @@ import {
   $2191,
   $2193
 } from '../orthogonal.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const stroke = [
   $21E8(5),
   $21E9(0),

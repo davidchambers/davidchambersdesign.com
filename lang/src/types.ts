@@ -601,12 +601,22 @@ export const ExpressionStatement = (
 
 export interface Module {
   readonly type: 'Module';
+  readonly imports: ReadonlyArray<ImportDeclaration>;
+  readonly exports: ReadonlyArray<ExportNamedDeclaration | ExportDefaultDeclaration>;
   readonly statements: ReadonlyArray<Node>;
 }
 
-export const Module = (
+export const Module = ({
+  imports,
+  exports,
+  statements,
+}: {
+  imports: ReadonlyArray<ImportDeclaration>,
+  exports: ReadonlyArray<ExportNamedDeclaration | ExportDefaultDeclaration>,
   statements: ReadonlyArray<Node>,
-): Module => ({
+}): Module => ({
   type: 'Module',
+  imports,
+  exports,
   statements,
 });

@@ -85,6 +85,7 @@ import {
   video
 } from './elements.js';
 import tags from './tags.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const render$002Dpost = post => related$002Dposts => [article$0027('article-id' in post ? { id: post['article-id'] } : {})([
     header([
       h1(post.title),
@@ -98,12 +99,12 @@ const render$002Dpost = post => related$002Dposts => [article$0027('article-id' 
       ul([li$0027({ class: 'shorturl' })([a({ href: `http://dċd.ws/${ post.id }/` })(['Short URL'])])]),
       ...post.tags.length === 0 ? [] : [
         h4(['This post has the following tags:']),
-        ol(Array.isArray(post.tags) ? post.tags.map($0024 => (tag => li([a({ href: `/tag/${ tag }/` })([tags[tag]])]))($0024)) : post.tags['fantasy-land/map'](tag => li([a({ href: `/tag/${ tag }/` })([tags[tag]])])))
+        ol(Prelude.map(tag => li([a({ href: `/tag/${ tag }/` })([tags[tag]])]))(post.tags))
       ]
     ]),
     ...related$002Dposts.length === 0 ? [] : [
       h3$0027({ id: 'related' })(['Possibly related posts']),
-      ul(Array.isArray(related$002Dposts) ? related$002Dposts.map($0024 => (post => li([a({ href: `/${ post.slug }/` })(post.title)]))($0024)) : related$002Dposts['fantasy-land/map'](post => li([a({ href: `/${ post.slug }/` })(post.title)])))
+      ul(Prelude.map(post => li([a({ href: `/${ post.slug }/` })(post.title)]))(related$002Dposts))
     ]
   ])];
 export default render$002Dpost;

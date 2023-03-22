@@ -85,6 +85,7 @@ import {
 } from '../elements.js';
 import { update } from '../components.js';
 import datetime from '../datetime.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const excerpt = [
   p([
     'It\'s not uncommon to start watching a video online and discover\n    that its audio is quite quiet. This is not a problem in and of\n    itself, as one can simply crank up the output volume. What ',

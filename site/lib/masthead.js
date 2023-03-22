@@ -11,6 +11,7 @@ import {
   $2191,
   $2193
 } from './orthogonal.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const mask$002Dchars = {
   A: [
     $2192(14),
@@ -779,8 +780,8 @@ const reset = path => (() => {
       x: 0,
       y: 0
     }])(path));
-  const xs = S.chain(path => Array.isArray(path) ? path.map($0024 => (({x: x}) => x)($0024)) : path['fantasy-land/map'](({x: x}) => x))(paths);
-  const ys = S.chain(path => Array.isArray(path) ? path.map($0024 => (({y: y}) => y)($0024)) : path['fantasy-land/map'](({y: y}) => y))(paths);
+  const xs = S.chain(path => Prelude.map(({x: x}) => x)(path))(paths);
+  const ys = S.chain(path => Prelude.map(({y: y}) => y)(path))(paths);
   const dx = S.reduce(S.max)(0)(xs) - xs[0];
   const dy = 0 - ys[0];
   return [
@@ -817,17 +818,17 @@ const paths = chars => [
 ];
 const chars = Array.from('DAVIDCHAMBERSDESIGN');
 const mask = [path({
-    d: render(paths(Array.isArray(chars) ? chars.map($0024 => (char => mask$002Dchars[char])($0024)) : chars['fantasy-land/map'](char => mask$002Dchars[char]))),
+    d: render(paths(Prelude.map(char => mask$002Dchars[char])(chars))),
     fill: '#000',
     ['fill-rule']: 'evenodd'
   })];
 const fill = [
   path({
-    d: render(paths(Array.isArray(chars) ? chars.map($0024 => (char => line$002Dchars[char])($0024)) : chars['fantasy-land/map'](char => line$002Dchars[char]))),
+    d: render(paths(Prelude.map(char => line$002Dchars[char])(chars))),
     fill: '#999'
   }),
   path({
-    d: render(paths(Array.isArray(chars) ? chars.map($0024 => (char => fill$002Dchars[char])($0024)) : chars['fantasy-land/map'](char => fill$002Dchars[char]))),
+    d: render(paths(Prelude.map(char => fill$002Dchars[char])(chars))),
     fill: '#666'
   })
 ];

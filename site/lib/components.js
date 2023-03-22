@@ -85,6 +85,7 @@ import {
   var$0027,
   video
 } from './elements.js';
+const Prelude = { map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f) };
 const captioned$002Dimages = images => dl(images.flatMap(image => [
   dt([img({
       alt: image.alt,
