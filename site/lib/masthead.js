@@ -781,8 +781,8 @@ const reset = path => (() => {
       x: 0,
       y: 0
     }])(path));
-  const xs = Prelude.chain(map(({x}) => x))(paths);
-  const ys = Prelude.chain(map(({y}) => y))(paths);
+  const xs = Prelude.chain(map(x => x.x))(paths);
+  const ys = Prelude.chain(map(x => x.y))(paths);
   const dx = S.reduce(S.max)(0)(xs) - xs[0];
   const dy = 0 - ys[0];
   return [

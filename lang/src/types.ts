@@ -232,6 +232,18 @@ export const ArrowFunctionExpression = (
   body,
 });
 
+export interface PropertyAccessor {
+  readonly type: 'PropertyAccessor';
+  readonly identifier: Identifier;
+}
+
+export const PropertyAccessor = (
+  identifier: Identifier,
+): PropertyAccessor => ({
+  type: 'PropertyAccessor',
+  identifier,
+});
+
 export interface BlockExpression {
   readonly type: 'BlockExpression';
   readonly statements: ReadonlyNonEmptyArray<Node>;
@@ -246,6 +258,7 @@ export const BlockExpression = (
 
 export type PrimaryExpression =
   | Identifier
+  | PropertyAccessor
   | BooleanLiteral
   | NumberLiteral
   | StringLiteral
@@ -436,6 +449,7 @@ export type Node =
   | ArrayExpression
   | ObjectExpression
   | ArrowFunctionExpression
+  | PropertyAccessor
   | BlockExpression
   | UnaryExpression
   | BinaryExpression

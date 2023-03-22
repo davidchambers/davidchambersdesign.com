@@ -251,8 +251,8 @@ update [{x, y}, ...tail] [dir, mag] = [
 
 reset path = {
   paths = S.extend S.I {S.reduce update [{x: 0, y: 0}] path};
-  xs = paths >>= map {{x} => x};
-  ys = paths >>= map {{y} => y};
+  xs = paths >>= map (.x);
+  ys = paths >>= map (.y);
   dx = S.reduce S.max 0 xs - xs[0];
   dy = 0 - ys[0];
   ["m", [dx, dy]]

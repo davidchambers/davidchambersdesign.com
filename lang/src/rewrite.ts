@@ -21,6 +21,12 @@ function rewriteNode(node: Serif.Node): Serif.Node {
     case 'ArrowFunctionExpression': {
       return Serif.ArrowFunctionExpression(node.parameters.map(rewriteNode) as ReadonlyArray<Serif.Pattern>, rewriteNode(node.body));
     }
+    case 'PropertyAccessor': {
+      return Serif.ArrowFunctionExpression(
+        [Serif.Identifier('x')],
+        Serif.MemberExpression(Serif.Identifier('x'), Serif.StringLiteral(node.identifier.name)),
+      );
+    }
     case 'BlockExpression': {
       const [head, ...tail] = node.statements;
       if (tail.length === 0 && head.type === 'ExpressionStatement') {

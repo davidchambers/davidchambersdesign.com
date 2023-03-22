@@ -294,6 +294,7 @@ const esFromNode = (expr: Serif.Node): ES.Expression => {
     case 'ArrayExpression':             return esFromArrayExpression(expr);
     case 'ObjectExpression':            return esFromObjectExpression(expr);
     case 'ArrowFunctionExpression':     return esFromArrowFunctionExpression(expr);
+    case 'PropertyAccessor':            return ES.Literal('never');
     case 'BlockExpression':             return esFromBlockExpression(expr);
     case 'UnaryExpression':             return esFromUnaryExpression(expr);
     case 'BinaryExpression':            return esFromBinaryExpression(expr);

@@ -92,8 +92,7 @@ const Prelude = {
 };
 const {chain, map} = Prelude;
 const render$002Dtags = posts => (() => {
-  const slugs = Prelude.chain(post => post.tags)(posts);
-  const from$002Dentry = ([slug, name]) => li$0027({ ['data-count']: S.size(S.filter(S.equals(slug))(slugs)) })([a({ href: `/tag/${ slug }/` })([name])]);
+  const from$002Dentry = ([slug, name]) => li$0027({ ['data-count']: S.size(S.filter(S.equals(slug))(Prelude.chain(x => x.tags)(posts))) })([a({ href: `/tag/${ slug }/` })([name])]);
   return [
     h1(['Tags']),
     ol$0027({ id: 'tags' })(Prelude.map(from$002Dentry)(Object.entries(tags))),

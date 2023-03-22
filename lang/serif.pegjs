@@ -234,6 +234,7 @@ PrimaryExpression
   / ObjectExpression
   / ImportMeta
   / Identifier
+  / PropertyAccessor
   / BlockExpression
 
 MemberExpression
@@ -479,6 +480,10 @@ PipeExpression
   = head:ApplicationExpression
     tail:(_ PipeOperator _ body:ApplicationExpression { return body; })*
     { return tail.reduce(Serif.PipeExpression, head); }
+
+PropertyAccessor
+  = '(' '.' ident:Identifier ')'
+    { return Serif.PropertyAccessor(ident); }
 
 BlockExpression
   = '{' _ statements:Statement|1.., SemicolonSeparator| _ '}'
