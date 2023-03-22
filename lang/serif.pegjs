@@ -7,7 +7,7 @@ Module
 
 ImportSpecifier
   = local:Identifier
-    { return Serif.ImportSpecifier(local, local); }
+    { return Serif.ImportSpecifier(local)(local); }
 
 ImportNamespaceSpecifier
   = local:Identifier
@@ -19,13 +19,13 @@ ImportDefaultSpecifier
 
 ImportDeclaration
   = ImportToken _ '{' _ specifiers:ImportSpecifier|.., CommaSeparator| _ '}' _ 'from' _ source:StringLiteral _ ';'
-    { return Serif.ImportDeclaration(source, specifiers); }
+    { return Serif.ImportDeclaration(source)(specifiers); }
   / ImportToken _ '*' _ 'as' _ specifier:ImportNamespaceSpecifier _ 'from' _ source:StringLiteral _ ';'
-    { return Serif.ImportDeclaration(source, [specifier]); }
+    { return Serif.ImportDeclaration(source)([specifier]); }
   / ImportToken _ '*' _ 'from' _ source:StringLiteral hiding:(_ 'hiding' _ '{' _ hiding:Identifier|.., CommaSeparator| _ '}' { return hiding; })? _ ';'
-    { return Serif.ImportEverythingDeclaration(source, hiding ?? []); }
+    { return Serif.ImportEverythingDeclaration(source)(hiding ?? []); }
   / ImportToken _ specifier:ImportDefaultSpecifier _ 'from' _ source:StringLiteral _ ';'
-    { return Serif.ImportDefaultDeclaration(source, specifier); }
+    { return Serif.ImportDefaultDeclaration(source)(specifier); }
 
 ExportDefaultDeclaration
   = ExportToken _ 'default' _ declaration:Expression _ ';'
@@ -105,11 +105,11 @@ TemplateLiteral
       const quasis = [];
       const expressions = [];
       for (const {quasi, expression} of pairs) {
-        quasis.push(Serif.TemplateElement(false, quasi));
+        quasis.push(Serif.TemplateElement(false)(quasi));
         expressions.push(expression);
       }
-      quasis.push(Serif.TemplateElement(true, quasi));
-      return Serif.TemplateLiteral(quasis, expressions);
+      quasis.push(Serif.TemplateElement(true)(quasi));
+      return Serif.TemplateLiteral(quasis)(expressions);
     }
 
 Quasi
@@ -204,7 +204,7 @@ ObjectElement
 
 Property
   = key:PropertyName _ ':' _ value:AssignmentExpression
-    { return Serif.Property(key, value); }
+    { return Serif.Property(key)(value); }
 
 PropertyName
   = LiteralPropertyName
@@ -223,7 +223,7 @@ AssignmentExpression
 
 ImportMeta
   = meta:ImportToken '.' property:'meta'
-    { return Serif.MetaProperty(meta, property); }
+    { return Serif.MetaProperty(meta)(property); }
 
 PrimaryExpression
   = BooleanLiteral
@@ -243,11 +243,11 @@ MemberExpression
         _ '.' ident:Identifier          { return Serif.StringLiteral(ident.name); }
       / '[' _ property:Expression _ ']' { return property; }
     )*
-    { return properties.reduce(Serif.MemberExpression, object); }
+    { return properties.reduce((object, property) => Serif.MemberExpression(object)(property), object); }
 
 ArrowFunctionExpression
   = parameters:ArrowFunctionParameters _ ArrowToken _ body:Expression
-    { return Serif.ArrowFunctionExpression(parameters, body); }
+    { return Serif.ArrowFunctionExpression(parameters)(body); }
 
 LeftHandSideExpression
   = ArrowFunctionExpression
@@ -256,10 +256,10 @@ LeftHandSideExpression
 CallExpression
   = head:LeftHandSideExpression
     tail:(
-        __ arg:LeftHandSideExpression   { return expr => Serif.CallExpression(expr, [arg]); }
-      / _ args:Arguments                { return expr => Serif.CallExpression(expr, args); }
-      / _ '.' ident:Identifier          { return expr => Serif.MemberExpression(expr, Serif.StringLiteral(ident.name)); }
-      / '[' _ property:Expression _ ']' { return expr => Serif.MemberExpression(expr, property); }
+        __ arg:LeftHandSideExpression   { return expr => Serif.CallExpression(expr)([arg]); }
+      / _ args:Arguments                { return expr => Serif.CallExpression(expr)(args); }
+      / _ '.' ident:Identifier          { return expr => Serif.MemberExpression(expr)(Serif.StringLiteral(ident.name)); }
+      / '[' _ property:Expression _ ']' { return expr => Serif.MemberExpression(expr)(property); }
     )*
     { return tail.reduce((expr, wrap) => wrap(expr), head); }
 
@@ -314,9 +314,9 @@ ObjectPattern
 
 ObjectPatternProperty
   = ident:Identifier _ ':' _ element:LeftHandSideExpression
-    { return Serif.Property(Serif.StringLiteral(ident.name), element); }
+    { return Serif.Property(Serif.StringLiteral(ident.name))(element); }
   / ident:Identifier
-    { return Serif.Property(Serif.StringLiteral(ident.name), ident); }
+    { return Serif.Property(Serif.StringLiteral(ident.name))(ident); }
 
 RestElement
   = '...' argument:Identifier
@@ -331,7 +331,7 @@ UnaryOperator
 
 UnaryExpression
   = operator:UnaryOperator _ argument:CallExpression
-    { return Serif.UnaryExpression(operator, argument); }
+    { return Serif.UnaryExpression(operator)(argument); }
   / CallExpression
 
 ExponentiationOperator
@@ -340,7 +340,7 @@ ExponentiationOperator
 ExponentiationExpression
   = left:UnaryExpression
     tail:(_ operator:ExponentiationOperator _ right:UnaryExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); }
 
 MultiplicativeOperator
   = '*'
@@ -350,7 +350,7 @@ MultiplicativeOperator
 MultiplicativeExpression
   = left:ExponentiationExpression
     tail:(_ operator:MultiplicativeOperator _ right:ExponentiationExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); }
 
 AdditiveOperator
   = '+'
@@ -359,7 +359,7 @@ AdditiveOperator
 AdditiveExpression
   = left:MultiplicativeExpression
     tail:(_ operator:AdditiveOperator _ right:MultiplicativeExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); }
 
 ShiftOperator
   = '<<'
@@ -369,7 +369,7 @@ ShiftOperator
 ShiftExpression
   = left:AdditiveExpression
     tail:(_ operator:ShiftOperator _ right:AdditiveExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); }
 
 RelationalOperator
   = '<='
@@ -382,7 +382,7 @@ RelationalOperator
 RelationalExpression
   = left:ShiftExpression
     tail:(_ operator:RelationalOperator _ right:ShiftExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); }
 
 EqualityOperator
   = '=='
@@ -391,14 +391,14 @@ EqualityOperator
 EqualityExpression
   = left:RelationalExpression
     tail:(_ operator:EqualityOperator _ right:RelationalExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); }
 
 MapOperator
   = '<$>'
 
 MapExpression
   = exprs:EqualityExpression|1.., _ MapOperator _|
-    { return exprs.reduceRight((right, left) => Serif.MapExpression(left, right)); }
+    { return exprs.reduceRight((right, left) => Serif.MapExpression(left)(right)); }
 
 BitwiseANDOperator
   = '&'
@@ -406,7 +406,7 @@ BitwiseANDOperator
 BitwiseANDExpression
   = left:MapExpression
     tail:(_ operator:BitwiseANDOperator _ right:MapExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); }
 
 BitwiseXOROperator
   = '^'
@@ -414,7 +414,7 @@ BitwiseXOROperator
 BitwiseXORExpression
   = left:BitwiseANDExpression
     tail:(_ operator:BitwiseXOROperator _ right:BitwiseANDExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); }
 
 BitwiseOROperator
   = '|'
@@ -422,7 +422,7 @@ BitwiseOROperator
 BitwiseORExpression
   = left:BitwiseXORExpression
     tail:(_ operator:BitwiseOROperator _ right:BitwiseXORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); }
 
 LogicalANDOperator
   = AndToken
@@ -430,7 +430,7 @@ LogicalANDOperator
 LogicalANDExpression
   = left:BitwiseORExpression
     tail:(_ operator:LogicalANDOperator _ right:BitwiseORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator)(left)(right), left); }
 
 LogicalOROperator
   = OrToken
@@ -438,7 +438,7 @@ LogicalOROperator
 LogicalORExpression
   = left:LogicalANDExpression
     tail:(_ operator:LogicalOROperator _ right:LogicalANDExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator)(left)(right), left); }
 
 CoalesceOperator
   = '??'
@@ -446,14 +446,14 @@ CoalesceOperator
 CoalesceExpression
   = left:LogicalORExpression
     tail:(_ operator:CoalesceOperator _ right:LogicalORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator, left, right), left); }
+    { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator)(left)(right), left); }
 
 BindOperator
   = '>>='
 
 BindExpression
   = exprs:CoalesceExpression|1.., _ BindOperator _|
-    { return exprs.reduceRight((right, left) => Serif.BindExpression(left, right)); }
+    { return exprs.reduceRight((right, left) => Serif.BindExpression(left)(right)); }
 
 ConditionalExpression
   = IfToken
@@ -462,7 +462,7 @@ ConditionalExpression
     _ consequent:ConditionalExpression
     _ ElseToken
     _ alternative:ConditionalExpression
-    { return Serif.ConditionalExpression(predicate, consequent, alternative); }
+    { return Serif.ConditionalExpression(predicate)(consequent)(alternative); }
   / BindExpression
 
 ApplicationOperator
@@ -471,7 +471,7 @@ ApplicationOperator
 ApplicationExpression
   = callee:ConditionalExpression
     args:(_ ApplicationOperator _ arg:ApplicationExpression { return arg; })*
-    { return args.reduce((callee, arg) => Serif.CallExpression(callee, [arg]), callee); }
+    { return args.reduce((callee, arg) => Serif.CallExpression(callee)([arg]), callee); }
 
 PipeOperator
   = '|>'
@@ -479,7 +479,7 @@ PipeOperator
 PipeExpression
   = head:ApplicationExpression
     tail:(_ PipeOperator _ body:ApplicationExpression { return body; })*
-    { return tail.reduce(Serif.PipeExpression, head); }
+    { return tail.reduce((head, body) => Serif.PipeExpression(head)(body), head); }
 
 PropertyAccessor
   = '(' '.' ident:Identifier ')'
@@ -498,11 +498,11 @@ FunctionDeclaration
   = ident:Identifier
     parameters:(__ parameter:Pattern { return parameter; })+
     _ '=' _ body:Expression
-    { return Serif.FunctionDeclaration(ident.name, parameters, body); }
+    { return Serif.FunctionDeclaration(ident.name)(parameters)(body); }
 
 VariableDeclaration
   = pattern:Pattern _ '=' _ expression:Expression
-    { return Serif.VariableDeclaration(pattern, expression); }
+    { return Serif.VariableDeclaration(pattern)(expression); }
 
 ExpressionStatement
   = expression:Expression

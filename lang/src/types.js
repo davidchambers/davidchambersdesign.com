@@ -13,25 +13,25 @@ export const StringLiteral = value => ({
   value,
 });
 
-export const TemplateElement = (tail, raw) => ({
+export const TemplateElement = tail => raw => ({
   type: 'TemplateElement',
   tail,
   raw,
 });
 
-export const TemplateLiteral = (quasis, expressions) => ({
+export const TemplateLiteral = quasis => expressions => ({
   type: 'TemplateLiteral',
   quasis,
   expressions,
 });
 
-export const MetaProperty = (meta, property) => ({
+export const MetaProperty = meta => property => ({
   type: 'MetaProperty',
   meta,
   property,
 });
 
-export const MemberExpression = (object, property) => ({
+export const MemberExpression = object => property => ({
   type: 'MemberExpression',
   object,
   property,
@@ -52,13 +52,7 @@ export const ArrayExpression = elements => ({
   elements,
 });
 
-export const Property = (key, value) => ({
-  type: 'Property',
-  key,
-  value,
-});
-
-export const AssignmentProperty = (key, value) => ({
+export const Property = key => value => ({
   type: 'Property',
   key,
   value,
@@ -84,7 +78,7 @@ export const RestElement = argument => ({
   argument,
 });
 
-export const ArrowFunctionExpression = (parameters, body) => ({
+export const ArrowFunctionExpression = parameters => body => ({
   type: 'ArrowFunctionExpression',
   parameters,
   body,
@@ -100,70 +94,70 @@ export const BlockExpression = statements => ({
   statements,
 });
 
-export const UnaryExpression = (operator, argument) => ({
+export const UnaryExpression = operator => argument => ({
   type: 'UnaryExpression',
   operator,
   argument,
 });
 
-export const BinaryExpression = (operator, left, right) => ({
+export const BinaryExpression = operator => left => right => ({
   type: 'BinaryExpression',
   operator,
   left,
   right,
 });
 
-export const MapExpression = (left, right) => ({
+export const MapExpression = left => right => ({
   type: 'MapExpression',
   left,
   right,
 });
 
-export const BindExpression = (left, right) => ({
+export const BindExpression = left => right => ({
   type: 'BindExpression',
   left,
   right,
 });
 
-export const LogicalExpression = (operator, left, right) => ({
+export const LogicalExpression = operator => left => right => ({
   type: 'LogicalExpression',
   operator,
   left,
   right,
 });
 
-export const ConditionalExpression = (predicate, consequent, alternative) => ({
+export const ConditionalExpression = predicate => consequent => alternative => ({
   type: 'ConditionalExpression',
   predicate,
   consequent,
   alternative,
 });
 
-export const PipeExpression = (head, body) => ({
+export const PipeExpression = head => body => ({
   type: 'PipeExpression',
   head,
   body,
 });
 
-export const CallExpression = (callee, args) => ({
+export const CallExpression = callee => args => ({
   type: 'CallExpression',
   callee,
   arguments: args,
 });
 
-export const ImportDefaultDeclaration = (source, specifier) => ({
+export const ImportDefaultDeclaration = source => specifier => ({
   type: 'ImportDeclaration',
   source,
   specifiers: [specifier],
 });
 
-export const ImportDeclaration = (source, specifiers) => ({
+export const ImportDeclaration = source => specifiers => ({
   type: 'ImportDeclaration',
   source,
   specifiers,
 });
 
-export const ImportEverythingDeclaration = (source, hiding) => ({
+export const ImportEverythingDeclaration = source => hiding => ({
   type: 'ImportDeclaration',
   source,
   specifiers: '*',
@@ -175,7 +169,7 @@ export const ImportDefaultSpecifier = local => ({
   local,
 });
 
-export const ImportSpecifier = (local, imported) => ({
+export const ImportSpecifier = local => imported => ({
   type: 'ImportSpecifier',
   local,
   imported,
@@ -196,13 +190,13 @@ export const ExportDefaultDeclaration = declaration => ({
   declaration,
 });
 
-export const VariableDeclaration = (pattern, expression) => ({
+export const VariableDeclaration = pattern => expression => ({
   type: 'VariableDeclaration',
   pattern,
   expression,
 });
 
-export const FunctionDeclaration = (name, parameters, body) => ({
+export const FunctionDeclaration = name => parameters => body => ({
   type: 'FunctionDeclaration',
   name,
   parameters,

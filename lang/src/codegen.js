@@ -41,38 +41,31 @@ const esFromStringLiteral = stringLiteral => (
 const esFromTemplateLiteral = templateLiteral => {
   const [quasi, ...quasis] = templateLiteral.quasis;
   const lineEnding = ['\n', '\r\n'].find(lineEnding => quasi.raw.startsWith(lineEnding));
-  if (lineEnding == null) return ES.TemplateLiteral(
-    templateLiteral.quasis.map(quasi => ES.TemplateElement(quasi.raw, quasi.tail)),
-    templateLiteral.expressions.map(esFromNode),
-  );
+  if (lineEnding == null) {
+    return ES.TemplateLiteral(templateLiteral.quasis.map(quasi => ES.TemplateElement(quasi.raw)(quasi.tail)))
+                             (templateLiteral.expressions.map(esFromNode));
+  }
   const indent = quasi.raw.slice(lineEnding.length).search(/(?! )/);
   const pattern = RegExp(`${lineEnding}[ ]{0,${indent}}`, 'g');
   const dedent = text => text.replace(pattern, lineEnding);
-  return ES.TemplateLiteral([
-    ES.TemplateElement(dedent(quasi.raw).slice(lineEnding.length), quasi.tail),
-    ...quasis.map(quasi => ES.TemplateElement(dedent(quasi.raw), quasi.tail)),
-  ], templateLiteral.expressions.map(esFromNode));
+  return ES.TemplateLiteral([ES.TemplateElement(dedent(quasi.raw).slice(lineEnding.length))(quasi.tail),
+                             ...quasis.map(quasi => ES.TemplateElement(dedent(quasi.raw))(quasi.tail))])
+                           (templateLiteral.expressions.map(esFromNode));
 };
 
 const esFromMetaProperty = metaProperty => (
-  ES.MetaProperty(
-    esFromEscapedIdentifierName(metaProperty.meta),
-    esFromEscapedIdentifierName(metaProperty.property),
-  )
+  ES.MetaProperty(esFromEscapedIdentifierName(metaProperty.meta))
+                 (esFromEscapedIdentifierName(metaProperty.property))
 );
 
 const esFromMemberExpression = memberExpression => (
   memberExpression.property.type === 'StringLiteral' && validEsIdentifierName(memberExpression.property.value) ?
-  ES.MemberExpression(
-    esFromNode(memberExpression.object),
-    esFromEscapedIdentifierName(memberExpression.property.value),
-    {computed: false}
-  ) :
-  ES.MemberExpression(
-    esFromNode(memberExpression.object),
-    esFromNode(memberExpression.property),
-    {computed: true}
-  )
+  ES.MemberExpression(esFromNode(memberExpression.object))
+                     (esFromEscapedIdentifierName(memberExpression.property.value))
+                     ({computed: false}) :
+  ES.MemberExpression(esFromNode(memberExpression.object))
+                     (esFromNode(memberExpression.property))
+                     ({computed: true})
 );
 
 const esFromIdentifier = identifier => (
@@ -94,17 +87,13 @@ const esFromProperty = property => {
     property.key.type === 'StringLiteral' &&
     validEsIdentifierName(property.key.value)
   ) {
-    return ES.Property(
-      esFromEscapedIdentifierName(property.key.value),
-      esFromNode(property.value),
-      {computed: false}
-    );
+    return ES.Property(esFromEscapedIdentifierName(property.key.value))
+                      (esFromNode(property.value))
+                      ({computed: false});
   } else {
-    return ES.Property(
-      esFromNode(property.key),
-      esFromNode(property.value),
-      {computed: true}
-    );
+    return ES.Property(esFromNode(property.key))
+                      (esFromNode(property.value))
+                      ({computed: true});
   }
 };
 
@@ -113,103 +102,78 @@ const esFromObjectExpression = objectExpression => (
 );
 
 const esFromArrowFunctionExpression = arrowFunctionExpression => (
-  ES.ArrowFunctionExpression(
-    arrowFunctionExpression.parameters.map(esFromNode),
-    esFromNode(arrowFunctionExpression.body),
-  )
+  ES.ArrowFunctionExpression(arrowFunctionExpression.parameters.map(esFromNode))
+                            (esFromNode(arrowFunctionExpression.body))
 );
 
 const esFromBlockExpression = blockExpression => {
   const last = blockExpression.statements[blockExpression.statements.length - 1];
-  return ES.CallExpression(
-    ES.ArrowFunctionExpression(
-      [],
-      ES.BlockStatement(
-        last.type === 'ExpressionStatement'
-        ? [...blockExpression.statements.slice(0, -1).map(esFromNode), ES.ReturnStatement(esFromNode(last.expression))]
-        : blockExpression.statements.map(esFromNode)
-      )
-    ),
-    []
+  return (
+    ES.CallExpression(ES.ArrowFunctionExpression([])
+                                                (ES.BlockStatement(last.type === 'ExpressionStatement'
+                                                                   ? [...blockExpression.statements.slice(0, -1).map(esFromNode), ES.ReturnStatement(esFromNode(last.expression))]
+                                                                   : blockExpression.statements.map(esFromNode)
+                                                 )))
+                     ([])
   );
 };
 
 const esFromUnaryExpression = unaryExpression => (
-  ES.UnaryExpression(
-    unaryExpression.operator,
-    esFromNode(unaryExpression.argument)
-  )
+  ES.UnaryExpression(unaryExpression.operator)
+                    (esFromNode(unaryExpression.argument))
 );
 
 const esFromBinaryExpression = binaryExpression => (
-  ES.BinaryExpression(
-    (() => {
-      switch (binaryExpression.operator) {
-        case '==':  return '===';
-        case '!=':  return '!==';
-        default:    return binaryExpression.operator;
-      }
-    })(),
-    esFromNode(binaryExpression.left),
-    esFromNode(binaryExpression.right)
-  )
+  ES.BinaryExpression((() => {
+                        switch (binaryExpression.operator) {
+                          case '==':  return '===';
+                          case '!=':  return '!==';
+                          default:    return binaryExpression.operator;
+                        }
+                      })())
+                     (esFromNode(binaryExpression.left))
+                     (esFromNode(binaryExpression.right))
 );
 
 const esFromLogicalExpression = logicalExpression => (
-  ES.LogicalExpression(
-    (() => {
-      switch (logicalExpression.operator) {
-        case 'and': return '&&';
-        case 'or':  return '||';
-        case '??':  return '??';
-      }
-    })(),
-    esFromNode(logicalExpression.left),
-    esFromNode(logicalExpression.right),
-  )
+  ES.LogicalExpression((() => {
+                         switch (logicalExpression.operator) {
+                           case 'and': return '&&';
+                           case 'or':  return '||';
+                           case '??':  return '??';
+                         }
+                       })())
+                      (esFromNode(logicalExpression.left))
+                      (esFromNode(logicalExpression.right))
 );
 
 const esFromConditionalExpression = conditionalExpression => (
-  ES.ConditionalExpression(
-    esFromNode(conditionalExpression.predicate),
-    esFromNode(conditionalExpression.consequent),
-    esFromNode(conditionalExpression.alternative),
-  )
+  ES.ConditionalExpression(esFromNode(conditionalExpression.predicate))
+                          (esFromNode(conditionalExpression.consequent))
+                          (esFromNode(conditionalExpression.alternative))
 );
 
 const esFromPipeExpression = ({head, body}) => (
-  esFromNode(Serif.CallExpression(body, [head]))
+  esFromNode(Serif.CallExpression(body)([head]))
 );
 
 const esFromCallExpression = callExpression => (
-  ES.CallExpression(
-    esFromNode(callExpression.callee),
-    callExpression.arguments.map(esFromNode),
-  )
+  ES.CallExpression(esFromNode(callExpression.callee))
+                   (callExpression.arguments.map(esFromNode))
 );
 
 const esFromVariableDeclaration = variableDeclaration => (
-  ES.VariableDeclaration([
-    ES.VariableDeclarator(
-      esFromNode(variableDeclaration.pattern),
-      esFromNode(variableDeclaration.expression),
-    ),
-  ])
+  ES.VariableDeclaration([ES.VariableDeclarator(esFromNode(variableDeclaration.pattern))
+                                               (esFromNode(variableDeclaration.expression))])
 );
 
 const esFromFunctionDeclaration = functionDeclaration => (
-  ES.VariableDeclaration([
-    ES.VariableDeclarator(
-      esFromIdentifierName(functionDeclaration.name),
-      ES.ArrowFunctionExpression(
-        functionDeclaration.parameters.slice(0, 1).map(esFromNode),
-        functionDeclaration.parameters.slice(1).reduceRight(
-          (body, param) => ES.ArrowFunctionExpression([esFromNode(param)], body),
-          esFromNode(functionDeclaration.body)
-        ),
-      ),
-    ),
-  ])
+  ES.VariableDeclaration([ES.VariableDeclarator(esFromIdentifierName(functionDeclaration.name))
+                                               (ES.ArrowFunctionExpression(functionDeclaration.parameters.slice(0, 1).map(esFromNode))
+                                                                          (functionDeclaration.parameters.slice(1).reduceRight(
+                                                                             (body, param) => ES.ArrowFunctionExpression([esFromNode(param)])(body),
+                                                                             esFromNode(functionDeclaration.body)
+                                                                           )))])
 );
 
 const esFromExpressionStatement = expressionStatement => (
@@ -241,49 +205,43 @@ const esFromImportDeclaration = exportedNames => importDeclaration => {
       return (
         $hiding.size > 0
         ? reject(unnecessaryHiding(source, hiding, Array.from($hiding.values())))
-        : resolve(ES.ImportDeclaration(names.map(esFromIdentifierName).map(local => ES.ImportSpecifier(local, local)), source.replace(/[.]serif$/, '.js')))
+        : resolve(ES.ImportDeclaration(names.map(esFromIdentifierName).map(local => ES.ImportSpecifier(local)(local)))
+                                      (source.replace(/[.]serif$/, '.js')))
       );
     } else {
       return (
         chain(names => $hiding.size > 0
                        ? reject(unnecessaryHiding(source, hiding, Array.from($hiding.values())))
-                       : resolve(ES.ImportDeclaration(names.map(esFromEscapedIdentifierName).map(local => ES.ImportSpecifier(local, local)), source)))
+                       : resolve(ES.ImportDeclaration(names.map(esFromEscapedIdentifierName).map(local => ES.ImportSpecifier(local)(local)))
+                                (source)))
              (map(module => Object.keys(module).filter(visible))
                  (attemptP(() => import(source))))
       );
     }
   } else {
     return resolve(
-      ES.ImportDeclaration(
-        importDeclaration.specifiers.map(specifier => {
-          switch (specifier.type) {
-            case 'ImportDefaultSpecifier': {
-              return ES.ImportDefaultSpecifier(
-                esFromIdentifier(specifier.local)
-              );
-            }
-            case 'ImportNamespaceSpecifier': {
-              return ES.ImportNamespaceSpecifier(
-                esFromIdentifier(specifier.local)
-              );
-            }
-            case 'ImportSpecifier': {
-              return ES.ImportSpecifier(
-                esFromIdentifier(specifier.local),
-                esFromIdentifier(specifier.imported)
-              );
-            }
-          }
-        }),
-        importDeclaration.source.value.replace(/[.]serif$/, '.js')
-      )
+      ES.ImportDeclaration(importDeclaration.specifiers.map(specifier => {
+                             switch (specifier.type) {
+                               case 'ImportDefaultSpecifier': {
+                                 return ES.ImportDefaultSpecifier(esFromIdentifier(specifier.local));
+                               }
+                               case 'ImportNamespaceSpecifier': {
+                                 return ES.ImportNamespaceSpecifier(esFromIdentifier(specifier.local));
+                               }
+                               case 'ImportSpecifier': {
+                                 return ES.ImportSpecifier(esFromIdentifier(specifier.local))
+                                                          (esFromIdentifier(specifier.imported));
+                               }
+                             }
+                           }))
+                          (importDeclaration.source.value.replace(/[.]serif$/, '.js'))
     );
   }
 };
 
 const esFromExportNamedDeclaration = exportNamedDeclaration => (
   ES.ExportNamedDeclaration(exportNamedDeclaration.specifiers.map(specifier =>
-    ES.ExportSpecifier(esFromIdentifier(specifier))
+    ES.ExportSpecifier(esFromIdentifier(specifier))(esFromIdentifier(specifier))
   ))
 );
 
@@ -366,23 +324,15 @@ export function toModule(module, exportedNames) {
     map(imports => ES.Program([
       ...imports,
       esFromVariableDeclaration(
-        Serif.VariableDeclaration(
-          Serif.Identifier('Prelude'),
-          Serif.ObjectExpression(
-            Object.entries(Prelude).map(([name, expr]) => Serif.Property(Serif.StringLiteral(name), expr))
-          )
-        )
+        Serif.VariableDeclaration(Serif.Identifier('Prelude'))
+                                 (Serif.ObjectExpression(Object.entries(Prelude).map(([name, expr]) => Serif.Property(Serif.StringLiteral(name))(expr))))
       ),
       esFromVariableDeclaration(
-        Serif.VariableDeclaration(
-          Serif.ObjectPattern(
-            Object.keys(Prelude)
-            // Do not unpack if name conflicts with a top-level binding:
-            .filter(name => !topLevelNames.has(name))
-            .map(name => Serif.Property(Serif.StringLiteral(name), Serif.Identifier(name)))
-          ),
-          Serif.Identifier('Prelude')
-        )
+        Serif.VariableDeclaration(Serif.ObjectPattern(Object.keys(Prelude)
+                                                      // Do not unpack if name conflicts with a top-level binding:
+                                                      .filter(name => !topLevelNames.has(name))
+                                                      .map(name => Serif.Property(Serif.StringLiteral(name))(Serif.Identifier(name)))))
+                                 (Serif.Identifier('Prelude'))
       ),
       ...(
         module.statements.flatMap(statement => {

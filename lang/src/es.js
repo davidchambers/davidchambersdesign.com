@@ -77,41 +77,25 @@ export const ObjectExpression = properties => ({
   properties,
 });
 
-export const Property = (key, value, options) => ({
+export const Property = key => value => options => ({
   type: 'Property',
   key,
   value,
   kind: 'init',
-  method: options?.method ?? false,
+  method: options.method ?? false,
   shorthand: key.type === 'Identifier' && value.type === 'Identifier' && key.name === value.name,
-  computed: options?.computed ?? false,
-});
-
-export const AssignmentProperty = (key, value, options) => ({
-  type: 'Property',
-  key,
-  value,
-  kind: 'init',
-  method: options?.method ?? false,
-  shorthand: options?.shorthand ?? false,
-  computed: options?.computed ?? false,
+  computed: options.computed ?? false,
 });
 
 // 13.2.8 Template Literals
 
-export const TemplateLiteral = (
-  quasis,
-  expressions,
-) => ({
+export const TemplateLiteral = quasis => expressions => ({
   type: 'TemplateLiteral',
   quasis,
   expressions,
 });
 
-export const TemplateElement = (
-  value,
-  tail,
-) => ({
+export const TemplateElement = value => tail => ({
   type: 'TemplateElement',
   value: {
     raw: value,
@@ -121,26 +105,26 @@ export const TemplateElement = (
 
 // 13.3.2 Property Accessors
 
-export const MemberExpression = (object, property, options) => ({
+export const MemberExpression = object => property => options => ({
   type: 'MemberExpression',
   object,
   property,
-  computed: options?.computed ?? false,
-  optional: options?.optional ?? false,
+  computed: options.computed ?? false,
+  optional: options.optional ?? false,
 });
 
 // 13.3.6 Function Calls
 
-export const CallExpression = (callee, args, options) => ({
+export const CallExpression = callee => args => ({
   type: 'CallExpression',
   callee,
   arguments: args,
-  optional: options?.optional ?? false,
+  optional: false,
 });
 
 // 13.3.12 Meta Properties
 
-export const MetaProperty = (meta, property) => ({
+export const MetaProperty = meta => property => ({
   type: 'MetaProperty',
   meta,
   property,
@@ -148,7 +132,7 @@ export const MetaProperty = (meta, property) => ({
 
 // 13.5 Unary Operators
 
-export const UnaryExpression = (operator, argument) => ({
+export const UnaryExpression = operator => argument => ({
   type: 'UnaryExpression',
   operator,
   argument,
@@ -163,7 +147,7 @@ export const UnaryExpression = (operator, argument) => ({
 // 13.11 Equality Operators
 // 13.12 Binary Bitwise Operators
 
-export const BinaryExpression = (operator, left, right) => ({
+export const BinaryExpression = operator => left => right => ({
   type: 'BinaryExpression',
   operator,
   left,
@@ -172,7 +156,7 @@ export const BinaryExpression = (operator, left, right) => ({
 
 // 13.13 Binary Logical Operators
 
-export const LogicalExpression = (operator, left, right) => ({
+export const LogicalExpression = operator => left => right => ({
   type: 'LogicalExpression',
   operator,
   left,
@@ -181,7 +165,7 @@ export const LogicalExpression = (operator, left, right) => ({
 
 // 13.14 Conditional Operator
 
-export const ConditionalExpression = (test, consequent, alternate) => ({
+export const ConditionalExpression = test => consequent => alternate => ({
   type: 'ConditionalExpression',
   test,
   consequent,
@@ -203,7 +187,7 @@ export const VariableDeclaration = declarations => ({
   declarations,
 });
 
-export const VariableDeclarator = (id, init) => ({
+export const VariableDeclarator = id => init => ({
   type: 'VariableDeclarator',
   id,
   init,
@@ -225,7 +209,7 @@ export const ReturnStatement = argument => ({
 
 // 15.3 Arrow Function Definitions
 
-export const ArrowFunctionExpression = (params, body) => ({
+export const ArrowFunctionExpression = params => body => ({
   type: 'ArrowFunctionExpression',
   params,
   body,
@@ -242,7 +226,7 @@ export const ObjectPattern = properties => ({
   properties,
 });
 
-export const AssignmentPattern = (left, right) => ({
+export const AssignmentPattern = left => right => ({
   type: 'AssignmentPattern',
   left,
   right,
@@ -263,7 +247,7 @@ export const Program = body => ({
 
 // 16.2.2 Imports
 
-export const ImportDeclaration = (specifiers, source) => ({
+export const ImportDeclaration = specifiers => source => ({
   type: 'ImportDeclaration',
   specifiers,
   source: Literal(source),
@@ -279,7 +263,7 @@ export const ImportNamespaceSpecifier = local => ({
   local,
 });
 
-export const ImportSpecifier = (local, imported) => ({
+export const ImportSpecifier = local => imported => ({
   type: 'ImportSpecifier',
   local,
   imported,
@@ -292,7 +276,7 @@ export const ExportNamedDeclaration = specifiers => ({
   specifiers,
 });
 
-export const ExportSpecifier = (local, exported = local) => ({
+export const ExportSpecifier = local => exported => ({
   type: 'ExportSpecifier',
   local,
   exported,

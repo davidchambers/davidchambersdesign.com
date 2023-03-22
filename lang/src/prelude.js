@@ -1,57 +1,42 @@
-import * as Serif from './types.js';
+import {
+  ArrowFunctionExpression,
+  CallExpression,
+  ConditionalExpression,
+  Identifier,
+  MemberExpression,
+  StringLiteral,
+} from './types.js';
 
 
 const isArray = name => (
-  Serif.CallExpression(
-    Serif.MemberExpression(Serif.Identifier('Array'), Serif.StringLiteral('isArray')),
-    [Serif.Identifier(name)],
-  )
+  CallExpression(MemberExpression(Identifier('Array'))(StringLiteral('isArray')))
+                ([Identifier(name)])
 );
 
-export const map = Serif.ArrowFunctionExpression(
-  [Serif.Identifier('f')],
-  Serif.ArrowFunctionExpression(
-    [Serif.Identifier('functor')],
-    Serif.ConditionalExpression(
-      isArray('functor'),
-      Serif.CallExpression(
-        Serif.MemberExpression(Serif.Identifier('functor'), Serif.StringLiteral('map')),
-        [Serif.ArrowFunctionExpression(
-          [Serif.Identifier('x')],
-          Serif.CallExpression(
-            Serif.Identifier('f'),
-            [Serif.Identifier('x')],
-          ),
-        )],
-      ),
-      Serif.CallExpression(
-        Serif.MemberExpression(Serif.Identifier('functor'), Serif.StringLiteral('fantasy-land/map')),
-        [Serif.Identifier('f')],
-      ),
-    ),
-  ),
+export const map = (
+  ArrowFunctionExpression([Identifier('f')])
+                         (ArrowFunctionExpression([Identifier('functor')])
+                                                 (ConditionalExpression(isArray('functor'))
+                                                                       (CallExpression(MemberExpression(Identifier('functor'))
+                                                                                                       (StringLiteral('map')))
+                                                                                      ([ArrowFunctionExpression([Identifier('x')])
+                                                                                                               (CallExpression(Identifier('f'))
+                                                                                                                              ([Identifier('x')]))]))
+                                                                       (CallExpression(MemberExpression(Identifier('functor'))
+                                                                                                       (StringLiteral('fantasy-land/map')))
+                                                                                      ([Identifier('f')]))))
 );
 
-export const chain = Serif.ArrowFunctionExpression(
-  [Serif.Identifier('f')],
-  Serif.ArrowFunctionExpression(
-    [Serif.Identifier('chain')],
-    Serif.ConditionalExpression(
-      isArray('chain'),
-      Serif.CallExpression(
-        Serif.MemberExpression(Serif.Identifier('chain'), Serif.StringLiteral('flatMap')),
-        [Serif.ArrowFunctionExpression(
-          [Serif.Identifier('x')],
-          Serif.CallExpression(
-            Serif.Identifier('f'),
-            [Serif.Identifier('x')],
-          ),
-        )],
-      ),
-      Serif.CallExpression(
-        Serif.MemberExpression(Serif.Identifier('chain'), Serif.StringLiteral('fantasy-land/chain')),
-        [Serif.Identifier('f')],
-      ),
-    ),
-  ),
+export const chain = (
+  ArrowFunctionExpression([Identifier('f')])
+                         (ArrowFunctionExpression([Identifier('chain')])
+                                                 (ConditionalExpression(isArray('chain'))
+                                                                       (CallExpression(MemberExpression(Identifier('chain'))
+                                                                                                       (StringLiteral('flatMap')))
+                                                                                      ([ArrowFunctionExpression([Identifier('x')])
+                                                                                                               (CallExpression(Identifier('f'))
+                                                                                                                              ([Identifier('x')]))]))
+                                                                       (CallExpression(MemberExpression(Identifier('chain'))
+                                                                                                       (StringLiteral('fantasy-land/chain')))
+                                                                                      ([Identifier('f')]))))
 );
