@@ -4,29 +4,20 @@ import {basename, dirname, join, relative} from 'node:path';
 import escodegen from 'escodegen';
 
 import serif from './index.js';
-import type {Module} from './types.js';
 
 
-interface ResolvedModule {
-  ast: Module;
-  dependencies: ReadonlyArray<string>;
-  exportedNames: ReadonlyArray<string>;
-}
-
-type Tree = Map<string, ResolvedModule>
-
-async function findDependencies(entryPoint: string): Promise<Tree> {
-  const tree = Reflect.construct(Map, [[]]) as Tree;
+async function findDependencies(entryPoint) {
+  const tree = Reflect.construct(Map, [[]]);
   await recur(entryPoint);
   return tree;
 
-  async function recur(filename: string): Promise<void> {
+  async function recur(filename) {
     if (tree.has(filename)) return;
     const source = await readFile(filename, 'utf8');
     let ast;
     try {
       ast = serif.parse(source, filename);
-    } catch (err: any) {
+    } catch (err) {
       const {source, start} = err.location;
       const lines = (
         (await readFile(source, 'utf8'))
@@ -37,7 +28,7 @@ async function findDependencies(entryPoint: string): Promise<Tree> {
           return offset > -5 && offset <= 0;
         })
       );
-      const renderLineNumber = (number: number): string => number.toString().padStart(4);
+      const renderLineNumber = number => number.toString().padStart(4);
       console.error(`\n\x1B[1m${
         relative(process.cwd(), source)
       }\x1B[0m\n\n${
@@ -80,13 +71,13 @@ async function findDependencies(entryPoint: string): Promise<Tree> {
   }
 }
 
-function orderDependencies(tree: Tree): Array<string> {
-  const sorted = Reflect.construct(Set, [[]]) as Set<string>;
+function orderDependencies(tree) {
+  const sorted = Reflect.construct(Set, [[]]);
   const unsorted = Array.from(tree.keys());
   while (unsorted.length > 0) {
     const filename = unsorted[0];
     unsorted.shift();
-    const {dependencies} = tree.get(filename) as ResolvedModule;
+    const {dependencies} = tree.get(filename);
     if (dependencies.every(filename => sorted.has(filename))) {
       sorted.add(filename);
     } else {
@@ -99,7 +90,7 @@ function orderDependencies(tree: Tree): Array<string> {
 {
   const cwd = process.cwd();
   const [,, src, lib, filename] = process.argv;
-  let tree: Tree;
+  let tree;
   try {
     tree = await findDependencies(filename);
   } catch (err) {
@@ -109,12 +100,12 @@ function orderDependencies(tree: Tree): Array<string> {
   const filenames = await Promise.all(
     orderDependencies(tree).map(async serifFilename => {
       const serifDirname = dirname(serifFilename);
-      const serifAst = (tree.get(serifFilename) as ResolvedModule).ast;
+      const serifAst = tree.get(serifFilename).ast;
       const jsAst = await serif.trans(
         serifAst,
         importPath => {
           const importFilename = join(serifDirname, ...importPath.split('/'));
-          return (tree.get(importFilename) as ResolvedModule).exportedNames;
+          return tree.get(importFilename).exportedNames;
         }
       );
       const options = {format: {indent: {style: '  '}}};

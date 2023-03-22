@@ -4,7 +4,7 @@ import serif from '../index.js';
 import * as Serif from '../types.js';
 
 
-const valid = (input: string, expected: Serif.Node) => (
+const valid = (input, expected) => (
   test(`parse(${JSON.stringify(input)})`, t => {
     t.deepEqual(
       serif.parse(input, '[test]'),

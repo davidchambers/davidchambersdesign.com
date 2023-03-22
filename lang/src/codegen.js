@@ -3,42 +3,40 @@ import * as Prelude from './prelude.js';
 import * as Serif from './types.js';
 
 
-type Escaped = string & {_tag: 'Escaped'}
-
-const validEsIdentifierName = (name: string): boolean => (
+const validEsIdentifierName = name => (
   /^[a-z][a-z0-9]*$/i.test(name)
 );
 
-const esFromIdentifierName = (name: string): ES.Identifier => {
-  const escapeChar = (c: string): string => (
+const esFromIdentifierName = name => {
+  const escapeChar = c => (
     '$' + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')
   );
-  const escape = (name: string): Escaped => (
+  const escape = name => (
     ES.RESERVED_WORDS.has(name) ? name + '_' :
     validEsIdentifierName(name) ? name :
     /* else */                    name.replace(/[^a-z0-9]/gi, escapeChar)
-  ) as Escaped;
+  );
   return esFromEscapedIdentifierName(escape(name));
 };
 
-const esFromEscapedIdentifierName = (name: Escaped): ES.Identifier => ({
+const esFromEscapedIdentifierName = name => ({
   type: 'Identifier',
   name,
 });
 
-const esFromBooleanLiteral = (booleanLiteral: Serif.BooleanLiteral): ES.Literal => (
+const esFromBooleanLiteral = booleanLiteral => (
   ES.Literal(booleanLiteral.value)
 );
 
-const esFromNumberLiteral = (numberLiteral: Serif.NumberLiteral): ES.UnaryExpression | ES.Literal => (
+const esFromNumberLiteral = numberLiteral => (
   ES.Literal(numberLiteral.value)
 );
 
-const esFromStringLiteral = (stringLiteral: Serif.StringLiteral): ES.Literal => (
+const esFromStringLiteral = stringLiteral => (
   ES.Literal(stringLiteral.value)
 );
 
-const esFromTemplateLiteral = (templateLiteral: Serif.TemplateLiteral): ES.TemplateLiteral => {
+const esFromTemplateLiteral = templateLiteral => {
   const [quasi, ...quasis] = templateLiteral.quasis;
   const lineEnding = ['\n', '\r\n'].find(lineEnding => quasi.raw.startsWith(lineEnding));
   if (lineEnding == null) return ES.TemplateLiteral(
@@ -47,25 +45,25 @@ const esFromTemplateLiteral = (templateLiteral: Serif.TemplateLiteral): ES.Templ
   );
   const indent = quasi.raw.slice(lineEnding.length).search(/(?! )/);
   const pattern = RegExp(`${lineEnding}[ ]{0,${indent}}`, 'g');
-  const dedent = (text: string): string => text.replace(pattern, lineEnding);
+  const dedent = text => text.replace(pattern, lineEnding);
   return ES.TemplateLiteral([
     ES.TemplateElement(dedent(quasi.raw).slice(lineEnding.length), quasi.tail),
     ...quasis.map(quasi => ES.TemplateElement(dedent(quasi.raw), quasi.tail)),
   ], templateLiteral.expressions.map(esFromNode));
 };
 
-const esFromMetaProperty = (metaProperty: Serif.MetaProperty): ES.MetaProperty => (
+const esFromMetaProperty = metaProperty => (
   ES.MetaProperty(
-    esFromEscapedIdentifierName(metaProperty.meta as Escaped),
-    esFromEscapedIdentifierName(metaProperty.property as Escaped),
+    esFromEscapedIdentifierName(metaProperty.meta),
+    esFromEscapedIdentifierName(metaProperty.property),
   )
 );
 
-const esFromMemberExpression = (memberExpression: Serif.MemberExpression): ES.MemberExpression => (
+const esFromMemberExpression = memberExpression => (
   memberExpression.property.type === 'StringLiteral' && validEsIdentifierName(memberExpression.property.value) ?
   ES.MemberExpression(
     esFromNode(memberExpression.object),
-    esFromEscapedIdentifierName(memberExpression.property.value as Escaped),
+    esFromEscapedIdentifierName(memberExpression.property.value),
     {computed: false}
   ) :
   ES.MemberExpression(
@@ -75,19 +73,19 @@ const esFromMemberExpression = (memberExpression: Serif.MemberExpression): ES.Me
   )
 );
 
-const esFromIdentifier = (identifier: Serif.Identifier): ES.Identifier => (
+const esFromIdentifier = identifier => (
   esFromIdentifierName(identifier.name)
 );
 
-const esFromSpreadElement = (spreadElement: Serif.SpreadElement): ES.SpreadElement => (
+const esFromSpreadElement = spreadElement => (
   ES.SpreadElement(esFromNode(spreadElement.argument))
 );
 
-const esFromArrayExpression = (arrayExpression: Serif.ArrayExpression): ES.ArrayExpression => (
+const esFromArrayExpression = arrayExpression => (
   ES.ArrayExpression(arrayExpression.elements.map(esFromNode))
 );
 
-const esFromProperty = (property: Serif.SpreadElement | Serif.Property): ES.SpreadElement | ES.Property => {
+const esFromProperty = property => {
   if (property.type === 'SpreadElement') {
     return esFromSpreadElement(property);
   } else if (
@@ -95,7 +93,7 @@ const esFromProperty = (property: Serif.SpreadElement | Serif.Property): ES.Spre
     validEsIdentifierName(property.key.value)
   ) {
     return ES.Property(
-      esFromEscapedIdentifierName(property.key.value as Escaped),
+      esFromEscapedIdentifierName(property.key.value),
       esFromNode(property.value),
       {computed: false}
     );
@@ -108,40 +106,40 @@ const esFromProperty = (property: Serif.SpreadElement | Serif.Property): ES.Spre
   }
 };
 
-const esFromObjectExpression = (objectExpression: Serif.ObjectExpression): ES.ObjectExpression => (
+const esFromObjectExpression = objectExpression => (
   ES.ObjectExpression(objectExpression.properties.map(esFromProperty))
 );
 
-const esFromArrowFunctionExpression = (arrowFunctionExpression: Serif.ArrowFunctionExpression): ES.ArrowFunctionExpression => (
+const esFromArrowFunctionExpression = arrowFunctionExpression => (
   ES.ArrowFunctionExpression(
-    arrowFunctionExpression.parameters.map(esFromNode) as Array<ES.Pattern>,
+    arrowFunctionExpression.parameters.map(esFromNode),
     esFromNode(arrowFunctionExpression.body),
   )
 );
 
-const esFromBlockExpression = (blockExpression: Serif.BlockExpression): ES.Expression => {
+const esFromBlockExpression = blockExpression => {
   const last = blockExpression.statements[blockExpression.statements.length - 1];
   return ES.CallExpression(
     ES.ArrowFunctionExpression(
       [],
       ES.BlockStatement(
         last.type === 'ExpressionStatement'
-        ? [...blockExpression.statements.slice(0, -1).map(esFromNode), ES.ReturnStatement(esFromNode(last.expression))] as Array<ES.Statement>
-        : blockExpression.statements.map(esFromNode) as unknown as Array<ES.Statement>
+        ? [...blockExpression.statements.slice(0, -1).map(esFromNode), ES.ReturnStatement(esFromNode(last.expression))]
+        : blockExpression.statements.map(esFromNode)
       )
     ),
     []
   );
 };
 
-const esFromUnaryExpression = (unaryExpression: Serif.UnaryExpression): ES.UnaryExpression => (
+const esFromUnaryExpression = unaryExpression => (
   ES.UnaryExpression(
     unaryExpression.operator,
     esFromNode(unaryExpression.argument)
   )
 );
 
-const esFromBinaryExpression = (binaryExpression: Serif.BinaryExpression): ES.BinaryExpression => (
+const esFromBinaryExpression = binaryExpression => (
   ES.BinaryExpression(
     (() => {
       switch (binaryExpression.operator) {
@@ -155,7 +153,7 @@ const esFromBinaryExpression = (binaryExpression: Serif.BinaryExpression): ES.Bi
   )
 );
 
-const esFromLogicalExpression = (logicalExpression: Serif.LogicalExpression): ES.LogicalExpression => (
+const esFromLogicalExpression = logicalExpression => (
   ES.LogicalExpression(
     (() => {
       switch (logicalExpression.operator) {
@@ -169,7 +167,7 @@ const esFromLogicalExpression = (logicalExpression: Serif.LogicalExpression): ES
   )
 );
 
-const esFromConditionalExpression = (conditionalExpression: Serif.ConditionalExpression): ES.ConditionalExpression => (
+const esFromConditionalExpression = conditionalExpression => (
   ES.ConditionalExpression(
     esFromNode(conditionalExpression.predicate),
     esFromNode(conditionalExpression.consequent),
@@ -177,34 +175,34 @@ const esFromConditionalExpression = (conditionalExpression: Serif.ConditionalExp
   )
 );
 
-const esFromPipeExpression = ({head, body}: Serif.PipeExpression): ES.Expression => (
+const esFromPipeExpression = ({head, body}) => (
   esFromNode(Serif.CallExpression(body, [head]))
 );
 
-const esFromCallExpression = (callExpression: Serif.CallExpression): ES.CallExpression => (
+const esFromCallExpression = callExpression => (
   ES.CallExpression(
     esFromNode(callExpression.callee),
     callExpression.arguments.map(esFromNode),
   )
 );
 
-const esFromVariableDeclaration = (variableDeclaration: Serif.VariableDeclaration): ES.VariableDeclaration => (
+const esFromVariableDeclaration = variableDeclaration => (
   ES.VariableDeclaration([
     ES.VariableDeclarator(
-      esFromNode(variableDeclaration.pattern) as ES.Pattern,
+      esFromNode(variableDeclaration.pattern),
       esFromNode(variableDeclaration.expression),
     ),
   ])
 );
 
-const esFromFunctionDeclaration = (functionDeclaration: Serif.FunctionDeclaration): ES.VariableDeclaration => (
+const esFromFunctionDeclaration = functionDeclaration => (
   ES.VariableDeclaration([
     ES.VariableDeclarator(
       esFromIdentifierName(functionDeclaration.name),
       ES.ArrowFunctionExpression(
-        functionDeclaration.parameters.slice(0, 1).map(esFromNode) as Array<ES.Pattern>,
+        functionDeclaration.parameters.slice(0, 1).map(esFromNode),
         functionDeclaration.parameters.slice(1).reduceRight(
-          (body, param) => ES.ArrowFunctionExpression([esFromNode(param) as ES.Pattern], body),
+          (body, param) => ES.ArrowFunctionExpression([esFromNode(param)], body),
           esFromNode(functionDeclaration.body)
         ),
       ),
@@ -212,30 +210,30 @@ const esFromFunctionDeclaration = (functionDeclaration: Serif.FunctionDeclaratio
   ])
 );
 
-const esFromExpressionStatement = (expressionStatement: Serif.ExpressionStatement): ES.ExpressionStatement => (
+const esFromExpressionStatement = expressionStatement => (
   ES.ExpressionStatement(esFromNode(expressionStatement.expression))
 );
 
-const esFromArrayPattern = (arrayPattern: Serif.ArrayPattern): ES.ArrayPattern => (
+const esFromArrayPattern = arrayPattern => (
   ES.ArrayPattern(arrayPattern.elements.map(element =>
-    element == null ? null : esFromNode(element) as ES.Pattern
+    element == null ? null : esFromNode(element)
   ))
 );
 
-const esFromObjectPattern = (objectPattern: Serif.ObjectPattern): ES.ObjectPattern => (
-  ES.ObjectPattern(objectPattern.properties.map(esFromNode) as unknown as Array<ES.AssignmentProperty>)
+const esFromObjectPattern = objectPattern => (
+  ES.ObjectPattern(objectPattern.properties.map(esFromNode))
 );
 
-const esFromRestElement = (restElement: Serif.RestElement): ES.RestElement => (
+const esFromRestElement = restElement => (
   ES.RestElement(esFromIdentifier(restElement.argument))
 );
 
-const esFromImportDeclaration = (exportedNames: (source: string) => ReadonlyArray<string>) => async (importDeclaration: Serif.ImportDeclaration): Promise<ES.ImportDeclaration> => {
+const esFromImportDeclaration = exportedNames => async importDeclaration => {
   if (importDeclaration.specifiers === '*') {
     const source = importDeclaration.source.value;
     const hiding = importDeclaration.hiding.map(ident => ident.name);
-    const $hiding = Reflect.construct(Set, [importDeclaration.hiding.map(ident => ident.name)]) as Set<string>;
-    const visible = (name: string): boolean => !$hiding.delete(name);
+    const $hiding = Reflect.construct(Set, [importDeclaration.hiding.map(ident => ident.name)]);
+    const visible = name => !$hiding.delete(name);
     if (source.endsWith('.serif')) {
       const names = exportedNames(source).filter(visible);
       if ($hiding.size > 0) throw unnecessaryHiding(source, hiding, Array.from($hiding.values()));
@@ -243,7 +241,7 @@ const esFromImportDeclaration = (exportedNames: (source: string) => ReadonlyArra
     } else {
       const names = Object.keys(await import(source)).filter(visible);
       if ($hiding.size > 0) throw unnecessaryHiding(source, hiding, Array.from($hiding.values()));
-      return ES.ImportDeclaration((names as Array<Escaped>).map(esFromEscapedIdentifierName).map(local => ES.ImportSpecifier(local, local)), source);
+      return ES.ImportDeclaration(names.map(esFromEscapedIdentifierName).map(local => ES.ImportSpecifier(local, local)), source);
     }
   } else {
     return ES.ImportDeclaration(
@@ -272,17 +270,17 @@ const esFromImportDeclaration = (exportedNames: (source: string) => ReadonlyArra
   }
 };
 
-const esFromExportNamedDeclaration = (exportNamedDeclaration: Serif.ExportNamedDeclaration): ES.ExportNamedDeclaration => (
+const esFromExportNamedDeclaration = exportNamedDeclaration => (
   ES.ExportNamedDeclaration(exportNamedDeclaration.specifiers.map(specifier =>
     ES.ExportSpecifier(esFromIdentifier(specifier))
   ))
 );
 
-const esFromExportDefaultDeclaration = (exportDefaultDeclaration: Serif.ExportDefaultDeclaration): ES.ExportDefaultDeclaration => (
+const esFromExportDefaultDeclaration = exportDefaultDeclaration => (
   ES.ExportDefaultDeclaration(esFromNode(exportDefaultDeclaration.declaration))
 );
 
-const esFromNode = (expr: Serif.Node): ES.Expression => {
+const esFromNode = expr => {
   switch (expr.type) {
     case 'BooleanLiteral':              return esFromBooleanLiteral(expr);
     case 'NumberLiteral':               return esFromNumberLiteral(expr);
@@ -294,35 +292,31 @@ const esFromNode = (expr: Serif.Node): ES.Expression => {
     case 'ArrayExpression':             return esFromArrayExpression(expr);
     case 'ObjectExpression':            return esFromObjectExpression(expr);
     case 'ArrowFunctionExpression':     return esFromArrowFunctionExpression(expr);
-    case 'PropertyAccessor':            return ES.Literal('never');
     case 'BlockExpression':             return esFromBlockExpression(expr);
     case 'UnaryExpression':             return esFromUnaryExpression(expr);
     case 'BinaryExpression':            return esFromBinaryExpression(expr);
-    case 'MapExpression':               return ES.Literal('never');
-    case 'BindExpression':              return ES.Literal('never');
     case 'LogicalExpression':           return esFromLogicalExpression(expr);
     case 'ConditionalExpression':       return esFromConditionalExpression(expr);
     case 'PipeExpression':              return esFromPipeExpression(expr);
     case 'CallExpression':              return esFromCallExpression(expr);
-    case 'SpreadElement':               return esFromSpreadElement(expr) as unknown as ES.Expression;
-    case 'ExpressionStatement':         return esFromExpressionStatement(expr) as unknown as ES.Expression;
-    case 'VariableDeclaration':         return esFromVariableDeclaration(expr) as unknown as ES.Expression;
-    case 'FunctionDeclaration':         return esFromFunctionDeclaration(expr) as unknown as ES.Expression;
-    case 'Property':                    return esFromProperty(expr) as unknown as ES.Expression;
-    case 'ArrayPattern':                return esFromArrayPattern(expr) as unknown as ES.Expression;
-    case 'ObjectPattern':               return esFromObjectPattern(expr) as unknown as ES.Expression;
-    case 'RestElement':                 return esFromRestElement(expr) as unknown as ES.Expression;
-    case 'ImportDeclaration':           return null as unknown as ES.Expression;
-    case 'ExportNamedDeclaration':      return esFromExportNamedDeclaration(expr) as unknown as ES.Expression;
-    case 'ExportDefaultDeclaration':    return esFromExportDefaultDeclaration(expr) as unknown as ES.Expression;
+    case 'SpreadElement':               return esFromSpreadElement(expr);
+    case 'ExpressionStatement':         return esFromExpressionStatement(expr);
+    case 'VariableDeclaration':         return esFromVariableDeclaration(expr);
+    case 'FunctionDeclaration':         return esFromFunctionDeclaration(expr);
+    case 'Property':                    return esFromProperty(expr);
+    case 'ArrayPattern':                return esFromArrayPattern(expr);
+    case 'ObjectPattern':               return esFromObjectPattern(expr);
+    case 'RestElement':                 return esFromRestElement(expr);
+    case 'ExportNamedDeclaration':      return esFromExportNamedDeclaration(expr);
+    case 'ExportDefaultDeclaration':    return esFromExportDefaultDeclaration(expr);
   }
 };
 
 const unnecessaryHiding = (
-  source: string,
-  hiding: ReadonlyArray<string>,
-  names: ReadonlyArray<string>,
-): Error => Reflect.construct(Error, [
+  source,
+  hiding,
+  names,
+) => Reflect.construct(Error, [
   `import * from "${
     source
   }" hiding {${
@@ -336,7 +330,7 @@ const unnecessaryHiding = (
   } not exported so need not be hidden.\n`,
 ]);
 
-function namesInPattern(node: Serif.Node): Array<string> {
+function namesInPattern(node) {
   switch (node.type) {
     case 'Identifier':    return [node.name];
     case 'ArrayPattern':  return node.elements.flatMap(element => element == null ? [] : namesInPattern(element));
@@ -347,10 +341,7 @@ function namesInPattern(node: Serif.Node): Array<string> {
   }
 }
 
-export async function toModule(
-  module: Serif.Module,
-  exportedNames: (source: string) => ReadonlyArray<string>,
-): Promise<ES.Program> {
+export async function toModule(module, exportedNames) {
   const topLevelNames = new Set(
     module.statements.flatMap(statement => {
       switch (statement.type) {
@@ -403,5 +394,5 @@ export async function toModule(
         }
       })
     ),
-  ] as any);
+  ]);
 }

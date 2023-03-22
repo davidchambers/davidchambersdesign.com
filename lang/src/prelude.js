@@ -1,7 +1,7 @@
 import * as Serif from './types.js';
 
 
-const isArray = (name: string): Serif.CallExpression => (
+const isArray = name => (
   Serif.CallExpression(
     Serif.MemberExpression(Serif.Identifier('Array'), Serif.StringLiteral('isArray')),
     [Serif.Identifier(name)],

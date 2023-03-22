@@ -9,12 +9,12 @@ import serif        from './index.js';
 import rewrite      from './rewrite.js';
 
 
-async function evaluateModule(source: string): Promise<unknown> {
+async function evaluateModule(source) {
   const context = vm.createContext(global);
-  const module: any = Reflect.construct((vm as any).SourceTextModule, [source, {context}]);
-  await module.link(async (specifier: string, referencingModule: any) => {
+  const module = Reflect.construct(vm.SourceTextModule, [source, {context}]);
+  await module.link(async (specifier, referencingModule) => {
     const entries = Object.entries(await import(specifier));
-    const module: any = Reflect.construct((vm as any).SyntheticModule, [
+    const module = Reflect.construct(vm.SyntheticModule, [
       entries.map(([name]) => name),
       () => {
         for (const [name, value] of entries) {
@@ -29,14 +29,14 @@ async function evaluateModule(source: string): Promise<unknown> {
   return module.namespace.default;
 }
 
-async function read(serifSource: string): Promise<unknown> {
+async function read(serifSource) {
   const serifAst = serif.parse(`export default ${serifSource};`, '[repl]');
   const jsAst = await serif.trans(rewrite(serifAst), _importPath => []);
   const jsSource = escodegen.generate(jsAst);
   return evaluateModule(jsSource);
 }
 
-function print(x: any): string {
+function print(x) {
   switch (Object.prototype.toString.call(x)) {
     case '[object Null]':
     case '[object Undefined]':
