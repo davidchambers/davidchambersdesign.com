@@ -110,7 +110,7 @@ function rewriteNode(node) {
       return Serif.ExpressionStatement(rewriteNode(node.expression));
     }
     case 'ArrayPattern': {
-      return Serif.ArrayPattern(node.elements.map(element => element == null ? null : rewriteNode(element)));
+      return Serif.ArrayPattern(node.elements.map(rewriteNode));
     }
     case 'ObjectPattern': {
       return Serif.ObjectPattern(node.properties.map(rewriteNode));

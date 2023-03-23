@@ -453,7 +453,7 @@ function peg$parse(input, options) {
   var peg$f61 = function(elision) { return elision; };
   var peg$f62 = function(element) { return element; };
   var peg$f63 = function(elements, element) { return Serif.ArrayPattern(element == null ? elements : [...elements, element]); };
-  var peg$f64 = function() { return null; };
+  var peg$f64 = function() { return Serif.Elision; };
   var peg$f65 = function() { return Serif.ObjectPattern([]); };
   var peg$f66 = function(properties) { return Serif.ObjectPattern(properties); };
   var peg$f67 = function(ident, element) { return Serif.Property(Serif.StringLiteral(ident.name))(element); };

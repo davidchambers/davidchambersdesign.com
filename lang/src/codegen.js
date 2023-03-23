@@ -274,8 +274,10 @@ const esFromExpressionStatement = ({expression}) => ({
 
 const esFromArrayPattern = ({elements}) => ({
   type: 'ArrayPattern',
-  elements: elements.map(element => element == null ? null : esFromNode(element)),
+  elements: elements.map(esFromNode),
 });
+
+const esFromElision = null;
 
 const esFromObjectPattern = ({properties}) => ({
   type: 'ObjectPattern',
@@ -403,6 +405,7 @@ const esFromNode = expr => {
     case 'FunctionDeclaration':         return esFromFunctionDeclaration(expr);
     case 'Property':                    return esFromProperty(expr);
     case 'ArrayPattern':                return esFromArrayPattern(expr);
+    case 'Elision':                     return esFromElision;
     case 'ObjectPattern':               return esFromObjectPattern(expr);
     case 'RestElement':                 return esFromRestElement(expr);
     case 'ExportNamedDeclaration':      return esFromExportNamedDeclaration(expr);
@@ -431,7 +434,7 @@ const unnecessaryHiding = (
 function namesInPattern(node) {
   switch (node.type) {
     case 'Identifier':    return [node.name];
-    case 'ArrayPattern':  return node.elements.flatMap(element => element == null ? [] : namesInPattern(element));
+    case 'ArrayPattern':  return node.elements.flatMap(namesInPattern);
     case 'ObjectPattern': return node.properties.flatMap(namesInPattern);
     case 'Property':      return namesInPattern(node.key);
     case 'RestElement':   return namesInPattern(node.argument);

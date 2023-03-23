@@ -298,7 +298,7 @@ ArrayPattern
 
 Elision
   = ','
-    { return null; }
+    { return Serif.Elision; }
 
 ArrayPatternElement
   = ArrayPattern

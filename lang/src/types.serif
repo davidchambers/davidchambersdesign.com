@@ -12,6 +12,7 @@ export {
   Property,
   ObjectExpression,
   ArrayPattern,
+  Elision,
   ObjectPattern,
   RestElement,
   ArrowFunctionExpression,
@@ -107,6 +108,10 @@ ObjectExpression properties = {
 ArrayPattern elements = {
   type: "ArrayPattern",
   elements: elements,
+};
+
+Elision = {
+  type: "Elision",
 };
 
 ObjectPattern properties = {
