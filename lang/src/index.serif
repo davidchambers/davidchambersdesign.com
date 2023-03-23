@@ -1,0 +1,12 @@
+import * as codegen from "./codegen.serif";
+import * as grammar from "./grammar.js";
+import rewrite from "./rewrite.serif";
+
+export default {
+  parse: parse,
+  trans: trans,
+};
+
+parse input filename = grammar.parse (input, {grammarSource: filename});
+
+trans module exportedNames = codegen.toModule (rewrite module) exportedNames;

@@ -258,6 +258,11 @@ ArrowFunctionExpression
 LeftHandSideExpression
   = ArrowFunctionExpression
   / MemberExpression
+  / ImportExpression
+
+ImportExpression
+  = ImportToken _ '(' _ source:Expression _ ')'
+    { return Serif.ImportExpression(source); }
 
 CallExpression
   = head:LeftHandSideExpression
@@ -278,7 +283,7 @@ Arguments
 ArrowFunctionParameters
   = '(' _ ')'
     { return []; }
-  / '(' _ parameters:Pattern|1.., CommaSeparator| _ ')'
+  / '(' _ parameters:Pattern|1.., CommaSeparator| _ ','? _ ')'
     { return parameters; }
   / parameter:Pattern
     { return [parameter]; }
@@ -315,12 +320,12 @@ ArrayPatternElement
 ObjectPattern
   = '{' _ '}'
     { return Serif.ObjectPattern([]); }
-  / '{' _ properties:ObjectPatternProperty|1.., CommaSeparator| _ '}'
+  / '{' _ properties:ObjectPatternProperty|1.., CommaSeparator| _ ','? _ '}'
     { return Serif.ObjectPattern(properties); }
 
 ObjectPatternProperty
-  = ident:Identifier _ ':' _ element:LeftHandSideExpression
-    { return Serif.Property(Serif.StringLiteral(ident.name))(element); }
+  = ident:Identifier _ ':' _ pattern:Pattern
+    { return Serif.Property(Serif.StringLiteral(ident.name))(pattern); }
   / ident:Identifier
     { return Serif.Property(Serif.StringLiteral(ident.name))(ident); }
 

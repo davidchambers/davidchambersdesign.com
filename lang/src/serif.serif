@@ -1,0 +1,134 @@
+import fs from "node:fs/promises";
+import path from "node:path";
+
+import escodegen from "escodegen";
+import {attempt, attemptP, fork, mapRej, parallel, resolve} from "fluture";
+
+import serif from "./index.serif";
+
+
+parse filename sourceText = {
+  {attempt (() => serif.parse sourceText filename)} |> mapRej error => {
+    lines = {
+      sourceText
+      .split(RegExp ("^", "m"))
+      .map((text, index) => {number: index + 1, text: text.trimEnd()})
+      >>= line => {
+        offset = line.number - error.location.start.line;
+        if offset > -5 and offset <= 0 then [line] else []
+      }
+    };
+    renderLineNumber number = number.toString().padStart(4);
+    `\n\x1B[1m${
+      path.relative(process.cwd(), error.location.source)
+    }\x1B[0m\n\n${
+      lines
+      .map((line, idx, lines) => {
+        `\x1B[7m${
+          renderLineNumber line.number
+        }\x1B[0m${
+          if idx < lines.length - 1 then line.text else {
+            `${
+              line.text.slice(0, error.location.start.column - 1)
+            }\x1B[7m${
+              line.text.charAt(error.location.start.column - 1)
+            }\x1B[0m${
+              line.text.slice(error.location.start.column)
+            }`
+          }
+        }\n${""}`
+      })
+      .join("")
+    }${
+      " ".repeat(renderLineNumber(lines.at(-1).number).length + error.location.start.column - 1)
+    }^\n${
+      error.message
+    }\n`
+  }
+};
+
+reducer = (futureTree, filename) => {
+  futureTree >>= findDependencies filename
+};
+
+findDependencies filename tree = {
+  if tree.has filename then resolve tree else {
+    mapRej (.message) (attemptP (() => fs.readFile (filename, "utf8"))) >>= sourceText => {
+      parse filename sourceText >>= ast => {
+        dependencies = ast.imports >>= {source: {value}} => {
+          if {value.startsWith "/" or value.startsWith "."} and value.endsWith ".serif" then {
+            [path.join (filename, "..", value)]
+          } else {
+            []
+          }
+        };
+        exportedNames = ast.exports >>= exportDeclaration => {
+          if exportDeclaration.type == "ExportNamedDeclaration" then {
+            (.name) <$> exportDeclaration.specifiers
+          } else {
+            []
+          }
+        };
+        dependencies.reduce (reducer, resolve $ Reflect.construct (Map, [[
+          ...tree.entries(),
+          [filename, {sourceText: sourceText, ast: ast, dependencies: dependencies, exportedNames: exportedNames}],
+        ]]))
+      }
+    }
+  }
+};
+
+orderDependencies tree = {
+  recur unsorted! sorted! = {
+    if unsorted!.length == 0 then sorted! else {
+      filename = unsorted!.shift();
+      {dependencies} = tree.get(filename);
+      if dependencies.every(filename => sorted!.has(filename)) then {
+        sorted!.add(filename)
+      } else {
+        unsorted!.push(filename)
+      };
+      recur unsorted! sorted!
+    }
+  };
+  Array.from $ recur (Array.from $ tree.keys()) (Reflect.construct (Set, [[]]))
+};
+
+{
+  cwd = process.cwd();
+  [,, src, lib, ...filenames] = process.argv;
+  program = {
+    filenames.reduce (reducer, resolve $ Reflect.construct (Map, [[]]))
+    >>= tree => {
+      ;; Create JavaScript module for each Serif module:
+      orderDependencies tree
+      |> map (serifFilename => {
+           serifDirname = path.dirname serifFilename;
+           serifAst = tree.get(serifFilename).ast;
+           {serif.trans serifAst $ importPath =>
+              tree.get(path.join (serifDirname, ...importPath.split("/"))).exportedNames}
+           >>= jsAst => {
+             options = {format: {indent: {style: "  "}}};
+             jsSource = escodegen.generate (jsAst, options) + "\n";
+             jsDirname = path.dirname serifFilename;
+             jsBasename = path.basename (serifFilename, ".serif") + ".js";
+             jsFilename = path.join (lib, path.relative (src, jsDirname), jsBasename);
+             {attemptP (() => fs.mkdir (jsDirname, {recursive: true}))}
+             |> chain (_ => attemptP (() => fs.writeFile (jsFilename, jsSource, "utf8")))
+             |> map (_ => {serifFilename: serifFilename, jsFilename: jsFilename})
+           }
+         })
+      |> parallel 16
+    }
+  };
+
+  fork (console.error)
+       (filenames => {
+          ;; List files created:
+          filenames.forEach $ {serifFilename, jsFilename} => {
+            console.log("• " + path.relative (cwd, serifFilename));
+            console.log("  ➔ " + path.relative (cwd, jsFilename))
+          }
+        })
+       (program)
+};

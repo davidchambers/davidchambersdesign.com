@@ -19,6 +19,6 @@
     "sanctuary-style": "6.0.x"
   },
   "scripts": {
-    "repl": "node --experimental-vm-modules --no-warnings -- src/repl.js"
+    "repl": "node --experimental-vm-modules --no-warnings -- dist/repl.js"
   }
 }

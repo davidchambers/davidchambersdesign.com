@@ -1,0 +1,91 @@
+import os           from "node:os";
+import path         from "node:path";
+import repl         from "node:repl";
+import vm           from "node:vm";
+
+import escodegen    from "escodegen";
+import {attemptP, fork, promise} from "fluture";
+
+import serif        from "./index.serif";
+import rewrite      from "./rewrite.serif";
+
+
+evaluateModule source = {
+  context = vm.createContext global;
+  module = Reflect.construct (vm.SourceTextModule, [source, {context: context}]);
+  chain (_ => map (_ => module.namespace.default)
+                  (attemptP (() => module.evaluate())))
+        (attemptP (() => module.link $ (specifier, referencingModule) => {
+                     promise (map (entries => {
+                                     module = Reflect.construct (vm.SyntheticModule, [
+                                       entries.map $ [name] => name,
+                                       () => {
+                                         entries.forEach $ [name, value] => {
+                                           module.setExport(name, value)
+                                         }
+                                       },
+                                       {identifier: specifier, context: referencingModule.context},
+                                     ]);
+                                     module
+                                   })
+                                  (map Object.entries
+                                       (attemptP (() => import (specifier)))))
+                   }))
+};
+
+read serifSource = {
+  serifAst = serif.parse `export default ${serifSource};` "[repl]";
+  serif.trans (rewrite serifAst) (_importPath => []) >>= jsAst => {
+    evaluateModule $ escodegen.generate jsAst
+  }
+};
+
+print x = {
+  repr = Object.prototype.toString.call x;
+  if repr == "[object Null]" or
+     repr == "[object Undefined]" or
+     repr == "[object Boolean]" then {
+    `\x1B[35m${x}\x1B[0m`
+  } else if repr == "[object Number]" then {
+    `\x1B[33m${x}\x1B[0m`
+  } else if repr == "[object String]" then {
+    `\x1B[32m${JSON.stringify(x)}\x1B[0m`
+  } else if repr == "[object Symbol]" then {
+    `Symbol.for ${print(Symbol.keyFor(x))}`
+  } else if repr == "[object Date]" then {
+    `Reflect.construct (Date, [${print(Number(x))}])`
+  } else if repr == "[object RegExp]" then {
+    `RegExp (${print(x.source)}, ${print(x.flags)})`
+  } else if repr == "[object Set]" then {
+    `Reflect.construct (Set, [${print(Array.from(x))}])`
+  } else if repr == "[object Map]" then {
+    `Reflect.construct (Map, [${print(Array.from(x))}])`
+  } else if repr == "[object Array]" then {
+    "[" + x.map(print).join(", ") + "]"
+  } else if repr == "[object Object]" then {
+    "{" + Reflect.ownKeys(x).map(k => `[${print(k)}]: ${print(x[k])}`).join(", ") + "}"
+  } else {
+    `${x}`
+  }
+};
+
+server = repl.start {
+  prompt: ">>> ",
+  eval: (code, _context, _filename, callback) => {
+    fork (err => {
+            console.error(err);
+            console.log();
+            server.displayPrompt(false)
+          })
+         (result => {
+            callback(null, result)
+          })
+         (read code)
+  },
+  writer: value => print(value) + "\n",
+};
+
+server.setupHistory (
+  path.join (os.homedir(), ".serif-repl-history"),
+  error => undefined
+);

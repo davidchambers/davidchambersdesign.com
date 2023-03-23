@@ -27,6 +27,7 @@ export {
   ConditionalExpression,
   PipeExpression,
   CallExpression,
+  ImportExpression,
   ImportDefaultDeclaration,
   ImportDeclaration,
   ImportEverythingDeclaration,
@@ -194,6 +195,11 @@ CallExpression callee args = {
   type: "CallExpression",
   callee: callee,
   arguments: args,
+};
+
+ImportExpression source = {
+  type: "ImportExpression",
+  source: source,
 };
 
 ImportDefaultDeclaration source specifier = {

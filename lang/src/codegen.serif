@@ -1,0 +1,539 @@
+import * as Future from "fluture";
+
+import * as Prelude_ from "./prelude.serif";
+import * as Serif from "./types.serif";
+
+export {toModule};
+
+;; https://262.ecma-international.org/13.0/#sec-keywords-and-reserved-words
+RESERVED_WORDS = Reflect.construct (Set, [[
+  ;; reserved words
+  "await",
+  "break",
+  "case",
+  "catch",
+  "class",
+  "const",
+  "continue",
+  "debugger",
+  "default",
+  "delete",
+  "do",
+  "else",
+  "enum",
+  "export",
+  "extends",
+  "false",
+  "finally",
+  "for",
+  "function",
+  "if",
+  "import",
+  "in",
+  "instanceof",
+  "new",
+  "null",
+  "return",
+  "super",
+  "switch",
+  "this",
+  "throw",
+  "true",
+  "try",
+  "typeof",
+  "var",
+  "void",
+  "while",
+  "with",
+  "yield",
+  ;; future reserved words
+  "enum",
+  "implements",
+  "interface",
+  "package",
+  "private",
+  "protected",
+  "public",
+]]);
+
+validEsIdentifierName name = {
+  Reflect.apply (
+    RegExp.prototype.test,
+    RegExp ("^[a-z][a-z0-9]*$", "i"),
+    [name]
+  )
+};
+
+esFromIdentifierName = {
+  escapeChar c = {
+    "$" + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, "0")
+  };
+  escape name = {
+    if RESERVED_WORDS.has name then {
+      name + "$"
+    } else if validEsIdentifierName name then {
+      name
+    } else {
+      Reflect.apply (
+        String.prototype.replace,
+        name,
+        [RegExp ("[^a-z0-9_]", "gi"), escapeChar]
+      )
+    }
+  };
+  name => esFromEscapedIdentifierName $ escape name
+};
+
+esFromEscapedIdentifierName name = {
+  type: "Identifier",
+  name: name,
+};
+
+esFromNullLiteral = {
+  type: "Literal",
+  value: null,
+};
+
+esFromLiteral {value} = {
+  type: "Literal",
+  value: value,
+};
+
+esFromMetaProperty = {meta, property} => {
+  type: "MetaProperty",
+  meta: esFromEscapedIdentifierName meta,
+  property: esFromEscapedIdentifierName property,
+};
+
+esFromIdentifier {name} = {
+  esFromIdentifierName name
+};
+
+esFromElision = null;
+
+esFromTemplateLiteral {expressions, quasis} = {
+  type: "TemplateLiteral",
+  expressions: esFromNode <$> expressions,
+  quasis: {
+    lineEnding = ["\n", "\r\n"].find (lineEnding => quasis[0].raw.startsWith lineEnding);
+    if lineEnding == undefined then {
+      {{tail, raw} => {type: "TemplateElement", tail: tail, value: {raw: raw}}} <$> quasis
+    } else {
+      [head, ...tail] = quasis;
+      indent = head.raw.slice(lineEnding.length).search(RegExp "(?! )");
+      pattern = RegExp (`${lineEnding}[ ]{0,${indent}}`, "g");
+      dedent = text => text.replace (pattern, lineEnding);
+      [
+        {type: "TemplateElement", tail: head.tail, value: {raw: dedent(head.raw).slice(lineEnding.length)}},
+        ...{{{tail, raw} => {type: "TemplateElement", tail: tail, value: {raw: dedent raw}}} <$> tail},
+      ]
+    }
+  },
+};
+
+esFromMemberExpression {object, property} = {
+  computed = !{
+    property.type == "StringLiteral" and
+    validEsIdentifierName property.value
+  };
+  {
+    type: "MemberExpression",
+    object: esFromNode object,
+    property: if computed then esFromNode property else esFromEscapedIdentifierName property.value,
+    computed: computed,
+    optional: false,
+  }
+};
+
+esFromSpreadElement {argument} = {
+  type: "SpreadElement",
+  argument: esFromNode argument,
+};
+
+esFromArrayExpression {elements} = {
+  type: "ArrayExpression",
+  elements: esFromNode <$> elements,
+};
+
+esFromProperty property = {
+  if property.type == "SpreadElement" then esFromSpreadElement property else {
+    computed = !{
+      property.key.type == "StringLiteral" and
+      validEsIdentifierName property.key.value
+    };
+    key = if computed then esFromNode property.key else esFromEscapedIdentifierName property.key.value;
+    value = esFromNode property.value;
+    shorthand = {
+      key.type == "Identifier" and
+      value.type == "Identifier" and
+      key.name == value.name
+    };
+    {
+      type: "Property",
+      key: key,
+      value: value,
+      kind: "init",
+      method: false,
+      shorthand: shorthand,
+      computed: computed,
+    }
+  }
+};
+
+esFromObjectExpression {properties} = {
+  type: "ObjectExpression",
+  properties: esFromProperty <$> properties,
+};
+
+esFromArrowFunctionExpression {parameters, body} = {
+  esBody = esFromNode body;
+  {
+    type: "ArrowFunctionExpression",
+    params: esFromNode <$> parameters,
+    body: esBody,
+    expression: esBody.type != "BlockStatement",
+  }
+};
+
+esFromBlockExpression {statements} = {
+  type: "CallExpression",
+  callee: {
+    type: "ArrowFunctionExpression",
+    params: [],
+    body: {
+      type: "BlockStatement",
+      body: {
+        statements! = [...statements];
+        last = statements!.pop();
+        if last.type == "ExpressionStatement" then {
+          return = {type: "ReturnStatement", argument: esFromNode last.expression};
+          [...{esFromNode <$> statements!}, return]
+        } else {
+          esFromNode <$> statements
+        }
+      },
+    },
+    expression: false,
+  },
+  arguments: [],
+  optional: false,
+};
+
+esFromUnaryExpression {operator, argument} = {
+  type: "UnaryExpression",
+  operator: operator,
+  argument: esFromNode argument,
+  prefix: true,
+};
+
+esFromBinaryExpression {operator, left, right} = {
+  type: "BinaryExpression",
+  operator: {
+    if operator == "==" then "==="
+    else if operator == "!=" then "!=="
+    else operator
+  },
+  left: esFromNode left,
+  right: esFromNode right,
+};
+
+esFromLogicalExpression {operator, left, right} = {
+  type: "LogicalExpression",
+  operator: {
+    if operator == "and" then "&&"
+    else if operator == "or" then "||"
+    else operator
+  },
+  left: esFromNode left,
+  right: esFromNode right,
+};
+
+esFromConditionalExpression {predicate, consequent, alternative} = {
+  type: "ConditionalExpression",
+  test: esFromNode predicate,
+  consequent: esFromNode consequent,
+  alternate: esFromNode alternative,
+};
+
+esFromCallExpression {callee, arguments: args} = {
+  type: "CallExpression",
+  callee: esFromNode callee,
+  arguments: esFromNode <$> args,
+  optional: false,
+};
+
+esFromVariableDeclaration {pattern, expression} = {
+  type: "VariableDeclaration",
+  kind: "const",
+  declarations: [{
+    type: "VariableDeclarator",
+    id: esFromNode pattern,
+    init: esFromNode expression,
+  }],
+};
+
+esFromFunctionDeclaration {name, parameters, body} = {
+  type: "VariableDeclaration",
+  kind: "const",
+  declarations: [{
+    type: "VariableDeclarator",
+    id: esFromIdentifierName name,
+    init: parameters.reduceRight (
+      (esBody, param) => {
+        type: "ArrowFunctionExpression",
+        params: [esFromNode param],
+        body: esBody,
+        expression: esBody.type != "BlockStatement",
+      },
+      esFromNode body
+    ),
+  }],
+};
+
+esFromExpressionStatement {expression} = {
+  type: "ExpressionStatement",
+  expression: esFromNode expression,
+};
+
+esFromArrayPattern {elements} = {
+  type: "ArrayPattern",
+  elements: esFromNode <$> elements,
+};
+
+esFromObjectPattern {properties} = {
+  type: "ObjectPattern",
+  properties: esFromNode <$> properties,
+};
+
+esFromRestElement {argument} = {
+  type: "RestElement",
+  argument: esFromNode argument,
+};
+
+esFromExportDefaultDeclaration {declaration} = {
+  type: "ExportDefaultDeclaration",
+  declaration: esFromNode declaration,
+};
+
+esFromExportNamedDeclaration {specifiers} = {
+  type: "ExportNamedDeclaration",
+  specifiers: {specifier => {
+    type: "ExportSpecifier",
+    local: esFromNode specifier,
+    exported: esFromNode specifier,
+  }} <$> specifiers,
+};
+
+esFromImportExpression {source} = {
+  type: "ImportExpression",
+  source: esFromNode source,
+};
+
+esFromImportDeclaration exportedNames importDeclaration = {
+  if importDeclaration.specifiers == "*" then {
+    source = importDeclaration.source.value;
+    hiding = (.name) <$> importDeclaration.hiding;
+    hiding! = Reflect.construct (Set, [(.name) <$> importDeclaration.hiding]);
+    visible = name => !hiding!.delete(name);
+    if source.endsWith ".serif" then {
+      names = exportedNames(source).filter(visible);
+      if hiding!.size > 0 then {
+        Future.reject $ unnecessaryHiding (source, hiding, Array.from (hiding!.values()))
+      } else {
+        Future.resolve {
+          type: "ImportDeclaration",
+          specifiers: {
+            name => {
+              type: "ImportSpecifier",
+              local: esFromIdentifierName name,
+              imported: esFromIdentifierName name,
+            }
+          } <$> names,
+          source: {
+            type: "Literal",
+            value: source.replace (RegExp "[.]serif$", ".js"),
+          },
+        }
+      }
+    } else {
+      Future.attemptP (() => import (source))
+      |> map Object.keys
+      |> map (names => names.filter visible)
+      |> chain (names =>
+           if hiding!.size > 0 then {
+             Future.reject $ unnecessaryHiding (source, hiding, Array.from (hiding!.values()))
+           } else {
+             Future.resolve {
+               type: "ImportDeclaration",
+               specifiers: {
+                 name => {
+                   type: "ImportSpecifier",
+                   local: esFromEscapedIdentifierName name,
+                   imported: esFromEscapedIdentifierName name,
+                 }
+               } <$> names,
+               source: {
+                 type: "Literal",
+                 value: source,
+               },
+             }
+           }
+         )
+    }
+  } else {
+    Future.resolve {
+      type: "ImportDeclaration",
+      specifiers: {
+        specifier => {
+          if specifier.type == "ImportDefaultSpecifier" then {
+            {
+              type: "ImportDefaultSpecifier",
+              local: esFromIdentifier specifier.local,
+            }
+          } else if specifier.type == "ImportNamespaceSpecifier" then {
+            {
+              type: "ImportNamespaceSpecifier",
+              local: esFromIdentifier specifier.local,
+            }
+          } else { ;; "ImportSpecifier"
+            {
+              type: "ImportSpecifier",
+              local: esFromIdentifier specifier.local,
+              imported: esFromIdentifier specifier.imported,
+            }
+          }
+        }
+      } <$> importDeclaration.specifiers,
+      source: {
+        type: "Literal",
+        value: importDeclaration.source.value.replace(RegExp "[.]serif$", ".js"),
+      },
+    }
+  }
+};
+
+esFromNode expr = {
+  if expr.type == "NullLiteral"                   then esFromNullLiteral
+  else if expr.type == "BooleanLiteral"           then esFromLiteral(expr)
+  else if expr.type == "NumberLiteral"            then esFromLiteral(expr)
+  else if expr.type == "StringLiteral"            then esFromLiteral(expr)
+  else if expr.type == "TemplateLiteral"          then esFromTemplateLiteral(expr)
+  else if expr.type == "MetaProperty"             then esFromMetaProperty(expr)
+  else if expr.type == "MemberExpression"         then esFromMemberExpression(expr)
+  else if expr.type == "Identifier"               then esFromIdentifier(expr)
+  else if expr.type == "ArrayExpression"          then esFromArrayExpression(expr)
+  else if expr.type == "ObjectExpression"         then esFromObjectExpression(expr)
+  else if expr.type == "ArrowFunctionExpression"  then esFromArrowFunctionExpression(expr)
+  else if expr.type == "BlockExpression"          then esFromBlockExpression(expr)
+  else if expr.type == "UnaryExpression"          then esFromUnaryExpression(expr)
+  else if expr.type == "BinaryExpression"         then esFromBinaryExpression(expr)
+  else if expr.type == "LogicalExpression"        then esFromLogicalExpression(expr)
+  else if expr.type == "ConditionalExpression"    then esFromConditionalExpression(expr)
+  else if expr.type == "CallExpression"           then esFromCallExpression(expr)
+  else if expr.type == "SpreadElement"            then esFromSpreadElement(expr)
+  else if expr.type == "ExpressionStatement"      then esFromExpressionStatement(expr)
+  else if expr.type == "VariableDeclaration"      then esFromVariableDeclaration(expr)
+  else if expr.type == "FunctionDeclaration"      then esFromFunctionDeclaration(expr)
+  else if expr.type == "Property"                 then esFromProperty(expr)
+  else if expr.type == "ArrayPattern"             then esFromArrayPattern(expr)
+  else if expr.type == "Elision"                  then esFromElision
+  else if expr.type == "ObjectPattern"            then esFromObjectPattern(expr)
+  else if expr.type == "RestElement"              then esFromRestElement(expr)
+  else if expr.type == "ExportNamedDeclaration"   then esFromExportNamedDeclaration(expr)
+  else if expr.type == "ExportDefaultDeclaration" then esFromExportDefaultDeclaration(expr)
+  else                                                 esFromImportExpression(expr) ;; ImportExpression
+};
+
+unnecessaryHiding = (
+  source,
+  hiding,
+  names,
+) => Reflect.construct (Error, [
+  `import * from "${
+    source
+  }" hiding {${
+    hiding.join(", ")
+  }};\n\n${
+    if names.length > 2
+    then names.slice(0, -1).join(", ") + ", and " + names.at(-1)
+    else names.join(" and ")
+  } ${
+    if names.length == 1 then "is" else "are"
+  } not exported so need not be hidden.\n`,
+]);
+
+namesInPattern node = {
+  if node.type == "Identifier" then {
+    [node.name]
+  } else if node.type == "ArrayPattern" then {
+    node.elements >>= namesInPattern
+  } else if node.type == "ObjectPattern" then {
+    node.properties >>= namesInPattern
+  } else if node.type == "Property" then {
+    namesInPattern node.key
+  } else if node.type == "RestElement" then {
+    namesInPattern node.argument
+  } else {
+    []
+  }
+};
+
+toModule module exportedNames = {
+  topLevelNames = Reflect.construct (Set, [
+    module.statements >>= statement => {
+      if statement.type == "VariableDeclaration" then {
+        namesInPattern(statement.pattern)
+      } else if statement.type == "FunctionDeclaration" then {
+        [statement.name]
+      } else {
+        []
+      }
+    }
+  ]);
+  module.imports
+  |> map (esFromImportDeclaration exportedNames)
+  |> Future.parallel 16
+  |> map (imports => {
+       type: "Program",
+       sourceType: "module",
+       body: [
+         ...imports,
+         esFromVariableDeclaration (
+           Serif.VariableDeclaration
+             (Serif.Identifier "Prelude")
+             (Prelude_
+              |> Object.entries
+              |> map {[name, expr] => Serif.Property (Serif.StringLiteral name) expr}
+              |> Serif.ObjectExpression)
+         ),
+         esFromVariableDeclaration (
+           Serif.VariableDeclaration
+             (Prelude_
+              |> Object.keys
+              ;; Do not unpack if name conflicts with a top-level binding:
+              |> names => names.filter {name => !topLevelNames.has(name)}
+              |> map {name => Serif.Property (Serif.StringLiteral name) (Serif.Identifier name)}
+              |> Serif.ObjectPattern)
+             (Serif.Identifier "Prelude")
+         ),
+         ...{
+           module.statements >>= statement => {
+             if [
+               "VariableDeclaration",
+               "FunctionDeclaration",
+               "ExpressionStatement",
+             ].includes statement.type then [esFromNode statement] else []
+           }
+         },
+         ...{
+           {statement => {
+             if statement.type == "ExportNamedDeclaration" then {
+               esFromExportNamedDeclaration statement
+             } else {
+               esFromExportDefaultDeclaration statement
+             }
+           }} <$> module.exports
+         },
+       ],
+     })
+};

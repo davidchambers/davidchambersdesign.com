@@ -69,6 +69,8 @@ rewrite node = {
     Property (rewrite node.key) (rewrite node.value)
   } else if node.type == "ExportDefaultDeclaration" then {
     ExportDefaultDeclaration $ rewrite node.declaration
+  } else if node.type == "ImportExpression" then {
+    ImportExpression $ rewrite node.source
   } else {
     node
   }
