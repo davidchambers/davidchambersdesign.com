@@ -4,17 +4,16 @@ all: \
 		dist/codegen.js \
 		dist/grammar.js \
 		dist/index.js \
-		dist/prelude.js \
 		dist/repl.js \
 		dist/rewrite.js \
 		dist/serif.js \
-		dist/types.js
+		dist/prelude.js
 
 src/grammar.js: serif.pegjs
 	node_modules/.bin/peggy --format es --dependencies '{"* as Serif": "./types.js"}' <'$<' >'$@'
 
-.PHONY: dist/types.js
-dist/types.js: src/types.serif
+.PHONY: dist/prelude.js
+dist/prelude.js: src/prelude.serif
 	node -- dist/serif.js '$(CURDIR)/src' '$(CURDIR)/dist' '$(CURDIR)/$<'
 
 dist/%: src/%

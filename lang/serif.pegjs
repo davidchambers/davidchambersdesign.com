@@ -18,7 +18,9 @@ ImportDefaultSpecifier
     { return Serif.ImportDefaultSpecifier(local); }
 
 ImportDeclaration
-  = ImportToken _ '{' _ specifiers:ImportSpecifier|.., CommaSeparator| _ '}' _ 'from' _ source:StringLiteral _ ';'
+  = ImportToken _ '{' _ '}' _ 'from' _ source:StringLiteral _ ';'
+    { return Serif.ImportDeclaration(source)([]); }
+  / ImportToken _ '{' _ specifiers:ImportSpecifier|.., CommaSeparator| _ ','? _ '}' _ 'from' _ source:StringLiteral _ ';'
     { return Serif.ImportDeclaration(source)(specifiers); }
   / ImportToken _ '*' _ 'as' _ specifier:ImportNamespaceSpecifier _ 'from' _ source:StringLiteral _ ';'
     { return Serif.ImportDeclaration(source)([specifier]); }
