@@ -232,10 +232,6 @@ const esFromConditionalExpression = ({predicate, consequent, alternative}) => ({
   alternate: esFromNode(alternative),
 });
 
-const esFromPipeExpression = ({head, body}) => (
-  esFromNode(Serif.CallExpression(body)([head]))
-);
-
 const esFromCallExpression = ({callee, arguments: args}) => ({
   type: 'CallExpression',
   callee: esFromNode(callee),
@@ -400,7 +396,6 @@ const esFromNode = expr => {
     case 'BinaryExpression':            return esFromBinaryExpression(expr);
     case 'LogicalExpression':           return esFromLogicalExpression(expr);
     case 'ConditionalExpression':       return esFromConditionalExpression(expr);
-    case 'PipeExpression':              return esFromPipeExpression(expr);
     case 'CallExpression':              return esFromCallExpression(expr);
     case 'SpreadElement':               return esFromSpreadElement(expr);
     case 'ExpressionStatement':         return esFromExpressionStatement(expr);

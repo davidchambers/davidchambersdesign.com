@@ -83,8 +83,8 @@ function rewriteNode(node) {
     }
     case 'PipeExpression': {
       return (
-        Serif.PipeExpression(rewriteNode(node.head))
-                            (rewriteNode(node.body))
+        Serif.CallExpression(rewriteNode(node.body))
+                            ([rewriteNode(node.head)])
       );
     }
     case 'CallExpression': {
