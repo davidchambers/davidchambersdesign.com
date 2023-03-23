@@ -52,7 +52,7 @@ const parse = filename => source => (
           (attempt(() => serif.parse(source, filename)))
 );
 
-const findDependencies = (filename, tree) => (
+const findDependencies = filename => tree => (
   tree.has(filename) ?
   resolve(tree) :
   chain(ast => {
@@ -71,7 +71,7 @@ const findDependencies = (filename, tree) => (
             [filename, {ast, dependencies, exportedNames}],
           ]]);
           return dependencies.reduce(
-            (futureTree, dependency) => chain(tree => findDependencies(dependency, tree))(futureTree),
+            (futureTree, dependency) => chain(findDependencies(dependency))(futureTree),
             resolve(newTree)
           );
         })
@@ -98,7 +98,7 @@ function orderDependencies(tree) {
 
 {
   const cwd = process.cwd();
-  const [,, src, lib, filename] = process.argv;
+  const [,, src, lib, ...filenames] = process.argv;
   const program = (
     chain(tree =>
             // Create JavaScript module for each Serif module:
@@ -128,7 +128,8 @@ function orderDependencies(tree) {
                         ))
                 );
               })))
-         (findDependencies(filename, Reflect.construct(Map, [[]])))
+         (filenames.reduce((futureTree, filename) => chain(findDependencies(filename))(futureTree),
+                           resolve(Reflect.construct(Map, [[]]))))
   );
 
   fork(console.error)
