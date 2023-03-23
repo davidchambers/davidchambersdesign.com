@@ -76,6 +76,11 @@ const esFromEscapedIdentifierName = name => ({
   name,
 });
 
+const esFromNullLiteral = {
+  type: 'Literal',
+  value: null,
+};
+
 const esFromLiteral = ({value}) => ({
   type: 'Literal',
   value,
@@ -383,6 +388,7 @@ const esFromExportDefaultDeclaration = ({declaration}) => ({
 
 const esFromNode = expr => {
   switch (expr.type) {
+    case 'NullLiteral':                 return esFromNullLiteral;
     case 'BooleanLiteral':              return esFromLiteral(expr);
     case 'NumberLiteral':               return esFromLiteral(expr);
     case 'StringLiteral':               return esFromLiteral(expr);

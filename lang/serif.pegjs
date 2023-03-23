@@ -39,6 +39,9 @@ ExportNamedDeclaration
   / ExportToken _ '{' _ specifiers:Identifier|.., CommaSeparator| _ ','? _ '}' _ ';'
     { return Serif.ExportNamedDeclaration(specifiers); }
 
+NullLiteral
+  = 'null'  { return Serif.NullLiteral; }
+
 BooleanLiteral
   = 'true'  { return Serif.BooleanLiteral(true); }
   / 'false' { return Serif.BooleanLiteral(false); }
@@ -228,7 +231,8 @@ ImportMeta
     { return Serif.MetaProperty(meta)(property); }
 
 PrimaryExpression
-  = BooleanLiteral
+  = NullLiteral
+  / BooleanLiteral
   / NumberLiteral
   / StringLiteral
   / TemplateLiteral
