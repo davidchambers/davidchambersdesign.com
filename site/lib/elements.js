@@ -146,7 +146,7 @@ const strong$0027 = inline$002Delement('strong');
 const strong = inline$002Delement('strong')({});
 const time = inline$002Delement('time');
 const var$0027 = inline$002Delement('var');
-const var_ = inline$002Delement('var')({});
+const var$ = inline$002Delement('var')({});
 const video = inline$002Delement('video');
 const embed = self$002Dclosing$002Delement('embed');
 const img = self$002Dclosing$002Delement('img');
@@ -235,7 +235,7 @@ export {
   title$0027,
   ul,
   ul$0027,
-  var_,
+  var$,
   var$0027,
   video
 };

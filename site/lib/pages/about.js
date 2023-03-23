@@ -80,7 +80,7 @@ import {
   title$0027,
   ul,
   ul$0027,
-  var_,
+  var$,
   var$0027,
   video
 } from '../elements.js';

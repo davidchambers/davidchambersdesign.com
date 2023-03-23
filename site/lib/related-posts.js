@@ -6,13 +6,13 @@ const Prelude = {
 const {chain, map} = Prelude;
 const related$002Dposts = posts => post => (() => {
   const tags = Reflect.construct(Set, [post.tags]);
-  return (posts => posts.slice(0, 5))(S.sortBy(this_ => S.Pair(-this_.score)(Math.abs(this_.datetime.diff(post.datetime).milliseconds)))(S.mapMaybe(this_ => this_.slug === post.slug ? S.Nothing : (() => {
-    const score = this_.tags.filter(x => tags.has(x)).length / Math.sqrt(Reflect.construct(Set, [[
+  return (posts => posts.slice(0, 5))(S.sortBy(this$ => S.Pair(-this$.score)(Math.abs(this$.datetime.diff(post.datetime).milliseconds)))(S.mapMaybe(this$ => this$.slug === post.slug ? S.Nothing : (() => {
+    const score = this$.tags.filter(x => tags.has(x)).length / Math.sqrt(Reflect.construct(Set, [[
         ...tags,
-        ...this_.tags
+        ...this$.tags
       ]]).size);
     return score < 0.5 ? S.Nothing : S.Just({
-      ...this_,
+      ...this$,
       score
     });
   })())(posts)));

@@ -79,7 +79,7 @@ import {
   title$0027,
   ul,
   ul$0027,
-  var_,
+  var$,
   var$0027,
   video
 } from '../elements.js';
@@ -93,27 +93,27 @@ const {chain, map} = Prelude;
 const body = [
   p([
     'A reasonably common task is to determine whether a particular\n    statement evaluates as true for every item in a collection.\n    Take ',
-    var_(['list']),
+    var$(['list']),
     ', for example, an Array containing\n    several numbers:'
   ]),
   code$002Dblock('javascript')(`var list = [4, -1, 3, 2, 5];
 `),
   p([
     'One might wish to determine whether all the numbers in ',
-    var_(['list']),
+    var$(['list']),
     ' are positive. The required logic is as follows:'
   ]),
   ol([
     li([
       'assume that all the numbers in ',
-      var_(['list']),
+      var$(['list']),
       ' are positive, then...'
     ]),
     li([
       'loop through ',
-      var_(['list']),
+      var$(['list']),
       ' until the assumption is proven to be\n      false, or until all items in ',
-      var_(['list']),
+      var$(['list']),
       ' have been tested'
     ])
   ]),

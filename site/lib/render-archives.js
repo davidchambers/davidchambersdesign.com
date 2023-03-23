@@ -81,7 +81,7 @@ import {
   title$0027,
   ul,
   ul$0027,
-  var_,
+  var$,
   var$0027,
   video
 } from './elements.js';
@@ -102,7 +102,7 @@ const render$002Dsection = posts => li([
 const render$002Darchives = posts => (archives => [
   h1(['Archives']),
   ol$0027({ class: 'archives' })(archives)
-])(map(render$002Dsection)(S.groupBy(this_ => that => this_['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(map(post => ({
+])(map(render$002Dsection)(S.groupBy(this$ => that => this$['formatted-date'] === that['formatted-date'])(S.sortBy(post => -post.datetime)(map(post => ({
   ...post,
   ['formatted-date']: post.datetime.toFormat('MMMM y')
 }))(posts)))));
