@@ -1,0 +1,80 @@
+import * from "./types.serif";
+
+export default {imports, exports, statements} => {
+  Module {
+    imports: imports,
+    exports: rewrite <$> exports,
+    statements: rewrite <$> statements,
+  }
+};
+
+rewrite node = {
+  if node.type == "TemplateLiteral" then {
+    TemplateLiteral node.quasis $ rewrite <$> node.expressions
+  } else if node.type == "MemberExpression" then {
+    MemberExpression (rewrite node.object) (rewrite node.property)
+  } else if node.type == "ArrayExpression" then {
+    ArrayExpression $ rewrite <$> node.elements
+  } else if node.type == "ObjectExpression" then {
+    ObjectExpression $ rewrite <$> node.properties
+  } else if node.type == "ArrowFunctionExpression" then {
+    ArrowFunctionExpression (rewrite <$> node.parameters) (rewrite node.body)
+  } else if node.type == "PropertyAccessor" then {
+    param = Identifier "x";
+    ArrowFunctionExpression [param] $
+      MemberExpression param $ StringLiteral node.identifier.name
+  } else if node.type == "BlockExpression" then {
+    if node.statements.length == 1 and node.statements[0].type == "ExpressionStatement" then {
+      rewrite node.statements[0].expression
+    } else {
+      BlockExpression $ rewrite <$> node.statements
+    }
+  } else if node.type == "UnaryExpression" then {
+    UnaryExpression node.operator (rewrite node.argument)
+  } else if node.type == "BinaryExpression" then {
+    BinaryExpression node.operator (rewrite node.left) (rewrite node.right)
+  } else if node.type == "MapExpression" then {
+    CallExpression (CallExpression (prelude "map")
+                                   [rewrite node.left])
+                   [rewrite node.right]
+  } else if node.type == "BindExpression" then {
+    CallExpression (CallExpression (prelude "chain")
+                                   [rewrite node.right])
+                   [rewrite node.left]
+  } else if node.type == "LogicalExpression" then {
+    LogicalExpression node.operator (rewrite node.left) (rewrite node.right)
+  } else if node.type == "ConditionalExpression" then {
+    ConditionalExpression (rewrite node.predicate)
+                          (rewrite node.consequent)
+                          (rewrite node.alternative)
+  } else if node.type == "PipeExpression" then {
+    rewrite $ CallExpression node.body [node.head]
+  } else if node.type == "CallExpression" then {
+    CallExpression (rewrite node.callee) (rewrite <$> node.arguments)
+  } else if node.type == "VariableDeclaration" then {
+    VariableDeclaration (rewrite node.pattern) (rewrite node.expression)
+  } else if node.type == "FunctionDeclaration" then {
+    FunctionDeclaration node.name (rewrite <$> node.parameters) (rewrite node.body)
+  } else if node.type == "ExpressionStatement" then {
+    ExpressionStatement $ rewrite node.expression
+  } else if node.type == "ArrayPattern" then {
+    ArrayPattern $ rewrite <$> node.elements
+  } else if node.type == "ObjectPattern" then {
+    ObjectPattern $ rewrite <$> node.properties
+  } else if node.type == "SpreadElement" then {
+    SpreadElement $ rewrite node.argument
+  } else if node.type == "RestElement" then {
+    RestElement $ rewrite node.argument
+  } else if node.type == "Property" then {
+    Property (rewrite node.key) (rewrite node.value)
+  } else if node.type == "ExportDefaultDeclaration" then {
+    ExportDefaultDeclaration $ rewrite node.declaration
+  } else {
+    node
+  }
+};
+
+prelude name = {
+  MemberExpression (Identifier "Prelude")
+                   (StringLiteral name)
+};
