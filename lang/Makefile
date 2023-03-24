@@ -12,7 +12,3 @@ dist/grammar.js: serif.pegjs
 
 dist/%: src/%
 	cp -- '$<' '$@'
-
-.PHONY: test
-test:
-	node -- node_modules/.bin/oletus -- src/test/grammar.js
