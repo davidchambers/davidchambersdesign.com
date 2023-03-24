@@ -234,28 +234,29 @@ fill-chars = {
   ],
 };
 
-update [{x, y}, ...tail] [dir, mag] = [
-  if dir == "h" then {
+next {w, x, y} [dir, mag] = {
+  switch dir
+  when "h" then {
     dx = mag;
-    {x: x + mag, y: y}
-  } else if dir == "v" then {
+    x' = x + dx;
+    {w: S.max w x', x: x', y: y}
+  }
+  when "v" then {
     dy = mag;
-    {x: x, y: y + dy}
-  } else {
+    y' = y + dy;
+    {w: w, x: x, y: y'}
+  }
+  when "m" then {
     [dx, dy] = mag;
-    {x: x + dx, y: y + dy}
-  },
-  {x: x, y: y},
-  ...tail,
-];
+    x' = x + dx;
+    y' = y + dy;
+    {w: S.max w x', x: x', y: y'}
+  }
+};
 
 reset path = {
-  paths = S.extend S.I {S.reduce update [{x: 0, y: 0}] path};
-  xs = paths >>= map (.x);
-  ys = paths >>= map (.y);
-  dx = S.reduce S.max 0 xs - xs[0];
-  dy = 0 - ys[0];
-  ["m", [dx, dy]]
+  {w, x, y} = S.reduce next {w: 0, x: 0, y: 0} path;
+  ["m", [w - x, -y]]
 };
 
 paths chars = [

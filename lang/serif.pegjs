@@ -135,8 +135,10 @@ ImportToken         = @$'import'        !IdentifierPart
 InToken             = @$'in'            !IdentifierPart
 InstanceofToken     = @$'instanceof'    !IdentifierPart
 OrToken             = @$'or'            !IdentifierPart
+SwitchToken         = @$'switch'        !IdentifierPart
 ThenToken           = @$'then'          !IdentifierPart
 TypeofToken         = @$'typeof'        !IdentifierPart
+WhenToken           = @$'when'          !IdentifierPart
 
 ReservedWord
   = UnaryOperator
@@ -155,6 +157,8 @@ ReservedWord
   / IfToken
   / ThenToken
   / ElseToken
+  / SwitchToken
+  / WhenToken
   / ImportToken
   / ExportToken
 
@@ -464,7 +468,7 @@ BindOperator
 
 BindExpression
   = exprs:CoalesceExpression|1.., _ BindOperator _|
-    { return exprs.reduceRight((right, left) => Serif.BindExpression(left)(right)); }
+    { return exprs.reduce((left, right) => Serif.BindExpression(left)(right)); }
 
 ConditionalExpression
   = IfToken
@@ -476,11 +480,26 @@ ConditionalExpression
     { return Serif.ConditionalExpression(predicate)(consequent)(alternative); }
   / BindExpression
 
+SwitchExpression
+  = SwitchToken
+    _ discriminant:Expression
+    _ cases:SwitchCase|.., _|
+    default_:(_ ElseToken _ default_:Expression { return default_; })?
+    { return Serif.SwitchExpression(discriminant)(cases)(default_); }
+  / ConditionalExpression
+
+SwitchCase
+  = WhenToken
+    _ predicates:Expression|1.., CommaSeparator|
+    _ ThenToken
+    _ consequent:Expression
+    { return Serif.SwitchCase(predicates)(consequent); }
+
 ApplicationOperator
   = '$'
 
 ApplicationExpression
-  = callee:ConditionalExpression
+  = callee:SwitchExpression
     args:(_ ApplicationOperator _ arg:ApplicationExpression { return arg; })*
     { return args.reduce((callee, arg) => Serif.CallExpression(callee)([arg]), callee); }
 

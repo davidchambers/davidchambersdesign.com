@@ -179,11 +179,9 @@ inline-element name attributes children! = {
     children: children,
     toString: () => {String <$> children}.join(""),
     render: context => {
-      if format == "inline" then {
-        render-inline-element context element
-      } else {
-        render-block-element context element
-      }
+      switch format
+      when "inline" then render-inline-element context element
+      when "block"  then render-block-element context element
     },
   };
   element

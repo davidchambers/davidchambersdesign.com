@@ -9,69 +9,103 @@ export default {imports, exports, statements} => {
 };
 
 rewrite node = {
-  if node.type == "TemplateLiteral" then {
+  switch node.type
+  when "TemplateLiteral" then {
     TemplateLiteral node.quasis $ rewrite <$> node.expressions
-  } else if node.type == "MemberExpression" then {
+  }
+  when "MemberExpression" then {
     MemberExpression (rewrite node.object) (rewrite node.property)
-  } else if node.type == "ArrayExpression" then {
+  }
+  when "ArrayExpression" then {
     ArrayExpression $ rewrite <$> node.elements
-  } else if node.type == "ObjectExpression" then {
+  }
+  when "ObjectExpression" then {
     ObjectExpression $ rewrite <$> node.properties
-  } else if node.type == "ArrowFunctionExpression" then {
+  }
+  when "ArrowFunctionExpression" then {
     ArrowFunctionExpression (rewrite <$> node.parameters) (rewrite node.body)
-  } else if node.type == "PropertyAccessor" then {
+  }
+  when "PropertyAccessor" then {
     param = Identifier "x";
     ArrowFunctionExpression [param] $
       MemberExpression param $ StringLiteral node.identifier.name
-  } else if node.type == "BlockExpression" then {
+  }
+  when "BlockExpression" then {
     if node.statements.length == 1 and node.statements[0].type == "ExpressionStatement" then {
       rewrite node.statements[0].expression
     } else {
       BlockExpression $ rewrite <$> node.statements
     }
-  } else if node.type == "UnaryExpression" then {
+  }
+  when "UnaryExpression" then {
     UnaryExpression node.operator (rewrite node.argument)
-  } else if node.type == "BinaryExpression" then {
+  }
+  when "BinaryExpression" then {
     BinaryExpression node.operator (rewrite node.left) (rewrite node.right)
-  } else if node.type == "MapExpression" then {
+  }
+  when "MapExpression" then {
     CallExpression (CallExpression (prelude "map")
                                    [rewrite node.left])
                    [rewrite node.right]
-  } else if node.type == "BindExpression" then {
+  }
+  when "BindExpression" then {
     CallExpression (CallExpression (prelude "chain")
                                    [rewrite node.right])
                    [rewrite node.left]
-  } else if node.type == "LogicalExpression" then {
+  }
+  when "LogicalExpression" then {
     LogicalExpression node.operator (rewrite node.left) (rewrite node.right)
-  } else if node.type == "ConditionalExpression" then {
+  }
+  when "ConditionalExpression" then {
     ConditionalExpression (rewrite node.predicate)
                           (rewrite node.consequent)
                           (rewrite node.alternative)
-  } else if node.type == "PipeExpression" then {
+  }
+  when "SwitchExpression" then {
+    SwitchExpression (rewrite node.discriminant)
+                     (rewrite <$> node.cases)
+                     (if node.default == null then null else rewrite node.default)
+  }
+  when "SwitchCase" then {
+    SwitchCase (rewrite <$> node.predicates) (rewrite node.consequent)
+  }
+  when "PipeExpression" then {
     rewrite $ CallExpression node.body [node.head]
-  } else if node.type == "CallExpression" then {
+  }
+  when "CallExpression" then {
     CallExpression (rewrite node.callee) (rewrite <$> node.arguments)
-  } else if node.type == "VariableDeclaration" then {
+  }
+  when "VariableDeclaration" then {
     VariableDeclaration (rewrite node.pattern) (rewrite node.expression)
-  } else if node.type == "FunctionDeclaration" then {
+  }
+  when "FunctionDeclaration" then {
     FunctionDeclaration node.name (rewrite <$> node.parameters) (rewrite node.body)
-  } else if node.type == "ExpressionStatement" then {
+  }
+  when "ExpressionStatement" then {
     ExpressionStatement $ rewrite node.expression
-  } else if node.type == "ArrayPattern" then {
+  }
+  when "ArrayPattern" then {
     ArrayPattern $ rewrite <$> node.elements
-  } else if node.type == "ObjectPattern" then {
+  }
+  when "ObjectPattern" then {
     ObjectPattern $ rewrite <$> node.properties
-  } else if node.type == "SpreadElement" then {
+  }
+  when "SpreadElement" then {
     SpreadElement $ rewrite node.argument
-  } else if node.type == "RestElement" then {
+  }
+  when "RestElement" then {
     RestElement $ rewrite node.argument
-  } else if node.type == "Property" then {
+  }
+  when "Property" then {
     Property (rewrite node.key) (rewrite node.value)
-  } else if node.type == "ExportDefaultDeclaration" then {
+  }
+  when "ExportDefaultDeclaration" then {
     ExportDefaultDeclaration $ rewrite node.declaration
-  } else if node.type == "ImportExpression" then {
+  }
+  when "ImportExpression" then {
     ImportExpression $ rewrite node.source
-  } else {
+  }
+  else {
     node
   }
 };

@@ -46,7 +46,14 @@ const inline$002Delement = name => attributes => children$0021 => (() => {
     attributes,
     children,
     toString: () => Prelude.map(String)(children).join(""),
-    render: context => format === "inline" ? render$002Dinline$002Delement(context)(element) : render$002Dblock$002Delement(context)(element)
+    render: context => (discriminant => {
+      switch (format) {
+        case "inline":
+          return render$002Dinline$002Delement(context)(element);
+        case "block":
+          return render$002Dblock$002Delement(context)(element);
+      }
+    })(format)
   };
   return element;
 })();

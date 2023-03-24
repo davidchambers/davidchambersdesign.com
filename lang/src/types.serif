@@ -25,6 +25,8 @@ export {
   BindExpression,
   LogicalExpression,
   ConditionalExpression,
+  SwitchExpression,
+  SwitchCase,
   PipeExpression,
   CallExpression,
   ImportExpression,
@@ -183,6 +185,19 @@ ConditionalExpression predicate consequent alternative = {
   predicate: predicate,
   consequent: consequent,
   alternative: alternative,
+};
+
+SwitchExpression discriminant cases default = {
+  type: "SwitchExpression",
+  discriminant: discriminant,
+  cases: cases,
+  default: default,
+};
+
+SwitchCase predicates consequent = {
+  type: "SwitchCase",
+  predicates: predicates,
+  consequent: consequent,
 };
 
 PipeExpression head body = {

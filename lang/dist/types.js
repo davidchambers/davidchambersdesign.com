@@ -120,6 +120,17 @@ const ConditionalExpression = predicate => consequent => alternative => ({
   consequent,
   alternative
 });
+const SwitchExpression = discriminant => cases => default$ => ({
+  type: "SwitchExpression",
+  discriminant,
+  cases,
+  default: default$
+});
+const SwitchCase = predicates => consequent => ({
+  type: "SwitchCase",
+  predicates,
+  consequent
+});
 const PipeExpression = head => body => ({
   type: "PipeExpression",
   head,
@@ -192,4 +203,4 @@ const Module = ({imports, exports, statements}) => ({
   exports,
   statements
 });
-export {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateElement, TemplateLiteral, MetaProperty, MemberExpression, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, PipeExpression, CallExpression, ImportExpression, ImportDefaultDeclaration, ImportDeclaration, ImportEverythingDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module};
+export {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateElement, TemplateLiteral, MetaProperty, MemberExpression, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, PipeExpression, CallExpression, ImportExpression, ImportDefaultDeclaration, ImportDeclaration, ImportEverythingDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module};

@@ -70,7 +70,7 @@ findDependencies filename tree = {
           }
         };
         dependencies.reduce (reducer, resolve $ Reflect.construct (Map, [[
-          ...tree.entries(),
+          ...tree,
           [filename, {sourceText: sourceText, ast: ast, dependencies: dependencies, exportedNames: exportedNames}],
         ]]))
       }

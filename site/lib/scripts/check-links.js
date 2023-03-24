@@ -23,9 +23,23 @@ const invert = text => `\x1B[7m${text}\x1B[27m`;
 const red = text => `\x1B[31m${text}\x1B[0m`;
 const yellow = text => `\x1B[33m${text}\x1B[0m`;
 const cyan = text => `\x1B[36m${text}\x1B[0m`;
-const format = ({url, status}) => typeof status === "string" ? (() => {
-  const indent = (" ").repeat(Math.max(0, 15 - status.length));
-  return red(`${indent}${invert(bold(status))} ${url}`);
-})() : status >= 200 && status < 300 ? `            ${bold(status)} ${url}` : status >= 300 && status < 400 ? yellow(`            ${bold(status)} ${url}`) : status >= 400 && status < 500 ? red(`            ${bold(status)} ${url}`) : cyan(`            ${bold(status)} ${url}`);
-const program = (links => map(S.joinWith("\n"))(map(map(format))(parallel(16)(map(status)(S.sort(Array.from(Reflect.construct(Set, [links]).values())))))))(chain(links)(chain(x => x.body)(posts)));
+const format = ({url, status}) => (() => {
+  const padding = x => (" ").repeat(S.max(0)(15 - `${x}`.length));
+  const normal = s => s;
+  return (discriminant => {
+    switch (true) {
+      case typeof status === "string":
+        return red(`${padding(status)} ${invert(bold(status))} ${url}`);
+      case status >= 200 && status < 300:
+        return `${padding(status)} ${normal(bold(status))} ${url}`;
+      case status >= 300 && status < 400:
+        return yellow(`${padding(status)} ${normal(bold(status))} ${url}`);
+      case status >= 400 && status < 500:
+        return red(`${padding(status)} ${normal(bold(status))} ${url}`);
+      default:
+        return cyan(`${padding(status)} ${normal(bold(status))} ${url}`);
+    }
+  })(true);
+})();
+const program = (links => map(S.joinWith("\n"))(map(map(format))(parallel(16)(map(status)(S.sort(Array.from(Reflect.construct(Set, [links]))))))))(Prelude.chain(links)(Prelude.chain(x => x.body)(posts)));
 fork(console.error)(console.log)(program);

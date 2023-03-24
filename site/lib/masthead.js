@@ -51,38 +51,48 @@ const fill$002Dchars = {
   S: [$21E8(1), $21E9(13), $2192(8), $2193(1), $2190(8), $2191(1), $21E8(0), $21E9(10), $2192(10), $2191(12), $2192(1), $2193(13), $2190(11), $2191(1), $21E8(2), $21E7(20), $2192(8), $2191(2), $2192(1), $2193(3), $2190(8), $2193(7), $2190(1), $2191(8)],
   V: [$21E8(1), $21E9(23), $2192(12), $2191(22), $2192(1), $2193(23), $2190(13), $2191(1), $21E8(2), $21E7(22), $2192(1), $2193(20), $2190(1), $2191(20)]
 };
-const update = ([{x, y}, ...tail]) => ([dir, mag]) => [dir === "h" ? (() => {
-  const dx = mag;
-  return {
-    x: x + mag,
-    y
-  };
-})() : dir === "v" ? (() => {
-  const dy = mag;
-  return {
-    x,
-    y: y + dy
-  };
-})() : (() => {
-  const [dx, dy] = mag;
-  return {
-    x: x + dx,
-    y: y + dy
-  };
-})(), {
-  x,
-  y
-}, ...tail];
+const next = ({w, x, y}) => ([dir, mag]) => (discriminant => {
+  switch (dir) {
+    case "h":
+      return (() => {
+        const dx = mag;
+        const x$0027 = x + dx;
+        return {
+          w: S.max(w)(x$0027),
+          x: x$0027,
+          y
+        };
+      })();
+    case "v":
+      return (() => {
+        const dy = mag;
+        const y$0027 = y + dy;
+        return {
+          w,
+          x,
+          y: y$0027
+        };
+      })();
+    case "m":
+      return (() => {
+        const [dx, dy] = mag;
+        const x$0027 = x + dx;
+        const y$0027 = y + dy;
+        return {
+          w: S.max(w)(x$0027),
+          x: x$0027,
+          y: y$0027
+        };
+      })();
+  }
+})(dir);
 const reset = path => (() => {
-  const paths = S.extend(S.I)(S.reduce(update)([{
+  const {w, x, y} = S.reduce(next)({
+    w: 0,
     x: 0,
     y: 0
-  }])(path));
-  const xs = Prelude.chain(map(x => x.x))(paths);
-  const ys = Prelude.chain(map(x => x.y))(paths);
-  const dx = S.reduce(S.max)(0)(xs) - xs[0];
-  const dy = 0 - ys[0];
-  return ["m", [dx, dy]];
+  })(path);
+  return ["m", [w - x, -y]];
 })();
 const paths = chars => [...Prelude.chain(char => [["M", [0, 0]], ...char, reset(char)])(chars.slice(0, 1)), ...Prelude.chain(char => [["m", [6, 0]], ...char, reset(char)])(chars.slice(1))];
 const chars = Array.from("DAVIDCHAMBERSDESIGN");

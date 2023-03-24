@@ -23,7 +23,7 @@ const reducer = (futureTree, filename) => Prelude.chain(findDependencies(filenam
 const findDependencies = filename => tree => tree.has(filename) ? resolve(tree) : Prelude.chain(sourceText => Prelude.chain(ast => (() => {
   const dependencies = Prelude.chain(({source: {value}}) => (value.startsWith("/") || value.startsWith(".")) && value.endsWith(".serif") ? [path.join(filename, "..", value)] : [])(ast.imports);
   const exportedNames = Prelude.chain(exportDeclaration => exportDeclaration.type === "ExportNamedDeclaration" ? Prelude.map(x => x.name)(exportDeclaration.specifiers) : [])(ast.exports);
-  return dependencies.reduce(reducer, resolve(Reflect.construct(Map, [[...tree.entries(), [filename, {
+  return dependencies.reduce(reducer, resolve(Reflect.construct(Map, [[...tree, [filename, {
     sourceText,
     ast,
     dependencies,

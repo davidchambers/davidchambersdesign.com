@@ -14,22 +14,17 @@ evaluateModule source = {
   context = vm.createContext global;
   module = Reflect.construct (vm.SourceTextModule, [source, {context: context}]);
   chain (_ => map (_ => module.namespace.default)
-                  (attemptP (() => module.evaluate())))
+                  (attemptP (() => module.evaluate ())))
         (attemptP (() => module.link $ (specifier, referencingModule) => {
                      promise (map (entries => {
                                      module = Reflect.construct (vm.SyntheticModule, [
                                        entries.map $ [name] => name,
-                                       () => {
-                                         entries.forEach $ [name, value] => {
-                                           module.setExport(name, value)
-                                         }
-                                       },
+                                       () => entries.forEach $ [name, value] => module.setExport (name, value),
                                        {identifier: specifier, context: referencingModule.context},
                                      ]);
                                      module
                                    })
-                                  (map Object.entries
-                                       (attemptP (() => import (specifier)))))
+                                  (Object.entries <$> attemptP (() => import (specifier))))
                    }))
 };
 
@@ -41,51 +36,49 @@ read serifSource = {
 };
 
 print x = {
-  repr = Object.prototype.toString.call x;
-  if repr == "[object Null]" or
-     repr == "[object Undefined]" or
-     repr == "[object Boolean]" then {
-    `\x1B[35m${x}\x1B[0m`
-  } else if repr == "[object Number]" then {
-    `\x1B[33m${x}\x1B[0m`
-  } else if repr == "[object String]" then {
-    `\x1B[32m${JSON.stringify(x)}\x1B[0m`
-  } else if repr == "[object Symbol]" then {
-    `Symbol.for ${print(Symbol.keyFor(x))}`
-  } else if repr == "[object Date]" then {
-    `Reflect.construct (Date, [${print(Number(x))}])`
-  } else if repr == "[object RegExp]" then {
-    `RegExp (${print(x.source)}, ${print(x.flags)})`
-  } else if repr == "[object Set]" then {
-    `Reflect.construct (Set, [${print(Array.from(x))}])`
-  } else if repr == "[object Map]" then {
-    `Reflect.construct (Map, [${print(Array.from(x))}])`
-  } else if repr == "[object Array]" then {
-    "[" + x.map(print).join(", ") + "]"
-  } else if repr == "[object Object]" then {
-    "{" + Reflect.ownKeys(x).map(k => `[${print(k)}]: ${print(x[k])}`).join(", ") + "}"
-  } else {
-    `${x}`
-  }
+  switch Object.prototype.toString.call x
+  when "[object Null]",
+       "[object Undefined]",
+       "[object Boolean]"
+  then `\x1B[35m${x}\x1B[0m`
+  when "[object Number]"
+  then `\x1B[33m${x}\x1B[0m`
+  when "[object String]"
+  then `\x1B[32m${JSON.stringify x}\x1B[0m`
+  when "[object Symbol]"
+  then `Symbol.for ${print $ Symbol.keyFor x}`
+  when "[object Date]"
+  then `Reflect.construct (Date, [${print $ Number x}])`
+  when "[object RegExp]"
+  then `RegExp (${print x.source}, ${print x.flags})`
+  when "[object Set]"
+  then `Reflect.construct (Set, [${print $ Array.from x}])`
+  when "[object Map]"
+  then `Reflect.construct (Map, [${print $ Array.from x}])`
+  when "[object Array]"
+  then "[" + {print <$> x}.join(", ") + "]"
+  when "[object Object]"
+  then "{" + {{k => `[${print k}]: ${print x[k]}`} <$> Reflect.ownKeys x}.join(", ") + "}"
+  else `${x}`
 };
 
 server = repl.start {
   prompt: ">>> ",
   eval: (code, _context, _filename, callback) => {
     fork (err => {
-            console.error(err);
-            console.log();
-            server.displayPrompt(false)
+            console.error err;
+            console.log ();
+            server.displayPrompt false
           })
          (result => {
-            callback(null, result)
+            callback (null, result)
           })
          (read code)
   },
-  writer: value => print(value) + "\n",
+  writer: value => print value + "\n",
 };
 
 server.setupHistory (
-  path.join (os.homedir(), ".serif-repl-history"),
+  path.join (os.homedir (), ".serif-repl-history"),
   error => undefined
 );
