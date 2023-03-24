@@ -32,7 +32,6 @@ export {
   PipeExpression,
   CallExpression,
   ImportExpression,
-  ImportDefaultDeclaration,
   ImportDeclaration,
   ImportEverythingDeclaration,
   ImportDefaultSpecifier,
@@ -228,12 +227,6 @@ CallExpression callee args = {
 ImportExpression source = {
   type: "ImportExpression",
   source: source,
-};
-
-ImportDefaultDeclaration source specifier = {
-  type: "ImportDeclaration",
-  source: source,
-  specifiers: [specifier],
 };
 
 ImportDeclaration source specifiers = {

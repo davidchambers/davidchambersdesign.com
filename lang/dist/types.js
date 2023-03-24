@@ -154,11 +154,6 @@ const ImportExpression = source => ({
   type: "ImportExpression",
   source
 });
-const ImportDefaultDeclaration = source => specifier => ({
-  type: "ImportDeclaration",
-  source,
-  specifiers: [specifier]
-});
 const ImportDeclaration = source => specifiers => ({
   type: "ImportDeclaration",
   source,
@@ -212,4 +207,4 @@ const Module = ({imports, exports, statements}) => ({
   exports,
   statements
 });
-export {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateElement, TemplateLiteral, MetaProperty, MemberExpression, IdentifierPlaceholder, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, PipeExpression, CallExpression, ImportExpression, ImportDefaultDeclaration, ImportDeclaration, ImportEverythingDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module};
+export {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateElement, TemplateLiteral, MetaProperty, MemberExpression, IdentifierPlaceholder, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, PipeExpression, CallExpression, ImportExpression, ImportDeclaration, ImportEverythingDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module};
