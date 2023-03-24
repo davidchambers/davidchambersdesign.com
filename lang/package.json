@@ -9,7 +9,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "escodegen": "2.0.0",
+    "astring": "1.8.4",
     "fluture": "14.0.0"
   },
   "devDependencies": {

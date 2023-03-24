@@ -1,39 +1,39 @@
-import S from 'sanctuary';
+import S from "sanctuary";
 const Prelude = {
-  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain['fantasy-land/chain'](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f)
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
 };
 const {chain, map} = Prelude;
-const base03 = '#002b36';
-const base02 = '#073642';
-const base01 = '#586e75';
-const base00 = '#657b83';
-const base0 = '#839496';
-const base1 = '#93a1a1';
-const base2 = '#eee8d5';
-const base3 = '#fdf6e3';
-const yellow = '#b58900';
-const orange = '#cb4b16';
-const red = '#dc322f';
-const magenta = '#d33682';
-const violet = '#6c71c4';
-const blue = '#268bd2';
-const cyan = '#2aa198';
-const green = '#859900';
-const mid$002Dgray = '#a9a9a9';
-const pink = '#ff5e99';
-const recycled$002Dpaper = '#fef9ec';
+const base03 = "#002b36";
+const base02 = "#073642";
+const base01 = "#586e75";
+const base00 = "#657b83";
+const base0 = "#839496";
+const base1 = "#93a1a1";
+const base2 = "#eee8d5";
+const base3 = "#fdf6e3";
+const yellow = "#b58900";
+const orange = "#cb4b16";
+const red = "#dc322f";
+const magenta = "#d33682";
+const violet = "#6c71c4";
+const blue = "#268bd2";
+const cyan = "#2aa198";
+const green = "#859900";
+const mid$002Dgray = "#a9a9a9";
+const pink = "#ff5e99";
+const recycled$002Dpaper = "#fef9ec";
 const tag$002Dbackground = count => (() => {
-  const hex = Math.floor(247 - Math.log2(count) * 5).toString(16).padStart(2, '0');
-  return `#${ hex }${ hex }${ hex }`;
+  const hex = Math.floor(247 - Math.log2(count) * 5).toString(16).padStart(2, "0");
+  return `#${hex}${hex}${hex}`;
 })();
 const tag$002Dcolor = count => (() => {
-  const inconsequential = RegExp('[.]000$|0*$');
-  return `rgba(0, 0, 0, ${ (Math.log2(count) * 0.1 + 0.3).toFixed(3).replace(inconsequential, '') })`;
+  const inconsequential = RegExp("[.]000$|0*$");
+  return `rgba(0, 0, 0, ${(Math.log2(count) * 0.1 + 0.3).toFixed(3).replace(inconsequential, "")})`;
 })();
 const screen = `html {
   height: 100%;
-  background-color: ${ base3 };
+  background-color: ${base3};
 }
 
 html > body {
@@ -44,10 +44,10 @@ body {
   position: relative;
   min-width: 675px;
   height: 100%;
-  background-color: ${ base3 };
+  background-color: ${base3};
   font-size: 75%;
   font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif;
-  color: ${ base00 };
+  color: ${base00};
   cursor: default;
 }
 
@@ -180,7 +180,7 @@ a#title.hover {
 }
 
 #nav a:focus {
-  border-color: ${ orange };
+  border-color: ${orange};
   background-color: #eecc66;
 }
 
@@ -190,7 +190,7 @@ a#title.hover {
 
 #nav a:hover,
 #nav a.hover {
-  border-color: ${ orange };
+  border-color: ${orange};
   background-color: white;
 }
 
@@ -207,7 +207,7 @@ a#title.hover {
   display: block;
   width: 354px;
   height: 10px;
-  background: ${ base3 };
+  background: ${base3};
   line-height: 10;
   overflow: hidden;
   visibility: hidden;
@@ -291,17 +291,17 @@ a#title.hover {
 
 #wrap + footer > :first-child {
   margin: -1px 0 0;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 ::-moz-selection {
-  background: ${ pink };
+  background: ${pink};
   color: white;
   text-shadow: none;
 }
 
 ::selection {
-  background: ${ pink };
+  background: ${pink};
   color: white;
   text-shadow: none;
 }
@@ -309,16 +309,16 @@ a#title.hover {
 a {
   font-weight: bold;
   text-decoration: none;
-  color: ${ blue };
+  color: ${blue};
 }
 
 a:focus {
-  color: ${ orange };
+  color: ${orange};
   outline: none;
 }
 
 a:hover {
-  color: ${ orange };
+  color: ${orange};
 }
 
 a code,
@@ -329,14 +329,14 @@ a var {
 aside {
   margin: 1.75em 0 0;
   font-style: italic;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 blockquote {
-  border-left: 0.5em solid ${ base2 };
+  border-left: 0.5em solid ${base2};
   padding: 0 2.25em 0 1.75em;
   font-style: italic;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 blockquote em {
@@ -350,11 +350,11 @@ caption {
 
 code,
 var {
-  border: 1px solid ${ base2 };
-  background: ${ recycled$002Dpaper };
+  border: 1px solid ${base2};
+  background: ${recycled$002Dpaper};
   padding: 1px 4px;
   font: normal 120%/1 'Courier', 'Courier New', monospace;
-  color: ${ base01 };
+  color: ${base01};
 }
 
 pre code {
@@ -414,7 +414,7 @@ dl dt img {
 
 dl dd {
   font-style: italic;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 em {
@@ -426,7 +426,7 @@ h2,
 h3,
 h4 {
   font: bold 1.667em/1.05 'proxima-nova-1', 'proxima-nova-2', 'Helvetica', 'Arial', sans-serif;
-  color: ${ base01 };
+  color: ${base01};
   text-shadow: 0 1px 0 white;
 }
 
@@ -541,7 +541,7 @@ input[type='search'] {
   -webkit-box-sizing: content-box;
   height: 15px;
   border: 1px solid #cccccc;
-  background: ${ recycled$002Dpaper };
+  background: ${recycled$002Dpaper};
   padding: 3px 0.5em;
   font-size: 1em;
 }
@@ -550,12 +550,12 @@ input[type='url']:focus,
 input[type='text']:focus,
 input[type='email']:focus,
 input[type='search']:focus {
-  border-color: ${ blue };
+  border-color: ${blue};
   outline: none;
 }
 
 input.placeholder {
-  color: ${ '#a9a9a9' } !important;
+  color: ${"#a9a9a9"} !important;
 }
 
 ins {
@@ -568,7 +568,7 @@ label {
   left: 19.833em;
   top: 0;
   margin: 1px 0 0;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 label.required:after {
@@ -593,13 +593,13 @@ p {
 p.caption {
   margin: 0.5em 0 0;
   font-style: italic;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 pre {
   margin: 1.286em 0 -0.214em;
-  border: 1px solid ${ base2 };
-  background-color: ${ recycled$002Dpaper };
+  border: 1px solid ${base2};
+  background-color: ${recycled$002Dpaper};
   padding: 0.143em 0.714em;
   font: 1.167em/1.5 'Courier', 'Courier New', monospace;
   overflow: auto;
@@ -622,7 +622,7 @@ textarea {
   width: 98%;
   height: 15em;
   border: 1px solid #cccccc;
-  background: ${ recycled$002Dpaper };
+  background: ${recycled$002Dpaper};
   padding: 0.333em 0.5em;
   font: 1em/1.25 'Monaco', monospace;
   outline: none;
@@ -630,12 +630,12 @@ textarea {
 }
 
 textarea:focus {
-  border-color: ${ blue };
+  border-color: ${blue};
 }
 
 time span {
   display: block;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 time span + span {
@@ -671,7 +671,7 @@ video {
 article > header > dl {
   margin: 1.571em 0 -0.071em;
   font: 1.167em/1.5 'Courier', 'Courier New', monospace;
-  color: ${ base1 };
+  color: ${base1};
   overflow: auto;
 }
 
@@ -737,8 +737,8 @@ article > header > dl > dd > a {
   -moz-transition-timing-function: ease;
   -o-transition-timing-function: ease;
   transition-timing-function: ease;
-  background: ${ tag$002Dbackground(20) };
-  color: ${ tag$002Dcolor(20) };
+  background: ${tag$002Dbackground(20)};
+  color: ${tag$002Dcolor(20)};
 }
 
 #tags li a:focus,
@@ -755,11 +755,11 @@ article > header > dl > dd > a {
   z-index: 99;
 }
 
-${ S.range(1)(20).map(count => `#tags li[data-count='${ count }'] a {
-  background: ${ tag$002Dbackground(count) };
-  color: ${ tag$002Dcolor(count) };
+${S.range(1)(20).map(count => `#tags li[data-count='${count}'] a {
+  background: ${tag$002Dbackground(count)};
+  color: ${tag$002Dcolor(count)};
 }
-`).join('\n').trimEnd() }
+`).join("\n").trimEnd()}
 
 .hashify-editor {
   margin-top: 2px;
@@ -781,7 +781,7 @@ div.syntaxhighlighter code {
 }
 
 .filesize {
-  color: ${ base1 };
+  color: ${base1};
 }
 
 .structural {
@@ -800,7 +800,7 @@ ol li.interviewer ~ li {
 
 ol li.interviewer:nth-child(1),
 ol li.interviewer ~ li:nth-child(odd) {
-  color: ${ base1 };
+  color: ${base1};
 }
 
 #comments,
@@ -848,17 +848,17 @@ ol li.interviewer ~ li:nth-child(odd) {
   display: inline;
   margin: 0 0.25em 0 0;
   font: bold 1.667em/1.05 'proxima-nova-1', 'proxima-nova-2', 'Helvetica', 'Arial', sans-serif;
-  color: ${ base01 };
+  color: ${base01};
   text-shadow: 0 1px 0 white;
 }
 
 #main article header time {
   display: inline;
   font: bold 1.667em/1.05 'proxima-nova-1', 'proxima-nova-2', 'Helvetica', 'Arial', sans-serif;
-  color: ${ base01 };
+  color: ${base01};
   text-shadow: 0 1px 0 white;
   font-weight: normal;
-  color: ${ base1 };
+  color: ${base1};
   white-space: nowrap;
 }
 
@@ -866,7 +866,7 @@ ol li.interviewer ~ li:nth-child(odd) {
   margin: 1.75em 0 -1px;
   border-width: 1px 0;
   border-style: solid;
-  border-color: ${ base1 };
+  border-color: ${base1};
   padding: 1.667em 0 1.75em;
 }
 
@@ -900,14 +900,14 @@ footer.metadata ul a {
   -ms-border-radius: 0.875em;
   -o-border-radius: 0.875em;
   border-radius: 0.875em;
-  background: ${ blue };
+  background: ${blue};
   padding: 0 0.667em 0 0.833em;
   color: white;
 }
 
 footer.metadata ul a:focus,
 footer.metadata ul a:hover {
-  background: ${ orange };
+  background: ${orange};
 }
 
 footer.metadata h4 {
@@ -1054,7 +1054,7 @@ input[type='submit'] {
 }
 
 input[type='submit']:focus {
-  border-color: ${ blue };
+  border-color: ${blue};
   outline: none;
 }
 
@@ -1096,7 +1096,7 @@ ol.pages {
 
 ol.posts {
   list-style: none;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 ol.archives {
@@ -1109,7 +1109,7 @@ ol.archives li h2 {
   margin: 1.75em 0 0 21px;
   padding: 0;
   font: bold 1em/1.75 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 ol.archives li ol {
@@ -1410,12 +1410,12 @@ ol.archives time[datetime*='31T']:after {
 }
 
 .codehilite .hll {
-  background-color: ${ base2 };
+  background-color: ${base2};
 }
 
 .codehilite .c {
   font-style: italic;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 .codehilite .k {
@@ -1428,23 +1428,23 @@ ol.archives time[datetime*='31T']:after {
 
 .codehilite .cm {
   font-style: italic;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 .codehilite .cp {
   font-weight: bold;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 .codehilite .c1 {
   font-style: italic;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 .codehilite .cs {
   font-style: italic;
   font-weight: bold;
-  color: ${ base1 };
+  color: ${base1};
 }
 
 .codehilite .ge {
@@ -1452,19 +1452,19 @@ ol.archives time[datetime*='31T']:after {
 }
 
 .codehilite .gr {
-  color: ${ red };
+  color: ${red};
 }
 
 .codehilite .gh {
-  color: ${ base1 };
+  color: ${base1};
 }
 
 .codehilite .go {
-  color: ${ base1 };
+  color: ${base1};
 }
 
 .codehilite .gp {
-  color: ${ base1 };
+  color: ${base1};
 }
 
 .codehilite .gs {
@@ -1472,11 +1472,11 @@ ol.archives time[datetime*='31T']:after {
 }
 
 .codehilite .gu {
-  color: ${ base1 };
+  color: ${base1};
 }
 
 .codehilite .gt {
-  color: ${ red };
+  color: ${red};
 }
 
 .codehilite .kc {
@@ -1504,15 +1504,15 @@ ol.archives time[datetime*='31T']:after {
 }
 
 .codehilite .m {
-  color: ${ cyan };
+  color: ${cyan};
 }
 
 .codehilite .s {
-  color: ${ yellow };
+  color: ${yellow};
 }
 
 .codehilite .na {
-  color: ${ cyan };
+  color: ${cyan};
 }
 
 .codehilite .nc {
@@ -1520,25 +1520,25 @@ ol.archives time[datetime*='31T']:after {
 }
 
 .codehilite .no {
-  color: ${ cyan };
+  color: ${cyan};
 }
 
 .codehilite .ni {
-  color: ${ magenta };
+  color: ${magenta};
 }
 
 .codehilite .ne {
   font-weight: bold;
-  color: ${ orange };
+  color: ${orange};
 }
 
 .codehilite .nf {
   font-weight: bold;
-  color: ${ orange };
+  color: ${orange};
 }
 
 .codehilite .nt {
-  color: ${ blue };
+  color: ${blue};
 }
 
 .codehilite .ow {
@@ -1546,83 +1546,83 @@ ol.archives time[datetime*='31T']:after {
 }
 
 .codehilite .mf {
-  color: ${ cyan };
+  color: ${cyan};
 }
 
 .codehilite .mh {
-  color: ${ cyan };
+  color: ${cyan};
 }
 
 .codehilite .mi {
-  color: ${ cyan };
+  color: ${cyan};
 }
 
 .codehilite .mo {
-  color: ${ cyan };
+  color: ${cyan};
 }
 
 .codehilite .sb {
-  color: ${ yellow };
+  color: ${yellow};
 }
 
 .codehilite .sc {
-  color: ${ yellow };
+  color: ${yellow};
 }
 
 .codehilite .sd {
-  color: ${ yellow };
+  color: ${yellow};
 }
 
 .codehilite .s2 {
-  color: ${ yellow };
+  color: ${yellow};
 }
 
 .codehilite .se {
-  color: ${ yellow };
+  color: ${yellow};
 }
 
 .codehilite .sh {
-  color: ${ yellow };
+  color: ${yellow};
 }
 
 .codehilite .si {
-  color: ${ yellow };
+  color: ${yellow};
 }
 
 .codehilite .sx {
-  color: ${ yellow };
+  color: ${yellow};
 }
 
 .codehilite .sr {
-  color: ${ red };
+  color: ${red};
 }
 
 .codehilite .s1 {
-  color: ${ yellow };
+  color: ${yellow};
 }
 
 .codehilite .ss {
-  color: ${ yellow };
+  color: ${yellow};
 }
 
 .codehilite .bp {
-  color: ${ base1 };
+  color: ${base1};
 }
 
 .codehilite .vc {
-  color: ${ cyan };
+  color: ${cyan};
 }
 
 .codehilite .vg {
-  color: ${ cyan };
+  color: ${cyan};
 }
 
 .codehilite .vi {
-  color: ${ cyan };
+  color: ${cyan};
 }
 
 .codehilite .il {
-  color: ${ cyan };
+  color: ${cyan};
 }
 `;
 export default screen;

@@ -1,113 +1,18 @@
-import {
-  text,
-  a,
-  article,
-  article$0027,
-  aside,
-  aside$0027,
-  b,
-  blockquote,
-  blockquote$0027,
-  body$0027,
-  code,
-  code$0027,
-  dd,
-  dd$0027,
-  del,
-  del$0027,
-  div,
-  dl,
-  dl$0027,
-  dt,
-  dt$0027,
-  em,
-  em$0027,
-  embed,
-  footer,
-  footer$0027,
-  h1,
-  h1$0027,
-  h2,
-  h2$0027,
-  h3,
-  h3$0027,
-  h4,
-  h4$0027,
-  h5,
-  h5$0027,
-  h6,
-  h6$0027,
-  head,
-  head$0027,
-  header,
-  header$0027,
-  hr,
-  hr$0027,
-  html,
-  html$0027,
-  i,
-  i$0027,
-  img,
-  ins,
-  ins$0027,
-  li,
-  li$0027,
-  linearGradient,
-  link,
-  mask,
-  meta,
-  nav,
-  nav$0027,
-  object,
-  ol,
-  ol$0027,
-  p,
-  p$0027,
-  param,
-  path,
-  pre,
-  pre$0027,
-  rect,
-  script,
-  span,
-  stop,
-  strong,
-  strong$0027,
-  svg,
-  time,
-  title,
-  title$0027,
-  ul,
-  ul$0027,
-  var$,
-  var$0027,
-  video
-} from '../elements.js';
-import datetime from '../datetime.js';
+import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockquote$0027, body$0027, code, code$0027, dd, dd$0027, del, del$0027, div, dl, dl$0027, dt, dt$0027, em, em$0027, embed, footer, footer$0027, h1, h1$0027, h2, h2$0027, h3, h3$0027, h4, h4$0027, h5, h5$0027, h6, h6$0027, head, head$0027, header, header$0027, hr, hr$0027, html, html$0027, i, i$0027, img, ins, ins$0027, li, li$0027, linearGradient, link, mask, meta, nav, nav$0027, object, ol, ol$0027, p, p$0027, param, path, pre, pre$0027, rect, script, span, stop, strong, strong$0027, svg, time, title, title$0027, ul, ul$0027, var$, var$0027, video} from "../elements.js";
+import datetime from "../datetime.js";
 const Prelude = {
-  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain['fantasy-land/chain'](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f)
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
 };
 const {chain, map} = Prelude;
-const body = [
-  p(['Recording of Yehuda Katz\'s presentation from Bay Area jQuery Conf 2011.']),
-  p([a({ href: 'http://vimeo.com/22687694' })(['Getting truth out of the DOM'])]),
-  p([
-    'While watching this it ',
-    em(['finally']),
-    ' became clear to me why\n    storing state in the DOM is a terrible idea for complex applications.\n    The approach comes unstuck as soon as one wishes to display an entity\n    more than once in a view (such as in a list\u2013details split view).'
-  ])
-];
+const body = [p(["Recording of Yehuda Katz's presentation from Bay Area jQuery Conf 2011."]), p([a({
+  href: "http://vimeo.com/22687694"
+})(["Getting truth out of the DOM"])]), p(["While watching this it ", em(["finally"]), " became clear to me why\n    storing state in the DOM is a terrible idea for complex applications.\n    The approach comes unstuck as soon as one wishes to display an entity\n    more than once in a view (such as in a list–details split view)."])];
 export default {
   id: 87,
-  slug: 'getting-truth-out-of-the-dom',
-  title: ['Getting truth out of the DOM \u2013 Yehuda Katz'],
-  datetime: datetime('2011-05-24')('22:15:00')('America/Los_Angeles'),
-  tags: [
-    'best-practice',
-    'javascript',
-    'mvc',
-    'video'
-  ],
+  slug: "getting-truth-out-of-the-dom",
+  title: ["Getting truth out of the DOM – Yehuda Katz"],
+  datetime: datetime("2011-05-24")("22:15:00")("America/Los_Angeles"),
+  tags: ["best-practice", "javascript", "mvc", "video"],
   body
 };

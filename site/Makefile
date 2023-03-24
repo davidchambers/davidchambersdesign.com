@@ -9,4 +9,4 @@ everything:
 .PHONY: check-links
 check-links:
 	node -- ../lang/dist/serif.js '$(CURDIR)/src' '$(CURDIR)/lib' '$(CURDIR)/src/scripts/check-links.serif'
-	NODE_ENV=production node -- '$(CURDIR)/lib/scripts/check-links.js'
+	NODE_ENV=production node --no-warnings -- '$(CURDIR)/lib/scripts/check-links.js'

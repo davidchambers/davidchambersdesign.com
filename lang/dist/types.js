@@ -1,233 +1,195 @@
 const Prelude = {
-  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain['fantasy-land/chain'](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor['fantasy-land/map'](f)
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
 };
 const {chain, map} = Prelude;
-const NullLiteral = { type: 'NullLiteral' };
+const NullLiteral = {
+  type: "NullLiteral"
+};
 const BooleanLiteral = value => ({
-  type: 'BooleanLiteral',
+  type: "BooleanLiteral",
   value
 });
 const NumberLiteral = value => ({
-  type: 'NumberLiteral',
+  type: "NumberLiteral",
   value
 });
 const StringLiteral = value => ({
-  type: 'StringLiteral',
+  type: "StringLiteral",
   value
 });
 const TemplateElement = tail => raw => ({
-  type: 'TemplateElement',
+  type: "TemplateElement",
   tail,
   raw
 });
 const TemplateLiteral = quasis => expressions => ({
-  type: 'TemplateLiteral',
+  type: "TemplateLiteral",
   quasis,
   expressions
 });
 const MetaProperty = meta => property => ({
-  type: 'MetaProperty',
+  type: "MetaProperty",
   meta,
   property
 });
 const MemberExpression = object => property => ({
-  type: 'MemberExpression',
+  type: "MemberExpression",
   object,
   property
 });
 const Identifier = name => ({
-  type: 'Identifier',
+  type: "Identifier",
   name
 });
 const SpreadElement = argument => ({
-  type: 'SpreadElement',
+  type: "SpreadElement",
   argument
 });
 const ArrayExpression = elements => ({
-  type: 'ArrayExpression',
+  type: "ArrayExpression",
   elements
 });
 const Property = key => value => ({
-  type: 'Property',
+  type: "Property",
   key,
   value
 });
 const ObjectExpression = properties => ({
-  type: 'ObjectExpression',
+  type: "ObjectExpression",
   properties
 });
 const ArrayPattern = elements => ({
-  type: 'ArrayPattern',
+  type: "ArrayPattern",
   elements
 });
-const Elision = { type: 'Elision' };
+const Elision = {
+  type: "Elision"
+};
 const ObjectPattern = properties => ({
-  type: 'ObjectPattern',
+  type: "ObjectPattern",
   properties
 });
 const RestElement = argument => ({
-  type: 'RestElement',
+  type: "RestElement",
   argument
 });
 const ArrowFunctionExpression = parameters => body => ({
-  type: 'ArrowFunctionExpression',
+  type: "ArrowFunctionExpression",
   parameters,
   body
 });
 const PropertyAccessor = identifier => ({
-  type: 'PropertyAccessor',
+  type: "PropertyAccessor",
   identifier
 });
 const BlockExpression = statements => ({
-  type: 'BlockExpression',
+  type: "BlockExpression",
   statements
 });
 const UnaryExpression = operator => argument => ({
-  type: 'UnaryExpression',
+  type: "UnaryExpression",
   operator,
   argument
 });
 const BinaryExpression = operator => left => right => ({
-  type: 'BinaryExpression',
+  type: "BinaryExpression",
   operator,
   left,
   right
 });
 const MapExpression = left => right => ({
-  type: 'MapExpression',
+  type: "MapExpression",
   left,
   right
 });
 const BindExpression = left => right => ({
-  type: 'BindExpression',
+  type: "BindExpression",
   left,
   right
 });
 const LogicalExpression = operator => left => right => ({
-  type: 'LogicalExpression',
+  type: "LogicalExpression",
   operator,
   left,
   right
 });
 const ConditionalExpression = predicate => consequent => alternative => ({
-  type: 'ConditionalExpression',
+  type: "ConditionalExpression",
   predicate,
   consequent,
   alternative
 });
 const PipeExpression = head => body => ({
-  type: 'PipeExpression',
+  type: "PipeExpression",
   head,
   body
 });
 const CallExpression = callee => args => ({
-  type: 'CallExpression',
+  type: "CallExpression",
   callee,
   arguments: args
 });
 const ImportExpression = source => ({
-  type: 'ImportExpression',
+  type: "ImportExpression",
   source
 });
 const ImportDefaultDeclaration = source => specifier => ({
-  type: 'ImportDeclaration',
+  type: "ImportDeclaration",
   source,
   specifiers: [specifier]
 });
 const ImportDeclaration = source => specifiers => ({
-  type: 'ImportDeclaration',
+  type: "ImportDeclaration",
   source,
   specifiers
 });
 const ImportEverythingDeclaration = source => hiding => ({
-  type: 'ImportDeclaration',
+  type: "ImportDeclaration",
   source,
-  specifiers: '*',
+  specifiers: "*",
   hiding
 });
 const ImportDefaultSpecifier = local => ({
-  type: 'ImportDefaultSpecifier',
+  type: "ImportDefaultSpecifier",
   local
 });
 const ImportSpecifier = local => imported => ({
-  type: 'ImportSpecifier',
+  type: "ImportSpecifier",
   local,
   imported
 });
 const ImportNamespaceSpecifier = local => ({
-  type: 'ImportNamespaceSpecifier',
+  type: "ImportNamespaceSpecifier",
   local
 });
 const ExportNamedDeclaration = specifiers => ({
-  type: 'ExportNamedDeclaration',
+  type: "ExportNamedDeclaration",
   specifiers
 });
 const ExportDefaultDeclaration = declaration => ({
-  type: 'ExportDefaultDeclaration',
+  type: "ExportDefaultDeclaration",
   declaration
 });
 const VariableDeclaration = pattern => expression => ({
-  type: 'VariableDeclaration',
+  type: "VariableDeclaration",
   pattern,
   expression
 });
 const FunctionDeclaration = name => parameters => body => ({
-  type: 'FunctionDeclaration',
+  type: "FunctionDeclaration",
   name,
   parameters,
   body
 });
 const ExpressionStatement = expression => ({
-  type: 'ExpressionStatement',
+  type: "ExpressionStatement",
   expression
 });
 const Module = ({imports, exports, statements}) => ({
-  type: 'Module',
+  type: "Module",
   imports,
   exports,
   statements
 });
-export {
-  NullLiteral,
-  BooleanLiteral,
-  NumberLiteral,
-  StringLiteral,
-  TemplateElement,
-  TemplateLiteral,
-  MetaProperty,
-  MemberExpression,
-  Identifier,
-  SpreadElement,
-  ArrayExpression,
-  Property,
-  ObjectExpression,
-  ArrayPattern,
-  Elision,
-  ObjectPattern,
-  RestElement,
-  ArrowFunctionExpression,
-  PropertyAccessor,
-  BlockExpression,
-  UnaryExpression,
-  BinaryExpression,
-  MapExpression,
-  BindExpression,
-  LogicalExpression,
-  ConditionalExpression,
-  PipeExpression,
-  CallExpression,
-  ImportExpression,
-  ImportDefaultDeclaration,
-  ImportDeclaration,
-  ImportEverythingDeclaration,
-  ImportDefaultSpecifier,
-  ImportSpecifier,
-  ImportNamespaceSpecifier,
-  ExportNamedDeclaration,
-  ExportDefaultDeclaration,
-  VariableDeclaration,
-  FunctionDeclaration,
-  ExpressionStatement,
-  Module
-};
+export {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateElement, TemplateLiteral, MetaProperty, MemberExpression, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, PipeExpression, CallExpression, ImportExpression, ImportDefaultDeclaration, ImportDeclaration, ImportEverythingDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module};

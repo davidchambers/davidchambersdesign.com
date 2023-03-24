@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import escodegen from "escodegen";
+import {generate} from "astring";
 import {attempt, attemptP, fork, mapRej, parallel, resolve} from "fluture";
 
 import serif from "./index.serif";
@@ -108,8 +108,7 @@ orderDependencies tree = {
            {serif.trans serifAst $ importPath =>
               tree.get(path.join (serifDirname, ...importPath.split("/"))).exportedNames}
            >>= jsAst => {
-             options = {format: {indent: {style: "  "}}};
-             jsSource = escodegen.generate (jsAst, options) + "\n";
+             jsSource = generate (jsAst, {});
              jsDirname = path.dirname serifFilename;
              jsBasename = path.basename (serifFilename, ".serif") + ".js";
              jsFilename = path.join (lib, path.relative (src, jsDirname), jsBasename);

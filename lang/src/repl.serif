@@ -3,7 +3,7 @@ import path         from "node:path";
 import repl         from "node:repl";
 import vm           from "node:vm";
 
-import escodegen    from "escodegen";
+import {generate} from "astring";
 import {attemptP, fork, promise} from "fluture";
 
 import serif        from "./index.serif";
@@ -36,7 +36,7 @@ evaluateModule source = {
 read serifSource = {
   serifAst = serif.parse `export default ${serifSource};` "[repl]";
   serif.trans (rewrite serifAst) (_importPath => []) >>= jsAst => {
-    evaluateModule $ escodegen.generate jsAst
+    evaluateModule $ generate (jsAst, {})
   }
 };
 
