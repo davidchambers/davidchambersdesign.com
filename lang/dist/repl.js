@@ -28,7 +28,7 @@ const read = serifSource => (() => {
   const serifAst = serif.parse(`export default ${serifSource};`)("[repl]");
   return Prelude.chain(jsAst => evaluateModule(generate(jsAst, {})))(serif.trans(rewrite(serifAst))(_importPath => []));
 })();
-const print = x => (discriminant => {
+const print = x => (() => {
   switch (Object.prototype.toString.call(x)) {
     case "[object Null]":
       return `\x1B[35m${x}\x1B[0m`;
@@ -57,7 +57,7 @@ const print = x => (discriminant => {
     default:
       return `${x}`;
   }
-})(Object.prototype.toString.call(x));
+})();
 const server = repl.start({
   prompt: ">>> ",
   eval: (code, _context, _filename, callback) => fork(err => (() => {

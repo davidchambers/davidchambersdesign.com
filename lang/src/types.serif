@@ -7,6 +7,7 @@ export {
   TemplateLiteral,
   MetaProperty,
   MemberExpression,
+  IdentifierPlaceholder,
   Identifier,
   SpreadElement,
   ArrayExpression,
@@ -20,6 +21,7 @@ export {
   PropertyAccessor,
   BlockExpression,
   UnaryExpression,
+  CompositionExpression,
   BinaryExpression,
   MapExpression,
   BindExpression,
@@ -87,6 +89,11 @@ MemberExpression object property = {
   property: property,
 };
 
+IdentifierPlaceholder desiredName = {
+  type: "IdentifierPlaceholder",
+  desiredName: desiredName,
+};
+
 Identifier name = {
   type: "Identifier",
   name: name,
@@ -152,6 +159,12 @@ UnaryExpression operator argument = {
   type: "UnaryExpression",
   operator: operator,
   argument: argument,
+};
+
+CompositionExpression left right = {
+  type: "CompositionExpression",
+  left: left,
+  right: right,
 };
 
 BinaryExpression operator left right = {

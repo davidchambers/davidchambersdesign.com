@@ -1,6 +1,4 @@
 import * as Future from "fluture";
-import * as Prelude_ from "./prelude.js";
-import * as Serif from "./types.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
@@ -10,7 +8,7 @@ const RESERVED_WORDS = Reflect.construct(Set, [["await", "break", "case", "catch
 const validEsIdentifierName = name => Reflect.apply(RegExp.prototype.test, RegExp("^[a-z][a-z0-9]*$", "i"), [name]);
 const esFromIdentifierName = (() => {
   const escapeChar = c => "$" + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, "0");
-  const escape = name => RESERVED_WORDS.has(name) ? name + "$" : validEsIdentifierName(name) ? name : Reflect.apply(String.prototype.replace, name, [RegExp("[^a-z0-9_]", "gi"), escapeChar]);
+  const escape = name => RESERVED_WORDS.has(name) ? name + "$" : validEsIdentifierName(name) ? name : Reflect.apply(String.prototype.replace, name, [RegExp("[^a-z0-9_$]", "gi"), escapeChar]);
   return name => esFromEscapedIdentifierName(escape(name));
 })();
 const esFromEscapedIdentifierName = name => ({
@@ -118,15 +116,23 @@ const esFromBlockExpression = ({statements}) => ({
     body: {
       type: "BlockStatement",
       body: (() => {
-        const statements$0021 = [...statements];
-        const last = statements$0021.pop();
-        return last.type === "ExpressionStatement" ? (() => {
-          const return$ = {
-            type: "ReturnStatement",
-            argument: esFromNode(last.expression)
-          };
-          return [...Prelude.map(esFromNode)(statements$0021), return$];
-        })() : Prelude.map(esFromNode)(statements);
+        switch (statements.at(-1).type) {
+          case "VariableDeclaration":
+            return [...Prelude.map(esFromNode)(statements)];
+          case "FunctionDeclaration":
+            return [...Prelude.map(esFromNode)(statements), {
+              type: "ReturnStatement",
+              argument: {
+                type: "Identifier",
+                name: statements.at(-1).name
+              }
+            }];
+          case "ExpressionStatement":
+            return [...Prelude.map(esFromNode)(statements.slice(0, -1)), {
+              type: "ReturnStatement",
+              argument: esFromNode(statements.at(-1).expression)
+            }];
+        }
       })()
     },
     expression: false
@@ -142,7 +148,7 @@ const esFromUnaryExpression = ({operator, argument}) => ({
 });
 const esFromBinaryExpression = ({operator, left, right}) => ({
   type: "BinaryExpression",
-  operator: (discriminant => {
+  operator: (() => {
     switch (operator) {
       case "==":
         return "===";
@@ -151,13 +157,13 @@ const esFromBinaryExpression = ({operator, left, right}) => ({
       default:
         return operator;
     }
-  })(operator),
+  })(),
   left: esFromNode(left),
   right: esFromNode(right)
 });
 const esFromLogicalExpression = ({operator, left, right}) => ({
   type: "LogicalExpression",
-  operator: (discriminant => {
+  operator: (() => {
     switch (operator) {
       case "and":
         return "&&";
@@ -166,7 +172,7 @@ const esFromLogicalExpression = ({operator, left, right}) => ({
       case "??":
         return "??";
     }
-  })(operator),
+  })(),
   left: esFromNode(left),
   right: esFromNode(right)
 });
@@ -188,10 +194,7 @@ const esFromSwitchExpression = ({discriminant, cases, default: default$}) => ({
   type: "CallExpression",
   callee: {
     type: "ArrowFunctionExpression",
-    params: [{
-      type: "Identifier",
-      name: "discriminant"
-    }],
+    params: [],
     body: {
       type: "BlockStatement",
       body: [{
@@ -212,7 +215,7 @@ const esFromSwitchExpression = ({discriminant, cases, default: default$}) => ({
     },
     expression: false
   },
-  arguments: [esFromNode(discriminant)],
+  arguments: [],
   optional: false
 });
 const esFromCallExpression = ({callee, arguments: args}) => ({
@@ -309,7 +312,7 @@ const esFromImportDeclaration = exportedNames => importDeclaration => importDecl
   }))(map(names => names.filter(visible))(map(Object.keys)(Future.attemptP(() => import(source)))));
 })() : Future.resolve({
   type: "ImportDeclaration",
-  specifiers: Prelude.map(specifier => (discriminant => {
+  specifiers: Prelude.map(specifier => (() => {
     switch (specifier.type) {
       case "ImportDefaultSpecifier":
         return {
@@ -328,13 +331,13 @@ const esFromImportDeclaration = exportedNames => importDeclaration => importDecl
           imported: esFromIdentifier(specifier.imported)
         };
     }
-  })(specifier.type))(importDeclaration.specifiers),
+  })())(importDeclaration.specifiers),
   source: {
     type: "Literal",
     value: importDeclaration.source.value.replace(RegExp("[.]serif$"), ".js")
   }
 });
-const esFromNode = expr => (discriminant => {
+const esFromNode = expr => (() => {
   switch (expr.type) {
     case "NullLiteral":
       return esFromNullLiteral;
@@ -397,37 +400,29 @@ const esFromNode = expr => (discriminant => {
     case "ImportExpression":
       return esFromImportExpression(expr);
   }
-})(expr.type);
+})();
 const unnecessaryHiding = (source, hiding, names) => Reflect.construct(Error, [`import * from "${source}" hiding {${hiding.join(", ")}};\n\n${names.length > 2 ? names.slice(0, -1).join(", ") + ", and " + names.at(-1) : names.join(" and ")} ${names.length === 1 ? "is" : "are"} not exported so need not be hidden.\n`]);
-const namesInPattern = node => (discriminant => {
-  switch (node.type) {
-    case "Identifier":
-      return [node.name];
-    case "ArrayPattern":
-      return Prelude.chain(namesInPattern)(node.elements);
-    case "ObjectPattern":
-      return Prelude.chain(namesInPattern)(node.properties);
-    case "Property":
-      return namesInPattern(node.value);
-    case "RestElement":
-      return namesInPattern(node.argument);
-  }
-})(node.type);
-const toModule = module => exportedNames => (() => {
-  const topLevelNames = Reflect.construct(Set, [Prelude.chain(statement => (discriminant => {
+const toModule = module => exportedNames => map(imports => ({
+  type: "Program",
+  sourceType: "module",
+  body: [...imports, ...Prelude.chain(statement => (() => {
     switch (statement.type) {
       case "VariableDeclaration":
-        return namesInPattern(statement.pattern);
+        return [esFromNode(statement)];
       case "FunctionDeclaration":
-        return [statement.name];
+        return [esFromNode(statement)];
       case "ExpressionStatement":
+        return [esFromNode(statement)];
+      default:
         return [];
     }
-  })(statement.type))(module.statements)]);
-  return map(imports => ({
-    type: "Program",
-    sourceType: "module",
-    body: [...imports, esFromVariableDeclaration(Serif.VariableDeclaration(Serif.Identifier("Prelude"))(Serif.ObjectExpression(map(([name, expr]) => Serif.Property(Serif.StringLiteral(name))(expr))(Object.entries(Prelude_))))), esFromVariableDeclaration(Serif.VariableDeclaration((names => Serif.ObjectPattern(map(name => Serif.Property(Serif.StringLiteral(name))(Serif.Identifier(name)))(names.filter(name => !topLevelNames.has(name)))))(Object.keys(Prelude_)))(Serif.Identifier("Prelude"))), ...Prelude.chain(statement => ["VariableDeclaration", "FunctionDeclaration", "ExpressionStatement"].includes(statement.type) ? [esFromNode(statement)] : [])(module.statements), ...Prelude.map(statement => statement.type === "ExportNamedDeclaration" ? esFromExportNamedDeclaration(statement) : esFromExportDefaultDeclaration(statement))(module.exports)]
-  }))(Future.parallel(16)(map(esFromImportDeclaration(exportedNames))(module.imports)));
-})();
+  })())(module.statements), ...Prelude.map(statement => (() => {
+    switch (statement.type) {
+      case "ExportNamedDeclaration":
+        return esFromExportNamedDeclaration(statement);
+      case "ExportDefaultDeclaration":
+        return esFromExportDefaultDeclaration(statement);
+    }
+  })())(module.exports)]
+}))(Future.parallel(16)(map(esFromImportDeclaration(exportedNames))(module.imports)));
 export {toModule};

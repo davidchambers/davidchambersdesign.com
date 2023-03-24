@@ -27,12 +27,7 @@ simplify paths = {
   }
 };
 
-render paths = {
-  paths
-  |> simplify
-  |> S.join
-  |> S.unwords
-};
+render = S.unwords . S.join . simplify;
 
 ⇦ x = ["m", [-x, 0]];
 ⇨ x = ["m", [+x, 0]];

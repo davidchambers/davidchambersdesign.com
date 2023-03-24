@@ -9,7 +9,7 @@ const simplify = paths => paths.length === 0 ? [] : (() => {
   const [prev, path] = tail.reduce(([prev, path], curr) => curr[0] === "M" ? prev[0] === "M" || prev[0] === "m" ? [curr, path] : [curr, [...path, prev]] : (prev[0] === "M" || prev[0] === "m") && curr[0] === "m" ? [[prev[0], [prev[1][0] + curr[1][0], prev[1][1] + curr[1][1]]], path] : [curr, [...path, prev]], [head, []]);
   return [...path, prev];
 })();
-const render = paths => S.unwords(S.join(simplify(paths)));
+const render = x => S.unwords(S.join(simplify(x)));
 const $21E6 = x => ["m", [-x, 0]];
 const $21E8 = x => ["m", [+x, 0]];
 const $21E7 = y => ["m", [0, -y]];

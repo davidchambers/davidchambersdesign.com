@@ -38,6 +38,10 @@ const MemberExpression = object => property => ({
   object,
   property
 });
+const IdentifierPlaceholder = desiredName => ({
+  type: "IdentifierPlaceholder",
+  desiredName
+});
 const Identifier = name => ({
   type: "Identifier",
   name
@@ -91,6 +95,11 @@ const UnaryExpression = operator => argument => ({
   type: "UnaryExpression",
   operator,
   argument
+});
+const CompositionExpression = left => right => ({
+  type: "CompositionExpression",
+  left,
+  right
 });
 const BinaryExpression = operator => left => right => ({
   type: "BinaryExpression",
@@ -203,4 +212,4 @@ const Module = ({imports, exports, statements}) => ({
   exports,
   statements
 });
-export {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateElement, TemplateLiteral, MetaProperty, MemberExpression, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, PipeExpression, CallExpression, ImportExpression, ImportDefaultDeclaration, ImportDeclaration, ImportEverythingDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module};
+export {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateElement, TemplateLiteral, MetaProperty, MemberExpression, IdentifierPlaceholder, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, PipeExpression, CallExpression, ImportExpression, ImportDefaultDeclaration, ImportDeclaration, ImportEverythingDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module};

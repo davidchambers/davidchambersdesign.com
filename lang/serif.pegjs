@@ -349,12 +349,19 @@ UnaryExpression
     { return Serif.UnaryExpression(operator)(argument); }
   / CallExpression
 
+CompositionOperator
+  = '.'
+
+CompositionExpression
+  = exprs:UnaryExpression|1.., _ CompositionOperator _|
+    { return exprs.reduceRight((right, left) => Serif.CompositionExpression(left)(right)); }
+
 ExponentiationOperator
   = '**'
 
 ExponentiationExpression
-  = left:UnaryExpression
-    tail:(_ operator:ExponentiationOperator _ right:UnaryExpression { return {operator, right}; })*
+  = left:CompositionExpression
+    tail:(_ operator:ExponentiationOperator _ right:CompositionExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); }
 
 MultiplicativeOperator

@@ -1,8 +1,5 @@
 import * as Future from "fluture";
 
-import * as Prelude_ from "./prelude.serif";
-import * as Serif from "./types.serif";
-
 export {toModule};
 
 ;; https://262.ecma-international.org/13.0/#sec-keywords-and-reserved-words
@@ -74,7 +71,7 @@ esFromIdentifierName = {
     else Reflect.apply (
       String.prototype.replace,
       name,
-      [RegExp ("[^a-z0-9_]", "gi"), escapeChar]
+      [RegExp ("[^a-z0-9_$]", "gi"), escapeChar]
     )
   };
   name => esFromEscapedIdentifierName $ escape name
@@ -199,14 +196,18 @@ esFromBlockExpression {statements} = {
     body: {
       type: "BlockStatement",
       body: {
-        statements! = [...statements];
-        last = statements!.pop();
-        if last.type == "ExpressionStatement" then {
-          return = {type: "ReturnStatement", argument: esFromNode last.expression};
-          [...{esFromNode <$> statements!}, return]
-        } else {
-          esFromNode <$> statements
-        }
+        switch statements.at(-1).type
+        when "VariableDeclaration" then [
+          ...{esFromNode <$> statements},
+        ]
+        when "FunctionDeclaration" then [
+          ...{esFromNode <$> statements},
+          {type: "ReturnStatement", argument: {type: "Identifier", name: statements.at(-1).name}},
+        ]
+        when "ExpressionStatement" then [
+          ...{esFromNode <$> statements.slice(0, -1)},
+          {type: "ReturnStatement", argument: esFromNode $ statements.at(-1).expression},
+        ]
       },
     },
     expression: false,
@@ -266,7 +267,7 @@ esFromSwitchExpression {discriminant, cases, default} = {
   type: "CallExpression",
   callee: {
     type: "ArrowFunctionExpression",
-    params: [{type: "Identifier", name: "discriminant"}],  ;; TODO: use unused identifier
+    params: [],
     body: {
       type: "BlockStatement",
       body: [{
@@ -287,7 +288,7 @@ esFromSwitchExpression {discriminant, cases, default} = {
     },
     expression: false,
   },
-  arguments: [esFromNode discriminant],
+  arguments: [],
   optional: false,
 };
 
@@ -497,24 +498,7 @@ unnecessaryHiding = (
   } not exported so need not be hidden.\n`,
 ]);
 
-namesInPattern node = {
-  switch node.type
-  when "Identifier"    then [node.name]
-  when "ArrayPattern"  then node.elements >>= namesInPattern
-  when "ObjectPattern" then node.properties >>= namesInPattern
-  when "Property"      then namesInPattern node.value
-  when "RestElement"   then namesInPattern node.argument
-};
-
 toModule module exportedNames = {
-  topLevelNames = Reflect.construct (Set, [
-    module.statements >>= statement => {
-      switch statement.type
-      when "VariableDeclaration" then namesInPattern(statement.pattern)
-      when "FunctionDeclaration" then [statement.name]
-      when "ExpressionStatement" then []
-    }
-  ]);
   module.imports
   |> map (esFromImportDeclaration exportedNames)
   |> Future.parallel 16
@@ -523,42 +507,25 @@ toModule module exportedNames = {
        sourceType: "module",
        body: [
          ...imports,
-         esFromVariableDeclaration (
-           Serif.VariableDeclaration
-             (Serif.Identifier "Prelude")
-             (Prelude_
-              |> Object.entries
-              |> map {[name, expr] => Serif.Property (Serif.StringLiteral name) expr}
-              |> Serif.ObjectExpression)
-         ),
-         esFromVariableDeclaration (
-           Serif.VariableDeclaration
-             (Prelude_
-              |> Object.keys
-              ;; Do not unpack if name conflicts with a top-level binding:
-              |> names => names.filter {name => !topLevelNames.has(name)}
-              |> map {name => Serif.Property (Serif.StringLiteral name) (Serif.Identifier name)}
-              |> Serif.ObjectPattern)
-             (Serif.Identifier "Prelude")
-         ),
          ...{
            module.statements >>= statement => {
-             if [
-               "VariableDeclaration",
-               "FunctionDeclaration",
-               "ExpressionStatement",
-             ].includes statement.type then [esFromNode statement] else []
+             switch statement.type
+             when "VariableDeclaration",
+                  "FunctionDeclaration",
+                  "ExpressionStatement"
+             then [esFromNode statement]
+             else []
            }
          },
-         ...{
-           {statement => {
-             if statement.type == "ExportNamedDeclaration" then {
-               esFromExportNamedDeclaration statement
-             } else {
-               esFromExportDefaultDeclaration statement
-             }
-           }} <$> module.exports
-         },
+         ...{{
+           statement => {
+             switch statement.type
+             when "ExportNamedDeclaration"
+             then esFromExportNamedDeclaration statement
+             when "ExportDefaultDeclaration"
+             then esFromExportDefaultDeclaration statement
+           }
+         } <$> module.exports},
        ],
      })
 };

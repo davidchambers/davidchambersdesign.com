@@ -1,116 +1,230 @@
+import * as Prelude from "./prelude.serif";
 import * from "./types.serif";
 
-export default {imports, exports, statements} => {
-  Module {
-    imports: imports,
-    exports: rewrite <$> exports,
-    statements: rewrite <$> statements,
-  }
+export default rewriteModule;
+
+has element set = set.has (element);
+
+add element set = Reflect.construct (Set, [[...set, element]]);
+
+union this that = Reflect.construct (Set, [[...this, ...that]]);
+
+nextUnusedIdent names desiredName = {
+  recur counter = {
+    candidate = if counter == 0 then desiredName else `${desiredName}$${counter}`;
+    if has candidate names then recur (counter + 1) else Identifier candidate
+  };
+  recur 0
 };
 
-rewrite node = {
+namesInPattern pattern = {
+  switch pattern.type
+  when "Identifier"    then [pattern.name]
+  when "ArrayPattern"  then pattern.elements >>= namesInPattern
+  when "ObjectPattern" then pattern.properties >>= namesInPattern
+  when "Property"      then namesInPattern pattern.value
+  when "RestElement"   then namesInPattern pattern.argument
+};
+
+namesInStatement node = {
   switch node.type
-  when "TemplateLiteral" then {
-    TemplateLiteral node.quasis $ rewrite <$> node.expressions
-  }
-  when "MemberExpression" then {
-    MemberExpression (rewrite node.object) (rewrite node.property)
-  }
-  when "ArrayExpression" then {
-    ArrayExpression $ rewrite <$> node.elements
-  }
-  when "ObjectExpression" then {
-    ObjectExpression $ rewrite <$> node.properties
-  }
-  when "ArrowFunctionExpression" then {
-    ArrowFunctionExpression (rewrite <$> node.parameters) (rewrite node.body)
-  }
-  when "PropertyAccessor" then {
-    param = Identifier "x";
-    ArrowFunctionExpression [param] $
-      MemberExpression param $ StringLiteral node.identifier.name
-  }
-  when "BlockExpression" then {
-    if node.statements.length == 1 and node.statements[0].type == "ExpressionStatement" then {
-      rewrite node.statements[0].expression
+  when "ImportDeclaration" then {
+    if node.specifiers == "*" then {
+      node.source;
+      node.hiding;
+      []  ;; TODO: determine imported names
     } else {
-      BlockExpression $ rewrite <$> node.statements
+      (.name) . (.local) <$> node.specifiers
     }
   }
-  when "UnaryExpression" then {
-    UnaryExpression node.operator (rewrite node.argument)
-  }
-  when "BinaryExpression" then {
-    BinaryExpression node.operator (rewrite node.left) (rewrite node.right)
-  }
-  when "MapExpression" then {
-    CallExpression (CallExpression (prelude "map")
-                                   [rewrite node.left])
-                   [rewrite node.right]
-  }
-  when "BindExpression" then {
-    CallExpression (CallExpression (prelude "chain")
-                                   [rewrite node.right])
-                   [rewrite node.left]
-  }
-  when "LogicalExpression" then {
-    LogicalExpression node.operator (rewrite node.left) (rewrite node.right)
-  }
-  when "ConditionalExpression" then {
-    ConditionalExpression (rewrite node.predicate)
-                          (rewrite node.consequent)
-                          (rewrite node.alternative)
-  }
-  when "SwitchExpression" then {
-    SwitchExpression (rewrite node.discriminant)
-                     (rewrite <$> node.cases)
-                     (if node.default == null then null else rewrite node.default)
-  }
-  when "SwitchCase" then {
-    SwitchCase (rewrite <$> node.predicates) (rewrite node.consequent)
-  }
-  when "PipeExpression" then {
-    rewrite $ CallExpression node.body [node.head]
-  }
-  when "CallExpression" then {
-    CallExpression (rewrite node.callee) (rewrite <$> node.arguments)
-  }
-  when "VariableDeclaration" then {
-    VariableDeclaration (rewrite node.pattern) (rewrite node.expression)
-  }
-  when "FunctionDeclaration" then {
-    FunctionDeclaration node.name (rewrite <$> node.parameters) (rewrite node.body)
-  }
-  when "ExpressionStatement" then {
-    ExpressionStatement $ rewrite node.expression
-  }
-  when "ArrayPattern" then {
-    ArrayPattern $ rewrite <$> node.elements
-  }
-  when "ObjectPattern" then {
-    ObjectPattern $ rewrite <$> node.properties
-  }
-  when "SpreadElement" then {
-    SpreadElement $ rewrite node.argument
-  }
-  when "RestElement" then {
-    RestElement $ rewrite node.argument
-  }
-  when "Property" then {
-    Property (rewrite node.key) (rewrite node.value)
-  }
-  when "ExportDefaultDeclaration" then {
-    ExportDefaultDeclaration $ rewrite node.declaration
-  }
-  when "ImportExpression" then {
-    ImportExpression $ rewrite node.source
-  }
-  else {
-    node
+  when "VariableDeclaration" then namesInPattern node.pattern
+  when "FunctionDeclaration" then [node.name]
+  when "ExpressionStatement" then []
+};
+
+rewriteModule module = {
+  names = Reflect.construct (Set, [
+    [...module.imports, ...module.statements] >>= namesInStatement,
+  ]);
+  preludeIdent = nextUnusedIdent names "Prelude";
+  names' = add preludeIdent.name names;
+  rewrite = rewriteNode preludeIdent names';
+  preludeDefinition = {
+    VariableDeclaration preludeIdent {
+      Prelude
+      |> Object.entries
+      |> map ([name, expr] => Property (StringLiteral name) expr)
+      |> ObjectExpression
+    }
+  };
+  preludeDestructuring = {
+    VariableDeclaration {
+      Prelude
+      |> Object.keys
+      ;; Do not unpack if name conflicts with a top-level binding:
+      |> names => names.filter (name => !{has name names'})
+      |> map (name => Property (StringLiteral name) (Identifier name))
+      |> ObjectPattern
+    } preludeIdent
+  };
+  Module {
+    imports: rewrite <$> module.imports,
+    exports: rewrite <$> module.exports,
+    statements: rewrite <$> [
+      preludeDefinition,
+      preludeDestructuring,
+      ...module.statements,
+    ],
   }
 };
 
-prelude name = {
-  MemberExpression (Identifier "Prelude")
-                   (StringLiteral name)
+rewriteNode preludeIdent = {
+  recur names node = {
+    switch node.type
+    when "TemplateLiteral" then {
+      TemplateLiteral node.quasis
+                      (recur names <$> node.expressions)
+    }
+    when "MemberExpression" then {
+      MemberExpression (recur names node.object)
+                       (recur names node.property)
+    }
+    when "ArrayExpression" then {
+      ArrayExpression $ recur names <$> node.elements
+    }
+    when "ObjectExpression" then {
+      ObjectExpression $ recur names <$> node.properties
+    }
+    when "ArrowFunctionExpression" then {
+      params = recur names <$> node.parameters;
+      names' = union names $ (.name) <$> params;
+      ArrowFunctionExpression params (recur names' node.body)
+    }
+    when "PropertyAccessor" then {
+      param = Identifier "x";
+      names' = add param.name names;
+      recur names' {
+        ArrowFunctionExpression [param] {
+          MemberExpression param $ StringLiteral node.identifier.name
+        }
+      }
+    }
+    when "BlockExpression" then {
+      if node.statements.length == 1 and node.statements[0].type == "ExpressionStatement" then {
+        recur names node.statements[0].expression
+      } else {
+        names' = union names $ node.statements >>= statement => {
+          switch statement.type
+          when "VariableDeclaration" then namesInPattern statement.pattern
+          when "FunctionDeclaration" then [statement.name]
+          when "ExpressionStatement" then []
+        };
+        BlockExpression $ recur names' <$> node.statements
+      }
+    }
+    when "UnaryExpression" then {
+      UnaryExpression node.operator
+                      (recur names node.argument)
+    }
+    when "CompositionExpression" then {
+      ;; Original expression: f . g . h
+      ;;
+      ;; Representation:   o
+      ;;                  / \
+      ;;                 f   o
+      ;;                    / \
+      ;;                   g   h
+      ;;
+      ;; Rewritten expression: x => f (g (h x))
+      param = nextUnusedIdent names "x";
+      names' = add param.name names;
+      toCallExpression expr = {
+        if expr.type == "CompositionExpression" then {
+          CallExpression expr.left [toCallExpression expr.right]
+        } else {
+          CallExpression expr [param]
+        }
+      };
+      recur names' $ ArrowFunctionExpression [param] $ toCallExpression node
+    }
+    when "BinaryExpression" then {
+      BinaryExpression node.operator
+                       (recur names node.left)
+                       (recur names node.right)
+    }
+    when "MapExpression" then {
+      CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "map")
+                                     [recur names node.left])
+                     [recur names node.right]
+    }
+    when "BindExpression" then {
+      CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "chain")
+                                     [recur names node.right])
+                     [recur names node.left]
+    }
+    when "LogicalExpression" then {
+      LogicalExpression node.operator
+                        (recur names node.left)
+                        (recur names node.right)
+    }
+    when "ConditionalExpression" then {
+      ConditionalExpression (recur names node.predicate)
+                            (recur names node.consequent)
+                            (recur names node.alternative)
+    }
+    when "SwitchExpression" then {
+      SwitchExpression (recur names node.discriminant)
+                       (recur names <$> node.cases)
+                       (if node.default == null then null else recur names node.default)
+    }
+    when "SwitchCase" then {
+      SwitchCase (recur names <$> node.predicates)
+                 (recur names node.consequent)
+    }
+    when "PipeExpression" then {
+      recur names $ CallExpression node.body [node.head]
+    }
+    when "CallExpression" then {
+      CallExpression (recur names node.callee)
+                     (recur names <$> node.arguments)
+    }
+    when "VariableDeclaration" then {
+      VariableDeclaration (recur names node.pattern)
+                          (recur names node.expression)
+    }
+    when "FunctionDeclaration" then {
+      FunctionDeclaration node.name
+                          (recur names <$> node.parameters)
+                          (recur names node.body)
+    }
+    when "ExpressionStatement" then {
+      ExpressionStatement $ recur names node.expression
+    }
+    when "ArrayPattern" then {
+      ArrayPattern $ recur names <$> node.elements
+    }
+    when "ObjectPattern" then {
+      ObjectPattern $ recur names <$> node.properties
+    }
+    when "SpreadElement" then {
+      SpreadElement $ recur names node.argument
+    }
+    when "RestElement" then {
+      RestElement $ recur names node.argument
+    }
+    when "Property" then {
+      Property (recur names node.key)
+               (recur names node.value)
+    }
+    when "ExportDefaultDeclaration" then {
+      ExportDefaultDeclaration $ recur names node.declaration
+    }
+    when "ImportExpression" then {
+      ImportExpression $ recur names node.source
+    }
+    else {
+      node
+    }
+  };
+  recur
 };
