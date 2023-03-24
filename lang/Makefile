@@ -8,7 +8,7 @@ all: \
 	node -- dist/serif.js '$(CURDIR)/src' '$(CURDIR)/dist' '$(CURDIR)/src/serif.serif' '$(CURDIR)/src/repl.serif'
 
 dist/grammar.js: serif.pegjs
-	node_modules/.bin/peggy --format es --dependencies '{"* as Serif": "./types.js"}' <'$<' >'$@'
+	node_modules/.bin/peggy --format es <'$<' >'$@'
 
 dist/%: src/%
 	cp -- '$<' '$@'

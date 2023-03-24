@@ -2,8 +2,6 @@
 //
 // https://peggyjs.org/
 
-import * as Serif from "./types.js";
-
 function peg$subclass(child, parent) {
   function C() { this.constructor = child; }
   C.prototype = parent.prototype;
@@ -389,27 +387,27 @@ function peg$parse(input, options) {
   var peg$f0 = function(importDeclaration) { return importDeclaration; };
   var peg$f1 = function(imports, exportDeclaration) { return exportDeclaration; };
   var peg$f2 = function(imports, exports, statement) { return statement; };
-  var peg$f3 = function(imports, exports, statements) { return Serif.Module({imports, exports, statements}); };
-  var peg$f4 = function(local) { return Serif.ImportSpecifier(local)(local); };
-  var peg$f5 = function(local) { return Serif.ImportNamespaceSpecifier(local); };
-  var peg$f6 = function(local) { return Serif.ImportDefaultSpecifier(local); };
-  var peg$f7 = function(source) { return Serif.ImportDeclaration(source)([]); };
-  var peg$f8 = function(specifiers, source) { return Serif.ImportDeclaration(source)(specifiers); };
-  var peg$f9 = function(specifier, source) { return Serif.ImportDeclaration(source)([specifier]); };
+  var peg$f3 = function(imports, exports, statements) { return {type: 'Module', imports, exports, statements}; };
+  var peg$f4 = function(local) { return {type: 'ImportSpecifier', imported: local, local}; };
+  var peg$f5 = function(local) { return {type: 'ImportNamespaceSpecifier', local}; };
+  var peg$f6 = function(local) { return {type: 'ImportDefaultSpecifier', local}; };
+  var peg$f7 = function(source) { return {type: 'ImportDeclaration', source, specifiers: []}; };
+  var peg$f8 = function(specifiers, source) { return {type: 'ImportDeclaration', source, specifiers}; };
+  var peg$f9 = function(specifier, source) { return {type: 'ImportDeclaration', source, specifiers: [specifier]}; };
   var peg$f10 = function(source, hiding) { return hiding; };
-  var peg$f11 = function(source, hiding) { return Serif.ImportEverythingDeclaration(source)(hiding ?? []); };
-  var peg$f12 = function(specifier, source) { return Serif.ImportDefaultDeclaration(source)(specifier); };
-  var peg$f13 = function(declaration) { return Serif.ExportDefaultDeclaration(declaration); };
-  var peg$f14 = function() { return Serif.ExportNamedDeclaration([]); };
-  var peg$f15 = function(specifiers) { return Serif.ExportNamedDeclaration(specifiers); };
-  var peg$f16 = function() { return Serif.NullLiteral; };
-  var peg$f17 = function() { return Serif.BooleanLiteral(true); };
-  var peg$f18 = function() { return Serif.BooleanLiteral(false); };
-  var peg$f19 = function(digits) { return Serif.NumberLiteral(parseInt(digits, 2)); };
-  var peg$f20 = function(digits) { return Serif.NumberLiteral(parseInt(digits, 8)); };
-  var peg$f21 = function(digits) { return Serif.NumberLiteral(parseInt(digits, 16)); };
-  var peg$f22 = function() { return Serif.NumberLiteral(parseFloat(text())); };
-  var peg$f23 = function(chars) { return Serif.StringLiteral(chars.join('')); };
+  var peg$f11 = function(source, hiding) { return {type: 'ImportDeclaration', source, specifiers: '*', hiding: hiding ?? []}; };
+  var peg$f12 = function(specifier, source) { return {type: 'ImportDeclaration', source, specifiers: [specifier]}; };
+  var peg$f13 = function(declaration) { return {type: 'ExportDefaultDeclaration', declaration}; };
+  var peg$f14 = function() { return {type: 'ExportNamedDeclaration', specifiers: []}; };
+  var peg$f15 = function(specifiers) { return {type: 'ExportNamedDeclaration', specifiers}; };
+  var peg$f16 = function() { return {type: 'NullLiteral'}; };
+  var peg$f17 = function() { return {type: 'BooleanLiteral', value: true}; };
+  var peg$f18 = function() { return {type: 'BooleanLiteral', value: false}; };
+  var peg$f19 = function(digits) { return {type: 'NumberLiteral', value: parseInt(digits, 2)}; };
+  var peg$f20 = function(digits) { return {type: 'NumberLiteral', value: parseInt(digits, 8)}; };
+  var peg$f21 = function(digits) { return {type: 'NumberLiteral', value: parseInt(digits, 16)}; };
+  var peg$f22 = function() { return {type: 'NumberLiteral', value: parseFloat(text())}; };
+  var peg$f23 = function(chars) { return {type: 'StringLiteral', value: chars.join('')}; };
   var peg$f24 = function(character) { return character; };
   var peg$f25 = function(sequence) { return sequence; };
   var peg$f26 = function() { return '\b'; };
@@ -425,92 +423,91 @@ function peg$parse(input, options) {
       const quasis = [];
       const expressions = [];
       for (const {quasi, expression} of pairs) {
-        quasis.push(Serif.TemplateElement(false)(quasi));
+        quasis.push({type: 'TemplateElement', raw: quasi, tail: false});
         expressions.push(expression);
       }
-      quasis.push(Serif.TemplateElement(true)(quasi));
-      return Serif.TemplateLiteral(quasis)(expressions);
+      quasis.push({type: 'TemplateElement', raw: quasi, tail: true});
+      return {type: 'TemplateLiteral', quasis, expressions};
     };
   var peg$f36 = function(character) { return character; };
   var peg$f37 = function(sequence) { return sequence; };
-  var peg$f38 = function(name) { return Serif.Identifier(name); };
-  var peg$f39 = function() { return Serif.ArrayExpression([]); };
-  var peg$f40 = function(elements) { return Serif.ArrayExpression(elements); };
-  var peg$f41 = function() { return Serif.ObjectExpression([]); };
-  var peg$f42 = function(properties) { return Serif.ObjectExpression(properties); };
-  var peg$f43 = function(key, value) { return Serif.Property(key)(value); };
-  var peg$f44 = function(ident) { return Serif.StringLiteral(ident.name); };
+  var peg$f38 = function(name) { return {type: 'Identifier', name}; };
+  var peg$f39 = function() { return {type: 'ArrayExpression', elements: []}; };
+  var peg$f40 = function(elements) { return {type: 'ArrayExpression', elements}; };
+  var peg$f41 = function() { return {type: 'ObjectExpression', properties: []}; };
+  var peg$f42 = function(properties) { return {type: 'ObjectExpression', properties}; };
+  var peg$f43 = function(key, value) { return {type: 'Property', key, value}; };
+  var peg$f44 = function(ident) { return {type: 'StringLiteral', value: ident.name}; };
   var peg$f45 = function(expression) { return expression; };
-  var peg$f46 = function(meta, property) { return Serif.MetaProperty(meta)(property); };
-  var peg$f47 = function(object, ident) { return Serif.StringLiteral(ident.name); };
+  var peg$f46 = function(meta, property) { return {type: 'MetaProperty', meta, property}; };
+  var peg$f47 = function(object, ident) { return {type: 'StringLiteral', value: ident.name}; };
   var peg$f48 = function(object, property) { return property; };
-  var peg$f49 = function(object, properties) { return properties.reduce((object, property) => Serif.MemberExpression(object)(property), object); };
-  var peg$f50 = function(parameters, body) { return Serif.ArrowFunctionExpression(parameters)(body); };
-  var peg$f51 = function(source) { return Serif.ImportExpression(source); };
-  var peg$f52 = function(head, arg) { return expr => Serif.CallExpression(expr)([arg]); };
-  var peg$f53 = function(head, args) { return expr => Serif.CallExpression(expr)(args); };
-  var peg$f54 = function(head, ident) { return expr => Serif.MemberExpression(expr)(Serif.StringLiteral(ident.name)); };
-  var peg$f55 = function(head, property) { return expr => Serif.MemberExpression(expr)(property); };
+  var peg$f49 = function(object, properties) { return properties.reduce((object, property) => ({type: 'MemberExpression', object, property}), object); };
+  var peg$f50 = function(parameters, body) { return {type: 'ArrowFunctionExpression', parameters, body}; };
+  var peg$f51 = function(source) { return {type: 'ImportExpression', source}; };
+  var peg$f52 = function(head, arg) { return callee => ({type: 'CallExpression', callee, arguments: [arg]}); };
+  var peg$f53 = function(head, args) { return callee => ({type: 'CallExpression', callee, arguments: args}); };
+  var peg$f54 = function(head, ident) { return object => ({type: 'MemberExpression', object, property: {type: 'StringLiteral', value: ident.name}}); };
+  var peg$f55 = function(head, property) { return object => ({type: 'MemberExpression', object, property}); };
   var peg$f56 = function(head, tail) { return tail.reduce((expr, wrap) => wrap(expr), head); };
   var peg$f57 = function() { return []; };
   var peg$f58 = function(args) { return args; };
   var peg$f59 = function() { return []; };
   var peg$f60 = function(parameters) { return parameters; };
   var peg$f61 = function(parameter) { return [parameter]; };
-  var peg$f62 = function() { return Serif.ArrayPattern([]); };
-  var peg$f63 = function(elisions) { return Serif.ArrayPattern(elisions); };
+  var peg$f62 = function() { return {type: 'ArrayPattern', elements: []}; };
+  var peg$f63 = function(elisions) { return {type: 'ArrayPattern', elements: elisions}; };
   var peg$f64 = function(elision) { return elision; };
   var peg$f65 = function(element) { return element; };
-  var peg$f66 = function(elements, element) { return Serif.ArrayPattern(element == null ? elements : [...elements, element]); };
-  var peg$f67 = function() { return Serif.Elision; };
-  var peg$f68 = function() { return Serif.ObjectPattern([]); };
-  var peg$f69 = function(properties) { return Serif.ObjectPattern(properties); };
-  var peg$f70 = function(ident, pattern) { return Serif.Property(Serif.StringLiteral(ident.name))(pattern); };
-  var peg$f71 = function(ident) { return Serif.Property(Serif.StringLiteral(ident.name))(ident); };
-  var peg$f72 = function(argument) { return Serif.RestElement(argument); };
-  var peg$f73 = function(operator, argument) { return Serif.UnaryExpression(operator)(argument); };
-  var peg$f74 = function(exprs) { return exprs.reduceRight((right, left) => Serif.CompositionExpression(left)(right)); };
+  var peg$f66 = function(elements, element) { return {type: 'ArrayPattern', elements: element == null ? elements : [...elements, element]}; };
+  var peg$f67 = function() { return {type: 'Elision'}; };
+  var peg$f68 = function() { return {type: 'ObjectPattern', properties: []}; };
+  var peg$f69 = function(properties) { return {type: 'ObjectPattern', properties}; };
+  var peg$f70 = function(ident, pattern) { return {type: 'Property', key: {type: 'StringLiteral', value: ident.name}, value: pattern}; };
+  var peg$f71 = function(ident) { return {type: 'Property', key: {type: 'StringLiteral', value: ident.name}, value: ident}; };
+  var peg$f72 = function(argument) { return {type: 'RestElement', argument}; };
+  var peg$f73 = function(operator, argument) { return {type: 'UnaryExpression', operator, argument}; };
+  var peg$f74 = function(exprs) { return exprs.reduceRight((right, left) => ({type: 'CompositionExpression', left, right})); };
   var peg$f75 = function(left, operator, right) { return {operator, right}; };
-  var peg$f76 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); };
+  var peg$f76 = function(left, tail) { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); };
   var peg$f77 = function(left, operator, right) { return {operator, right}; };
-  var peg$f78 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); };
+  var peg$f78 = function(left, tail) { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); };
   var peg$f79 = function(left, operator, right) { return {operator, right}; };
-  var peg$f80 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); };
+  var peg$f80 = function(left, tail) { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); };
   var peg$f81 = function(left, operator, right) { return {operator, right}; };
-  var peg$f82 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); };
+  var peg$f82 = function(left, tail) { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); };
   var peg$f83 = function(left, operator, right) { return {operator, right}; };
-  var peg$f84 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); };
+  var peg$f84 = function(left, tail) { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); };
   var peg$f85 = function(left, operator, right) { return {operator, right}; };
-  var peg$f86 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); };
-  var peg$f87 = function(exprs) { return exprs.reduceRight((right, left) => Serif.MapExpression(left)(right)); };
+  var peg$f86 = function(left, tail) { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); };
+  var peg$f87 = function(exprs) { return exprs.reduceRight((right, left) => ({type: 'MapExpression', left, right})); };
   var peg$f88 = function(left, operator, right) { return {operator, right}; };
-  var peg$f89 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); };
+  var peg$f89 = function(left, tail) { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); };
   var peg$f90 = function(left, operator, right) { return {operator, right}; };
-  var peg$f91 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); };
+  var peg$f91 = function(left, tail) { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); };
   var peg$f92 = function(left, operator, right) { return {operator, right}; };
-  var peg$f93 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.BinaryExpression(operator)(left)(right), left); };
+  var peg$f93 = function(left, tail) { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); };
   var peg$f94 = function(left, operator, right) { return {operator, right}; };
-  var peg$f95 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator)(left)(right), left); };
+  var peg$f95 = function(left, tail) { return tail.reduce((left, {operator, right}) => ({type: 'LogicalExpression', operator, left, right}), left); };
   var peg$f96 = function(left, operator, right) { return {operator, right}; };
-  var peg$f97 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator)(left)(right), left); };
+  var peg$f97 = function(left, tail) { return tail.reduce((left, {operator, right}) => ({type: 'LogicalExpression', operator, left, right}), left); };
   var peg$f98 = function(left, operator, right) { return {operator, right}; };
-  var peg$f99 = function(left, tail) { return tail.reduce((left, {operator, right}) => Serif.LogicalExpression(operator)(left)(right), left); };
-  var peg$f100 = function(exprs) { return exprs.reduce((left, right) => Serif.BindExpression(left)(right)); };
-  var peg$f101 = function(predicate, consequent, alternative) { return Serif.ConditionalExpression(predicate)(consequent)(alternative); };
+  var peg$f99 = function(left, tail) { return tail.reduce((left, {operator, right}) => ({type: 'LogicalExpression', operator, left, right}), left); };
+  var peg$f100 = function(exprs) { return exprs.reduce((left, right) => ({type: 'BindExpression', left, right})); };
+  var peg$f101 = function(predicate, consequent, alternative) { return {type: 'ConditionalExpression', predicate, consequent, alternative}; };
   var peg$f102 = function(discriminant, cases, default_) { return default_; };
-  var peg$f103 = function(discriminant, cases, default_) { return Serif.SwitchExpression(discriminant)(cases)(default_); };
-  var peg$f104 = function(predicates, consequent) { return Serif.SwitchCase(predicates)(consequent); };
+  var peg$f103 = function(discriminant, cases, default_) { return {type: 'SwitchExpression', discriminant, cases, default: default_}; };
+  var peg$f104 = function(predicates, consequent) { return {type: 'SwitchCase', predicates, consequent}; };
   var peg$f105 = function(callee, arg) { return arg; };
-  var peg$f106 = function(callee, args) { return args.reduce((callee, arg) => Serif.CallExpression(callee)([arg]), callee); };
-  var peg$f107 = function(head, body) { return body; };
-  var peg$f108 = function(head, tail) { return tail.reduce((head, body) => Serif.PipeExpression(head)(body), head); };
-  var peg$f109 = function(ident) { return Serif.PropertyAccessor(ident); };
-  var peg$f110 = function(statements) { return Serif.BlockExpression(statements); };
-  var peg$f111 = function(ident, parameter) { return parameter; };
-  var peg$f112 = function(ident, parameters, body) { return Serif.FunctionDeclaration(ident.name)(parameters)(body); };
-  var peg$f113 = function(pattern, expression) { return Serif.VariableDeclaration(pattern)(expression); };
-  var peg$f114 = function(expression) { return Serif.ExpressionStatement(expression); };
-  var peg$f115 = function(argument) { return Serif.SpreadElement(argument); };
+  var peg$f106 = function(callee, args) { return args.reduce((callee, arg) => ({type: 'CallExpression', callee, arguments: [arg]}), callee); };
+  var peg$f107 = function(exprs) { return exprs.reduce((head, body) => ({type: 'PipeExpression', head, body})); };
+  var peg$f108 = function(identifier) { return {type: 'PropertyAccessor', identifier}; };
+  var peg$f109 = function(statements) { return {type: 'BlockExpression', statements}; };
+  var peg$f110 = function(ident, parameter) { return parameter; };
+  var peg$f111 = function(ident, parameters, body) { return {type: 'FunctionDeclaration', name: ident.name, parameters, body}; };
+  var peg$f112 = function(pattern, expression) { return {type: 'VariableDeclaration', pattern, expression}; };
+  var peg$f113 = function(expression) { return {type: 'ExpressionStatement', expression}; };
+  var peg$f114 = function(argument) { return {type: 'SpreadElement', argument}; };
   var peg$currPos = 0;
   var peg$savedPos = 0;
   var peg$posDetailsCache = [{ line: 1, column: 1 }];
@@ -6341,52 +6338,46 @@ function peg$parse(input, options) {
     var s0, s1, s2, s3, s4, s5, s6, s7;
 
     s0 = peg$currPos;
-    s1 = peg$parseApplicationExpression();
-    if (s1 !== peg$FAILED) {
-      s2 = [];
+    s1 = peg$currPos;
+    s2 = [];
+    s3 = peg$parseApplicationExpression();
+    while (s3 !== peg$FAILED) {
+      s2.push(s3);
       s3 = peg$currPos;
-      s4 = peg$parse_();
-      s5 = peg$parsePipeOperator();
-      if (s5 !== peg$FAILED) {
-        s6 = peg$parse_();
-        s7 = peg$parseApplicationExpression();
-        if (s7 !== peg$FAILED) {
-          peg$savedPos = s3;
-          s3 = peg$f107(s1, s7);
-        } else {
+      s4 = peg$currPos;
+      s5 = peg$parse_();
+      s6 = peg$parsePipeOperator();
+      if (s6 !== peg$FAILED) {
+        s7 = peg$parse_();
+        s5 = [s5, s6, s7];
+        s4 = s5;
+      } else {
+        peg$currPos = s4;
+        s4 = peg$FAILED;
+      }
+      if (s4 !== peg$FAILED) {
+        s4 = peg$parseApplicationExpression();
+        if (s4 === peg$FAILED) {
           peg$currPos = s3;
           s3 = peg$FAILED;
+        } else {
+          s3 = s4;
         }
       } else {
-        peg$currPos = s3;
-        s3 = peg$FAILED;
+        s3 = s4;
       }
-      while (s3 !== peg$FAILED) {
-        s2.push(s3);
-        s3 = peg$currPos;
-        s4 = peg$parse_();
-        s5 = peg$parsePipeOperator();
-        if (s5 !== peg$FAILED) {
-          s6 = peg$parse_();
-          s7 = peg$parseApplicationExpression();
-          if (s7 !== peg$FAILED) {
-            peg$savedPos = s3;
-            s3 = peg$f107(s1, s7);
-          } else {
-            peg$currPos = s3;
-            s3 = peg$FAILED;
-          }
-        } else {
-          peg$currPos = s3;
-          s3 = peg$FAILED;
-        }
-      }
-      peg$savedPos = s0;
-      s0 = peg$f108(s1, s2);
-    } else {
-      peg$currPos = s0;
-      s0 = peg$FAILED;
     }
+    if (s2.length < 1) {
+      peg$currPos = s1;
+      s1 = peg$FAILED;
+    } else {
+      s1 = s2;
+    }
+    if (s1 !== peg$FAILED) {
+      peg$savedPos = s0;
+      s1 = peg$f107(s1);
+    }
+    s0 = s1;
 
     return s0;
   }
@@ -6422,7 +6413,7 @@ function peg$parse(input, options) {
           }
           if (s4 !== peg$FAILED) {
             peg$savedPos = s0;
-            s0 = peg$f109(s3);
+            s0 = peg$f108(s3);
           } else {
             peg$currPos = s0;
             s0 = peg$FAILED;
@@ -6492,7 +6483,7 @@ function peg$parse(input, options) {
         }
         if (s5 !== peg$FAILED) {
           peg$savedPos = s0;
-          s0 = peg$f110(s3);
+          s0 = peg$f109(s3);
         } else {
           peg$currPos = s0;
           s0 = peg$FAILED;
@@ -6536,7 +6527,7 @@ function peg$parse(input, options) {
         s5 = peg$parsePattern();
         if (s5 !== peg$FAILED) {
           peg$savedPos = s3;
-          s3 = peg$f111(s1, s5);
+          s3 = peg$f110(s1, s5);
         } else {
           peg$currPos = s3;
           s3 = peg$FAILED;
@@ -6554,7 +6545,7 @@ function peg$parse(input, options) {
             s5 = peg$parsePattern();
             if (s5 !== peg$FAILED) {
               peg$savedPos = s3;
-              s3 = peg$f111(s1, s5);
+              s3 = peg$f110(s1, s5);
             } else {
               peg$currPos = s3;
               s3 = peg$FAILED;
@@ -6581,7 +6572,7 @@ function peg$parse(input, options) {
           s6 = peg$parsePipeExpression();
           if (s6 !== peg$FAILED) {
             peg$savedPos = s0;
-            s0 = peg$f112(s1, s2, s6);
+            s0 = peg$f111(s1, s2, s6);
           } else {
             peg$currPos = s0;
             s0 = peg$FAILED;
@@ -6621,7 +6612,7 @@ function peg$parse(input, options) {
         s5 = peg$parsePipeExpression();
         if (s5 !== peg$FAILED) {
           peg$savedPos = s0;
-          s0 = peg$f113(s1, s5);
+          s0 = peg$f112(s1, s5);
         } else {
           peg$currPos = s0;
           s0 = peg$FAILED;
@@ -6645,7 +6636,7 @@ function peg$parse(input, options) {
     s1 = peg$parsePipeExpression();
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
-      s1 = peg$f114(s1);
+      s1 = peg$f113(s1);
     }
     s0 = s1;
 
@@ -6667,7 +6658,7 @@ function peg$parse(input, options) {
       s2 = peg$parsePipeExpression();
       if (s2 !== peg$FAILED) {
         peg$savedPos = s0;
-        s0 = peg$f115(s2);
+        s0 = peg$f114(s2);
       } else {
         peg$currPos = s0;
         s0 = peg$FAILED;
