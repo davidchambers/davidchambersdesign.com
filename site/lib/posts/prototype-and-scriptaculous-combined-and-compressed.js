@@ -3,9 +3,11 @@ import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const body = [p([strong(["Nothing new here."]), " I've combined ", a({
   href: "http://prototypejs.org/2009/9/1/prototype-1-6-1-released"
 })(["Prototype 1.6.1"]), " and the various files that make up ", a({

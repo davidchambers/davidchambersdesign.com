@@ -2,9 +2,11 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const body = [p(["In this performance from ", i(["Ukraine's Got Talent"]), ",\n    Kseniya Simonova uses the simplest of tools (a lightbox,\n    sand, and her own body) to create a captivating animation.\n    I really enjoyed the accompanying \"Nothing Else Matters\"\n    instrumental, as well."]), p([a({
   href: "http://www.youtube.com/watch?v=518XP8prwZo"
 })(["Kseniya Simonova on Ukraine's Got Talent"])])];

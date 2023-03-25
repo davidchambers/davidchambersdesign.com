@@ -3,9 +3,11 @@ import {captioned$002Dimages, code$002Dblock, update} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const excerpt = [p(["Mac OS X's default bash prompt is dull and uninformative."]), captioned$002Dimages([{
   alt: "Mac OS X's default bash prompt",
   src: "/images/posts/80/windows/default-os-x-bash-prompt.png",

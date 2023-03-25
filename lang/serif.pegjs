@@ -383,14 +383,21 @@ AdditiveExpression
     tail:(_ operator:AdditiveOperator _ right:MultiplicativeExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
 
+ConcatenationOperator
+  = '<>'
+
+ConcatenationExpression
+  = exprs:AdditiveExpression|1.., _ ConcatenationOperator _|
+    { return exprs.reduceRight((right, left) => ({type: 'ConcatenationExpression', left, right})); }
+
 ShiftOperator
   = '<<'
   / '>>>'
   / '>>'
 
 ShiftExpression
-  = left:AdditiveExpression
-    tail:(_ operator:ShiftOperator _ right:AdditiveExpression { return {operator, right}; })*
+  = left:ConcatenationExpression
+    tail:(_ operator:ShiftOperator _ right:ConcatenationExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
 
 RelationalOperator

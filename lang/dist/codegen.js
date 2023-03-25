@@ -1,10 +1,11 @@
 import * as Future from "fluture";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, map, not} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const RESERVED_WORDS = Reflect.construct(Set, [["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public"]]);
 const validEsIdentifierName = name => Reflect.apply(RegExp.prototype.test, RegExp("^[a-z][a-z0-9]*$", "i"), [name]);
 const esFromIdentifierName = (() => {

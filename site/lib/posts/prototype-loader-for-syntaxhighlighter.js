@@ -3,9 +3,11 @@ import {code$002Dblock, update} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const excerpt = [p([a({
   href: "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
 })(["SyntaxHighlighter"]), " is a fully functional self-contained\n    code syntax highlighter developed in JavaScript (as stated on\n    its wiki). One of its deficiencies is that it retrieves all\n    its brushes each time a page is loaded, despite the fact that\n    in many cases only one or two (or none) are required."]), p(["Currently, ", a({

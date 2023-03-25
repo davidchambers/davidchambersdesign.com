@@ -3,9 +3,11 @@ import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const excerpt = [p(["One way to reduce the number of HTTP requests a page requires\n    is to group (non-content) images into sprites. An even better\n    way is to remove these images from the server altogether;\n    instead include them as encoded strings in your style sheet."])];
 const body = [...excerpt, p(["Instead of..."]), code$002Dblock("css")(`a[href="/contact/"] {
     background: url(/images/sprite.png) no-repeat 0 -30px;

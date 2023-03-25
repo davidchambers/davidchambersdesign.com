@@ -3,9 +3,11 @@ import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const excerpt = [p(["URL shortening is something that's been\n    at the back of my mind since listening to ", a({
   href: "http://www.sitepoint.com/blogs/2009/08/22/podcast-24-those-frames-are-ironic/"
 })(["SitePoint Podcast #24"]), "\n    which discussed the near closure of ", a({

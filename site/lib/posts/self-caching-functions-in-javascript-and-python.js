@@ -3,9 +3,11 @@ import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const excerpt = [p(["Earlier I wrote some code which repeatedly calls a function\n    which performs a database query – often ", strong(["the same"]), "\n    query. This encouraged me to explore various ways to cache the\n    results of function calls in both Python (to solve my immediate\n    problem) and JavaScript (because I find that language endlessly\n    fascinating)."]), p(["I played around with ", a({
   href: "http://en.wikipedia.org/wiki/Fibonacci_number"
 })(["Fibonacci"]), ",\n    which is a well suited to the task: it can be described in just\n    a couple of lines of code yet benefits enormously from caching\n    due to its recursive nature."]), h3(["JavaScript Fibonacci without caching"]), code$002Dblock("javascript")(`function fibonacci(n) {

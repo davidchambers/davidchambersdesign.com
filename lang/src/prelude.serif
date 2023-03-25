@@ -2,6 +2,7 @@ import * from "./types.serif";
 
 export {
   not,
+  concat,
   map,
   chain,
 };
@@ -12,9 +13,30 @@ isArray name = {
                  [Identifier name]
 };
 
+isString name = {
+  BinaryExpression "is"
+                   (UnaryExpression "typeof" $ Identifier name)
+                   (StringLiteral "string")
+};
+
 not = {
   ArrowFunctionExpression [Identifier "b"] {
     UnaryExpression "!" (Identifier "b")
+  }
+};
+
+concat = {
+  ArrowFunctionExpression [Identifier "this"] {
+    ArrowFunctionExpression [Identifier "that"] {
+      ConditionalExpression
+        (LogicalExpression "or" (isArray "this") (isString "this"))
+        (CallExpression (MemberExpression (Identifier "this")
+                                          (StringLiteral "concat"))
+                        [Identifier "that"])
+        (CallExpression (MemberExpression (Identifier "this")
+                                          (StringLiteral "fantasy-land/concat"))
+                        [Identifier "that"])
+    }
   }
 };
 

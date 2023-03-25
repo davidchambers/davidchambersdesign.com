@@ -44,7 +44,7 @@ namesInStatement node = {
 
 rewriteModule module = {
   names = Reflect.construct (Set, [
-    [...module.imports, ...module.statements] >>= namesInStatement,
+    module.imports <> module.statements >>= namesInStatement,
   ]);
   preludeIdent = nextUnusedIdent names "Prelude";
   names' = add preludeIdent.name names;
@@ -151,6 +151,11 @@ rewriteNode preludeIdent = {
       BinaryExpression node.operator
                        (recur names node.left)
                        (recur names node.right)
+    }
+    when "ConcatenationExpression" then {
+      CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "concat")
+                                     [recur names node.left])
+                     [recur names node.right]
     }
     when "MapExpression" then {
       CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "map")

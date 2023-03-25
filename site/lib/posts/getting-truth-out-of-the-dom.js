@@ -2,9 +2,11 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const body = [p(["Recording of Yehuda Katz's presentation from Bay Area jQuery Conf 2011."]), p([a({
   href: "http://vimeo.com/22687694"
 })(["Getting truth out of the DOM"])]), p(["While watching this it ", em(["finally"]), " became clear to me why\n    storing state in the DOM is a terrible idea for complex applications.\n    The approach comes unstuck as soon as one wishes to display an entity\n    more than once in a view (such as in a list–details split view)."])];

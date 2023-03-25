@@ -22,9 +22,11 @@ import pages from "../pages/index.js";
 import posts from "../posts/index.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const public$ = components => path.join(dirname, "..", "..", "public", ...components);
 const write$002Dfile = filename => data => fs.writeFileSync(filename, data);

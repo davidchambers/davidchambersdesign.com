@@ -3,9 +3,11 @@ import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const excerpt = [p([strong(["I wanted to simplify everything."]), "\n    I wanted to write posts in ", a({
   href: "http://daringfireball.net/projects/markdown/syntax"
 })(["Markdown"]), ", not HTML. I wanted to save posts as files,\n    not database entries. I wanted to free myself of my dependence\n    on WordPress, PHP, and MySQL in one fell swoop."]), p(["So, ", a({

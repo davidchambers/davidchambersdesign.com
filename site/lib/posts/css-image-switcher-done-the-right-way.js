@@ -3,9 +3,11 @@ import {captioned$002Dimages, code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const excerpt = [p([strong(["Chris Coyier has done it again."]), "\n    Compelled me to stay up all night, that is\n    (it's 7am as I type this). In Chris's latest screencast, ", a({
   href: "http://css-tricks.com/video-screencasts/82-css-image-switcher/"
 })(["CSS Image Switcher"]), ", he demonstrates how to create an\n    \"image switcher\" using CSS. The problem, though, is that ", strong(["his process is wrong"]), "."]), h4(["Incorrect process"]), ol([li(["What effect or experience do I want to create?"]), li(["How can I achieve this using CSS (and JavaScript if necessary)?"]), li(["What can my markup do to help me?"])]), h4(["Correct process"]), ol([li(["What effect or experience do I want to create?"]), li(["What is the most correct and meaningful way to describe the content?"]), li(["How can I achieve the desired effect or experience (or something close\n      to it) ", em(["without"]), " altering my markup?"])])];

@@ -3,9 +3,11 @@ import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const body = [p(["Recently I listened to ", a({
   href: "http://blog.extracheese.org/2010/02/python-vs-ruby-a-battle-to-the-death.html"
 })(["Gary Bernhardt comparing Python and Ruby"]), ". In the talk Gary\n    states that he finds Ruby code ugly and Python code beautiful.\n    He then goes on to say that the things which reduce Ruby's\n    aesthetic appeal are the very things which allow Ruby to do\n    beautiful things impossible in Python."]), p(["Gary provides several examples of equivalent code in Python and\n    Ruby to highlight situations in which one language reads better\n    than the other, such as the following."]), p(["Python:"]), code$002Dblock("python")(`'\\n'.join(obj.name

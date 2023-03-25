@@ -3,9 +3,11 @@ import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const body = [p(["I've begun retrofitting this site with HTML5 elements.\n    I'm thoroughly enjoying the process (I love meaningful markup)."]), p(["One of the first HTML5 elements I've introduced is the ", strong(["time"]), " element which, through its ", strong(["datetime"]), "\n    attribute, provides a machine-readable version of dates and times."]), code$002Dblock("html")(`<time datetime="2009-11-01T16:41:53+13:00">1 November 2009</time>
 `), p(["I wrote a function to generate the machine-readable dates and times\n    for blog comments."]), code$002Dblock("php")(`<?php
 

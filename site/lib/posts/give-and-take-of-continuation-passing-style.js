@@ -3,9 +3,11 @@ import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const body = [p(["I have been experimenting with ", a({
   href: "https://en.wikipedia.org/wiki/Continuation-passing_style"
 })(["continuation-passing style"]), " recently. Writing code in\n    this style feels strange but exciting! I recently discovered\n    that one can use functions in place of objects."]), p(["Local mutation and reassignment are acceptable, but I avoid them\n    whenever practical. As a result I use ", code(["reduce"]), " ", em(["a lot"]), "."]), code$002Dblock("javascript")(`//    reduce :: (b -> a -> b) -> b -> Array a -> b

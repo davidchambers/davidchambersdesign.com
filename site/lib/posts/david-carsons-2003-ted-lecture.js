@@ -2,9 +2,11 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const body = [p(["One of my flatmates linked me to this clip recently. It's titled ", a({
   href: "http://www.ted.com/index.php/talks/david_carson_on_design.html"
 })(["Design, discovery and humor"]), " and certainly delivers the\n    entertainment it promises. It's well worth a look."]), dl([dt([object({

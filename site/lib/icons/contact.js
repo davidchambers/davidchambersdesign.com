@@ -2,9 +2,11 @@ import {path} from "../elements.js";
 import {render, $21E6, $21E8, $21E7, $21E9, $2190, $2192, $2191, $2193} from "../orthogonal.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const stroke = [$21E8(0), $21E9(2), $2192(16), $2193(12), $2190(16), $2191(12)];
 const fill = [$21E8(2), $21E9(3), $2192(12), $2193(1), $2192(1), $2193(9), $2190(14), $2191(9), $2192(1), $2191(1)];
 const flap = [$21E8(2), $21E9(4), $2192(1), $2193(2), $2192(2), $2193(2), $2192(2), $2193(2), $2192(2), $2191(2), $2192(2), $2191(2), $2192(2), $2191(2), $2192(1), $2193(1), $2190(2), $2193(2), $2190(2), $2193(2), $2190(4), $2191(2), $2190(2), $2191(2), $2190(2), $2191(1)];

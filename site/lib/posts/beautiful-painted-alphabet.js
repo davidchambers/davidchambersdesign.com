@@ -2,9 +2,11 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const body = [p(["I came across this recently while browsing ", a({
   href: "http://markboulton.co.uk/"
 })(["Mark Boulton's site"]), ".\n    The style and control of Job's hand is played off against\n    the exuberance of his son's approach. An upbeat soundtrack\n    accompanies the performance."]), dl([dt([a({

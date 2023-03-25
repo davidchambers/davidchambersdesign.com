@@ -3,9 +3,11 @@ import {captioned$002Dimages, code$002Dblock, update, $2014} from "../components
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const excerpt = [p(["I've been using Alex Gorbatchev's ", a({
   href: "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
 })(["SyntaxHighlighter"]), "\n    to syntactically display code of various languages for several\n    months now. When I decided to post an AppleScript snippet, however,\n    I realised that I was out of luck. SyntaxHighlighter does not\n    include an AppleScript \"brush\", and a quick flick through the ", a({

@@ -3,9 +3,11 @@ import {captioned$002Dimages, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const body = [p(["On 19 April 2011, at around noon Pacific time, I published a short tweet."]), blockquote([p(["Hashify is officially live as of now! ", a({
   href: "http://bit.ly/dXYxGU"
 })(["bit.ly/dXYxGU"])])]), p(["Quite to my surprise word of the release spread\n    incredibly quickly, thanks in large part to the ", a({

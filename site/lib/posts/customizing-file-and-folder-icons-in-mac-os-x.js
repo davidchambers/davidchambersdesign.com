@@ -3,9 +3,11 @@ import {captioned$002Dimages, code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const excerpt = [p(["Customizing the appearance of files and folders in OS X is\n    a cinch. ⌘C, ⌘I, ⌘V, punctuated by a few mouse clicks."]), p([strong(["Actually, that's total bullshit."])]), p(["Sure, in the simplest of cases the copy and paste approach\n    gets the job done, assuming one knows to copy from Preview.app\n    if copying from the original source fails. As soon as one decides\n    to do something a bit more advanced, such as providing versions\n    for display at different sizes, one's shit outta luck."])];
 const body = [...excerpt, h3(["Creating .icns and applying them to files, folders, or bundles"]), ol([li([p([img({
   alt: "",

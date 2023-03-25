@@ -2,10 +2,11 @@ import * as Prelude from "./prelude.js";
 import {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateLiteral, MetaProperty, MemberExpression, IdentifierPlaceholder, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, PipeExpression, CallExpression, ImportExpression, ImportDeclaration, ImportEverythingDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} from "./types.js";
 const Prelude$1 = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, map, not} = Prelude$1;
+const {chain, concat, map, not} = Prelude$1;
 const has = element => set => set.has(element);
 const add = element => set => Reflect.construct(Set, [[...set, element]]);
 const union = this$ => that => Reflect.construct(Set, [[...this$, ...that]]);
@@ -47,7 +48,7 @@ const namesInStatement = node => (() => {
   }
 })();
 const rewriteModule = module => (() => {
-  const names = Reflect.construct(Set, [Prelude$1.chain(namesInStatement)([...module.imports, ...module.statements])]);
+  const names = Reflect.construct(Set, [Prelude$1.chain(namesInStatement)(Prelude$1.concat(module.imports)(module.statements))]);
   const preludeIdent = nextUnusedIdent(names)("Prelude");
   const names$0027 = add(preludeIdent.name)(names);
   const rewrite = rewriteNode(preludeIdent)(names$0027);
@@ -107,6 +108,8 @@ const rewriteNode = preludeIdent => (() => {
         })();
       case "BinaryExpression":
         return BinaryExpression(node.operator)(recur(names)(node.left))(recur(names)(node.right));
+      case "ConcatenationExpression":
+        return CallExpression(CallExpression(MemberExpression(preludeIdent)(StringLiteral("concat")))([recur(names)(node.left)]))([recur(names)(node.right)]);
       case "MapExpression":
         return CallExpression(CallExpression(MemberExpression(preludeIdent)(StringLiteral("map")))([recur(names)(node.left)]))([recur(names)(node.right)]);
       case "BindExpression":

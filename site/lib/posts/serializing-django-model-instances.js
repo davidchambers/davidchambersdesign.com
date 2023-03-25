@@ -3,9 +3,11 @@ import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const body = [p(["One might expect the following code to serialize a Django model instance:"]), code$002Dblock("python")(`import simplejson
 simplejson.dumps(instance)
 `), p(["Unforunately, this raises a TypeError, as the instance is not JSON\n    serializable. I don't understand ", em(["why"]), " model instances are\n    not serializable, but I do have a solution: define a serialization\n    method on the instance's model."]), code$002Dblock("python")(`def toJSON(self):

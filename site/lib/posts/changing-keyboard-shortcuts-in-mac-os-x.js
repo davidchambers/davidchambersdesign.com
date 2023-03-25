@@ -2,9 +2,11 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const excerpt = [p(["I've been using OS X almost exclusively for the last three\n    or four years, but it was only recently that I discovered the\n    system-wide method for changing keyboard shortcuts. I think\n    the reason that this feature eluded me for so long is that so\n    many of the hours I've spent on OS X have involved the use of\n    the Adobe applications Photoshop, Illustrator, and InDesign,\n    which provide their own means of changing keyboard shortcuts.\n    I assumed that since application developers sometimes provide\n    their own interfaces for changing keyboard shortcuts, the\n    operating system must lack this functionality. I was wrong."])];
 const body = [...excerpt, p(["I stumbled upon this useful information while reading ", a({
   href: "http://caminobrowser.org/documentation/faq/#cust_change"

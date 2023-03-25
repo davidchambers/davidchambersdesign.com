@@ -3,9 +3,11 @@ import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, concat, map, not} = Prelude;
 const body = [p(["When writing code one often needs to grab the first item in\n    a collection that has certain characteristics. For example,\n    one may have a list of ", code(["Student"]), " objects and\n    need to fetch the one with a certain id."]), p(["The task is trivial: loop through the list and compare each\n    student's id until a match is found or all the students in\n    the list have been inspected, whichever comes first."]), p(["In the past, I've tended to take advantage of return statements\n    to exit the loop as soon as a match is found. The examples here\n    are in Python, but the same patterns apply to other languages."]), code$002Dblock("python")(`def student_by_id(students, id):
     for student in students:
         if student.id == id:
