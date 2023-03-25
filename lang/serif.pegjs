@@ -343,7 +343,6 @@ UnaryOperator
   / '+'
   / '-'
   / '~'
-  / '!'
 
 UnaryExpression
   = operator:UnaryOperator _ argument:CallExpression

@@ -5,9 +5,10 @@ import {attempt, attemptP, fork, mapRej, parallel, resolve} from "fluture";
 import serif from "./index.js";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, map, not} = Prelude;
 const parse = filename => sourceText => mapRej(error => (() => {
   const lines = Prelude.chain(line => (() => {
     const offset = line.number - error.location.start.line;

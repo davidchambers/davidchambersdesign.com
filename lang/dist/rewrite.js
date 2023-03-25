@@ -2,9 +2,10 @@ import * as Prelude from "./prelude.js";
 import {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateLiteral, MetaProperty, MemberExpression, IdentifierPlaceholder, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, PipeExpression, CallExpression, ImportExpression, ImportDeclaration, ImportEverythingDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} from "./types.js";
 const Prelude$1 = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude$1;
+const {chain, map, not} = Prelude$1;
 const has = element => set => set.has(element);
 const add = element => set => Reflect.construct(Set, [[...set, element]]);
 const union = this$ => that => Reflect.construct(Set, [[...this$, ...that]]);
@@ -51,7 +52,7 @@ const rewriteModule = module => (() => {
   const names$0027 = add(preludeIdent.name)(names);
   const rewrite = rewriteNode(preludeIdent)(names$0027);
   const preludeDefinition = VariableDeclaration(preludeIdent)(ObjectExpression(map(([name, expr]) => Property(StringLiteral(name))(expr))(Object.entries(Prelude))));
-  const preludeDestructuring = VariableDeclaration((names => ObjectPattern(map(name => Property(StringLiteral(name))(Identifier(name)))(names.filter(name => !has(name)(names$0027)))))(Object.keys(Prelude)))(preludeIdent);
+  const preludeDestructuring = VariableDeclaration((names => ObjectPattern(map(name => Property(StringLiteral(name))(Identifier(name)))(names.filter(name => not(has(name)(names$0027))))))(Object.keys(Prelude)))(preludeIdent);
   return Module({
     imports: Prelude$1.map(rewrite)(module.imports),
     exports: Prelude$1.map(rewrite)(module.exports),

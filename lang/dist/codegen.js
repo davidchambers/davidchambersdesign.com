@@ -1,9 +1,10 @@
 import * as Future from "fluture";
 const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f)
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  not: b => !b
 };
-const {chain, map} = Prelude;
+const {chain, map, not} = Prelude;
 const RESERVED_WORDS = Reflect.construct(Set, [["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public"]]);
 const validEsIdentifierName = name => Reflect.apply(RegExp.prototype.test, RegExp("^[a-z][a-z0-9]*$", "i"), [name]);
 const esFromIdentifierName = (() => {
@@ -52,7 +53,7 @@ const esFromTemplateLiteral = ({expressions, quasis}) => ({
   })()
 });
 const esFromMemberExpression = ({object, property}) => (() => {
-  const computed = !(property.type === "StringLiteral" && validEsIdentifierName(property.value));
+  const computed = not(property.type === "StringLiteral" && validEsIdentifierName(property.value));
   return {
     type: "MemberExpression",
     object: esFromNode(object),
@@ -70,7 +71,7 @@ const esFromArrayExpression = ({elements}) => ({
   elements: Prelude.map(esFromNode)(elements)
 });
 const esFromProperty = property => property.type === "SpreadElement" ? esFromSpreadElement(property) : (() => {
-  const computed = !(property.key.type === "StringLiteral" && validEsIdentifierName(property.key.value));
+  const computed = not(property.key.type === "StringLiteral" && validEsIdentifierName(property.key.value));
   const key = computed ? esFromNode(property.key) : esFromEscapedIdentifierName(property.key.value);
   const value = esFromNode(property.value);
   const shorthand = key.type === "Identifier" && value.type === "Identifier" && key.name === value.name;
@@ -272,7 +273,7 @@ const esFromImportDeclaration = exportedNames => importDeclaration => importDecl
   const source = importDeclaration.source.value;
   const hiding = Prelude.map(x => x.name)(importDeclaration.hiding);
   const hiding$0021 = Reflect.construct(Set, [Prelude.map(x => x.name)(importDeclaration.hiding)]);
-  const visible = name => !hiding$0021.delete(name);
+  const visible = name => not(hiding$0021.delete(name));
   return source.endsWith(".serif") ? (() => {
     const names = exportedNames(source).filter(visible);
     return hiding$0021.size > 0 ? Future.reject(unnecessaryHiding(source, hiding, Array.from(hiding$0021))) : Future.resolve({

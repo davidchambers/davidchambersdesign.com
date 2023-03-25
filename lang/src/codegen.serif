@@ -137,7 +137,7 @@ esFromTemplateLiteral {expressions, quasis} = {
 };
 
 esFromMemberExpression {object, property} = {
-  computed = !{
+  computed = not {
     property.type is "StringLiteral" and
     validEsIdentifierName property.value
   };
@@ -162,7 +162,7 @@ esFromArrayExpression {elements} = {
 
 esFromProperty property = {
   if property.type is "SpreadElement" then esFromSpreadElement property else {
-    computed = !{
+    computed = not {
       property.key.type is "StringLiteral" and
       validEsIdentifierName property.key.value
     };
@@ -383,7 +383,7 @@ esFromImportDeclaration exportedNames importDeclaration = {
     source = importDeclaration.source.value;
     hiding = (.name) <$> importDeclaration.hiding;
     hiding! = Reflect.construct (Set, [(.name) <$> importDeclaration.hiding]);
-    visible = name => !hiding!.delete(name);
+    visible = name => not $ hiding!.delete(name);
     if source.endsWith ".serif" then {
       names = exportedNames(source).filter(visible);
       if hiding!.size > 0 then {

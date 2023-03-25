@@ -62,7 +62,7 @@ rewriteModule module = {
       Prelude
       |> Object.keys
       ;; Do not unpack if name conflicts with a top-level binding:
-      |> names => names.filter (name => !{has name names'})
+      |> names => names.filter (name => not $ has name names')
       |> map (name => Property (StringLiteral name) (Identifier name))
       |> ObjectPattern
     } preludeIdent

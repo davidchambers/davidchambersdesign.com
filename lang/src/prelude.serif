@@ -1,13 +1,7 @@
-import {
-  ArrowFunctionExpression,
-  CallExpression,
-  ConditionalExpression,
-  Identifier,
-  MemberExpression,
-  StringLiteral,
-} from "./types.serif";
+import * from "./types.serif";
 
 export {
+  not,
   map,
   chain,
 };
@@ -18,9 +12,15 @@ isArray name = {
                  [Identifier name]
 };
 
+not = {
+  ArrowFunctionExpression [Identifier "b"] {
+    UnaryExpression "!" (Identifier "b")
+  }
+};
+
 map = {
-  ArrowFunctionExpression [Identifier "f"] $
-    ArrowFunctionExpression [Identifier "functor"] $
+  ArrowFunctionExpression [Identifier "f"] {
+    ArrowFunctionExpression [Identifier "functor"] {
       ConditionalExpression
         (isArray "functor")
         (CallExpression (MemberExpression (Identifier "functor")
@@ -31,11 +31,13 @@ map = {
         (CallExpression (MemberExpression (Identifier "functor")
                                           (StringLiteral "fantasy-land/map"))
                         [Identifier "f"])
+    }
+  }
 };
 
 chain = {
-  ArrowFunctionExpression [Identifier "f"] $
-    ArrowFunctionExpression [Identifier "chain"] $
+  ArrowFunctionExpression [Identifier "f"] {
+    ArrowFunctionExpression [Identifier "chain"] {
       ConditionalExpression
         (isArray "chain")
         (CallExpression (MemberExpression (Identifier "chain")
@@ -46,4 +48,6 @@ chain = {
         (CallExpression (MemberExpression (Identifier "chain")
                                           (StringLiteral "fantasy-land/chain"))
                         [Identifier "f"])
+    }
+  }
 };
