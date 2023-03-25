@@ -131,6 +131,8 @@ IfToken             = @$'if'            !IdentifierPart
 ImportToken         = @$'import'        !IdentifierPart
 InToken             = @$'in'            !IdentifierPart
 InstanceofToken     = @$'instanceof'    !IdentifierPart
+IsToken             = @$'is'            !IdentifierPart
+IsntToken           = @$'isnt'          !IdentifierPart
 OrToken             = @$'or'            !IdentifierPart
 SwitchToken         = @$'switch'        !IdentifierPart
 ThenToken           = @$'then'          !IdentifierPart
@@ -156,6 +158,8 @@ ReservedWord
   / ElseToken
   / SwitchToken
   / WhenToken
+  / IsToken
+  / IsntToken
   / ImportToken
   / ExportToken
 
@@ -404,8 +408,8 @@ RelationalExpression
     { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
 
 EqualityOperator
-  = '=='
-  / '!='
+  = IsToken
+  / IsntToken
 
 EqualityExpression
   = left:RelationalExpression

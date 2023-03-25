@@ -117,7 +117,7 @@ esFromTemplateLiteral {expressions, quasis} = {
   expressions: esFromNode <$> expressions,
   quasis: {
     lineEnding = ["\n", "\r\n"].find (lineEnding => quasis[0].startsWith lineEnding);
-    if lineEnding == undefined then [
+    if lineEnding is undefined then [
       ...{TemplateElement false <$> quasis.slice (0, -1)},
       ...{TemplateElement true  <$> quasis.slice (-1)},
     ] else {
@@ -125,7 +125,7 @@ esFromTemplateLiteral {expressions, quasis} = {
       pattern = RegExp (`${lineEnding}[ ]{0,${indent}}`, "g");
       [head, ...tail] = map (quasi => quasi.replace (pattern, lineEnding)) quasis;
       head' = head.slice lineEnding.length;
-      if tail.length == 0 then [
+      if tail.length is 0 then [
         TemplateElement true head',
       ] else [
         TemplateElement false head',
@@ -138,7 +138,7 @@ esFromTemplateLiteral {expressions, quasis} = {
 
 esFromMemberExpression {object, property} = {
   computed = !{
-    property.type == "StringLiteral" and
+    property.type is "StringLiteral" and
     validEsIdentifierName property.value
   };
   {
@@ -161,17 +161,17 @@ esFromArrayExpression {elements} = {
 };
 
 esFromProperty property = {
-  if property.type == "SpreadElement" then esFromSpreadElement property else {
+  if property.type is "SpreadElement" then esFromSpreadElement property else {
     computed = !{
-      property.key.type == "StringLiteral" and
+      property.key.type is "StringLiteral" and
       validEsIdentifierName property.key.value
     };
     key = if computed then esFromNode property.key else esFromEscapedIdentifierName property.key.value;
     value = esFromNode property.value;
     shorthand = {
-      key.type == "Identifier" and
-      value.type == "Identifier" and
-      key.name == value.name
+      key.type is "Identifier" and
+      value.type is "Identifier" and
+      key.name is value.name
     };
     {
       type: "Property",
@@ -196,7 +196,7 @@ esFromArrowFunctionExpression {parameters, body} = {
     type: "ArrowFunctionExpression",
     params: esFromNode <$> parameters,
     body: esBody,
-    expression: esBody.type != "BlockStatement",
+    expression: esBody.type isnt "BlockStatement",
   }
 };
 
@@ -239,8 +239,8 @@ esFromBinaryExpression {operator, left, right} = {
   type: "BinaryExpression",
   operator: {
     switch operator
-    when "==" then "==="
-    when "!=" then "!=="
+    when "is"   then "==="
+    when "isnt" then "!=="
     else operator
   },
   left: esFromNode left,
@@ -287,7 +287,7 @@ esFromSwitchExpression {discriminant, cases, default} = {
         discriminant: esFromNode discriminant,
         cases: {
           esCases = cases >>= esFromSwitchCase;
-          if default == null then esCases else [...esCases, {
+          if default is null then esCases else [...esCases, {
             type: "SwitchCase",
             test: null,
             consequent: [{
@@ -332,7 +332,7 @@ esFromFunctionDeclaration {name, parameters, body} = {
         type: "ArrowFunctionExpression",
         params: [esFromNode param],
         body: esBody,
-        expression: esBody.type != "BlockStatement",
+        expression: esBody.type isnt "BlockStatement",
       },
       esFromNode body
     ),
@@ -379,7 +379,7 @@ esFromImportExpression {source} = {
 };
 
 esFromImportDeclaration exportedNames importDeclaration = {
-  if importDeclaration.specifiers == "*" then {
+  if importDeclaration.specifiers is "*" then {
     source = importDeclaration.source.value;
     hiding = (.name) <$> importDeclaration.hiding;
     hiding! = Reflect.construct (Set, [(.name) <$> importDeclaration.hiding]);
@@ -506,7 +506,7 @@ unnecessaryHiding = (
     then names.slice(0, -1).join(", ") + ", and " + names.at(-1)
     else names.join(" and ")
   } ${
-    if names.length == 1 then "is" else "are"
+    if names.length is 1 then "is" else "are"
   } not exported so need not be hidden.\n`,
 ]);
 

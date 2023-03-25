@@ -6,7 +6,7 @@ related-posts posts post = {
   tags = Reflect.construct (Set, [post.tags]);
   posts
   |> S.mapMaybe {this => {
-       if this.slug == post.slug then S.Nothing else {
+       if this.slug is post.slug then S.Nothing else {
          score = this.tags.filter(x => tags.has(x)).length
                  / Math.sqrt {Reflect.construct (Set, [[...tags, ...this.tags]])}.size;
          if score < 0.5 then S.Nothing else S.Just {...this, score: score}

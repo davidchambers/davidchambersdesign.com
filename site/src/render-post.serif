@@ -22,14 +22,14 @@ render-post post related-posts = [
         ],
       ],
       ...{
-        if post.tags.length == 0 then [] else [
+        if post.tags.length is 0 then [] else [
           h4 ["This post has the following tags:"],
           ol $ {tag => li [a {href: `/tag/${tag}/`} [tags[tag]]]} <$> post.tags,
         ]
       },
     ],
     ...{
-      if related-posts.length == 0 then [] else [
+      if related-posts.length is 0 then [] else [
         h3' {id: "related"} ["Possibly related posts"],
         ul $ {post => li [a {href: `/${post.slug}/`} post.title]} <$> related-posts,
       ]

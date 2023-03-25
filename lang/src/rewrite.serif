@@ -11,7 +11,7 @@ union this that = Reflect.construct (Set, [[...this, ...that]]);
 
 nextUnusedIdent names desiredName = {
   recur counter = {
-    candidate = if counter == 0 then desiredName else `${desiredName}$${counter}`;
+    candidate = if counter is 0 then desiredName else `${desiredName}$${counter}`;
     if has candidate names then recur (counter + 1) else Identifier candidate
   };
   recur 0
@@ -29,7 +29,7 @@ namesInPattern pattern = {
 namesInStatement node = {
   switch node.type
   when "ImportDeclaration" then {
-    if node.specifiers == "*" then {
+    if node.specifiers is "*" then {
       node.source;
       node.hiding;
       []  ;; TODO: determine imported names
@@ -110,7 +110,7 @@ rewriteNode preludeIdent = {
       }
     }
     when "BlockExpression" then {
-      if node.statements.length == 1 and node.statements[0].type == "ExpressionStatement" then {
+      if node.statements.length is 1 and node.statements[0].type is "ExpressionStatement" then {
         recur names node.statements[0].expression
       } else {
         names' = union names $ node.statements >>= statement => {
@@ -139,7 +139,7 @@ rewriteNode preludeIdent = {
       param = nextUnusedIdent names "x";
       names' = add param.name names;
       toCallExpression expr = {
-        if expr.type == "CompositionExpression" then {
+        if expr.type is "CompositionExpression" then {
           CallExpression expr.left [toCallExpression expr.right]
         } else {
           CallExpression expr [param]
@@ -175,7 +175,7 @@ rewriteNode preludeIdent = {
     when "SwitchExpression" then {
       SwitchExpression (recur names node.discriminant)
                        (recur names <$> node.cases)
-                       (if node.default == null then null else recur names node.default)
+                       (if node.default is null then null else recur names node.default)
     }
     when "SwitchCase" then {
       SwitchCase (recur names <$> node.predicates)

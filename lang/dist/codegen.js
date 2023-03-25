@@ -139,9 +139,9 @@ const esFromBinaryExpression = ({operator, left, right}) => ({
   type: "BinaryExpression",
   operator: (() => {
     switch (operator) {
-      case "==":
+      case "is":
         return "===";
-      case "!=":
+      case "isnt":
         return "!==";
       default:
         return operator;

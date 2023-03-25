@@ -63,7 +63,7 @@ findDependencies filename tree = {
           }
         };
         exportedNames = ast.exports >>= exportDeclaration => {
-          if exportDeclaration.type == "ExportNamedDeclaration" then {
+          if exportDeclaration.type is "ExportNamedDeclaration" then {
             (.name) <$> exportDeclaration.specifiers
           } else {
             []
@@ -80,7 +80,7 @@ findDependencies filename tree = {
 
 orderDependencies tree = {
   recur unsorted! sorted! = {
-    if unsorted!.length == 0 then sorted! else {
+    if unsorted!.length is 0 then sorted! else {
       filename = unsorted!.shift();
       {dependencies} = tree.get(filename);
       if dependencies.every(filename => sorted!.has(filename)) then {

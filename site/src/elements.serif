@@ -146,7 +146,7 @@ render-inline-element context element = {
 };
 
 string-to-text-node string-or-node = {
-  if typeof string-or-node == "object" then string-or-node else {
+  if typeof string-or-node is "object" then string-or-node else {
     string-or-node
     |> s => s.replace (RegExp ("^[ ]+", "gm"), " ")
     |> s => s.replaceAll ("\n", "")
@@ -170,7 +170,7 @@ block-element name attributes children! = {
 
 inline-element name attributes children! = {
   children = string-to-text-node <$> children!;
-  format = if children.some(node => node.format == "block") then "block" else "inline";
+  format = if children.some(node => node.format is "block") then "block" else "inline";
   element = {
     type: "element",
     format: format,
