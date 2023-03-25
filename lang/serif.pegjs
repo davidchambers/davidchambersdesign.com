@@ -107,14 +107,11 @@ TemplateLiteral
     quasi:Quasi
     '`'
     {
-      const quasis = [];
-      const expressions = [];
-      for (const {quasi, expression} of pairs) {
-        quasis.push({type: 'TemplateElement', raw: quasi, tail: false});
-        expressions.push(expression);
-      }
-      quasis.push({type: 'TemplateElement', raw: quasi, tail: true});
-      return {type: 'TemplateLiteral', quasis, expressions};
+      return {
+        type: 'TemplateLiteral',
+        quasis: [...pairs.map(pair => pair.quasi), quasi],
+        expressions: pairs.map(pair => pair.expression),
+      };
     }
 
 Quasi

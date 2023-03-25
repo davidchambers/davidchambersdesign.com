@@ -420,14 +420,11 @@ function peg$parse(input, options) {
   var peg$f33 = function(digits) { return String.fromCharCode(parseInt(digits, 16)); };
   var peg$f34 = function(quasi, expression) { return {quasi, expression}; };
   var peg$f35 = function(pairs, quasi) {
-      const quasis = [];
-      const expressions = [];
-      for (const {quasi, expression} of pairs) {
-        quasis.push({type: 'TemplateElement', raw: quasi, tail: false});
-        expressions.push(expression);
-      }
-      quasis.push({type: 'TemplateElement', raw: quasi, tail: true});
-      return {type: 'TemplateLiteral', quasis, expressions};
+      return {
+        type: 'TemplateLiteral',
+        quasis: [...pairs.map(pair => pair.quasi), quasi],
+        expressions: pairs.map(pair => pair.expression),
+      };
     };
   var peg$f36 = function(character) { return character; };
   var peg$f37 = function(sequence) { return sequence; };

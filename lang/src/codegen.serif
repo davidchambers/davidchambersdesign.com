@@ -104,21 +104,33 @@ esFromIdentifier {name} = {
 
 esFromElision = null;
 
+TemplateElement tail raw = {
+  type: "TemplateElement",
+  tail: tail,
+  value: {
+    raw: raw,
+  },
+};
+
 esFromTemplateLiteral {expressions, quasis} = {
   type: "TemplateLiteral",
   expressions: esFromNode <$> expressions,
   quasis: {
-    lineEnding = ["\n", "\r\n"].find (lineEnding => quasis[0].raw.startsWith lineEnding);
-    if lineEnding == undefined then {
-      {{tail, raw} => {type: "TemplateElement", tail: tail, value: {raw: raw}}} <$> quasis
-    } else {
-      [head, ...tail] = quasis;
-      indent = head.raw.slice(lineEnding.length).search(RegExp "(?! )");
+    lineEnding = ["\n", "\r\n"].find (lineEnding => quasis[0].startsWith lineEnding);
+    if lineEnding == undefined then [
+      ...{TemplateElement false <$> quasis.slice (0, -1)},
+      ...{TemplateElement true  <$> quasis.slice (-1)},
+    ] else {
+      indent = quasis[0].slice(lineEnding.length).search(RegExp "(?! )");
       pattern = RegExp (`${lineEnding}[ ]{0,${indent}}`, "g");
-      dedent = text => text.replace (pattern, lineEnding);
-      [
-        {type: "TemplateElement", tail: head.tail, value: {raw: dedent(head.raw).slice(lineEnding.length)}},
-        ...{{{tail, raw} => {type: "TemplateElement", tail: tail, value: {raw: dedent raw}}} <$> tail},
+      [head, ...tail] = map (quasi => quasi.replace (pattern, lineEnding)) quasis;
+      head' = head.slice lineEnding.length;
+      if tail.length == 0 then [
+        TemplateElement true head',
+      ] else [
+        TemplateElement false head',
+        ...{TemplateElement false <$> tail.slice (0, -1)},
+        ...{TemplateElement true  <$> tail.slice (-1)},
       ]
     }
   },

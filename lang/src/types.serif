@@ -3,7 +3,6 @@ export {
   BooleanLiteral,
   NumberLiteral,
   StringLiteral,
-  TemplateElement,
   TemplateLiteral,
   MetaProperty,
   MemberExpression,
@@ -62,12 +61,6 @@ NumberLiteral value = {
 StringLiteral value = {
   type: "StringLiteral",
   value: value,
-};
-
-TemplateElement tail raw = {
-  type: "TemplateElement",
-  tail: tail,
-  raw: raw,
 };
 
 TemplateLiteral quasis expressions = {

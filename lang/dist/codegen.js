@@ -30,35 +30,24 @@ const esFromMetaProperty = ({meta, property}) => ({
 });
 const esFromIdentifier = ({name}) => esFromIdentifierName(name);
 const esFromElision = null;
+const TemplateElement = tail => raw => ({
+  type: "TemplateElement",
+  tail,
+  value: {
+    raw
+  }
+});
 const esFromTemplateLiteral = ({expressions, quasis}) => ({
   type: "TemplateLiteral",
   expressions: Prelude.map(esFromNode)(expressions),
   quasis: (() => {
-    const lineEnding = ["\n", "\r\n"].find(lineEnding => quasis[0].raw.startsWith(lineEnding));
-    return lineEnding === undefined ? Prelude.map(({tail, raw}) => ({
-      type: "TemplateElement",
-      tail,
-      value: {
-        raw
-      }
-    }))(quasis) : (() => {
-      const [head, ...tail] = quasis;
-      const indent = head.raw.slice(lineEnding.length).search(RegExp("(?! )"));
+    const lineEnding = ["\n", "\r\n"].find(lineEnding => quasis[0].startsWith(lineEnding));
+    return lineEnding === undefined ? [...Prelude.map(TemplateElement(false))(quasis.slice(0, -1)), ...Prelude.map(TemplateElement(true))(quasis.slice(-1))] : (() => {
+      const indent = quasis[0].slice(lineEnding.length).search(RegExp("(?! )"));
       const pattern = RegExp(`${lineEnding}[ ]{0,${indent}}`, "g");
-      const dedent = text => text.replace(pattern, lineEnding);
-      return [{
-        type: "TemplateElement",
-        tail: head.tail,
-        value: {
-          raw: dedent(head.raw).slice(lineEnding.length)
-        }
-      }, ...Prelude.map(({tail, raw}) => ({
-        type: "TemplateElement",
-        tail,
-        value: {
-          raw: dedent(raw)
-        }
-      }))(tail)];
+      const [head, ...tail] = map(quasi => quasi.replace(pattern, lineEnding))(quasis);
+      const head$0027 = head.slice(lineEnding.length);
+      return tail.length === 0 ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...Prelude.map(TemplateElement(false))(tail.slice(0, -1)), ...Prelude.map(TemplateElement(true))(tail.slice(-1))];
     })();
   })()
 });
