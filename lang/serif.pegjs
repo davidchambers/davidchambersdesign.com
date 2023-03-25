@@ -260,10 +260,16 @@ ArrowFunctionExpression
   = parameters:ArrowFunctionParameters _ ArrowToken _ body:Expression
     { return {type: 'ArrowFunctionExpression', parameters, body}; }
 
+MethodCallExpression
+  = '.' ident:Identifier
+    { return {type: 'MethodCallExpression', name: ident.name}; }
+
 LeftHandSideExpression
   = ArrowFunctionExpression
+  / MethodCallExpression
   / MemberExpression
   / ImportExpression
+  / '(' _ expression:Expression _ ')' { return expression; }
 
 ImportExpression
   = ImportToken _ '(' _ source:Expression _ ')'
@@ -273,17 +279,10 @@ CallExpression
   = head:LeftHandSideExpression
     tail:(
         __ arg:LeftHandSideExpression   { return callee => ({type: 'CallExpression', callee, arguments: [arg]}); }
-      / _ args:Arguments                { return callee => ({type: 'CallExpression', callee, arguments: args}); }
       / _ '.' ident:Identifier          { return object => ({type: 'MemberExpression', object, property: {type: 'StringLiteral', value: ident.name}}); }
       / '[' _ property:Expression _ ']' { return object => ({type: 'MemberExpression', object, property}); }
     )*
     { return tail.reduce((expr, wrap) => wrap(expr), head); }
-
-Arguments
-  = '(' _ ')'
-    { return []; }
-  / '(' _ args:(SpreadElement / Expression)|1.., CommaSeparator| _ ')'
-    { return args; }
 
 ArrowFunctionParameters
   = '(' _ ')'

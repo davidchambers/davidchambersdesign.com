@@ -1,42 +1,45 @@
-import os           from "node:os";
-import path         from "node:path";
-import repl         from "node:repl";
-import vm           from "node:vm";
+import os from "node:os";
+import repl from "node:repl";
+import vm from "node:vm";
 
 import {generate} from "astring";
 import {attemptP, fork, promise} from "fluture";
 
-import serif        from "./index.serif";
-import rewrite      from "./rewrite.serif";
+import * as serif from "./index.serif";
+import * as path from "./path.serif";
+import rewrite from "./rewrite.serif";
 
 
 evaluateModule source = {
   context = vm.createContext global;
-  module = Reflect.construct (vm.SourceTextModule, [source, {context: context}]);
+  module = apply [vm.SourceTextModule, [source, {context: context}]] Reflect.construct;
   chain (_ => map (_ => module.namespace.default)
-                  (attemptP (() => module.evaluate ())))
-        (attemptP (() => module.link $ (specifier, referencingModule) => {
-                     promise (map (entries => {
-                                     module = Reflect.construct (vm.SyntheticModule, [
-                                       entries.map $ [name] => name,
-                                       () => entries.forEach $ [name, value] => module.setExport (name, value),
-                                       {identifier: specifier, context: referencingModule.context},
-                                     ]);
-                                     module
-                                   })
-                                  (Object.entries <$> attemptP (() => import (specifier))))
-                   }))
+                  (attemptP (() => .evaluate [] module)))
+        (attemptP (() => .link [
+                     (specifier, referencingModule) => {
+                       promise (map (entries => {
+                                       module = apply [vm.SyntheticModule, [
+                                         {[name] => name} <$> entries,
+                                         () => .forEach [flip {.setExport} module] entries,
+                                         {identifier: specifier, context: referencingModule.context},
+                                       ]] Reflect.construct;
+                                       module
+                                     })
+                                    (Object.entries <$> attemptP (() => import (specifier))))
+                     },
+                   ] module))
 };
 
 read serifSource = {
-  serifAst = serif.parse `export default ${serifSource};` "[repl]";
-  serif.trans (rewrite serifAst) (_importPath => []) >>= jsAst => {
-    evaluateModule $ generate (jsAst, {})
+  serif.parse "[repl]" `export default ${serifSource};` >>= serifAst => {
+    serif.trans (rewrite serifAst) (_importPath => []) >>= jsAst => {
+      evaluateModule $ apply [jsAst, {}] generate
+    }
   }
 };
 
 print x = {
-  switch Object.prototype.toString.call x
+  switch apply [Object.prototype.toString, x, []] Reflect.apply
   when "[object Null]",
        "[object Undefined]",
        "[object Boolean]"
@@ -48,17 +51,17 @@ print x = {
   when "[object Symbol]"
   then `Symbol.for ${print $ Symbol.keyFor x}`
   when "[object Date]"
-  then `Reflect.construct (Date, [${print $ Number x}])`
+  then `apply [Date, [${print $ Number x}]] Reflect.construct`
   when "[object RegExp]"
-  then `RegExp (${print x.source}, ${print x.flags})`
+  then if x.flags is "" then `RegExp ${print x.source}` else `apply [${print x.source}, ${print x.flags}] RegExp`
   when "[object Set]"
-  then `Reflect.construct (Set, [${print $ Array.from x}])`
+  then `apply [Set, [${print $ Array.from x}]] Reflect.construct`
   when "[object Map]"
-  then `Reflect.construct (Map, [${print $ Array.from x}])`
+  then `apply [Map, [${print $ Array.from x}]] Reflect.construct`
   when "[object Array]"
-  then "[" + {print <$> x}.join(", ") + "]"
+  then `[${.join [", "] $ print <$> x}]`
   when "[object Object]"
-  then "{" + {{k => `[${print k}]: ${print x[k]}`} <$> Reflect.ownKeys x}.join(", ") + "}"
+  then `{${.join [", "] $ map {k => `[${print k}]: ${print x[k]}`} $ Reflect.ownKeys x}}`
   else `${x}`
 };
 
@@ -67,18 +70,18 @@ server = repl.start {
   eval: (code, _context, _filename, callback) => {
     fork (err => {
             console.error err;
-            console.log ();
-            server.displayPrompt false
+            console.log "";
+            .displayPrompt [false] server
           })
          (result => {
-            callback (null, result)
+            apply [null, result] callback
           })
          (read code)
   },
   writer: value => print value + "\n",
 };
 
-server.setupHistory (
-  path.join (os.homedir (), ".serif-repl-history"),
+.setupHistory [
+  path.join [apply [] os.homedir, ".serif-repl-history"],
   error => undefined
-);
+] server;

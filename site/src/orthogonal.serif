@@ -5,7 +5,7 @@ export {render, ⇦, ⇨, ⇧, ⇩, ←, →, ↑, ↓};
 simplify paths = {
   if paths.length is 0 then [] else {
     [head, ...tail] = paths;
-    [prev, path] = tail.reduce(
+    [prev, path] = .reduce [
       ([prev, path], curr) => {
         if curr[0] is "M" then {
           if {prev[0] is "M" or prev[0] is "m"} then {
@@ -21,8 +21,8 @@ simplify paths = {
           }
         }
       },
-      [head, []]
-    );
+      [head, []],
+    ] tail;
     [...path, prev]
   }
 };

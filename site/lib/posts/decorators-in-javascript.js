@@ -2,12 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const body = [p(["A decorator is a function which takes a function and returns a function:"]), code$002Dblock("coffeescript")(`decorator = (fn) -> fn
 `), p(["Obviously, this doesn't do anything useful. It's the fact that a\n    decorator can return a function which behaves ", em(["similarly"]), "\n    to the function passed to it that makes the pattern interesting.\n    Commonly a decorator will simply wrap a function invocation in a\n    check of some sort:"]), code$002Dblock("javascript")(`var loginRequired = function (fn) {
   return function () {

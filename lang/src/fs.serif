@@ -1,0 +1,21 @@
+import fs from "node:fs/promises";
+
+import {attemptP} from "fluture";
+
+export {
+  mkdir,
+  readFile,
+  writeFile,
+};
+
+mkdir options path = {
+  attemptP $ () => apply [path, options] fs.mkdir
+};
+
+readFile filename = {
+  attemptP $ () => apply [filename, "utf8"] fs.readFile
+};
+
+writeFile filename data = {
+  attemptP $ () => apply [filename, data] fs.writeFile
+};

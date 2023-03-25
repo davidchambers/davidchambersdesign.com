@@ -1,9 +1,13 @@
 import * from "./types.serif";
 
 export {
+  _apply,
+  apply,
+  const_,
   not,
   concat,
   map,
+  flip,
   chain,
 };
 
@@ -17,6 +21,38 @@ isString name = {
   BinaryExpression "is"
                    (UnaryExpression "typeof" $ Identifier name)
                    (StringLiteral "string")
+};
+
+_apply = {
+  ArrowFunctionExpression [Identifier "name"] {
+    ArrowFunctionExpression [Identifier "args"] {
+      ArrowFunctionExpression [Identifier "target"] {
+        CallExpression (MemberExpression (MemberExpression (Identifier "target")
+                                                           (Identifier "name"))
+                                         (StringLiteral "apply"))
+                       [Identifier "target", Identifier "args"]
+      }
+    }
+  }
+};
+
+apply = {
+  ArrowFunctionExpression [Identifier "args"] {
+    ArrowFunctionExpression [Identifier "target"] {
+      CallExpression (MemberExpression (Identifier "target")
+                                       (StringLiteral "apply"))
+                     [Identifier "target", Identifier "args"]
+    }
+  }
+};
+
+;; TODO: rename
+const_ = {
+  ArrowFunctionExpression [Identifier "x"] {
+    ArrowFunctionExpression [Identifier "y"] {
+      Identifier "x"
+    }
+  }
 };
 
 not = {
@@ -53,6 +89,17 @@ map = {
         (CallExpression (MemberExpression (Identifier "functor")
                                           (StringLiteral "fantasy-land/map"))
                         [Identifier "f"])
+    }
+  }
+};
+
+;; TODO: generalize to functor
+flip = {
+  ArrowFunctionExpression [Identifier "f"] {
+    ArrowFunctionExpression [Identifier "y"] {
+      ArrowFunctionExpression [Identifier "x"] {
+        CallExpression (CallExpression (Identifier "f") [Identifier "x"]) [Identifier "y"]
+      }
     }
   }
 };

@@ -2,12 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const body = [p(["I've spent the afternoon creating a custom scrollbar for a\n    products viewer which utilizes CSS transitions, reflections,\n    and other goodness."]), p(["Simple arithmetic dictates how long to make the scrollbar\n    and where to position it, but I could not get my theoretical\n    calculations to play out in the browser."]), p(["It turns out that I'd been calling the wrong MooTools method.\n    I'd been doing..."]), code$002Dblock("javascript")(`element.setStyle('left', offset);
 `), p(["rather than..."]), code$002Dblock("javascript")(`element.setPosition({ x: offset });
 `), p(["Frustratingly, ", code(["setStyle('left', offset)"]), " ", em(["appeared"]), " to work, but its behaviour was unpredictable.\n    I'm still confused by this, but at least I'm no longer stuck."])];

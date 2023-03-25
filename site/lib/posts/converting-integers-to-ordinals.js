@@ -2,12 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const body = [p(["When dealing with dates, it's not uncommon to need to convert an\n    integer into an ordinal number (1st, 2nd, 3rd, etc.). While making\n    improvements to ", a({
   href: "http://mango.io/wtf?"
 })(["Mango"]), " recently\n    I wrote a function to do this, first in Python, later in JavaScript."]), h3(["Python"]), code$002Dblock("python")(`def ordinal(n):

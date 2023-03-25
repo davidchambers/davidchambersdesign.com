@@ -2,12 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const body = [p(["Many of those who write JavaScript do not come from programming\n    backgrounds (while I've written plenty of PHP, Python, and\n    JavaScript, I don't have much experience with \"real\" programming\n    languages", a({
   href: "#footnote"
 })(["*"]), "). As a result, a significant\n    portion of JavaScript coders do not think of variables as pointers\n    to memory addresses. This leads to confusion in cases such as this:"]), code$002Dblock("javascript")(`var fruits = ['orange', 'lime'];

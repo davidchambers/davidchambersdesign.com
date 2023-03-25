@@ -2,12 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {captioned$002Dimages, code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const excerpt = [p(["If you have ever found yourself command-clicking the\n    title of a Finder window to find out where you are (", strong(["/Library/Fonts"]), " or ", strong(["~/Library/Fonts"]), "\n    is one I've double-checked many times), you'll understand how\n    pleased I was to discover that there is a command which can be\n    entered in Terminal to ", a({
   href: "http://osxdaily.com/2007/12/02/show-full-directory-path-in-finder-window-title-bars/"
 })(["show full directory paths in Finder window title bars"]), "."])];

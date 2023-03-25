@@ -1,15 +1,20 @@
+import * as Set from "./Set.js";
 import * as Prelude from "./prelude.js";
-import {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateLiteral, MetaProperty, MemberExpression, IdentifierPlaceholder, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, PipeExpression, CallExpression, ImportExpression, ImportDeclaration, ImportEverythingDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} from "./types.js";
+import {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateLiteral, MetaProperty, MemberExpression, IdentifierPlaceholder, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, PipeExpression, MethodCallExpression, CallExpression, ImportExpression, ImportDeclaration, ImportEverythingDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} from "./types.js";
 const Prelude$1 = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude$1;
-const has = element => set => set.has(element);
-const add = element => set => Reflect.construct(Set, [[...set, element]]);
-const union = this$ => that => Reflect.construct(Set, [[...this$, ...that]]);
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude$1;
+const has = element => set => Prelude$1._apply("has")([element])(set);
+const add = element => set => Set.from([...set, element]);
+const union = this$ => that => Set.from([...this$, ...that]);
 const nextUnusedIdent = names => desiredName => (() => {
   const recur = counter => (() => {
     const candidate = counter === 0 ? desiredName : `${desiredName}$${counter}`;
@@ -48,12 +53,12 @@ const namesInStatement = node => (() => {
   }
 })();
 const rewriteModule = module => (() => {
-  const names = Reflect.construct(Set, [Prelude$1.chain(namesInStatement)(Prelude$1.concat(module.imports)(module.statements))]);
+  const names = Set.from(Prelude$1.chain(namesInStatement)(Prelude$1.concat(module.imports)(module.statements)));
   const preludeIdent = nextUnusedIdent(names)("Prelude");
   const names$0027 = add(preludeIdent.name)(names);
   const rewrite = rewriteNode(preludeIdent)(names$0027);
   const preludeDefinition = VariableDeclaration(preludeIdent)(ObjectExpression(map(([name, expr]) => Property(StringLiteral(name))(expr))(Object.entries(Prelude))));
-  const preludeDestructuring = VariableDeclaration((names => ObjectPattern(map(name => Property(StringLiteral(name))(Identifier(name)))(names.filter(name => not(has(name)(names$0027))))))(Object.keys(Prelude)))(preludeIdent);
+  const preludeDestructuring = VariableDeclaration(ObjectPattern(map(name => Property(StringLiteral(name))(Identifier(name)))(Prelude$1._apply("filter")([x => not(flip(has)(names$0027)(x))])(Object.keys(Prelude)))))(preludeIdent);
   return Module({
     imports: Prelude$1.map(rewrite)(module.imports),
     exports: Prelude$1.map(rewrite)(module.exports),
@@ -124,6 +129,8 @@ const rewriteNode = preludeIdent => (() => {
         return SwitchCase(Prelude$1.map(recur(names))(node.predicates))(recur(names)(node.consequent));
       case "PipeExpression":
         return recur(names)(CallExpression(node.body)([node.head]));
+      case "MethodCallExpression":
+        return recur(names)(CallExpression(MemberExpression(preludeIdent)(StringLiteral("_apply")))([StringLiteral(node.name)]));
       case "CallExpression":
         return CallExpression(recur(names)(node.callee))(Prelude$1.map(recur(names))(node.arguments));
       case "VariableDeclaration":

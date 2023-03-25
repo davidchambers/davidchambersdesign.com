@@ -4,13 +4,13 @@ import * from "./elements.serif";
 
 export default render-archives;
 
-render-post post = {
+render-post {slug, title, datetime} = {
   li [
-    a {href: `/${post.slug}`} post.title,
+    a {href: `/${slug}`} title,
     " ",
-    time {datetime: post.datetime.toISO()} [
-      post.datetime.toFormat("d MMMM y | h:mm") +
-      post.datetime.toFormat("a").toLowerCase(),
+    time {datetime: .toISO [] datetime} [
+      {datetime |> .toFormat ["d MMMM y | h:mm"]} +
+      {datetime |> .toFormat ["a"] |> .toLowerCase []},
     ],
   ]
 };
@@ -24,7 +24,7 @@ render-section posts = {
 
 render-archives posts = {
   posts
-  |> map {post => {...post, formatted-date: post.datetime.toFormat("MMMM y")}}
+  |> map {post => {...post, formatted-date: .toFormat ["MMMM y"] post.datetime}}
   |> S.sortBy {post => -post.datetime}
   |> S.groupBy {this => that => this.formatted-date is that.formatted-date}
   |> map render-section

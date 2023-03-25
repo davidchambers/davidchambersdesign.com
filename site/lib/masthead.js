@@ -2,12 +2,16 @@ import S from "sanctuary";
 import {path} from "./elements.js";
 import {render, $21E6, $21E8, $21E7, $21E9, $2190, $2192, $2191, $2193} from "./orthogonal.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const mask$002Dchars = {
   A: [$2192(14), $2193(24), $2190(4), $2191(10), $2190(6), $2193(10), $2190(4), $2191(24), $21E8(4), $21E9(4), $2192(6), $2193(6), $2190(6), $2191(6)],
   B: [$2192(14), $2193(24), $2190(14), $2191(24), $21E8(4), $21E9(4), $2192(6), $2193(6), $2190(6), $2191(6), $21E8(0), $21E9(10), $2192(6), $2193(6), $2190(6), $2191(6)],
@@ -96,7 +100,7 @@ const reset = path => (() => {
   })(path);
   return ["m", [w - x, -y]];
 })();
-const paths = chars => [...Prelude.chain(char => [["M", [0, 0]], ...char, reset(char)])(chars.slice(0, 1)), ...Prelude.chain(char => [["m", [6, 0]], ...char, reset(char)])(chars.slice(1))];
+const paths = chars => [...Prelude.chain(char => [["M", [0, 0]], ...char, reset(char)])(Prelude._apply("slice")([0, 1])(chars)), ...Prelude.chain(char => [["m", [6, 0]], ...char, reset(char)])(Prelude._apply("slice")([1])(chars))];
 const chars = Array.from("DAVIDCHAMBERSDESIGN");
 const mask = [path({
   d: render(paths(Prelude.map(char => mask$002Dchars[char])(chars))),

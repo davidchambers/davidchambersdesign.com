@@ -1,67 +1,74 @@
-import fs from "node:fs/promises";
-import path from "node:path";
 import {generate} from "astring";
-import {attempt, attemptP, fork, mapRej, parallel, resolve} from "fluture";
-import serif from "./index.js";
+import {attempt, fork, mapRej, parallel, resolve} from "fluture";
+import * as Map from "./Map.js";
+import * as Set from "./Set.js";
+import * as fs from "./fs.js";
+import * as serif from "./index.js";
+import * as path from "./path.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const parse = filename => sourceText => mapRej(error => (() => {
-  const lines = Prelude.chain(line => (() => {
+  const lines = chain(line => (() => {
     const offset = line.number - error.location.start.line;
     return offset > -5 && offset <= 0 ? [line] : [];
-  })())(sourceText.split(RegExp("^", "m")).map((text, index) => ({
+  })())(Prelude._apply("map")([(text, index) => ({
     number: index + 1,
-    text: text.trimEnd()
-  })));
-  const renderLineNumber = number => number.toString().padStart(4);
-  return `\n\x1B[1m${path.relative(process.cwd(), error.location.source)}\x1B[0m\n\n${lines.map((line, idx, lines) => `\x1B[7m${renderLineNumber(line.number)}\x1B[0m${idx < lines.length - 1 ? line.text : `${line.text.slice(0, error.location.start.column - 1)}\x1B[7m${line.text.charAt(error.location.start.column - 1)}\x1B[0m${line.text.slice(error.location.start.column)}`}\n${""}`).join("")}${(" ").repeat(renderLineNumber(lines.at(-1).number).length + error.location.start.column - 1)}^\n${error.message}\n`;
-})())(attempt(() => serif.parse(sourceText)(filename)));
+    text: Prelude._apply("trimEnd")([])(text)
+  })])(Prelude._apply("split")([apply(["^", "m"])(RegExp)])(sourceText)));
+  const renderLineNumber = x => Prelude._apply("padStart")([4])(String(x));
+  return `\n\x1B[1m${path.relative(apply([])(process.cwd))(error.location.source)}\x1B[0m\n\n${Prelude._apply("join")([""])(Prelude._apply("map")([(line, idx, lines) => `\x1B[7m${renderLineNumber(line.number)}\x1B[0m${idx < lines.length - 1 ? line.text : `${Prelude._apply("slice")([0, error.location.start.column - 1])(line.text)}\x1B[7m${Prelude._apply("charAt")([error.location.start.column - 1])(line.text)}\x1B[0m${Prelude._apply("slice")([error.location.start.column])(line.text)}`}\n`])(lines))}${(length => Prelude._apply("repeat")([length + error.location.start.column - 1])(" "))((x => x.length)(renderLineNumber((x => x.number)(Prelude._apply("at")([-1])(lines)))))}^\n${error.message}\n`;
+})())(serif.parse(filename)(sourceText));
 const reducer = (futureTree, filename) => Prelude.chain(findDependencies(filename))(futureTree);
-const findDependencies = filename => tree => tree.has(filename) ? resolve(tree) : Prelude.chain(sourceText => Prelude.chain(ast => (() => {
-  const dependencies = Prelude.chain(({source: {value}}) => (value.startsWith("/") || value.startsWith(".")) && value.endsWith(".serif") ? [path.join(filename, "..", value)] : [])(ast.imports);
+const findDependencies = filename => tree => Prelude._apply("has")([filename])(tree) ? resolve(tree) : Prelude.chain(sourceText => Prelude.chain(ast => (() => {
+  const dependencies = Prelude.chain(({source: {value}}) => Prelude._apply("test")([value])(RegExp("^[./].*[.]serif$")) ? [path.join([filename, "..", value])] : [])(ast.imports);
   const exportedNames = Prelude.chain(exportDeclaration => exportDeclaration.type === "ExportNamedDeclaration" ? Prelude.map(x => x.name)(exportDeclaration.specifiers) : [])(ast.exports);
-  return dependencies.reduce(reducer, resolve(Reflect.construct(Map, [[...tree, [filename, {
+  return Prelude._apply("reduce")([reducer, resolve(Map.from([...tree, [filename, {
     sourceText,
     ast,
     dependencies,
     exportedNames
-  }]]])));
-})())(parse(filename)(sourceText)))(mapRej(x => x.message)(attemptP(() => fs.readFile(filename, "utf8"))));
+  }]]))])(dependencies);
+})())(parse(filename)(sourceText)))(mapRej(x => x.message)(fs.readFile(filename)));
 const orderDependencies = tree => (() => {
   const recur = unsorted$0021 => sorted$0021 => unsorted$0021.length === 0 ? sorted$0021 : (() => {
-    const filename = unsorted$0021.shift();
-    const {dependencies} = tree.get(filename);
-    dependencies.every(filename => sorted$0021.has(filename)) ? sorted$0021.add(filename) : unsorted$0021.push(filename);
+    const filename = Prelude._apply("shift")([])(unsorted$0021);
+    const {dependencies} = Prelude._apply("get")([filename])(tree);
+    Prelude._apply("every")([filename => Prelude._apply("has")([filename])(sorted$0021)])(dependencies) ? Prelude._apply("add")([filename])(sorted$0021) : Prelude._apply("push")([filename])(unsorted$0021);
     return recur(unsorted$0021)(sorted$0021);
   })();
-  return Array.from(recur(Array.from(tree.keys()))(Reflect.construct(Set, [[]])));
+  return Array.from(recur(Array.from(Prelude._apply("keys")([])(tree)))(Set.from([])));
 })();
 (() => {
-  const cwd = process.cwd();
+  const cwd = apply([])(process.cwd);
   const [, , src, lib, ...filenames] = process.argv;
   const program = Prelude.chain(tree => parallel(16)(map(serifFilename => (() => {
     const serifDirname = path.dirname(serifFilename);
-    const serifAst = tree.get(serifFilename).ast;
+    const serifAst = (x => x.ast)(Prelude._apply("get")([serifFilename])(tree));
+    const exportedNames = importPath => (x => x.exportedNames)(Prelude._apply("get")([path.join(Prelude.concat([serifDirname])(Prelude._apply("split")(["/"])(importPath)))])(tree));
     return Prelude.chain(jsAst => (() => {
-      const jsSource = generate(jsAst, {});
+      const jsSource = apply([jsAst, {}])(generate);
       const jsDirname = path.dirname(serifFilename);
-      const jsBasename = path.basename(serifFilename, ".serif") + ".js";
-      const jsFilename = path.join(lib, path.relative(src, jsDirname), jsBasename);
-      return map(_ => ({
+      const jsBasename = path.basename(serifFilename)(".serif") + ".js";
+      const jsFilename = path.join([lib, path.relative(src)(jsDirname), jsBasename]);
+      return map(const_({
         serifFilename,
         jsFilename
-      }))(chain(_ => attemptP(() => fs.writeFile(jsFilename, jsSource, "utf8")))(attemptP(() => fs.mkdir(jsDirname, {
+      }))(chain(const_(fs.writeFile(jsFilename)(jsSource)))(fs.mkdir({
         recursive: true
-      }))));
-    })())(serif.trans(serifAst)(importPath => tree.get(path.join(serifDirname, ...importPath.split("/"))).exportedNames));
-  })())(orderDependencies(tree))))(filenames.reduce(reducer, resolve(Reflect.construct(Map, [[]]))));
-  return fork(console.error)(filenames => filenames.forEach(({serifFilename, jsFilename}) => (() => {
-    console.log("• " + path.relative(cwd, serifFilename));
-    return console.log("  ➔ " + path.relative(cwd, jsFilename));
-  })()))(program);
+      })(jsDirname)));
+    })())(serif.trans(serifAst)(exportedNames));
+  })())(orderDependencies(tree))))(Prelude._apply("reduce")([reducer, resolve(Map.from([]))])(filenames));
+  return fork(console.error)(filenames => Prelude._apply("forEach")([({serifFilename, jsFilename}) => (() => {
+    console.log(`• ${path.relative(cwd)(serifFilename)}`);
+    return console.log(`  ➔ ${path.relative(cwd)(jsFilename)}`);
+  })()])(filenames))(program);
 })();

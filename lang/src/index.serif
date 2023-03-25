@@ -1,12 +1,18 @@
-import * as codegen from "./codegen.serif";
+import {attempt} from "fluture";
+
+import {toModule} from "./codegen.serif";
 import * as grammar from "./grammar.js";
 import rewrite from "./rewrite.serif";
 
-export default {
-  parse: parse,
-  trans: trans,
+export {
+  parse,
+  trans,
 };
 
-parse input filename = grammar.parse (input, {grammarSource: filename});
+parse filename sourceText = {
+  attempt $ () => apply [sourceText, {grammarSource: filename}] grammar.parse
+};
 
-trans module exportedNames = codegen.toModule (rewrite module) exportedNames;
+trans = {
+  toModule . rewrite
+};

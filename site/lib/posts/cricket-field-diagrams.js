@@ -2,12 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {captioned$002Dimages} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const body = [p(["While creating documentation for ", i(["Dice Cricket"]), ",\n    a game a friend and I designed many years ago, I produced\n    a set of diagrams which represent the segments of a cricket\n    field. The isolated nature of this small design challenge\n    provided a refreshing break from the various and interrelated\n    considerations involved in designing for the Web."]), captioned$002Dimages([{
   alt: "Cricket field with mid-wicket area highlighted",
   src: "/images/posts/40/mid-wicket.png",

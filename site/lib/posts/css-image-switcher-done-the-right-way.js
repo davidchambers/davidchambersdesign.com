@@ -2,12 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {captioned$002Dimages, code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const excerpt = [p([strong(["Chris Coyier has done it again."]), "\n    Compelled me to stay up all night, that is\n    (it's 7am as I type this). In Chris's latest screencast, ", a({
   href: "http://css-tricks.com/video-screencasts/82-css-image-switcher/"
 })(["CSS Image Switcher"]), ", he demonstrates how to create an\n    \"image switcher\" using CSS. The problem, though, is that ", strong(["his process is wrong"]), "."]), h4(["Incorrect process"]), ol([li(["What effect or experience do I want to create?"]), li(["How can I achieve this using CSS (and JavaScript if necessary)?"]), li(["What can my markup do to help me?"])]), h4(["Correct process"]), ol([li(["What effect or experience do I want to create?"]), li(["What is the most correct and meaningful way to describe the content?"]), li(["How can I achieve the desired effect or experience (or something close\n      to it) ", em(["without"]), " altering my markup?"])])];

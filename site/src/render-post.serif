@@ -8,10 +8,10 @@ render-post post related-posts = [
     header [
       h1 post.title,
       time {
-        datetime: post.datetime.toFormat("yyyy-MM-dd'T'HH:mm:ssZZ"),
+        datetime: .toFormat ["yyyy-MM-dd'T'HH:mm:ssZZ"] post.datetime,
         pubdate: "pubdate",
       } [
-        post.datetime.toFormat("d MMMM y"),
+        .toFormat ["d MMMM y"] post.datetime,
       ],
     ],
     ...post.body,

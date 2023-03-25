@@ -21,15 +21,19 @@ import {date$002D0, date$002D1, date$002D2, date$002D3, date$002D4, date$002D5, 
 import pages from "../pages/index.js";
 import posts from "../posts/index.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
-const public$ = components => path.join(dirname, "..", "..", "public", ...components);
-const write$002Dfile = filename => data => fs.writeFileSync(filename, data);
+const public$ = components => apply([dirname, "..", "..", "public", ...components])(path.join);
+const write$002Dfile = filename => data => apply([filename, data])(fs.writeFileSync);
 write$002Dfile(public$(["css", "screen.css"]))(css$002Fscreen);
 const render$002Dsvg = attrs => paths => `<?xml version="1.0" standalone="no"?>\n${svg({
   xmlns: "http://www.w3.org/2000/svg",
@@ -87,5 +91,5 @@ const render$002Ddocument = element => `<!DOCTYPE html>\n${element.render({
 })}`;
 write$002Dfile(public$(["archives.html"]))(render$002Ddocument(base$002Dtemplate(["Archives"])(render$002Darchives(posts))));
 write$002Dfile(public$(["tags.html"]))(render$002Ddocument(base$002Dtemplate(["Tags"])(render$002Dtags(posts))));
-pages.forEach(page => write$002Dfile(public$([`${page.slug}.html`]))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))));
-posts.forEach(post => write$002Dfile(public$([`${post.slug}.html`]))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post))))));
+flip(map)(pages)(page => write$002Dfile(public$([`${page.slug}.html`]))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))));
+flip(map)(posts)(post => write$002Dfile(public$([`${post.slug}.html`]))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post))))));

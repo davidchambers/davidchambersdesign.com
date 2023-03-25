@@ -260,8 +260,8 @@ reset path = {
 };
 
 paths chars = [
-  ...{chars.slice (0, 1) >>= char => [["M", [0, 0]], ...char, reset char]},
-  ...{chars.slice (1   ) >>= char => [["m", [6, 0]], ...char, reset char]},
+  ...{.slice [0, 1] chars >>= char => [["M", [0, 0]], ...char, reset char]},
+  ...{.slice [1   ] chars >>= char => [["m", [6, 0]], ...char, reset char]},
 ];
 
 chars = Array.from "DAVIDCHAMBERSDESIGN";

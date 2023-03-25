@@ -1,9 +1,11 @@
-import * as Future from "fluture";
+import {attemptP, parallel, reject, resolve} from "fluture";
+
+import * as Set from "./Set.serif";
 
 export {toModule};
 
 ;; https://262.ecma-international.org/13.0/#sec-keywords-and-reserved-words
-RESERVED_WORDS = Reflect.construct (Set, [[
+RESERVED_WORDS = Set.from [
   ;; reserved words
   "await",
   "break",
@@ -51,30 +53,30 @@ RESERVED_WORDS = Reflect.construct (Set, [[
   "private",
   "protected",
   "public",
-]]);
+  ;; reserved in strict mode
+  "arguments",
+  "eval",
+];
 
 validEsIdentifierName name = {
-  Reflect.apply (
-    RegExp.prototype.test,
-    RegExp ("^[a-z][a-z0-9]*$", "i"),
-    [name]
-  )
+  .test [name] $ RegExp "^[$_A-Za-z][$_A-Za-z0-9]*$"
 };
 
 esFromIdentifierName = {
   escapeChar c = {
-    "$" + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, "0")
+    c
+    |> .charCodeAt [0]
+    |> .toString [16]
+    |> .toUpperCase []
+    |> .padStart [4, "0"]
+    |> concat "$"
   };
   escape name = {
-    if RESERVED_WORDS.has name then name + "$"
+    if .has [name] RESERVED_WORDS then name + "$"
     else if validEsIdentifierName name then name
-    else Reflect.apply (
-      String.prototype.replace,
-      name,
-      [RegExp ("[^a-z0-9_$]", "gi"), escapeChar]
-    )
+    else .replaceAll [apply ["[^$_A-Za-z0-9]", "g"] RegExp, escapeChar] name
   };
-  name => esFromEscapedIdentifierName $ escape name
+  esFromEscapedIdentifierName . escape
 };
 
 esFromEscapedIdentifierName name = {
@@ -116,21 +118,21 @@ esFromTemplateLiteral {expressions, quasis} = {
   type: "TemplateLiteral",
   expressions: esFromNode <$> expressions,
   quasis: {
-    lineEnding = ["\n", "\r\n"].find (lineEnding => quasis[0].startsWith lineEnding);
+    lineEnding = .find [lineEnding => .startsWith [lineEnding] quasis[0]] ["\n", "\r\n"];
     if lineEnding is undefined then [
-      ...{TemplateElement false <$> quasis.slice (0, -1)},
-      ...{TemplateElement true  <$> quasis.slice (-1)},
+      ...{TemplateElement false <$> .slice [0, -1] quasis},
+      ...{TemplateElement true  <$> .slice [-1]    quasis},
     ] else {
-      indent = quasis[0].slice(lineEnding.length).search(RegExp "(?! )");
-      pattern = RegExp (`${lineEnding}[ ]{0,${indent}}`, "g");
-      [head, ...tail] = map (quasi => quasi.replace (pattern, lineEnding)) quasis;
-      head' = head.slice lineEnding.length;
+      indent = .search [RegExp "(?! )"] $ .slice [lineEnding.length] quasis[0];
+      pattern = apply [`${lineEnding}[ ]{0,${indent}}`, "g"] RegExp;
+      [head, ...tail] = .replace [pattern, lineEnding] <$> quasis;
+      head' = .slice [lineEnding.length] head;
       if tail.length is 0 then [
         TemplateElement true head',
       ] else [
         TemplateElement false head',
-        ...{TemplateElement false <$> tail.slice (0, -1)},
-        ...{TemplateElement true  <$> tail.slice (-1)},
+        ...{TemplateElement false <$> .slice [0, -1] tail},
+        ...{TemplateElement true  <$> .slice [-1]    tail},
       ]
     }
   },
@@ -208,17 +210,17 @@ esFromBlockExpression {statements} = {
     body: {
       type: "BlockStatement",
       body: {
-        switch statements.at(-1).type
+        switch (.type) $ .at [-1] statements
         when "VariableDeclaration" then [
           ...{esFromNode <$> statements},
         ]
         when "FunctionDeclaration" then [
           ...{esFromNode <$> statements},
-          {type: "ReturnStatement", argument: {type: "Identifier", name: statements.at(-1).name}},
+          {type: "ReturnStatement", argument: {type: "Identifier", name: (.name) $ .at [-1] statements}},
         ]
         when "ExpressionStatement" then [
-          ...{esFromNode <$> statements.slice(0, -1)},
-          {type: "ReturnStatement", argument: esFromNode $ statements.at(-1).expression},
+          ...{esFromNode <$> .slice [0, -1] statements},
+          {type: "ReturnStatement", argument: esFromNode $ (.expression) $ .at [-1] statements},
         ]
       },
     },
@@ -327,15 +329,15 @@ esFromFunctionDeclaration {name, parameters, body} = {
   declarations: [{
     type: "VariableDeclarator",
     id: esFromIdentifierName name,
-    init: parameters.reduceRight (
+    init: .reduceRight [
       (esBody, param) => {
         type: "ArrowFunctionExpression",
         params: [esFromNode param],
         body: esBody,
         expression: esBody.type isnt "BlockStatement",
       },
-      esFromNode body
-    ),
+      esFromNode body,
+    ] parameters,
   }],
 };
 
@@ -382,14 +384,14 @@ esFromImportDeclaration exportedNames importDeclaration = {
   if importDeclaration.specifiers is "*" then {
     source = importDeclaration.source.value;
     hiding = (.name) <$> importDeclaration.hiding;
-    hiding! = Reflect.construct (Set, [(.name) <$> importDeclaration.hiding]);
-    visible = name => not $ hiding!.delete(name);
-    if source.endsWith ".serif" then {
-      names = exportedNames(source).filter(visible);
+    hiding! = Set.from $ (.name) <$> importDeclaration.hiding;
+    visible = name => not $ .delete [name] hiding!;
+    if .endsWith [".serif"] source then {
+      names = .filter [visible] $ exportedNames source;
       if hiding!.size > 0 then {
-        Future.reject $ unnecessaryHiding (source, hiding, Array.from hiding!)
+        reject $ unnecessaryHiding source hiding $ Array.from hiding!
       } else {
-        Future.resolve {
+        resolve {
           type: "ImportDeclaration",
           specifiers: {
             name => {
@@ -400,19 +402,19 @@ esFromImportDeclaration exportedNames importDeclaration = {
           } <$> names,
           source: {
             type: "Literal",
-            value: source.replace (RegExp "[.]serif$", ".js"),
+            value: .replace [RegExp "[.]serif$", ".js"] source,
           },
         }
       }
     } else {
-      Future.attemptP (() => import (source))
+      attemptP (() => import (source))
       |> map Object.keys
-      |> map (names => names.filter visible)
+      |> map (.filter [visible])
       |> chain (names =>
            if hiding!.size > 0 then {
-             Future.reject $ unnecessaryHiding (source, hiding, Array.from hiding!)
+             reject $ unnecessaryHiding source hiding $ Array.from hiding!
            } else {
-             Future.resolve {
+             resolve {
                type: "ImportDeclaration",
                specifiers: {
                  name => {
@@ -430,7 +432,7 @@ esFromImportDeclaration exportedNames importDeclaration = {
          )
     }
   } else {
-    Future.resolve {
+    resolve {
       type: "ImportDeclaration",
       specifiers: {
         specifier => {
@@ -452,7 +454,7 @@ esFromImportDeclaration exportedNames importDeclaration = {
       } <$> importDeclaration.specifiers,
       source: {
         type: "Literal",
-        value: importDeclaration.source.value.replace(RegExp "[.]serif$", ".js"),
+        value: .replace [RegExp "[.]serif$", ".js"] importDeclaration.source.value,
       },
     }
   }
@@ -492,28 +494,26 @@ esFromNode expr = {
   when "ImportExpression"         then esFromImportExpression expr
 };
 
-unnecessaryHiding = (
-  source,
-  hiding,
-  names,
-) => Reflect.construct (Error, [
-  `import * from "${
-    source
-  }" hiding {${
-    hiding.join(", ")
-  }};\n\n${
-    if names.length > 2
-    then names.slice(0, -1).join(", ") + ", and " + names.at(-1)
-    else names.join(" and ")
-  } ${
-    if names.length is 1 then "is" else "are"
-  } not exported so need not be hidden.\n`,
-]);
+unnecessaryHiding source hiding names = {
+  Error {
+    `import * from "${
+      source
+    }" hiding {${
+      .join [", "] hiding
+    }};\n\n${
+      if names.length > 2
+      then `${names |> .slice [0, -1] |> .join [", "]}, and ${.at [-1] names}`
+      else .join [" and "] names
+    } ${
+      if names.length is 1 then "is" else "are"
+    } not exported so need not be hidden.\n`
+  }
+};
 
 toModule module exportedNames = {
   module.imports
   |> map (esFromImportDeclaration exportedNames)
-  |> Future.parallel 16
+  |> parallel 16
   |> map (imports => {
        type: "Program",
        sourceType: "module",

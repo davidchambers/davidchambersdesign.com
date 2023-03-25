@@ -1,12 +1,16 @@
 import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockquote$0027, body$0027, code, code$0027, dd, dd$0027, del, del$0027, div, dl, dl$0027, dt, dt$0027, em, em$0027, embed, footer, footer$0027, h1, h1$0027, h2, h2$0027, h3, h3$0027, h4, h4$0027, h5, h5$0027, h6, h6$0027, head, head$0027, header, header$0027, hr, hr$0027, html, html$0027, i, i$0027, img, ins, ins$0027, li, li$0027, linearGradient, link, mask, meta, nav, nav$0027, object, ol, ol$0027, p, p$0027, param, path, pre, pre$0027, rect, script, span, stop, strong, strong$0027, svg, time, title, title$0027, ul, ul$0027, var$, var$0027, video} from "../elements.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const excerpt = [p(["Over the past few months I've reached a startling realization: ", strong(["JavaScript is a tremendously capable language."])]), p(["The reason that it took me so long to discover this is that\n    the playing field has never been fair. On the one hand I've been\n    writing application code for the server, a stable, predictable\n    environment. On the other hand I've been adding interactivity\n    on the client's side, dealing with inconsistencies on multiple\n    fronts, not least of which is the DOM API."]), p(["Comparing Python and JavaScript, for example, by using\n    the former to quickly put together a website using the\n    excellent Django framework while using the latter to add\n    drag and drop functionality is to compare apples and oranges. ", strong(["Actually, it's more like comparing apples to root canals."])])];
 const body = [...excerpt, p(["Had I been writing application code in JavaScript (without\n    touching the DOM), I'd have been in a much better position\n    to weigh each on its merits. Thanks to some terrifically\n    exciting developments in the JS world, it is now possible to\n    write application code ", em(["entirely"]), " in JavaScript."]), p(["When I was first exposed to the idea of having JavaScript on\n    the server, the thing that appealed to me was the potential to\n    share code between server and client. This seemed preferable\n    to the situation that is currently prevalent, whereby objects\n    are created on the server (probably using an ORM such as that\n    provided by Rails or Django) and are then sent down the wire\n    as JSON (or XML for the masochists) at which point they are\n    parsed to create JS objects."]), p([a({
   href: "http://www.sproutcore.com/"

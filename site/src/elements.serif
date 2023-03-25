@@ -90,9 +90,9 @@ export {
 
 escape s = {
   s
-  |> s => s.replaceAll ("&", "&amp;")
-  |> s => s.replaceAll ("<", "&lt;")
-  |> s => s.replaceAll (">", "&gt;")
+  |> .replaceAll ["&", "&amp;"]
+  |> .replaceAll ["<", "&lt;"]
+  |> .replaceAll [">", "&gt;"]
 };
 
 text value = {
@@ -102,26 +102,34 @@ text value = {
 };
 
 render-attribute [name, value] = {
-  ` ${name}="${escape $ `${value}`.trim().replaceAll("\n", " ")}"`
+  value
+  |> String
+  |> .trim []
+  |> .replaceAll ["\n", " "]
+  |> escape
+  |> value => ` ${name}="${value}"`  ;; TODO: escape double quotes
 };
 
 render-attributes attrs = {
-  {render-attribute <$> Object.entries attrs}.join("")
+  attrs
+  |> Object.entries
+  |> map render-attribute
+  |> .join [""]
 };
 
 render-block-element context element = {
   `${
-    context.indent.repeat(context.level)
+    .repeat [context.level] context.indent
   }<${
     element.name
   }${
     render-attributes element.attributes
   }>\n${
     element.children
-    |> map {node => node.render {indent: context.indent, level: context.level + 1, inline: context.inline}}
-    |> S.joinWith ""
+    |> map (.render [{indent: context.indent, level: context.level + 1, inline: context.inline}])
+    |> .join [""]
   }${
-    context.indent.repeat(context.level)
+    .repeat [context.level] context.indent
   }</${
     element.name
   }>\n`
@@ -129,15 +137,15 @@ render-block-element context element = {
 
 render-inline-element context element = {
   `${
-    context.indent.repeat(context.level)
+    .repeat [context.level] context.indent
   }<${
     element.name
   }${
     render-attributes element.attributes
   }>${
     element.children
-    |> map {node => node.render {indent: context.indent, level: 0, inline: true}}
-    |> S.joinWith ""
+    |> map (.render [{indent: context.indent, level: 0, inline: true}])
+    |> .join [""]
   }</${
     element.name
   }>${
@@ -148,8 +156,8 @@ render-inline-element context element = {
 string-to-text-node string-or-node = {
   if typeof string-or-node is "object" then string-or-node else {
     string-or-node
-    |> s => s.replace (RegExp ("^[ ]+", "gm"), " ")
-    |> s => s.replaceAll ("\n", "")
+    |> .replaceAll [apply ["^[ ]+", "gm"] RegExp, " "]
+    |> .replaceAll ["\n", ""]
     |> text
   }
 };
@@ -162,7 +170,7 @@ block-element name attributes children! = {
     name: name,
     attributes: attributes,
     children: children,
-    toString: () => {String <$> children}.join(""),
+    toString: () => .join [""] $ String <$> children,
     render: context => render-block-element context element,
   };
   element
@@ -170,14 +178,14 @@ block-element name attributes children! = {
 
 inline-element name attributes children! = {
   children = string-to-text-node <$> children!;
-  format = if children.some(node => node.format is "block") then "block" else "inline";
+  format = if .some [node => node.format is "block"] children then "block" else "inline";
   element = {
     type: "element",
     format: format,
     name: name,
     attributes: attributes,
     children: children,
-    toString: () => {String <$> children}.join(""),
+    toString: () => .join [""] $ String <$> children,
     render: context => {
       switch format
       when "inline" then render-inline-element context element
@@ -196,7 +204,7 @@ self-closing-element name attributes = {
     toString: () => "",
     render: {indent, level, inline} => {
       `${
-        indent.repeat(level)
+        .repeat [level] indent
       }<${
         name
       }${

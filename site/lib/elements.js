@@ -1,30 +1,34 @@
 import S from "sanctuary";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
-const escape = s => (s => (s => (s => s.replaceAll(">", "&gt;"))(s.replaceAll("<", "&lt;")))(s.replaceAll("&", "&amp;")))(s);
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
+const escape = s => Prelude._apply("replaceAll")([">", "&gt;"])(Prelude._apply("replaceAll")(["<", "&lt;"])(Prelude._apply("replaceAll")(["&", "&amp;"])(s)));
 const text = value => ({
   type: "text",
   toString: () => value,
   render: context => escape(value)
 });
-const render$002Dattribute = ([name, value]) => ` ${name}="${escape(`${value}`.trim().replaceAll("\n", " "))}"`;
-const render$002Dattributes = attrs => Prelude.map(render$002Dattribute)(Object.entries(attrs)).join("");
-const render$002Dblock$002Delement = context => element => `${context.indent.repeat(context.level)}<${element.name}${render$002Dattributes(element.attributes)}>\n${S.joinWith("")(map(node => node.render({
+const render$002Dattribute = ([name, value]) => (value => ` ${name}="${value}"`)(escape(Prelude._apply("replaceAll")(["\n", " "])(Prelude._apply("trim")([])(String(value)))));
+const render$002Dattributes = attrs => Prelude._apply("join")([""])(map(render$002Dattribute)(Object.entries(attrs)));
+const render$002Dblock$002Delement = context => element => `${Prelude._apply("repeat")([context.level])(context.indent)}<${element.name}${render$002Dattributes(element.attributes)}>\n${Prelude._apply("join")([""])(map(Prelude._apply("render")([{
   indent: context.indent,
   level: context.level + 1,
   inline: context.inline
-}))(element.children))}${context.indent.repeat(context.level)}</${element.name}>\n`;
-const render$002Dinline$002Delement = context => element => `${context.indent.repeat(context.level)}<${element.name}${render$002Dattributes(element.attributes)}>${S.joinWith("")(map(node => node.render({
+}]))(element.children))}${Prelude._apply("repeat")([context.level])(context.indent)}</${element.name}>\n`;
+const render$002Dinline$002Delement = context => element => `${Prelude._apply("repeat")([context.level])(context.indent)}<${element.name}${render$002Dattributes(element.attributes)}>${Prelude._apply("join")([""])(map(Prelude._apply("render")([{
   indent: context.indent,
   level: 0,
   inline: true
-}))(element.children))}</${element.name}>${context.inline ? "" : "\n"}`;
-const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => typeof string$002Dor$002Dnode === "object" ? string$002Dor$002Dnode : (s => (s => text(s.replaceAll("\n", "")))(s.replace(RegExp("^[ ]+", "gm"), " ")))(string$002Dor$002Dnode);
+}]))(element.children))}</${element.name}>${context.inline ? "" : "\n"}`;
+const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => typeof string$002Dor$002Dnode === "object" ? string$002Dor$002Dnode : text(Prelude._apply("replaceAll")(["\n", ""])(Prelude._apply("replaceAll")([apply(["^[ ]+", "gm"])(RegExp), " "])(string$002Dor$002Dnode)));
 const block$002Delement = name => attributes => children$0021 => (() => {
   const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
   const element = {
@@ -33,21 +37,21 @@ const block$002Delement = name => attributes => children$0021 => (() => {
     name,
     attributes,
     children,
-    toString: () => Prelude.map(String)(children).join(""),
+    toString: () => Prelude._apply("join")([""])(Prelude.map(String)(children)),
     render: context => render$002Dblock$002Delement(context)(element)
   };
   return element;
 })();
 const inline$002Delement = name => attributes => children$0021 => (() => {
   const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
-  const format = children.some(node => node.format === "block") ? "block" : "inline";
+  const format = Prelude._apply("some")([node => node.format === "block"])(children) ? "block" : "inline";
   const element = {
     type: "element",
     format,
     name,
     attributes,
     children,
-    toString: () => Prelude.map(String)(children).join(""),
+    toString: () => Prelude._apply("join")([""])(Prelude.map(String)(children)),
     render: context => (() => {
       switch (format) {
         case "inline":
@@ -66,7 +70,7 @@ const self$002Dclosing$002Delement = name => attributes => (() => {
     name,
     attributes,
     toString: () => "",
-    render: ({indent, level, inline}) => `${indent.repeat(level)}<${name}${render$002Dattributes(attributes)} />${inline ? "" : "\n"}`
+    render: ({indent, level, inline}) => `${Prelude._apply("repeat")([level])(indent)}<${name}${render$002Dattributes(attributes)} />${inline ? "" : "\n"}`
   };
   return element;
 })();

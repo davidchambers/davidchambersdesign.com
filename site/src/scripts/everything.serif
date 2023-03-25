@@ -25,11 +25,11 @@ import posts from "../posts/index.serif";
 dirname = path.dirname $ url.fileURLToPath import.meta.url
 ;
 public components = {
-  path.join(dirname, "..", "..", "public", ...components)
+  apply [dirname, "..", "..", "public", ...components] path.join
 }
 ;
 write-file filename data = {
-  fs.writeFileSync(filename, data)
+  apply [filename, data] fs.writeFileSync
 }
 ;
 css/screen
@@ -134,20 +134,20 @@ posts
 |> render-document
 |> write-file $ public ["tags.html"]
 ;
-pages.forEach(page => {
+flip map pages $ page => {
   page
   |> render-page
   |> base-template page.title
   |> render-document
   |> write-file $ public [`${page.slug}.html`]
-})
+}
 ;
-posts.forEach(post => {
+flip map posts $ post => {
   post
   |> related-posts posts
   |> render-post post
   |> base-template post.title
   |> render-document
   |> write-file $ public [`${post.slug}.html`]
-})
+}
 ;

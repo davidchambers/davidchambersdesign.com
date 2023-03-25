@@ -29,6 +29,7 @@ export {
   SwitchExpression,
   SwitchCase,
   PipeExpression,
+  MethodCallExpression,
   CallExpression,
   ImportExpression,
   ImportDeclaration,
@@ -209,6 +210,11 @@ PipeExpression head body = {
   type: "PipeExpression",
   head: head,
   body: body,
+};
+
+MethodCallExpression name = {
+  type: "MethodCallExpression",
+  name: name,
 };
 
 CallExpression callee args = {

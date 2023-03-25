@@ -1,20 +1,26 @@
 import S from "sanctuary";
 
+import * as Set from "./Set.serif";
+
 export default related-posts;
 
 related-posts posts post = {
-  tags = Reflect.construct (Set, [post.tags]);
+  tags = Set.from post.tags;
+  has-tag tag = .has [tag] tags;
   posts
   |> S.mapMaybe {this => {
        if this.slug is post.slug then S.Nothing else {
-         score = this.tags.filter(x => tags.has(x)).length
-                 / Math.sqrt {Reflect.construct (Set, [[...tags, ...this.tags]])}.size;
+         dividend = (.length) $ .filter [has-tag] this.tags;
+         divisor = Math.sqrt $ (.size) $ Set.from $ post.tags <> this.tags;
+         score = dividend / divisor;
          if score < 0.5 then S.Nothing else S.Just {...this, score: score}
        }
      }}
-  |> S.sortBy {this => {
-       S.Pair {-this.score}
-              {Math.abs $ this.datetime.diff(post.datetime).milliseconds}
-     }}
-  |> posts => posts.slice (0, 5)
+  |> S.sortBy (this =>
+       .diff [post.datetime] this.datetime
+       |> (.milliseconds)
+       |> Math.abs
+       |> S.Pair (-this.score)
+     )
+  |> .slice [0, 5]
 };

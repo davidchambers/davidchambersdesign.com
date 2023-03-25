@@ -1,17 +1,22 @@
-import * as Future from "fluture";
+import {attemptP, parallel, reject, resolve} from "fluture";
+import * as Set from "./Set.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
-const RESERVED_WORDS = Reflect.construct(Set, [["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public"]]);
-const validEsIdentifierName = name => Reflect.apply(RegExp.prototype.test, RegExp("^[a-z][a-z0-9]*$", "i"), [name]);
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
+const RESERVED_WORDS = Set.from(["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public", "arguments", "eval"]);
+const validEsIdentifierName = name => Prelude._apply("test")([name])(RegExp("^[$_A-Za-z][$_A-Za-z0-9]*$"));
 const esFromIdentifierName = (() => {
-  const escapeChar = c => "$" + c.charCodeAt(0).toString(16).toUpperCase().padStart(4, "0");
-  const escape = name => RESERVED_WORDS.has(name) ? name + "$" : validEsIdentifierName(name) ? name : Reflect.apply(String.prototype.replace, name, [RegExp("[^a-z0-9_$]", "gi"), escapeChar]);
-  return name => esFromEscapedIdentifierName(escape(name));
+  const escapeChar = c => concat("$")(Prelude._apply("padStart")([4, "0"])(Prelude._apply("toUpperCase")([])(Prelude._apply("toString")([16])(Prelude._apply("charCodeAt")([0])(c)))));
+  const escape = name => Prelude._apply("has")([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : Prelude._apply("replaceAll")([apply(["[^$_A-Za-z0-9]", "g"])(RegExp), escapeChar])(name);
+  return x => esFromEscapedIdentifierName(escape(x));
 })();
 const esFromEscapedIdentifierName = name => ({
   type: "Identifier",
@@ -43,13 +48,13 @@ const esFromTemplateLiteral = ({expressions, quasis}) => ({
   type: "TemplateLiteral",
   expressions: Prelude.map(esFromNode)(expressions),
   quasis: (() => {
-    const lineEnding = ["\n", "\r\n"].find(lineEnding => quasis[0].startsWith(lineEnding));
-    return lineEnding === undefined ? [...Prelude.map(TemplateElement(false))(quasis.slice(0, -1)), ...Prelude.map(TemplateElement(true))(quasis.slice(-1))] : (() => {
-      const indent = quasis[0].slice(lineEnding.length).search(RegExp("(?! )"));
-      const pattern = RegExp(`${lineEnding}[ ]{0,${indent}}`, "g");
-      const [head, ...tail] = map(quasi => quasi.replace(pattern, lineEnding))(quasis);
-      const head$0027 = head.slice(lineEnding.length);
-      return tail.length === 0 ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...Prelude.map(TemplateElement(false))(tail.slice(0, -1)), ...Prelude.map(TemplateElement(true))(tail.slice(-1))];
+    const lineEnding = Prelude._apply("find")([lineEnding => Prelude._apply("startsWith")([lineEnding])(quasis[0])])(["\n", "\r\n"]);
+    return lineEnding === undefined ? [...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(quasis)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(quasis))] : (() => {
+      const indent = Prelude._apply("search")([RegExp("(?! )")])(Prelude._apply("slice")([lineEnding.length])(quasis[0]));
+      const pattern = apply([`${lineEnding}[ ]{0,${indent}}`, "g"])(RegExp);
+      const [head, ...tail] = Prelude.map(Prelude._apply("replace")([pattern, lineEnding]))(quasis);
+      const head$0027 = Prelude._apply("slice")([lineEnding.length])(head);
+      return tail.length === 0 ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(tail)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(tail))];
     })();
   })()
 });
@@ -107,7 +112,7 @@ const esFromBlockExpression = ({statements}) => ({
     body: {
       type: "BlockStatement",
       body: (() => {
-        switch (statements.at(-1).type) {
+        switch ((x => x.type)(Prelude._apply("at")([-1])(statements))) {
           case "VariableDeclaration":
             return [...Prelude.map(esFromNode)(statements)];
           case "FunctionDeclaration":
@@ -115,13 +120,13 @@ const esFromBlockExpression = ({statements}) => ({
               type: "ReturnStatement",
               argument: {
                 type: "Identifier",
-                name: statements.at(-1).name
+                name: (x => x.name)(Prelude._apply("at")([-1])(statements))
               }
             }];
           case "ExpressionStatement":
-            return [...Prelude.map(esFromNode)(statements.slice(0, -1)), {
+            return [...Prelude.map(esFromNode)(Prelude._apply("slice")([0, -1])(statements)), {
               type: "ReturnStatement",
-              argument: esFromNode(statements.at(-1).expression)
+              argument: esFromNode((x => x.expression)(Prelude._apply("at")([-1])(statements)))
             }];
         }
       })()
@@ -230,12 +235,12 @@ const esFromFunctionDeclaration = ({name, parameters, body}) => ({
   declarations: [{
     type: "VariableDeclarator",
     id: esFromIdentifierName(name),
-    init: parameters.reduceRight((esBody, param) => ({
+    init: Prelude._apply("reduceRight")([(esBody, param) => ({
       type: "ArrowFunctionExpression",
       params: [esFromNode(param)],
       body: esBody,
       expression: esBody.type !== "BlockStatement"
-    }), esFromNode(body))
+    }), esFromNode(body)])(parameters)
   }]
 });
 const esFromExpressionStatement = ({expression}) => ({
@@ -273,11 +278,11 @@ const esFromImportExpression = ({source}) => ({
 const esFromImportDeclaration = exportedNames => importDeclaration => importDeclaration.specifiers === "*" ? (() => {
   const source = importDeclaration.source.value;
   const hiding = Prelude.map(x => x.name)(importDeclaration.hiding);
-  const hiding$0021 = Reflect.construct(Set, [Prelude.map(x => x.name)(importDeclaration.hiding)]);
-  const visible = name => not(hiding$0021.delete(name));
-  return source.endsWith(".serif") ? (() => {
-    const names = exportedNames(source).filter(visible);
-    return hiding$0021.size > 0 ? Future.reject(unnecessaryHiding(source, hiding, Array.from(hiding$0021))) : Future.resolve({
+  const hiding$0021 = Set.from(Prelude.map(x => x.name)(importDeclaration.hiding));
+  const visible = name => not(Prelude._apply("delete")([name])(hiding$0021));
+  return Prelude._apply("endsWith")([".serif"])(source) ? (() => {
+    const names = Prelude._apply("filter")([visible])(exportedNames(source));
+    return hiding$0021.size > 0 ? reject(unnecessaryHiding(source)(hiding)(Array.from(hiding$0021))) : resolve({
       type: "ImportDeclaration",
       specifiers: Prelude.map(name => ({
         type: "ImportSpecifier",
@@ -286,10 +291,10 @@ const esFromImportDeclaration = exportedNames => importDeclaration => importDecl
       }))(names),
       source: {
         type: "Literal",
-        value: source.replace(RegExp("[.]serif$"), ".js")
+        value: Prelude._apply("replace")([RegExp("[.]serif$"), ".js"])(source)
       }
     });
-  })() : chain(names => hiding$0021.size > 0 ? Future.reject(unnecessaryHiding(source, hiding, Array.from(hiding$0021))) : Future.resolve({
+  })() : chain(names => hiding$0021.size > 0 ? reject(unnecessaryHiding(source)(hiding)(Array.from(hiding$0021))) : resolve({
     type: "ImportDeclaration",
     specifiers: Prelude.map(name => ({
       type: "ImportSpecifier",
@@ -300,8 +305,8 @@ const esFromImportDeclaration = exportedNames => importDeclaration => importDecl
       type: "Literal",
       value: source
     }
-  }))(map(names => names.filter(visible))(map(Object.keys)(Future.attemptP(() => import(source)))));
-})() : Future.resolve({
+  }))(map(Prelude._apply("filter")([visible]))(map(Object.keys)(attemptP(() => import(source)))));
+})() : resolve({
   type: "ImportDeclaration",
   specifiers: Prelude.map(specifier => (() => {
     switch (specifier.type) {
@@ -325,7 +330,7 @@ const esFromImportDeclaration = exportedNames => importDeclaration => importDecl
   })())(importDeclaration.specifiers),
   source: {
     type: "Literal",
-    value: importDeclaration.source.value.replace(RegExp("[.]serif$"), ".js")
+    value: Prelude._apply("replace")([RegExp("[.]serif$"), ".js"])(importDeclaration.source.value)
   }
 });
 const esFromNode = expr => (() => {
@@ -392,7 +397,7 @@ const esFromNode = expr => (() => {
       return esFromImportExpression(expr);
   }
 })();
-const unnecessaryHiding = (source, hiding, names) => Reflect.construct(Error, [`import * from "${source}" hiding {${hiding.join(", ")}};\n\n${names.length > 2 ? names.slice(0, -1).join(", ") + ", and " + names.at(-1) : names.join(" and ")} ${names.length === 1 ? "is" : "are"} not exported so need not be hidden.\n`]);
+const unnecessaryHiding = source => hiding => names => Error(`import * from "${source}" hiding {${Prelude._apply("join")([", "])(hiding)}};\n\n${names.length > 2 ? `${Prelude._apply("join")([", "])(Prelude._apply("slice")([0, -1])(names))}, and ${Prelude._apply("at")([-1])(names)}` : Prelude._apply("join")([" and "])(names)} ${names.length === 1 ? "is" : "are"} not exported so need not be hidden.\n`);
 const toModule = module => exportedNames => map(imports => ({
   type: "Program",
   sourceType: "module",
@@ -415,5 +420,5 @@ const toModule = module => exportedNames => map(imports => ({
         return esFromExportDefaultDeclaration(statement);
     }
   })())(module.exports)]
-}))(Future.parallel(16)(map(esFromImportDeclaration(exportedNames))(module.imports)));
+}))(parallel(16)(map(esFromImportDeclaration(exportedNames))(module.imports)));
 export {toModule};

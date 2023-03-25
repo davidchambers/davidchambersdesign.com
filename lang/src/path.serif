@@ -1,0 +1,24 @@
+import path from "node:path";
+
+export {
+  basename,
+  dirname,
+  join,
+  relative,
+};
+
+basename path_ suffix = {
+  apply [path_, suffix] path.basename
+};
+
+dirname = {
+  path.dirname
+};
+
+join = {
+  flip apply path.join
+};
+
+relative from to = {
+  apply [from, to] path.relative
+};

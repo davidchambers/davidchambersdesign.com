@@ -1,13 +1,14 @@
+import * as Set from "./Set.serif";
 import * as Prelude from "./prelude.serif";
 import * from "./types.serif";
 
 export default rewriteModule;
 
-has element set = set.has (element);
+has element set = .has [element] set;
 
-add element set = Reflect.construct (Set, [[...set, element]]);
+add element set = Set.from [...set, element];
 
-union this that = Reflect.construct (Set, [[...this, ...that]]);
+union this that = Set.from [...this, ...that];
 
 nextUnusedIdent names desiredName = {
   recur counter = {
@@ -43,9 +44,7 @@ namesInStatement node = {
 };
 
 rewriteModule module = {
-  names = Reflect.construct (Set, [
-    module.imports <> module.statements >>= namesInStatement,
-  ]);
+  names = Set.from $ module.imports <> module.statements >>= namesInStatement;
   preludeIdent = nextUnusedIdent names "Prelude";
   names' = add preludeIdent.name names;
   rewrite = rewriteNode preludeIdent names';
@@ -62,7 +61,7 @@ rewriteModule module = {
       Prelude
       |> Object.keys
       ;; Do not unpack if name conflicts with a top-level binding:
-      |> names => names.filter (name => not $ has name names')
+      |> .filter [not . flip has names']
       |> map (name => Property (StringLiteral name) (Identifier name))
       |> ObjectPattern
     } preludeIdent
@@ -188,6 +187,12 @@ rewriteNode preludeIdent = {
     }
     when "PipeExpression" then {
       recur names $ CallExpression node.body [node.head]
+    }
+    when "MethodCallExpression" then {
+      recur names {
+        CallExpression (MemberExpression preludeIdent $ StringLiteral "_apply")
+                       [StringLiteral node.name]
+      }
     }
     when "CallExpression" then {
       CallExpression (recur names node.callee)

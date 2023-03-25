@@ -10,5 +10,5 @@ all: \
 dist/grammar.js: serif.pegjs
 	node_modules/.bin/peggy --format es <'$<' >'$@'
 
-dist/%: src/%
+dist/%.js: src/%.serif
 	cp -- '$<' '$@'

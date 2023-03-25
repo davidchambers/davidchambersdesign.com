@@ -1,11 +1,15 @@
 import S from "sanctuary";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const base03 = "#002b36";
 const base02 = "#073642";
 const base01 = "#586e75";
@@ -25,14 +29,8 @@ const green = "#859900";
 const mid$002Dgray = "#a9a9a9";
 const pink = "#ff5e99";
 const recycled$002Dpaper = "#fef9ec";
-const tag$002Dbackground = count => (() => {
-  const hex = Math.floor(247 - Math.log2(count) * 5).toString(16).padStart(2, "0");
-  return `#${hex}${hex}${hex}`;
-})();
-const tag$002Dcolor = count => (() => {
-  const inconsequential = RegExp("[.]000$|0*$");
-  return `rgba(0, 0, 0, ${(Math.log2(count) * 0.1 + 0.3).toFixed(3).replace(inconsequential, "")})`;
-})();
+const tag$002Dbackground = count => concat("#")(Prelude._apply("repeat")([3])(Prelude._apply("padStart")([2, "0"])(Prelude._apply("toString")([16])(Math.floor(247 - Math.log2(count) * 5)))));
+const tag$002Dcolor = count => (alpha => `rgba(0, 0, 0, ${alpha})`)(Prelude._apply("replace")([RegExp("[.]000$|0*$"), ""])(Prelude._apply("toFixed")([3])(Math.log2(count) * 0.1 + 0.3)));
 const screen = `html {
   height: 100%;
   background-color: ${base3};
@@ -757,11 +755,11 @@ article > header > dl > dd > a {
   z-index: 99;
 }
 
-${S.range(1)(20).map(count => `#tags li[data-count='${count}'] a {
+${Prelude._apply("trimEnd")([])(Prelude._apply("join")(["\n"])(map(count => `#tags li[data-count='${count}'] a {
   background: ${tag$002Dbackground(count)};
   color: ${tag$002Dcolor(count)};
 }
-`).join("\n").trimEnd()}
+`)(S.range(1)(20))))}
 
 .hashify-editor {
   margin-top: 2px;

@@ -2,12 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {captioned$002Dimages, code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  _apply: name => args => target => target[name].apply(target, args),
+  apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  const_: x => y => x,
+  flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {chain, concat, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const body = [p(["I spent much of my day at work editing Django templates in Emacs,\n    which does a decent job of applying syntax highlighting to HTML.\n    When I got home, though, and resumed work on a new Mango feature,\n    my Django templates lacked colour. :\\"]), p(["Emacs doesn't recognize the \"dhtml\" extension, but it's easy to\n    add a custom mapping (when the appropriate snippet is sitting in a\n    chat window waiting to be copied (ty, Brodie))."]), code$002Dblock("TK")(`(add-to-list 'auto-mode-alist '("[.]dhtml$" . html-mode))
 `), p(["Adding the above snippet to my ", strong(["~/.emacs"]), " file did\n    the trick. :)"]), captioned$002Dimages([{
   alt: "Emacs syntax highlighting",
