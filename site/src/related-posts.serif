@@ -13,7 +13,7 @@ related-posts posts post = {
          dividend = (.length) $ .filter [has-tag] this.tags;
          divisor = Math.sqrt $ (.size) $ Set.from $ post.tags <> this.tags;
          score = dividend / divisor;
-         if score < 0.5 then S.Nothing else S.Just {...this, score: score}
+         if score < 0.5 then S.Nothing else S.Just {...this, score}
        }
      }}
   |> S.sortBy (this =>

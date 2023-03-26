@@ -8,7 +8,7 @@ export default {
   title: ["Python loops can have else clause?!"],
   datetime: datetime "2010-07-25" "18:11:00" "Pacific/Auckland",
   tags: ["javascript", "mootools", "programming", "python"],
-  body: body,
+  body,
 };
 
 body = [

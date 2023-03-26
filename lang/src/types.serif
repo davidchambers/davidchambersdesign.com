@@ -51,71 +51,71 @@ NullLiteral = {
 
 BooleanLiteral value = {
   type: "BooleanLiteral",
-  value: value,
+  value,
 };
 
 NumberLiteral value = {
   type: "NumberLiteral",
-  value: value,
+  value,
 };
 
 StringLiteral value = {
   type: "StringLiteral",
-  value: value,
+  value,
 };
 
 TemplateLiteral quasis expressions = {
   type: "TemplateLiteral",
-  quasis: quasis,
-  expressions: expressions,
+  quasis,
+  expressions,
 };
 
 MetaProperty meta property = {
   type: "MetaProperty",
-  meta: meta,
-  property: property,
+  meta,
+  property,
 };
 
 MemberExpression object property = {
   type: "MemberExpression",
-  object: object,
-  property: property,
+  object,
+  property,
 };
 
 IdentifierPlaceholder desiredName = {
   type: "IdentifierPlaceholder",
-  desiredName: desiredName,
+  desiredName,
 };
 
 Identifier name = {
   type: "Identifier",
-  name: name,
+  name,
 };
 
 SpreadElement argument = {
   type: "SpreadElement",
-  argument: argument,
+  argument,
 };
 
 ArrayExpression elements = {
   type: "ArrayExpression",
-  elements: elements,
+  elements,
 };
 
 Property key value = {
   type: "Property",
-  key: key,
-  value: value,
+  key,
+  value,
 };
 
 ObjectExpression properties = {
   type: "ObjectExpression",
-  properties: properties,
+  properties,
 };
 
 ArrayPattern elements = {
   type: "ArrayPattern",
-  elements: elements,
+  elements,
 };
 
 Elision = {
@@ -124,170 +124,170 @@ Elision = {
 
 ObjectPattern properties = {
   type: "ObjectPattern",
-  properties: properties,
+  properties,
 };
 
 RestElement argument = {
   type: "RestElement",
-  argument: argument,
+  argument,
 };
 
 ArrowFunctionExpression parameters body = {
   type: "ArrowFunctionExpression",
-  parameters: parameters,
-  body: body,
+  parameters,
+  body,
 };
 
 PropertyAccessor identifier = {
   type: "PropertyAccessor",
-  identifier: identifier,
+  identifier,
 };
 
 BlockExpression statements = {
   type: "BlockExpression",
-  statements: statements,
+  statements,
 };
 
 UnaryExpression operator argument = {
   type: "UnaryExpression",
-  operator: operator,
-  argument: argument,
+  operator,
+  argument,
 };
 
 CompositionExpression left right = {
   type: "CompositionExpression",
-  left: left,
-  right: right,
+  left,
+  right,
 };
 
 BinaryExpression operator left right = {
   type: "BinaryExpression",
-  operator: operator,
-  left: left,
-  right: right,
+  operator,
+  left,
+  right,
 };
 
 MapExpression left right = {
   type: "MapExpression",
-  left: left,
-  right: right,
+  left,
+  right,
 };
 
 BindExpression left right = {
   type: "BindExpression",
-  left: left,
-  right: right,
+  left,
+  right,
 };
 
 LogicalExpression operator left right = {
   type: "LogicalExpression",
-  operator: operator,
-  left: left,
-  right: right,
+  operator,
+  left,
+  right,
 };
 
 ConditionalExpression predicate consequent alternative = {
   type: "ConditionalExpression",
-  predicate: predicate,
-  consequent: consequent,
-  alternative: alternative,
+  predicate,
+  consequent,
+  alternative,
 };
 
 SwitchExpression discriminant cases default = {
   type: "SwitchExpression",
-  discriminant: discriminant,
-  cases: cases,
-  default: default,
+  discriminant,
+  cases,
+  default,
 };
 
 SwitchCase predicates consequent = {
   type: "SwitchCase",
-  predicates: predicates,
-  consequent: consequent,
+  predicates,
+  consequent,
 };
 
 PipeExpression head body = {
   type: "PipeExpression",
-  head: head,
-  body: body,
+  head,
+  body,
 };
 
 MethodCallExpression name = {
   type: "MethodCallExpression",
-  name: name,
+  name,
 };
 
 CallExpression callee args = {
   type: "CallExpression",
-  callee: callee,
+  callee,
   arguments: args,
 };
 
 ImportExpression source = {
   type: "ImportExpression",
-  source: source,
+  source,
 };
 
 ImportDeclaration source specifiers = {
   type: "ImportDeclaration",
-  source: source,
-  specifiers: specifiers,
+  source,
+  specifiers,
 };
 
 ImportEverythingDeclaration source hiding = {
   type: "ImportDeclaration",
-  source: source,
+  source,
   specifiers: "*",
-  hiding: hiding,
+  hiding,
 };
 
 ImportDefaultSpecifier local = {
   type: "ImportDefaultSpecifier",
-  local: local,
+  local,
 };
 
 ImportSpecifier local imported = {
   type: "ImportSpecifier",
-  local: local,
-  imported: imported,
+  local,
+  imported,
 };
 
 ImportNamespaceSpecifier local = {
   type: "ImportNamespaceSpecifier",
-  local: local,
+  local,
 };
 
 ExportNamedDeclaration specifiers = {
   type: "ExportNamedDeclaration",
-  specifiers: specifiers,
+  specifiers,
 };
 
 ExportDefaultDeclaration declaration = {
   type: "ExportDefaultDeclaration",
-  declaration: declaration,
+  declaration,
 };
 
 VariableDeclaration pattern expression = {
   type: "VariableDeclaration",
-  pattern: pattern,
-  expression: expression,
+  pattern,
+  expression,
 };
 
 FunctionDeclaration name parameters body = {
   type: "FunctionDeclaration",
-  name: name,
-  parameters: parameters,
-  body: body,
+  name,
+  parameters,
+  body,
 };
 
 ExpressionStatement expression = {
   type: "ExpressionStatement",
-  expression: expression,
+  expression,
 };
 
 Module {imports, exports, statements} = {
   type: "Module",
-  imports: imports,
-  exports: exports,
-  statements: statements,
+  imports,
+  exports,
+  statements,
 };

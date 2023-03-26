@@ -8,7 +8,7 @@ export default {
   title: ["Prototype loader for SyntaxHighlighter"],
   datetime: datetime "2009-06-22" "01:04:00" "Pacific/Auckland",
   tags: ["javascript", "optimization", "prototype", "syntaxhighlighter"],
-  body: body,
+  body,
 };
 
 excerpt = [

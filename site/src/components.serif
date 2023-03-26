@@ -11,7 +11,7 @@ export {
 
 captioned-images images = {
   dl $ images >>= {alt, src, caption} => [
-    dt [img {alt: alt, src: src}],
+    dt [img {alt, src}],
     dd caption,
   ]
 };

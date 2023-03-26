@@ -239,12 +239,12 @@ next {w, x, y} [dir, mag] = {
   when "h" then {
     dx = mag;
     x' = x + dx;
-    {w: S.max w x', x: x', y: y}
+    {w: S.max w x', x: x', y}
   }
   when "v" then {
     dy = mag;
     y' = y + dy;
-    {w: w, x: x, y: y'}
+    {w, x, y: y'}
   }
   when "m" then {
     [dx, dy] = mag;

@@ -8,7 +8,7 @@ export default {
   title: ["Valid XHTML alternative to ", code ["<strike>"]],
   datetime: datetime "2009-03-17" "21:53:00" "Pacific/Auckland",
   tags: ["css", "html"],
-  body: body,
+  body,
 };
 
 body = [

@@ -8,7 +8,7 @@ export default {
   title: ["Prototype image slider"],
   datetime: datetime "2009-09-16" "23:43:00" "Pacific/Auckland",
   tags: ["css", "html", "javascript", "meaningful-markup", "prototype"],
-  body: body,
+  body,
 };
 
 excerpt = [

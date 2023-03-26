@@ -12,7 +12,7 @@ import rewrite from "./rewrite.serif";
 
 evaluateModule source = {
   context = vm.createContext global;
-  module = apply [vm.SourceTextModule, [source, {context: context}]] Reflect.construct;
+  module = apply [vm.SourceTextModule, [source, {context,}]] Reflect.construct;
   chain (_ => map (_ => module.namespace.default)
                   (attemptP (() => .evaluate [] module)))
         (attemptP (() => .link [

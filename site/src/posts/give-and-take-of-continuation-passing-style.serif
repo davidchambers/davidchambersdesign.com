@@ -11,7 +11,7 @@ export default {
   ],
   datetime: datetime "2020-10-08" "10:41:26" "Europe/Berlin",
   tags: ["continuation-passing-style", "javascript", "programming"],
-  body: body,
+  body,
 };
 
 body = [

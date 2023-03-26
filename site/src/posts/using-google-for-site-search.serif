@@ -8,7 +8,7 @@ export default {
   title: ["Using Google for site search"],
   datetime: datetime "2010-03-25" "22:06:00" "Pacific/Auckland",
   tags: ["google", "search"],
-  body: body,
+  body,
 };
 
 excerpt = [

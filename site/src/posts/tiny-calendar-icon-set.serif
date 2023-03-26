@@ -8,7 +8,7 @@ export default {
   title: ["Tiny calendar icon set"],
   datetime: datetime "2009-04-24" "21:24:00" "Pacific/Auckland",
   tags: ["design", "icons"],
-  body: body,
+  body,
 };
 
 body = [

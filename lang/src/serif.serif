@@ -76,12 +76,10 @@ findDependencies filename tree = {
         };
         .reduce [
           reducer,
-          resolve $ Map.from [...tree, [filename, {
-            sourceText: sourceText,
-            ast: ast,
-            dependencies: dependencies,
-            exportedNames: exportedNames,
-          }]],
+          resolve $ Map.from [
+            ...tree,
+            [filename, {sourceText, ast, dependencies, exportedNames}],
+          ],
         ] dependencies
       }
     }
@@ -127,7 +125,7 @@ orderDependencies tree = {
              jsDirname
              |> fs.mkdir {recursive: true}
              |> chain (const_ $ fs.writeFile jsFilename jsSource)
-             |> map (const_ {serifFilename: serifFilename, jsFilename: jsFilename})
+             |> map (const_ {serifFilename, jsFilename})
            }
          })
       |> parallel 16

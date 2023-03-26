@@ -8,7 +8,7 @@ export default {
   title: ["Get attributes of Django model or instance"],
   datetime: datetime "2010-02-22" "20:24:00" "Pacific/Auckland",
   tags: ["django", "python"],
-  body: body,
+  body,
 };
 
 body = [

@@ -7,7 +7,7 @@ export default {
   title: ["Beautiful painted alphabet"],
   datetime: datetime "2008-08-22" "01:56:00" "Pacific/Auckland",
   tags: ["design", "typography", "video"],
-  body: body,
+  body,
 };
 
 body = [

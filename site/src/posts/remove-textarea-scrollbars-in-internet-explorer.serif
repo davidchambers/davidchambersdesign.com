@@ -8,7 +8,7 @@ export default {
   title: ["Remove textarea scrollbars in Internet Explorer"],
   datetime: datetime "2010-07-18" "22:00:00" "Pacific/Auckland",
   tags: ["css"],
-  body: body,
+  body,
 };
 
 body = [

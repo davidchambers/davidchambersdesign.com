@@ -8,7 +8,7 @@ export default {
   title: ["Self-caching functions in JavaScript and Python"],
   datetime: datetime "2010-08-29" "01:10:00" "Pacific/Auckland",
   tags: ["javascript", "programming", "python"],
-  body: body,
+  body,
 };
 
 excerpt = [

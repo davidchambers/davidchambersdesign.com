@@ -8,7 +8,7 @@ export default {
   title: ["Duplicating arrays in JavaScript"],
   datetime: datetime "2010-01-09" "19:26:00" "Pacific/Auckland",
   tags: ["javascript"],
-  body: body,
+  body,
 };
 
 body = [

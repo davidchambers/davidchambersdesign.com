@@ -8,7 +8,7 @@ export default {
   title: ["WordPress login redirect"],
   datetime: datetime "2009-03-01" "03:01:00" "Pacific/Auckland",
   tags: ["php", "wordpress"],
-  body: body,
+  body,
 };
 
 body = [

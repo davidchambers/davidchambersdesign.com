@@ -8,7 +8,7 @@ export default {
   title: ["Converting integers to ordinals"],
   datetime: datetime "2010-09-16" "13:00:00" "Pacific/Auckland",
   tags: ["javascript", "programming", "python"],
-  body: body,
+  body,
 };
 
 body = [

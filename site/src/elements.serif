@@ -167,9 +167,9 @@ block-element name attributes children! = {
   element = {
     type: "element",
     format: "block",
-    name: name,
-    attributes: attributes,
-    children: children,
+    name,
+    attributes,
+    children,
     toString: () => .join [""] $ String <$> children,
     render: context => render-block-element context element,
   };
@@ -181,10 +181,10 @@ inline-element name attributes children! = {
   format = if .some [node => node.format is "block"] children then "block" else "inline";
   element = {
     type: "element",
-    format: format,
-    name: name,
-    attributes: attributes,
-    children: children,
+    format,
+    name,
+    attributes,
+    children,
     toString: () => .join [""] $ String <$> children,
     render: context => {
       switch format
@@ -199,8 +199,8 @@ self-closing-element name attributes = {
   element = {
     type: "element",
     format: "inline",
-    name: name,
-    attributes: attributes,
+    name,
+    attributes,
     toString: () => "",
     render: {indent, level, inline} => {
       `${

@@ -8,7 +8,7 @@ export default {
   title: ["PHP print_filesize function"],
   datetime: datetime "2009-06-10" "21:17:00" "Pacific/Auckland",
   tags: ["best-practice", "php"],
-  body: body,
+  body,
 };
 
 excerpt = [

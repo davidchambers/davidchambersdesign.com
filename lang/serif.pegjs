@@ -211,23 +211,12 @@ ObjectElement
   / Property
 
 Property
-  = key:PropertyName _ ':' _ value:AssignmentExpression
+  = '[' _ key:Expression _ ']' _ ':' _ value:Expression
     { return {type: 'Property', key, value}; }
-
-PropertyName
-  = LiteralPropertyName
-  / ComputedPropertyName
-
-LiteralPropertyName
-  = ident:Identifier
-    { return {type: 'StringLiteral', value: ident.name}; }
-
-ComputedPropertyName
-  = '[' _ expression:AssignmentExpression _ ']'
-    { return expression; }
-
-AssignmentExpression
-  = Expression
+  / ident:Identifier _ ':' _ value:Expression
+    { return {type: 'Property', key: {type: 'StringLiteral', value: ident.name}, value}; }
+  / ident:Identifier
+    { return {type: 'Property', key: {type: 'StringLiteral', value: ident.name}, value: ident}; }
 
 ImportMeta
   = meta:ImportToken '.' property:'meta'
@@ -239,12 +228,12 @@ PrimaryExpression
   / NumberLiteral
   / StringLiteral
   / TemplateLiteral
-  / ArrayExpression
+  / BlockExpression
   / ObjectExpression
+  / ArrayExpression
   / ImportMeta
   / Identifier
   / PropertyAccessor
-  / BlockExpression
 
 MemberExpression
   = object:PrimaryExpression

@@ -81,7 +81,7 @@ esFromIdentifierName = {
 
 esFromEscapedIdentifierName name = {
   type: "Identifier",
-  name: name,
+  name,
 };
 
 esFromNullLiteral = {
@@ -91,7 +91,7 @@ esFromNullLiteral = {
 
 esFromLiteral {value} = {
   type: "Literal",
-  value: value,
+  value,
 };
 
 esFromMetaProperty = {meta, property} => {
@@ -108,9 +108,9 @@ esFromElision = null;
 
 TemplateElement tail raw = {
   type: "TemplateElement",
-  tail: tail,
+  tail,
   value: {
-    raw: raw,
+    raw,
   },
 };
 
@@ -147,7 +147,7 @@ esFromMemberExpression {object, property} = {
     type: "MemberExpression",
     object: esFromNode object,
     property: if computed then esFromNode property else esFromEscapedIdentifierName property.value,
-    computed: computed,
+    computed,
     optional: false,
   }
 };
@@ -177,12 +177,12 @@ esFromProperty property = {
     };
     {
       type: "Property",
-      key: key,
-      value: value,
+      key,
+      value,
       kind: "init",
       method: false,
-      shorthand: shorthand,
-      computed: computed,
+      shorthand,
+      computed,
     }
   }
 };
@@ -232,14 +232,14 @@ esFromBlockExpression {statements} = {
 
 esFromUnaryExpression {operator, argument} = {
   type: "UnaryExpression",
-  operator: operator,
+  operator,
   argument: esFromNode argument,
   prefix: true,
 };
 
 esFromBinaryExpression {operator, left, right} = {
   type: "BinaryExpression",
-  operator: operator,
+  operator,
   left: esFromNode left,
   right: esFromNode right,
 };

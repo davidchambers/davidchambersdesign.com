@@ -8,7 +8,7 @@ export default {
   title: ["PHP brush for SyntaxHighlighter"],
   datetime: datetime "2009-06-08" "17:00:00" "Pacific/Auckland",
   tags: ["javascript", "php", "syntaxhighlighter"],
-  body: body,
+  body,
 };
 
 excerpt = [
