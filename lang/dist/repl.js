@@ -2,7 +2,7 @@ import os from "node:os";
 import repl from "node:repl";
 import vm from "node:vm";
 import {generate} from "astring";
-import {attemptP, fork, promise} from "fluture";
+import {attemptP, fork, promise, resolve} from "fluture";
 import * as serif from "./index.js";
 import * as path from "./path.js";
 import rewrite from "./rewrite.js";
@@ -17,19 +17,15 @@ const Prelude = {
   not: b => !b
 };
 const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
-const evaluateModule = source => (() => {
-  const context = vm.createContext(global);
-  const module = apply([vm.SourceTextModule, [source, {
-    context
+const evaluateModule = source => (context => (module => Prelude.chain(_ => Prelude.chain(_ => resolve(module.namespace.default))(attemptP(() => Prelude._apply("evaluate")([])(module))))(attemptP(() => Prelude._apply("link")([(specifier, referencingModule) => promise(map(map(entries => (() => {
+  const module = apply([vm.SyntheticModule, [Prelude.map(([name]) => name)(entries), () => Prelude._apply("forEach")([flip(Prelude._apply("setExport"))(module)])(entries), {
+    identifier: specifier,
+    context: referencingModule.context
   }]])(Reflect.construct);
-  return chain(_ => map(_ => module.namespace.default)(attemptP(() => Prelude._apply("evaluate")([])(module))))(attemptP(() => Prelude._apply("link")([(specifier, referencingModule) => promise(map(entries => (() => {
-    const module = apply([vm.SyntheticModule, [Prelude.map(([name]) => name)(entries), () => Prelude._apply("forEach")([flip(Prelude._apply("setExport"))(module)])(entries), {
-      identifier: specifier,
-      context: referencingModule.context
-    }]])(Reflect.construct);
-    return module;
-  })())(Prelude.map(Object.entries)(attemptP(() => import(specifier)))))])(module)));
-})();
+  return module;
+})()))(map(Object.entries)(attemptP(() => import(specifier)))))])(module))))(apply([vm.SourceTextModule, [source, {
+  context
+}]])(Reflect.construct)))(vm.createContext(global));
 const read = serifSource => Prelude.chain(serifAst => Prelude.chain(jsAst => evaluateModule(apply([jsAst, {}])(generate)))(serif.trans(rewrite(serifAst))(_importPath => [])))(serif.parse("[repl]")(`export default ${serifSource};`));
 const print = x => (() => {
   switch (apply([Object.prototype.toString, x, []])(Reflect.apply)) {

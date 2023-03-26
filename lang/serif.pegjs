@@ -125,6 +125,7 @@ TemplateLiteralCharacter
 
 AndToken            = @$'and'           !IdentifierPart
 ArrowToken          = @$'=>'            !IdentifierPart
+DoToken             = @$'do'            !IdentifierPart
 ElseToken           = @$'else'          !IdentifierPart
 ExportToken         = @$'export'        !IdentifierPart
 IfToken             = @$'if'            !IdentifierPart
@@ -158,6 +159,7 @@ ReservedWord
   / SwitchToken
   / WhenToken
   / IsToken
+  / DoToken
   / ImportToken
   / ExportToken
 
@@ -229,6 +231,7 @@ PrimaryExpression
   / StringLiteral
   / TemplateLiteral
   / BlockExpression
+  / DoBlockExpression
   / ObjectExpression
   / ArrayExpression
   / ImportMeta
@@ -516,6 +519,20 @@ PropertyAccessor
 BlockExpression
   = '{' _ statements:Statement|1.., SemicolonSeparator| _ '}'
     { return {type: 'BlockExpression', statements}; }
+
+DoBlockExpression
+  = DoToken
+    _ '{'
+    operations:(_ operation:DoOperation _ ';' { return operation; })*
+    _ result:Expression
+    _ '}'
+    { return {type: 'DoBlockExpression', operations, result}; }
+
+DoOperation
+  = pattern:Pattern _ '<-' _ expression:Expression
+    { return {type: 'ArrowAssignmentStatement', pattern, expression}; }
+  / FunctionDeclaration
+  / VariableDeclaration
 
 Statement
   = FunctionDeclaration

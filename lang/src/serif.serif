@@ -57,32 +57,30 @@ reducer = (futureTree, filename) => {
 };
 
 findDependencies filename tree = {
-  if .has [filename] tree then resolve tree else {
-    mapRej (.message) (fs.readFile filename) >>= sourceText => {
-      parse filename sourceText >>= ast => {
-        dependencies = ast.imports >>= {source: {value}} => {
-          if .test [value] (RegExp "^[./].*[.]serif$") then {
-            [path.join [filename, "..", value]]
-          } else {
-            []
-          }
-        };
-        exportedNames = ast.exports >>= exportDeclaration => {
-          if exportDeclaration.type is "ExportNamedDeclaration" then {
-            (.name) <$> exportDeclaration.specifiers
-          } else {
-            []
-          }
-        };
-        .reduce [
-          reducer,
-          resolve $ Map.from [
-            ...tree,
-            [filename, {sourceText, ast, dependencies, exportedNames}],
-          ],
-        ] dependencies
+  if .has [filename] tree then resolve tree else do {
+    sourceText <- mapRej (.message) $ fs.readFile filename;
+    ast <- parse filename sourceText;
+    dependencies <- resolve $ ast.imports >>= {source: {value}} => {
+      if .test [value] (RegExp "^[./].*[.]serif$") then {
+        [path.join [filename, "..", value]]
+      } else {
+        []
       }
-    }
+    };
+    exportedNames <- resolve $ ast.exports >>= exportDeclaration => {
+      if exportDeclaration.type is "ExportNamedDeclaration" then {
+        (.name) <$> exportDeclaration.specifiers
+      } else {
+        []
+      }
+    };
+    .reduce [
+      reducer,
+      resolve $ Map.from [
+        ...tree,
+        [filename, {sourceText, ast, dependencies, exportedNames}],
+      ],
+    ] dependencies
   }
 };
 
@@ -105,30 +103,28 @@ orderDependencies tree = {
 {
   cwd = apply [] process.cwd;
   [,, src, lib, ...filenames] = process.argv;
-  program = {
-    .reduce [reducer, resolve $ Map.from []] filenames
-    >>= tree => {
-      ;; Create JavaScript module for each Serif module:
-      orderDependencies tree
-      |> map (serifFilename => {
-           serifDirname = path.dirname serifFilename;
-           serifAst = (.ast) $ .get [serifFilename] tree;
-           exportedNames importPath = {
-             .get [path.join $ [serifDirname] <> .split ["/"] importPath] tree
-             |> (.exportedNames)
-           };
-           serif.trans serifAst exportedNames >>= jsAst => {
-             jsSource = apply [jsAst, {}] generate;
-             jsDirname = path.dirname serifFilename;
-             jsBasename = path.basename serifFilename ".serif" + ".js";
-             jsFilename = path.join [lib, path.relative src jsDirname, jsBasename];
-             jsDirname
-             |> fs.mkdir {recursive: true}
-             |> chain (const_ $ fs.writeFile jsFilename jsSource)
-             |> map (const_ {serifFilename, jsFilename})
-           }
-         })
-      |> parallel 16
+  program = do {
+    tree <- .reduce [reducer, resolve $ Map.from []] filenames;
+    filenames = orderDependencies tree;
+    ;; Create JavaScript module for each Serif module:
+    parallel 16 $ flip map filenames $ serifFilename => do {
+      serifDirname = path.dirname serifFilename;
+      serifAst = (.ast) $ .get [serifFilename] tree;
+      jsAst <- serif.trans serifAst $ importPath => {
+        importPath
+        |> .split ["/"]
+        |> concat [serifDirname]
+        |> path.join
+        |> filename => .get [filename] tree
+        |> (.exportedNames)
+      };
+      jsSource = apply [jsAst, {}] generate;
+      jsDirname = path.dirname serifFilename;
+      jsBasename = path.basename serifFilename ".serif" + ".js";
+      jsFilename = path.join [lib, path.relative src jsDirname, jsBasename];
+      _ <- fs.mkdir {recursive: true} jsDirname;
+      _ <- fs.writeFile jsFilename jsSource;
+      resolve {serifFilename, jsFilename}
     }
   };
 

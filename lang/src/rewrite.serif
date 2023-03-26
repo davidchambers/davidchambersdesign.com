@@ -121,6 +121,35 @@ rewriteNode preludeIdent = {
         BlockExpression $ recur names' <$> node.statements
       }
     }
+    when "DoBlockExpression" then {
+      recur names {
+        .reduceRight [
+          (result, operation) => {
+            switch operation.type
+            when "ArrowAssignmentStatement" then {
+              CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "chain")
+                                             [ArrowFunctionExpression [operation.pattern] result]) [
+                operation.expression,
+              ]
+            }
+            when "VariableDeclaration" then {
+              CallExpression (ArrowFunctionExpression [operation.pattern] result) [
+                operation.expression,
+              ]
+            }
+            when "FunctionDeclaration" then {
+              CallExpression (ArrowFunctionExpression [Identifier operation.name] result) [
+                .reduceRight [
+                  (body, param) => ArrowFunctionExpression [param] body,
+                  operation.body,
+                ] operation.parameters,
+              ]
+            }
+          },
+          node.result,
+        ] node.operations
+      }
+    }
     when "UnaryExpression" then {
       UnaryExpression node.operator
                       (recur names node.argument)

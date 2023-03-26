@@ -102,6 +102,17 @@ const rewriteNode = preludeIdent => (() => {
           })())(node.statements));
           return BlockExpression(Prelude$1.map(recur(names$0027))(node.statements));
         })();
+      case "DoBlockExpression":
+        return recur(names)(Prelude$1._apply("reduceRight")([(result, operation) => (() => {
+          switch (operation.type) {
+            case "ArrowAssignmentStatement":
+              return CallExpression(CallExpression(MemberExpression(preludeIdent)(StringLiteral("chain")))([ArrowFunctionExpression([operation.pattern])(result)]))([operation.expression]);
+            case "VariableDeclaration":
+              return CallExpression(ArrowFunctionExpression([operation.pattern])(result))([operation.expression]);
+            case "FunctionDeclaration":
+              return CallExpression(ArrowFunctionExpression([Identifier(operation.name)])(result))([Prelude$1._apply("reduceRight")([(body, param) => ArrowFunctionExpression([param])(body), operation.body])(operation.parameters)]);
+          }
+        })(), node.result])(node.operations));
       case "UnaryExpression":
         return UnaryExpression(node.operator)(recur(names)(node.argument));
       case "CompositionExpression":

@@ -3,31 +3,32 @@ import repl from "node:repl";
 import vm from "node:vm";
 
 import {generate} from "astring";
-import {attemptP, fork, promise} from "fluture";
+import {attemptP, fork, promise, resolve} from "fluture";
 
 import * as serif from "./index.serif";
 import * as path from "./path.serif";
 import rewrite from "./rewrite.serif";
 
 
-evaluateModule source = {
+evaluateModule source = do {
   context = vm.createContext global;
   module = apply [vm.SourceTextModule, [source, {context,}]] Reflect.construct;
-  chain (_ => map (_ => module.namespace.default)
-                  (attemptP (() => .evaluate [] module)))
-        (attemptP (() => .link [
-                     (specifier, referencingModule) => {
-                       promise (map (entries => {
-                                       module = apply [vm.SyntheticModule, [
-                                         {[name] => name} <$> entries,
-                                         () => .forEach [flip {.setExport} module] entries,
-                                         {identifier: specifier, context: referencingModule.context},
-                                       ]] Reflect.construct;
-                                       module
-                                     })
-                                    (Object.entries <$> attemptP (() => import (specifier))))
-                     },
-                   ] module))
+  _ <- attemptP $ () => .link [
+    (specifier, referencingModule) => promise {
+      attemptP (() => import (specifier))
+      |> map Object.entries
+      |> map $ map entries => {
+           module = apply [vm.SyntheticModule, [
+             {[name] => name} <$> entries,
+             () => .forEach [flip {.setExport} module] entries,
+             {identifier: specifier, context: referencingModule.context},
+           ]] Reflect.construct;
+           module
+         }
+    },
+  ] module;
+  _ <- attemptP $ () => .evaluate [] module;
+  resolve module.namespace.default
 };
 
 read serifSource = {
