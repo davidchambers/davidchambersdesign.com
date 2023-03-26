@@ -4,7 +4,7 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
@@ -49,17 +49,17 @@ const esFromTemplateLiteral = ({expressions, quasis}) => ({
   expressions: Prelude.map(esFromNode)(expressions),
   quasis: (() => {
     const lineEnding = Prelude._apply("find")([lineEnding => Prelude._apply("startsWith")([lineEnding])(quasis[0])])(["\n", "\r\n"]);
-    return lineEnding === undefined ? [...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(quasis)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(quasis))] : (() => {
+    return Object.is(undefined, lineEnding) ? [...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(quasis)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(quasis))] : (() => {
       const indent = Prelude._apply("search")([RegExp("(?! )")])(Prelude._apply("slice")([lineEnding.length])(quasis[0]));
       const pattern = apply([`${lineEnding}[ ]{0,${indent}}`, "g"])(RegExp);
       const [head, ...tail] = Prelude.map(Prelude._apply("replace")([pattern, lineEnding]))(quasis);
       const head$0027 = Prelude._apply("slice")([lineEnding.length])(head);
-      return tail.length === 0 ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(tail)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(tail))];
+      return Object.is(0, tail.length) ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(tail)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(tail))];
     })();
   })()
 });
 const esFromMemberExpression = ({object, property}) => (() => {
-  const computed = not(property.type === "StringLiteral" && validEsIdentifierName(property.value));
+  const computed = not(Object.is("StringLiteral", property.type) && validEsIdentifierName(property.value));
   return {
     type: "MemberExpression",
     object: esFromNode(object),
@@ -76,11 +76,11 @@ const esFromArrayExpression = ({elements}) => ({
   type: "ArrayExpression",
   elements: Prelude.map(esFromNode)(elements)
 });
-const esFromProperty = property => property.type === "SpreadElement" ? esFromSpreadElement(property) : (() => {
-  const computed = not(property.key.type === "StringLiteral" && validEsIdentifierName(property.key.value));
+const esFromProperty = property => Object.is("SpreadElement", property.type) ? esFromSpreadElement(property) : (() => {
+  const computed = not(Object.is("StringLiteral", property.key.type) && validEsIdentifierName(property.key.value));
   const key = computed ? esFromNode(property.key) : esFromEscapedIdentifierName(property.key.value);
   const value = esFromNode(property.value);
-  const shorthand = key.type === "Identifier" && value.type === "Identifier" && key.name === value.name;
+  const shorthand = Object.is("Identifier", key.type) && Object.is("Identifier", value.type) && Object.is(value.name, key.name);
   return {
     type: "Property",
     key,
@@ -101,7 +101,7 @@ const esFromArrowFunctionExpression = ({parameters, body}) => (() => {
     type: "ArrowFunctionExpression",
     params: Prelude.map(esFromNode)(parameters),
     body: esBody,
-    expression: esBody.type !== "BlockStatement"
+    expression: not(Object.is("BlockStatement", esBody.type))
   };
 })();
 const esFromBlockExpression = ({statements}) => ({
@@ -144,16 +144,7 @@ const esFromUnaryExpression = ({operator, argument}) => ({
 });
 const esFromBinaryExpression = ({operator, left, right}) => ({
   type: "BinaryExpression",
-  operator: (() => {
-    switch (operator) {
-      case "is":
-        return "===";
-      case "isnt":
-        return "!==";
-      default:
-        return operator;
-    }
-  })(),
+  operator,
   left: esFromNode(left),
   right: esFromNode(right)
 });
@@ -198,7 +189,7 @@ const esFromSwitchExpression = ({discriminant, cases, default: default$}) => ({
         discriminant: esFromNode(discriminant),
         cases: (() => {
           const esCases = Prelude.chain(esFromSwitchCase)(cases);
-          return default$ === null ? esCases : [...esCases, {
+          return Object.is(null, default$) ? esCases : [...esCases, {
             type: "SwitchCase",
             test: null,
             consequent: [{
@@ -239,7 +230,7 @@ const esFromFunctionDeclaration = ({name, parameters, body}) => ({
       type: "ArrowFunctionExpression",
       params: [esFromNode(param)],
       body: esBody,
-      expression: esBody.type !== "BlockStatement"
+      expression: not(Object.is("BlockStatement", esBody.type))
     }), esFromNode(body)])(parameters)
   }]
 });
@@ -275,7 +266,7 @@ const esFromImportExpression = ({source}) => ({
   type: "ImportExpression",
   source: esFromNode(source)
 });
-const esFromImportDeclaration = exportedNames => importDeclaration => importDeclaration.specifiers === "*" ? (() => {
+const esFromImportDeclaration = exportedNames => importDeclaration => Object.is("*", importDeclaration.specifiers) ? (() => {
   const source = importDeclaration.source.value;
   const hiding = Prelude.map(x => x.name)(importDeclaration.hiding);
   const hiding$0021 = Set.from(Prelude.map(x => x.name)(importDeclaration.hiding));
@@ -397,7 +388,7 @@ const esFromNode = expr => (() => {
       return esFromImportExpression(expr);
   }
 })();
-const unnecessaryHiding = source => hiding => names => Error(`import * from "${source}" hiding {${Prelude._apply("join")([", "])(hiding)}};\n\n${names.length > 2 ? `${Prelude._apply("join")([", "])(Prelude._apply("slice")([0, -1])(names))}, and ${Prelude._apply("at")([-1])(names)}` : Prelude._apply("join")([" and "])(names)} ${names.length === 1 ? "is" : "are"} not exported so need not be hidden.\n`);
+const unnecessaryHiding = source => hiding => names => Error(`import * from "${source}" hiding {${Prelude._apply("join")([", "])(hiding)}};\n\n${names.length > 2 ? `${Prelude._apply("join")([", "])(Prelude._apply("slice")([0, -1])(names))}, and ${Prelude._apply("at")([-1])(names)}` : Prelude._apply("join")([" and "])(names)} ${Object.is(1, names.length) ? "is" : "are"} not exported so need not be hidden.\n`);
 const toModule = module => exportedNames => map(imports => ({
   type: "Program",
   sourceType: "module",

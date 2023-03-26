@@ -4,7 +4,7 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
@@ -22,9 +22,9 @@ const render$002Dpost = post => related$002Dposts => [article$0027(("article-id"
   class: "shorturl"
 })([a({
   href: `http://dċd.ws/${post.id}/`
-})(["Short URL"])])]), ...post.tags.length === 0 ? [] : [h4(["This post has the following tags:"]), ol(Prelude.map(tag => li([a({
+})(["Short URL"])])]), ...Object.is(0, post.tags.length) ? [] : [h4(["This post has the following tags:"]), ol(Prelude.map(tag => li([a({
   href: `/tag/${tag}/`
-})([tags[tag]])]))(post.tags))]]), ...related$002Dposts.length === 0 ? [] : [h3$0027({
+})([tags[tag]])]))(post.tags))]]), ...Object.is(0, related$002Dposts.length) ? [] : [h3$0027({
   id: "related"
 })(["Possibly related posts"]), ul(Prelude.map(post => li([a({
   href: `/${post.slug}/`

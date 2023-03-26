@@ -4,7 +4,7 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
@@ -19,7 +19,7 @@ const render$002Dpost = ({slug, title, datetime}) => li([a({
 const render$002Dsection = posts => li([h2([posts[0]["formatted-date"]]), ol(Prelude.map(render$002Dpost)(posts))]);
 const render$002Darchives = posts => (archives => [h1(["Archives"]), ol$0027({
   class: "archives"
-})(archives)])(map(render$002Dsection)(S.groupBy(this$ => that => this$["formatted-date"] === that["formatted-date"])(S.sortBy(post => -post.datetime)(map(post => ({
+})(archives)])(map(render$002Dsection)(S.groupBy(this$ => that => Object.is(that["formatted-date"], this$["formatted-date"]))(S.sortBy(post => -post.datetime)(map(post => ({
   ...post,
   ["formatted-date"]: Prelude._apply("toFormat")(["MMMM y"])(post.datetime)
 }))(posts)))));

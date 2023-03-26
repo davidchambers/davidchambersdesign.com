@@ -1,14 +1,4 @@
 .PHONY: all
-all: \
-		dist/codegen.js \
-		dist/grammar.js \
-		dist/index.js \
-		dist/repl.js \
-		dist/serif.js
+all:
+	node_modules/.bin/peggy --format es <serif.pegjs >dist/grammar.js
 	node -- dist/serif.js '$(CURDIR)/src' '$(CURDIR)/dist' '$(CURDIR)/src/serif.serif' '$(CURDIR)/src/repl.serif'
-
-dist/grammar.js: serif.pegjs
-	node_modules/.bin/peggy --format es <'$<' >'$@'
-
-dist/%.js: src/%.serif
-	cp -- '$<' '$@'

@@ -132,7 +132,6 @@ ImportToken         = @$'import'        !IdentifierPart
 InToken             = @$'in'            !IdentifierPart
 InstanceofToken     = @$'instanceof'    !IdentifierPart
 IsToken             = @$'is'            !IdentifierPart
-IsntToken           = @$'isnt'          !IdentifierPart
 OrToken             = @$'or'            !IdentifierPart
 SwitchToken         = @$'switch'        !IdentifierPart
 ThenToken           = @$'then'          !IdentifierPart
@@ -159,7 +158,6 @@ ReservedWord
   / SwitchToken
   / WhenToken
   / IsToken
-  / IsntToken
   / ImportToken
   / ExportToken
 
@@ -414,7 +412,6 @@ RelationalExpression
 
 EqualityOperator
   = IsToken
-  / IsntToken
 
 EqualityExpression
   = left:RelationalExpression

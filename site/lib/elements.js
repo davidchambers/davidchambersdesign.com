@@ -3,7 +3,7 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
@@ -28,7 +28,7 @@ const render$002Dinline$002Delement = context => element => `${Prelude._apply("r
   level: 0,
   inline: true
 }]))(element.children))}</${element.name}>${context.inline ? "" : "\n"}`;
-const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => typeof string$002Dor$002Dnode === "object" ? string$002Dor$002Dnode : text(Prelude._apply("replaceAll")(["\n", ""])(Prelude._apply("replaceAll")([apply(["^[ ]+", "gm"])(RegExp), " "])(string$002Dor$002Dnode)));
+const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => Object.is("object", typeof string$002Dor$002Dnode) ? string$002Dor$002Dnode : text(Prelude._apply("replaceAll")(["\n", ""])(Prelude._apply("replaceAll")([apply(["^[ ]+", "gm"])(RegExp), " "])(string$002Dor$002Dnode)));
 const block$002Delement = name => attributes => children$0021 => (() => {
   const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
   const element = {
@@ -44,7 +44,7 @@ const block$002Delement = name => attributes => children$0021 => (() => {
 })();
 const inline$002Delement = name => attributes => children$0021 => (() => {
   const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
-  const format = Prelude._apply("some")([node => node.format === "block"])(children) ? "block" : "inline";
+  const format = Prelude._apply("some")([node => Object.is("block", node.format)])(children) ? "block" : "inline";
   const element = {
     type: "element",
     format,

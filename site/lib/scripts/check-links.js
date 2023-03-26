@@ -6,7 +6,7 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
@@ -14,7 +14,7 @@ const Prelude = {
 };
 const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
 const absolute$003F = url => url.startsWith("http:") || url.startsWith("https:");
-const links = node => node.name === "a" ? [node.attributes.href].filter(absolute$003F) : ("children" in node) ? Prelude.chain(links)(node.children) : [];
+const links = node => Object.is("a", node.name) ? [node.attributes.href].filter(absolute$003F) : ("children" in node) ? Prelude.chain(links)(node.children) : [];
 const status = url => bichain(err => resolve({
   url,
   status: err.cause.code
@@ -35,7 +35,7 @@ const format = ({url, status}) => (() => {
   const normal = s => s;
   return (() => {
     switch (true) {
-      case typeof status === "string":
+      case Object.is("string", typeof status):
         return red(`${padding(status)} ${invert(bold(status))} ${url}`);
       case status >= 200 && status < 300:
         return `${padding(status)} ${normal(bold(status))} ${url}`;

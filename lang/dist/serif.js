@@ -9,7 +9,7 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
@@ -30,7 +30,7 @@ const parse = filename => sourceText => mapRej(error => (() => {
 const reducer = (futureTree, filename) => Prelude.chain(findDependencies(filename))(futureTree);
 const findDependencies = filename => tree => Prelude._apply("has")([filename])(tree) ? resolve(tree) : Prelude.chain(sourceText => Prelude.chain(ast => (() => {
   const dependencies = Prelude.chain(({source: {value}}) => Prelude._apply("test")([value])(RegExp("^[./].*[.]serif$")) ? [path.join([filename, "..", value])] : [])(ast.imports);
-  const exportedNames = Prelude.chain(exportDeclaration => exportDeclaration.type === "ExportNamedDeclaration" ? Prelude.map(x => x.name)(exportDeclaration.specifiers) : [])(ast.exports);
+  const exportedNames = Prelude.chain(exportDeclaration => Object.is("ExportNamedDeclaration", exportDeclaration.type) ? Prelude.map(x => x.name)(exportDeclaration.specifiers) : [])(ast.exports);
   return Prelude._apply("reduce")([reducer, resolve(Map.from([...tree, [filename, {
     sourceText,
     ast,
@@ -39,7 +39,7 @@ const findDependencies = filename => tree => Prelude._apply("has")([filename])(t
   }]]))])(dependencies);
 })())(parse(filename)(sourceText)))(mapRej(x => x.message)(fs.readFile(filename)));
 const orderDependencies = tree => (() => {
-  const recur = unsorted$0021 => sorted$0021 => unsorted$0021.length === 0 ? sorted$0021 : (() => {
+  const recur = unsorted$0021 => sorted$0021 => Object.is(0, unsorted$0021.length) ? sorted$0021 : (() => {
     const filename = Prelude._apply("shift")([])(unsorted$0021);
     const {dependencies} = Prelude._apply("get")([filename])(tree);
     Prelude._apply("every")([filename => Prelude._apply("has")([filename])(sorted$0021)])(dependencies) ? Prelude._apply("add")([filename])(sorted$0021) : Prelude._apply("push")([filename])(unsorted$0021);

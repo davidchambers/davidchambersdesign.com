@@ -198,7 +198,7 @@ esFromArrowFunctionExpression {parameters, body} = {
     type: "ArrowFunctionExpression",
     params: esFromNode <$> parameters,
     body: esBody,
-    expression: esBody.type isnt "BlockStatement",
+    expression: not $ esBody.type is "BlockStatement",
   }
 };
 
@@ -239,12 +239,7 @@ esFromUnaryExpression {operator, argument} = {
 
 esFromBinaryExpression {operator, left, right} = {
   type: "BinaryExpression",
-  operator: {
-    switch operator
-    when "is"   then "==="
-    when "isnt" then "!=="
-    else operator
-  },
+  operator: operator,
   left: esFromNode left,
   right: esFromNode right,
 };
@@ -334,7 +329,7 @@ esFromFunctionDeclaration {name, parameters, body} = {
         type: "ArrowFunctionExpression",
         params: [esFromNode param],
         body: esBody,
-        expression: esBody.type isnt "BlockStatement",
+        expression: not $ esBody.type is "BlockStatement",
       },
       esFromNode body,
     ] parameters,

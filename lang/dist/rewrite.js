@@ -5,7 +5,7 @@ const Prelude$1 = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
@@ -17,7 +17,7 @@ const add = element => set => Set.from([...set, element]);
 const union = this$ => that => Set.from([...this$, ...that]);
 const nextUnusedIdent = names => desiredName => (() => {
   const recur = counter => (() => {
-    const candidate = counter === 0 ? desiredName : `${desiredName}$${counter}`;
+    const candidate = Object.is(0, counter) ? desiredName : `${desiredName}$${counter}`;
     return has(candidate)(names) ? recur(counter + 1) : Identifier(candidate);
   })();
   return recur(0);
@@ -39,7 +39,7 @@ const namesInPattern = pattern => (() => {
 const namesInStatement = node => (() => {
   switch (node.type) {
     case "ImportDeclaration":
-      return node.specifiers === "*" ? (() => {
+      return Object.is("*", node.specifiers) ? (() => {
         node.source;
         node.hiding;
         return [];
@@ -89,7 +89,7 @@ const rewriteNode = preludeIdent => (() => {
           return recur(names$0027)(ArrowFunctionExpression([param])(MemberExpression(param)(StringLiteral(node.identifier.name))));
         })();
       case "BlockExpression":
-        return node.statements.length === 1 && node.statements[0].type === "ExpressionStatement" ? recur(names)(node.statements[0].expression) : (() => {
+        return Object.is(1, node.statements.length) && Object.is("ExpressionStatement", node.statements[0].type) ? recur(names)(node.statements[0].expression) : (() => {
           const names$0027 = union(names)(Prelude$1.chain(statement => (() => {
             switch (statement.type) {
               case "VariableDeclaration":
@@ -108,11 +108,11 @@ const rewriteNode = preludeIdent => (() => {
         return (() => {
           const param = nextUnusedIdent(names)("x");
           const names$0027 = add(param.name)(names);
-          const toCallExpression = expr => expr.type === "CompositionExpression" ? CallExpression(expr.left)([toCallExpression(expr.right)]) : CallExpression(expr)([param]);
+          const toCallExpression = expr => Object.is("CompositionExpression", expr.type) ? CallExpression(expr.left)([toCallExpression(expr.right)]) : CallExpression(expr)([param]);
           return recur(names$0027)(ArrowFunctionExpression([param])(toCallExpression(node)));
         })();
       case "BinaryExpression":
-        return BinaryExpression(node.operator)(recur(names)(node.left))(recur(names)(node.right));
+        return Object.is("is", node.operator) ? recur(names)(CallExpression(MemberExpression(Identifier("Object"))(StringLiteral("is")))([node.right, node.left])) : BinaryExpression(node.operator)(recur(names)(node.left))(recur(names)(node.right));
       case "ConcatenationExpression":
         return CallExpression(CallExpression(MemberExpression(preludeIdent)(StringLiteral("concat")))([recur(names)(node.left)]))([recur(names)(node.right)]);
       case "MapExpression":
@@ -124,7 +124,7 @@ const rewriteNode = preludeIdent => (() => {
       case "ConditionalExpression":
         return ConditionalExpression(recur(names)(node.predicate))(recur(names)(node.consequent))(recur(names)(node.alternative));
       case "SwitchExpression":
-        return SwitchExpression(recur(names)(node.discriminant))(Prelude$1.map(recur(names))(node.cases))(node.default === null ? null : recur(names)(node.default));
+        return SwitchExpression(recur(names)(node.discriminant))(Prelude$1.map(recur(names))(node.cases))(Object.is(null, node.default) ? null : recur(names)(node.default));
       case "SwitchCase":
         return SwitchCase(Prelude$1.map(recur(names))(node.predicates))(recur(names)(node.consequent));
       case "PipeExpression":

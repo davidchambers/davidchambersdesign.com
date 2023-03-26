@@ -147,9 +147,14 @@ rewriteNode preludeIdent = {
       recur names' $ ArrowFunctionExpression [param] $ toCallExpression node
     }
     when "BinaryExpression" then {
-      BinaryExpression node.operator
-                       (recur names node.left)
-                       (recur names node.right)
+      if node.operator is "is" then recur names {
+        CallExpression (MemberExpression (Identifier "Object") $ StringLiteral "is")
+                       [node.right, node.left]
+      } else {
+        BinaryExpression node.operator
+                         (recur names node.left)
+                         (recur names node.right)
+      }
     }
     when "ConcatenationExpression" then {
       CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "concat")
