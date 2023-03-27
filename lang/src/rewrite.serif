@@ -1,4 +1,7 @@
+import {parallel, reject, resolve} from "fluture";
+
 import * as Set from "./Set.serif";
+import * as format from "./format.serif";
 import * as Prelude from "./prelude.serif";
 import * from "./types.serif";
 
@@ -29,22 +32,15 @@ namesInPattern pattern = {
 
 namesInStatement node = {
   switch node.type
-  when "ImportDeclaration" then {
-    if node.specifiers is "*" then {
-      node.source;
-      node.hiding;
-      []  ;; TODO: determine imported names
-    } else {
-      (.name) . (.local) <$> node.specifiers
-    }
-  }
+  when "ImportDeclaration"   then (.name) . (.local) <$> node.specifiers
   when "VariableDeclaration" then namesInPattern node.pattern
   when "FunctionDeclaration" then [node.name]
   when "ExpressionStatement" then []
 };
 
-rewriteModule module = {
-  names = Set.from $ module.imports <> module.statements >>= namesInStatement;
+rewriteModule {imports, exports, statements} namesExportedFrom = do {
+  imports' <- parallel 16 $ rewriteImportDeclaration namesExportedFrom <$> imports;
+  names = Set.from $ imports' <> statements >>= namesInStatement;
   preludeIdent = nextUnusedIdent names "Prelude";
   names' = add preludeIdent.name names;
   rewrite = rewriteNode preludeIdent names';
@@ -66,15 +62,47 @@ rewriteModule module = {
       |> ObjectPattern
     } preludeIdent
   };
-  Module {
-    imports: rewrite <$> module.imports,
-    exports: rewrite <$> module.exports,
-    statements: rewrite <$> [
-      preludeDefinition,
-      preludeDestructuring,
-      ...module.statements,
-    ],
+  resolve $ Module {
+    imports: imports',
+    exports: rewrite <$> exports,
+    statements: rewrite <$> [preludeDefinition, preludeDestructuring, ...statements],
   }
+};
+
+rewriteImportAllDeclaration namesExportedFrom {source, hiding} = {
+  namesExported = {
+    if .endsWith [".serif"] source.value then namesExportedFrom source.value
+    else Object.keys <$> attemptP () => import (source.value)
+  };
+  namesHidden = (.name) <$> hiding;
+  namesHiddenNeedlessly = .filter [name => not $ .includes [name] namesExported] namesHidden;
+  if namesHiddenNeedlessly.length > 0 then {
+    reject $ Error {
+      `import * from "${
+        source.value
+      }" hiding {${
+        .join [", "] $ namesHidden
+      }};\n\n${
+        format.list namesHiddenNeedlessly
+      } ${
+        if namesHiddenNeedlessly.length is 1 then "is" else "are"
+      } not exported so need not be hidden.\n`
+    }
+  } else {
+    namesExported
+    |> .filter [name => not $ .includes [name] namesHidden]
+    |> map (name => ImportSpecifier (Identifier name) (Identifier name))
+    |> ImportDeclaration source
+    |> resolve
+  }
+};
+
+rewriteImportDeclaration namesExportedFrom importDeclaration = {
+  switch importDeclaration.type
+  when "ImportDeclaration"
+  then resolve importDeclaration
+  when "ImportAllDeclaration"
+  then rewriteImportAllDeclaration namesExportedFrom importDeclaration
 };
 
 rewriteNode preludeIdent = {

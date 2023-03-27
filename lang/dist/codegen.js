@@ -1,4 +1,3 @@
-import {attemptP, parallel, reject, resolve} from "fluture";
 import * as Set from "./Set.js";
 const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
@@ -266,63 +265,28 @@ const esFromImportExpression = ({source}) => ({
   type: "ImportExpression",
   source: esFromNode(source)
 });
-const esFromImportDeclaration = exportedNames => importDeclaration => Object.is("*", importDeclaration.specifiers) ? (() => {
-  const source = importDeclaration.source.value;
-  const hiding = Prelude.map(x => x.name)(importDeclaration.hiding);
-  const hiding$0021 = Set.from(Prelude.map(x => x.name)(importDeclaration.hiding));
-  const visible = name => not(Prelude._apply("delete")([name])(hiding$0021));
-  return Prelude._apply("endsWith")([".serif"])(source) ? (() => {
-    const names = Prelude._apply("filter")([visible])(exportedNames(source));
-    return hiding$0021.size > 0 ? reject(unnecessaryHiding(source)(hiding)(Array.from(hiding$0021))) : resolve({
-      type: "ImportDeclaration",
-      specifiers: Prelude.map(name => ({
-        type: "ImportSpecifier",
-        local: esFromIdentifierName(name),
-        imported: esFromIdentifierName(name)
-      }))(names),
-      source: {
-        type: "Literal",
-        value: Prelude._apply("replace")([RegExp("[.]serif$"), ".js"])(source)
-      }
-    });
-  })() : chain(names => hiding$0021.size > 0 ? reject(unnecessaryHiding(source)(hiding)(Array.from(hiding$0021))) : resolve({
-    type: "ImportDeclaration",
-    specifiers: Prelude.map(name => ({
-      type: "ImportSpecifier",
-      local: esFromEscapedIdentifierName(name),
-      imported: esFromEscapedIdentifierName(name)
-    }))(names),
-    source: {
-      type: "Literal",
-      value: source
-    }
-  }))(map(Prelude._apply("filter")([visible]))(map(Object.keys)(attemptP(() => import(source)))));
-})() : resolve({
+const esFromImportDefaultSpecifier = ({local}) => ({
+  type: "ImportDefaultSpecifier",
+  local: esFromIdentifier(local)
+});
+const esFromImportNamespaceSpecifier = ({local}) => ({
+  type: "ImportNamespaceSpecifier",
+  local: esFromIdentifier(local)
+});
+const esFromImportSpecifier = ({local, imported}) => ({
+  type: "ImportSpecifier",
+  local: esFromIdentifier(local),
+  imported: esFromIdentifier(imported)
+});
+const esFromImportDeclaration = ({source, specifiers}) => ({
   type: "ImportDeclaration",
-  specifiers: Prelude.map(specifier => (() => {
-    switch (specifier.type) {
-      case "ImportDefaultSpecifier":
-        return {
-          type: "ImportDefaultSpecifier",
-          local: esFromIdentifier(specifier.local)
-        };
-      case "ImportNamespaceSpecifier":
-        return {
-          type: "ImportNamespaceSpecifier",
-          local: esFromIdentifier(specifier.local)
-        };
-      case "ImportSpecifier":
-        return {
-          type: "ImportSpecifier",
-          local: esFromIdentifier(specifier.local),
-          imported: esFromIdentifier(specifier.imported)
-        };
-    }
-  })())(importDeclaration.specifiers),
-  source: {
-    type: "Literal",
-    value: Prelude._apply("replace")([RegExp("[.]serif$"), ".js"])(importDeclaration.source.value)
-  }
+  specifiers: Prelude.map(esFromNode)(specifiers),
+  source: esFromNode(source)
+});
+const esFromModule = ({imports, exports, statements}) => ({
+  type: "Program",
+  sourceType: "module",
+  body: Prelude.map(esFromNode)(Prelude.concat(imports)(Prelude.concat(statements)(exports)))
 });
 const esFromNode = expr => (() => {
   switch (expr.type) {
@@ -380,36 +344,22 @@ const esFromNode = expr => (() => {
       return esFromObjectPattern(expr);
     case "RestElement":
       return esFromRestElement(expr);
+    case "ImportDeclaration":
+      return esFromImportDeclaration(expr);
+    case "ImportDefaultSpecifier":
+      return esFromImportDefaultSpecifier(expr);
+    case "ImportNamespaceSpecifier":
+      return esFromImportNamespaceSpecifier(expr);
+    case "ImportSpecifier":
+      return esFromImportSpecifier(expr);
     case "ExportNamedDeclaration":
       return esFromExportNamedDeclaration(expr);
     case "ExportDefaultDeclaration":
       return esFromExportDefaultDeclaration(expr);
     case "ImportExpression":
       return esFromImportExpression(expr);
+    case "Module":
+      return esFromModule(expr);
   }
 })();
-const unnecessaryHiding = source => hiding => names => Error(`import * from "${source}" hiding {${Prelude._apply("join")([", "])(hiding)}};\n\n${names.length > 2 ? `${Prelude._apply("join")([", "])(Prelude._apply("slice")([0, -1])(names))}, and ${Prelude._apply("at")([-1])(names)}` : Prelude._apply("join")([" and "])(names)} ${Object.is(1, names.length) ? "is" : "are"} not exported so need not be hidden.\n`);
-const toModule = module => exportedNames => map(imports => ({
-  type: "Program",
-  sourceType: "module",
-  body: [...imports, ...Prelude.chain(statement => (() => {
-    switch (statement.type) {
-      case "VariableDeclaration":
-        return [esFromNode(statement)];
-      case "FunctionDeclaration":
-        return [esFromNode(statement)];
-      case "ExpressionStatement":
-        return [esFromNode(statement)];
-      default:
-        return [];
-    }
-  })())(module.statements), ...Prelude.map(statement => (() => {
-    switch (statement.type) {
-      case "ExportNamedDeclaration":
-        return esFromExportNamedDeclaration(statement);
-      case "ExportDefaultDeclaration":
-        return esFromExportDefaultDeclaration(statement);
-    }
-  })())(module.exports)]
-}))(parallel(16)(map(esFromImportDeclaration(exportedNames))(module.imports)));
-export {toModule};
+export default esFromNode;

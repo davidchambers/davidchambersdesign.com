@@ -1,11 +1,15 @@
 import {attempt} from "fluture";
 
-import {toModule} from "./codegen.serif";
+import esModuleFromSerifModule from "./codegen.serif";
 import * as grammar from "./grammar.js";
 import rewrite from "./rewrite.serif";
+import * from "./types.serif";
 
 export {
   parse,
+  rewrite,
+  changeExtensions,
+  esModuleFromSerifModule,
   trans,
 };
 
@@ -13,6 +17,17 @@ parse filename sourceText = {
   attempt $ () => apply [sourceText, {grammarSource: filename}] grammar.parse
 };
 
-trans = {
-  toModule . rewrite
+changeExtensionInImportDeclaration {source, specifiers} = {
+  source' = StringLiteral $ .replace [RegExp "[.]serif$", ".js"] source.value;
+  ImportDeclaration source' specifiers
+};
+
+changeExtensions {imports, exports, statements} = Module {
+  imports: changeExtensionInImportDeclaration <$> imports,
+  exports,
+  statements,
+};
+
+trans module namesExportedFrom = {
+  esModuleFromSerifModule . changeExtensions <$> rewrite module namesExportedFrom
 };

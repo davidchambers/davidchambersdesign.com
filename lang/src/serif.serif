@@ -110,7 +110,7 @@ orderDependencies tree = {
     parallel 16 $ flip map filenames $ serifFilename => do {
       serifDirname = path.dirname serifFilename;
       serifAst = (.ast) $ .get [serifFilename] tree;
-      jsAst <- serif.trans serifAst $ importPath => {
+      serifAst' <- serif.rewrite serifAst $ importPath => {
         importPath
         |> .split ["/"]
         |> concat [serifDirname]
@@ -118,13 +118,15 @@ orderDependencies tree = {
         |> filename => .get [filename] tree
         |> (.exportedNames)
       };
-      jsSource = apply [jsAst, {}] generate;
-      jsDirname = path.dirname serifFilename;
-      jsBasename = path.basename serifFilename ".serif" + ".js";
-      jsFilename = path.join [lib, path.relative src jsDirname, jsBasename];
-      _ <- fs.mkdir {recursive: true} jsDirname;
-      _ <- fs.writeFile jsFilename jsSource;
-      resolve {serifFilename, jsFilename}
+      serifAst'' = serif.changeExtensions serifAst';
+      esAst = serif.esModuleFromSerifModule serifAst'';
+      esSource = apply [esAst, {}] generate;
+      esDirname = path.dirname serifFilename;
+      esBasename = path.basename serifFilename ".serif" + ".js";
+      esFilename = path.join [lib, path.relative src esDirname, esBasename];
+      _ <- fs.mkdir {recursive: true} esDirname;
+      _ <- fs.writeFile esFilename esSource;
+      resolve {serifFilename, esFilename}
     }
   };
 
@@ -132,9 +134,9 @@ orderDependencies tree = {
        (filenames => {
           ;; List files created:
           .forEach [
-            {serifFilename, jsFilename} => {
+            {serifFilename, esFilename} => {
               console.log (`• ${path.relative cwd serifFilename}`);
-              console.log (`  ➔ ${path.relative cwd jsFilename}`)
+              console.log (`  ➔ ${path.relative cwd esFilename}`)
             },
           ] filenames
         })

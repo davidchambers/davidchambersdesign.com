@@ -17,16 +17,16 @@ const Prelude = {
   not: b => !b
 };
 const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
-const evaluateModule = source => (context => (module => Prelude.chain(_ => Prelude.chain(_ => resolve(module.namespace.default))(attemptP(() => Prelude._apply("evaluate")([])(module))))(attemptP(() => Prelude._apply("link")([(specifier, referencingModule) => promise(map(map(entries => (() => {
+const evaluateModule = sourceText => (context => (module => Prelude.chain(_ => Prelude.chain(_ => resolve(module.namespace.default))(attemptP(() => Prelude._apply("evaluate")([])(module))))(attemptP(() => Prelude._apply("link")([(specifier, referencingModule) => promise(map(map(entries => (() => {
   const module = apply([vm.SyntheticModule, [Prelude.map(([name]) => name)(entries), () => Prelude._apply("forEach")([flip(Prelude._apply("setExport"))(module)])(entries), {
     identifier: specifier,
     context: referencingModule.context
   }]])(Reflect.construct);
   return module;
-})()))(map(Object.entries)(attemptP(() => import(specifier)))))])(module))))(apply([vm.SourceTextModule, [source, {
+})()))(map(Object.entries)(attemptP(() => import(specifier)))))])(module))))(apply([vm.SourceTextModule, [sourceText, {
   context
 }]])(Reflect.construct)))(vm.createContext(global));
-const read = serifSource => Prelude.chain(serifAst => Prelude.chain(jsAst => evaluateModule(apply([jsAst, {}])(generate)))(serif.trans(rewrite(serifAst))(_importPath => [])))(serif.parse("[repl]")(`export default ${serifSource};`));
+const read = serifSource => Prelude.chain(serifAst => Prelude.chain(serifAst$0027 => (serifAst$0027$0027 => (esAst => (esSourceText => evaluateModule(esSourceText))(apply([esAst, {}])(generate)))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(_importPath => [])))(serif.parse("[repl]")(`export default ${serifSource};`));
 const print = x => (() => {
   switch (apply([Object.prototype.toString, x, []])(Reflect.apply)) {
     case "[object Null]":

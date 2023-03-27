@@ -397,7 +397,7 @@ function peg$parse(input, options) {
   var peg$f8 = function(specifiers, source) { return {type: 'ImportDeclaration', source, specifiers}; };
   var peg$f9 = function(specifier, source) { return {type: 'ImportDeclaration', source, specifiers: [specifier]}; };
   var peg$f10 = function(source, hiding) { return hiding; };
-  var peg$f11 = function(source, hiding) { return {type: 'ImportDeclaration', source, specifiers: '*', hiding: hiding ?? []}; };
+  var peg$f11 = function(source, hiding) { return {type: 'ImportAllDeclaration', source, hiding: hiding ?? []}; };
   var peg$f12 = function(specifier, source) { return {type: 'ImportDeclaration', source, specifiers: [specifier]}; };
   var peg$f13 = function(declaration) { return {type: 'ExportDefaultDeclaration', declaration}; };
   var peg$f14 = function() { return {type: 'ExportNamedDeclaration', specifiers: []}; };

@@ -1,6 +1,8 @@
+import {parallel, reject, resolve} from "fluture";
 import * as Set from "./Set.js";
+import * as format from "./format.js";
 import * as Prelude from "./prelude.js";
-import {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateLiteral, MetaProperty, MemberExpression, IdentifierPlaceholder, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, PipeExpression, MethodCallExpression, CallExpression, ImportExpression, ImportDeclaration, ImportEverythingDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} from "./types.js";
+import {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateLiteral, MetaProperty, MemberExpression, IdentifierPlaceholder, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, Elision, ObjectPattern, RestElement, ArrowFunctionExpression, PropertyAccessor, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, MapExpression, BindExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, PipeExpression, MethodCallExpression, CallExpression, ImportExpression, ImportDeclaration, ImportAllDeclaration, ImportDefaultSpecifier, ImportSpecifier, ImportNamespaceSpecifier, ExportNamedDeclaration, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} from "./types.js";
 const Prelude$1 = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
@@ -39,11 +41,7 @@ const namesInPattern = pattern => (() => {
 const namesInStatement = node => (() => {
   switch (node.type) {
     case "ImportDeclaration":
-      return Object.is("*", node.specifiers) ? (() => {
-        node.source;
-        node.hiding;
-        return [];
-      })() : Prelude$1.map(x => (x => x.name)((x => x.local)(x)))(node.specifiers);
+      return Prelude$1.map(x => (x => x.name)((x => x.local)(x)))(node.specifiers);
     case "VariableDeclaration":
       return namesInPattern(node.pattern);
     case "FunctionDeclaration":
@@ -52,18 +50,24 @@ const namesInStatement = node => (() => {
       return [];
   }
 })();
-const rewriteModule = module => (() => {
-  const names = Set.from(Prelude$1.chain(namesInStatement)(Prelude$1.concat(module.imports)(module.statements)));
-  const preludeIdent = nextUnusedIdent(names)("Prelude");
-  const names$0027 = add(preludeIdent.name)(names);
-  const rewrite = rewriteNode(preludeIdent)(names$0027);
-  const preludeDefinition = VariableDeclaration(preludeIdent)(ObjectExpression(map(([name, expr]) => Property(StringLiteral(name))(expr))(Object.entries(Prelude))));
-  const preludeDestructuring = VariableDeclaration(ObjectPattern(map(name => Property(StringLiteral(name))(Identifier(name)))(Prelude$1._apply("filter")([x => not(flip(has)(names$0027)(x))])(Object.keys(Prelude)))))(preludeIdent);
-  return Module({
-    imports: Prelude$1.map(rewrite)(module.imports),
-    exports: Prelude$1.map(rewrite)(module.exports),
-    statements: Prelude$1.map(rewrite)([preludeDefinition, preludeDestructuring, ...module.statements])
-  });
+const rewriteModule = ({imports, exports, statements}) => namesExportedFrom => Prelude$1.chain(imports$0027 => (names => (preludeIdent => (names$0027 => (rewrite => (preludeDefinition => (preludeDestructuring => resolve(Module({
+  imports: imports$0027,
+  exports: Prelude$1.map(rewrite)(exports),
+  statements: Prelude$1.map(rewrite)([preludeDefinition, preludeDestructuring, ...statements])
+})))(VariableDeclaration(ObjectPattern(map(name => Property(StringLiteral(name))(Identifier(name)))(Prelude$1._apply("filter")([x => not(flip(has)(names$0027)(x))])(Object.keys(Prelude)))))(preludeIdent)))(VariableDeclaration(preludeIdent)(ObjectExpression(map(([name, expr]) => Property(StringLiteral(name))(expr))(Object.entries(Prelude))))))(rewriteNode(preludeIdent)(names$0027)))(add(preludeIdent.name)(names)))(nextUnusedIdent(names)("Prelude")))(Set.from(Prelude$1.chain(namesInStatement)(Prelude$1.concat(imports$0027)(statements)))))(parallel(16)(Prelude$1.map(rewriteImportDeclaration(namesExportedFrom))(imports)));
+const rewriteImportAllDeclaration = namesExportedFrom => ({source, hiding}) => (() => {
+  const namesExported = Prelude$1._apply("endsWith")([".serif"])(source.value) ? namesExportedFrom(source.value) : Prelude$1.map(Object.keys)(attemptP(() => import(source.value)));
+  const namesHidden = Prelude$1.map(x => x.name)(hiding);
+  const namesHiddenNeedlessly = Prelude$1._apply("filter")([name => not(Prelude$1._apply("includes")([name])(namesExported))])(namesHidden);
+  return namesHiddenNeedlessly.length > 0 ? reject(Error(`import * from "${source.value}" hiding {${Prelude$1._apply("join")([", "])(namesHidden)}};\n\n${format.list(namesHiddenNeedlessly)} ${Object.is(1, namesHiddenNeedlessly.length) ? "is" : "are"} not exported so need not be hidden.\n`)) : resolve(ImportDeclaration(source)(map(name => ImportSpecifier(Identifier(name))(Identifier(name)))(Prelude$1._apply("filter")([name => not(Prelude$1._apply("includes")([name])(namesHidden))])(namesExported))));
+})();
+const rewriteImportDeclaration = namesExportedFrom => importDeclaration => (() => {
+  switch (importDeclaration.type) {
+    case "ImportDeclaration":
+      return resolve(importDeclaration);
+    case "ImportAllDeclaration":
+      return rewriteImportAllDeclaration(namesExportedFrom)(importDeclaration);
+  }
 })();
 const rewriteNode = preludeIdent => (() => {
   const recur = names => node => (() => {

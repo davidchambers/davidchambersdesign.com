@@ -10,9 +10,9 @@ import * as path from "./path.serif";
 import rewrite from "./rewrite.serif";
 
 
-evaluateModule source = do {
+evaluateModule sourceText = do {
   context = vm.createContext global;
-  module = apply [vm.SourceTextModule, [source, {context,}]] Reflect.construct;
+  module = apply [vm.SourceTextModule, [sourceText, {context,}]] Reflect.construct;
   _ <- attemptP $ () => .link [
     (specifier, referencingModule) => promise {
       attemptP (() => import (specifier))
@@ -31,12 +31,13 @@ evaluateModule source = do {
   resolve module.namespace.default
 };
 
-read serifSource = {
-  serif.parse "[repl]" `export default ${serifSource};` >>= serifAst => {
-    serif.trans (rewrite serifAst) (_importPath => []) >>= jsAst => {
-      evaluateModule $ apply [jsAst, {}] generate
-    }
-  }
+read serifSource = do {
+  serifAst <- serif.parse "[repl]" `export default ${serifSource};`;
+  serifAst' <- serif.rewrite serifAst $ _importPath => [];  ;; TODO: support import statements
+  serifAst'' = serif.changeExtensions serifAst';
+  esAst = serif.esModuleFromSerifModule serifAst'';
+  esSourceText = apply [esAst, {}] generate;
+  evaluateModule esSourceText
 };
 
 print x = {

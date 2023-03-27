@@ -1,8 +1,6 @@
-import {attemptP, parallel, reject, resolve} from "fluture";
-
 import * as Set from "./Set.serif";
 
-export {toModule};
+export default esFromNode;
 
 ;; https://262.ecma-international.org/13.0/#sec-keywords-and-reserved-words
 RESERVED_WORDS = Set.from [
@@ -375,84 +373,32 @@ esFromImportExpression {source} = {
   source: esFromNode source,
 };
 
-esFromImportDeclaration exportedNames importDeclaration = {
-  if importDeclaration.specifiers is "*" then {
-    source = importDeclaration.source.value;
-    hiding = (.name) <$> importDeclaration.hiding;
-    hiding! = Set.from $ (.name) <$> importDeclaration.hiding;
-    visible = name => not $ .delete [name] hiding!;
-    if .endsWith [".serif"] source then {
-      names = .filter [visible] $ exportedNames source;
-      if hiding!.size > 0 then {
-        reject $ unnecessaryHiding source hiding $ Array.from hiding!
-      } else {
-        resolve {
-          type: "ImportDeclaration",
-          specifiers: {
-            name => {
-              type: "ImportSpecifier",
-              local: esFromIdentifierName name,
-              imported: esFromIdentifierName name,
-            }
-          } <$> names,
-          source: {
-            type: "Literal",
-            value: .replace [RegExp "[.]serif$", ".js"] source,
-          },
-        }
-      }
-    } else {
-      attemptP (() => import (source))
-      |> map Object.keys
-      |> map (.filter [visible])
-      |> chain (names =>
-           if hiding!.size > 0 then {
-             reject $ unnecessaryHiding source hiding $ Array.from hiding!
-           } else {
-             resolve {
-               type: "ImportDeclaration",
-               specifiers: {
-                 name => {
-                   type: "ImportSpecifier",
-                   local: esFromEscapedIdentifierName name,
-                   imported: esFromEscapedIdentifierName name,
-                 }
-               } <$> names,
-               source: {
-                 type: "Literal",
-                 value: source,
-               },
-             }
-           }
-         )
-    }
-  } else {
-    resolve {
-      type: "ImportDeclaration",
-      specifiers: {
-        specifier => {
-          switch specifier.type
-          when "ImportDefaultSpecifier" then {
-            type: "ImportDefaultSpecifier",
-            local: esFromIdentifier specifier.local,
-          }
-          when "ImportNamespaceSpecifier" then {
-            type: "ImportNamespaceSpecifier",
-            local: esFromIdentifier specifier.local,
-          }
-          when "ImportSpecifier" then {
-            type: "ImportSpecifier",
-            local: esFromIdentifier specifier.local,
-            imported: esFromIdentifier specifier.imported,
-          }
-        }
-      } <$> importDeclaration.specifiers,
-      source: {
-        type: "Literal",
-        value: .replace [RegExp "[.]serif$", ".js"] importDeclaration.source.value,
-      },
-    }
-  }
+esFromImportDefaultSpecifier {local} = {
+  type: "ImportDefaultSpecifier",
+  local: esFromIdentifier local,
+};
+
+esFromImportNamespaceSpecifier {local} = {
+  type: "ImportNamespaceSpecifier",
+  local: esFromIdentifier local,
+};
+
+esFromImportSpecifier {local, imported} = {
+  type: "ImportSpecifier",
+  local: esFromIdentifier local,
+  imported: esFromIdentifier imported,
+};
+
+esFromImportDeclaration {source, specifiers} = {
+  type: "ImportDeclaration",
+  specifiers: esFromNode <$> specifiers,
+  source: esFromNode source,
+};
+
+esFromModule {imports, exports, statements} = {
+  type: "Program",
+  sourceType: "module",
+  body: esFromNode <$> imports <> statements <> exports,
 };
 
 esFromNode expr = {
@@ -484,55 +430,12 @@ esFromNode expr = {
   when "Elision"                  then esFromElision
   when "ObjectPattern"            then esFromObjectPattern expr
   when "RestElement"              then esFromRestElement expr
+  when "ImportDeclaration"        then esFromImportDeclaration expr
+  when "ImportDefaultSpecifier"   then esFromImportDefaultSpecifier expr
+  when "ImportNamespaceSpecifier" then esFromImportNamespaceSpecifier expr
+  when "ImportSpecifier"          then esFromImportSpecifier expr
   when "ExportNamedDeclaration"   then esFromExportNamedDeclaration expr
   when "ExportDefaultDeclaration" then esFromExportDefaultDeclaration expr
   when "ImportExpression"         then esFromImportExpression expr
-};
-
-unnecessaryHiding source hiding names = {
-  Error {
-    `import * from "${
-      source
-    }" hiding {${
-      .join [", "] hiding
-    }};\n\n${
-      if names.length > 2
-      then `${names |> .slice [0, -1] |> .join [", "]}, and ${.at [-1] names}`
-      else .join [" and "] names
-    } ${
-      if names.length is 1 then "is" else "are"
-    } not exported so need not be hidden.\n`
-  }
-};
-
-toModule module exportedNames = {
-  module.imports
-  |> map (esFromImportDeclaration exportedNames)
-  |> parallel 16
-  |> map (imports => {
-       type: "Program",
-       sourceType: "module",
-       body: [
-         ...imports,
-         ...{
-           module.statements >>= statement => {
-             switch statement.type
-             when "VariableDeclaration",
-                  "FunctionDeclaration",
-                  "ExpressionStatement"
-             then [esFromNode statement]
-             else []
-           }
-         },
-         ...{{
-           statement => {
-             switch statement.type
-             when "ExportNamedDeclaration"
-             then esFromExportNamedDeclaration statement
-             when "ExportDefaultDeclaration"
-             then esFromExportDefaultDeclaration statement
-           }
-         } <$> module.exports},
-       ],
-     })
+  when "Module"                   then esFromModule expr
 };

@@ -46,14 +46,14 @@ const orderDependencies = tree => (() => {
 (() => {
   const cwd = apply([])(process.cwd);
   const [, , src, lib, ...filenames] = process.argv;
-  const program = Prelude.chain(tree => (filenames => parallel(16)(flip(map)(filenames)(serifFilename => (serifDirname => (serifAst => Prelude.chain(jsAst => (jsSource => (jsDirname => (jsBasename => (jsFilename => Prelude.chain(_ => Prelude.chain(_ => resolve({
+  const program = Prelude.chain(tree => (filenames => parallel(16)(flip(map)(filenames)(serifFilename => (serifDirname => (serifAst => Prelude.chain(serifAst$0027 => (serifAst$0027$0027 => (esAst => (esSource => (esDirname => (esBasename => (esFilename => Prelude.chain(_ => Prelude.chain(_ => resolve({
     serifFilename,
-    jsFilename
-  }))(fs.writeFile(jsFilename)(jsSource)))(fs.mkdir({
+    esFilename
+  }))(fs.writeFile(esFilename)(esSource)))(fs.mkdir({
     recursive: true
-  })(jsDirname)))(path.join([lib, path.relative(src)(jsDirname), jsBasename])))(path.basename(serifFilename)(".serif") + ".js"))(path.dirname(serifFilename)))(apply([jsAst, {}])(generate)))(serif.trans(serifAst)(importPath => (filename => (x => x.exportedNames)(Prelude._apply("get")([filename])(tree)))(path.join(concat([serifDirname])(Prelude._apply("split")(["/"])(importPath)))))))((x => x.ast)(Prelude._apply("get")([serifFilename])(tree))))(path.dirname(serifFilename)))))(orderDependencies(tree)))(Prelude._apply("reduce")([reducer, resolve(Map.from([]))])(filenames));
-  return fork(console.error)(filenames => Prelude._apply("forEach")([({serifFilename, jsFilename}) => (() => {
+  })(esDirname)))(path.join([lib, path.relative(src)(esDirname), esBasename])))(path.basename(serifFilename)(".serif") + ".js"))(path.dirname(serifFilename)))(apply([esAst, {}])(generate)))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(importPath => (filename => (x => x.exportedNames)(Prelude._apply("get")([filename])(tree)))(path.join(concat([serifDirname])(Prelude._apply("split")(["/"])(importPath)))))))((x => x.ast)(Prelude._apply("get")([serifFilename])(tree))))(path.dirname(serifFilename)))))(orderDependencies(tree)))(Prelude._apply("reduce")([reducer, resolve(Map.from([]))])(filenames));
+  return fork(console.error)(filenames => Prelude._apply("forEach")([({serifFilename, esFilename}) => (() => {
     console.log(`• ${path.relative(cwd)(serifFilename)}`);
-    return console.log(`  ➔ ${path.relative(cwd)(jsFilename)}`);
+    return console.log(`  ➔ ${path.relative(cwd)(esFilename)}`);
   })()])(filenames))(program);
 })();

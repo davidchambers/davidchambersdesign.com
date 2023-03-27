@@ -33,7 +33,7 @@ export {
   CallExpression,
   ImportExpression,
   ImportDeclaration,
-  ImportEverythingDeclaration,
+  ImportAllDeclaration,
   ImportDefaultSpecifier,
   ImportSpecifier,
   ImportNamespaceSpecifier,
@@ -234,10 +234,9 @@ ImportDeclaration source specifiers = {
   specifiers,
 };
 
-ImportEverythingDeclaration source hiding = {
-  type: "ImportDeclaration",
+ImportAllDeclaration source hiding = {
+  type: "ImportAllDeclaration",
   source,
-  specifiers: "*",
   hiding,
 };
 

@@ -25,7 +25,7 @@ ImportDeclaration
   / ImportToken _ '*' _ 'as' _ specifier:ImportNamespaceSpecifier _ 'from' _ source:StringLiteral _ ';'
     { return {type: 'ImportDeclaration', source, specifiers: [specifier]}; }
   / ImportToken _ '*' _ 'from' _ source:StringLiteral hiding:(_ 'hiding' _ '{' _ hiding:Identifier|.., CommaSeparator| _ '}' { return hiding; })? _ ';'
-    { return {type: 'ImportDeclaration', source, specifiers: '*', hiding: hiding ?? []}; }
+    { return {type: 'ImportAllDeclaration', source, hiding: hiding ?? []}; }
   / ImportToken _ specifier:ImportDefaultSpecifier _ 'from' _ source:StringLiteral _ ';'
     { return {type: 'ImportDeclaration', source, specifiers: [specifier]}; }
 
