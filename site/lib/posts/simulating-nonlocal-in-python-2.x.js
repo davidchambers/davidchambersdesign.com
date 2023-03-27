@@ -11,9 +11,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const excerpt = [p([a({
   href: "http://en.wikipedia.org/wiki/Closure_(computer_science)"
 })(["Closure"]), " is truly wonderful. JavaScript", $2014, "despite its\n    plethora of quirks", $2014, "is now widely appreciated, thanks in large\n    part to its lexical scoping. Python 3 is lexically-scoped, too, as\n    the following code demonstrates."]), code$002Dblock("python")(`def cache(saved=None):

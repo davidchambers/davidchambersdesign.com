@@ -11,9 +11,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const body = [p(["Comment forms that don't provide previews", $2014, "or at least an\n    indication of how comments are processed", $2014, "really annoy me.\n    If I decide to leave a comment I take care to avoid spelling\n    mistakes and grammatical errors. It's quite upsetting, then,\n    to see my code snippet completely mangled and my carefully\n    typed links displayed in plain text (<a href=\"...)."]), p(["Despite my appreciation of the preview, not one of my sites\n    provided this service until a few hours ago. Now that I've\n    migrated from WordPress to ", a({
   href: "http://mango.io/"
 })(["Mango"]), "\n    I'm able to spend some time working on front-end code. My first\n    two challenges were localizing dates and times, and integrating ", a({

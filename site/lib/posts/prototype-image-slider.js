@@ -11,9 +11,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const excerpt = [p(["In my post titled ", a({
   href: "/captions-over-images/"
 })(["Captions over images"]), "\n    I advocate the use of definition lists for captioning images.\n    Earlier today I was asked whether this meaningful markup could\n    be used in conjunction with an \"image slider\" such as ", a({

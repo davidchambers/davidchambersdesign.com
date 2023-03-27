@@ -11,9 +11,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const excerpt = [p(["There's no shortage of blog posts which", $2014, "like this one", $2014, "provide an introduction to ", a({
   href: "http://socket.io/"
 })(["Socket.IO"]), ". Many, though, were\n    written prior to the release of 0.7, which ushered in ", a({

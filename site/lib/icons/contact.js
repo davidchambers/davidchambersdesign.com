@@ -10,9 +10,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const stroke = [$21E8(0), $21E9(2), $2192(16), $2193(12), $2190(16), $2191(12)];
 const fill = [$21E8(2), $21E9(3), $2192(12), $2193(1), $2192(1), $2193(9), $2190(14), $2191(9), $2192(1), $2191(1)];
 const flap = [$21E8(2), $21E9(4), $2192(1), $2193(2), $2192(2), $2193(2), $2192(2), $2193(2), $2192(2), $2191(2), $2192(2), $2191(2), $2192(2), $2191(2), $2192(1), $2193(1), $2190(2), $2193(2), $2190(2), $2193(2), $2190(4), $2191(2), $2190(2), $2191(2), $2190(2), $2191(1)];

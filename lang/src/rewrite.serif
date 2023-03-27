@@ -1,4 +1,4 @@
-import {parallel, reject, resolve} from "fluture";
+import * as Future from "fluture";
 
 import * as format from "./format.serif";
 import * as Prelude from "./prelude.serif";
@@ -38,7 +38,7 @@ namesInStatement node = {
 };
 
 rewriteModule {imports, exports, statements} namesExportedFrom = do {
-  imports' <- parallel 16 $ rewriteImportDeclaration namesExportedFrom <$> imports;
+  imports' <- Future.parallel 16 $ rewriteImportDeclaration namesExportedFrom <$> imports;
   names = construct Set [imports' <> statements >>= namesInStatement];
   preludeIdent = nextUnusedIdent names "Prelude";
   names' = add preludeIdent.name names;
@@ -47,7 +47,7 @@ rewriteModule {imports, exports, statements} namesExportedFrom = do {
     VariableDeclaration preludeIdent {
       Prelude
       |> Object.entries
-      |> map ([name, expr] => Property (StringLiteral name) expr)
+      |> map ([name, implementation] => Property (StringLiteral name) $ implementation preludeIdent)
       |> ObjectExpression
     }
   };
@@ -56,12 +56,12 @@ rewriteModule {imports, exports, statements} namesExportedFrom = do {
       Prelude
       |> Object.keys
       ;; Do not unpack if name conflicts with a top-level binding:
-      |> filter (not . flip has names')
+      |> reject (flip has names')
       |> map (name => Property (StringLiteral name) (Identifier name))
       |> ObjectPattern
     } preludeIdent
   };
-  resolve $ Module {
+  Future.resolve $ Module {
     imports: imports',
     exports: rewrite <$> exports,
     statements: rewrite <$> [preludeDefinition, preludeDestructuring, ...statements],
@@ -74,9 +74,9 @@ rewriteImportAllDeclaration namesExportedFrom {source, hiding} = {
     else Object.keys <$> attemptP () => import source.value
   };
   namesHidden = (.name) <$> hiding;
-  namesHiddenNeedlessly = filter (name => not $ .includes [name] namesExported) namesHidden;
+  namesHiddenNeedlessly = reject (name => .includes [name] namesExported) namesHidden;
   if namesHiddenNeedlessly.length > 0 then {
-    reject $ Error {
+    Future.reject $ Error {
       `import * from "${
         source.value
       }" hiding {${
@@ -89,17 +89,17 @@ rewriteImportAllDeclaration namesExportedFrom {source, hiding} = {
     }
   } else {
     namesExported
-    |> filter (name => not $ .includes [name] namesHidden)
+    |> reject (name => .includes [name] namesHidden)
     |> map (name => ImportSpecifier (Identifier name) (Identifier name))
     |> ImportDeclaration source
-    |> resolve
+    |> Future.resolve
   }
 };
 
 rewriteImportDeclaration namesExportedFrom importDeclaration = {
   switch importDeclaration.type
   when "ImportDeclaration"
-  then resolve importDeclaration
+  then Future.resolve importDeclaration
   when "ImportAllDeclaration"
   then rewriteImportAllDeclaration namesExportedFrom importDeclaration
 };

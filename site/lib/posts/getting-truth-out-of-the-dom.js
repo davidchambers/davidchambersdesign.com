@@ -10,9 +10,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const body = [p(["Recording of Yehuda Katz's presentation from Bay Area jQuery Conf 2011."]), p([a({
   href: "http://vimeo.com/22687694"
 })(["Getting truth out of the DOM"])]), p(["While watching this it ", em(["finally"]), " became clear to me why\n    storing state in the DOM is a terrible idea for complex applications.\n    The approach comes unstuck as soon as one wishes to display an entity\n    more than once in a view (such as in a list–details split view)."])];

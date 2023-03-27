@@ -11,9 +11,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const body = [p(["I spent much of my day at work editing Django templates in Emacs,\n    which does a decent job of applying syntax highlighting to HTML.\n    When I got home, though, and resumed work on a new Mango feature,\n    my Django templates lacked colour. :\\"]), p(["Emacs doesn't recognize the \"dhtml\" extension, but it's easy to\n    add a custom mapping (when the appropriate snippet is sitting in a\n    chat window waiting to be copied (ty, Brodie))."]), code$002Dblock("TK")(`(add-to-list 'auto-mode-alist '("[.]dhtml$" . html-mode))
 `), p(["Adding the above snippet to my ", strong(["~/.emacs"]), " file did\n    the trick. :)"]), captioned$002Dimages([{
   alt: "Emacs syntax highlighting",

@@ -11,9 +11,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const body = [p(["JavaScript's regular expressions are less than awesome, sadly.\n    One limitation is the lack of start of string and end of string\n    anchors. In Perl, for example, ", code(["\\A"]), " matches the\n    start of a string, ", code(["\\Z"]), " the end."]), p(["Most of the time it's possible to get by with ", code(["^"]), " and ", code(["$"]), " which act like ", code(["\\A"]), " and ", code(["\\Z"]), " ", strong(["except in multiline mode"]), " where they match the start and\n    end of any line."]), p(["It's possible, though, to have a lookahead act as an end of string\n    anchor in multiline mode:"]), code$002Dblock("javascript")(`> /bar(?![\\s\\S])/m.test('foo\\nbar')
 true
 > /bar(?![\\s\\S])/m.test('foo\\nbar\\n')

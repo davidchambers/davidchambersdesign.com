@@ -9,9 +9,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const simplify = paths => Object.is(0, paths.length) ? [] : (() => {
   const [head, ...tail] = paths;
   const [prev, path] = Prelude._apply("reduce")([([prev, path], curr) => Object.is("M", curr[0]) ? Object.is("M", prev[0]) || Object.is("m", prev[0]) ? [curr, path] : [curr, [...path, prev]] : (Object.is("M", prev[0]) || Object.is("m", prev[0])) && Object.is("m", curr[0]) ? [[prev[0], [prev[1][0] + curr[1][0], prev[1][1] + curr[1][1]]], path] : [curr, [...path, prev]], [head, []]])(tail);

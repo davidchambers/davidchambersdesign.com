@@ -11,9 +11,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const body = [p(["This is a JavaScript function for Photoshop which saves\n    the active document as a 24-bit PNG file. It is equivalent to\n    manually selecting ", strong(["File > Save for Web & Devices..."]), "\n    which means that the file size of the resulting PNG will be smaller\n    than would be the case using ", code(["PNGSaveOptions()"]), "."]), code$002Dblock("javascript")(`function saveForWebPNG(outputFolderStr, filename)
 {
     var opts, file;

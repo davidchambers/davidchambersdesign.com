@@ -11,9 +11,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const excerpt = [p(["This is my response to Chris Coyier's screencast titled ", a({
   href: "http://css-tricks.com/video-screencasts/67-jquery-part-3-image-title-plugin/"
 })(["jQuery Part 3 – Image Title Plugin"]), " which I watched\n    a couple of days ago. Something didn't sit right with me\n    at the time, and I've now worked out what it was: ", strong(["JavaScript is not required!"])]), p(["I'll present a JavaScript-free approach for displaying captions\n    over images that uses ", em(["truly"]), " meaningful markup."])];

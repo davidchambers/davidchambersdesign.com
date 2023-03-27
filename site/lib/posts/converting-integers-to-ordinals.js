@@ -11,9 +11,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const body = [p(["When dealing with dates, it's not uncommon to need to convert an\n    integer into an ordinal number (1st, 2nd, 3rd, etc.). While making\n    improvements to ", a({
   href: "http://mango.io/wtf?"
 })(["Mango"]), " recently\n    I wrote a function to do this, first in Python, later in JavaScript."]), h3(["Python"]), code$002Dblock("python")(`def ordinal(n):

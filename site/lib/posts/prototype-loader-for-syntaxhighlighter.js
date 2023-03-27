@@ -11,9 +11,10 @@ const Prelude = {
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
-  not: b => !b
+  not: b => !b,
+  reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
 const excerpt = [p([a({
   href: "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
 })(["SyntaxHighlighter"]), " is a fully functional self-contained\n    code syntax highlighter developed in JavaScript (as stated on\n    its wiki). One of its deficiencies is that it retrieves all\n    its brushes each time a page is loaded, despite the fact that\n    in many cases only one or two (or none) are required."]), p(["Currently, ", a({

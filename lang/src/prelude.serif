@@ -8,6 +8,7 @@ export {
   not,
   concat,
   filter,
+  reject,
   map,
   flip,
   chain,
@@ -25,7 +26,7 @@ isString name = {
                    (StringLiteral "string")
 };
 
-_apply = {
+_apply preludeIdent = {
   ArrowFunctionExpression [Identifier "name"] {
     ArrowFunctionExpression [Identifier "args"] {
       ArrowFunctionExpression [Identifier "target"] {
@@ -38,7 +39,7 @@ _apply = {
   }
 };
 
-apply = {
+apply preludeIdent = {
   ArrowFunctionExpression [Identifier "args"] {
     ArrowFunctionExpression [Identifier "target"] {
       CallExpression (MemberExpression (Identifier "target")
@@ -48,7 +49,7 @@ apply = {
   }
 };
 
-construct = {
+construct preludeIdent = {
   ArrowFunctionExpression [Identifier "constructor"] {
     ArrowFunctionExpression [Identifier "args"] {
       CallExpression (MemberExpression (Identifier "Reflect")
@@ -59,7 +60,7 @@ construct = {
 };
 
 ;; TODO: rename
-const_ = {
+const_ preludeIdent = {
   ArrowFunctionExpression [Identifier "x"] {
     ArrowFunctionExpression [Identifier "y"] {
       Identifier "x"
@@ -67,13 +68,13 @@ const_ = {
   }
 };
 
-not = {
+not preludeIdent = {
   ArrowFunctionExpression [Identifier "b"] {
     UnaryExpression "!" (Identifier "b")
   }
 };
 
-concat = {
+concat preludeIdent = {
   ArrowFunctionExpression [Identifier "this"] {
     ArrowFunctionExpression [Identifier "that"] {
       ConditionalExpression
@@ -88,7 +89,7 @@ concat = {
   }
 };
 
-filter = {
+filter preludeIdent = {
   ArrowFunctionExpression [Identifier "predicate"] {
     ArrowFunctionExpression [Identifier "filterable"] {
       ConditionalExpression
@@ -105,7 +106,17 @@ filter = {
   }
 };
 
-map = {
+reject preludeIdent = {
+  ArrowFunctionExpression [Identifier "predicate"] {
+    CallExpression (MemberExpression preludeIdent $ StringLiteral "filter") [
+      ArrowFunctionExpression [Identifier "x"] {
+        UnaryExpression "!" $ CallExpression (Identifier "predicate") [Identifier "x"]
+      },
+    ]
+  }
+};
+
+map preludeIdent = {
   ArrowFunctionExpression [Identifier "f"] {
     ArrowFunctionExpression [Identifier "functor"] {
       ConditionalExpression
@@ -123,7 +134,7 @@ map = {
 };
 
 ;; TODO: generalize to functor
-flip = {
+flip preludeIdent = {
   ArrowFunctionExpression [Identifier "f"] {
     ArrowFunctionExpression [Identifier "y"] {
       ArrowFunctionExpression [Identifier "x"] {
@@ -133,7 +144,7 @@ flip = {
   }
 };
 
-chain = {
+chain preludeIdent = {
   ArrowFunctionExpression [Identifier "f"] {
     ArrowFunctionExpression [Identifier "chain"] {
       ConditionalExpression
