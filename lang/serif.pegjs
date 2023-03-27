@@ -160,7 +160,6 @@ ReservedWord
   / WhenToken
   / IsToken
   / DoToken
-  / ImportToken
   / ExportToken
 
 Identifier
@@ -220,10 +219,6 @@ Property
   / ident:Identifier
     { return {type: 'Property', key: {type: 'StringLiteral', value: ident.name}, value: ident}; }
 
-ImportMeta
-  = meta:ImportToken '.' property:'meta'
-    { return {type: 'MetaProperty', meta, property}; }
-
 PrimaryExpression
   = NullLiteral
   / BooleanLiteral
@@ -234,7 +229,6 @@ PrimaryExpression
   / DoBlockExpression
   / ObjectExpression
   / ArrayExpression
-  / ImportMeta
   / Identifier
   / PropertyAccessor
 
@@ -258,12 +252,7 @@ LeftHandSideExpression
   = ArrowFunctionExpression
   / MethodCallExpression
   / MemberExpression
-  / ImportExpression
   / '(' _ expression:Expression _ ')' { return expression; }
-
-ImportExpression
-  = ImportToken _ '(' _ source:Expression _ ')'
-    { return {type: 'ImportExpression', source}; }
 
 CallExpression
   = head:LeftHandSideExpression

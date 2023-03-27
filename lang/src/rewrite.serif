@@ -72,7 +72,7 @@ rewriteModule {imports, exports, statements} namesExportedFrom = do {
 rewriteImportAllDeclaration namesExportedFrom {source, hiding} = {
   namesExported = {
     if .endsWith [".serif"] source.value then namesExportedFrom source.value
-    else Object.keys <$> attemptP () => import (source.value)
+    else Object.keys <$> attemptP () => import source.value
   };
   namesHidden = (.name) <$> hiding;
   namesHiddenNeedlessly = .filter [name => not $ .includes [name] namesExported] namesHidden;
@@ -290,9 +290,6 @@ rewriteNode preludeIdent = {
     }
     when "ExportDefaultDeclaration" then {
       ExportDefaultDeclaration $ recur names node.declaration
-    }
-    when "ImportExpression" then {
-      ImportExpression $ recur names node.source
     }
     else {
       node

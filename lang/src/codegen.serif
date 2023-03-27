@@ -70,7 +70,8 @@ esFromIdentifierName = {
     |> concat "$"
   };
   escape name = {
-    if .has [name] RESERVED_WORDS then name + "$"
+    if name is "import" then "import"
+    else if .has [name] RESERVED_WORDS then name + "$"
     else if validEsIdentifierName name then name
     else .replaceAll [apply ["[^$_A-Za-z0-9]", "g"] RegExp, escapeChar] name
   };
@@ -90,12 +91,6 @@ esFromNullLiteral = {
 esFromLiteral {value} = {
   type: "Literal",
   value,
-};
-
-esFromMetaProperty = {meta, property} => {
-  type: "MetaProperty",
-  meta: esFromEscapedIdentifierName meta,
-  property: esFromEscapedIdentifierName property,
 };
 
 esFromIdentifier {name} = {
@@ -368,11 +363,6 @@ esFromExportNamedDeclaration {specifiers} = {
   }} <$> specifiers,
 };
 
-esFromImportExpression {source} = {
-  type: "ImportExpression",
-  source: esFromNode source,
-};
-
 esFromImportDefaultSpecifier {local} = {
   type: "ImportDefaultSpecifier",
   local: esFromIdentifier local,
@@ -408,7 +398,6 @@ esFromNode expr = {
   when "NumberLiteral"            then esFromLiteral expr
   when "StringLiteral"            then esFromLiteral expr
   when "TemplateLiteral"          then esFromTemplateLiteral expr
-  when "MetaProperty"             then esFromMetaProperty expr
   when "MemberExpression"         then esFromMemberExpression expr
   when "Identifier"               then esFromIdentifier expr
   when "ArrayExpression"          then esFromArrayExpression expr
@@ -436,6 +425,5 @@ esFromNode expr = {
   when "ImportSpecifier"          then esFromImportSpecifier expr
   when "ExportNamedDeclaration"   then esFromExportNamedDeclaration expr
   when "ExportDefaultDeclaration" then esFromExportDefaultDeclaration expr
-  when "ImportExpression"         then esFromImportExpression expr
   when "Module"                   then esFromModule expr
 };

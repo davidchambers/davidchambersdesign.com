@@ -14,8 +14,8 @@ evaluateModule sourceText = do {
   context = vm.createContext global;
   module = apply [vm.SourceTextModule, [sourceText, {context,}]] Reflect.construct;
   _ <- attemptP $ () => .link [
-    (specifier, referencingModule) => promise {
-      attemptP (() => import (specifier))
+    (specifier, referencingModule) => {
+      attemptP (() => import specifier)
       |> map Object.entries
       |> map $ map entries => {
            module = apply [vm.SyntheticModule, [
@@ -25,6 +25,7 @@ evaluateModule sourceText = do {
            ]] Reflect.construct;
            module
          }
+      |> promise
     },
   ] module;
   _ <- attemptP $ () => .evaluate [] module;

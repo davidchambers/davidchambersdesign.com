@@ -14,7 +14,7 @@ const RESERVED_WORDS = Set.from(["await", "break", "case", "catch", "class", "co
 const validEsIdentifierName = name => Prelude._apply("test")([name])(RegExp("^[$_A-Za-z][$_A-Za-z0-9]*$"));
 const esFromIdentifierName = (() => {
   const escapeChar = c => concat("$")(Prelude._apply("padStart")([4, "0"])(Prelude._apply("toUpperCase")([])(Prelude._apply("toString")([16])(Prelude._apply("charCodeAt")([0])(c)))));
-  const escape = name => Prelude._apply("has")([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : Prelude._apply("replaceAll")([apply(["[^$_A-Za-z0-9]", "g"])(RegExp), escapeChar])(name);
+  const escape = name => Object.is("import", name) ? "import" : Prelude._apply("has")([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : Prelude._apply("replaceAll")([apply(["[^$_A-Za-z0-9]", "g"])(RegExp), escapeChar])(name);
   return x => esFromEscapedIdentifierName(escape(x));
 })();
 const esFromEscapedIdentifierName = name => ({
@@ -28,11 +28,6 @@ const esFromNullLiteral = {
 const esFromLiteral = ({value}) => ({
   type: "Literal",
   value
-});
-const esFromMetaProperty = ({meta, property}) => ({
-  type: "MetaProperty",
-  meta: esFromEscapedIdentifierName(meta),
-  property: esFromEscapedIdentifierName(property)
 });
 const esFromIdentifier = ({name}) => esFromIdentifierName(name);
 const esFromElision = null;
@@ -261,10 +256,6 @@ const esFromExportNamedDeclaration = ({specifiers}) => ({
     exported: esFromNode(specifier)
   }))(specifiers)
 });
-const esFromImportExpression = ({source}) => ({
-  type: "ImportExpression",
-  source: esFromNode(source)
-});
 const esFromImportDefaultSpecifier = ({local}) => ({
   type: "ImportDefaultSpecifier",
   local: esFromIdentifier(local)
@@ -300,8 +291,6 @@ const esFromNode = expr => (() => {
       return esFromLiteral(expr);
     case "TemplateLiteral":
       return esFromTemplateLiteral(expr);
-    case "MetaProperty":
-      return esFromMetaProperty(expr);
     case "MemberExpression":
       return esFromMemberExpression(expr);
     case "Identifier":
@@ -356,8 +345,6 @@ const esFromNode = expr => (() => {
       return esFromExportNamedDeclaration(expr);
     case "ExportDefaultDeclaration":
       return esFromExportDefaultDeclaration(expr);
-    case "ImportExpression":
-      return esFromImportExpression(expr);
     case "Module":
       return esFromModule(expr);
   }

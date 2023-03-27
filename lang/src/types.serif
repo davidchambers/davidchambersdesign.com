@@ -4,7 +4,6 @@ export {
   NumberLiteral,
   StringLiteral,
   TemplateLiteral,
-  MetaProperty,
   MemberExpression,
   IdentifierPlaceholder,
   Identifier,
@@ -31,7 +30,6 @@ export {
   PipeExpression,
   MethodCallExpression,
   CallExpression,
-  ImportExpression,
   ImportDeclaration,
   ImportAllDeclaration,
   ImportDefaultSpecifier,
@@ -68,12 +66,6 @@ TemplateLiteral quasis expressions = {
   type: "TemplateLiteral",
   quasis,
   expressions,
-};
-
-MetaProperty meta property = {
-  type: "MetaProperty",
-  meta,
-  property,
 };
 
 MemberExpression object property = {
@@ -221,11 +213,6 @@ CallExpression callee args = {
   type: "CallExpression",
   callee,
   arguments: args,
-};
-
-ImportExpression source = {
-  type: "ImportExpression",
-  source,
 };
 
 ImportDeclaration source specifiers = {
