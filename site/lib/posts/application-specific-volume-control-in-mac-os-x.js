@@ -8,11 +8,12 @@ const Prelude = {
   concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   construct: constructor => args => Reflect.construct(constructor, args),
+  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {_apply, apply, chain, concat, const_, construct, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
 const excerpt = [p(["It's not uncommon to start watching a video online and discover\n    that its audio is quite quiet. This is not a problem in and of\n    itself, as one can simply crank up the output volume. What ", em(["is"]), " a problem, however, is a message then arriving in\n    one's inbox and waking the neighbours!"]), p(["This situation could be avoided if it were possible adjust the\n    browser's output volume without affecting the rest of the system.\n    As it is, though, one is forced to increase the volume of ", em(["everything"]), ". Not ideal."]), h3(["System Preferences > Sound > Application Volumes"]), p([img({
   alt: `Possible interface for application-specific volume settings in Mac OS X
 `,

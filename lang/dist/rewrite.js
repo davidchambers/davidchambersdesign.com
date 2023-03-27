@@ -9,11 +9,12 @@ const Prelude$1 = {
   concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   construct: constructor => args => Reflect.construct(constructor, args),
+  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {_apply, apply, chain, concat, const_, construct, flip, map, not} = Prelude$1;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude$1;
 const has = element => set => Prelude$1._apply("has")([element])(set);
 const add = element => set => construct(Set)([[...set, element]]);
 const union = this$ => that => construct(Set)([[...this$, ...that]]);
@@ -54,12 +55,12 @@ const rewriteModule = ({imports, exports, statements}) => namesExportedFrom => P
   imports: imports$0027,
   exports: Prelude$1.map(rewrite)(exports),
   statements: Prelude$1.map(rewrite)([preludeDefinition, preludeDestructuring, ...statements])
-})))(VariableDeclaration(ObjectPattern(map(name => Property(StringLiteral(name))(Identifier(name)))(Prelude$1._apply("filter")([x => not(flip(has)(names$0027)(x))])(Object.keys(Prelude)))))(preludeIdent)))(VariableDeclaration(preludeIdent)(ObjectExpression(map(([name, expr]) => Property(StringLiteral(name))(expr))(Object.entries(Prelude))))))(rewriteNode(preludeIdent)(names$0027)))(add(preludeIdent.name)(names)))(nextUnusedIdent(names)("Prelude")))(construct(Set)([Prelude$1.chain(namesInStatement)(Prelude$1.concat(imports$0027)(statements))])))(parallel(16)(Prelude$1.map(rewriteImportDeclaration(namesExportedFrom))(imports)));
+})))(VariableDeclaration(ObjectPattern(map(name => Property(StringLiteral(name))(Identifier(name)))(filter(x => not(flip(has)(names$0027)(x)))(Object.keys(Prelude)))))(preludeIdent)))(VariableDeclaration(preludeIdent)(ObjectExpression(map(([name, expr]) => Property(StringLiteral(name))(expr))(Object.entries(Prelude))))))(rewriteNode(preludeIdent)(names$0027)))(add(preludeIdent.name)(names)))(nextUnusedIdent(names)("Prelude")))(construct(Set)([Prelude$1.chain(namesInStatement)(Prelude$1.concat(imports$0027)(statements))])))(parallel(16)(Prelude$1.map(rewriteImportDeclaration(namesExportedFrom))(imports)));
 const rewriteImportAllDeclaration = namesExportedFrom => ({source, hiding}) => (() => {
   const namesExported = Prelude$1._apply("endsWith")([".serif"])(source.value) ? namesExportedFrom(source.value) : Prelude$1.map(Object.keys)(attemptP(() => import(source.value)));
   const namesHidden = Prelude$1.map(x => x.name)(hiding);
-  const namesHiddenNeedlessly = Prelude$1._apply("filter")([name => not(Prelude$1._apply("includes")([name])(namesExported))])(namesHidden);
-  return namesHiddenNeedlessly.length > 0 ? reject(Error(`import * from "${source.value}" hiding {${Prelude$1._apply("join")([", "])(namesHidden)}};\n\n${format.list(namesHiddenNeedlessly)} ${Object.is(1, namesHiddenNeedlessly.length) ? "is" : "are"} not exported so need not be hidden.\n`)) : resolve(ImportDeclaration(source)(map(name => ImportSpecifier(Identifier(name))(Identifier(name)))(Prelude$1._apply("filter")([name => not(Prelude$1._apply("includes")([name])(namesHidden))])(namesExported))));
+  const namesHiddenNeedlessly = filter(name => not(Prelude$1._apply("includes")([name])(namesExported)))(namesHidden);
+  return namesHiddenNeedlessly.length > 0 ? reject(Error(`import * from "${source.value}" hiding {${Prelude$1._apply("join")([", "])(namesHidden)}};\n\n${format.list(namesHiddenNeedlessly)} ${Object.is(1, namesHiddenNeedlessly.length) ? "is" : "are"} not exported so need not be hidden.\n`)) : resolve(ImportDeclaration(source)(map(name => ImportSpecifier(Identifier(name))(Identifier(name)))(filter(name => not(Prelude$1._apply("includes")([name])(namesHidden)))(namesExported))));
 })();
 const rewriteImportDeclaration = namesExportedFrom => importDeclaration => (() => {
   switch (importDeclaration.type) {

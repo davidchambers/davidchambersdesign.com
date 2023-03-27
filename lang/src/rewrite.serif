@@ -56,7 +56,7 @@ rewriteModule {imports, exports, statements} namesExportedFrom = do {
       Prelude
       |> Object.keys
       ;; Do not unpack if name conflicts with a top-level binding:
-      |> .filter [not . flip has names']
+      |> filter (not . flip has names')
       |> map (name => Property (StringLiteral name) (Identifier name))
       |> ObjectPattern
     } preludeIdent
@@ -74,7 +74,7 @@ rewriteImportAllDeclaration namesExportedFrom {source, hiding} = {
     else Object.keys <$> attemptP () => import source.value
   };
   namesHidden = (.name) <$> hiding;
-  namesHiddenNeedlessly = .filter [name => not $ .includes [name] namesExported] namesHidden;
+  namesHiddenNeedlessly = filter (name => not $ .includes [name] namesExported) namesHidden;
   if namesHiddenNeedlessly.length > 0 then {
     reject $ Error {
       `import * from "${
@@ -89,7 +89,7 @@ rewriteImportAllDeclaration namesExportedFrom {source, hiding} = {
     }
   } else {
     namesExported
-    |> .filter [name => not $ .includes [name] namesHidden]
+    |> filter (name => not $ .includes [name] namesHidden)
     |> map (name => ImportSpecifier (Identifier name) (Identifier name))
     |> ImportDeclaration source
     |> resolve

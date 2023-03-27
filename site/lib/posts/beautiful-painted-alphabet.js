@@ -7,11 +7,12 @@ const Prelude = {
   concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   construct: constructor => args => Reflect.construct(constructor, args),
+  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {_apply, apply, chain, concat, const_, construct, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
 const body = [p(["I came across this recently while browsing ", a({
   href: "http://markboulton.co.uk/"
 })(["Mark Boulton's site"]), ".\n    The style and control of Job's hand is played off against\n    the exuberance of his son's approach. An upbeat soundtrack\n    accompanies the performance."]), dl([dt([a({

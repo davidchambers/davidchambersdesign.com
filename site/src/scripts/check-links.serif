@@ -10,7 +10,7 @@ absolute? url = {
 
 links node = {
   if node.name is "a" then {
-    [node.attributes.href].filter absolute?
+    filter absolute? [node.attributes.href]
   } else if "children" in node then {
     node.children >>= links
   } else {

@@ -8,11 +8,12 @@ const Prelude = {
   concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   construct: constructor => args => Reflect.construct(constructor, args),
+  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {_apply, apply, chain, concat, const_, construct, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
 const excerpt = [p(["On the Web it's not uncommon to see characters with\n    no inherent meaning used for stylistic reasons. A good\n    example is the ", a({
   href: "#"
 })(["Read more »"]), " link.\n    Perhaps the directionality of the \"»\" is suggestive of\n    travelling to another page, or perhaps the letterform is\n    included solely for its aesthetic appeal. Whatever the case,\n    one thing is certain: links do not require right-pointing\n    double angle quotation marks in order to function."]), p([strong(["The inclusion of such a character is therefore\n    a design decision."]), " It is decoration, not content.\n    It belongs in a style sheet, not in a page's markup."])];

@@ -7,11 +7,12 @@ const Prelude = {
   concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   construct: constructor => args => Reflect.construct(constructor, args),
+  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {_apply, apply, chain, concat, const_, construct, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
 const body = [p([strong(["JavaScript does not have associative arrays."]), "\n    (This will be old news to many.)"]), p(["Confusion arises from the fact that array syntax in JavaScript is\n    very similar to array syntax in PHP, a language that ", em(["does"]), "\n    have associative arrays. Additionally, ", strong(["any object in\n    JavaScript can be treated as an associative array"]), ". This means\n    that if one creates a JavaScript ", code(["Array"]), " object and\n    proceeds to use PHP's associative array syntax in an attempt to\n    add items to it, one ", em(["will"]), " succeed in assigning it\n    attribute–value pairs. The object in question need not be an ", code(["Array"]), " for this to work, though, so for the sake of\n    clarity using a vanilla ", code(["Object"]), " is advisable."]), p(["To gain a more detailed understanding of why JavaScript ", em(["appears"]), " to have associative arrays, read ", a({
   href: "http://andrewdupont.net/2006/05/18/javascript-associative-arrays-considered-harmful/"
 })([`JavaScript "Associative Arrays" Considered Harmful`]), "."])];

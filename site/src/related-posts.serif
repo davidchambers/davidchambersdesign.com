@@ -8,7 +8,7 @@ related-posts posts post = {
   posts
   |> S.mapMaybe {this => {
        if this.slug is post.slug then S.Nothing else {
-         dividend = (.length) $ .filter [has-tag] this.tags;
+         dividend = (.length) $ filter has-tag this.tags;
          divisor = Math.sqrt $ (.size) $ construct Set [post.tags <> this.tags];
          score = dividend / divisor;
          if score < 0.5 then S.Nothing else S.Just {...this, score}

@@ -7,11 +7,12 @@ const Prelude = {
   concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
   construct: constructor => args => Reflect.construct(constructor, args),
+  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {_apply, apply, chain, concat, const_, construct, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not} = Prelude;
 const base = [$21E8(0), $21E9(1), $2192(1), $2193(14), $2192(14), $2191(14), $2192(1), $2193(15), $2190(16), $2191(15)];
 const spiral = [$21E8(3), $21E9(0), $2192(1), $2193(1), $2190(1), $2191(1), $21E8(3), $21E9(0), $2192(1), $2193(1), $2190(1), $2191(1), $21E8(3), $21E9(0), $2192(1), $2193(1), $2190(1), $2191(1), $21E8(3), $21E9(0), $2192(1), $2193(1), $2190(1), $2191(1)];
 const header = [$21E8(1), $21E9(1), $2192(2), $2193(1), $2192(1), $2191(1), $2192(2), $2193(1), $2192(1), $2191(1), $2192(2), $2193(1), $2192(1), $2191(1), $2192(2), $2193(1), $2192(1), $2191(1), $2192(2), $2193(3), $2190(14), $2191(3)];

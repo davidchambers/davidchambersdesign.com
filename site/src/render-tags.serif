@@ -7,7 +7,7 @@ export default render-tags;
 
 render-tags posts = {
   from-entry = [slug, name] => {
-    li' {data-count: S.size $ S.filter {S.equals slug} $ posts >>= (.tags)} [
+    li' {data-count: S.size $ filter {S.equals slug} $ posts >>= (.tags)} [
       a {href: `/tag/${slug}/`} [name],
     ]
   };
