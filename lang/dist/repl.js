@@ -12,20 +12,21 @@ const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
+  construct: constructor => args => Reflect.construct(constructor, args),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, flip, map, not} = Prelude;
 const evaluateModule = sourceText => (context => (module => Prelude.chain(_ => Prelude.chain(_ => resolve(module.namespace.default))(attemptP(() => Prelude._apply("evaluate")([])(module))))(attemptP(() => Prelude._apply("link")([(specifier, referencingModule) => map(map(entries => promise((() => {
-  const module = apply([vm.SyntheticModule, [Prelude.map(([name]) => name)(entries), () => Prelude._apply("forEach")([flip(Prelude._apply("setExport"))(module)])(entries), {
+  const module = construct(vm.SyntheticModule)([Prelude.map(([name]) => name)(entries), () => Prelude._apply("forEach")([flip(Prelude._apply("setExport"))(module)])(entries), {
     identifier: specifier,
     context: referencingModule.context
-  }]])(Reflect.construct);
+  }]);
   return module;
-})())))(map(Object.entries)(attemptP(() => import(specifier))))])(module))))(apply([vm.SourceTextModule, [sourceText, {
+})())))(map(Object.entries)(attemptP(() => import(specifier))))])(module))))(construct(vm.SourceTextModule)([sourceText, {
   context
-}]])(Reflect.construct)))(vm.createContext(global));
+}])))(vm.createContext(global));
 const read = serifSource => Prelude.chain(serifAst => Prelude.chain(serifAst$0027 => (serifAst$0027$0027 => (esAst => (esSourceText => evaluateModule(esSourceText))(apply([esAst, {}])(generate)))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(_importPath => [])))(serif.parse("[repl]")(`export default ${serifSource};`));
 const print = x => (() => {
   switch (apply([Object.prototype.toString, x, []])(Reflect.apply)) {
@@ -42,13 +43,13 @@ const print = x => (() => {
     case "[object Symbol]":
       return `Symbol.for ${print(Symbol.keyFor(x))}`;
     case "[object Date]":
-      return `apply [Date, [${print(Number(x))}]] Reflect.construct`;
+      return `construct Date [${print(Number(x))}]`;
     case "[object RegExp]":
       return Object.is("", x.flags) ? `RegExp ${print(x.source)}` : `apply [${print(x.source)}, ${print(x.flags)}] RegExp`;
     case "[object Set]":
-      return `apply [Set, [${print(Array.from(x))}]] Reflect.construct`;
+      return `construct Set [${print(Array.from(x))}]`;
     case "[object Map]":
-      return `apply [Map, [${print(Array.from(x))}]] Reflect.construct`;
+      return `construct Map [${print(Array.from(x))}]`;
     case "[object Array]":
       return `[${Prelude._apply("join")([", "])(Prelude.map(print)(x))}]`;
     case "[object Object]":

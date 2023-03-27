@@ -1,6 +1,5 @@
 import {parallel, reject, resolve} from "fluture";
 
-import * as Set from "./Set.serif";
 import * as format from "./format.serif";
 import * as Prelude from "./prelude.serif";
 import * from "./types.serif";
@@ -9,9 +8,9 @@ export default rewriteModule;
 
 has element set = .has [element] set;
 
-add element set = Set.from [...set, element];
+add element set = construct Set [[...set, element]];
 
-union this that = Set.from [...this, ...that];
+union this that = construct Set [[...this, ...that]];
 
 nextUnusedIdent names desiredName = {
   recur counter = {
@@ -40,7 +39,7 @@ namesInStatement node = {
 
 rewriteModule {imports, exports, statements} namesExportedFrom = do {
   imports' <- parallel 16 $ rewriteImportDeclaration namesExportedFrom <$> imports;
-  names = Set.from $ imports' <> statements >>= namesInStatement;
+  names = construct Set [imports' <> statements >>= namesInStatement];
   preludeIdent = nextUnusedIdent names "Prelude";
   names' = add preludeIdent.name names;
   rewrite = rewriteNode preludeIdent names';

@@ -6,11 +6,12 @@ const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
+  construct: constructor => args => Reflect.construct(constructor, args),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, flip, map, not} = Prelude;
 const bucket = [$21E8(0), $21E9(0), $2193(2), $2192(1), $2193(6), $2192(1), $2193(6), $2192(1), $2193(1), $2192(2), $2193(1), $2192(6), $2191(1), $2192(2), $2191(1), $2192(1), $2191(6), $2192(1), $2191(6), $2192(1), $2191(2), $2190(16)];
 const sticky$002Dnote = [$21E8(4), $21E9(1), $2192(8), $2193(7), $2190(8), $2191(7)];
 const symbol = [$21E8(6), $21E9(2), $2192(1), $2193(5), $2192(2), $2191(5), $2192(1), $2193(1), $2190(4), $2191(1), $21E8(0), $21E9(2), $2192(4), $2193(2), $2190(4), $2191(2)];

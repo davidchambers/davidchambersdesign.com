@@ -7,11 +7,12 @@ const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
+  construct: constructor => args => Reflect.construct(constructor, args),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, flip, map, not} = Prelude;
 const body = [p(["Early this year I wrote a post titled ", a({
   href: "/autopopulating-input-fields-with-prototype/"
 })(["Auto-populating input fields with Prototype"]), ".\n    Looking at the code now, I realize that it's not very pretty.\n    I'm rewriting this site's JavaScript in MooTools, and the new\n    code is quite a bit more elegant."]), code$002Dblock("javascript")(`// provide input hints

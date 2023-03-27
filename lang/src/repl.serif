@@ -12,17 +12,17 @@ import rewrite from "./rewrite.serif";
 
 evaluateModule sourceText = do {
   context = vm.createContext global;
-  module = apply [vm.SourceTextModule, [sourceText, {context,}]] Reflect.construct;
+  module = construct vm.SourceTextModule [sourceText, {context,}];
   _ <- attemptP $ () => .link [
     (specifier, referencingModule) => {
       attemptP (() => import specifier)
       |> map Object.entries
       |> map $ map entries => {
-           module = apply [vm.SyntheticModule, [
+           module = construct vm.SyntheticModule [
              {[name] => name} <$> entries,
              () => .forEach [flip {.setExport} module] entries,
              {identifier: specifier, context: referencingModule.context},
-           ]] Reflect.construct;
+           ];
            module
          }
       |> promise
@@ -54,13 +54,13 @@ print x = {
   when "[object Symbol]"
   then `Symbol.for ${print $ Symbol.keyFor x}`
   when "[object Date]"
-  then `apply [Date, [${print $ Number x}]] Reflect.construct`
+  then `construct Date [${print $ Number x}]`
   when "[object RegExp]"
   then if x.flags is "" then `RegExp ${print x.source}` else `apply [${print x.source}, ${print x.flags}] RegExp`
   when "[object Set]"
-  then `apply [Set, [${print $ Array.from x}]] Reflect.construct`
+  then `construct Set [${print $ Array.from x}]`
   when "[object Map]"
-  then `apply [Map, [${print $ Array.from x}]] Reflect.construct`
+  then `construct Map [${print $ Array.from x}]`
   when "[object Array]"
   then `[${.join [", "] $ print <$> x}]`
   when "[object Object]"

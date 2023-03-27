@@ -1,7 +1,6 @@
 import {attemptP, bichain, fork, parallel, resolve} from "fluture";
 import S from "sanctuary";
 
-import * as Set from "../Set.serif";
 import posts from "../posts/index.serif";
 
 absolute? url = {
@@ -44,7 +43,8 @@ format {url, status} = {
 
 program = {
   posts >>= (.body) >>= links
-  |> Set.from
+  |> Array.of
+  |> construct Set
   |> Array.from
   |> S.sort
   |> map status

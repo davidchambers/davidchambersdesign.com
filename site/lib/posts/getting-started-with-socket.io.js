@@ -7,11 +7,12 @@ const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
+  construct: constructor => args => Reflect.construct(constructor, args),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, flip, map, not} = Prelude;
 const excerpt = [p(["There's no shortage of blog posts which", $2014, "like this one", $2014, "provide an introduction to ", a({
   href: "http://socket.io/"
 })(["Socket.IO"]), ". Many, though, were\n    written prior to the release of 0.7, which ushered in ", a({

@@ -1,17 +1,15 @@
 import S from "sanctuary";
 
-import * as Set from "./Set.serif";
-
 export default related-posts;
 
 related-posts posts post = {
-  tags = Set.from post.tags;
+  tags = construct Set [post.tags];
   has-tag tag = .has [tag] tags;
   posts
   |> S.mapMaybe {this => {
        if this.slug is post.slug then S.Nothing else {
          dividend = (.length) $ .filter [has-tag] this.tags;
-         divisor = Math.sqrt $ (.size) $ Set.from $ post.tags <> this.tags;
+         divisor = Math.sqrt $ (.size) $ construct Set [post.tags <> this.tags];
          score = dividend / divisor;
          if score < 0.5 then S.Nothing else S.Just {...this, score}
        }

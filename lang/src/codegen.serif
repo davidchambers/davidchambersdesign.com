@@ -1,9 +1,7 @@
-import * as Set from "./Set.serif";
-
 export default esFromNode;
 
 ;; https://262.ecma-international.org/13.0/#sec-keywords-and-reserved-words
-RESERVED_WORDS = Set.from [
+RESERVED_WORDS = construct Set [[
   ;; reserved words
   "await",
   "break",
@@ -54,7 +52,7 @@ RESERVED_WORDS = Set.from [
   ;; reserved in strict mode
   "arguments",
   "eval",
-];
+]];
 
 validEsIdentifierName name = {
   .test [name] $ RegExp "^[$_A-Za-z][$_A-Za-z0-9]*$"

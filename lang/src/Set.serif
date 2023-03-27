@@ -1,7 +1,0 @@
-export {
-  from,
-};
-
-from elements = {
-  apply [Set, [elements]] Reflect.construct
-};

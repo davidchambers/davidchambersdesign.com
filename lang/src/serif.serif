@@ -1,8 +1,6 @@
 import {generate} from "astring";
 import {attempt, fork, mapRej, parallel, resolve} from "fluture";
 
-import * as Map from "./Map.serif";
-import * as Set from "./Set.serif";
 import * as fs from "./fs.serif";
 import * as serif from "./index.serif";
 import * as path from "./path.serif";
@@ -76,10 +74,10 @@ findDependencies filename tree = {
     };
     .reduce [
       reducer,
-      resolve $ Map.from [
+      resolve $ construct Map [[
         ...tree,
         [filename, {sourceText, ast, dependencies, exportedNames}],
-      ],
+      ]],
     ] dependencies
   }
 };
@@ -97,14 +95,14 @@ orderDependencies tree = {
       recur unsorted! sorted!
     }
   };
-  Array.from $ recur (Array.from $ .keys [] tree) $ Set.from []
+  Array.from $ recur (Array.from $ .keys [] tree) $ construct Set [[]]
 };
 
 {
   cwd = apply [] process.cwd;
   [,, src, lib, ...filenames] = process.argv;
   program = do {
-    tree <- .reduce [reducer, resolve $ Map.from []] filenames;
+    tree <- .reduce [reducer, resolve $ construct Map [[]]] filenames;
     filenames = orderDependencies tree;
     ;; Create JavaScript module for each Serif module:
     parallel 16 $ flip map filenames $ serifFilename => do {

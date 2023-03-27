@@ -1,7 +1,0 @@
-export {
-  from,
-};
-
-from entries = {
-  apply [Map, [entries]] Reflect.construct
-};

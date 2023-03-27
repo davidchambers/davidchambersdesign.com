@@ -7,11 +7,12 @@ const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
+  construct: constructor => args => Reflect.construct(constructor, args),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, flip, map, not} = Prelude;
 const body = [p(["Those of us running Mac OS X are spoilt by Keychain Access.\n    It's no help, of course, to have a password stored in your Mac's\n    keychain if you're at an Internet café unable to access it.\n    Thus, memorable passwords are still useful."]), p(["Those of us who write code can create passwords riddled with\n    spaces and punctuation without resorting to the use of random\n    strings of characters. Here's a \"JavaScript\" password,\n    for example:"]), code$002Dblock("javascript")(`var favourites = { book: 'Collapse', game: 'Agricola', site: 'ted.com' };
 `), p(["Carefully written passwords wrapping personal information\n    in programming syntax should be both strong and memorable.\n    I'm sure Perl programmers could write some concise, cryptic\n    passwords using this approach. ;)"])];
 export default {

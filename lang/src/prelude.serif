@@ -3,6 +3,7 @@ import * from "./types.serif";
 export {
   _apply,
   apply,
+  construct,
   const_,
   not,
   concat,
@@ -42,6 +43,16 @@ apply = {
       CallExpression (MemberExpression (Identifier "target")
                                        (StringLiteral "apply"))
                      [Identifier "target", Identifier "args"]
+    }
+  }
+};
+
+construct = {
+  ArrowFunctionExpression [Identifier "constructor"] {
+    ArrowFunctionExpression [Identifier "args"] {
+      CallExpression (MemberExpression (Identifier "Reflect")
+                                       (StringLiteral "construct"))
+                     [Identifier "constructor", Identifier "args"]
     }
   }
 };

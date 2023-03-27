@@ -1,6 +1,5 @@
 import {attemptP, bichain, fork, parallel, resolve} from "fluture";
 import S from "sanctuary";
-import * as Set from "../Set.js";
 import posts from "../posts/index.js";
 const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
@@ -8,11 +7,12 @@ const Prelude = {
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
   concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   const_: x => y => x,
+  construct: constructor => args => Reflect.construct(constructor, args),
   flip: f => y => x => f(x)(y),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   not: b => !b
 };
-const {_apply, apply, chain, concat, const_, flip, map, not} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, flip, map, not} = Prelude;
 const absolute$003F = url => url.startsWith("http:") || url.startsWith("https:");
 const links = node => Object.is("a", node.name) ? [node.attributes.href].filter(absolute$003F) : ("children" in node) ? Prelude.chain(links)(node.children) : [];
 const status = url => bichain(err => resolve({
@@ -48,5 +48,5 @@ const format = ({url, status}) => (() => {
     }
   })();
 })();
-const program = map(S.joinWith("\n"))(map(map(format))(parallel(16)(map(status)(S.sort(Array.from(Set.from(Prelude.chain(links)(Prelude.chain(x => x.body)(posts)))))))));
+const program = map(S.joinWith("\n"))(map(map(format))(parallel(16)(map(status)(S.sort(Array.from(construct(Set)(Array.of(Prelude.chain(links)(Prelude.chain(x => x.body)(posts))))))))));
 fork(console.error)(console.log)(program);
