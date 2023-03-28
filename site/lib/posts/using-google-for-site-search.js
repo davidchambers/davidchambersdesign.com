@@ -5,7 +5,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -18,7 +19,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["WordPress is a great piece of software, although I've never been\n    satisfied with its search functionality. Last night I decided to\n    switch to a very simple solution:"]), code$002Dblock("html")(`<form action="http://www.google.com/search" method="get">
     <div>
         <label for="q">Search davidchambersdesign.com</label>

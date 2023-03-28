@@ -5,7 +5,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -18,7 +19,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["Here's a simple animation which utilizes ", code(["webkitTransition"]), ":"]), p$0027({
   id: "transition-example-1",
   style: "position:relative;left:0;top:0;width:200px;line-height:5.25em;background-color:#ccc;text-align:center;"

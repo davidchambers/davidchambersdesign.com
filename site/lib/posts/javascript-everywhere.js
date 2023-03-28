@@ -4,7 +4,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -17,7 +18,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["Over the past few months I've reached a startling realization: ", strong(["JavaScript is a tremendously capable language."])]), p(["The reason that it took me so long to discover this is that\n    the playing field has never been fair. On the one hand I've been\n    writing application code for the server, a stable, predictable\n    environment. On the other hand I've been adding interactivity\n    on the client's side, dealing with inconsistencies on multiple\n    fronts, not least of which is the DOM API."]), p(["Comparing Python and JavaScript, for example, by using\n    the former to quickly put together a website using the\n    excellent Django framework while using the latter to add\n    drag and drop functionality is to compare apples and oranges. ", strong(["Actually, it's more like comparing apples to root canals."])])];
 const body = [...excerpt, p(["Had I been writing application code in JavaScript (without\n    touching the DOM), I'd have been in a much better position\n    to weigh each on its merits. Thanks to some terrifically\n    exciting developments in the JS world, it is now possible to\n    write application code ", em(["entirely"]), " in JavaScript."]), p(["When I was first exposed to the idea of having JavaScript on\n    the server, the thing that appealed to me was the potential to\n    share code between server and client. This seemed preferable\n    to the situation that is currently prevalent, whereby objects\n    are created on the server (probably using an ORM such as that\n    provided by Rails or Django) and are then sent down the wire\n    as JSON (or XML for the masochists) at which point they are\n    parsed to create JS objects."]), p([a({
   href: "http://www.sproutcore.com/"

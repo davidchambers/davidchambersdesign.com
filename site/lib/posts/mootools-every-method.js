@@ -5,7 +5,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -18,7 +19,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["A reasonably common task is to determine whether a particular\n    statement evaluates as true for every item in a collection.\n    Take ", var$(["list"]), ", for example, an Array containing\n    several numbers:"]), code$002Dblock("javascript")(`var list = [4, -1, 3, 2, 5];
 `), p(["One might wish to determine whether all the numbers in ", var$(["list"]), " are positive. The required logic is as follows:"]), ol([li(["assume that all the numbers in ", var$(["list"]), " are positive, then..."]), li(["loop through ", var$(["list"]), " until the assumption is proven to be\n      false, or until all items in ", var$(["list"]), " have been tested"])]), p(["In plain JavaScript, this can be achieved using a ", code(["for"]), "\n    loop..."]), code$002Dblock("javascript")(`var allPositive = true;
 for (var i = 0; i < list.length; i++) {

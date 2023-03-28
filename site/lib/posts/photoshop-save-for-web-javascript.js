@@ -5,7 +5,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -18,7 +19,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["This is a JavaScript function for Photoshop which saves\n    the active document as a 24-bit PNG file. It is equivalent to\n    manually selecting ", strong(["File > Save for Web & Devices..."]), "\n    which means that the file size of the resulting PNG will be smaller\n    than would be the case using ", code(["PNGSaveOptions()"]), "."]), code$002Dblock("javascript")(`function saveForWebPNG(outputFolderStr, filename)
 {
     var opts, file;

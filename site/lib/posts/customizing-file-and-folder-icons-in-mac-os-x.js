@@ -5,7 +5,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -18,7 +19,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["Customizing the appearance of files and folders in OS X is\n    a cinch. ⌘C, ⌘I, ⌘V, punctuated by a few mouse clicks."]), p([strong(["Actually, that's total bullshit."])]), p(["Sure, in the simplest of cases the copy and paste approach\n    gets the job done, assuming one knows to copy from Preview.app\n    if copying from the original source fails. As soon as one decides\n    to do something a bit more advanced, such as providing versions\n    for display at different sizes, one's shit outta luck."])];
 const body = [...excerpt, h3(["Creating .icns and applying them to files, folders, or bundles"]), ol([li([p([img({
   alt: "",

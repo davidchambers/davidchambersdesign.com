@@ -5,7 +5,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -18,7 +19,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["I began this post three months ago, got stuck, and put it in\n    the too hard basket. I wanted to devise a workable solution\n    to my stumbling block before publishing this information.\n    I'm getting ahead of myself, though. First, the background."]), p(["As I began writing this post, I had just completed a redesign\n    of this site. The new design removed unnecessary distractions\n    to allow readers to focus on the clearly presented content.\n    I moved site navigation from the sidebar (which I axed\n    altogether) to the header. I decided to fix the header in\n    place so that the navigation and search form would always be\n    visible. This required very little effort, but overcoming the ", a({
   href: "http://css-tricks.com/forums/viewtopic.php?t=3496"
 })(["problem posed by fixed-position headers"]), " took a great\n    deal of trial and error. To save others from going through\n    this tortuous process I'll describe my various approaches,\n    and list the benefits and drawbacks of each."])];

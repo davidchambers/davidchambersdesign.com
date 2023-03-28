@@ -3,7 +3,8 @@ const Prelude$1 = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude$1["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -16,7 +17,7 @@ const Prelude$1 = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
 const {ArrowFunctionExpression, BinaryExpression, CallExpression, ConditionalExpression, Identifier, LogicalExpression, MemberExpression, StringLiteral, UnaryExpression} = Node;
 const isArray = name => CallExpression(MemberExpression(Identifier("Array"))(StringLiteral("isArray")))([Identifier(name)]);
 const isString = name => BinaryExpression("is")(UnaryExpression("typeof")(Identifier(name)))(StringLiteral("string"));
@@ -24,7 +25,8 @@ const Prelude = {
   _apply: preludeIdent => ArrowFunctionExpression([Identifier("name")])(ArrowFunctionExpression([Identifier("args")])(ArrowFunctionExpression([Identifier("target")])(CallExpression(MemberExpression(MemberExpression(Identifier("target"))(Identifier("name")))(StringLiteral("apply")))([Identifier("target"), Identifier("args")])))),
   apply: preludeIdent => ArrowFunctionExpression([Identifier("args")])(ArrowFunctionExpression([Identifier("target")])(CallExpression(MemberExpression(Identifier("target"))(StringLiteral("apply")))([Identifier("target"), Identifier("args")]))),
   construct: preludeIdent => ArrowFunctionExpression([Identifier("constructor")])(ArrowFunctionExpression([Identifier("args")])(CallExpression(MemberExpression(Identifier("Reflect"))(StringLiteral("construct")))([Identifier("constructor"), Identifier("args")]))),
-  match: preludeIdent => ArrowFunctionExpression([Identifier("type")])(MemberExpression(Identifier("type"))(CallExpression(MemberExpression(Identifier("Symbol"))(StringLiteral("for")))([StringLiteral("match")]))),
+  match: preludeIdent => ArrowFunctionExpression([Identifier("type")])(CallExpression(CallExpression(MemberExpression(preludeIdent)(StringLiteral("match'")))([Identifier("type")]))([ArrowFunctionExpression([Identifier("_")])(Identifier("CasesNotExhaustive"))])),
+  ["match'"]: preludeIdent => ArrowFunctionExpression([Identifier("type")])(MemberExpression(Identifier("type"))(CallExpression(MemberExpression(Identifier("Symbol"))(StringLiteral("for")))([StringLiteral("match")]))),
   id: preludeIdent => ArrowFunctionExpression([Identifier("x")])(Identifier("x")),
   const: preludeIdent => ArrowFunctionExpression([Identifier("x")])(ArrowFunctionExpression([Identifier("y")])(Identifier("x"))),
   not: preludeIdent => ArrowFunctionExpression([Identifier("b")])(UnaryExpression("!")(Identifier("b"))),

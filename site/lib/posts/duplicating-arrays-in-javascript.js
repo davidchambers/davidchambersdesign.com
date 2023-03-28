@@ -5,7 +5,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -18,7 +19,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["Many of those who write JavaScript do not come from programming\n    backgrounds (while I've written plenty of PHP, Python, and\n    JavaScript, I don't have much experience with \"real\" programming\n    languages", a({
   href: "#footnote"
 })(["*"]), "). As a result, a significant\n    portion of JavaScript coders do not think of variables as pointers\n    to memory addresses. This leads to confusion in cases such as this:"]), code$002Dblock("javascript")(`var fruits = ['orange', 'lime'];

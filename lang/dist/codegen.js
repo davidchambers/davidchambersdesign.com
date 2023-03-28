@@ -3,7 +3,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -16,8 +17,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
-const never = _ => XXX;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const RESERVED_WORDS = construct(Set)([["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public", "arguments", "eval"]]);
 const validEsIdentifierName = name => Prelude._apply("test")([name])(RegExp("^[$_A-Za-z][$_A-Za-z0-9]*$"));
 const esFromEscapedIdentifierName = name => ({
@@ -56,7 +56,7 @@ const esFromTemplateLiteral = quasis => expressions => ({
   })()
 });
 const esFromMemberExpression = object => property => (() => {
-  const computed = not(match(Node)(const$(false))({
+  const computed = not(match$0027(Node)(const$(false))({
     StringLiteral: validEsIdentifierName
   })(property));
   return {
@@ -76,7 +76,7 @@ const esFromArrayExpression = elements => ({
   elements: Prelude.map(esFromNode)(elements)
 });
 const esFromProperty = key => value => (() => {
-  const computed = not(match(Node)(const$(false))({
+  const computed = not(match$0027(Node)(const$(false))({
     StringLiteral: validEsIdentifierName
   })(key));
   const esKey = computed ? esFromNode(key) : esFromEscapedIdentifierName(key.value);
@@ -112,7 +112,7 @@ const esFromBlockExpression = statements => ({
     params: [],
     body: {
       type: "BlockStatement",
-      body: match(Node)(never)({
+      body: match(Node)({
         VariableDeclaration: pattern => expression => init => Prelude.map(esFromNode)(Prelude.concat(init)(Node.VariableDeclaration(pattern)(expression))),
         FunctionDeclaration: name => parameters => body => init => Prelude.concat(Prelude.map(esFromNode)(Prelude.concat(init)(Node.FunctionDeclaration(name)(parameters)(body))))([{
           type: "ReturnStatement",
@@ -282,7 +282,7 @@ const esFromModule = imports => exports => statements => ({
   sourceType: "module",
   body: Prelude.map(esFromNode)(Prelude.concat(imports)(Prelude.concat(statements)(exports)))
 });
-const esFromNode = match(Node)(never)({
+const esFromNode = match(Node)({
   NullLiteral: esFromLiteral(null),
   BooleanLiteral: esFromLiteral,
   NumberLiteral: esFromLiteral,

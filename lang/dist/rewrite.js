@@ -6,7 +6,8 @@ const Prelude$1 = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude$1["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -19,9 +20,8 @@ const Prelude$1 = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
 const {StringLiteral, TemplateLiteral, MemberExpression, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, ObjectPattern, RestElement, ArrowFunctionExpression, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, CallExpression, ImportDeclaration, ImportSpecifier, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} = Node;
-const never = _ => XXX;
 const has = element => set => Prelude$1._apply("has")([element])(set);
 const add = element => set => construct(Set)([[...set, element]]);
 const union = this$ => that => construct(Set)([[...this$, ...that]]);
@@ -32,14 +32,14 @@ const nextUnusedIdent = names => desiredName => (() => {
   })();
   return recur(0);
 })();
-const namesInPattern = match(Node)(const$([]))({
+const namesInPattern = match$0027(Node)(const$([]))({
   Identifier: name => [name],
   ArrayPattern: elements => Prelude$1.chain(namesInPattern)(elements),
   ObjectPattern: properties => Prelude$1.chain(namesInPattern)(properties),
   Property: key => value => namesInPattern(value),
   RestElement: argument => namesInPattern(argument)
 });
-const namesInStatement = match(Node)(const$([]))({
+const namesInStatement = match$0027(Node)(const$([]))({
   ImportDeclaration: source => specifiers => Prelude$1.map(x => (x => x.name)((x => x.local)(x)))(specifiers),
   VariableDeclaration: pattern => expression => namesInPattern(pattern),
   FunctionDeclaration: name => parameters => body => [name]
@@ -51,12 +51,12 @@ const rewriteImportAllDeclaration = namesExportedFrom => source => hiding => (()
   const namesHiddenNeedlessly = reject(name => Prelude$1._apply("includes")([name])(namesExported))(namesHidden);
   return namesHiddenNeedlessly.length > 0 ? Future.reject(Error(`import * from "${source.value}" hiding {${Prelude$1._apply("join")([", "])(namesHidden)}};\n\n${format.list(namesHiddenNeedlessly)} ${Object.is(1, namesHiddenNeedlessly.length) ? "is" : "are"} not exported so need not be hidden.\n`)) : Future.resolve(ImportDeclaration(source)(map(name => ImportSpecifier(Identifier(name))(Identifier(name)))(reject(name => Prelude$1._apply("includes")([name])(namesHidden))(namesExported))));
 })();
-const rewriteImportDeclaration = namesExportedFrom => match(Node)(never)({
+const rewriteImportDeclaration = namesExportedFrom => match(Node)({
   ImportDeclaration: source => specifiers => Future.resolve(ImportDeclaration(source)(specifiers)),
   ImportAllDeclaration: rewriteImportAllDeclaration(namesExportedFrom)
 });
 const rewriteNode = preludeIdent => (() => {
-  const recur = names => match(Node)(id)({
+  const recur = names => match$0027(Node)(id)({
     TemplateLiteral: quasis => expressions => TemplateLiteral(quasis)(Prelude$1.map(recur(names))(expressions)),
     MemberExpression: object => property => MemberExpression(recur(names)(object))(recur(names)(property)),
     ArrayExpression: x => ArrayExpression(map(recur(names))(x)),
@@ -73,17 +73,17 @@ const rewriteNode = preludeIdent => (() => {
     })(),
     BlockExpression: statements => (() => {
       const otherwise = _ => (() => {
-        const names$0027 = union(names)(Prelude$1.chain(match(Node)(const$([]))({
+        const names$0027 = union(names)(Prelude$1.chain(match$0027(Node)(const$([]))({
           VariableDeclaration: pattern => expression => namesInPattern(pattern),
           FunctionDeclaration: name => parameters => body => [name]
         }))(statements));
         return BlockExpression(Prelude$1.map(recur(names$0027))(statements));
       })();
-      return Object.is(1, statements.length) ? match(Node)(otherwise)({
+      return Object.is(1, statements.length) ? match$0027(Node)(otherwise)({
         ExpressionStatement: recur(names)
       })(statements[0]) : otherwise(null);
     })(),
-    DoBlockExpression: operations => result => recur(names)(reduceRight(result => match(Node)(never)({
+    DoBlockExpression: operations => result => recur(names)(reduceRight(result => match(Node)({
       ArrowAssignmentStatement: pattern => expression => CallExpression(CallExpression(MemberExpression(preludeIdent)(StringLiteral("chain")))([ArrowFunctionExpression([pattern])(result)]))([expression]),
       VariableDeclaration: pattern => expression => CallExpression(ArrowFunctionExpression([pattern])(result))([expression]),
       FunctionDeclaration: name => parameters => body => CallExpression(ArrowFunctionExpression([Identifier(name)])(result))([reduceRight(body => param => ArrowFunctionExpression([param])(body))(body)(parameters)])
@@ -92,7 +92,7 @@ const rewriteNode = preludeIdent => (() => {
     CompositionExpression: left => right => (() => {
       const param = nextUnusedIdent(names)("x");
       const names$0027 = add(param.name)(names);
-      const toCallExpression = match(Node)(flip(CallExpression)([param]))({
+      const toCallExpression = match$0027(Node)(flip(CallExpression)([param]))({
         CompositionExpression: left => right => CallExpression(left)([toCallExpression(right)])
       });
       return recur(names$0027)(ArrowFunctionExpression([param])(toCallExpression(CompositionExpression(left)(right))));

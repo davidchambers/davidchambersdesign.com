@@ -5,7 +5,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -18,7 +19,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["I was delighted to discover this \"trick\"\n    over on CSS-Tricks in a post titled ", a({
   href: "http://css-tricks.com/textarea-tricks/"
 })(["Textarea Tricks"]), ".\n    (See, Chris, I ", em(["do"]), " like you!)"]), p(["Internet Explorer displays a (completely pointless) inactive scrollbar in\n    empty ", code(["textarea"]), " elements, unlike other browsers which wait\n    until a scrollbar is actually ", em(["required"]), " before displaying it."]), p(["As it turns out, there's a dead simple way to prevent this,\n    and once again its everybody's friend ", code(["overflow"]), "\n    to the rescue."]), code$002Dblock("css")(`textarea { overflow: auto; }

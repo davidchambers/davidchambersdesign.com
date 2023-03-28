@@ -5,7 +5,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -18,7 +19,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["Sometimes we require users to log in to a WordPress site in order\n    to access ", em(["front-end"]), " functionality hidden from guests.\n    In such instances, we can simply provide a standard login link:"]), code$002Dblock("php")(`<a href="<?php bloginfo('url'); ?>/wp-login.php">log in</a>
 `), p(["While this gets the job done, it takes users to the dashboard after\n    they have logged in: they must then click on a link to return to the\n    front-end, at which point an additional click may be required to get\n    them back to the page they were viewing. Since WordPress 2.6.2 it has\n    been possible to circumvent this round trip from ", strong(["origin"]), "\n    to ", strong(["wp-login.php"]), " to ", strong(["wp-admin/"]), " to ", strong(["/"]), " and finally back to ", strong(["origin"]), " by\n    including a value for ", code(["redirect_to"]), " in the href:"]), code$002Dblock("php")(`<a href="<?php bloginfo('url'); ?>/wp-login.php?redirect_to=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">log in</a>
 `), p(["The above returns users to their starting point after they've\n    logged in."])];

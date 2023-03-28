@@ -59,6 +59,13 @@ Prelude = {
   },
   match: \preludeIdent -> {
     ArrowFunctionExpression [Identifier "type"] {
+      CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "match'")
+                                     [Identifier "type"])
+                     [ArrowFunctionExpression [Identifier "_"] $ Identifier "CasesNotExhaustive"]
+    }
+  },
+  match': \preludeIdent -> {
+    ArrowFunctionExpression [Identifier "type"] {
       MemberExpression (Identifier "type")
                        (CallExpression (MemberExpression (Identifier "Symbol")
                                                          (StringLiteral "for"))

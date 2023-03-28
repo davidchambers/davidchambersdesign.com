@@ -4,7 +4,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -17,7 +18,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["I recently began learning Danish. I'm taking a weekly class, and\n    the first week's homework involved listening to the conversations\n    we covered during the lesson. I began by playing the audio files,\n    following along in the Danish transcripts. I found myself wanting\n    to listen to the difficult parts over and over, but scrubbing\n    through a timeline is rather awkward."]), p(["It occurred to me that I could use iTunes to solve this problem.\n    Normally, iTunes will play a track from beginning to end. It's\n    possible, though, to specify a certain portion of the track to be\n    played instead. By adding an audio file to a playlist many times\n    and specifying consecutive portions (e.g. 0:00–0:02, 0:02–0:04.8,\n    ...), a track can be broken into manageable clips for more\n    convenient navigation."]), p(["Here's the end result:"]), p([img({
   alt: "iTunes playlist for Danish dialogue",
   src: "/images/posts/93/windows/lion/itunes-playlist-for-danish-dialogue.png"

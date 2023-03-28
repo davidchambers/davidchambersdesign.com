@@ -37,8 +37,6 @@ export default rewriteModule;
   Module,
 } = Node;
 
-never _ = XXX;
-
 has element set = .has [element] set;
 
 add element set = construct Set [[...set, element]];
@@ -53,7 +51,7 @@ nextUnusedIdent names desiredName = {
   recur 0
 };
 
-namesInPattern = match Node (const []) {
+namesInPattern = match' Node (const []) {
   Identifier: \name -> [name],
   ArrayPattern: \elements -> elements >>= namesInPattern,
   ObjectPattern: \properties -> properties >>= namesInPattern,
@@ -61,7 +59,7 @@ namesInPattern = match Node (const []) {
   RestElement: \argument -> namesInPattern argument,
 };
 
-namesInStatement = match Node (const []) {
+namesInStatement = match' Node (const []) {
   ImportDeclaration: \source specifiers -> (.name) . (.local) <$> specifiers,
   VariableDeclaration: \pattern expression -> namesInPattern pattern,
   FunctionDeclaration: \name parameters body -> [name],
@@ -127,14 +125,14 @@ rewriteImportAllDeclaration namesExportedFrom source hiding = {
 };
 
 rewriteImportDeclaration namesExportedFrom = {
-  match Node never {
+  match Node {
     ImportDeclaration: \source specifiers -> Future.resolve $ ImportDeclaration source specifiers,
     ImportAllDeclaration: rewriteImportAllDeclaration namesExportedFrom,
   }
 };
 
 rewriteNode preludeIdent = {
-  recur names = match Node id {
+  recur names = match' Node id {
     TemplateLiteral: \quasis expressions -> {
       TemplateLiteral quasis (recur names <$> expressions)
     },
@@ -159,19 +157,19 @@ rewriteNode preludeIdent = {
     },
     BlockExpression: \statements -> {
       otherwise _ = {
-        names' = union names $ statements >>= match Node (const []) {
+        names' = union names $ statements >>= match' Node (const []) {
           VariableDeclaration: \pattern expression -> namesInPattern pattern,
           FunctionDeclaration: \name parameters body -> [name],
         };
         BlockExpression $ recur names' <$> statements
       };
       if statements.length is 1 then {
-        match Node otherwise {ExpressionStatement: recur names} statements[0]
+        match' Node otherwise {ExpressionStatement: recur names} statements[0]
       } else otherwise null
     },
     DoBlockExpression: \operations result -> {
       recur names $ reduceRight
-        (\result -> match Node never {
+        (\result -> match Node {
            ArrowAssignmentStatement: \pattern expression -> {
              CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "chain")
                                             [ArrowFunctionExpression [pattern] result]) [
@@ -206,7 +204,7 @@ rewriteNode preludeIdent = {
       param = nextUnusedIdent names "x";
       names' = add param.name names;
       toCallExpression = {
-        match Node (flip CallExpression [param]) {
+        match' Node (flip CallExpression [param]) {
           CompositionExpression: \left right -> {
             CallExpression left [toCallExpression right]
           },

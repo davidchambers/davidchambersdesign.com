@@ -4,7 +4,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -17,7 +18,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const bucket = [$21E8(0), $21E9(0), $2193(2), $2192(1), $2193(6), $2192(1), $2193(6), $2192(1), $2193(1), $2192(2), $2193(1), $2192(6), $2191(1), $2192(2), $2191(1), $2192(1), $2191(6), $2192(1), $2191(6), $2192(1), $2191(2), $2190(16)];
 const sticky$002Dnote = [$21E8(4), $21E9(1), $2192(8), $2193(7), $2190(8), $2191(7)];
 const symbol = [$21E8(6), $21E9(2), $2192(1), $2193(5), $2192(2), $2191(5), $2192(1), $2193(1), $2190(4), $2191(1), $21E8(0), $21E9(2), $2192(4), $2193(2), $2190(4), $2191(2)];

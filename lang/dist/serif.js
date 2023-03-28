@@ -8,7 +8,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -21,7 +22,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const parse = filename => sourceText => mapRej(error => (() => {
   const lines = chain(line => (() => {
     const offset = line.number - error.location.start.line;
@@ -39,7 +40,7 @@ const findDependencies = filename => tree => Prelude._apply("has")([filename])(t
   ast,
   dependencies,
   exportedNames
-}]]])))(dependencies))(Prelude.chain(match(Node)(const$([]))({
+}]]])))(dependencies))(Prelude.chain(match$0027(Node)(const$([]))({
   ExportNamedDeclaration: map(x => (x => x.name)((x => x.exported)(x)))
 }))(ast.exports)))(Prelude.chain(({source: {value}}) => Prelude._apply("test")([value])(RegExp("^[./].*[.]serif$")) ? [path.join([filename, "..", value])] : [])(ast.imports)))(parse(filename)(sourceText)))(mapRej(x => x.message)(fs.readFile(filename)));
 const orderDependencies = tree => (() => {

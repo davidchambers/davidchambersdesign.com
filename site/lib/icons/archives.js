@@ -4,7 +4,8 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => type[Symbol.for("match")],
+  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: b => !b,
@@ -17,7 +18,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const base = [$21E8(0), $21E9(1), $2192(1), $2193(14), $2192(14), $2191(14), $2192(1), $2193(15), $2190(16), $2191(15)];
 const spiral = [$21E8(3), $21E9(0), $2192(1), $2193(1), $2190(1), $2191(1), $21E8(3), $21E9(0), $2192(1), $2193(1), $2190(1), $2191(1), $21E8(3), $21E9(0), $2192(1), $2193(1), $2190(1), $2191(1), $21E8(3), $21E9(0), $2192(1), $2193(1), $2190(1), $2191(1)];
 const header = [$21E8(1), $21E9(1), $2192(2), $2193(1), $2192(1), $2191(1), $2192(2), $2193(1), $2192(1), $2191(1), $2192(2), $2193(1), $2192(1), $2191(1), $2192(2), $2193(1), $2192(1), $2191(1), $2192(2), $2193(3), $2190(14), $2191(3)];
