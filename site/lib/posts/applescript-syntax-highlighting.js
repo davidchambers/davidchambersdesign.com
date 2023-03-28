@@ -10,11 +10,13 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
+  id: x => x,
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  match: type => type[Symbol.for("match")],
   not: b => !b,
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
 const excerpt = [p(["I've been using Alex Gorbatchev's ", a({
   href: "http://alexgorbatchev.com/wiki/SyntaxHighlighter"
 })(["SyntaxHighlighter"]), "\n    to syntactically display code of various languages for several\n    months now. When I decided to post an AppleScript snippet, however,\n    I realised that I was out of luck. SyntaxHighlighter does not\n    include an AppleScript \"brush\", and a quick flick through the ", a({

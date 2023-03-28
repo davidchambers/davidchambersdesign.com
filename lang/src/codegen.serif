@@ -1,4 +1,8 @@
+import Node from "./Node.js";
+
 export default esFromNode;
+
+never _ = XXX;
 
 ;; https://262.ecma-international.org/13.0/#sec-keywords-and-reserved-words
 RESERVED_WORDS = construct Set [[
@@ -58,7 +62,12 @@ validEsIdentifierName name = {
   .test [name] $ RegExp "^[$_A-Za-z][$_A-Za-z0-9]*$"
 };
 
-esFromIdentifierName = {
+esFromEscapedIdentifierName name = {
+  type: "Identifier",
+  name,
+};
+
+esFromIdentifier = {
   escapeChar c = {
     c
     |> .charCodeAt [0]
@@ -76,23 +85,9 @@ esFromIdentifierName = {
   esFromEscapedIdentifierName . escape
 };
 
-esFromEscapedIdentifierName name = {
-  type: "Identifier",
-  name,
-};
-
-esFromNullLiteral = {
-  type: "Literal",
-  value: null,
-};
-
-esFromLiteral {value} = {
+esFromLiteral value = {
   type: "Literal",
   value,
-};
-
-esFromIdentifier {name} = {
-  esFromIdentifierName name
 };
 
 esFromElision = null;
@@ -105,7 +100,7 @@ TemplateElement tail raw = {
   },
 };
 
-esFromTemplateLiteral {expressions, quasis} = {
+esFromTemplateLiteral quasis expressions = {
   type: "TemplateLiteral",
   expressions: esFromNode <$> expressions,
   quasis: {
@@ -129,11 +124,8 @@ esFromTemplateLiteral {expressions, quasis} = {
   },
 };
 
-esFromMemberExpression {object, property} = {
-  computed = not {
-    property.type is "StringLiteral" and
-    validEsIdentifierName property.value
-  };
+esFromMemberExpression object property = {
+  computed = not $ match Node (const_ false) {StringLiteral: validEsIdentifierName} property;
   {
     type: "MemberExpression",
     object: esFromNode object,
@@ -143,47 +135,30 @@ esFromMemberExpression {object, property} = {
   }
 };
 
-esFromSpreadElement {argument} = {
+esFromSpreadElement argument = {
   type: "SpreadElement",
   argument: esFromNode argument,
 };
 
-esFromArrayExpression {elements} = {
+esFromArrayExpression elements = {
   type: "ArrayExpression",
   elements: esFromNode <$> elements,
 };
 
-esFromProperty property = {
-  if property.type is "SpreadElement" then esFromSpreadElement property else {
-    computed = not {
-      property.key.type is "StringLiteral" and
-      validEsIdentifierName property.key.value
-    };
-    key = if computed then esFromNode property.key else esFromEscapedIdentifierName property.key.value;
-    value = esFromNode property.value;
-    shorthand = {
-      key.type is "Identifier" and
-      value.type is "Identifier" and
-      key.name is value.name
-    };
-    {
-      type: "Property",
-      key,
-      value,
-      kind: "init",
-      method: false,
-      shorthand,
-      computed,
-    }
-  }
+esFromProperty key value = {
+  computed = not $ match Node (const_ false) {StringLiteral: validEsIdentifierName} key;
+  esKey = if computed then esFromNode key else esFromEscapedIdentifierName key.value;
+  esValue = esFromNode value;
+  shorthand = esKey.type is "Identifier" and esValue.type is "Identifier" and esKey.name is esValue.name;
+  {type: "Property", key: esKey, value: esValue, kind: "init", method: false, shorthand, computed}
 };
 
-esFromObjectExpression {properties} = {
+esFromObjectExpression properties = {
   type: "ObjectExpression",
-  properties: esFromProperty <$> properties,
+  properties: esFromNode <$> properties,
 };
 
-esFromArrowFunctionExpression {parameters, body} = {
+esFromArrowFunctionExpression parameters body = {
   esBody = esFromNode body;
   {
     type: "ArrowFunctionExpression",
@@ -193,27 +168,26 @@ esFromArrowFunctionExpression {parameters, body} = {
   }
 };
 
-esFromBlockExpression {statements} = {
+esFromBlockExpression statements = {
   type: "CallExpression",
   callee: {
     type: "ArrowFunctionExpression",
     params: [],
     body: {
       type: "BlockStatement",
-      body: {
-        switch (.type) $ .at [-1] statements
-        when "VariableDeclaration" then [
-          ...{esFromNode <$> statements},
-        ]
-        when "FunctionDeclaration" then [
-          ...{esFromNode <$> statements},
-          {type: "ReturnStatement", argument: {type: "Identifier", name: (.name) $ .at [-1] statements}},
-        ]
-        when "ExpressionStatement" then [
-          ...{esFromNode <$> .slice [0, -1] statements},
-          {type: "ReturnStatement", argument: esFromNode $ (.expression) $ .at [-1] statements},
-        ]
-      },
+      body: match Node never {
+        VariableDeclaration: pattern => expression => init => (
+          (esFromNode <$> init <> Node.VariableDeclaration pattern expression)
+        ),
+        FunctionDeclaration: name => parameters => body => init => (
+          (esFromNode <$> init <> Node.FunctionDeclaration name parameters body)
+          <> [{type: "ReturnStatement", argument: {type: "Identifier", name}}]
+        ),
+        ExpressionStatement: expression => init => (
+          (esFromNode <$> init)
+          <> [{type: "ReturnStatement", argument: esFromNode expression}]
+        ),
+      } (.at [-1] statements) (.slice [0, -1] statements),
     },
     expression: false,
   },
@@ -221,21 +195,21 @@ esFromBlockExpression {statements} = {
   optional: false,
 };
 
-esFromUnaryExpression {operator, argument} = {
+esFromUnaryExpression operator argument = {
   type: "UnaryExpression",
   operator,
   argument: esFromNode argument,
   prefix: true,
 };
 
-esFromBinaryExpression {operator, left, right} = {
+esFromBinaryExpression operator left right = {
   type: "BinaryExpression",
   operator,
   left: esFromNode left,
   right: esFromNode right,
 };
 
-esFromLogicalExpression {operator, left, right} = {
+esFromLogicalExpression operator left right = {
   type: "LogicalExpression",
   operator: {
     switch operator
@@ -247,7 +221,7 @@ esFromLogicalExpression {operator, left, right} = {
   right: esFromNode right,
 };
 
-esFromConditionalExpression {predicate, consequent, alternative} = {
+esFromConditionalExpression predicate consequent alternative = {
   type: "ConditionalExpression",
   test: esFromNode predicate,
   consequent: esFromNode consequent,
@@ -263,7 +237,7 @@ esFromSwitchCase {predicates, consequent} = {predicate => {
   }],
 }} <$> predicates;
 
-esFromSwitchExpression {discriminant, cases, default} = {
+esFromSwitchExpression discriminant cases default = {
   type: "CallExpression",
   callee: {
     type: "ArrowFunctionExpression",
@@ -292,14 +266,14 @@ esFromSwitchExpression {discriminant, cases, default} = {
   optional: false,
 };
 
-esFromCallExpression {callee, arguments: args} = {
+esFromCallExpression callee arguments = {
   type: "CallExpression",
   callee: esFromNode callee,
-  arguments: esFromNode <$> args,
+  arguments: esFromNode <$> arguments,
   optional: false,
 };
 
-esFromVariableDeclaration {pattern, expression} = {
+esFromVariableDeclaration pattern expression = {
   type: "VariableDeclaration",
   kind: "const",
   declarations: [{
@@ -309,12 +283,12 @@ esFromVariableDeclaration {pattern, expression} = {
   }],
 };
 
-esFromFunctionDeclaration {name, parameters, body} = {
+esFromFunctionDeclaration name parameters body = {
   type: "VariableDeclaration",
   kind: "const",
   declarations: [{
     type: "VariableDeclarator",
-    id: esFromIdentifierName name,
+    id: esFromIdentifier name,
     init: .reduceRight [
       (esBody, param) => {
         type: "ArrowFunctionExpression",
@@ -327,101 +301,103 @@ esFromFunctionDeclaration {name, parameters, body} = {
   }],
 };
 
-esFromExpressionStatement {expression} = {
+esFromExpressionStatement expression = {
   type: "ExpressionStatement",
   expression: esFromNode expression,
 };
 
-esFromArrayPattern {elements} = {
+esFromArrayPattern elements = {
   type: "ArrayPattern",
   elements: esFromNode <$> elements,
 };
 
-esFromObjectPattern {properties} = {
+esFromObjectPattern properties = {
   type: "ObjectPattern",
   properties: esFromNode <$> properties,
 };
 
-esFromRestElement {argument} = {
+esFromRestElement argument = {
   type: "RestElement",
   argument: esFromNode argument,
 };
 
-esFromExportDefaultDeclaration {declaration} = {
+esFromExportDefaultDeclaration declaration = {
   type: "ExportDefaultDeclaration",
   declaration: esFromNode declaration,
 };
 
-esFromExportNamedDeclaration {specifiers} = {
+esFromExportNamedDeclaration specifiers = {
   type: "ExportNamedDeclaration",
-  specifiers: {specifier => {
-    type: "ExportSpecifier",
-    local: esFromNode specifier,
-    exported: esFromNode specifier,
-  }} <$> specifiers,
+  specifiers: esFromNode <$> specifiers,
 };
 
-esFromImportDefaultSpecifier {local} = {
+esFromExportSpecifier local exported = {
+  type: "ExportSpecifier",
+  local: esFromNode local,
+  exported: esFromNode exported,
+};
+
+esFromImportDefaultSpecifier local = {
   type: "ImportDefaultSpecifier",
-  local: esFromIdentifier local,
+  local: esFromNode local,
 };
 
-esFromImportNamespaceSpecifier {local} = {
+esFromImportNamespaceSpecifier local = {
   type: "ImportNamespaceSpecifier",
-  local: esFromIdentifier local,
+  local: esFromNode local,
 };
 
-esFromImportSpecifier {local, imported} = {
+esFromImportSpecifier local imported = {
   type: "ImportSpecifier",
-  local: esFromIdentifier local,
-  imported: esFromIdentifier imported,
+  local: esFromNode local,
+  imported: esFromNode imported,
 };
 
-esFromImportDeclaration {source, specifiers} = {
+esFromImportDeclaration source specifiers = {
   type: "ImportDeclaration",
   specifiers: esFromNode <$> specifiers,
   source: esFromNode source,
 };
 
-esFromModule {imports, exports, statements} = {
+esFromModule imports exports statements = {
   type: "Program",
   sourceType: "module",
   body: esFromNode <$> imports <> statements <> exports,
 };
 
-esFromNode expr = {
-  switch expr.type
-  when "NullLiteral"              then esFromNullLiteral
-  when "BooleanLiteral"           then esFromLiteral expr
-  when "NumberLiteral"            then esFromLiteral expr
-  when "StringLiteral"            then esFromLiteral expr
-  when "TemplateLiteral"          then esFromTemplateLiteral expr
-  when "MemberExpression"         then esFromMemberExpression expr
-  when "Identifier"               then esFromIdentifier expr
-  when "ArrayExpression"          then esFromArrayExpression expr
-  when "ObjectExpression"         then esFromObjectExpression expr
-  when "ArrowFunctionExpression"  then esFromArrowFunctionExpression expr
-  when "BlockExpression"          then esFromBlockExpression expr
-  when "UnaryExpression"          then esFromUnaryExpression expr
-  when "BinaryExpression"         then esFromBinaryExpression expr
-  when "LogicalExpression"        then esFromLogicalExpression expr
-  when "ConditionalExpression"    then esFromConditionalExpression expr
-  when "SwitchExpression"         then esFromSwitchExpression expr
-  when "CallExpression"           then esFromCallExpression expr
-  when "SpreadElement"            then esFromSpreadElement expr
-  when "ExpressionStatement"      then esFromExpressionStatement expr
-  when "VariableDeclaration"      then esFromVariableDeclaration expr
-  when "FunctionDeclaration"      then esFromFunctionDeclaration expr
-  when "Property"                 then esFromProperty expr
-  when "ArrayPattern"             then esFromArrayPattern expr
-  when "Elision"                  then esFromElision
-  when "ObjectPattern"            then esFromObjectPattern expr
-  when "RestElement"              then esFromRestElement expr
-  when "ImportDeclaration"        then esFromImportDeclaration expr
-  when "ImportDefaultSpecifier"   then esFromImportDefaultSpecifier expr
-  when "ImportNamespaceSpecifier" then esFromImportNamespaceSpecifier expr
-  when "ImportSpecifier"          then esFromImportSpecifier expr
-  when "ExportNamedDeclaration"   then esFromExportNamedDeclaration expr
-  when "ExportDefaultDeclaration" then esFromExportDefaultDeclaration expr
-  when "Module"                   then esFromModule expr
+esFromNode = match Node never {
+  NullLiteral:                esFromLiteral null,
+  BooleanLiteral:             esFromLiteral,
+  NumberLiteral:              esFromLiteral,
+  StringLiteral:              esFromLiteral,
+  TemplateLiteral:            esFromTemplateLiteral,
+  MemberExpression:           esFromMemberExpression,
+  Identifier:                 esFromIdentifier,
+  ArrayExpression:            esFromArrayExpression,
+  ObjectExpression:           esFromObjectExpression,
+  ArrowFunctionExpression:    esFromArrowFunctionExpression,
+  BlockExpression:            esFromBlockExpression,
+  UnaryExpression:            esFromUnaryExpression,
+  BinaryExpression:           esFromBinaryExpression,
+  LogicalExpression:          esFromLogicalExpression,
+  ConditionalExpression:      esFromConditionalExpression,
+  SwitchExpression:           esFromSwitchExpression,
+  CallExpression:             esFromCallExpression,
+  SpreadElement:              esFromSpreadElement,
+  ExpressionStatement:        esFromExpressionStatement,
+  VariableDeclaration:        esFromVariableDeclaration,
+  FunctionDeclaration:        esFromFunctionDeclaration,
+  Property:                   esFromProperty,
+  ArrayPattern:               esFromArrayPattern,
+  Elision:                    esFromElision,
+  ObjectPattern:              esFromObjectPattern,
+  RestElement:                esFromRestElement,
+  ImportDeclaration:          esFromImportDeclaration,
+  ImportDefaultSpecifier:     esFromImportDefaultSpecifier,
+  ImportNamespaceSpecifier:   esFromImportNamespaceSpecifier,
+  ImportSpecifier:            esFromImportSpecifier,
+  ExportNamedDeclaration:     esFromExportNamedDeclaration,
+  ExportDefaultDeclaration:   esFromExportDefaultDeclaration,
+  ExportSpecifier:            esFromExportSpecifier,
+  Module:                     esFromModule,
 };

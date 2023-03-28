@@ -1,9 +1,9 @@
 import {attempt} from "fluture";
 
+import Node from "./Node.serif";
 import esModuleFromSerifModule from "./codegen.serif";
 import * as grammar from "./grammar.js";
 import rewrite from "./rewrite.serif";
-import * from "./types.serif";
 
 export {
   parse,
@@ -18,14 +18,12 @@ parse filename sourceText = {
 };
 
 changeExtensionInImportDeclaration {source, specifiers} = {
-  source' = StringLiteral $ .replace [RegExp "[.]serif$", ".js"] source.value;
-  ImportDeclaration source' specifiers
+  source' = Node.StringLiteral $ .replace [RegExp "[.]serif$", ".js"] source.value;
+  Node.ImportDeclaration source' specifiers
 };
 
-changeExtensions {imports, exports, statements} = Module {
-  imports: changeExtensionInImportDeclaration <$> imports,
-  exports,
-  statements,
+changeExtensions {imports, exports, statements} = {
+  Node.Module (changeExtensionInImportDeclaration <$> imports) exports statements
 };
 
 trans module namesExportedFrom = {

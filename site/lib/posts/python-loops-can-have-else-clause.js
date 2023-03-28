@@ -10,11 +10,13 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
+  id: x => x,
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  match: type => type[Symbol.for("match")],
   not: b => !b,
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
 const body = [p(["I write a lot of Python. I also write a lot of JavaScript. As I switch\n    between the two (often several times in a day) I sometimes find myself\n    trying to do something in one using the syntax of the other. The most\n    common example is joining a list."]), p(["Python:"]), code$002Dblock("python")(`' '.join(['foo', 'bar'])
 `), p(["JavaScript:"]), code$002Dblock("javascript")(`['foo', 'bar'].join(' ')
 `), p(["Often", $2014, "as is the case above", $2014, "the syntactical differences\n    are minor, but there are times when there's no direct translation."]), p([a({

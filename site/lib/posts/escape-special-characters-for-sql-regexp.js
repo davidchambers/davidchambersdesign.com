@@ -10,11 +10,13 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
+  id: x => x,
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  match: type => type[Symbol.for("match")],
   not: b => !b,
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
 const excerpt = [p(["Developers will be familiar with using PHP's ", a({
   href: "http://php.net/manual/en/function.mysql-real-escape-string.php"
 })(["mysql_real_escape_string"]), "\n    to escape problematic characters before submitting a query.\n    When the query in question involves MySQL's REGEXP function,\n    however, we need to go one step further and escape regex's\n    special characters."])];

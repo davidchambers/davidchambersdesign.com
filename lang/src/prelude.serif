@@ -1,9 +1,11 @@
-import * from "./types.serif";
+import Node from "./Node.serif";
 
 export {
   _apply,
   apply,
   construct,
+  match,
+  id,
   const_,
   not,
   concat,
@@ -13,6 +15,18 @@ export {
   flip,
   chain,
 };
+
+{
+  ArrowFunctionExpression,
+  BinaryExpression,
+  CallExpression,
+  ConditionalExpression,
+  Identifier,
+  LogicalExpression,
+  MemberExpression,
+  StringLiteral,
+  UnaryExpression,
+} = Node;
 
 isArray name = {
   CallExpression (MemberExpression (Identifier "Array")
@@ -56,6 +70,21 @@ construct preludeIdent = {
                                        (StringLiteral "construct"))
                      [Identifier "constructor", Identifier "args"]
     }
+  }
+};
+
+match preludeIdent = {
+  ArrowFunctionExpression [Identifier "type"] {
+    MemberExpression (Identifier "type")
+                     (CallExpression (MemberExpression (Identifier "Symbol")
+                                                       (StringLiteral "for"))
+                                     [StringLiteral "match"])
+  }
+};
+
+id preludeIdent = {
+  ArrowFunctionExpression [Identifier "x"] {
+    Identifier "x"
   }
 };
 

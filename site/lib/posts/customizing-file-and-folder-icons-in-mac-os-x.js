@@ -10,11 +10,13 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
+  id: x => x,
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  match: type => type[Symbol.for("match")],
   not: b => !b,
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
 const excerpt = [p(["Customizing the appearance of files and folders in OS X is\n    a cinch. ⌘C, ⌘I, ⌘V, punctuated by a few mouse clicks."]), p([strong(["Actually, that's total bullshit."])]), p(["Sure, in the simplest of cases the copy and paste approach\n    gets the job done, assuming one knows to copy from Preview.app\n    if copying from the original source fails. As soon as one decides\n    to do something a bit more advanced, such as providing versions\n    for display at different sizes, one's shit outta luck."])];
 const body = [...excerpt, h3(["Creating .icns and applying them to files, folders, or bundles"]), ol([li([p([img({
   alt: "",

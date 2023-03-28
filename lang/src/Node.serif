@@ -1,0 +1,50 @@
+export default Node;
+
+type Node
+  = NullLiteral
+  | BooleanLiteral value
+  | NumberLiteral value
+  | StringLiteral value
+  | TemplateLiteral quasis expressions
+  | MemberExpression object property
+  | Identifier name
+  | SpreadElement argument
+  | ArrayExpression elements
+  | Property key value
+  | ObjectExpression properties
+  | ArrayPattern elements
+  | Elision
+  | ObjectPattern properties
+  | RestElement argument
+  | ArrowFunctionExpression parameters body
+  | PropertyAccessor identifier
+  | BlockExpression statements
+  | DoBlockExpression operations result
+  | ArrowAssignmentStatement pattern expression
+  | UnaryExpression operator argument
+  | CompositionExpression left right
+  | BinaryExpression operator left right
+  | ConcatenationExpression left right
+  | MapExpression left right
+  | BindExpression left right
+  | LogicalExpression operator left right
+  | ConditionalExpression predicate consequent alternative
+  | SwitchExpression discriminant cases default
+  | SwitchCase predicates consequent
+  | PipeExpression head body
+  | MethodCallExpression name
+  | CallExpression callee arguments
+  | ImportDeclaration source specifiers
+  | ImportAllDeclaration source hiding
+  | ImportDefaultSpecifier local
+  | ImportSpecifier local imported
+  | ImportNamespaceSpecifier local
+  | ExportNamedDeclaration specifiers
+  | ExportDefaultDeclaration declaration
+  | ExportSpecifier local exported
+  | VariableDeclaration pattern expression
+  | FunctionDeclaration name parameters body
+  | ExpressionStatement expression
+  | Module imports exports statements
+  | DataTypeDeclaration name constructors
+;

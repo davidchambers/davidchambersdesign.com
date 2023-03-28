@@ -10,11 +10,13 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
+  id: x => x,
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  match: type => type[Symbol.for("match")],
   not: b => !b,
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
 const mask$002Dchars = {
   A: [$2192(14), $2193(24), $2190(4), $2191(10), $2190(6), $2193(10), $2190(4), $2191(24), $21E8(4), $21E9(4), $2192(6), $2193(6), $2190(6), $2191(6)],
   B: [$2192(14), $2193(24), $2190(14), $2191(24), $21E8(4), $21E9(4), $2192(6), $2193(6), $2190(6), $2191(6), $21E8(0), $21E9(10), $2192(6), $2193(6), $2190(6), $2191(6)],

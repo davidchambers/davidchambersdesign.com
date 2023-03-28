@@ -10,11 +10,13 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
+  id: x => x,
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  match: type => type[Symbol.for("match")],
   not: b => !b,
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
 const body = [p(["Generally speaking browsers rerender elements as required\n    – in response to DOM changes effected via JavaScript, for\n    instance. There are times, though, when the browser ", em(["Internet Explorer, I'm looking at you!"]), "\n    needs a gentle nudge."]), p([a({
   href: "http://ajaxian.com/archives/forcing-a-ui-redraw-from-javascript"
 })(["Forcing a UI redraw from JavaScript"]), " highlights the solution\n    employed by Thomas Fuchs, creator of the popular JavaScript library ", a({

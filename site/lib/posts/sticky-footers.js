@@ -10,11 +10,13 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
+  id: x => x,
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  match: type => type[Symbol.for("match")],
   not: b => !b,
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
 const excerpt = [p([strong(["Sticky footers should be ubiquitous. They are not."])]), p(["This leads me to believe that many developers are unaware\n    of how to prevent footers from floating up on pages without\n    much content."])];
 const body = [...excerpt, p(["I'll explain how it's done. The markup must look something like\n    the following:"]), code$002Dblock("html")(`<body>
     <div id="wrap">

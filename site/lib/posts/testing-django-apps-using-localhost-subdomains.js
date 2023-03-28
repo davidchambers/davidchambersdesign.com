@@ -10,11 +10,13 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
+  id: x => x,
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  match: type => type[Symbol.for("match")],
   not: b => !b,
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
 const body = [p(["This turned out to be quite a bit easier than I'd imagined.\n    Here are the things I did:"]), ol([li([p(["I saved ", a({
   href: "http://thingsilearned.com/2009/01/05/using-subdomains-in-django/"
 })(["Dave Fowler's subdomain middleware"]), "\n        as ", code(["middleware.py"]), " in my project directory:"]), code$002Dblock("python")(`class SubdomainMiddleware:

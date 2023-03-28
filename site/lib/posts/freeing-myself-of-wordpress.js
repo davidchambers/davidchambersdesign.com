@@ -10,11 +10,13 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
+  id: x => x,
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  match: type => type[Symbol.for("match")],
   not: b => !b,
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
 const excerpt = [p([strong(["I wanted to simplify everything."]), "\n    I wanted to write posts in ", a({
   href: "http://daringfireball.net/projects/markdown/syntax"
 })(["Markdown"]), ", not HTML. I wanted to save posts as files,\n    not database entries. I wanted to free myself of my dependence\n    on WordPress, PHP, and MySQL in one fell swoop."]), p(["So, ", a({

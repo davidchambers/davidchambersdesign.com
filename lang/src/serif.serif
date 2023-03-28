@@ -1,6 +1,7 @@
 import {generate} from "astring";
 import {attempt, fork, mapRej, parallel, resolve} from "fluture";
 
+import Node from "./Node.js";
 import * as fs from "./fs.serif";
 import * as serif from "./index.serif";
 import * as path from "./path.serif";
@@ -58,26 +59,17 @@ findDependencies filename tree = {
   if .has [filename] tree then resolve tree else do {
     sourceText <- mapRej (.message) $ fs.readFile filename;
     ast <- parse filename sourceText;
-    dependencies <- resolve $ ast.imports >>= {source: {value}} => {
+    dependencies = ast.imports >>= {source: {value}} => {
       if .test [value] (RegExp "^[./].*[.]serif$") then {
         [path.join [filename, "..", value]]
       } else {
         []
       }
     };
-    exportedNames <- resolve $ ast.exports >>= exportDeclaration => {
-      if exportDeclaration.type is "ExportNamedDeclaration" then {
-        (.name) <$> exportDeclaration.specifiers
-      } else {
-        []
-      }
-    };
+    exportedNames = ast.exports >>= match Node (const_ []) {ExportNamedDeclaration: map ((.name) . (.exported))};
     .reduce [
       reducer,
-      resolve $ construct Map [[
-        ...tree,
-        [filename, {sourceText, ast, dependencies, exportedNames}],
-      ]],
+      resolve $ construct Map [[...tree, [filename, {sourceText, ast, dependencies, exportedNames}]]],
     ] dependencies
   }
 };

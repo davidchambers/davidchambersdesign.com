@@ -1,3 +1,4 @@
+import Node from "./Node.js";
 const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
@@ -7,31 +8,29 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
+  id: x => x,
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  match: type => type[Symbol.for("match")],
   not: b => !b,
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const never = _ => XXX;
 const RESERVED_WORDS = construct(Set)([["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public", "arguments", "eval"]]);
 const validEsIdentifierName = name => Prelude._apply("test")([name])(RegExp("^[$_A-Za-z][$_A-Za-z0-9]*$"));
-const esFromIdentifierName = (() => {
-  const escapeChar = c => concat("$")(Prelude._apply("padStart")([4, "0"])(Prelude._apply("toUpperCase")([])(Prelude._apply("toString")([16])(Prelude._apply("charCodeAt")([0])(c)))));
-  const escape = name => Object.is("import", name) ? "import" : Prelude._apply("has")([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : Prelude._apply("replaceAll")([apply(["[^$_A-Za-z0-9]", "g"])(RegExp), escapeChar])(name);
-  return x => esFromEscapedIdentifierName(escape(x));
-})();
 const esFromEscapedIdentifierName = name => ({
   type: "Identifier",
   name
 });
-const esFromNullLiteral = {
-  type: "Literal",
-  value: null
-};
-const esFromLiteral = ({value}) => ({
+const esFromIdentifier = (() => {
+  const escapeChar = c => concat("$")(Prelude._apply("padStart")([4, "0"])(Prelude._apply("toUpperCase")([])(Prelude._apply("toString")([16])(Prelude._apply("charCodeAt")([0])(c)))));
+  const escape = name => Object.is("import", name) ? "import" : Prelude._apply("has")([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : Prelude._apply("replaceAll")([apply(["[^$_A-Za-z0-9]", "g"])(RegExp), escapeChar])(name);
+  return x => esFromEscapedIdentifierName(escape(x));
+})();
+const esFromLiteral = value => ({
   type: "Literal",
   value
 });
-const esFromIdentifier = ({name}) => esFromIdentifierName(name);
 const esFromElision = null;
 const TemplateElement = tail => raw => ({
   type: "TemplateElement",
@@ -40,7 +39,7 @@ const TemplateElement = tail => raw => ({
     raw
   }
 });
-const esFromTemplateLiteral = ({expressions, quasis}) => ({
+const esFromTemplateLiteral = quasis => expressions => ({
   type: "TemplateLiteral",
   expressions: Prelude.map(esFromNode)(expressions),
   quasis: (() => {
@@ -54,8 +53,10 @@ const esFromTemplateLiteral = ({expressions, quasis}) => ({
     })();
   })()
 });
-const esFromMemberExpression = ({object, property}) => (() => {
-  const computed = not(Object.is("StringLiteral", property.type) && validEsIdentifierName(property.value));
+const esFromMemberExpression = object => property => (() => {
+  const computed = not(match(Node)(const_(false))({
+    StringLiteral: validEsIdentifierName
+  })(property));
   return {
     type: "MemberExpression",
     object: esFromNode(object),
@@ -64,34 +65,36 @@ const esFromMemberExpression = ({object, property}) => (() => {
     optional: false
   };
 })();
-const esFromSpreadElement = ({argument}) => ({
+const esFromSpreadElement = argument => ({
   type: "SpreadElement",
   argument: esFromNode(argument)
 });
-const esFromArrayExpression = ({elements}) => ({
+const esFromArrayExpression = elements => ({
   type: "ArrayExpression",
   elements: Prelude.map(esFromNode)(elements)
 });
-const esFromProperty = property => Object.is("SpreadElement", property.type) ? esFromSpreadElement(property) : (() => {
-  const computed = not(Object.is("StringLiteral", property.key.type) && validEsIdentifierName(property.key.value));
-  const key = computed ? esFromNode(property.key) : esFromEscapedIdentifierName(property.key.value);
-  const value = esFromNode(property.value);
-  const shorthand = Object.is("Identifier", key.type) && Object.is("Identifier", value.type) && Object.is(value.name, key.name);
+const esFromProperty = key => value => (() => {
+  const computed = not(match(Node)(const_(false))({
+    StringLiteral: validEsIdentifierName
+  })(key));
+  const esKey = computed ? esFromNode(key) : esFromEscapedIdentifierName(key.value);
+  const esValue = esFromNode(value);
+  const shorthand = Object.is("Identifier", esKey.type) && Object.is("Identifier", esValue.type) && Object.is(esValue.name, esKey.name);
   return {
     type: "Property",
-    key,
-    value,
+    key: esKey,
+    value: esValue,
     kind: "init",
     method: false,
     shorthand,
     computed
   };
 })();
-const esFromObjectExpression = ({properties}) => ({
+const esFromObjectExpression = properties => ({
   type: "ObjectExpression",
-  properties: Prelude.map(esFromProperty)(properties)
+  properties: Prelude.map(esFromNode)(properties)
 });
-const esFromArrowFunctionExpression = ({parameters, body}) => (() => {
+const esFromArrowFunctionExpression = parameters => body => (() => {
   const esBody = esFromNode(body);
   return {
     type: "ArrowFunctionExpression",
@@ -100,51 +103,46 @@ const esFromArrowFunctionExpression = ({parameters, body}) => (() => {
     expression: not(Object.is("BlockStatement", esBody.type))
   };
 })();
-const esFromBlockExpression = ({statements}) => ({
+const esFromBlockExpression = statements => ({
   type: "CallExpression",
   callee: {
     type: "ArrowFunctionExpression",
     params: [],
     body: {
       type: "BlockStatement",
-      body: (() => {
-        switch ((x => x.type)(Prelude._apply("at")([-1])(statements))) {
-          case "VariableDeclaration":
-            return [...Prelude.map(esFromNode)(statements)];
-          case "FunctionDeclaration":
-            return [...Prelude.map(esFromNode)(statements), {
-              type: "ReturnStatement",
-              argument: {
-                type: "Identifier",
-                name: (x => x.name)(Prelude._apply("at")([-1])(statements))
-              }
-            }];
-          case "ExpressionStatement":
-            return [...Prelude.map(esFromNode)(Prelude._apply("slice")([0, -1])(statements)), {
-              type: "ReturnStatement",
-              argument: esFromNode((x => x.expression)(Prelude._apply("at")([-1])(statements)))
-            }];
-        }
-      })()
+      body: match(Node)(never)({
+        VariableDeclaration: pattern => expression => init => Prelude.map(esFromNode)(Prelude.concat(init)(Node.VariableDeclaration(pattern)(expression))),
+        FunctionDeclaration: name => parameters => body => init => Prelude.concat(Prelude.map(esFromNode)(Prelude.concat(init)(Node.FunctionDeclaration(name)(parameters)(body))))([{
+          type: "ReturnStatement",
+          argument: {
+            type: "Identifier",
+            name
+          }
+        }]),
+        ExpressionStatement: expression => init => Prelude.concat(Prelude.map(esFromNode)(init))([{
+          type: "ReturnStatement",
+          argument: esFromNode(expression)
+        }])
+      })(Prelude._apply("at")([-1])(statements))(Prelude._apply("slice")([0, -1])(statements))
     },
     expression: false
   },
   arguments: [],
   optional: false
 });
-const esFromUnaryExpression = ({operator, argument}) => ({
+const esFromUnaryExpression = operator => argument => ({
   type: "UnaryExpression",
   operator,
   argument: esFromNode(argument),
   prefix: true
 });
-const esFromBinaryExpression = ({operator, left, right}) => ({
+const esFromBinaryExpression = operator => left => right => ({
   type: "BinaryExpression",
   operator,
   left: esFromNode(left),
   right: esFromNode(right)
 });
-const esFromLogicalExpression = ({operator, left, right}) => ({
+const esFromLogicalExpression = operator => left => right => ({
   type: "LogicalExpression",
   operator: (() => {
     switch (operator) {
@@ -159,7 +157,7 @@ const esFromLogicalExpression = ({operator, left, right}) => ({
   left: esFromNode(left),
   right: esFromNode(right)
 });
-const esFromConditionalExpression = ({predicate, consequent, alternative}) => ({
+const esFromConditionalExpression = predicate => consequent => alternative => ({
   type: "ConditionalExpression",
   test: esFromNode(predicate),
   consequent: esFromNode(consequent),
@@ -173,7 +171,7 @@ const esFromSwitchCase = ({predicates, consequent}) => Prelude.map(predicate => 
     argument: esFromNode(consequent)
   }]
 }))(predicates);
-const esFromSwitchExpression = ({discriminant, cases, default: default$}) => ({
+const esFromSwitchExpression = discriminant => cases => default$ => ({
   type: "CallExpression",
   callee: {
     type: "ArrowFunctionExpression",
@@ -201,13 +199,13 @@ const esFromSwitchExpression = ({discriminant, cases, default: default$}) => ({
   arguments: [],
   optional: false
 });
-const esFromCallExpression = ({callee, arguments: args}) => ({
+const esFromCallExpression = callee => arguments$ => ({
   type: "CallExpression",
   callee: esFromNode(callee),
-  arguments: Prelude.map(esFromNode)(args),
+  arguments: Prelude.map(esFromNode)(arguments$),
   optional: false
 });
-const esFromVariableDeclaration = ({pattern, expression}) => ({
+const esFromVariableDeclaration = pattern => expression => ({
   type: "VariableDeclaration",
   kind: "const",
   declarations: [{
@@ -216,12 +214,12 @@ const esFromVariableDeclaration = ({pattern, expression}) => ({
     init: esFromNode(expression)
   }]
 });
-const esFromFunctionDeclaration = ({name, parameters, body}) => ({
+const esFromFunctionDeclaration = name => parameters => body => ({
   type: "VariableDeclaration",
   kind: "const",
   declarations: [{
     type: "VariableDeclarator",
-    id: esFromIdentifierName(name),
+    id: esFromIdentifier(name),
     init: Prelude._apply("reduceRight")([(esBody, param) => ({
       type: "ArrowFunctionExpression",
       params: [esFromNode(param)],
@@ -230,125 +228,92 @@ const esFromFunctionDeclaration = ({name, parameters, body}) => ({
     }), esFromNode(body)])(parameters)
   }]
 });
-const esFromExpressionStatement = ({expression}) => ({
+const esFromExpressionStatement = expression => ({
   type: "ExpressionStatement",
   expression: esFromNode(expression)
 });
-const esFromArrayPattern = ({elements}) => ({
+const esFromArrayPattern = elements => ({
   type: "ArrayPattern",
   elements: Prelude.map(esFromNode)(elements)
 });
-const esFromObjectPattern = ({properties}) => ({
+const esFromObjectPattern = properties => ({
   type: "ObjectPattern",
   properties: Prelude.map(esFromNode)(properties)
 });
-const esFromRestElement = ({argument}) => ({
+const esFromRestElement = argument => ({
   type: "RestElement",
   argument: esFromNode(argument)
 });
-const esFromExportDefaultDeclaration = ({declaration}) => ({
+const esFromExportDefaultDeclaration = declaration => ({
   type: "ExportDefaultDeclaration",
   declaration: esFromNode(declaration)
 });
-const esFromExportNamedDeclaration = ({specifiers}) => ({
+const esFromExportNamedDeclaration = specifiers => ({
   type: "ExportNamedDeclaration",
-  specifiers: Prelude.map(specifier => ({
-    type: "ExportSpecifier",
-    local: esFromNode(specifier),
-    exported: esFromNode(specifier)
-  }))(specifiers)
+  specifiers: Prelude.map(esFromNode)(specifiers)
 });
-const esFromImportDefaultSpecifier = ({local}) => ({
+const esFromExportSpecifier = local => exported => ({
+  type: "ExportSpecifier",
+  local: esFromNode(local),
+  exported: esFromNode(exported)
+});
+const esFromImportDefaultSpecifier = local => ({
   type: "ImportDefaultSpecifier",
-  local: esFromIdentifier(local)
+  local: esFromNode(local)
 });
-const esFromImportNamespaceSpecifier = ({local}) => ({
+const esFromImportNamespaceSpecifier = local => ({
   type: "ImportNamespaceSpecifier",
-  local: esFromIdentifier(local)
+  local: esFromNode(local)
 });
-const esFromImportSpecifier = ({local, imported}) => ({
+const esFromImportSpecifier = local => imported => ({
   type: "ImportSpecifier",
-  local: esFromIdentifier(local),
-  imported: esFromIdentifier(imported)
+  local: esFromNode(local),
+  imported: esFromNode(imported)
 });
-const esFromImportDeclaration = ({source, specifiers}) => ({
+const esFromImportDeclaration = source => specifiers => ({
   type: "ImportDeclaration",
   specifiers: Prelude.map(esFromNode)(specifiers),
   source: esFromNode(source)
 });
-const esFromModule = ({imports, exports, statements}) => ({
+const esFromModule = imports => exports => statements => ({
   type: "Program",
   sourceType: "module",
   body: Prelude.map(esFromNode)(Prelude.concat(imports)(Prelude.concat(statements)(exports)))
 });
-const esFromNode = expr => (() => {
-  switch (expr.type) {
-    case "NullLiteral":
-      return esFromNullLiteral;
-    case "BooleanLiteral":
-      return esFromLiteral(expr);
-    case "NumberLiteral":
-      return esFromLiteral(expr);
-    case "StringLiteral":
-      return esFromLiteral(expr);
-    case "TemplateLiteral":
-      return esFromTemplateLiteral(expr);
-    case "MemberExpression":
-      return esFromMemberExpression(expr);
-    case "Identifier":
-      return esFromIdentifier(expr);
-    case "ArrayExpression":
-      return esFromArrayExpression(expr);
-    case "ObjectExpression":
-      return esFromObjectExpression(expr);
-    case "ArrowFunctionExpression":
-      return esFromArrowFunctionExpression(expr);
-    case "BlockExpression":
-      return esFromBlockExpression(expr);
-    case "UnaryExpression":
-      return esFromUnaryExpression(expr);
-    case "BinaryExpression":
-      return esFromBinaryExpression(expr);
-    case "LogicalExpression":
-      return esFromLogicalExpression(expr);
-    case "ConditionalExpression":
-      return esFromConditionalExpression(expr);
-    case "SwitchExpression":
-      return esFromSwitchExpression(expr);
-    case "CallExpression":
-      return esFromCallExpression(expr);
-    case "SpreadElement":
-      return esFromSpreadElement(expr);
-    case "ExpressionStatement":
-      return esFromExpressionStatement(expr);
-    case "VariableDeclaration":
-      return esFromVariableDeclaration(expr);
-    case "FunctionDeclaration":
-      return esFromFunctionDeclaration(expr);
-    case "Property":
-      return esFromProperty(expr);
-    case "ArrayPattern":
-      return esFromArrayPattern(expr);
-    case "Elision":
-      return esFromElision;
-    case "ObjectPattern":
-      return esFromObjectPattern(expr);
-    case "RestElement":
-      return esFromRestElement(expr);
-    case "ImportDeclaration":
-      return esFromImportDeclaration(expr);
-    case "ImportDefaultSpecifier":
-      return esFromImportDefaultSpecifier(expr);
-    case "ImportNamespaceSpecifier":
-      return esFromImportNamespaceSpecifier(expr);
-    case "ImportSpecifier":
-      return esFromImportSpecifier(expr);
-    case "ExportNamedDeclaration":
-      return esFromExportNamedDeclaration(expr);
-    case "ExportDefaultDeclaration":
-      return esFromExportDefaultDeclaration(expr);
-    case "Module":
-      return esFromModule(expr);
-  }
-})();
+const esFromNode = match(Node)(never)({
+  NullLiteral: esFromLiteral(null),
+  BooleanLiteral: esFromLiteral,
+  NumberLiteral: esFromLiteral,
+  StringLiteral: esFromLiteral,
+  TemplateLiteral: esFromTemplateLiteral,
+  MemberExpression: esFromMemberExpression,
+  Identifier: esFromIdentifier,
+  ArrayExpression: esFromArrayExpression,
+  ObjectExpression: esFromObjectExpression,
+  ArrowFunctionExpression: esFromArrowFunctionExpression,
+  BlockExpression: esFromBlockExpression,
+  UnaryExpression: esFromUnaryExpression,
+  BinaryExpression: esFromBinaryExpression,
+  LogicalExpression: esFromLogicalExpression,
+  ConditionalExpression: esFromConditionalExpression,
+  SwitchExpression: esFromSwitchExpression,
+  CallExpression: esFromCallExpression,
+  SpreadElement: esFromSpreadElement,
+  ExpressionStatement: esFromExpressionStatement,
+  VariableDeclaration: esFromVariableDeclaration,
+  FunctionDeclaration: esFromFunctionDeclaration,
+  Property: esFromProperty,
+  ArrayPattern: esFromArrayPattern,
+  Elision: esFromElision,
+  ObjectPattern: esFromObjectPattern,
+  RestElement: esFromRestElement,
+  ImportDeclaration: esFromImportDeclaration,
+  ImportDefaultSpecifier: esFromImportDefaultSpecifier,
+  ImportNamespaceSpecifier: esFromImportNamespaceSpecifier,
+  ImportSpecifier: esFromImportSpecifier,
+  ExportNamedDeclaration: esFromExportNamedDeclaration,
+  ExportDefaultDeclaration: esFromExportDefaultDeclaration,
+  ExportSpecifier: esFromExportSpecifier,
+  Module: esFromModule
+});
 export default esFromNode;

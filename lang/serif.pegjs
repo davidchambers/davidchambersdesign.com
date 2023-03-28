@@ -3,48 +3,52 @@ Module
     exports:(_ exportDeclaration:(ExportNamedDeclaration / ExportDefaultDeclaration) { return exportDeclaration; })*
     statements:(_ statement:Statement _ ';' { return statement; })*
     _
-    { return {type: 'Module', imports, exports, statements}; }
+    { return Node.Module(imports)(exports)(statements); }
 
 ImportSpecifier
   = local:Identifier
-    { return {type: 'ImportSpecifier', imported: local, local}; }
+    { return Node.ImportSpecifier(local)(local); }
 
 ImportNamespaceSpecifier
   = local:Identifier
-    { return {type: 'ImportNamespaceSpecifier', local}; }
+    { return Node.ImportNamespaceSpecifier(local); }
 
 ImportDefaultSpecifier
   = local:Identifier
-    { return {type: 'ImportDefaultSpecifier', local}; }
+    { return Node.ImportDefaultSpecifier(local); }
 
 ImportDeclaration
   = ImportToken _ '{' _ '}' _ 'from' _ source:StringLiteral _ ';'
-    { return {type: 'ImportDeclaration', source, specifiers: []}; }
+    { return Node.ImportDeclaration(source)([]); }
   / ImportToken _ '{' _ specifiers:ImportSpecifier|.., CommaSeparator| _ ','? _ '}' _ 'from' _ source:StringLiteral _ ';'
-    { return {type: 'ImportDeclaration', source, specifiers}; }
+    { return Node.ImportDeclaration(source)(specifiers); }
   / ImportToken _ '*' _ 'as' _ specifier:ImportNamespaceSpecifier _ 'from' _ source:StringLiteral _ ';'
-    { return {type: 'ImportDeclaration', source, specifiers: [specifier]}; }
+    { return Node.ImportDeclaration(source)([specifier]); }
   / ImportToken _ '*' _ 'from' _ source:StringLiteral hiding:(_ 'hiding' _ '{' _ hiding:Identifier|.., CommaSeparator| _ '}' { return hiding; })? _ ';'
-    { return {type: 'ImportAllDeclaration', source, hiding: hiding ?? []}; }
+    { return Node.ImportAllDeclaration(source)(hiding ?? []); }
   / ImportToken _ specifier:ImportDefaultSpecifier _ 'from' _ source:StringLiteral _ ';'
-    { return {type: 'ImportDeclaration', source, specifiers: [specifier]}; }
+    { return Node.ImportDeclaration(source)([specifier]); }
+
+ExportSpecifier
+  = local:Identifier
+    { return Node.ExportSpecifier(local)(local); }
 
 ExportDefaultDeclaration
   = ExportToken _ 'default' _ declaration:Expression _ ';'
-    { return {type: 'ExportDefaultDeclaration', declaration}; }
+    { return Node.ExportDefaultDeclaration(declaration); }
 
 ExportNamedDeclaration
   = ExportToken _ '{' _ '}' _ ';'
-    { return {type: 'ExportNamedDeclaration', specifiers: []}; }
-  / ExportToken _ '{' _ specifiers:Identifier|.., CommaSeparator| _ ','? _ '}' _ ';'
-    { return {type: 'ExportNamedDeclaration', specifiers}; }
+    { return Node.ExportNamedDeclaration([]); }
+  / ExportToken _ '{' _ specifiers:ExportSpecifier|.., CommaSeparator| _ ','? _ '}' _ ';'
+    { return Node.ExportNamedDeclaration(specifiers); }
 
 NullLiteral
-  = 'null'  { return {type: 'NullLiteral'}; }
+  = 'null'  { return Node.NullLiteral; }
 
 BooleanLiteral
-  = 'true'  { return {type: 'BooleanLiteral', value: true}; }
-  / 'false' { return {type: 'BooleanLiteral', value: false}; }
+  = 'true'  { return Node.BooleanLiteral(true); }
+  / 'false' { return Node.BooleanLiteral(false); }
 
 NumberLiteral
   = BinaryNumber
@@ -54,24 +58,24 @@ NumberLiteral
 
 BinaryNumber
   = '0' 'b' digits:$[0-1]+
-    { return {type: 'NumberLiteral', value: parseInt(digits, 2)}; }
+    { return Node.NumberLiteral(parseInt(digits, 2)); }
 
 OctalNumber
   = '0' 'o' digits:$[0-7]+
-    { return {type: 'NumberLiteral', value: parseInt(digits, 8)}; }
+    { return Node.NumberLiteral(parseInt(digits, 8)); }
 
 HexadecimalNumber
   = '0' 'x' digits:$[0-9A-F]+
-    { return {type: 'NumberLiteral', value: parseInt(digits, 16)}; }
+    { return Node.NumberLiteral(parseInt(digits, 16)); }
 
 DecimalNumber
   = ('0' / ([1-9] [0-9]*))
     ('.' [0-9]+)?
-    { return {type: 'NumberLiteral', value: parseFloat(text())}; }
+    { return Node.NumberLiteral(parseFloat(text())); }
 
 StringLiteral
   = '"' chars:StringCharacter* '"'
-    { return {type: 'StringLiteral', value: chars.join('')}; }
+    { return Node.StringLiteral(chars.join('')); }
 
 StringCharacter
   = !('"' / '\\') character:.
@@ -106,13 +110,7 @@ TemplateLiteral
     pairs:(quasi:Quasi '${' _ expression:Expression _ '}' { return {quasi, expression}; })*
     quasi:Quasi
     '`'
-    {
-      return {
-        type: 'TemplateLiteral',
-        quasis: [...pairs.map(pair => pair.quasi), quasi],
-        expressions: pairs.map(pair => pair.expression),
-      };
-    }
+    { return Node.TemplateLiteral([...pairs.map(pair => pair.quasi), quasi])(pairs.map(pair => pair.expression)); }
 
 Quasi
   = $TemplateLiteralCharacter*
@@ -136,6 +134,7 @@ IsToken             = @$'is'            !IdentifierPart
 OrToken             = @$'or'            !IdentifierPart
 SwitchToken         = @$'switch'        !IdentifierPart
 ThenToken           = @$'then'          !IdentifierPart
+TypeToken           = @$'type'          !IdentifierPart
 TypeofToken         = @$'typeof'        !IdentifierPart
 WhenToken           = @$'when'          !IdentifierPart
 
@@ -164,7 +163,7 @@ ReservedWord
 
 Identifier
   = !ReservedWord name:$(IdentifierStart IdentifierPart*)
-    { return {type: 'Identifier', name}; }
+    { return Node.Identifier(name); }
 
 IdentifierStart
   = !Whitespace
@@ -193,9 +192,9 @@ IdentifierPart
 
 ArrayExpression
   = '[' _ ']'
-    { return {type: 'ArrayExpression', elements: []}; }
+    { return Node.ArrayExpression([]); }
   / '[' _ elements:ArrayElement|1.., CommaSeparator| _ ','? _ ']'
-    { return {type: 'ArrayExpression', elements}; }
+    { return Node.ArrayExpression(elements); }
 
 ArrayElement
   = SpreadElement
@@ -203,9 +202,9 @@ ArrayElement
 
 ObjectExpression
   = '{' _ '}'
-    { return {type: 'ObjectExpression', properties: []}; }
+    { return Node.ObjectExpression([]); }
   / '{' _ properties:ObjectElement|1.., CommaSeparator| _ ','? _ '}'
-    { return {type: 'ObjectExpression', properties}; }
+    { return Node.ObjectExpression(properties); }
 
 ObjectElement
   = SpreadElement
@@ -213,11 +212,11 @@ ObjectElement
 
 Property
   = '[' _ key:Expression _ ']' _ ':' _ value:Expression
-    { return {type: 'Property', key, value}; }
+    { return Node.Property(key)(value); }
   / ident:Identifier _ ':' _ value:Expression
-    { return {type: 'Property', key: {type: 'StringLiteral', value: ident.name}, value}; }
+    { return Node.Property(Node.StringLiteral(ident.name))(value); }
   / ident:Identifier
-    { return {type: 'Property', key: {type: 'StringLiteral', value: ident.name}, value: ident}; }
+    { return Node.Property(Node.StringLiteral(ident.name))(ident); }
 
 PrimaryExpression
   = NullLiteral
@@ -235,18 +234,18 @@ PrimaryExpression
 MemberExpression
   = object:PrimaryExpression
     properties:(
-        _ '.' ident:Identifier          { return {type: 'StringLiteral', value: ident.name}; }
+        _ '.' ident:Identifier          { return Node.StringLiteral(ident.name); }
       / '[' _ property:Expression _ ']' { return property; }
     )*
-    { return properties.reduce((object, property) => ({type: 'MemberExpression', object, property}), object); }
+    { return properties.reduce((object, property) => Node.MemberExpression(object)(property), object); }
 
 ArrowFunctionExpression
   = parameters:ArrowFunctionParameters _ ArrowToken _ body:Expression
-    { return {type: 'ArrowFunctionExpression', parameters, body}; }
+    { return Node.ArrowFunctionExpression(parameters)(body); }
 
 MethodCallExpression
   = '.' ident:Identifier
-    { return {type: 'MethodCallExpression', name: ident.name}; }
+    { return Node.MethodCallExpression(ident.name); }
 
 LeftHandSideExpression
   = ArrowFunctionExpression
@@ -257,9 +256,9 @@ LeftHandSideExpression
 CallExpression
   = head:LeftHandSideExpression
     tail:(
-        __ arg:LeftHandSideExpression   { return callee => ({type: 'CallExpression', callee, arguments: [arg]}); }
-      / _ '.' ident:Identifier          { return object => ({type: 'MemberExpression', object, property: {type: 'StringLiteral', value: ident.name}}); }
-      / '[' _ property:Expression _ ']' { return object => ({type: 'MemberExpression', object, property}); }
+        __ arg:LeftHandSideExpression   { return callee => Node.CallExpression(callee)([arg]); }
+      / _ '.' ident:Identifier          { return object => Node.MemberExpression(object)(Node.StringLiteral(ident.name)); }
+      / '[' _ property:Expression _ ']' { return object => Node.MemberExpression(object)(property); }
     )*
     { return tail.reduce((expr, wrap) => wrap(expr), head); }
 
@@ -278,9 +277,9 @@ Pattern
 
 ArrayPattern
   = '[' _ ']'
-    { return {type: 'ArrayPattern', elements: []}; }
+    { return Node.ArrayPattern([]); }
   / '[' _ elisions:Elision|.., _| _ ']'
-    { return {type: 'ArrayPattern', elements: elisions}; }
+    { return Node.ArrayPattern(elisions); }
   / '['
     elements:(
         _ elision:Elision                   { return elision; }
@@ -288,11 +287,11 @@ ArrayPattern
     )*
     _ element:ArrayPatternElement?
     _ ']'
-    { return {type: 'ArrayPattern', elements: element == null ? elements : [...elements, element]}; }
+    { return Node.ArrayPattern(element == null ? elements : [...elements, element]); }
 
 Elision
   = ','
-    { return {type: 'Elision'}; }
+    { return Node.Elision; }
 
 ArrayPatternElement
   = ArrayPattern
@@ -302,19 +301,19 @@ ArrayPatternElement
 
 ObjectPattern
   = '{' _ '}'
-    { return {type: 'ObjectPattern', properties: []}; }
+    { return Node.ObjectPattern([]); }
   / '{' _ properties:ObjectPatternProperty|1.., CommaSeparator| _ ','? _ '}'
-    { return {type: 'ObjectPattern', properties}; }
+    { return Node.ObjectPattern(properties); }
 
 ObjectPatternProperty
   = ident:Identifier _ ':' _ pattern:Pattern
-    { return {type: 'Property', key: {type: 'StringLiteral', value: ident.name}, value: pattern}; }
+    { return Node.Property(Node.StringLiteral(ident.name))(pattern); }
   / ident:Identifier
-    { return {type: 'Property', key: {type: 'StringLiteral', value: ident.name}, value: ident}; }
+    { return Node.Property(Node.StringLiteral(ident.name))(ident); }
 
 RestElement
   = '...' argument:Identifier
-    { return {type: 'RestElement', argument}; }
+    { return Node.RestElement(argument); }
 
 UnaryOperator
   = TypeofToken
@@ -324,7 +323,7 @@ UnaryOperator
 
 UnaryExpression
   = operator:UnaryOperator _ argument:CallExpression
-    { return {type: 'UnaryExpression', operator, argument}; }
+    { return Node.UnaryExpression(operator)(argument); }
   / CallExpression
 
 CompositionOperator
@@ -332,7 +331,7 @@ CompositionOperator
 
 CompositionExpression
   = exprs:UnaryExpression|1.., _ CompositionOperator _|
-    { return exprs.reduceRight((right, left) => ({type: 'CompositionExpression', left, right})); }
+    { return exprs.reduceRight((right, left) => Node.CompositionExpression(left)(right)); }
 
 ExponentiationOperator
   = '**'
@@ -340,7 +339,7 @@ ExponentiationOperator
 ExponentiationExpression
   = left:CompositionExpression
     tail:(_ operator:ExponentiationOperator _ right:CompositionExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 MultiplicativeOperator
   = '*'
@@ -350,7 +349,7 @@ MultiplicativeOperator
 MultiplicativeExpression
   = left:ExponentiationExpression
     tail:(_ operator:MultiplicativeOperator _ right:ExponentiationExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 AdditiveOperator
   = '+'
@@ -359,14 +358,14 @@ AdditiveOperator
 AdditiveExpression
   = left:MultiplicativeExpression
     tail:(_ operator:AdditiveOperator _ right:MultiplicativeExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 ConcatenationOperator
   = '<>'
 
 ConcatenationExpression
   = exprs:AdditiveExpression|1.., _ ConcatenationOperator _|
-    { return exprs.reduceRight((right, left) => ({type: 'ConcatenationExpression', left, right})); }
+    { return exprs.reduceRight((right, left) => Node.ConcatenationExpression(left)(right)); }
 
 ShiftOperator
   = '<<'
@@ -376,7 +375,7 @@ ShiftOperator
 ShiftExpression
   = left:ConcatenationExpression
     tail:(_ operator:ShiftOperator _ right:ConcatenationExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 RelationalOperator
   = '<='
@@ -389,7 +388,7 @@ RelationalOperator
 RelationalExpression
   = left:ShiftExpression
     tail:(_ operator:RelationalOperator _ right:ShiftExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 EqualityOperator
   = IsToken
@@ -397,14 +396,14 @@ EqualityOperator
 EqualityExpression
   = left:RelationalExpression
     tail:(_ operator:EqualityOperator _ right:RelationalExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 MapOperator
   = '<$>'
 
 MapExpression
   = exprs:EqualityExpression|1.., _ MapOperator _|
-    { return exprs.reduceRight((right, left) => ({type: 'MapExpression', left, right})); }
+    { return exprs.reduceRight((right, left) => Node.MapExpression(left)(right)); }
 
 BitwiseANDOperator
   = '&'
@@ -412,7 +411,7 @@ BitwiseANDOperator
 BitwiseANDExpression
   = left:MapExpression
     tail:(_ operator:BitwiseANDOperator _ right:MapExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 BitwiseXOROperator
   = '^'
@@ -420,7 +419,7 @@ BitwiseXOROperator
 BitwiseXORExpression
   = left:BitwiseANDExpression
     tail:(_ operator:BitwiseXOROperator _ right:BitwiseANDExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 BitwiseOROperator
   = '|'
@@ -428,7 +427,7 @@ BitwiseOROperator
 BitwiseORExpression
   = left:BitwiseXORExpression
     tail:(_ operator:BitwiseOROperator _ right:BitwiseXORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => ({type: 'BinaryExpression', operator, left, right}), left); }
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 LogicalANDOperator
   = AndToken
@@ -436,7 +435,7 @@ LogicalANDOperator
 LogicalANDExpression
   = left:BitwiseORExpression
     tail:(_ operator:LogicalANDOperator _ right:BitwiseORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => ({type: 'LogicalExpression', operator, left, right}), left); }
+    { return tail.reduce((left, {operator, right}) => Node.LogicalExpression(operator)(left)(right), left); }
 
 LogicalOROperator
   = OrToken
@@ -444,7 +443,7 @@ LogicalOROperator
 LogicalORExpression
   = left:LogicalANDExpression
     tail:(_ operator:LogicalOROperator _ right:LogicalANDExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => ({type: 'LogicalExpression', operator, left, right}), left); }
+    { return tail.reduce((left, {operator, right}) => Node.LogicalExpression(operator)(left)(right), left); }
 
 CoalesceOperator
   = '??'
@@ -452,14 +451,14 @@ CoalesceOperator
 CoalesceExpression
   = left:LogicalORExpression
     tail:(_ operator:CoalesceOperator _ right:LogicalORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => ({type: 'LogicalExpression', operator, left, right}), left); }
+    { return tail.reduce((left, {operator, right}) => Node.LogicalExpression(operator)(left)(right), left); }
 
 BindOperator
   = '>>='
 
 BindExpression
   = exprs:CoalesceExpression|1.., _ BindOperator _|
-    { return exprs.reduce((left, right) => ({type: 'BindExpression', left, right})); }
+    { return exprs.reduce((left, right) => Node.BindExpression(left)(right)); }
 
 ConditionalExpression
   = IfToken
@@ -468,7 +467,7 @@ ConditionalExpression
     _ consequent:ConditionalExpression
     _ ElseToken
     _ alternative:ConditionalExpression
-    { return {type: 'ConditionalExpression', predicate, consequent, alternative}; }
+    { return Node.ConditionalExpression(predicate)(consequent)(alternative); }
   / BindExpression
 
 SwitchExpression
@@ -476,7 +475,7 @@ SwitchExpression
     _ discriminant:Expression
     _ cases:SwitchCase|.., _|
     default_:(_ ElseToken _ default_:Expression { return default_; })?
-    { return {type: 'SwitchExpression', discriminant, cases, default: default_}; }
+    { return Node.SwitchExpression(discriminant)(cases)(default_); }
   / ConditionalExpression
 
 SwitchCase
@@ -484,7 +483,7 @@ SwitchCase
     _ predicates:Expression|1.., CommaSeparator|
     _ ThenToken
     _ consequent:Expression
-    { return {type: 'SwitchCase', predicates, consequent}; }
+    { return Node.SwitchCase(predicates)(consequent); }
 
 ApplicationOperator
   = '$'
@@ -492,22 +491,22 @@ ApplicationOperator
 ApplicationExpression
   = callee:SwitchExpression
     args:(_ ApplicationOperator _ arg:ApplicationExpression { return arg; })*
-    { return args.reduce((callee, arg) => ({type: 'CallExpression', callee, arguments: [arg]}), callee); }
+    { return args.reduce((callee, arg) => Node.CallExpression(callee)([arg]), callee); }
 
 PipeOperator
   = '|>'
 
 PipeExpression
   = exprs:ApplicationExpression|1.., _ PipeOperator _|
-    { return exprs.reduce((head, body) => ({type: 'PipeExpression', head, body})); }
+    { return exprs.reduce((head, body) => Node.PipeExpression(head)(body)); }
 
 PropertyAccessor
   = '(' '.' identifier:Identifier ')'
-    { return {type: 'PropertyAccessor', identifier}; }
+    { return Node.PropertyAccessor(identifier); }
 
 BlockExpression
   = '{' _ statements:Statement|1.., SemicolonSeparator| _ '}'
-    { return {type: 'BlockExpression', statements}; }
+    { return Node.BlockExpression(statements); }
 
 DoBlockExpression
   = DoToken
@@ -515,16 +514,20 @@ DoBlockExpression
     operations:(_ operation:DoOperation _ ';' { return operation; })*
     _ result:Expression
     _ '}'
-    { return {type: 'DoBlockExpression', operations, result}; }
+    { return Node.DoBlockExpression(operations)(result); }
 
 DoOperation
-  = pattern:Pattern _ '<-' _ expression:Expression
-    { return {type: 'ArrowAssignmentStatement', pattern, expression}; }
+  = ArrowAssignmentStatement
   / FunctionDeclaration
   / VariableDeclaration
 
+ArrowAssignmentStatement
+  = pattern:Pattern _ '<-' _ expression:Expression
+    { return Node.ArrowAssignmentStatement(pattern)(expression); }
+
 Statement
-  = FunctionDeclaration
+  = DataTypeDeclaration
+  / FunctionDeclaration
   / VariableDeclaration
   / ExpressionStatement
 
@@ -532,19 +535,31 @@ FunctionDeclaration
   = ident:Identifier
     parameters:(__ parameter:Pattern { return parameter; })+
     _ '=' _ body:Expression
-    { return {type: 'FunctionDeclaration', name: ident.name, parameters, body}; }
+    { return Node.FunctionDeclaration(ident.name)(parameters)(body); }
 
 VariableDeclaration
   = pattern:Pattern _ '=' _ expression:Expression
-    { return {type: 'VariableDeclaration', pattern, expression}; }
+    { return Node.VariableDeclaration(pattern)(expression); }
+
+DataTypeDeclaration
+  = TypeToken
+    _ name:(ident:Identifier { return ident.name; })
+    _ '='
+    _ constructors:DataConstructorDefinition|1.., _ '|' _|
+    { return Node.DataTypeDeclaration(name)(constructors); }
+
+DataConstructorDefinition
+  = name:(ident:Identifier { return ident.name; })
+    parameters:(_ ident:Identifier { return ident.name; })*
+    { return {name, parameters}; }
 
 ExpressionStatement
   = expression:Expression
-    { return {type: 'ExpressionStatement', expression}; }
+    { return Node.ExpressionStatement(expression); }
 
 SpreadElement
   = '...' argument:Expression
-    { return {type: 'SpreadElement', argument}; }
+    { return Node.SpreadElement(argument); }
 
 LineTerminator
   = '\u000A' // LINE FEED (LF)

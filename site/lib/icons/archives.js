@@ -9,11 +9,13 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
   flip: f => y => x => f(x)(y),
+  id: x => x,
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  match: type => type[Symbol.for("match")],
   not: b => !b,
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, map, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
 const base = [$21E8(0), $21E9(1), $2192(1), $2193(14), $2192(14), $2191(14), $2192(1), $2193(15), $2190(16), $2191(15)];
 const spiral = [$21E8(3), $21E9(0), $2192(1), $2193(1), $2190(1), $2191(1), $21E8(3), $21E9(0), $2192(1), $2193(1), $2190(1), $2191(1), $21E8(3), $21E9(0), $2192(1), $2193(1), $2190(1), $2191(1), $21E8(3), $21E9(0), $2192(1), $2193(1), $2190(1), $2191(1)];
 const header = [$21E8(1), $21E9(1), $2192(2), $2193(1), $2192(1), $2191(1), $2192(2), $2193(1), $2192(1), $2191(1), $2192(2), $2193(1), $2192(1), $2191(1), $2192(2), $2193(1), $2192(1), $2191(1), $2192(2), $2193(3), $2190(14), $2191(3)];
