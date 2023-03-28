@@ -59,8 +59,8 @@ const rewriteNode = preludeIdent => (() => {
   const recur = names => match(Node)(id)({
     TemplateLiteral: quasis => expressions => TemplateLiteral(quasis)(Prelude$1.map(recur(names))(expressions)),
     MemberExpression: object => property => MemberExpression(recur(names)(object))(recur(names)(property)),
-    ArrayExpression: elements => ArrayExpression(Prelude$1.map(recur(names))(elements)),
-    ObjectExpression: properties => ObjectExpression(Prelude$1.map(recur(names))(properties)),
+    ArrayExpression: x => ArrayExpression(map(recur(names))(x)),
+    ObjectExpression: x => ObjectExpression(map(recur(names))(x)),
     ArrowFunctionExpression: parameters => body => (() => {
       const params = Prelude$1.map(recur(names))(parameters);
       const names$0027 = union(names)(Prelude$1.map(x => x.name)(params));
@@ -73,7 +73,7 @@ const rewriteNode = preludeIdent => (() => {
     })(),
     BlockExpression: statements => (() => {
       const otherwise = _ => (() => {
-        const names$0027 = union(names)(Prelude$1.chain(match(Node)(_ => [])({
+        const names$0027 = union(names)(Prelude$1.chain(match(Node)(const_ => [])({
           VariableDeclaration: pattern => expression => namesInPattern(pattern),
           FunctionDeclaration: name => parameters => body => [name]
         }))(statements));
@@ -110,13 +110,13 @@ const rewriteNode = preludeIdent => (() => {
     CallExpression: callee => arguments$ => CallExpression(recur(names)(callee))(Prelude$1.map(recur(names))(arguments$)),
     VariableDeclaration: pattern => expression => VariableDeclaration(recur(names)(pattern))(recur(names)(expression)),
     FunctionDeclaration: name => parameters => body => FunctionDeclaration(name)(Prelude$1.map(recur(names))(parameters))(recur(names)(body)),
-    ExpressionStatement: expression => ExpressionStatement(recur(names)(expression)),
-    ArrayPattern: elements => ArrayPattern(Prelude$1.map(recur(names))(elements)),
-    ObjectPattern: properties => ObjectPattern(Prelude$1.map(recur(names))(properties)),
-    SpreadElement: argument => SpreadElement(recur(names)(argument)),
-    RestElement: argument => RestElement(recur(names)(argument)),
+    ExpressionStatement: x => ExpressionStatement(recur(names)(x)),
+    ArrayPattern: x => ArrayPattern(map(recur(names))(x)),
+    ObjectPattern: x => ObjectPattern(map(recur(names))(x)),
+    SpreadElement: x => SpreadElement(recur(names)(x)),
+    RestElement: x => RestElement(recur(names)(x)),
     Property: key => value => Property(recur(names)(key))(recur(names)(value)),
-    ExportDefaultDeclaration: declaration => ExportDefaultDeclaration(recur(names)(declaration)),
+    ExportDefaultDeclaration: x => ExportDefaultDeclaration(recur(names)(x)),
     DataTypeDeclaration: name => constructors => (() => {
       const $0040tag = CallExpression(MemberExpression(Identifier("Symbol"))(StringLiteral("for")))([StringLiteral("tag")]);
       const $0040match = CallExpression(MemberExpression(Identifier("Symbol"))(StringLiteral("for")))([StringLiteral("match")]);

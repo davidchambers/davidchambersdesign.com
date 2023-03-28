@@ -260,12 +260,12 @@ reset path = {
 };
 
 paths chars = [
-  ...{.slice [0, 1] chars >>= char => [["M", [0, 0]], ...char, reset char]},
-  ...{.slice [1   ] chars >>= char => [["m", [6, 0]], ...char, reset char]},
+  ...{.slice [0, 1] chars >>= \char -> [["M", [0, 0]], ...char, reset char]},
+  ...{.slice [1   ] chars >>= \char -> [["m", [6, 0]], ...char, reset char]},
 ];
 
 chars = Array.from "DAVIDCHAMBERSDESIGN";
 
-mask = [path {d: render $ paths $ {char => mask-chars[char]} <$> chars, fill: "#000", fill-rule: "evenodd"}];
-fill = [path {d: render $ paths $ {char => line-chars[char]} <$> chars, fill: "#999"},
-        path {d: render $ paths $ {char => fill-chars[char]} <$> chars, fill: "#666"}];
+mask = [path {d: render $ paths $ (\char -> mask-chars[char]) <$> chars, fill: "#000", fill-rule: "evenodd"}];
+fill = [path {d: render $ paths $ (\char -> line-chars[char]) <$> chars, fill: "#999"},
+        path {d: render $ paths $ (\char -> fill-chars[char]) <$> chars, fill: "#666"}];

@@ -6,15 +6,15 @@ related-posts posts post = {
   tags = construct Set [post.tags];
   has-tag tag = .has [tag] tags;
   posts
-  |> S.mapMaybe {this => {
+  |> S.mapMaybe (\this ->
        if this.slug is post.slug then S.Nothing else {
          dividend = (.length) $ filter has-tag this.tags;
          divisor = Math.sqrt $ (.size) $ construct Set [post.tags <> this.tags];
          score = dividend / divisor;
          if score < 0.5 then S.Nothing else S.Just {...this, score}
        }
-     }}
-  |> S.sortBy (this =>
+     )
+  |> S.sortBy (\this ->
        .diff [post.datetime] this.datetime
        |> (.milliseconds)
        |> Math.abs

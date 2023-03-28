@@ -122,7 +122,7 @@ TemplateLiteralCharacter
     { return sequence; }
 
 AndToken            = @$'and'           !IdentifierPart
-ArrowToken          = @$'=>'            !IdentifierPart
+ArrowToken          = @$'->'            !IdentifierPart
 DoToken             = @$'do'            !IdentifierPart
 ElseToken           = @$'else'          !IdentifierPart
 ExportToken         = @$'export'        !IdentifierPart
@@ -240,8 +240,8 @@ MemberExpression
     { return properties.reduce((object, property) => Node.MemberExpression(object)(property), object); }
 
 ArrowFunctionExpression
-  = parameters:ArrowFunctionParameters _ ArrowToken _ body:Expression
-    { return Node.ArrowFunctionExpression(parameters)(body); }
+  = '\\' parameterss:ArrowFunctionParameters|1.., __| _ ArrowToken _ body:Expression
+    { return parameterss.reduceRight((body, parameters) => Node.ArrowFunctionExpression(parameters)(body), body); }
 
 MethodCallExpression
   = '.' ident:Identifier

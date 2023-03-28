@@ -6,7 +6,7 @@ simplify paths = {
   if paths.length is 0 then [] else {
     [head, ...tail] = paths;
     [prev, path] = {
-      reduce ([prev, path] => curr => {
+      reduce (\[prev, path] curr -> {
                 if curr[0] is "M" then {
                   if {prev[0] is "M" or prev[0] is "m"} then {
                     [curr, path]  ;; ignore previous move

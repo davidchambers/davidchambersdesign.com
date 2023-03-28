@@ -97,8 +97,8 @@ escape s = {
 
 text value = {
   type: "text",
-  toString: () => value,
-  render: context => escape value,
+  toString: \() -> value,
+  render: \context -> escape value,
 };
 
 render-attribute [name, value] = {
@@ -107,7 +107,7 @@ render-attribute [name, value] = {
   |> .trim []
   |> .replaceAll ["\n", " "]
   |> escape
-  |> value => ` ${name}="${value}"`  ;; TODO: escape double quotes
+  |> \value -> ` ${name}="${value}"`  ;; TODO: escape double quotes
 };
 
 render-attributes attrs = {
@@ -170,23 +170,23 @@ block-element name attributes children! = {
     name,
     attributes,
     children,
-    toString: () => .join [""] $ String <$> children,
-    render: context => render-block-element context element,
+    toString: \() -> .join [""] $ String <$> children,
+    render: \context -> render-block-element context element,
   };
   element
 };
 
 inline-element name attributes children! = {
   children = string-to-text-node <$> children!;
-  format = if .some [node => node.format is "block"] children then "block" else "inline";
+  format = if .some [\node -> node.format is "block"] children then "block" else "inline";
   element = {
     type: "element",
     format,
     name,
     attributes,
     children,
-    toString: () => .join [""] $ String <$> children,
-    render: context => {
+    toString: \() -> .join [""] $ String <$> children,
+    render: \context -> {
       switch format
       when "inline" then render-inline-element context element
       when "block"  then render-block-element context element
@@ -201,8 +201,8 @@ self-closing-element name attributes = {
     format: "inline",
     name,
     attributes,
-    toString: () => "",
-    render: {indent, level, inline} => {
+    toString: \() -> "",
+    render: \{indent, level, inline} -> {
       `${
         .repeat [level] indent
       }<${

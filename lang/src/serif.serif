@@ -7,12 +7,12 @@ import * as serif from "./index.serif";
 import * as path from "./path.serif";
 
 parse filename sourceText = {
-  {serif.parse filename sourceText} |> mapRej error => {
+  {serif.parse filename sourceText} |> mapRej \error -> {
     lines = {
       sourceText
       |> .split [apply ["^", "m"] RegExp]
-      |> .map [(text, index) => {number: index + 1, text: .trimEnd [] text}]
-      |> chain $ line => {
+      |> .map [\(text, index) -> {number: index + 1, text: .trimEnd [] text}]
+      |> chain \line -> {
            offset = line.number - error.location.start.line;
            if offset > -5 and offset <= 0 then [line] else []
          }
@@ -22,7 +22,7 @@ parse filename sourceText = {
       path.relative (apply [] process.cwd) error.location.source
     }\x1B[0m\n\n${
       lines
-      |> .map [(line, idx, lines) => {
+      |> .map [\(line, idx, lines) -> {
            `\x1B[7m${
              renderLineNumber line.number
            }\x1B[0m${
@@ -44,7 +44,7 @@ parse filename sourceText = {
       |> (.number)
       |> renderLineNumber
       |> (.length)
-      |> length => .repeat [length + error.location.start.column - 1] " "
+      |> \length -> .repeat [length + error.location.start.column - 1] " "
     }^\n${
       error.message
     }\n`
@@ -59,7 +59,7 @@ findDependencies filename tree = {
   if .has [filename] tree then resolve tree else do {
     sourceText <- mapRej (.message) $ fs.readFile filename;
     ast <- parse filename sourceText;
-    dependencies = ast.imports >>= {source: {value}} => {
+    dependencies = ast.imports >>= \{source: {value}} -> {
       if .test [value] (RegExp "^[./].*[.]serif$") then {
         [path.join [filename, "..", value]]
       } else {
@@ -78,7 +78,7 @@ orderDependencies tree = {
     if unsorted!.length is 0 then sorted! else {
       filename = .shift [] unsorted!;
       {dependencies} = .get [filename] tree;
-      if .every [filename => .has [filename] sorted!] dependencies then {
+      if .every [\filename -> .has [filename] sorted!] dependencies then {
         .add [filename] sorted!
       } else {
         .push [filename] unsorted!
@@ -96,15 +96,15 @@ orderDependencies tree = {
     tree <- reduce reducer (resolve $ construct Map [[]]) filenames;
     filenames = orderDependencies tree;
     ;; Create JavaScript module for each Serif module:
-    parallel 16 $ flip map filenames $ serifFilename => do {
+    parallel 16 $ flip map filenames \serifFilename -> do {
       serifDirname = path.dirname serifFilename;
       serifAst = (.ast) $ .get [serifFilename] tree;
-      serifAst' <- serif.rewrite serifAst $ importPath => {
+      serifAst' <- serif.rewrite serifAst \importPath -> {
         importPath
         |> .split ["/"]
         |> concat [serifDirname]
         |> path.join
-        |> filename => .get [filename] tree
+        |> \filename -> .get [filename] tree
         |> (.exportedNames)
       };
       serifAst'' = serif.changeExtensions serifAst';
@@ -120,10 +120,10 @@ orderDependencies tree = {
   };
 
   fork (console.error)
-       (filenames => {
+       (\filenames -> {
           ;; List files created:
           .forEach [
-            {serifFilename, esFilename} => {
+            \{serifFilename, esFilename} -> {
               console.log (`• ${path.relative cwd serifFilename}`);
               console.log (`  ➔ ${path.relative cwd esFilename}`)
             },

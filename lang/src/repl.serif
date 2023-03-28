@@ -13,14 +13,14 @@ import rewrite from "./rewrite.serif";
 evaluateModule sourceText = do {
   context = vm.createContext global;
   module = construct vm.SourceTextModule [sourceText, {context,}];
-  _ <- attemptP $ () => .link [
-    (specifier, referencingModule) => {
-      attemptP (() => import specifier)
+  _ <- attemptP \() -> .link [
+    \(specifier, referencingModule) -> {
+      attemptP (\() -> import specifier)
       |> map Object.entries
-      |> map $ map entries => {
+      |> map $ map \entries -> {
            module = construct vm.SyntheticModule [
-             {[name] => name} <$> entries,
-             () => .forEach [flip {.setExport} module] entries,
+             {\[name] -> name} <$> entries,
+             \() -> .forEach [flip {.setExport} module] entries,
              {identifier: specifier, context: referencingModule.context},
            ];
            module
@@ -28,13 +28,13 @@ evaluateModule sourceText = do {
       |> promise
     },
   ] module;
-  _ <- attemptP $ () => .evaluate [] module;
+  _ <- attemptP \() -> .evaluate [] module;
   resolve module.namespace.default
 };
 
 read serifSource = do {
   serifAst <- serif.parse "[repl]" `export default ${serifSource};`;
-  serifAst' <- serif.rewrite serifAst $ _importPath => [];  ;; TODO: support import statements
+  serifAst' <- serif.rewrite serifAst \_importPath -> [];  ;; TODO: support import statements
   serifAst'' = serif.changeExtensions serifAst';
   esAst = serif.esModuleFromSerifModule serifAst'';
   esSourceText = apply [esAst, {}] generate;
@@ -64,27 +64,27 @@ print x = {
   when "[object Array]"
   then `[${.join [", "] $ print <$> x}]`
   when "[object Object]"
-  then `{${.join [", "] $ map {k => `[${print k}]: ${print x[k]}`} $ Reflect.ownKeys x}}`
+  then `{${.join [", "] $ map {\k -> `[${print k}]: ${print x[k]}`} $ Reflect.ownKeys x}}`
   else `${x}`
 };
 
 server = repl.start {
   prompt: ">>> ",
-  eval: (code, _context, _filename, callback) => {
-    fork (err => {
+  eval: \(code, _context, _filename, callback) -> {
+    fork (\err -> {
             console.error err;
             console.log "";
             .displayPrompt [false] server
           })
-         (result => {
+         (\result -> {
             apply [null, result] callback
           })
          (read code)
   },
-  writer: value => print value + "\n",
+  writer: \value -> print value + "\n",
 };
 
 .setupHistory [
   path.join [apply [] os.homedir, ".serif-repl-history"],
-  error => undefined
+  \error -> undefined
 ] server;

@@ -65,9 +65,9 @@ namesInPattern pattern = {
 
 namesInStatement = {
   match Node (const_ []) {
-    ImportDeclaration: source => specifiers => (.name) . (.local) <$> specifiers,
-    VariableDeclaration: pattern => expression => namesInPattern pattern,
-    FunctionDeclaration: name => parameters => body => [name],
+    ImportDeclaration: \source specifiers -> (.name) . (.local) <$> specifiers,
+    VariableDeclaration: \pattern expression -> namesInPattern pattern,
+    FunctionDeclaration: \name parameters body -> [name],
   }
 };
 
@@ -81,7 +81,7 @@ rewriteModule {imports, exports, statements} namesExportedFrom = do {
     VariableDeclaration preludeIdent {
       Prelude
       |> Object.entries
-      |> map ([name, implementation] => Property (StringLiteral name) $ implementation preludeIdent)
+      |> map (\[name, implementation] -> Property (StringLiteral name) $ implementation preludeIdent)
       |> ObjectExpression
     }
   };
@@ -91,7 +91,7 @@ rewriteModule {imports, exports, statements} namesExportedFrom = do {
       |> Object.keys
       ;; Do not unpack if name conflicts with a top-level binding:
       |> reject (flip has names')
-      |> map (name => Property (StringLiteral name) (Identifier name))
+      |> map (\name -> Property (StringLiteral name) (Identifier name))
       |> ObjectPattern
     } preludeIdent
   };
@@ -105,10 +105,10 @@ rewriteModule {imports, exports, statements} namesExportedFrom = do {
 rewriteImportAllDeclaration namesExportedFrom source hiding = {
   namesExported = {
     if .endsWith [".serif"] source.value then namesExportedFrom source.value
-    else Object.keys <$> attemptP () => import source.value
+    else Object.keys <$> attemptP \() -> import source.value
   };
   namesHidden = (.name) <$> hiding;
-  namesHiddenNeedlessly = reject (name => .includes [name] namesExported) namesHidden;
+  namesHiddenNeedlessly = reject (\name -> .includes [name] namesExported) namesHidden;
   if namesHiddenNeedlessly.length > 0 then {
     Future.reject $ Error {
       `import * from "${
@@ -123,8 +123,8 @@ rewriteImportAllDeclaration namesExportedFrom source hiding = {
     }
   } else {
     namesExported
-    |> reject (name => .includes [name] namesHidden)
-    |> map (name => ImportSpecifier (Identifier name) (Identifier name))
+    |> reject (\name -> .includes [name] namesHidden)
+    |> map (\name -> ImportSpecifier (Identifier name) (Identifier name))
     |> ImportDeclaration source
     |> Future.resolve
   }
@@ -132,31 +132,27 @@ rewriteImportAllDeclaration namesExportedFrom source hiding = {
 
 rewriteImportDeclaration namesExportedFrom = {
   match Node never {
-    ImportDeclaration: source => specifiers => Future.resolve $ ImportDeclaration source specifiers,
+    ImportDeclaration: \source specifiers -> Future.resolve $ ImportDeclaration source specifiers,
     ImportAllDeclaration: rewriteImportAllDeclaration namesExportedFrom,
   }
 };
 
 rewriteNode preludeIdent = {
   recur names = match Node id {
-    TemplateLiteral: quasis => expressions => {
+    TemplateLiteral: \quasis expressions -> {
       TemplateLiteral quasis (recur names <$> expressions)
     },
-    MemberExpression: object => property => {
+    MemberExpression: \object property -> {
       MemberExpression (recur names object) (recur names property)
     },
-    ArrayExpression: elements => {
-      ArrayExpression $ recur names <$> elements
-    },
-    ObjectExpression: properties => {
-      ObjectExpression $ recur names <$> properties
-    },
-    ArrowFunctionExpression: parameters => body => {
+    ArrayExpression: ArrayExpression . map (recur names),
+    ObjectExpression: ObjectExpression . map (recur names),
+    ArrowFunctionExpression: \parameters body -> {
       params = recur names <$> parameters;
       names' = union names $ (.name) <$> params;
       ArrowFunctionExpression params (recur names' body)
     },
-    PropertyAccessor: identifier => {
+    PropertyAccessor: \identifier -> {
       param = Identifier "x";
       names' = add param.name names;
       recur names' {
@@ -165,11 +161,11 @@ rewriteNode preludeIdent = {
         }
       }
     },
-    BlockExpression: statements => {
+    BlockExpression: \statements -> {
       otherwise _ = {
-        names' = union names $ statements >>= match Node (_ => []) {
-          VariableDeclaration: pattern => expression => namesInPattern pattern,
-          FunctionDeclaration: name => parameters => body => [name],
+        names' = union names $ statements >>= match Node (\const_ -> []) {
+          VariableDeclaration: \pattern expression -> namesInPattern pattern,
+          FunctionDeclaration: \name parameters body -> [name],
         };
         BlockExpression $ recur names' <$> statements
       };
@@ -177,31 +173,31 @@ rewriteNode preludeIdent = {
         match Node otherwise {ExpressionStatement: recur names} statements[0]
       } else otherwise null
     },
-    DoBlockExpression: operations => result => {
+    DoBlockExpression: \operations result -> {
       recur names $ reduceRight
-        (result => match Node never {
-           ArrowAssignmentStatement: pattern => expression => {
+        (\result -> match Node never {
+           ArrowAssignmentStatement: \pattern expression -> {
              CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "chain")
                                             [ArrowFunctionExpression [pattern] result]) [
                expression,
              ]
            },
-           VariableDeclaration: pattern => expression => {
+           VariableDeclaration: \pattern expression -> {
              CallExpression (ArrowFunctionExpression [pattern] result) [expression]
            },
-           FunctionDeclaration: name => parameters => body => {
+           FunctionDeclaration: \name parameters body -> {
              CallExpression (ArrowFunctionExpression [Identifier name] result) [
-               reduceRight (body => param => ArrowFunctionExpression [param] body) body parameters,
+               reduceRight (\body param -> ArrowFunctionExpression [param] body) body parameters,
              ]
            },
          })
         result
         operations
     },
-    UnaryExpression: operator => argument => {
+    UnaryExpression: \operator argument -> {
       UnaryExpression operator (recur names argument)
     },
-    CompositionExpression: left => right => {
+    CompositionExpression: \left right -> {
       ;; Original expression: f . g . h
       ;;
       ;; Representation:   o
@@ -210,12 +206,12 @@ rewriteNode preludeIdent = {
       ;;                    / \
       ;;                   g   h
       ;;
-      ;; Rewritten expression: x => f (g (h x))
+      ;; Rewritten expression: \x -> f (g (h x))
       param = nextUnusedIdent names "x";
       names' = add param.name names;
       toCallExpression = {
         match Node (flip CallExpression [param]) {
-          CompositionExpression: left => right => {
+          CompositionExpression: \left right -> {
             CallExpression left [toCallExpression right]
           },
         }
@@ -225,91 +221,77 @@ rewriteNode preludeIdent = {
       |> ArrowFunctionExpression [param]
       |> recur names'
     },
-    BinaryExpression: operator => left => right => {
+    BinaryExpression: \operator left right -> {
       if operator is "is" then recur names {
         CallExpression (MemberExpression (Identifier "Object") $ StringLiteral "is") [right, left]
       } else {
         BinaryExpression operator (recur names left) (recur names right)
       }
     },
-    ConcatenationExpression: left => right => {
+    ConcatenationExpression: \left right -> {
       CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "concat")
                                      [recur names left])
                      [recur names right]
     },
-    MapExpression: left => right => {
+    MapExpression: \left right -> {
       CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "map")
                                      [recur names left])
                      [recur names right]
     },
-    BindExpression: left => right => {
+    BindExpression: \left right -> {
       CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "chain")
                                      [recur names right])
                      [recur names left]
     },
-    LogicalExpression: operator => left => right => {
+    LogicalExpression: \operator left right -> {
       LogicalExpression operator (recur names left) (recur names right)
     },
-    ConditionalExpression: predicate => consequent => alternative => {
+    ConditionalExpression: \predicate consequent alternative -> {
       ConditionalExpression (recur names predicate)
                             (recur names consequent)
                             (recur names alternative)
     },
-    SwitchExpression: discriminant => cases => default => {
+    SwitchExpression: \discriminant cases default -> {
       SwitchExpression (recur names discriminant)
                        (recur names <$> cases)
                        (if default is null then null else recur names default)
     },
-    SwitchCase: predicates => consequent => {
+    SwitchCase: \predicates consequent -> {
       SwitchCase (recur names <$> predicates) (recur names consequent)
     },
-    PipeExpression: head => body => {
+    PipeExpression: \head body -> {
       recur names $ CallExpression body [head]
     },
-    MethodCallExpression: name => {
+    MethodCallExpression: \name -> {
       recur names {
         CallExpression (MemberExpression preludeIdent $ StringLiteral "_apply")
                        [StringLiteral name]
       }
     },
-    CallExpression: callee => arguments => {
+    CallExpression: \callee arguments -> {
       CallExpression (recur names callee) (recur names <$> arguments)
     },
-    VariableDeclaration: pattern => expression => {
+    VariableDeclaration: \pattern expression -> {
       VariableDeclaration (recur names pattern) (recur names expression)
     },
-    FunctionDeclaration: name => parameters => body => {
+    FunctionDeclaration: \name parameters body -> {
       FunctionDeclaration name (recur names <$> parameters) (recur names body)
     },
-    ExpressionStatement: expression => {
-      ExpressionStatement $ recur names expression
-    },
-    ArrayPattern: elements => {
-      ArrayPattern $ recur names <$> elements
-    },
-    ObjectPattern: properties => {
-      ObjectPattern $ recur names <$> properties
-    },
-    SpreadElement: argument => {
-      SpreadElement $ recur names argument
-    },
-    RestElement: argument => {
-      RestElement $ recur names argument
-    },
-    Property: key => value => {
-      Property (recur names key) (recur names value)
-    },
-    ExportDefaultDeclaration: declaration => {
-      ExportDefaultDeclaration $ recur names declaration
-    },
-    DataTypeDeclaration: name => constructors => {
+    ExpressionStatement: ExpressionStatement . recur names,
+    ArrayPattern: ArrayPattern . map (recur names),
+    ObjectPattern: ObjectPattern . map (recur names),
+    SpreadElement: SpreadElement . recur names,
+    RestElement: RestElement . recur names,
+    Property: \key value -> Property (recur names key) (recur names value),
+    ExportDefaultDeclaration: ExportDefaultDeclaration . recur names,
+    DataTypeDeclaration: \name constructors -> {
       @tag = CallExpression (MemberExpression (Identifier "Symbol") $ StringLiteral "for") [StringLiteral "tag"];
       @match = CallExpression (MemberExpression (Identifier "Symbol") $ StringLiteral "for") [StringLiteral "match"];
       constructors
-      |> map ({name, parameters} => Property (StringLiteral name) $ reduceRight
-           (body => parameter => ArrowFunctionExpression [Identifier parameter] body)
+      |> map (\{name, parameters} -> Property (StringLiteral name) $ reduceRight
+           (\body parameter -> ArrowFunctionExpression [Identifier parameter] body)
            (parameters
-            |> map (name => Property (StringLiteral name) (Identifier name))
+            |> map (\name -> Property (StringLiteral name) (Identifier name))
             |> concat [Property @tag (StringLiteral name)]
             |> ObjectExpression)
            parameters
@@ -320,7 +302,7 @@ rewriteNode preludeIdent = {
            #member = Identifier $ .replace [RegExp "^.", .toLowerCase []] name;
            case {name, parameters} = {
              SwitchCase [StringLiteral name] {
-               reduce (callee => name => CallExpression callee [MemberExpression #member $ StringLiteral name])
+               reduce (\callee name -> CallExpression callee [MemberExpression #member $ StringLiteral name])
                       (MemberExpression #cases $ StringLiteral name)
                       parameters
              }

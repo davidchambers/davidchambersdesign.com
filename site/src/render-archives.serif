@@ -24,11 +24,11 @@ render-section posts = {
 
 render-archives posts = {
   posts
-  |> map {post => {...post, formatted-date: .toFormat ["MMMM y"] post.datetime}}
-  |> S.sortBy {post => -post.datetime}
-  |> S.groupBy {this => that => this.formatted-date is that.formatted-date}
+  |> map (\post -> {...post, formatted-date: .toFormat ["MMMM y"] post.datetime})
+  |> S.sortBy (\post -> -post.datetime)
+  |> S.groupBy (\this that -> this.formatted-date is that.formatted-date)
   |> map render-section
-  |> archives => [
+  |> \archives -> [
     h1 ["Archives"],
     ol' {class: "archives"} archives,
   ]

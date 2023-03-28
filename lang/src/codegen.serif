@@ -104,7 +104,7 @@ esFromTemplateLiteral quasis expressions = {
   type: "TemplateLiteral",
   expressions: esFromNode <$> expressions,
   quasis: {
-    lineEnding = .find [lineEnding => .startsWith [lineEnding] quasis[0]] ["\n", "\r\n"];
+    lineEnding = .find [\lineEnding -> .startsWith [lineEnding] quasis[0]] ["\n", "\r\n"];
     if lineEnding is undefined then [
       ...{TemplateElement false <$> .slice [0, -1] quasis},
       ...{TemplateElement true  <$> .slice [-1]    quasis},
@@ -176,14 +176,14 @@ esFromBlockExpression statements = {
     body: {
       type: "BlockStatement",
       body: match Node never {
-        VariableDeclaration: pattern => expression => init => (
+        VariableDeclaration: \pattern expression init -> (
           (esFromNode <$> init <> Node.VariableDeclaration pattern expression)
         ),
-        FunctionDeclaration: name => parameters => body => init => (
+        FunctionDeclaration: \name parameters body init -> (
           (esFromNode <$> init <> Node.FunctionDeclaration name parameters body)
           <> [{type: "ReturnStatement", argument: {type: "Identifier", name}}]
         ),
-        ExpressionStatement: expression => init => (
+        ExpressionStatement: \expression init -> (
           (esFromNode <$> init)
           <> [{type: "ReturnStatement", argument: esFromNode expression}]
         ),
@@ -228,7 +228,7 @@ esFromConditionalExpression predicate consequent alternative = {
   alternate: esFromNode alternative,
 };
 
-esFromSwitchCase {predicates, consequent} = {predicate => {
+esFromSwitchCase {predicates, consequent} = {\predicate -> {
   type: "SwitchCase",
   test: esFromNode predicate,
   consequent: [{
@@ -290,7 +290,7 @@ esFromFunctionDeclaration name parameters body = {
     type: "VariableDeclarator",
     id: esFromIdentifier name,
     init: {
-      reduceRight (esBody => param => {
+      reduceRight (\esBody param -> {
                      type: "ArrowFunctionExpression",
                      params: [esFromNode param],
                      body: esBody,
