@@ -3,10 +3,9 @@ all: everything
 
 .PHONY: everything
 everything:
-	node -- ../lang/dist/serif.js '$(CURDIR)/src' '$(CURDIR)/lib' '$(CURDIR)/src/scripts/everything.serif'
-	NODE_ENV=production node -- '$(CURDIR)/lib/scripts/everything.js'
+	node -- ../lang/dist/serif.js src lib scripts/{check-links,everything}.serif
+	NODE_ENV=production node -- lib/scripts/everything.js
 
 .PHONY: check-links
-check-links:
-	node -- ../lang/dist/serif.js '$(CURDIR)/src' '$(CURDIR)/lib' '$(CURDIR)/src/scripts/check-links.serif'
-	NODE_ENV=production node --no-warnings -- '$(CURDIR)/lib/scripts/check-links.js'
+check-links: all
+	NODE_ENV=production node --no-warnings -- lib/scripts/check-links.js

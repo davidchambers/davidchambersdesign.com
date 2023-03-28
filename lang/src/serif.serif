@@ -91,9 +91,13 @@ orderDependencies tree = {
 
 {
   cwd = apply [] process.cwd;
-  [,, src, lib, ...filenames] = process.argv;
+  [,, src, dst, ...filenames] = process.argv;
+  toAbs abs rel = path.join $ [abs] <> .split ["/"] rel;  ;; use / (even on Windows)
+  absSrc = toAbs cwd src;
+  absDst = toAbs cwd dst;
+  absFilenames = toAbs absSrc <$> filenames;
   program = do {
-    tree <- reduce reducer (resolve $ construct Map [[]]) filenames;
+    tree <- reduce reducer (resolve $ construct Map [[]]) absFilenames;
     filenames = orderDependencies tree;
     ;; Create JavaScript module for each Serif module:
     parallel 16 $ flip map filenames \serifFilename -> do {
@@ -110,10 +114,9 @@ orderDependencies tree = {
       serifAst'' = serif.changeExtensions serifAst';
       esAst = serif.esModuleFromSerifModule serifAst'';
       esSource = apply [esAst, {}] generate;
-      esDirname = path.dirname serifFilename;
       esBasename = path.basename serifFilename ".serif" + ".js";
-      esFilename = path.join [lib, path.relative src esDirname, esBasename];
-      _ <- fs.mkdir {recursive: true} esDirname;
+      esFilename = path.join [absDst, path.relative absSrc serifDirname, esBasename];
+      _ <- fs.mkdir {recursive: true} $ path.dirname esFilename;
       _ <- fs.writeFile esFilename esSource;
       resolve {serifFilename, esFilename}
     }
