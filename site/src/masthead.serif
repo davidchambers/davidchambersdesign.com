@@ -255,7 +255,7 @@ next {w, x, y} [dir, mag] = {
 };
 
 reset path = {
-  {w, x, y} = S.reduce next {w: 0, x: 0, y: 0} path;
+  {w, x, y} = reduce next {w: 0, x: 0, y: 0} path;
   ["m", [w - x, -y]]
 };
 

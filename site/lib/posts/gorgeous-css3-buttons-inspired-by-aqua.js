@@ -14,9 +14,11 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const excerpt = [p(["Modern browsers can display exciting visual effects such\n    as drop shadows (without the use of background images).\n    CSS3 makes it possible to turn submit inputs and even links\n    into rich, Aqua-like buttons in these browsers (alternative\n    style rules can be provided for older browsers)."]), p([img({
   alt: "",
   src: "/images/posts/39/start-game-hyperlink-and-button.png"

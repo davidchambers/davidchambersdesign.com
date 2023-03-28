@@ -17,9 +17,11 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const parse = filename => sourceText => mapRej(error => (() => {
   const lines = chain(line => (() => {
     const offset = line.number - error.location.start.line;
@@ -31,13 +33,13 @@ const parse = filename => sourceText => mapRej(error => (() => {
   const renderLineNumber = x => Prelude._apply("padStart")([4])(String(x));
   return `\n\x1B[1m${path.relative(apply([])(process.cwd))(error.location.source)}\x1B[0m\n\n${Prelude._apply("join")([""])(Prelude._apply("map")([(line, idx, lines) => `\x1B[7m${renderLineNumber(line.number)}\x1B[0m${idx < lines.length - 1 ? line.text : `${Prelude._apply("slice")([0, error.location.start.column - 1])(line.text)}\x1B[7m${Prelude._apply("charAt")([error.location.start.column - 1])(line.text)}\x1B[0m${Prelude._apply("slice")([error.location.start.column])(line.text)}`}\n`])(lines))}${(length => Prelude._apply("repeat")([length + error.location.start.column - 1])(" "))((x => x.length)(renderLineNumber((x => x.number)(Prelude._apply("at")([-1])(lines)))))}^\n${error.message}\n`;
 })())(serif.parse(filename)(sourceText));
-const reducer = (futureTree, filename) => Prelude.chain(findDependencies(filename))(futureTree);
-const findDependencies = filename => tree => Prelude._apply("has")([filename])(tree) ? resolve(tree) : Prelude.chain(sourceText => Prelude.chain(ast => (dependencies => (exportedNames => Prelude._apply("reduce")([reducer, resolve(construct(Map)([[...tree, [filename, {
+const reducer = futureTree => filename => Prelude.chain(findDependencies(filename))(futureTree);
+const findDependencies = filename => tree => Prelude._apply("has")([filename])(tree) ? resolve(tree) : Prelude.chain(sourceText => Prelude.chain(ast => (dependencies => (exportedNames => reduce(reducer)(resolve(construct(Map)([[...tree, [filename, {
   sourceText,
   ast,
   dependencies,
   exportedNames
-}]]]))])(dependencies))(Prelude.chain(match(Node)(const_([]))({
+}]]])))(dependencies))(Prelude.chain(match(Node)(const_([]))({
   ExportNamedDeclaration: map(x => (x => x.name)((x => x.exported)(x)))
 }))(ast.exports)))(Prelude.chain(({source: {value}}) => Prelude._apply("test")([value])(RegExp("^[./].*[.]serif$")) ? [path.join([filename, "..", value])] : [])(ast.imports)))(parse(filename)(sourceText)))(mapRej(x => x.message)(fs.readFile(filename)));
 const orderDependencies = tree => (() => {
@@ -57,7 +59,7 @@ const orderDependencies = tree => (() => {
     esFilename
   }))(fs.writeFile(esFilename)(esSource)))(fs.mkdir({
     recursive: true
-  })(esDirname)))(path.join([lib, path.relative(src)(esDirname), esBasename])))(path.basename(serifFilename)(".serif") + ".js"))(path.dirname(serifFilename)))(apply([esAst, {}])(generate)))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(importPath => (filename => (x => x.exportedNames)(Prelude._apply("get")([filename])(tree)))(path.join(concat([serifDirname])(Prelude._apply("split")(["/"])(importPath)))))))((x => x.ast)(Prelude._apply("get")([serifFilename])(tree))))(path.dirname(serifFilename)))))(orderDependencies(tree)))(Prelude._apply("reduce")([reducer, resolve(construct(Map)([[]]))])(filenames));
+  })(esDirname)))(path.join([lib, path.relative(src)(esDirname), esBasename])))(path.basename(serifFilename)(".serif") + ".js"))(path.dirname(serifFilename)))(apply([esAst, {}])(generate)))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(importPath => (filename => (x => x.exportedNames)(Prelude._apply("get")([filename])(tree)))(path.join(concat([serifDirname])(Prelude._apply("split")(["/"])(importPath)))))))((x => x.ast)(Prelude._apply("get")([serifFilename])(tree))))(path.dirname(serifFilename)))))(orderDependencies(tree)))(reduce(reducer)(resolve(construct(Map)([[]])))(filenames));
   return fork(console.error)(filenames => Prelude._apply("forEach")([({serifFilename, esFilename}) => (() => {
     console.log(`• ${path.relative(cwd)(serifFilename)}`);
     return console.log(`  ➔ ${path.relative(cwd)(esFilename)}`);

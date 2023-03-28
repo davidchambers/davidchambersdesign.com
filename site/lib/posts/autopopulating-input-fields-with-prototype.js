@@ -14,9 +14,11 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const excerpt = [p(["Yesterday I wrote a simple class which auto-populates\n    input fields, and thought it worth sharing. I was originally\n    inspired to write this code by Roger Johansson's post titled ", a({
   href: "http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/"
 })(["Autopopulating text input fields with JavaScript"]), ".\n    While I approached the problem from a slightly different angle,\n    I made sure to avoid the pitfalls Roger mentions."])];

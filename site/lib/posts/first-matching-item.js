@@ -14,9 +14,11 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const body = [p(["When writing code one often needs to grab the first item in\n    a collection that has certain characteristics. For example,\n    one may have a list of ", code(["Student"]), " objects and\n    need to fetch the one with a certain id."]), p(["The task is trivial: loop through the list and compare each\n    student's id until a match is found or all the students in\n    the list have been inspected, whichever comes first."]), p(["In the past, I've tended to take advantage of return statements\n    to exit the loop as soon as a match is found. The examples here\n    are in Python, but the same patterns apply to other languages."]), code$002Dblock("python")(`def student_by_id(students, id):
     for student in students:
         if student.id == id:

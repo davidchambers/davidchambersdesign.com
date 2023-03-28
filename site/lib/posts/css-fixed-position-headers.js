@@ -14,9 +14,11 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const excerpt = [p(["I began this post three months ago, got stuck, and put it in\n    the too hard basket. I wanted to devise a workable solution\n    to my stumbling block before publishing this information.\n    I'm getting ahead of myself, though. First, the background."]), p(["As I began writing this post, I had just completed a redesign\n    of this site. The new design removed unnecessary distractions\n    to allow readers to focus on the clearly presented content.\n    I moved site navigation from the sidebar (which I axed\n    altogether) to the header. I decided to fix the header in\n    place so that the navigation and search form would always be\n    visible. This required very little effort, but overcoming the ", a({
   href: "http://css-tricks.com/forums/viewtopic.php?t=3496"
 })(["problem posed by fixed-position headers"]), " took a great\n    deal of trial and error. To save others from going through\n    this tortuous process I'll describe my various approaches,\n    and list the benefits and drawbacks of each."])];

@@ -15,9 +15,11 @@ const Prelude$1 = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude$1.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude$1;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude$1;
 const {StringLiteral, TemplateLiteral, MemberExpression, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, ObjectPattern, RestElement, ArrowFunctionExpression, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, CallExpression, ImportDeclaration, ImportSpecifier, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} = Node;
 const never = _ => XXX;
 const has = element => set => Prelude$1._apply("has")([element])(set);
@@ -81,11 +83,11 @@ const rewriteNode = preludeIdent => (() => {
         ExpressionStatement: recur(names)
       })(statements[0]) : otherwise(null);
     })(),
-    DoBlockExpression: operations => result => recur(names)(Prelude$1._apply("reduceRight")([(result, operation) => match(Node)(never)({
+    DoBlockExpression: operations => result => recur(names)(reduceRight(result => match(Node)(never)({
       ArrowAssignmentStatement: pattern => expression => CallExpression(CallExpression(MemberExpression(preludeIdent)(StringLiteral("chain")))([ArrowFunctionExpression([pattern])(result)]))([expression]),
       VariableDeclaration: pattern => expression => CallExpression(ArrowFunctionExpression([pattern])(result))([expression]),
-      FunctionDeclaration: name => parameters => body => CallExpression(ArrowFunctionExpression([Identifier(name)])(result))([Prelude$1._apply("reduceRight")([(body, param) => ArrowFunctionExpression([param])(body), body])(parameters)])
-    })(operation), result])(operations)),
+      FunctionDeclaration: name => parameters => body => CallExpression(ArrowFunctionExpression([Identifier(name)])(result))([reduceRight(body => param => ArrowFunctionExpression([param])(body))(body)(parameters)])
+    }))(result)(operations)),
     UnaryExpression: operator => argument => UnaryExpression(operator)(recur(names)(argument)),
     CompositionExpression: left => right => (() => {
       const param = nextUnusedIdent(names)("x");
@@ -122,9 +124,9 @@ const rewriteNode = preludeIdent => (() => {
         const $0023default = Identifier("default");
         const $0023cases = Identifier("cases");
         const $0023member = Identifier(Prelude$1._apply("replace")([RegExp("^."), Prelude$1._apply("toLowerCase")([])])(name));
-        const case$ = ({name, parameters}) => SwitchCase([StringLiteral(name)])(Prelude$1._apply("reduce")([(callee, name) => CallExpression(callee)([MemberExpression($0023member)(StringLiteral(name))]), MemberExpression($0023cases)(StringLiteral(name))])(parameters));
+        const case$ = ({name, parameters}) => SwitchCase([StringLiteral(name)])(reduce(callee => name => CallExpression(callee)([MemberExpression($0023member)(StringLiteral(name))]))(MemberExpression($0023cases)(StringLiteral(name)))(parameters));
         return ArrowFunctionExpression([$0023default])(ArrowFunctionExpression([$0023cases])(ArrowFunctionExpression([$0023member])(ConditionalExpression(CallExpression(MemberExpression(Identifier("Object"))(StringLiteral("hasOwn")))([$0023cases, MemberExpression($0023member)($0040tag)]))(SwitchExpression(MemberExpression($0023member)($0040tag))(Prelude$1.map(case$)(constructors))(null))(CallExpression($0023default)([$0023member])))));
-      })())])(map(({name, parameters}) => Property(StringLiteral(name))(Prelude$1._apply("reduceRight")([(body, parameter) => ArrowFunctionExpression([Identifier(parameter)])(body), ObjectExpression(concat([Property($0040tag)(StringLiteral(name))])(map(name => Property(StringLiteral(name))(Identifier(name)))(parameters)))])(parameters)))(constructors)))));
+      })())])(map(({name, parameters}) => Property(StringLiteral(name))(reduceRight(body => parameter => ArrowFunctionExpression([Identifier(parameter)])(body))(ObjectExpression(concat([Property($0040tag)(StringLiteral(name))])(map(name => Property(StringLiteral(name))(Identifier(name)))(parameters))))(parameters)))(constructors)))));
     })()
   });
   return recur;

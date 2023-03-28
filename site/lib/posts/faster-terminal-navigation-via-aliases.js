@@ -14,9 +14,11 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const excerpt = [p(["Workmates will be quick to confirm that I'm ", strong(["not exactly leet"]), " on the command line.\n    Efforts to advance beyond ", code(["cd"]), " and ", code(["ls"]), " have been hampered by the fact that\n    many posts and discussion threads assume a level\n    of competency which as yet I lack."]), p(["When I sit down to write a post, oftentimes ", strong(["I write the post I wish I'd read an hour earlier"]), ".\n    As I unravel the mysteries of ack and bash and Emacs and the\n    like, I'll publish tips and explanations so that others can\n    benefit from my discoveries (or, as will likely be the case,\n    so that you people can further enlighten ", em(["me"]), ")."])];
 const body = [...excerpt, h3(["Aliases"]), p(["Do you find yourself ", code(["cd"]), "-ing to a particular directory\n    dozens of times each day? Perhaps you", $2014, "like me", $2014, "forget ", strong(["where the heck Python's site-packages directory lives"]), ",\n    and resort to Googling to find out? Aliases to the rescue!"]), p(["Aliases can be placed in your ", strong([".bashrc"]), " or ", strong([".bash_profile"]), ", or in a separate file which either\n    one of these imports."]), code$002Dblock("bash")(`alias site-packages="cd /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages"
 `), p(["Thanks to this alias I can enter ", code(["site-packages"]), " and be taken\n    straight there. Another cool thing to know about is ", code(["cd -"]), ",\n    which takes you to the directory you were in most recently."]), code$002Dblock("console")(`$ cd ~/Desktop

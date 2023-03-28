@@ -51,7 +51,7 @@ parse filename sourceText = {
   }
 };
 
-reducer = (futureTree, filename) => {
+reducer futureTree filename = {
   futureTree >>= findDependencies filename
 };
 
@@ -67,10 +67,9 @@ findDependencies filename tree = {
       }
     };
     exportedNames = ast.exports >>= match Node (const_ []) {ExportNamedDeclaration: map ((.name) . (.exported))};
-    .reduce [
-      reducer,
-      resolve $ construct Map [[...tree, [filename, {sourceText, ast, dependencies, exportedNames}]]],
-    ] dependencies
+    reduce reducer
+           (resolve $ construct Map [[...tree, [filename, {sourceText, ast, dependencies, exportedNames}]]])
+           dependencies
   }
 };
 
@@ -94,7 +93,7 @@ orderDependencies tree = {
   cwd = apply [] process.cwd;
   [,, src, lib, ...filenames] = process.argv;
   program = do {
-    tree <- .reduce [reducer, resolve $ construct Map [[]]] filenames;
+    tree <- reduce reducer (resolve $ construct Map [[]]) filenames;
     filenames = orderDependencies tree;
     ;; Create JavaScript module for each Serif module:
     parallel 16 $ flip map filenames $ serifFilename => do {

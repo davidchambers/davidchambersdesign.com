@@ -9,6 +9,8 @@ export {
   const_,
   not,
   concat,
+  reduce,
+  reduceRight,
   filter,
   reject,
   map,
@@ -114,6 +116,42 @@ concat preludeIdent = {
         (CallExpression (MemberExpression (Identifier "this")
                                           (StringLiteral "fantasy-land/concat"))
                         [Identifier "that"])
+    }
+  }
+};
+
+reduce preludeIdent = {
+  ArrowFunctionExpression [Identifier "f"] {
+    ArrowFunctionExpression [Identifier "y"] {
+      ArrowFunctionExpression [Identifier "foldable"] {
+        CallExpression (
+          MemberExpression (Identifier "foldable")
+                           (ConditionalExpression (isArray "foldable")
+                                                  (StringLiteral "reduce")
+                                                  (StringLiteral "fantasy-land/reduce"))
+        ) [
+          ArrowFunctionExpression [Identifier "y", Identifier "x"] {
+            CallExpression (CallExpression (Identifier "f") [Identifier "y"]) [Identifier "x"]
+          },
+          Identifier "y",
+        ]
+      }
+    }
+  }
+};
+
+;; TODO: generalize to foldable
+reduceRight preludeIdent = {
+  ArrowFunctionExpression [Identifier "f"] {
+    ArrowFunctionExpression [Identifier "y"] {
+      ArrowFunctionExpression [Identifier "foldable"] {
+        CallExpression (MemberExpression (Identifier "foldable") (StringLiteral "reduceRight")) [
+          ArrowFunctionExpression [Identifier "y", Identifier "x"] {
+            CallExpression (CallExpression (Identifier "f") [Identifier "y"]) [Identifier "x"]
+          },
+          Identifier "y",
+        ]
+      }
     }
   }
 };

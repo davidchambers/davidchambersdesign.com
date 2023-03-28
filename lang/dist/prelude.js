@@ -12,6 +12,8 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
 const {} = Prelude;
@@ -26,9 +28,11 @@ const id = preludeIdent => ArrowFunctionExpression([Identifier("x")])(Identifier
 const const_ = preludeIdent => ArrowFunctionExpression([Identifier("x")])(ArrowFunctionExpression([Identifier("y")])(Identifier("x")));
 const not = preludeIdent => ArrowFunctionExpression([Identifier("b")])(UnaryExpression("!")(Identifier("b")));
 const concat = preludeIdent => ArrowFunctionExpression([Identifier("this")])(ArrowFunctionExpression([Identifier("that")])(ConditionalExpression(LogicalExpression("or")(isArray("this"))(isString("this")))(CallExpression(MemberExpression(Identifier("this"))(StringLiteral("concat")))([Identifier("that")]))(CallExpression(MemberExpression(Identifier("this"))(StringLiteral("fantasy-land/concat")))([Identifier("that")]))));
+const reduce = preludeIdent => ArrowFunctionExpression([Identifier("f")])(ArrowFunctionExpression([Identifier("y")])(ArrowFunctionExpression([Identifier("foldable")])(CallExpression(MemberExpression(Identifier("foldable"))(ConditionalExpression(isArray("foldable"))(StringLiteral("reduce"))(StringLiteral("fantasy-land/reduce"))))([ArrowFunctionExpression([Identifier("y"), Identifier("x")])(CallExpression(CallExpression(Identifier("f"))([Identifier("y")]))([Identifier("x")])), Identifier("y")]))));
+const reduceRight = preludeIdent => ArrowFunctionExpression([Identifier("f")])(ArrowFunctionExpression([Identifier("y")])(ArrowFunctionExpression([Identifier("foldable")])(CallExpression(MemberExpression(Identifier("foldable"))(StringLiteral("reduceRight")))([ArrowFunctionExpression([Identifier("y"), Identifier("x")])(CallExpression(CallExpression(Identifier("f"))([Identifier("y")]))([Identifier("x")])), Identifier("y")]))));
 const filter = preludeIdent => ArrowFunctionExpression([Identifier("predicate")])(ArrowFunctionExpression([Identifier("filterable")])(ConditionalExpression(isArray("filterable"))(CallExpression(MemberExpression(Identifier("filterable"))(StringLiteral("filter")))([ArrowFunctionExpression([Identifier("x")])(CallExpression(Identifier("predicate"))([Identifier("x")]))]))(CallExpression(MemberExpression(Identifier("filterable"))(StringLiteral("fantasy-land/filter")))([Identifier("predicate")]))));
 const reject = preludeIdent => ArrowFunctionExpression([Identifier("predicate")])(CallExpression(MemberExpression(preludeIdent)(StringLiteral("filter")))([ArrowFunctionExpression([Identifier("x")])(UnaryExpression("!")(CallExpression(Identifier("predicate"))([Identifier("x")])))]));
 const map = preludeIdent => ArrowFunctionExpression([Identifier("f")])(ArrowFunctionExpression([Identifier("functor")])(ConditionalExpression(isArray("functor"))(CallExpression(MemberExpression(Identifier("functor"))(StringLiteral("map")))([ArrowFunctionExpression([Identifier("x")])(CallExpression(Identifier("f"))([Identifier("x")]))]))(CallExpression(MemberExpression(Identifier("functor"))(StringLiteral("fantasy-land/map")))([Identifier("f")]))));
 const flip = preludeIdent => ArrowFunctionExpression([Identifier("f")])(ArrowFunctionExpression([Identifier("y")])(ArrowFunctionExpression([Identifier("x")])(CallExpression(CallExpression(Identifier("f"))([Identifier("x")]))([Identifier("y")]))));
 const chain = preludeIdent => ArrowFunctionExpression([Identifier("f")])(ArrowFunctionExpression([Identifier("chain")])(ConditionalExpression(isArray("chain"))(CallExpression(MemberExpression(Identifier("chain"))(StringLiteral("flatMap")))([ArrowFunctionExpression([Identifier("x")])(CallExpression(Identifier("f"))([Identifier("x")]))]))(CallExpression(MemberExpression(Identifier("chain"))(StringLiteral("fantasy-land/chain")))([Identifier("f")]))));
-export {_apply, apply, construct, match, id, const_, not, concat, filter, reject, map, flip, chain};
+export {_apply, apply, construct, match, id, const_, not, concat, reduce, reduceRight, filter, reject, map, flip, chain};

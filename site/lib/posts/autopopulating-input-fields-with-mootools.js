@@ -14,9 +14,11 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const body = [p(["Early this year I wrote a post titled ", a({
   href: "/autopopulating-input-fields-with-prototype/"
 })(["Auto-populating input fields with Prototype"]), ".\n    Looking at the code now, I realize that it's not very pretty.\n    I'm rewriting this site's JavaScript in MooTools, and the new\n    code is quite a bit more elegant."]), code$002Dblock("javascript")(`// provide input hints

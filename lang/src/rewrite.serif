@@ -178,29 +178,25 @@ rewriteNode preludeIdent = {
       } else otherwise null
     },
     DoBlockExpression: operations => result => {
-      recur names {
-        .reduceRight [
-          (result, operation) => {
-            match Node never {
-              ArrowAssignmentStatement: pattern => expression => {
-                CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "chain")
-                                               [ArrowFunctionExpression [pattern] result]) [
-                  expression,
-                ]
-              },
-              VariableDeclaration: pattern => expression => {
-                CallExpression (ArrowFunctionExpression [pattern] result) [expression]
-              },
-              FunctionDeclaration: name => parameters => body => {
-                CallExpression (ArrowFunctionExpression [Identifier name] result) [
-                  .reduceRight [(body, param) => ArrowFunctionExpression [param] body, body] parameters,
-                ]
-              },
-            } operation
-          },
-          result,
-        ] operations
-      }
+      recur names $ reduceRight
+        (result => match Node never {
+           ArrowAssignmentStatement: pattern => expression => {
+             CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "chain")
+                                            [ArrowFunctionExpression [pattern] result]) [
+               expression,
+             ]
+           },
+           VariableDeclaration: pattern => expression => {
+             CallExpression (ArrowFunctionExpression [pattern] result) [expression]
+           },
+           FunctionDeclaration: name => parameters => body => {
+             CallExpression (ArrowFunctionExpression [Identifier name] result) [
+               reduceRight (body => param => ArrowFunctionExpression [param] body) body parameters,
+             ]
+           },
+         })
+        result
+        operations
     },
     UnaryExpression: operator => argument => {
       UnaryExpression operator (recur names argument)
@@ -310,14 +306,13 @@ rewriteNode preludeIdent = {
       @tag = CallExpression (MemberExpression (Identifier "Symbol") $ StringLiteral "for") [StringLiteral "tag"];
       @match = CallExpression (MemberExpression (Identifier "Symbol") $ StringLiteral "for") [StringLiteral "match"];
       constructors
-      |> map ({name, parameters} => Property (StringLiteral name) $
-           .reduceRight [
-             (body, parameter) => ArrowFunctionExpression [Identifier parameter] body,
-             parameters
-             |> map (name => Property (StringLiteral name) (Identifier name))
-             |> concat [Property @tag (StringLiteral name)]
-             |> ObjectExpression
-           ] parameters
+      |> map ({name, parameters} => Property (StringLiteral name) $ reduceRight
+           (body => parameter => ArrowFunctionExpression [Identifier parameter] body)
+           (parameters
+            |> map (name => Property (StringLiteral name) (Identifier name))
+            |> concat [Property @tag (StringLiteral name)]
+            |> ObjectExpression)
+           parameters
          )
       |> concat [Property @match {
            #default = Identifier "default";
@@ -325,10 +320,9 @@ rewriteNode preludeIdent = {
            #member = Identifier $ .replace [RegExp "^.", .toLowerCase []] name;
            case {name, parameters} = {
              SwitchCase [StringLiteral name] {
-               .reduce [
-                 (callee, name) => CallExpression callee [MemberExpression #member $ StringLiteral name],
-                 (MemberExpression #cases (StringLiteral name)),
-               ] parameters
+               reduce (callee => name => CallExpression callee [MemberExpression #member $ StringLiteral name])
+                      (MemberExpression #cases $ StringLiteral name)
+                      parameters
              }
            };
            ArrowFunctionExpression [#default] {

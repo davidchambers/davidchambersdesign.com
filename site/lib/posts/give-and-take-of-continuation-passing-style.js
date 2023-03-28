@@ -14,9 +14,11 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const body = [p(["I have been experimenting with ", a({
   href: "https://en.wikipedia.org/wiki/Continuation-passing_style"
 })(["continuation-passing style"]), " recently. Writing code in\n    this style feels strange but exciting! I recently discovered\n    that one can use functions in place of objects."]), p(["Local mutation and reassignment are acceptable, but I avoid them\n    whenever practical. As a result I use ", code(["reduce"]), " ", em(["a lot"]), "."]), code$002Dblock("javascript")(`//    reduce :: (b -> a -> b) -> b -> Array a -> b

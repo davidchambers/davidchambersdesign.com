@@ -14,9 +14,11 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const body = [p(["Recently I listened to ", a({
   href: "http://blog.extracheese.org/2010/02/python-vs-ruby-a-battle-to-the-death.html"
 })(["Gary Bernhardt comparing Python and Ruby"]), ". In the talk Gary\n    states that he finds Ruby code ugly and Python code beautiful.\n    He then goes on to say that the things which reduce Ruby's\n    aesthetic appeal are the very things which allow Ruby to do\n    beautiful things impossible in Python."]), p(["Gary provides several examples of equivalent code in Python and\n    Ruby to highlight situations in which one language reads better\n    than the other, such as the following."]), p(["Python:"]), code$002Dblock("python")(`'\\n'.join(obj.name

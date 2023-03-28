@@ -14,9 +14,11 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const body = [p(["While creating documentation for ", i(["Dice Cricket"]), ",\n    a game a friend and I designed many years ago, I produced\n    a set of diagrams which represent the segments of a cricket\n    field. The isolated nature of this small design challenge\n    provided a refreshing break from the various and interrelated\n    considerations involved in designing for the Web."]), captioned$002Dimages([{
   alt: "Cricket field with mid-wicket area highlighted",
   src: "/images/posts/40/mid-wicket.png",

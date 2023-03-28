@@ -289,15 +289,16 @@ esFromFunctionDeclaration name parameters body = {
   declarations: [{
     type: "VariableDeclarator",
     id: esFromIdentifier name,
-    init: .reduceRight [
-      (esBody, param) => {
-        type: "ArrowFunctionExpression",
-        params: [esFromNode param],
-        body: esBody,
-        expression: not $ esBody.type is "BlockStatement",
-      },
-      esFromNode body,
-    ] parameters,
+    init: {
+      reduceRight (esBody => param => {
+                     type: "ArrowFunctionExpression",
+                     params: [esFromNode param],
+                     body: esBody,
+                     expression: not $ esBody.type is "BlockStatement",
+                   })
+                  (esFromNode body)
+                  parameters
+    },
   }],
 };
 

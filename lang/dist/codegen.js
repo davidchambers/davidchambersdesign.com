@@ -12,9 +12,11 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const never = _ => XXX;
 const RESERVED_WORDS = construct(Set)([["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public", "arguments", "eval"]]);
 const validEsIdentifierName = name => Prelude._apply("test")([name])(RegExp("^[$_A-Za-z][$_A-Za-z0-9]*$"));
@@ -220,12 +222,12 @@ const esFromFunctionDeclaration = name => parameters => body => ({
   declarations: [{
     type: "VariableDeclarator",
     id: esFromIdentifier(name),
-    init: Prelude._apply("reduceRight")([(esBody, param) => ({
+    init: reduceRight(esBody => param => ({
       type: "ArrowFunctionExpression",
       params: [esFromNode(param)],
       body: esBody,
       expression: not(Object.is("BlockStatement", esBody.type))
-    }), esFromNode(body)])(parameters)
+    }))(esFromNode(body))(parameters)
   }]
 });
 const esFromExpressionStatement = expression => ({

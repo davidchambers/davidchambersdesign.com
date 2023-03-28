@@ -12,12 +12,14 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const simplify = paths => Object.is(0, paths.length) ? [] : (() => {
   const [head, ...tail] = paths;
-  const [prev, path] = Prelude._apply("reduce")([([prev, path], curr) => Object.is("M", curr[0]) ? Object.is("M", prev[0]) || Object.is("m", prev[0]) ? [curr, path] : [curr, [...path, prev]] : (Object.is("M", prev[0]) || Object.is("m", prev[0])) && Object.is("m", curr[0]) ? [[prev[0], [prev[1][0] + curr[1][0], prev[1][1] + curr[1][1]]], path] : [curr, [...path, prev]], [head, []]])(tail);
+  const [prev, path] = reduce(([prev, path]) => curr => Object.is("M", curr[0]) ? Object.is("M", prev[0]) || Object.is("m", prev[0]) ? [curr, path] : [curr, [...path, prev]] : (Object.is("M", prev[0]) || Object.is("m", prev[0])) && Object.is("m", curr[0]) ? [[prev[0], [prev[1][0] + curr[1][0], prev[1][1] + curr[1][1]]], path] : [curr, [...path, prev]])([head, []])(tail);
   return [...path, prev];
 })();
 const render = x => S.unwords(S.join(simplify(x)));

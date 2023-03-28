@@ -13,9 +13,11 @@ const Prelude = {
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
   not: b => !b,
+  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   reject: predicate => Prelude.filter(x => !predicate(x))
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reject} = Prelude;
+const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
 const body = [p(["In this performance from ", i(["Ukraine's Got Talent"]), ",\n    Kseniya Simonova uses the simplest of tools (a lightbox,\n    sand, and her own body) to create a captivating animation.\n    I really enjoyed the accompanying \"Nothing Else Matters\"\n    instrumental, as well."]), p([a({
   href: "http://www.youtube.com/watch?v=518XP8prwZo"
 })(["Kseniya Simonova on Ukraine's Got Talent"])])];
