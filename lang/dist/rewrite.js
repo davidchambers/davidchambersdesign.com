@@ -1,25 +1,25 @@
 import * as Future from "fluture";
 import Node from "./Node.js";
 import * as format from "./format.js";
-import * as Prelude from "./prelude.js";
+import Prelude from "./prelude.js";
 const Prelude$1 = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
-  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
-  const_: x => y => x,
   construct: constructor => args => Reflect.construct(constructor, args),
-  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  flip: f => y => x => f(x)(y),
-  id: x => x,
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
+  id: x => x,
+  const: x => y => x,
   not: b => !b,
+  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
-  reject: predicate => Prelude$1.filter(x => !predicate(x))
+  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
+  reject: predicate => Prelude$1.filter(x => !predicate(x)),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  flip: f => y => x => f(x)(y),
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude$1;
+const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
 const {StringLiteral, TemplateLiteral, MemberExpression, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, ObjectPattern, RestElement, ArrowFunctionExpression, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, CallExpression, ImportDeclaration, ImportSpecifier, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} = Node;
 const never = _ => XXX;
 const has = element => set => Prelude$1._apply("has")([element])(set);
@@ -32,14 +32,14 @@ const nextUnusedIdent = names => desiredName => (() => {
   })();
   return recur(0);
 })();
-const namesInPattern = pattern => match(Node)(const_([]))({
-  Identifier: Array.of,
-  ArrayPattern: chain(namesInPattern),
-  ObjectPattern: chain(namesInPattern),
-  Property: const_(namesInPattern),
-  RestElement: namesInPattern
+const namesInPattern = match(Node)(const$([]))({
+  Identifier: name => [name],
+  ArrayPattern: elements => Prelude$1.chain(namesInPattern)(elements),
+  ObjectPattern: properties => Prelude$1.chain(namesInPattern)(properties),
+  Property: key => value => namesInPattern(value),
+  RestElement: argument => namesInPattern(argument)
 });
-const namesInStatement = match(Node)(const_([]))({
+const namesInStatement = match(Node)(const$([]))({
   ImportDeclaration: source => specifiers => Prelude$1.map(x => (x => x.name)((x => x.local)(x)))(specifiers),
   VariableDeclaration: pattern => expression => namesInPattern(pattern),
   FunctionDeclaration: name => parameters => body => [name]
@@ -73,7 +73,7 @@ const rewriteNode = preludeIdent => (() => {
     })(),
     BlockExpression: statements => (() => {
       const otherwise = _ => (() => {
-        const names$0027 = union(names)(Prelude$1.chain(match(Node)(const_ => [])({
+        const names$0027 = union(names)(Prelude$1.chain(match(Node)(const$([]))({
           VariableDeclaration: pattern => expression => namesInPattern(pattern),
           FunctionDeclaration: name => parameters => body => [name]
         }))(statements));

@@ -2,7 +2,7 @@ import * as Future from "fluture";
 
 import Node from "./Node.serif";
 import * as format from "./format.serif";
-import * as Prelude from "./prelude.serif";
+import Prelude from "./prelude.serif";
 
 export default rewriteModule;
 
@@ -53,22 +53,18 @@ nextUnusedIdent names desiredName = {
   recur 0
 };
 
-namesInPattern pattern = {
-  match Node (const_ []) {
-    Identifier: Array.of,
-    ArrayPattern: chain namesInPattern,
-    ObjectPattern: chain namesInPattern,
-    Property: const_ namesInPattern,
-    RestElement: namesInPattern,
-  }
+namesInPattern = match Node (const []) {
+  Identifier: \name -> [name],
+  ArrayPattern: \elements -> elements >>= namesInPattern,
+  ObjectPattern: \properties -> properties >>= namesInPattern,
+  Property: \key value -> namesInPattern value,
+  RestElement: \argument -> namesInPattern argument,
 };
 
-namesInStatement = {
-  match Node (const_ []) {
-    ImportDeclaration: \source specifiers -> (.name) . (.local) <$> specifiers,
-    VariableDeclaration: \pattern expression -> namesInPattern pattern,
-    FunctionDeclaration: \name parameters body -> [name],
-  }
+namesInStatement = match Node (const []) {
+  ImportDeclaration: \source specifiers -> (.name) . (.local) <$> specifiers,
+  VariableDeclaration: \pattern expression -> namesInPattern pattern,
+  FunctionDeclaration: \name parameters body -> [name],
 };
 
 rewriteModule {imports, exports, statements} namesExportedFrom = do {
@@ -163,7 +159,7 @@ rewriteNode preludeIdent = {
     },
     BlockExpression: \statements -> {
       otherwise _ = {
-        names' = union names $ statements >>= match Node (\const_ -> []) {
+        names' = union names $ statements >>= match Node (const []) {
           VariableDeclaration: \pattern expression -> namesInPattern pattern,
           FunctionDeclaration: \name parameters body -> [name],
         };

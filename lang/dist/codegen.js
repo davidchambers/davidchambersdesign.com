@@ -2,21 +2,21 @@ import Node from "./Node.js";
 const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
-  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f),
-  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
-  const_: x => y => x,
   construct: constructor => args => Reflect.construct(constructor, args),
-  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  flip: f => y => x => f(x)(y),
-  id: x => x,
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   match: type => type[Symbol.for("match")],
+  id: x => x,
+  const: x => y => x,
   not: b => !b,
+  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
-  reject: predicate => Prelude.filter(x => !predicate(x))
+  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
+  reject: predicate => Prelude.filter(x => !predicate(x)),
+  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  flip: f => y => x => f(x)(y),
+  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, chain, concat, const_, construct, filter, flip, id, map, match, not, reduce, reduceRight, reject} = Prelude;
+const {_apply, apply, construct, match, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const never = _ => XXX;
 const RESERVED_WORDS = construct(Set)([["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public", "arguments", "eval"]]);
 const validEsIdentifierName = name => Prelude._apply("test")([name])(RegExp("^[$_A-Za-z][$_A-Za-z0-9]*$"));
@@ -56,7 +56,7 @@ const esFromTemplateLiteral = quasis => expressions => ({
   })()
 });
 const esFromMemberExpression = object => property => (() => {
-  const computed = not(match(Node)(const_(false))({
+  const computed = not(match(Node)(const$(false))({
     StringLiteral: validEsIdentifierName
   })(property));
   return {
@@ -76,7 +76,7 @@ const esFromArrayExpression = elements => ({
   elements: Prelude.map(esFromNode)(elements)
 });
 const esFromProperty = key => value => (() => {
-  const computed = not(match(Node)(const_(false))({
+  const computed = not(match(Node)(const$(false))({
     StringLiteral: validEsIdentifierName
   })(key));
   const esKey = computed ? esFromNode(key) : esFromEscapedIdentifierName(key.value);

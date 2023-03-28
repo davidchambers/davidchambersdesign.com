@@ -125,7 +125,7 @@ esFromTemplateLiteral quasis expressions = {
 };
 
 esFromMemberExpression object property = {
-  computed = not $ match Node (const_ false) {StringLiteral: validEsIdentifierName} property;
+  computed = not $ match Node (const false) {StringLiteral: validEsIdentifierName} property;
   {
     type: "MemberExpression",
     object: esFromNode object,
@@ -146,7 +146,7 @@ esFromArrayExpression elements = {
 };
 
 esFromProperty key value = {
-  computed = not $ match Node (const_ false) {StringLiteral: validEsIdentifierName} key;
+  computed = not $ match Node (const false) {StringLiteral: validEsIdentifierName} key;
   esKey = if computed then esFromNode key else esFromEscapedIdentifierName key.value;
   esValue = esFromNode value;
   shorthand = esKey.type is "Identifier" and esValue.type is "Identifier" and esKey.name is esValue.name;
