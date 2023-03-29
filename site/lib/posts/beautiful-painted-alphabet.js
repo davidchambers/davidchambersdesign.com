@@ -17,6 +17,7 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
+  instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
   match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
@@ -33,7 +34,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["I came across this recently while browsing ", a({
   href: "http://markboulton.co.uk/"
 })(["Mark Boulton's site"]), ".\n    The style and control of Job's hand is played off against\n    the exuberance of his son's approach. An upbeat soundtrack\n    accompanies the performance."]), dl([dt([a({

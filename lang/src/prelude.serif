@@ -126,6 +126,13 @@ Prelude fromPrelude = {
       }
     }
   },
+  instanceof: {
+    ArrowFunctionExpression [#constructor] {
+      ArrowFunctionExpression [#x] {
+        BinaryExpression "instanceof" #x #constructor
+      }
+    }
+  },
   typeof: {
     ArrowFunctionExpression [#x] {
       ConditionalExpression (BinaryExpression "===" #x NullLiteral) 'null (UnaryExpression "typeof" #x)

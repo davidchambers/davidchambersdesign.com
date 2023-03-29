@@ -16,6 +16,7 @@ const Prelude$1 = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
+  instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
   match: type => Prelude$1["match'"](type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
@@ -32,7 +33,7 @@ const Prelude$1 = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
+const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
 const {ArrowFunctionExpression, BinaryExpression, CallExpression, CompositionExpression, ConditionalExpression, Identifier, LogicalExpression, MemberExpression, NullLiteral, ObjectExpression, Property, StringLiteral, UnaryExpression} = Node;
 const $0023Array = Identifier("Array");
 const $0023CasesNotExhaustive = Identifier("CasesNotExhaustive");
@@ -83,6 +84,7 @@ const Prelude = fromPrelude => ({
   _apply: ArrowFunctionExpression([$0023name])(ArrowFunctionExpression([$0023args])(ArrowFunctionExpression([$0023target])(CallExpression(MemberExpression(MemberExpression($0023target)($0023name))($0027apply))([$0023target, $0023args])))),
   apply: ArrowFunctionExpression([$0023args])(ArrowFunctionExpression([$0023target])(CallExpression(MemberExpression($0023target)($0027apply))([$0023target, $0023args]))),
   construct: ArrowFunctionExpression([$0023constructor])(ArrowFunctionExpression([$0023args])(CallExpression(MemberExpression($0023Reflect)($0027construct))([$0023constructor, $0023args]))),
+  instanceof: ArrowFunctionExpression([$0023constructor])(ArrowFunctionExpression([$0023x])(BinaryExpression("instanceof")($0023x)($0023constructor))),
   typeof: ArrowFunctionExpression([$0023x])(ConditionalExpression(BinaryExpression("===")($0023x)(NullLiteral))($0027null)(UnaryExpression("typeof")($0023x))),
   match: ArrowFunctionExpression([$0023type])(CallExpression(CallExpression(fromPrelude("match'"))([$0023type]))([ArrowFunctionExpression([$0023x])($0023CasesNotExhaustive)])),
   ["match'"]: ArrowFunctionExpression([$0023type])(MemberExpression($0023type)(CallExpression(MemberExpression($0023Symbol)($0027for))([$0027match]))),

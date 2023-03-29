@@ -18,6 +18,7 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
+  instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
   match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
@@ -34,7 +35,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["On the Web it's not uncommon to see characters with\n    no inherent meaning used for stylistic reasons. A good\n    example is the ", a({
   href: "#"
 })(["Read more »"]), " link.\n    Perhaps the directionality of the \"»\" is suggestive of\n    travelling to another page, or perhaps the letterform is\n    included solely for its aesthetic appeal. Whatever the case,\n    one thing is certain: links do not require right-pointing\n    double angle quotation marks in order to function."]), p([strong(["The inclusion of such a character is therefore\n    a design decision."]), " It is decoration, not content.\n    It belongs in a style sheet, not in a page's markup."])];

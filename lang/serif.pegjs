@@ -129,7 +129,6 @@ ExportToken         = @$'export'        !IdentifierPart
 IfToken             = @$'if'            !IdentifierPart
 ImportToken         = @$'import'        !IdentifierPart
 InToken             = @$'in'            !IdentifierPart
-InstanceofToken     = @$'instanceof'    !IdentifierPart
 OrToken             = @$'or'            !IdentifierPart
 SwitchToken         = @$'switch'        !IdentifierPart
 ThenToken           = @$'then'          !IdentifierPart
@@ -364,7 +363,6 @@ RelationalOperator
   / '<'
   / '>='
   / '>'
-  / InstanceofToken
   / InToken
 
 RelationalExpression

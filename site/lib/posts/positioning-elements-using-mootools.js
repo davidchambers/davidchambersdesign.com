@@ -18,6 +18,7 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
+  instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
   match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
@@ -34,7 +35,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["I've spent the afternoon creating a custom scrollbar for a\n    products viewer which utilizes CSS transitions, reflections,\n    and other goodness."]), p(["Simple arithmetic dictates how long to make the scrollbar\n    and where to position it, but I could not get my theoretical\n    calculations to play out in the browser."]), p(["It turns out that I'd been calling the wrong MooTools method.\n    I'd been doing..."]), code$002Dblock("javascript")(`element.setStyle('left', offset);
 `), p(["rather than..."]), code$002Dblock("javascript")(`element.setPosition({ x: offset });
 `), p(["Frustratingly, ", code(["setStyle('left', offset)"]), " ", em(["appeared"]), " to work, but its behaviour was unpredictable.\n    I'm still confused by this, but at least I'm no longer stuck."])];

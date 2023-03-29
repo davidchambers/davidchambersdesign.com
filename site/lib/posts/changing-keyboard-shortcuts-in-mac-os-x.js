@@ -17,6 +17,7 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
+  instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
   match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
@@ -33,7 +34,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["I've been using OS X almost exclusively for the last three\n    or four years, but it was only recently that I discovered the\n    system-wide method for changing keyboard shortcuts. I think\n    the reason that this feature eluded me for so long is that so\n    many of the hours I've spent on OS X have involved the use of\n    the Adobe applications Photoshop, Illustrator, and InDesign,\n    which provide their own means of changing keyboard shortcuts.\n    I assumed that since application developers sometimes provide\n    their own interfaces for changing keyboard shortcuts, the\n    operating system must lack this functionality. I was wrong."])];
 const body = [...excerpt, p(["I stumbled upon this useful information while reading ", a({
   href: "http://caminobrowser.org/documentation/faq/#cust_change"

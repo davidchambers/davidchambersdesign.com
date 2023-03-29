@@ -18,6 +18,7 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
+  instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
   match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
@@ -34,7 +35,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["Those of us running Mac OS X are spoilt by Keychain Access.\n    It's no help, of course, to have a password stored in your Mac's\n    keychain if you're at an Internet café unable to access it.\n    Thus, memorable passwords are still useful."]), p(["Those of us who write code can create passwords riddled with\n    spaces and punctuation without resorting to the use of random\n    strings of characters. Here's a \"JavaScript\" password,\n    for example:"]), code$002Dblock("javascript")(`var favourites = { book: 'Collapse', game: 'Agricola', site: 'ted.com' };
 `), p(["Carefully written passwords wrapping personal information\n    in programming syntax should be both strong and memorable.\n    I'm sure Perl programmers could write some concise, cryptic\n    passwords using this approach. ;)"])];
 export default {

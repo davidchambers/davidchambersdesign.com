@@ -17,6 +17,7 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
+  instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
   match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
@@ -33,7 +34,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const skin = [$21E8(3), $21E9(4), $2192(10), $2193(6), $2190(1), $2193(3), $2190(1), $2193(1), $2190(1), $2193(1), $2190(4), $2191(1), $2190(1), $2191(1), $2190(1), $2191(3), $2190(1), $2191(6)];
 const features = [$21E8(2), $21E9(9), $2192(1), $2193(4), $2192(2), $2193(2), $2192(6), $2191(2), $2192(2), $2191(4), $2192(1), $2193(1), $2190(2), $2193(4), $2190(2), $2193(2), $2190(4), $2191(2), $2190(2), $2191(4), $2190(2), $2191(1), $21E8(3), $21E7(1), $2192(2), $2193(1), $2190(2), $2191(1), $21E8(2), $21E9(3), $2192(2), $2193(1), $2190(2), $2191(1), $21E8(2), $21E7(3), $2192(2), $2193(1), $2190(2), $2191(1)];
 const hat$002Dstripes$002Ddark = [$21E8(6), $21E9(0), $2192(4), $2193(2), $2192(3), $2193(1), $2190(1), $2191(2), $2190(8), $2193(2), $2190(1), $2191(1), $2192(3), $2191(2), $21E8(0), $21E9(2), $2192(4), $2193(2), $2192(3), $2193(2), $2192(1), $2191(1), $2190(2), $2191(2), $2190(8), $2193(2), $2190(2), $2193(1), $2192(1), $2191(2), $2192(3), $2191(2), $21E8(0), $21E9(2), $2192(4), $2193(2), $2192(3), $2193(3), $2192(1), $2191(2), $2190(2), $2191(2), $2190(8), $2193(2), $2190(2), $2193(2), $2192(1), $2191(3), $2192(3), $2191(2)];
