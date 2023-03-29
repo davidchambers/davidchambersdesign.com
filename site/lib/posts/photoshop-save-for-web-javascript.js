@@ -18,22 +18,23 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  typeof: x => x === null ? "null" : typeof x,
+  match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
-  not: b => !b,
+  not: x => !x,
   equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
-  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
-  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
-  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  reject: predicate => Prelude.filter(x => Prelude.not(predicate(x))),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  reduce: f => y => x => x[Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => x => x.reduceRight((y, x) => f(y)(x), y),
+  filter: f => x => Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f),
+  reject: f => Prelude.filter(x => Prelude.not(f(x))),
+  map: f => x => Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
-  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
+  chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["This is a JavaScript function for Photoshop which saves\n    the active document as a 24-bit PNG file. It is equivalent to\n    manually selecting ", strong(["File > Save for Web & Devices..."]), "\n    which means that the file size of the resulting PNG will be smaller\n    than would be the case using ", code(["PNGSaveOptions()"]), "."]), code$002Dblock("javascript")(`function saveForWebPNG(outputFolderStr, filename)
 {
     var opts, file;

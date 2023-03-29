@@ -52,10 +52,8 @@ false
 </code></pre>
     <p>Object literals begin with <code>{</code> and end with <code>}</code>, and contain zero or more entries separated by <code>,</code>. An entry is a key and a value separated by <code>:</code>. The most flexible form permits an expression to appear between <code>[</code> and <code>]</code> to determine the property name dynamically. <code>{x: 1, y: 2}</code> is shorthand for <code>{["x"]: 1, ["y"]: 2}</code>. <code>{foo, bar}</code> is shorthand for <code>{foo: foo, bar: bar}</code>. A trailing comma is permitted, and required in the case of <code>{foo}</code>—an object with a single shorthand entry—to avoid being interpreted as a block expression.</p>
     <h3>Unary operators</h3>
-    <pre><code>typeof
-+
+    <pre><code>+
 -
-~
 </code></pre>
     <h3>Binary operators</h3>
     <pre><code>**
@@ -64,9 +62,6 @@ false
 %
 +
 -
-&lt;&lt;
-&gt;&gt;
-&gt;&gt;&gt;
 &lt;
 &gt;
 &lt;=
@@ -75,9 +70,6 @@ instanceof
 in
 ==
 !=
-&amp;
-^
-|
 and
 or
 ??

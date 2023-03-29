@@ -11,34 +11,60 @@ export default Prelude;
   Identifier,
   LogicalExpression,
   MemberExpression,
+  NullLiteral,
   ObjectExpression,
   Property,
   StringLiteral,
   UnaryExpression,
 } = Node;
 
-isArray name = {
-  CallExpression (MemberExpression (Identifier "Array")
-                                   (StringLiteral "isArray"))
-                 [Identifier name]
-};
+#Array                  = Identifier "Array";
+#CasesNotExhaustive     = Identifier "CasesNotExhaustive";
+#Reflect                = Identifier "Reflect";
+#Symbol                 = Identifier "Symbol";
+#args                   = Identifier "args";
+#constructor            = Identifier "constructor";
+#f                      = Identifier "f";
+#idx                    = Identifier "idx";
+#lhs                    = Identifier "lhs";
+#name                   = Identifier "name";
+#operand                = Identifier "operand";
+#rhs                    = Identifier "rhs";
+#target                 = Identifier "target";
+#that                   = Identifier "that";
+#this                   = Identifier "this";
+#type                   = Identifier "type";
+#x                      = Identifier "x";
+#y                      = Identifier "y";
 
-isString name = {
-  BinaryExpression "==="
-                   (UnaryExpression "typeof" $ Identifier name)
-                   (StringLiteral "string")
-};
-
-#operand = Identifier "operand";
+'apply                  = StringLiteral "apply";
+'binary                 = StringLiteral "binary";
+'concat                 = StringLiteral "concat";
+'construct              = StringLiteral "construct";
+'every                  = StringLiteral "every";
+'fantasy-land/chain     = StringLiteral "fantasy-land/chain";
+'fantasy-land/concat    = StringLiteral "fantasy-land/concat";
+'fantasy-land/filter    = StringLiteral "fantasy-land/filter";
+'fantasy-land/map       = StringLiteral "fantasy-land/map";
+'fantasy-land/reduce    = StringLiteral "fantasy-land/reduce";
+'filter                 = StringLiteral "filter";
+'flatMap                = StringLiteral "flatMap";
+'for                    = StringLiteral "for";
+'isArray                = StringLiteral "isArray";
+'length                 = StringLiteral "length";
+'map                    = StringLiteral "map";
+'match                  = StringLiteral "match";
+'null                   = StringLiteral "null";
+'reduce                 = StringLiteral "reduce";
+'reduceRight            = StringLiteral "reduceRight";
+'string                 = StringLiteral "string";
+'unary                  = StringLiteral "unary";
 
 fromEsUnaryOperator operator = {
   ArrowFunctionExpression [#operand] {
     UnaryExpression operator #operand
   }
 };
-
-#lhs = Identifier "lhs";
-#rhs = Identifier "rhs";
 
 fromEsBinaryOperator operator = {
   ArrowFunctionExpression [#rhs] {
@@ -71,111 +97,111 @@ Prelude fromPrelude = {
     esUnaryOperators
     | map (\op -> Property (StringLiteral op) $ fromEsUnaryOperator op)
     | ObjectExpression
-    | Property $ StringLiteral "unary",
+    | Property 'unary,
     esBinaryOperators
     | map (\op -> Property (StringLiteral op) $ fromEsBinaryOperator op)
     | ObjectExpression
-    | Property $ StringLiteral "binary",
+    | Property 'binary,
   ],
   _apply: {
-    ArrowFunctionExpression [Identifier "name"] {
-      ArrowFunctionExpression [Identifier "args"] {
-        ArrowFunctionExpression [Identifier "target"] {
-          CallExpression (MemberExpression (MemberExpression (Identifier "target") (Identifier "name")) (StringLiteral "apply"))
-                         [Identifier "target", Identifier "args"]
+    ArrowFunctionExpression [#name] {
+      ArrowFunctionExpression [#args] {
+        ArrowFunctionExpression [#target] {
+          CallExpression (MemberExpression (MemberExpression #target #name) 'apply) [#target, #args]
         }
       }
     }
   },
   apply: {
-    ArrowFunctionExpression [Identifier "args"] {
-      ArrowFunctionExpression [Identifier "target"] {
-        CallExpression (MemberExpression (Identifier "target") (StringLiteral "apply")) [Identifier "target", Identifier "args"]
+    ArrowFunctionExpression [#args] {
+      ArrowFunctionExpression [#target] {
+        CallExpression (MemberExpression #target 'apply) [#target, #args]
       }
     }
   },
   construct: {
-    ArrowFunctionExpression [Identifier "constructor"] {
-      ArrowFunctionExpression [Identifier "args"] {
-        CallExpression (MemberExpression (Identifier "Reflect") (StringLiteral "construct")) [Identifier "constructor", Identifier "args"]
+    ArrowFunctionExpression [#constructor] {
+      ArrowFunctionExpression [#args] {
+        CallExpression (MemberExpression #Reflect 'construct) [#constructor, #args]
       }
     }
   },
+  typeof: {
+    ArrowFunctionExpression [#x] {
+      ConditionalExpression (BinaryExpression "===" #x NullLiteral) 'null (UnaryExpression "typeof" #x)
+    }
+  },
   match: {
-    ArrowFunctionExpression [Identifier "type"] {
-      CallExpression (CallExpression (fromPrelude "match'") [Identifier "type"])
-                     [ArrowFunctionExpression [Identifier "_"] $ Identifier "CasesNotExhaustive"]
+    ArrowFunctionExpression [#type] {
+      CallExpression (CallExpression (fromPrelude "match'") [#type]) [ArrowFunctionExpression [#x] #CasesNotExhaustive]
     }
   },
   match': {
-    ArrowFunctionExpression [Identifier "type"] {
-      MemberExpression (Identifier "type")
-                       (CallExpression (MemberExpression (Identifier "Symbol") (StringLiteral "for")) [StringLiteral "match"])
+    ArrowFunctionExpression [#type] {
+      MemberExpression #type $ CallExpression (MemberExpression #Symbol 'for) ['match]
     }
   },
   id: {
-    ArrowFunctionExpression [Identifier "x"] {
-      Identifier "x"
+    ArrowFunctionExpression [#x] {
+      #x
     }
   },
   const: {
-    ArrowFunctionExpression [Identifier "x"] {
-      ArrowFunctionExpression [Identifier "y"] {
-        Identifier "x"
+    ArrowFunctionExpression [#x] {
+      ArrowFunctionExpression [#y] {
+        #x
       }
     }
   },
   not: {
-    ArrowFunctionExpression [Identifier "b"] {
-      UnaryExpression "!" (Identifier "b")
+    ArrowFunctionExpression [#x] {
+      UnaryExpression "!" #x
     }
   },
   ;; TODO: generalize to setoid
   equals: {
-    ArrowFunctionExpression [Identifier "this"] {
-      ArrowFunctionExpression [Identifier "that"] {
+    ArrowFunctionExpression [#this] {
+      ArrowFunctionExpression [#that] {
         ConditionalExpression
-          (isArray "this")
+          (CallExpression (MemberExpression #Array 'isArray) [#this])
           (BinaryExpression "&&"
-                            (isArray "that")
-                            (BinaryExpression "&&"
-                                              (BinaryExpression "==="
-                                                                (MemberExpression (Identifier "this") $ StringLiteral "length")
-                                                                (MemberExpression (Identifier "that") $ StringLiteral "length"))
-                                              (CallExpression (MemberExpression (Identifier "this") $ StringLiteral "every")
-                                                              [ArrowFunctionExpression [Identifier "x", Identifier "idx"] $
-                                                                 CallExpression (CallExpression (fromPrelude "equals") [Identifier "x"])
-                                                                                [MemberExpression (Identifier "that") (Identifier "idx")]])))
-          (BinaryExpression "===" (Identifier "this") (Identifier "that"))
+             (CallExpression (MemberExpression #Array 'isArray) [#that])
+             (BinaryExpression "&&"
+                (BinaryExpression "==="
+                                  (MemberExpression #this 'length)
+                                  (MemberExpression #that 'length))
+                (CallExpression (MemberExpression #this 'every)
+                                [ArrowFunctionExpression [#x, #idx] $
+                                   CallExpression (CallExpression (fromPrelude "equals") [#x]) [MemberExpression #that #idx]])))
+          (BinaryExpression "===" #this #that)
       }
     }
   },
   concat: {
-    ArrowFunctionExpression [Identifier "this"] {
-      ArrowFunctionExpression [Identifier "that"] {
+    ArrowFunctionExpression [#this] {
+      ArrowFunctionExpression [#that] {
         ConditionalExpression
-          (LogicalExpression "or" (isArray "this") (isString "this"))
-          (CallExpression (MemberExpression (Identifier "this") (StringLiteral "concat"))
-                          [Identifier "that"])
-          (CallExpression (MemberExpression (Identifier "this") (StringLiteral "fantasy-land/concat"))
-                          [Identifier "that"])
+          (LogicalExpression "or"
+                             (CallExpression (MemberExpression #Array 'isArray) [#this])
+                             (BinaryExpression "===" (UnaryExpression "typeof" #this) 'string))
+          (CallExpression (MemberExpression #this 'concat) [#that])
+          (CallExpression (MemberExpression #this 'fantasy-land/concat) [#that])
       }
     }
   },
   reduce: {
-    ArrowFunctionExpression [Identifier "f"] {
-      ArrowFunctionExpression [Identifier "y"] {
-        ArrowFunctionExpression [Identifier "foldable"] {
+    ArrowFunctionExpression [#f] {
+      ArrowFunctionExpression [#y] {
+        ArrowFunctionExpression [#x] {
           CallExpression (
-            MemberExpression (Identifier "foldable")
-                             (ConditionalExpression (isArray "foldable")
-                                                    (StringLiteral "reduce")
-                                                    (StringLiteral "fantasy-land/reduce"))
+            MemberExpression #x {
+              ConditionalExpression (CallExpression (MemberExpression #Array 'isArray) [#x]) 'reduce 'fantasy-land/reduce
+            }
           ) [
-            ArrowFunctionExpression [Identifier "y", Identifier "x"] {
-              CallExpression (CallExpression (Identifier "f") [Identifier "y"]) [Identifier "x"]
+            ArrowFunctionExpression [#y, #x] {
+              CallExpression (CallExpression #f [#y]) [#x]
             },
-            Identifier "y",
+            #y,
           ]
         }
       }
@@ -183,83 +209,63 @@ Prelude fromPrelude = {
   },
   ;; TODO: generalize to foldable
   reduceRight: {
-    ArrowFunctionExpression [Identifier "f"] {
-      ArrowFunctionExpression [Identifier "y"] {
-        ArrowFunctionExpression [Identifier "foldable"] {
-          CallExpression (MemberExpression (Identifier "foldable") (StringLiteral "reduceRight")) [
-            ArrowFunctionExpression [Identifier "y", Identifier "x"] {
-              CallExpression (CallExpression (Identifier "f") [Identifier "y"]) [Identifier "x"]
-            },
-            Identifier "y",
+    ArrowFunctionExpression [#f] {
+      ArrowFunctionExpression [#y] {
+        ArrowFunctionExpression [#x] {
+          CallExpression (MemberExpression #x 'reduceRight) [
+            ArrowFunctionExpression [#y, #x] $ CallExpression (CallExpression #f [#y]) [#x],
+            #y,
           ]
         }
       }
     }
   },
   filter: {
-    ArrowFunctionExpression [Identifier "predicate"] {
-      ArrowFunctionExpression [Identifier "filterable"] {
+    ArrowFunctionExpression [#f] {
+      ArrowFunctionExpression [#x] {
         ConditionalExpression
-          (isArray "filterable")
-          (CallExpression (MemberExpression (Identifier "filterable")
-                                            (StringLiteral "filter"))
-                          [ArrowFunctionExpression [Identifier "x"] $
-                             CallExpression (Identifier "predicate")
-                                            [Identifier "x"]])
-          (CallExpression (MemberExpression (Identifier "filterable")
-                                            (StringLiteral "fantasy-land/filter"))
-                          [Identifier "predicate"])
+          (CallExpression (MemberExpression #Array 'isArray) [#x])
+          (CallExpression (MemberExpression #x 'filter) [ArrowFunctionExpression [#x] $ CallExpression #f [#x]])
+          (CallExpression (MemberExpression #x 'fantasy-land/filter) [#f])
       }
     }
   },
   reject: {
     ;; \predicate -> filter (not . predicate)
-    ArrowFunctionExpression [Identifier "predicate"] {
-      CallExpression (fromPrelude "filter") [CompositionExpression (fromPrelude "not") (Identifier "predicate")]
+    ArrowFunctionExpression [#f] {
+      CallExpression (fromPrelude "filter") [CompositionExpression (fromPrelude "not") #f]
     }
     ;; This may be possible once sectioning is supported:
     ;; filter . (not .)
     ;; CompositionExpression (fromPrelude "filter") (CompositionExpression (fromPrelude "not"))
   },
   map: {
-    ArrowFunctionExpression [Identifier "f"] {
-      ArrowFunctionExpression [Identifier "functor"] {
+    ArrowFunctionExpression [#f] {
+      ArrowFunctionExpression [#x] {
         ConditionalExpression
-          (isArray "functor")
-          (CallExpression (MemberExpression (Identifier "functor")
-                                            (StringLiteral "map"))
-                          [ArrowFunctionExpression [Identifier "x"] $
-                             CallExpression (Identifier "f")
-                                            [Identifier "x"]])
-          (CallExpression (MemberExpression (Identifier "functor")
-                                            (StringLiteral "fantasy-land/map"))
-                          [Identifier "f"])
+          (CallExpression (MemberExpression #Array 'isArray) [#x])
+          (CallExpression (MemberExpression #x 'map) [ArrowFunctionExpression [#x] $ CallExpression #f [#x]])
+          (CallExpression (MemberExpression #x 'fantasy-land/map) [#f])
       }
     }
   },
   ;; TODO: generalize to functor
   flip: {
-    ArrowFunctionExpression [Identifier "f"] {
-      ArrowFunctionExpression [Identifier "y"] {
-        ArrowFunctionExpression [Identifier "x"] {
-          CallExpression (CallExpression (Identifier "f") [Identifier "x"]) [Identifier "y"]
+    ArrowFunctionExpression [#f] {
+      ArrowFunctionExpression [#y] {
+        ArrowFunctionExpression [#x] {
+          CallExpression (CallExpression #f [#x]) [#y]
         }
       }
     }
   },
   chain: {
-    ArrowFunctionExpression [Identifier "f"] {
-      ArrowFunctionExpression [Identifier "chain"] {
+    ArrowFunctionExpression [#f] {
+      ArrowFunctionExpression [#x] {
         ConditionalExpression
-          (isArray "chain")
-          (CallExpression (MemberExpression (Identifier "chain")
-                                            (StringLiteral "flatMap"))
-                          [ArrowFunctionExpression [Identifier "x"] $
-                             CallExpression (Identifier "f")
-                                            [Identifier "x"]])
-          (CallExpression (MemberExpression (Identifier "chain")
-                                            (StringLiteral "fantasy-land/chain"))
-                          [Identifier "f"])
+          (CallExpression (MemberExpression #Array 'isArray) [#x])
+          (CallExpression (MemberExpression #x 'flatMap) [ArrowFunctionExpression [#x] $ CallExpression #f [#x]])
+          (CallExpression (MemberExpression #x 'fantasy-land/chain) [#f])
       }
     }
   },

@@ -18,22 +18,23 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  typeof: x => x === null ? "null" : typeof x,
+  match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
-  not: b => !b,
+  not: x => !x,
   equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
-  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
-  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
-  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  reject: predicate => Prelude.filter(x => Prelude.not(predicate(x))),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  reduce: f => y => x => x[Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => x => x.reduceRight((y, x) => f(y)(x), y),
+  filter: f => x => Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f),
+  reject: f => Prelude.filter(x => Prelude.not(f(x))),
+  map: f => x => Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
-  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
+  chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["Earlier I wrote some code which repeatedly calls a function\n    which performs a database query – often ", strong(["the same"]), "\n    query. This encouraged me to explore various ways to cache the\n    results of function calls in both Python (to solve my immediate\n    problem) and JavaScript (because I find that language endlessly\n    fascinating)."]), p(["I played around with ", a({
   href: "http://en.wikipedia.org/wiki/Fibonacci_number"
 })(["Fibonacci"]), ",\n    which is a well suited to the task: it can be described in just\n    a couple of lines of code yet benefits enormously from caching\n    due to its recursive nature."]), h3(["JavaScript Fibonacci without caching"]), code$002Dblock("javascript")(`function fibonacci(n) {

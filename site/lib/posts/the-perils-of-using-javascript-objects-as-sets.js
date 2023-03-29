@@ -18,22 +18,23 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  typeof: x => x === null ? "null" : typeof x,
+  match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
-  not: b => !b,
+  not: x => !x,
   equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
-  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
-  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
-  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  reject: predicate => Prelude.filter(x => Prelude.not(predicate(x))),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  reduce: f => y => x => x[Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => x => x.reduceRight((y, x) => f(y)(x), y),
+  filter: f => x => Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f),
+  reject: f => Prelude.filter(x => Prelude.not(f(x))),
+  map: f => x => Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
-  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
+  chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["One question I'm fond of asking in interviews is how to create\n    a set of strings to which values may be added in an efficient\n    manner. Furthermore, membership checks must be reliable and as\n    fast as possible. This post can be considered the model answer.\n    ;)"])];
 const body = [...excerpt, hr, p(["JavaScript is a small language. So small, in fact, that\n    several useful constructs are entirely absent. Just two\n    types of collection are provided: arrays and objects\n    (and even these are less different than they appear).\n    Sets (collections of unique values) and dictionaries\n    (collections which map unique values to other values)\n    are the most glaring omissions."]), h3(["How does Python do it?"]), p(["Python has literal syntax for sets, and supports\n    membership checks via the ", code(["in"]), " keyword:"]), code$002Dblock("python")(`>>> usernames = {'brodie', 'jespern', 'nvenegas'}
 >>> 'brodie' in usernames

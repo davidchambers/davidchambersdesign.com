@@ -18,22 +18,23 @@ const Prelude = {
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
-  match: type => Prelude["match'"](type)(_ => CasesNotExhaustive),
+  typeof: x => x === null ? "null" : typeof x,
+  match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
-  not: b => !b,
+  not: x => !x,
   equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
-  reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
-  reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
-  filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  reject: predicate => Prelude.filter(x => Prelude.not(predicate(x))),
-  map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
+  reduce: f => y => x => x[Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  reduceRight: f => y => x => x.reduceRight((y, x) => f(y)(x), y),
+  filter: f => x => Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f),
+  reject: f => Prelude.filter(x => Prelude.not(f(x))),
+  map: f => x => Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
-  chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
+  chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["I was delighted to discover this \"trick\"\n    over on CSS-Tricks in a post titled ", a({
   href: "http://css-tricks.com/textarea-tricks/"
 })(["Textarea Tricks"]), ".\n    (See, Chris, I ", em(["do"]), " like you!)"]), p(["Internet Explorer displays a (completely pointless) inactive scrollbar in\n    empty ", code(["textarea"]), " elements, unlike other browsers which wait\n    until a scrollbar is actually ", em(["required"]), " before displaying it."]), p(["As it turns out, there's a dead simple way to prevent this,\n    and once again its everybody's friend ", code(["overflow"]), "\n    to the rescue."]), code$002Dblock("css")(`textarea { overflow: auto; }

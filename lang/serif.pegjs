@@ -134,7 +134,6 @@ OrToken             = @$'or'            !IdentifierPart
 SwitchToken         = @$'switch'        !IdentifierPart
 ThenToken           = @$'then'          !IdentifierPart
 TypeToken           = @$'type'          !IdentifierPart
-TypeofToken         = @$'typeof'        !IdentifierPart
 WhenToken           = @$'when'          !IdentifierPart
 
 ReservedWord
@@ -311,8 +310,7 @@ RestElement
     { return Node.RestElement(argument); }
 
 UnaryOperator
-  = TypeofToken
-  / '+'
+  = '+'
   / '-'
 
 UnaryExpression

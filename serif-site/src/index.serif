@@ -102,10 +102,8 @@ document = html [
     pre [
       code [
         text `
-          typeof
           +
           -
-          ~
         `
       ],
     ],
@@ -119,9 +117,6 @@ document = html [
           %
           +
           -
-          <<
-          >>
-          >>>
           <
           >
           <=
@@ -130,9 +125,6 @@ document = html [
           in
           ==
           !=
-          &
-          ^
-          |
           and
           or
           ??
