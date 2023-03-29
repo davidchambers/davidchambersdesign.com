@@ -9,7 +9,7 @@ absolute? url = {
 };
 
 links node = {
-  if node.name is "a" then {
+  if node.name == "a" then {
     filter absolute? [node.attributes.href]
   } else if "children" in node then {
     node.children >>= links
@@ -34,7 +34,7 @@ format {url, status} = {
   padding x = " ".repeat $ S.max 0 $ 15 - `${x}`.length;
   normal s = s;
   switch true
-  when typeof status is "string"      then red    `${padding status} ${invert $ bold status} ${url}`
+  when typeof status == "string"      then red    `${padding status} ${invert $ bold status} ${url}`
   when status >= 200 and status < 300 then        `${padding status} ${normal $ bold status} ${url}`
   when status >= 300 and status < 400 then yellow `${padding status} ${normal $ bold status} ${url}`
   when status >= 400 and status < 500 then red    `${padding status} ${normal $ bold status} ${url}`

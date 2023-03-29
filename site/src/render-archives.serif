@@ -26,7 +26,7 @@ render-archives posts = {
   posts
   |> map (\post -> {...post, formatted-date: .toFormat ["MMMM y"] post.datetime})
   |> S.sortBy (\post -> -post.datetime)
-  |> S.groupBy (\this that -> this.formatted-date is that.formatted-date)
+  |> S.groupBy (\this that -> this.formatted-date == that.formatted-date)
   |> map render-section
   |> \archives -> [
     h1 ["Archives"],

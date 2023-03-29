@@ -10,16 +10,17 @@ const Prelude = {
   id: x => x,
   const: x => y => x,
   not: b => !b,
-  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  reject: predicate => Prelude.filter(x => !predicate(x)),
+  reject: predicate => Prelude.filter(x => Prelude.not(predicate(x))),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["It's not uncommon to start watching a video online and discover\n    that its audio is quite quiet. This is not a problem in and of\n    itself, as one can simply crank up the output volume. What ", em(["is"]), " a problem, however, is a message then arriving in\n    one's inbox and waking the neighbours!"]), p(["This situation could be avoided if it were possible adjust the\n    browser's output volume without affecting the rest of the system.\n    As it is, though, one is forced to increase the volume of ", em(["everything"]), ". Not ideal."]), h3(["System Preferences > Sound > Application Volumes"]), p([img({
   alt: `Possible interface for application-specific volume settings in Mac OS X
 `,

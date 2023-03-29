@@ -75,7 +75,7 @@ findDependencies filename tree = {
 
 orderDependencies tree = {
   recur unsorted! sorted! = {
-    if unsorted!.length is 0 then sorted! else {
+    if unsorted! == [] then sorted! else {
       filename = .shift [] unsorted!;
       {dependencies} = .get [filename] tree;
       if .every [\filename -> .has [filename] sorted!] dependencies then {

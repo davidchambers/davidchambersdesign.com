@@ -10,16 +10,17 @@ const Prelude = {
   id: x => x,
   const: x => y => x,
   not: b => !b,
-  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  reject: predicate => Prelude.filter(x => !predicate(x)),
+  reject: predicate => Prelude.filter(x => Prelude.not(predicate(x))),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["Those of us running Mac OS X are spoilt by Keychain Access.\n    It's no help, of course, to have a password stored in your Mac's\n    keychain if you're at an Internet café unable to access it.\n    Thus, memorable passwords are still useful."]), p(["Those of us who write code can create passwords riddled with\n    spaces and punctuation without resorting to the use of random\n    strings of characters. Here's a \"JavaScript\" password,\n    for example:"]), code$002Dblock("javascript")(`var favourites = { book: 'Collapse', game: 'Agricola', site: 'ted.com' };
 `), p(["Carefully written passwords wrapping personal information\n    in programming syntax should be both strong and memorable.\n    I'm sure Perl programmers could write some concise, cryptic\n    passwords using this approach. ;)"])];
 export default {

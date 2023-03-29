@@ -10,16 +10,17 @@ const Prelude = {
   id: x => x,
   const: x => y => x,
   not: b => !b,
-  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  reject: predicate => Prelude.filter(x => !predicate(x)),
+  reject: predicate => Prelude.filter(x => Prelude.not(predicate(x))),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p([strong(["Chris Coyier has done it again."]), "\n    Compelled me to stay up all night, that is\n    (it's 7am as I type this). In Chris's latest screencast, ", a({
   href: "http://css-tricks.com/video-screencasts/82-css-image-switcher/"
 })(["CSS Image Switcher"]), ", he demonstrates how to create an\n    \"image switcher\" using CSS. The problem, though, is that ", strong(["his process is wrong"]), "."]), h4(["Incorrect process"]), ol([li(["What effect or experience do I want to create?"]), li(["How can I achieve this using CSS (and JavaScript if necessary)?"]), li(["What can my markup do to help me?"])]), h4(["Correct process"]), ol([li(["What effect or experience do I want to create?"]), li(["What is the most correct and meaningful way to describe the content?"]), li(["How can I achieve the desired effect or experience (or something close\n      to it) ", em(["without"]), " altering my markup?"])])];

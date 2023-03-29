@@ -9,16 +9,17 @@ const Prelude = {
   id: x => x,
   const: x => y => x,
   not: b => !b,
-  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  reject: predicate => Prelude.filter(x => !predicate(x)),
+  reject: predicate => Prelude.filter(x => Prelude.not(predicate(x))),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["From Wikipedia on Mies van der Rohe's ", a({
   href: "http://en.wikipedia.org/wiki/Seagram_Building"
 })(["Seagram Building"]), ":"]), blockquote([p(["[An] interesting feature of the Seagram Building is the window blinds.\n      As was common with International Style architects, Mies wanted the\n      building to have a uniform appearance. One aspect of a façade which\n      Mies disliked, was the disordered irregularity when window blinds are\n      drawn. Inevitably, people using different windows will draw blinds to\n      different heights, making the building appear disorganized. To reduce\n      this disproportionate appearance, Mies specified window blinds which\n      only operated in three positions – fully open, halfway open/closed,\n      or fully closed."])]), p(["This, taken from Werner Blaser's ", i(["Mies van der Rohe"]), ",\n    is also brilliant:"]), blockquote([p(["The plan of the brick villa is a good example of the\n      way in which Mies van der Rohe developed the art of\n      structure from the very beginning. The structure of\n      a brick wall begins with the smallest unit into which\n      the whole can be divided: the brick. The dimensions are\n      calculated in terms of the basic unit of the brick."])])];

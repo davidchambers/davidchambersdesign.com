@@ -11,23 +11,24 @@ const Prelude$1 = {
   id: x => x,
   const: x => y => x,
   not: b => !b,
-  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude$1.equals(x)(that[idx]))) : this$ === that,
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  reject: predicate => Prelude$1.filter(x => !predicate(x)),
+  reject: predicate => Prelude$1.filter(x => Prelude$1.not(predicate(x))),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
 const {StringLiteral, TemplateLiteral, MemberExpression, Identifier, SpreadElement, ArrayExpression, Property, ObjectExpression, ArrayPattern, ObjectPattern, RestElement, ArrowFunctionExpression, BlockExpression, UnaryExpression, CompositionExpression, BinaryExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, CallExpression, ImportDeclaration, ImportSpecifier, ExportDefaultDeclaration, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} = Node;
 const has = element => set => Prelude$1._apply("has")([element])(set);
 const add = element => set => construct(Set)([[...set, element]]);
 const union = this$ => that => construct(Set)([[...this$, ...that]]);
 const nextUnusedIdent = names => desiredName => (() => {
   const recur = counter => (() => {
-    const candidate = Object.is(0, counter) ? desiredName : `${desiredName}$${counter}`;
+    const candidate = Prelude$1.equals(0)(counter) ? desiredName : `${desiredName}$${counter}`;
     return has(candidate)(names) ? recur(counter + 1) : Identifier(candidate);
   })();
   return recur(0);
@@ -44,18 +45,18 @@ const namesInStatement = match$0027(Node)(const$([]))({
   VariableDeclaration: pattern => expression => namesInPattern(pattern),
   FunctionDeclaration: name => parameters => body => [name]
 });
-const rewriteModule = ({imports, exports, statements}) => namesExportedFrom => Prelude$1.chain(imports$0027 => (names => (preludeIdent => (names$0027 => (rewrite => (preludeDefinition => (preludeDestructuring => Future.resolve(Module(imports$0027)(Prelude$1.map(rewrite)(exports))(Prelude$1.map(rewrite)([preludeDefinition, preludeDestructuring, ...statements]))))(VariableDeclaration(ObjectPattern(map(name => Property(StringLiteral(name))(Identifier(name)))(reject(flip(has)(names$0027))(Object.keys(Prelude)))))(preludeIdent)))(VariableDeclaration(preludeIdent)(ObjectExpression(map(([name, implementation]) => Property(StringLiteral(name))(implementation(preludeIdent)))(Object.entries(Prelude))))))(rewriteNode(preludeIdent)(names$0027)))(add(preludeIdent.name)(names)))(nextUnusedIdent(names)("Prelude")))(construct(Set)([Prelude$1.chain(namesInStatement)(Prelude$1.concat(imports$0027)(statements))])))(Future.parallel(16)(Prelude$1.map(rewriteImportDeclaration(namesExportedFrom))(imports)));
+const rewriteModule = ({imports, exports, statements}) => namesExportedFrom => Prelude$1.chain(imports$0027 => (names => (preludeIdent => (names$0027 => (fromPrelude => (rewrite => (preludeEntries => (preludeDefinition => (preludeDestructuring => Future.resolve(Module(imports$0027)(Prelude$1.map(rewrite)(exports))(Prelude$1.map(rewrite)([preludeDefinition, preludeDestructuring, ...statements]))))(VariableDeclaration(ObjectPattern(Prelude$1.chain(([name]) => has(name)(names$0027) ? [] : [Property(StringLiteral(name))(Identifier(name))])(preludeEntries)))(preludeIdent)))(VariableDeclaration(preludeIdent)(ObjectExpression(Prelude$1.map(([name, value]) => Property(StringLiteral(name))(value))(preludeEntries)))))(Object.entries(Prelude(fromPrelude))))(rewriteNode(fromPrelude)(names$0027)))(x => MemberExpression(preludeIdent)(StringLiteral(x))))(add(preludeIdent.name)(names)))(nextUnusedIdent(names)("Prelude")))(construct(Set)([Prelude$1.chain(namesInStatement)(Prelude$1.concat(imports$0027)(statements))])))(Future.parallel(16)(Prelude$1.map(rewriteImportDeclaration(namesExportedFrom))(imports)));
 const rewriteImportAllDeclaration = namesExportedFrom => source => hiding => (() => {
   const namesExported = Prelude$1._apply("endsWith")([".serif"])(source.value) ? namesExportedFrom(source.value) : Prelude$1.map(Object.keys)(attemptP(() => import(source.value)));
   const namesHidden = Prelude$1.map(x => x.name)(hiding);
   const namesHiddenNeedlessly = reject(name => Prelude$1._apply("includes")([name])(namesExported))(namesHidden);
-  return namesHiddenNeedlessly.length > 0 ? Future.reject(Error(`import * from "${source.value}" hiding {${Prelude$1._apply("join")([", "])(namesHidden)}};\n\n${format.list(namesHiddenNeedlessly)} ${Object.is(1, namesHiddenNeedlessly.length) ? "is" : "are"} not exported so need not be hidden.\n`)) : Future.resolve(ImportDeclaration(source)(map(name => ImportSpecifier(Identifier(name))(Identifier(name)))(reject(name => Prelude$1._apply("includes")([name])(namesHidden))(namesExported))));
+  return namesHiddenNeedlessly.length > 0 ? Future.reject(Error(`import * from "${source.value}" hiding {${Prelude$1._apply("join")([", "])(namesHidden)}};\n\n${format.list(namesHiddenNeedlessly)} ${Prelude$1.equals(1)(namesHiddenNeedlessly.length) ? "is" : "are"} not exported so need not be hidden.\n`)) : Future.resolve(ImportDeclaration(source)(map(name => ImportSpecifier(Identifier(name))(Identifier(name)))(reject(name => Prelude$1._apply("includes")([name])(namesHidden))(namesExported))));
 })();
 const rewriteImportDeclaration = namesExportedFrom => match(Node)({
   ImportDeclaration: source => specifiers => Future.resolve(ImportDeclaration(source)(specifiers)),
   ImportAllDeclaration: rewriteImportAllDeclaration(namesExportedFrom)
 });
-const rewriteNode = preludeIdent => (() => {
+const rewriteNode = fromPrelude => (() => {
   const recur = names => match$0027(Node)(id)({
     TemplateLiteral: quasis => expressions => TemplateLiteral(quasis)(Prelude$1.map(recur(names))(expressions)),
     MemberExpression: object => property => MemberExpression(recur(names)(object))(recur(names)(property)),
@@ -79,12 +80,12 @@ const rewriteNode = preludeIdent => (() => {
         }))(statements));
         return BlockExpression(Prelude$1.map(recur(names$0027))(statements));
       })();
-      return Object.is(1, statements.length) ? match$0027(Node)(otherwise)({
+      return Prelude$1.equals(1)(statements.length) ? match$0027(Node)(otherwise)({
         ExpressionStatement: recur(names)
       })(statements[0]) : otherwise(null);
     })(),
     DoBlockExpression: operations => result => recur(names)(reduceRight(result => match(Node)({
-      ArrowAssignmentStatement: pattern => expression => CallExpression(CallExpression(MemberExpression(preludeIdent)(StringLiteral("chain")))([ArrowFunctionExpression([pattern])(result)]))([expression]),
+      ArrowAssignmentStatement: pattern => expression => CallExpression(CallExpression(fromPrelude("chain"))([ArrowFunctionExpression([pattern])(result)]))([expression]),
       VariableDeclaration: pattern => expression => CallExpression(ArrowFunctionExpression([pattern])(result))([expression]),
       FunctionDeclaration: name => parameters => body => CallExpression(ArrowFunctionExpression([Identifier(name)])(result))([reduceRight(body => param => ArrowFunctionExpression([param])(body))(body)(parameters)])
     }))(result)(operations)),
@@ -97,16 +98,25 @@ const rewriteNode = preludeIdent => (() => {
       });
       return recur(names$0027)(ArrowFunctionExpression([param])(toCallExpression(CompositionExpression(left)(right))));
     })(),
-    BinaryExpression: operator => left => right => Object.is("is", operator) ? recur(names)(CallExpression(MemberExpression(Identifier("Object"))(StringLiteral("is")))([right, left])) : BinaryExpression(operator)(recur(names)(left))(recur(names)(right)),
-    ConcatenationExpression: left => right => CallExpression(CallExpression(MemberExpression(preludeIdent)(StringLiteral("concat")))([recur(names)(left)]))([recur(names)(right)]),
-    MapExpression: left => right => CallExpression(CallExpression(MemberExpression(preludeIdent)(StringLiteral("map")))([recur(names)(left)]))([recur(names)(right)]),
-    BindExpression: left => right => CallExpression(CallExpression(MemberExpression(preludeIdent)(StringLiteral("chain")))([recur(names)(right)]))([recur(names)(left)]),
+    BinaryExpression: operator => left => right => (() => {
+      switch (operator) {
+        case "==":
+          return recur(names)(CallExpression(CallExpression(fromPrelude("equals"))([right]))([left]));
+        case "!=":
+          return recur(names)(CallExpression(fromPrelude("not"))([BinaryExpression("==")(left)(right)]));
+        default:
+          return BinaryExpression(operator)(recur(names)(left))(recur(names)(right));
+      }
+    })(),
+    ConcatenationExpression: left => right => recur(names)(CallExpression(CallExpression(fromPrelude("concat"))([left]))([right])),
+    MapExpression: left => right => recur(names)(CallExpression(CallExpression(fromPrelude("map"))([left]))([right])),
+    BindExpression: left => right => recur(names)(CallExpression(CallExpression(fromPrelude("chain"))([right]))([left])),
     LogicalExpression: operator => left => right => LogicalExpression(operator)(recur(names)(left))(recur(names)(right)),
     ConditionalExpression: predicate => consequent => alternative => ConditionalExpression(recur(names)(predicate))(recur(names)(consequent))(recur(names)(alternative)),
-    SwitchExpression: discriminant => cases => default$ => SwitchExpression(recur(names)(discriminant))(Prelude$1.map(recur(names))(cases))(Object.is(null, default$) ? null : recur(names)(default$)),
+    SwitchExpression: discriminant => cases => default$ => SwitchExpression(recur(names)(discriminant))(Prelude$1.map(recur(names))(cases))(Prelude$1.equals(null)(default$) ? null : recur(names)(default$)),
     SwitchCase: predicates => consequent => SwitchCase(Prelude$1.map(recur(names))(predicates))(recur(names)(consequent)),
     PipeExpression: head => body => recur(names)(CallExpression(body)([head])),
-    MethodCallExpression: name => recur(names)(CallExpression(MemberExpression(preludeIdent)(StringLiteral("_apply")))([StringLiteral(name)])),
+    MethodCallExpression: name => recur(names)(CallExpression(fromPrelude("_apply"))([StringLiteral(name)])),
     CallExpression: callee => arguments$ => CallExpression(recur(names)(callee))(Prelude$1.map(recur(names))(arguments$)),
     VariableDeclaration: pattern => expression => VariableDeclaration(recur(names)(pattern))(recur(names)(expression)),
     FunctionDeclaration: name => parameters => body => FunctionDeclaration(name)(Prelude$1.map(recur(names))(parameters))(recur(names)(body)),

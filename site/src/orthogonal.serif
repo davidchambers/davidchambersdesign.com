@@ -3,18 +3,18 @@ import S from "sanctuary";
 export {render, ⇦, ⇨, ⇧, ⇩, ←, →, ↑, ↓};
 
 simplify paths = {
-  if paths.length is 0 then [] else {
+  if paths == [] then [] else {
     [head, ...tail] = paths;
     [prev, path] = {
       reduce (\[prev, path] curr -> {
-                if curr[0] is "M" then {
-                  if {prev[0] is "M" or prev[0] is "m"} then {
+                if curr[0] == "M" then {
+                  if (prev[0] == "M" or prev[0] == "m") then {
                     [curr, path]  ;; ignore previous move
                   } else {
                     [curr, [...path, prev]]
                   }
                 } else {
-                  if {prev[0] is "M" or prev[0] is "m"} and curr[0] is "m" then {
+                  if (prev[0] == "M" or prev[0] == "m") and curr[0] == "m" then {
                     [[prev[0], [prev[1][0] + curr[1][0], prev[1][1] + curr[1][1]]], path]
                   } else {
                     [curr, [...path, prev]]

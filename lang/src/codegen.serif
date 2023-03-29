@@ -75,7 +75,7 @@ esFromIdentifier = {
     |> concat "$"
   };
   escape name = {
-    if name is "import" then "import"
+    if name == "import" then "import"
     else if .has [name] RESERVED_WORDS then name + "$"
     else if validEsIdentifierName name then name
     else .replaceAll [apply ["[^$_A-Za-z0-9]", "g"] RegExp, escapeChar] name
@@ -103,7 +103,7 @@ esFromTemplateLiteral quasis expressions = {
   expressions: esFromNode <$> expressions,
   quasis: {
     lineEnding = .find [\lineEnding -> .startsWith [lineEnding] quasis[0]] ["\n", "\r\n"];
-    if lineEnding is undefined then [
+    if lineEnding == undefined then [
       ...{TemplateElement false <$> .slice [0, -1] quasis},
       ...{TemplateElement true  <$> .slice [-1]    quasis},
     ] else {
@@ -111,7 +111,7 @@ esFromTemplateLiteral quasis expressions = {
       pattern = apply [`${lineEnding}[ ]{0,${indent}}`, "g"] RegExp;
       [head, ...tail] = .replace [pattern, lineEnding] <$> quasis;
       head' = .slice [lineEnding.length] head;
-      if tail.length is 0 then [
+      if tail == [] then [
         TemplateElement true head',
       ] else [
         TemplateElement false head',
@@ -147,7 +147,7 @@ esFromProperty key value = {
   computed = not $ match' Node (const false) {StringLiteral: validEsIdentifierName} key;
   esKey = if computed then esFromNode key else esFromEscapedIdentifierName key.value;
   esValue = esFromNode value;
-  shorthand = esKey.type is "Identifier" and esValue.type is "Identifier" and esKey.name is esValue.name;
+  shorthand = esKey.type == "Identifier" and esValue.type == "Identifier" and esKey.name == esValue.name;
   {type: "Property", key: esKey, value: esValue, kind: "init", method: false, shorthand, computed}
 };
 
@@ -162,7 +162,7 @@ esFromArrowFunctionExpression parameters body = {
     type: "ArrowFunctionExpression",
     params: esFromNode <$> parameters,
     body: esBody,
-    expression: not $ esBody.type is "BlockStatement",
+    expression: esBody.type != "BlockStatement",
   }
 };
 
@@ -247,7 +247,7 @@ esFromSwitchExpression discriminant cases default = {
         discriminant: esFromNode discriminant,
         cases: {
           esCases = cases >>= esFromSwitchCase;
-          if default is null then esCases else [...esCases, {
+          if default == null then esCases else [...esCases, {
             type: "SwitchCase",
             test: null,
             consequent: [{
@@ -292,7 +292,7 @@ esFromFunctionDeclaration name parameters body = {
                      type: "ArrowFunctionExpression",
                      params: [esFromNode param],
                      body: esBody,
-                     expression: not $ esBody.type is "BlockStatement",
+                     expression: esBody.type != "BlockStatement",
                    })
                   (esFromNode body)
                   parameters

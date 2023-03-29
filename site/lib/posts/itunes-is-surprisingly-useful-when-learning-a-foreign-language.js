@@ -9,16 +9,17 @@ const Prelude = {
   id: x => x,
   const: x => y => x,
   not: b => !b,
-  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  reject: predicate => Prelude.filter(x => !predicate(x)),
+  reject: predicate => Prelude.filter(x => Prelude.not(predicate(x))),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["I recently began learning Danish. I'm taking a weekly class, and\n    the first week's homework involved listening to the conversations\n    we covered during the lesson. I began by playing the audio files,\n    following along in the Danish transcripts. I found myself wanting\n    to listen to the difficult parts over and over, but scrubbing\n    through a timeline is rather awkward."]), p(["It occurred to me that I could use iTunes to solve this problem.\n    Normally, iTunes will play a track from beginning to end. It's\n    possible, though, to specify a certain portion of the track to be\n    played instead. By adding an audio file to a playlist many times\n    and specifying consecutive portions (e.g. 0:00–0:02, 0:02–0:04.8,\n    ...), a track can be broken into manageable clips for more\n    convenient navigation."]), p(["Here's the end result:"]), p([img({
   alt: "iTunes playlist for Danish dialogue",
   src: "/images/posts/93/windows/lion/itunes-playlist-for-danish-dialogue.png"

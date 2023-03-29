@@ -7,7 +7,7 @@ related-posts posts post = {
   has-tag tag = .has [tag] tags;
   posts
   |> S.mapMaybe (\this ->
-       if this.slug is post.slug then S.Nothing else {
+       if this.slug == post.slug then S.Nothing else {
          dividend = (.length) $ filter has-tag this.tags;
          divisor = Math.sqrt $ (.size) $ construct Set [post.tags <> this.tags];
          score = dividend / divisor;

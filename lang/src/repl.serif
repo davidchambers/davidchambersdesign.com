@@ -56,7 +56,7 @@ print x = {
   when "[object Date]"
   then `construct Date [${print $ Number x}]`
   when "[object RegExp]"
-  then if x.flags is "" then `RegExp ${print x.source}` else `apply [${print x.source}, ${print x.flags}] RegExp`
+  then if x.flags == "" then `RegExp ${print x.source}` else `apply [${print x.source}, ${print x.flags}] RegExp`
   when "[object Set]"
   then `construct Set [${print $ Array.from x}]`
   when "[object Map]"

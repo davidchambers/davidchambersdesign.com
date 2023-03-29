@@ -154,7 +154,7 @@ render-inline-element context element = {
 };
 
 string-to-text-node string-or-node = {
-  if typeof string-or-node is "object" then string-or-node else {
+  if typeof string-or-node == "object" then string-or-node else {
     string-or-node
     |> .replaceAll [apply ["^[ ]+", "gm"] RegExp, " "]
     |> .replaceAll ["\n", ""]
@@ -178,7 +178,7 @@ block-element name attributes children! = {
 
 inline-element name attributes children! = {
   children = string-to-text-node <$> children!;
-  format = if .some [\node -> node.format is "block"] children then "block" else "inline";
+  format = if .some [\node -> node.format == "block"] children then "block" else "inline";
   element = {
     type: "element",
     format,

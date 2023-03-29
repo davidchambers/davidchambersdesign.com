@@ -8,16 +8,17 @@ const Prelude = {
   id: x => x,
   const: x => y => x,
   not: b => !b,
-  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  reject: predicate => Prelude.filter(x => !predicate(x)),
+  reject: predicate => Prelude.filter(x => Prelude.not(predicate(x))),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const escape = s => Prelude._apply("replaceAll")([">", "&gt;"])(Prelude._apply("replaceAll")(["<", "&lt;"])(Prelude._apply("replaceAll")(["&", "&amp;"])(s)));
 const text = value => ({
   type: "text",
@@ -36,7 +37,7 @@ const render$002Dinline$002Delement = context => element => `${Prelude._apply("r
   level: 0,
   inline: true
 }]))(element.children))}</${element.name}>${context.inline ? "" : "\n"}`;
-const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => Object.is("object", typeof string$002Dor$002Dnode) ? string$002Dor$002Dnode : text(Prelude._apply("replaceAll")(["\n", ""])(Prelude._apply("replaceAll")([apply(["^[ ]+", "gm"])(RegExp), " "])(string$002Dor$002Dnode)));
+const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => Prelude.equals("object")(typeof string$002Dor$002Dnode) ? string$002Dor$002Dnode : text(Prelude._apply("replaceAll")(["\n", ""])(Prelude._apply("replaceAll")([apply(["^[ ]+", "gm"])(RegExp), " "])(string$002Dor$002Dnode)));
 const block$002Delement = name => attributes => children$0021 => (() => {
   const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
   const element = {
@@ -52,7 +53,7 @@ const block$002Delement = name => attributes => children$0021 => (() => {
 })();
 const inline$002Delement = name => attributes => children$0021 => (() => {
   const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
-  const format = Prelude._apply("some")([node => Object.is("block", node.format)])(children) ? "block" : "inline";
+  const format = Prelude._apply("some")([node => Prelude.equals("block")(node.format)])(children) ? "block" : "inline";
   const element = {
     type: "element",
     format,

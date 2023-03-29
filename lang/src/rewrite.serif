@@ -45,7 +45,7 @@ union this that = construct Set [[...this, ...that]];
 
 nextUnusedIdent names desiredName = {
   recur counter = {
-    candidate = if counter is 0 then desiredName else `${desiredName}$${counter}`;
+    candidate = if counter == 0 then desiredName else `${desiredName}$${counter}`;
     if has candidate names then recur (counter + 1) else Identifier candidate
   };
   recur 0
@@ -70,23 +70,24 @@ rewriteModule {imports, exports, statements} namesExportedFrom = do {
   names = construct Set [imports' <> statements >>= namesInStatement];
   preludeIdent = nextUnusedIdent names "Prelude";
   names' = add preludeIdent.name names;
-  rewrite = rewriteNode preludeIdent names';
+  fromPrelude = MemberExpression preludeIdent . StringLiteral;
+  rewrite = rewriteNode fromPrelude names';
+  preludeEntries = Object.entries $ Prelude fromPrelude;
   preludeDefinition = {
     VariableDeclaration preludeIdent {
-      Prelude
-      |> Object.entries
-      |> map (\[name, implementation] -> Property (StringLiteral name) $ implementation preludeIdent)
-      |> ObjectExpression
+      ObjectExpression {
+        (\[name, value] -> Property (StringLiteral name) value) <$> preludeEntries
+      }
     }
   };
   preludeDestructuring = {
     VariableDeclaration {
-      Prelude
-      |> Object.keys
-      ;; Do not unpack if name conflicts with a top-level binding:
-      |> reject (flip has names')
-      |> map (\name -> Property (StringLiteral name) (Identifier name))
-      |> ObjectPattern
+      ObjectPattern {
+        preludeEntries >>= \[name] -> {
+          ;; Do not unpack if name conflicts with a top-level binding:
+          if has name names' then [] else [Property (StringLiteral name) (Identifier name)]
+        }
+      }
     } preludeIdent
   };
   Future.resolve {
@@ -112,7 +113,7 @@ rewriteImportAllDeclaration namesExportedFrom source hiding = {
       }};\n\n${
         format.list namesHiddenNeedlessly
       } ${
-        if namesHiddenNeedlessly.length is 1 then "is" else "are"
+        if namesHiddenNeedlessly.length == 1 then "is" else "are"
       } not exported so need not be hidden.\n`
     }
   } else {
@@ -131,7 +132,7 @@ rewriteImportDeclaration namesExportedFrom = {
   }
 };
 
-rewriteNode preludeIdent = {
+rewriteNode fromPrelude = {
   recur names = match' Node id {
     TemplateLiteral: \quasis expressions -> {
       TemplateLiteral quasis (recur names <$> expressions)
@@ -163,7 +164,7 @@ rewriteNode preludeIdent = {
         };
         BlockExpression $ recur names' <$> statements
       };
-      if statements.length is 1 then {
+      if statements.length == 1 then {
         match' Node otherwise {ExpressionStatement: recur names} statements[0]
       } else otherwise null
     },
@@ -171,10 +172,7 @@ rewriteNode preludeIdent = {
       recur names $ reduceRight
         (\result -> match Node {
            ArrowAssignmentStatement: \pattern expression -> {
-             CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "chain")
-                                            [ArrowFunctionExpression [pattern] result]) [
-               expression,
-             ]
+             CallExpression (CallExpression (fromPrelude "chain") [ArrowFunctionExpression [pattern] result]) [expression]
            },
            VariableDeclaration: \pattern expression -> {
              CallExpression (ArrowFunctionExpression [pattern] result) [expression]
@@ -216,26 +214,19 @@ rewriteNode preludeIdent = {
       |> recur names'
     },
     BinaryExpression: \operator left right -> {
-      if operator is "is" then recur names {
-        CallExpression (MemberExpression (Identifier "Object") $ StringLiteral "is") [right, left]
-      } else {
-        BinaryExpression operator (recur names left) (recur names right)
-      }
+      switch operator
+      when "==" then recur names $ CallExpression (CallExpression (fromPrelude "equals") [right]) [left]
+      when "!=" then recur names $ CallExpression (fromPrelude "not") [BinaryExpression "==" left right]
+      else BinaryExpression operator (recur names left) (recur names right)
     },
     ConcatenationExpression: \left right -> {
-      CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "concat")
-                                     [recur names left])
-                     [recur names right]
+      recur names $ CallExpression (CallExpression (fromPrelude "concat") [left]) [right]
     },
     MapExpression: \left right -> {
-      CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "map")
-                                     [recur names left])
-                     [recur names right]
+      recur names $ CallExpression (CallExpression (fromPrelude "map") [left]) [right]
     },
     BindExpression: \left right -> {
-      CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "chain")
-                                     [recur names right])
-                     [recur names left]
+      recur names $ CallExpression (CallExpression (fromPrelude "chain") [right]) [left]
     },
     LogicalExpression: \operator left right -> {
       LogicalExpression operator (recur names left) (recur names right)
@@ -248,7 +239,7 @@ rewriteNode preludeIdent = {
     SwitchExpression: \discriminant cases default -> {
       SwitchExpression (recur names discriminant)
                        (recur names <$> cases)
-                       (if default is null then null else recur names default)
+                       (if default == null then null else recur names default)
     },
     SwitchCase: \predicates consequent -> {
       SwitchCase (recur names <$> predicates) (recur names consequent)
@@ -257,10 +248,7 @@ rewriteNode preludeIdent = {
       recur names $ CallExpression body [head]
     },
     MethodCallExpression: \name -> {
-      recur names {
-        CallExpression (MemberExpression preludeIdent $ StringLiteral "_apply")
-                       [StringLiteral name]
-      }
+      recur names $ CallExpression (fromPrelude "_apply") [StringLiteral name]
     },
     CallExpression: \callee arguments -> {
       CallExpression (recur names callee) (recur names <$> arguments)

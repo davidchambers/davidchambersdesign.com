@@ -6,6 +6,7 @@ export default Prelude;
   ArrowFunctionExpression,
   BinaryExpression,
   CallExpression,
+  CompositionExpression,
   ConditionalExpression,
   Identifier,
   LogicalExpression,
@@ -21,89 +22,98 @@ isArray name = {
 };
 
 isString name = {
-  BinaryExpression "is"
+  BinaryExpression "==="
                    (UnaryExpression "typeof" $ Identifier name)
                    (StringLiteral "string")
 };
 
-Prelude = {
-  _apply: \preludeIdent -> {
+Prelude fromPrelude = {
+  _apply: {
     ArrowFunctionExpression [Identifier "name"] {
       ArrowFunctionExpression [Identifier "args"] {
         ArrowFunctionExpression [Identifier "target"] {
-          CallExpression (MemberExpression (MemberExpression (Identifier "target")
-                                                             (Identifier "name"))
-                                           (StringLiteral "apply"))
+          CallExpression (MemberExpression (MemberExpression (Identifier "target") (Identifier "name")) (StringLiteral "apply"))
                          [Identifier "target", Identifier "args"]
         }
       }
     }
   },
-  apply: \preludeIdent -> {
+  apply: {
     ArrowFunctionExpression [Identifier "args"] {
       ArrowFunctionExpression [Identifier "target"] {
-        CallExpression (MemberExpression (Identifier "target")
-                                         (StringLiteral "apply"))
-                       [Identifier "target", Identifier "args"]
+        CallExpression (MemberExpression (Identifier "target") (StringLiteral "apply")) [Identifier "target", Identifier "args"]
       }
     }
   },
-  construct: \preludeIdent -> {
+  construct: {
     ArrowFunctionExpression [Identifier "constructor"] {
       ArrowFunctionExpression [Identifier "args"] {
-        CallExpression (MemberExpression (Identifier "Reflect")
-                                         (StringLiteral "construct"))
-                       [Identifier "constructor", Identifier "args"]
+        CallExpression (MemberExpression (Identifier "Reflect") (StringLiteral "construct")) [Identifier "constructor", Identifier "args"]
       }
     }
   },
-  match: \preludeIdent -> {
+  match: {
     ArrowFunctionExpression [Identifier "type"] {
-      CallExpression (CallExpression (MemberExpression preludeIdent $ StringLiteral "match'")
-                                     [Identifier "type"])
+      CallExpression (CallExpression (fromPrelude "match'") [Identifier "type"])
                      [ArrowFunctionExpression [Identifier "_"] $ Identifier "CasesNotExhaustive"]
     }
   },
-  match': \preludeIdent -> {
+  match': {
     ArrowFunctionExpression [Identifier "type"] {
       MemberExpression (Identifier "type")
-                       (CallExpression (MemberExpression (Identifier "Symbol")
-                                                         (StringLiteral "for"))
-                                       [StringLiteral "match"])
+                       (CallExpression (MemberExpression (Identifier "Symbol") (StringLiteral "for")) [StringLiteral "match"])
     }
   },
-  id: \preludeIdent -> {
+  id: {
     ArrowFunctionExpression [Identifier "x"] {
       Identifier "x"
     }
   },
-  const: \preludeIdent -> {
+  const: {
     ArrowFunctionExpression [Identifier "x"] {
       ArrowFunctionExpression [Identifier "y"] {
         Identifier "x"
       }
     }
   },
-  not: \preludeIdent -> {
+  not: {
     ArrowFunctionExpression [Identifier "b"] {
       UnaryExpression "!" (Identifier "b")
     }
   },
-  concat: \preludeIdent -> {
+  ;; TODO: generalize to setoid
+  equals: {
+    ArrowFunctionExpression [Identifier "this"] {
+      ArrowFunctionExpression [Identifier "that"] {
+        ConditionalExpression
+          (isArray "this")
+          (BinaryExpression "&&"
+                            (isArray "that")
+                            (BinaryExpression "&&"
+                                              (BinaryExpression "==="
+                                                                (MemberExpression (Identifier "this") $ StringLiteral "length")
+                                                                (MemberExpression (Identifier "that") $ StringLiteral "length"))
+                                              (CallExpression (MemberExpression (Identifier "this") $ StringLiteral "every")
+                                                              [ArrowFunctionExpression [Identifier "x", Identifier "idx"] $
+                                                                 CallExpression (CallExpression (fromPrelude "equals") [Identifier "x"])
+                                                                                [MemberExpression (Identifier "that") (Identifier "idx")]])))
+          (BinaryExpression "===" (Identifier "this") (Identifier "that"))
+      }
+    }
+  },
+  concat: {
     ArrowFunctionExpression [Identifier "this"] {
       ArrowFunctionExpression [Identifier "that"] {
         ConditionalExpression
           (LogicalExpression "or" (isArray "this") (isString "this"))
-          (CallExpression (MemberExpression (Identifier "this")
-                                            (StringLiteral "concat"))
+          (CallExpression (MemberExpression (Identifier "this") (StringLiteral "concat"))
                           [Identifier "that"])
-          (CallExpression (MemberExpression (Identifier "this")
-                                            (StringLiteral "fantasy-land/concat"))
+          (CallExpression (MemberExpression (Identifier "this") (StringLiteral "fantasy-land/concat"))
                           [Identifier "that"])
       }
     }
   },
-  reduce: \preludeIdent -> {
+  reduce: {
     ArrowFunctionExpression [Identifier "f"] {
       ArrowFunctionExpression [Identifier "y"] {
         ArrowFunctionExpression [Identifier "foldable"] {
@@ -123,7 +133,7 @@ Prelude = {
     }
   },
   ;; TODO: generalize to foldable
-  reduceRight: \preludeIdent -> {
+  reduceRight: {
     ArrowFunctionExpression [Identifier "f"] {
       ArrowFunctionExpression [Identifier "y"] {
         ArrowFunctionExpression [Identifier "foldable"] {
@@ -137,7 +147,7 @@ Prelude = {
       }
     }
   },
-  filter: \preludeIdent -> {
+  filter: {
     ArrowFunctionExpression [Identifier "predicate"] {
       ArrowFunctionExpression [Identifier "filterable"] {
         ConditionalExpression
@@ -153,16 +163,16 @@ Prelude = {
       }
     }
   },
-  reject: \preludeIdent -> {
+  reject: {
+    ;; \predicate -> filter (not . predicate)
     ArrowFunctionExpression [Identifier "predicate"] {
-      CallExpression (MemberExpression preludeIdent $ StringLiteral "filter") [
-        ArrowFunctionExpression [Identifier "x"] {
-          UnaryExpression "!" $ CallExpression (Identifier "predicate") [Identifier "x"]
-        },
-      ]
+      CallExpression (fromPrelude "filter") [CompositionExpression (fromPrelude "not") (Identifier "predicate")]
     }
+    ;; This may be possible once sectioning is supported:
+    ;; filter . (not .)
+    ;; CompositionExpression (fromPrelude "filter") (CompositionExpression (fromPrelude "not"))
   },
-  map: \preludeIdent -> {
+  map: {
     ArrowFunctionExpression [Identifier "f"] {
       ArrowFunctionExpression [Identifier "functor"] {
         ConditionalExpression
@@ -179,7 +189,7 @@ Prelude = {
     }
   },
   ;; TODO: generalize to functor
-  flip: \preludeIdent -> {
+  flip: {
     ArrowFunctionExpression [Identifier "f"] {
       ArrowFunctionExpression [Identifier "y"] {
         ArrowFunctionExpression [Identifier "x"] {
@@ -188,7 +198,7 @@ Prelude = {
       }
     }
   },
-  chain: \preludeIdent -> {
+  chain: {
     ArrowFunctionExpression [Identifier "f"] {
       ArrowFunctionExpression [Identifier "chain"] {
         ConditionalExpression

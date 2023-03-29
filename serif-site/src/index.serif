@@ -128,7 +128,8 @@ document = html [
           >=
           instanceof
           in
-          is
+          ==
+          !=
           &
           ^
           |

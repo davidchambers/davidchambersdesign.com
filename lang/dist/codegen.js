@@ -8,16 +8,17 @@ const Prelude = {
   id: x => x,
   const: x => y => x,
   not: b => !b,
-  concat: this$ => that => Array.isArray(this$) || Object.is("string", typeof this$) ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
+  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => foldable => foldable[Array.isArray(foldable) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => foldable => foldable.reduceRight((y, x) => f(y)(x), y),
   filter: predicate => filterable => Array.isArray(filterable) ? filterable.filter(x => predicate(x)) : filterable["fantasy-land/filter"](predicate),
-  reject: predicate => Prelude.filter(x => !predicate(x)),
+  reject: predicate => Prelude.filter(x => Prelude.not(predicate(x))),
   map: f => functor => Array.isArray(functor) ? functor.map(x => f(x)) : functor["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const RESERVED_WORDS = construct(Set)([["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public", "arguments", "eval"]]);
 const validEsIdentifierName = name => Prelude._apply("test")([name])(RegExp("^[$_A-Za-z][$_A-Za-z0-9]*$"));
 const esFromEscapedIdentifierName = name => ({
@@ -26,7 +27,7 @@ const esFromEscapedIdentifierName = name => ({
 });
 const esFromIdentifier = (() => {
   const escapeChar = c => concat("$")(Prelude._apply("padStart")([4, "0"])(Prelude._apply("toUpperCase")([])(Prelude._apply("toString")([16])(Prelude._apply("charCodeAt")([0])(c)))));
-  const escape = name => Object.is("import", name) ? "import" : Prelude._apply("has")([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : Prelude._apply("replaceAll")([apply(["[^$_A-Za-z0-9]", "g"])(RegExp), escapeChar])(name);
+  const escape = name => Prelude.equals("import")(name) ? "import" : Prelude._apply("has")([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : Prelude._apply("replaceAll")([apply(["[^$_A-Za-z0-9]", "g"])(RegExp), escapeChar])(name);
   return x => esFromEscapedIdentifierName(escape(x));
 })();
 const esFromLiteral = value => ({
@@ -46,12 +47,12 @@ const esFromTemplateLiteral = quasis => expressions => ({
   expressions: Prelude.map(esFromNode)(expressions),
   quasis: (() => {
     const lineEnding = Prelude._apply("find")([lineEnding => Prelude._apply("startsWith")([lineEnding])(quasis[0])])(["\n", "\r\n"]);
-    return Object.is(undefined, lineEnding) ? [...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(quasis)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(quasis))] : (() => {
+    return Prelude.equals(undefined)(lineEnding) ? [...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(quasis)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(quasis))] : (() => {
       const indent = Prelude._apply("search")([RegExp("(?! )")])(Prelude._apply("slice")([lineEnding.length])(quasis[0]));
       const pattern = apply([`${lineEnding}[ ]{0,${indent}}`, "g"])(RegExp);
       const [head, ...tail] = Prelude.map(Prelude._apply("replace")([pattern, lineEnding]))(quasis);
       const head$0027 = Prelude._apply("slice")([lineEnding.length])(head);
-      return Object.is(0, tail.length) ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(tail)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(tail))];
+      return Prelude.equals([])(tail) ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(tail)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(tail))];
     })();
   })()
 });
@@ -81,7 +82,7 @@ const esFromProperty = key => value => (() => {
   })(key));
   const esKey = computed ? esFromNode(key) : esFromEscapedIdentifierName(key.value);
   const esValue = esFromNode(value);
-  const shorthand = Object.is("Identifier", esKey.type) && Object.is("Identifier", esValue.type) && Object.is(esValue.name, esKey.name);
+  const shorthand = Prelude.equals("Identifier")(esKey.type) && Prelude.equals("Identifier")(esValue.type) && Prelude.equals(esValue.name)(esKey.name);
   return {
     type: "Property",
     key: esKey,
@@ -102,7 +103,7 @@ const esFromArrowFunctionExpression = parameters => body => (() => {
     type: "ArrowFunctionExpression",
     params: Prelude.map(esFromNode)(parameters),
     body: esBody,
-    expression: not(Object.is("BlockStatement", esBody.type))
+    expression: Prelude.not(Prelude.equals("BlockStatement")(esBody.type))
   };
 })();
 const esFromBlockExpression = statements => ({
@@ -185,7 +186,7 @@ const esFromSwitchExpression = discriminant => cases => default$ => ({
         discriminant: esFromNode(discriminant),
         cases: (() => {
           const esCases = Prelude.chain(esFromSwitchCase)(cases);
-          return Object.is(null, default$) ? esCases : [...esCases, {
+          return Prelude.equals(null)(default$) ? esCases : [...esCases, {
             type: "SwitchCase",
             test: null,
             consequent: [{
@@ -226,7 +227,7 @@ const esFromFunctionDeclaration = name => parameters => body => ({
       type: "ArrowFunctionExpression",
       params: [esFromNode(param)],
       body: esBody,
-      expression: not(Object.is("BlockStatement", esBody.type))
+      expression: Prelude.not(Prelude.equals("BlockStatement")(esBody.type))
     }))(esFromNode(body))(parameters)
   }]
 });
