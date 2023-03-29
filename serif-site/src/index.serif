@@ -1,0 +1,167 @@
+import * from "./elements.serif";
+
+document = html [
+  head [
+    meta {charset: "utf-8"},
+    link {rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Source+Sans+3:normal,bold|Source+Code+Pro"},
+    link {rel: "stylesheet", href: "./style.css"},
+  ],
+  body [
+    h1 ["Serif"],
+    p [
+      "Serif is an expressive, practical functional programming language."
+    ],
+    p [
+      "Serif is dynamically typed and strictly evaluated."
+    ],
+    p [
+      "Serif code most closely resembles Haskell code, but the experience of programming with Serif feels ", em ["light"], " in some indescribable way."
+    ],
+    p [
+      "Serif is fully interoperable with JavaScript: Serif modules can import ES modules; Serif modules are transpiled to ES modules that can be imported by ES modules written in JavaScript or TypeScript.",
+    ],
+    h2 ["Literals"],
+    h3 ["Boolean literals"],
+    pre [
+      code [
+        text `
+          true
+          false
+        `
+      ],
+    ],
+    h3 ["Number literals"],
+    pre [
+      code [
+        text `
+          0
+          42
+          123.456
+          0b111
+          0o777
+          0xFF
+        `
+      ],
+    ],
+    p [
+      "Negative numbers can be represented by negating a literal (", code ["-1"], ") or variable (", code ["-x"], ").",
+    ],
+    h3 ["String literals"],
+    pre [
+      code [
+        text `
+          ""
+          "foo bar"
+          "\\n"
+        `
+      ],
+    ],
+    h3 ["Null literal"],
+    pre [
+      code [
+        text `
+          null
+        `
+      ],
+    ],
+    p [
+      "This is provided for JavaScript interoperability."
+    ],
+    h3 ["Array literals"],
+    pre [
+      code [
+        text `
+          []
+          [1, 2, 3]
+          [1, 2, 3,]
+        `
+      ],
+    ],
+    p [
+      "Array literals begin with ", code ["["], " and end with ", code ["]"], ", and contain zero or more elements separated by ", code [","], ". A trailing comma is permitted.",
+    ],
+    h3 ["Object literals"],
+    pre [
+      code [
+        text `
+          {}
+          {[key]: value}
+          {["x"]: 1, ["y"]: 2}
+          {x: 1, y: 2}
+          {x: 1, y: 2,}
+          {foo, bar, baz}
+          {foo, bar}
+          {foo,}
+        `
+      ],
+    ],
+    p [
+      "Object literals begin with ", code ["{"], " and end with ", code ["}"], ", and contain zero or more entries separated by ", code [","], ". An entry is a key and a value separated by ", code [":"], ". The most flexible form permits an expression to appear between ", code ["["], " and ", code ["]"], " to determine the property name dynamically. ", code ["{x: 1, y: 2}"], " is shorthand for ", code ["{[\"x\"]: 1, [\"y\"]: 2}"], ". ", code ["{foo, bar}"], " is shorthand for ", code ["{foo: foo, bar: bar}"], ". A trailing comma is permitted, and required in the case of ", code ["{foo}"], "—an object with a single shorthand entry—to avoid being interpreted as a block expression.",
+    ],
+    h3 ["Unary operators"],
+    pre [
+      code [
+        text `
+          typeof
+          +
+          -
+          ~
+        `
+      ],
+    ],
+    h3 ["Binary operators"],
+    pre [
+      code [
+        text `
+          **
+          *
+          /
+          %
+          +
+          -
+          <<
+          >>
+          >>>
+          <
+          >
+          <=
+          >=
+          instanceof
+          in
+          is
+          &
+          ^
+          |
+          and
+          or
+          ??
+        `
+      ],
+    ],
+    h3 ["Member access"],
+    pre [
+      code [
+        text `
+          Math.sqrt
+          foo[bar]
+        `
+      ],
+    ],
+    h3 ["Method calls"],
+    pre [
+      code [
+        text `
+          .toUpperCase [] s
+          .slice [0, 5] xs
+        `
+      ],
+    ],
+    p [
+      "This functionality is provided for JavaScript interoperability. Idiomatic Serif code is based on modules and functions rather than objects and methods.",
+    ],
+  ],
+];
+
+.write [
+  `<!DOCTYPE html>\n${document.render {indent: "  ", level: 0, inline: false}}`
+] process.stdout;

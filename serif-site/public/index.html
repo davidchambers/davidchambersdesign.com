@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+3:normal,bold|Source+Code+Pro" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <h1>Serif</h1>
+    <p>Serif is an expressive, practical functional programming language.</p>
+    <p>Serif is dynamically typed and strictly evaluated.</p>
+    <p>Serif code most closely resembles Haskell code, but the experience of programming with Serif feels <em>light</em> in some indescribable way.</p>
+    <p>Serif is fully interoperable with JavaScript: Serif modules can import ES modules; Serif modules are transpiled to ES modules that can be imported by ES modules written in JavaScript or TypeScript.</p>
+    <h2>Literals</h2>
+    <h3>Boolean literals</h3>
+    <pre><code>true
+false
+</code></pre>
+    <h3>Number literals</h3>
+    <pre><code>0
+42
+123.456
+0b111
+0o777
+0xFF
+</code></pre>
+    <p>Negative numbers can be represented by negating a literal (<code>-1</code>) or variable (<code>-x</code>).</p>
+    <h3>String literals</h3>
+    <pre><code>""
+"foo bar"
+"\n"
+</code></pre>
+    <h3>Null literal</h3>
+    <pre><code>null
+</code></pre>
+    <p>This is provided for JavaScript interoperability.</p>
+    <h3>Array literals</h3>
+    <pre><code>[]
+[1, 2, 3]
+[1, 2, 3,]
+</code></pre>
+    <p>Array literals begin with <code>[</code> and end with <code>]</code>, and contain zero or more elements separated by <code>,</code>. A trailing comma is permitted.</p>
+    <h3>Object literals</h3>
+    <pre><code>{}
+{[key]: value}
+{["x"]: 1, ["y"]: 2}
+{x: 1, y: 2}
+{x: 1, y: 2,}
+{foo, bar, baz}
+{foo, bar}
+{foo,}
+</code></pre>
+    <p>Object literals begin with <code>{</code> and end with <code>}</code>, and contain zero or more entries separated by <code>,</code>. An entry is a key and a value separated by <code>:</code>. The most flexible form permits an expression to appear between <code>[</code> and <code>]</code> to determine the property name dynamically. <code>{x: 1, y: 2}</code> is shorthand for <code>{["x"]: 1, ["y"]: 2}</code>. <code>{foo, bar}</code> is shorthand for <code>{foo: foo, bar: bar}</code>. A trailing comma is permitted, and required in the case of <code>{foo}</code>—an object with a single shorthand entry—to avoid being interpreted as a block expression.</p>
+    <h3>Unary operators</h3>
+    <pre><code>typeof
++
+-
+~
+</code></pre>
+    <h3>Binary operators</h3>
+    <pre><code>**
+*
+/
+%
++
+-
+&lt;&lt;
+&gt;&gt;
+&gt;&gt;&gt;
+&lt;
+&gt;
+&lt;=
+&gt;=
+instanceof
+in
+is
+&amp;
+^
+|
+and
+or
+??
+</code></pre>
+    <h3>Member access</h3>
+    <pre><code>Math.sqrt
+foo[bar]
+</code></pre>
+    <h3>Method calls</h3>
+    <pre><code>.toUpperCase [] s
+.slice [0, 5] xs
+</code></pre>
+    <p>This functionality is provided for JavaScript interoperability. Idiomatic Serif code is based on modules and functions rather than objects and methods.</p>
+  </body>
+</html>

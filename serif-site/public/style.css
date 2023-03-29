@@ -1,0 +1,22 @@
+body {
+  margin-block: 4rem;
+  margin-inline: 6rem;
+  font-size: 32px;
+  line-height: 1.5;
+  font-family: "Source Sans 3", sans-serif;
+}
+
+pre {
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 153, 153, 0.25);
+  border-radius: 4px;
+  background-color: rgba(0, 153, 153, 0.125);
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+}
+
+code {
+  font-family: "Source Code Pro", monospace;
+  color: rgb(0, 153, 153);
+}
