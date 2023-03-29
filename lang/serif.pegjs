@@ -142,7 +142,6 @@ ReservedWord
   / ExponentiationOperator
   / MultiplicativeOperator
   / AdditiveOperator
-  / ShiftOperator
   / RelationalOperator
   / EqualityOperator
   / LogicalANDOperator
@@ -362,16 +361,6 @@ ConcatenationExpression
   = exprs:AdditiveExpression|1.., _ ConcatenationOperator _|
     { return exprs.reduceRight((right, left) => Node.ConcatenationExpression(left)(right)); }
 
-ShiftOperator
-  = '<<'
-  / '>>>'
-  / '>>'
-
-ShiftExpression
-  = left:ConcatenationExpression
-    tail:(_ operator:ShiftOperator _ right:ConcatenationExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
-
 RelationalOperator
   = '<='
   / '<'
@@ -381,8 +370,8 @@ RelationalOperator
   / InToken
 
 RelationalExpression
-  = left:ShiftExpression
-    tail:(_ operator:RelationalOperator _ right:ShiftExpression { return {operator, right}; })*
+  = left:ConcatenationExpression
+    tail:(_ operator:RelationalOperator _ right:ConcatenationExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 EqualityOperator

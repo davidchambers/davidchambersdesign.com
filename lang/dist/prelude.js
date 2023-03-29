@@ -5,6 +5,9 @@ const Prelude$1 = {
       ["~"]: operand => ~operand
     },
     binary: {
+      ["<<"]: rhs => lhs => lhs << rhs,
+      [">>"]: rhs => lhs => lhs >> rhs,
+      [">>>"]: rhs => lhs => lhs >>> rhs,
       ["&"]: rhs => lhs => lhs & rhs,
       ["^"]: rhs => lhs => lhs ^ rhs,
       ["|"]: rhs => lhs => lhs | rhs
@@ -38,7 +41,7 @@ const $0023lhs = Identifier("lhs");
 const $0023rhs = Identifier("rhs");
 const fromEsBinaryOperator = operator => ArrowFunctionExpression([$0023rhs])(ArrowFunctionExpression([$0023lhs])(BinaryExpression(operator)($0023lhs)($0023rhs)));
 const esUnaryOperators = ["~"];
-const esBinaryOperators = ["&", "^", "|"];
+const esBinaryOperators = ["<<", ">>", ">>>", "&", "^", "|"];
 const Prelude = fromPrelude => ({
   operators: ObjectExpression([Property(StringLiteral("unary"))(ObjectExpression(map(op => Property(StringLiteral(op))(fromEsUnaryOperator(op)))(esUnaryOperators))), Property(StringLiteral("binary"))(ObjectExpression(map(op => Property(StringLiteral(op))(fromEsBinaryOperator(op)))(esBinaryOperators)))]),
   _apply: ArrowFunctionExpression([Identifier("name")])(ArrowFunctionExpression([Identifier("args")])(ArrowFunctionExpression([Identifier("target")])(CallExpression(MemberExpression(MemberExpression(Identifier("target"))(Identifier("name")))(StringLiteral("apply")))([Identifier("target"), Identifier("args")])))),

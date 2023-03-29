@@ -54,6 +54,12 @@ esUnaryOperators = [
 ];
 
 esBinaryOperators = [
+  ;; 13.9.1 The Left Shift Operator
+  "<<",
+  ;; 13.9.2 The Signed Right Shift Operator
+  ">>",
+  ;; 13.9.3 The Unsigned Right Shift Operator
+  ">>>",
   ;; 13.12 Binary Bitwise Operators
   "&",
   "^",

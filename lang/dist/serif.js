@@ -10,6 +10,9 @@ const Prelude = {
       ["~"]: operand => ~operand
     },
     binary: {
+      ["<<"]: rhs => lhs => lhs << rhs,
+      [">>"]: rhs => lhs => lhs >> rhs,
+      [">>>"]: rhs => lhs => lhs >>> rhs,
       ["&"]: rhs => lhs => lhs & rhs,
       ["^"]: rhs => lhs => lhs ^ rhs,
       ["|"]: rhs => lhs => lhs | rhs
