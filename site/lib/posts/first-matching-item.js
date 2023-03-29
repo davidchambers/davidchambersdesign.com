@@ -2,6 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  operators: {
+    unary: {
+      ["~"]: operand => ~operand
+    },
+    binary: {
+      ["&"]: rhs => lhs => lhs & rhs,
+      ["^"]: rhs => lhs => lhs ^ rhs,
+      ["|"]: rhs => lhs => lhs | rhs
+    }
+  },
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
@@ -20,7 +30,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p(["When writing code one often needs to grab the first item in\n    a collection that has certain characteristics. For example,\n    one may have a list of ", code(["Student"]), " objects and\n    need to fetch the one with a certain id."]), p(["The task is trivial: loop through the list and compare each\n    student's id until a match is found or all the students in\n    the list have been inspected, whichever comes first."]), p(["In the past, I've tended to take advantage of return statements\n    to exit the loop as soon as a match is found. The examples here\n    are in Python, but the same patterns apply to other languages."]), code$002Dblock("python")(`def student_by_id(students, id):
     for student in students:
         if student.id == id:

@@ -2,6 +2,16 @@ import {attemptP, bichain, fork, parallel, resolve} from "fluture";
 import S from "sanctuary";
 import posts from "../posts/index.js";
 const Prelude = {
+  operators: {
+    unary: {
+      ["~"]: operand => ~operand
+    },
+    binary: {
+      ["&"]: rhs => lhs => lhs & rhs,
+      ["^"]: rhs => lhs => lhs ^ rhs,
+      ["|"]: rhs => lhs => lhs | rhs
+    }
+  },
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
@@ -20,7 +30,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const absolute$003F = url => url.startsWith("http:") || url.startsWith("https:");
 const links = node => Prelude.equals("a")(node.name) ? filter(absolute$003F)([node.attributes.href]) : ("children" in node) ? Prelude.chain(links)(node.children) : [];
 const status = url => bichain(err => resolve({

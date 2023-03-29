@@ -11,6 +11,8 @@ export default Prelude;
   Identifier,
   LogicalExpression,
   MemberExpression,
+  ObjectExpression,
+  Property,
   StringLiteral,
   UnaryExpression,
 } = Node;
@@ -27,7 +29,48 @@ isString name = {
                    (StringLiteral "string")
 };
 
+#operand = Identifier "operand";
+
+fromEsUnaryOperator operator = {
+  ArrowFunctionExpression [#operand] {
+    UnaryExpression operator #operand
+  }
+};
+
+#lhs = Identifier "lhs";
+#rhs = Identifier "rhs";
+
+fromEsBinaryOperator operator = {
+  ArrowFunctionExpression [#rhs] {
+    ArrowFunctionExpression [#lhs] {
+      BinaryExpression operator #lhs #rhs
+    }
+  }
+};
+
+esUnaryOperators = [
+  ;; 13.5.6 Bitwise NOT Operator
+  "~",
+];
+
+esBinaryOperators = [
+  ;; 13.12 Binary Bitwise Operators
+  "&",
+  "^",
+  "|",
+];
+
 Prelude fromPrelude = {
+  operators: ObjectExpression [
+    esUnaryOperators
+    |> map (\op -> Property (StringLiteral op) $ fromEsUnaryOperator op)
+    |> ObjectExpression
+    |> Property $ StringLiteral "unary",
+    esBinaryOperators
+    |> map (\op -> Property (StringLiteral op) $ fromEsBinaryOperator op)
+    |> ObjectExpression
+    |> Property $ StringLiteral "binary",
+  ],
   _apply: {
     ArrowFunctionExpression [Identifier "name"] {
       ArrowFunctionExpression [Identifier "args"] {

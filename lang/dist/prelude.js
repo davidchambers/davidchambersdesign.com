@@ -1,5 +1,15 @@
 import Node from "./Node.js";
 const Prelude$1 = {
+  operators: {
+    unary: {
+      ["~"]: operand => ~operand
+    },
+    binary: {
+      ["&"]: rhs => lhs => lhs & rhs,
+      ["^"]: rhs => lhs => lhs ^ rhs,
+      ["|"]: rhs => lhs => lhs | rhs
+    }
+  },
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
@@ -18,11 +28,19 @@ const Prelude$1 = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
-const {ArrowFunctionExpression, BinaryExpression, CallExpression, CompositionExpression, ConditionalExpression, Identifier, LogicalExpression, MemberExpression, StringLiteral, UnaryExpression} = Node;
+const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
+const {ArrowFunctionExpression, BinaryExpression, CallExpression, CompositionExpression, ConditionalExpression, Identifier, LogicalExpression, MemberExpression, ObjectExpression, Property, StringLiteral, UnaryExpression} = Node;
 const isArray = name => CallExpression(MemberExpression(Identifier("Array"))(StringLiteral("isArray")))([Identifier(name)]);
 const isString = name => BinaryExpression("===")(UnaryExpression("typeof")(Identifier(name)))(StringLiteral("string"));
+const $0023operand = Identifier("operand");
+const fromEsUnaryOperator = operator => ArrowFunctionExpression([$0023operand])(UnaryExpression(operator)($0023operand));
+const $0023lhs = Identifier("lhs");
+const $0023rhs = Identifier("rhs");
+const fromEsBinaryOperator = operator => ArrowFunctionExpression([$0023rhs])(ArrowFunctionExpression([$0023lhs])(BinaryExpression(operator)($0023lhs)($0023rhs)));
+const esUnaryOperators = ["~"];
+const esBinaryOperators = ["&", "^", "|"];
 const Prelude = fromPrelude => ({
+  operators: ObjectExpression([Property(StringLiteral("unary"))(ObjectExpression(map(op => Property(StringLiteral(op))(fromEsUnaryOperator(op)))(esUnaryOperators))), Property(StringLiteral("binary"))(ObjectExpression(map(op => Property(StringLiteral(op))(fromEsBinaryOperator(op)))(esBinaryOperators)))]),
   _apply: ArrowFunctionExpression([Identifier("name")])(ArrowFunctionExpression([Identifier("args")])(ArrowFunctionExpression([Identifier("target")])(CallExpression(MemberExpression(MemberExpression(Identifier("target"))(Identifier("name")))(StringLiteral("apply")))([Identifier("target"), Identifier("args")])))),
   apply: ArrowFunctionExpression([Identifier("args")])(ArrowFunctionExpression([Identifier("target")])(CallExpression(MemberExpression(Identifier("target"))(StringLiteral("apply")))([Identifier("target"), Identifier("args")]))),
   construct: ArrowFunctionExpression([Identifier("constructor")])(ArrowFunctionExpression([Identifier("args")])(CallExpression(MemberExpression(Identifier("Reflect"))(StringLiteral("construct")))([Identifier("constructor"), Identifier("args")]))),

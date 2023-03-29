@@ -2,6 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {captioned$002Dimages, code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  operators: {
+    unary: {
+      ["~"]: operand => ~operand
+    },
+    binary: {
+      ["&"]: rhs => lhs => lhs & rhs,
+      ["^"]: rhs => lhs => lhs ^ rhs,
+      ["|"]: rhs => lhs => lhs | rhs
+    }
+  },
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
@@ -20,7 +30,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["Modern browsers can display exciting visual effects such\n    as drop shadows (without the use of background images).\n    CSS3 makes it possible to turn submit inputs and even links\n    into rich, Aqua-like buttons in these browsers (alternative\n    style rules can be provided for older browsers)."]), p([img({
   alt: "",
   src: "/images/posts/39/start-game-hyperlink-and-button.png"

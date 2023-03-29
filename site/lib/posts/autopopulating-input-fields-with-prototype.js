@@ -2,6 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {code$002Dblock, update} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  operators: {
+    unary: {
+      ["~"]: operand => ~operand
+    },
+    binary: {
+      ["&"]: rhs => lhs => lhs & rhs,
+      ["^"]: rhs => lhs => lhs ^ rhs,
+      ["|"]: rhs => lhs => lhs | rhs
+    }
+  },
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
@@ -20,7 +30,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["Yesterday I wrote a simple class which auto-populates\n    input fields, and thought it worth sharing. I was originally\n    inspired to write this code by Roger Johansson's post titled ", a({
   href: "http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/"
 })(["Autopopulating text input fields with JavaScript"]), ".\n    While I approached the problem from a slightly different angle,\n    I made sure to avoid the pitfalls Roger mentions."])];

@@ -145,9 +145,6 @@ ReservedWord
   / ShiftOperator
   / RelationalOperator
   / EqualityOperator
-  / BitwiseANDOperator
-  / BitwiseXOROperator
-  / BitwiseOROperator
   / LogicalANDOperator
   / LogicalOROperator
   / CoalesceOperator
@@ -181,6 +178,7 @@ IdentifierStart
     !'-'
     !'='
     !'$'
+    !'|'
     .
 
 IdentifierPart
@@ -317,7 +315,6 @@ UnaryOperator
   = TypeofToken
   / '+'
   / '-'
-  / '~'
 
 UnaryExpression
   = operator:UnaryOperator _ argument:CallExpression
@@ -404,36 +401,12 @@ MapExpression
   = exprs:EqualityExpression|1.., _ MapOperator _|
     { return exprs.reduceRight((right, left) => Node.MapExpression(left)(right)); }
 
-BitwiseANDOperator
-  = '&'
-
-BitwiseANDExpression
-  = left:MapExpression
-    tail:(_ operator:BitwiseANDOperator _ right:MapExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
-
-BitwiseXOROperator
-  = '^'
-
-BitwiseXORExpression
-  = left:BitwiseANDExpression
-    tail:(_ operator:BitwiseXOROperator _ right:BitwiseANDExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
-
-BitwiseOROperator
-  = '|'
-
-BitwiseORExpression
-  = left:BitwiseXORExpression
-    tail:(_ operator:BitwiseOROperator _ right:BitwiseXORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
-
 LogicalANDOperator
   = AndToken
 
 LogicalANDExpression
-  = left:BitwiseORExpression
-    tail:(_ operator:LogicalANDOperator _ right:BitwiseORExpression { return {operator, right}; })*
+  = left:MapExpression
+    tail:(_ operator:LogicalANDOperator _ right:MapExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Node.LogicalExpression(operator)(left)(right), left); }
 
 LogicalOROperator

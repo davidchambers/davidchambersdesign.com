@@ -2,6 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  operators: {
+    unary: {
+      ["~"]: operand => ~operand
+    },
+    binary: {
+      ["&"]: rhs => lhs => lhs & rhs,
+      ["^"]: rhs => lhs => lhs ^ rhs,
+      ["|"]: rhs => lhs => lhs | rhs
+    }
+  },
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
@@ -20,7 +30,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["On the Web it's not uncommon to see characters with\n    no inherent meaning used for stylistic reasons. A good\n    example is the ", a({
   href: "#"
 })(["Read more »"]), " link.\n    Perhaps the directionality of the \"»\" is suggestive of\n    travelling to another page, or perhaps the letterform is\n    included solely for its aesthetic appeal. Whatever the case,\n    one thing is certain: links do not require right-pointing\n    double angle quotation marks in order to function."]), p([strong(["The inclusion of such a character is therefore\n    a design decision."]), " It is decoration, not content.\n    It belongs in a style sheet, not in a page's markup."])];

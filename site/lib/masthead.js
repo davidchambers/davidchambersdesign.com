@@ -2,6 +2,16 @@ import S from "sanctuary";
 import {path} from "./elements.js";
 import {render, $21E6, $21E8, $21E7, $21E9, $2190, $2192, $2191, $2193} from "./orthogonal.js";
 const Prelude = {
+  operators: {
+    unary: {
+      ["~"]: operand => ~operand
+    },
+    binary: {
+      ["&"]: rhs => lhs => lhs & rhs,
+      ["^"]: rhs => lhs => lhs ^ rhs,
+      ["|"]: rhs => lhs => lhs | rhs
+    }
+  },
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
@@ -20,7 +30,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const mask$002Dchars = {
   A: [$2192(14), $2193(24), $2190(4), $2191(10), $2190(6), $2193(10), $2190(4), $2191(24), $21E8(4), $21E9(4), $2192(6), $2193(6), $2190(6), $2191(6)],
   B: [$2192(14), $2193(24), $2190(14), $2191(24), $21E8(4), $21E9(4), $2192(6), $2193(6), $2190(6), $2191(6), $21E8(0), $21E9(10), $2192(6), $2193(6), $2190(6), $2191(6)],

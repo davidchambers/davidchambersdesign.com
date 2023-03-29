@@ -2,6 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  operators: {
+    unary: {
+      ["~"]: operand => ~operand
+    },
+    binary: {
+      ["&"]: rhs => lhs => lhs & rhs,
+      ["^"]: rhs => lhs => lhs ^ rhs,
+      ["|"]: rhs => lhs => lhs | rhs
+    }
+  },
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
@@ -20,7 +30,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["Earlier I wrote some code which repeatedly calls a function\n    which performs a database query – often ", strong(["the same"]), "\n    query. This encouraged me to explore various ways to cache the\n    results of function calls in both Python (to solve my immediate\n    problem) and JavaScript (because I find that language endlessly\n    fascinating)."]), p(["I played around with ", a({
   href: "http://en.wikipedia.org/wiki/Fibonacci_number"
 })(["Fibonacci"]), ",\n    which is a well suited to the task: it can be described in just\n    a couple of lines of code yet benefits enormously from caching\n    due to its recursive nature."]), h3(["JavaScript Fibonacci without caching"]), code$002Dblock("javascript")(`function fibonacci(n) {

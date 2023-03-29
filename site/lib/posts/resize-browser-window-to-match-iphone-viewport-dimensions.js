@@ -2,6 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {captioned$002Dimages, code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  operators: {
+    unary: {
+      ["~"]: operand => ~operand
+    },
+    binary: {
+      ["&"]: rhs => lhs => lhs & rhs,
+      ["^"]: rhs => lhs => lhs ^ rhs,
+      ["|"]: rhs => lhs => lhs | rhs
+    }
+  },
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
@@ -20,7 +30,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["I've recently become interested in optimizing sites for\n    the iPhone and iPod touch. While nothing beats testing on\n    the device itself, I often find it quicker to test changes\n    on my Mac. Changing the user agent string is a piece of cake\n    in Safari (Develop > User Agent > Mobile Safari) but what\n    about adjusting the browser window's dimensions to match\n    those of the iPhone?"]), p(["I've created two bookmarklets to allow the current page to\n    be loaded in an iPhone-sized window with a single click:"]), ul([li([p([strong(["Portrait"]), ` (labelled "⁑")`]), code$002Dblock("plain-text")(`javascript:open(location,'iPhone:portrait','innerWidth='+(320+15)+',innerHeight='+(480+15)+',scrollbars=yes');
 `)]), li([p([strong(["Landscape"]), ` (labelled "**")`]), code$002Dblock("plain-text")(`javascript:open(location,'iPhone:landscape','innerWidth='+(480+15)+',innerHeight='+(320+15)+',scrollbars=yes');
 `)])]), captioned$002Dimages([{

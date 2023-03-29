@@ -2,6 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {update} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  operators: {
+    unary: {
+      ["~"]: operand => ~operand
+    },
+    binary: {
+      ["&"]: rhs => lhs => lhs & rhs,
+      ["^"]: rhs => lhs => lhs ^ rhs,
+      ["|"]: rhs => lhs => lhs | rhs
+    }
+  },
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
@@ -20,7 +30,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["It's not uncommon to start watching a video online and discover\n    that its audio is quite quiet. This is not a problem in and of\n    itself, as one can simply crank up the output volume. What ", em(["is"]), " a problem, however, is a message then arriving in\n    one's inbox and waking the neighbours!"]), p(["This situation could be avoided if it were possible adjust the\n    browser's output volume without affecting the rest of the system.\n    As it is, though, one is forced to increase the volume of ", em(["everything"]), ". Not ideal."]), h3(["System Preferences > Sound > Application Volumes"]), p([img({
   alt: `Possible interface for application-specific volume settings in Mac OS X
 `,

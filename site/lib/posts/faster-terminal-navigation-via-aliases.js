@@ -2,6 +2,16 @@ import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockq
 import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const Prelude = {
+  operators: {
+    unary: {
+      ["~"]: operand => ~operand
+    },
+    binary: {
+      ["&"]: rhs => lhs => lhs & rhs,
+      ["^"]: rhs => lhs => lhs ^ rhs,
+      ["|"]: rhs => lhs => lhs | rhs
+    }
+  },
   _apply: name => args => target => target[name].apply(target, args),
   apply: args => target => target.apply(target, args),
   construct: constructor => args => Reflect.construct(constructor, args),
@@ -20,7 +30,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => chain => Array.isArray(chain) ? chain.flatMap(x => f(x)) : chain["fantasy-land/chain"](f)
 };
-const {_apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["Workmates will be quick to confirm that I'm ", strong(["not exactly leet"]), " on the command line.\n    Efforts to advance beyond ", code(["cd"]), " and ", code(["ls"]), " have been hampered by the fact that\n    many posts and discussion threads assume a level\n    of competency which as yet I lack."]), p(["When I sit down to write a post, oftentimes ", strong(["I write the post I wish I'd read an hour earlier"]), ".\n    As I unravel the mysteries of ack and bash and Emacs and the\n    like, I'll publish tips and explanations so that others can\n    benefit from my discoveries (or, as will likely be the case,\n    so that you people can further enlighten ", em(["me"]), ")."])];
 const body = [...excerpt, h3(["Aliases"]), p(["Do you find yourself ", code(["cd"]), "-ing to a particular directory\n    dozens of times each day? Perhaps you", $2014, "like me", $2014, "forget ", strong(["where the heck Python's site-packages directory lives"]), ",\n    and resort to Googling to find out? Aliases to the rescue!"]), p(["Aliases can be placed in your ", strong([".bashrc"]), " or ", strong([".bash_profile"]), ", or in a separate file which either\n    one of these imports."]), code$002Dblock("bash")(`alias site-packages="cd /Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages"
 `), p(["Thanks to this alias I can enter ", code(["site-packages"]), " and be taken\n    straight there. Another cool thing to know about is ", code(["cd -"]), ",\n    which takes you to the directory you were in most recently."]), code$002Dblock("console")(`$ cd ~/Desktop
