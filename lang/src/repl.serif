@@ -16,16 +16,16 @@ evaluateModule sourceText = do {
   _ <- attemptP \() -> .link [
     \(specifier, referencingModule) -> {
       attemptP (\() -> import specifier)
-      |> map Object.entries
-      |> map $ map \entries -> {
-           module = construct vm.SyntheticModule [
-             {\[name] -> name} <$> entries,
-             \() -> .forEach [flip {.setExport} module] entries,
-             {identifier: specifier, context: referencingModule.context},
-           ];
-           module
-         }
-      |> promise
+      | map Object.entries
+      | map $ map \entries -> {
+          module = construct vm.SyntheticModule [
+            {\[name] -> name} <$> entries,
+            \() -> .forEach [flip {.setExport} module] entries,
+            {identifier: specifier, context: referencingModule.context},
+          ];
+          module
+        }
+      | promise
     },
   ] module;
   _ <- attemptP \() -> .evaluate [] module;

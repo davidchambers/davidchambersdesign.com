@@ -10,9 +10,9 @@ list strings = {
   else {
     concat' = flip concat;
     strings
-    |> .slice [0, -1]
-    |> map $ concat' ","
-    |> .join [" "]
-    |> concat' $ " and " <> .at [-1] strings
+    | .slice [0, -1]
+    | map $ concat' ","
+    | .join [" "]
+    | concat' $ " and " <> .at [-1] strings
   }
 };

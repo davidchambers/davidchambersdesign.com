@@ -466,7 +466,7 @@ ApplicationExpression
     { return args.reduce((callee, arg) => Node.CallExpression(callee)([arg]), callee); }
 
 PipeOperator
-  = '|>'
+  = '|'
 
 PipeExpression
   = exprs:ApplicationExpression|1.., _ PipeOperator _|

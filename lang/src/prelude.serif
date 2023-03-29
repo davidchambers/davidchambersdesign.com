@@ -63,13 +63,13 @@ esBinaryOperators = [
 Prelude fromPrelude = {
   operators: ObjectExpression [
     esUnaryOperators
-    |> map (\op -> Property (StringLiteral op) $ fromEsUnaryOperator op)
-    |> ObjectExpression
-    |> Property $ StringLiteral "unary",
+    | map (\op -> Property (StringLiteral op) $ fromEsUnaryOperator op)
+    | ObjectExpression
+    | Property $ StringLiteral "unary",
     esBinaryOperators
-    |> map (\op -> Property (StringLiteral op) $ fromEsBinaryOperator op)
-    |> ObjectExpression
-    |> Property $ StringLiteral "binary",
+    | map (\op -> Property (StringLiteral op) $ fromEsBinaryOperator op)
+    | ObjectExpression
+    | Property $ StringLiteral "binary",
   ],
   _apply: {
     ArrowFunctionExpression [Identifier "name"] {

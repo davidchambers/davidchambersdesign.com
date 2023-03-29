@@ -68,11 +68,11 @@ esFromEscapedIdentifierName name = {
 esFromIdentifier = {
   escapeChar c = {
     c
-    |> .charCodeAt [0]
-    |> .toString [16]
-    |> .toUpperCase []
-    |> .padStart [4, "0"]
-    |> concat "$"
+    | .charCodeAt [0]
+    | .toString [16]
+    | .toUpperCase []
+    | .padStart [4, "0"]
+    | concat "$"
   };
   escape name = {
     if name == "import" then "import"

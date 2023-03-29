@@ -118,10 +118,10 @@ rewriteImportAllDeclaration namesExportedFrom source hiding = {
     }
   } else {
     namesExported
-    |> reject (\name -> .includes [name] namesHidden)
-    |> map (\name -> ImportSpecifier (Identifier name) (Identifier name))
-    |> ImportDeclaration source
-    |> Future.resolve
+    | reject (\name -> .includes [name] namesHidden)
+    | map (\name -> ImportSpecifier (Identifier name) (Identifier name))
+    | ImportDeclaration source
+    | Future.resolve
   }
 };
 
@@ -209,9 +209,9 @@ rewriteNode fromPrelude = {
         }
       };
       CompositionExpression left right
-      |> toCallExpression
-      |> ArrowFunctionExpression [param]
-      |> recur names'
+      | toCallExpression
+      | ArrowFunctionExpression [param]
+      | recur names'
     },
     BinaryExpression: \operator left right -> {
       switch operator
@@ -270,42 +270,42 @@ rewriteNode fromPrelude = {
       @tag = CallExpression (MemberExpression (Identifier "Symbol") $ StringLiteral "for") [StringLiteral "tag"];
       @match = CallExpression (MemberExpression (Identifier "Symbol") $ StringLiteral "for") [StringLiteral "match"];
       constructors
-      |> map (\{name, parameters} -> Property (StringLiteral name) $ reduceRight
-           (\body parameter -> ArrowFunctionExpression [Identifier parameter] body)
-           (parameters
-            |> map (\name -> Property (StringLiteral name) (Identifier name))
-            |> concat [Property @tag (StringLiteral name)]
-            |> ObjectExpression)
-           parameters
-         )
-      |> concat [Property @match {
-           #default = Identifier "default";
-           #cases = Identifier "cases";
-           #member = Identifier $ .replace [RegExp "^.", .toLowerCase []] name;
-           case {name, parameters} = {
-             SwitchCase [StringLiteral name] {
-               reduce (\callee name -> CallExpression callee [MemberExpression #member $ StringLiteral name])
-                      (MemberExpression #cases $ StringLiteral name)
-                      parameters
-             }
-           };
-           ArrowFunctionExpression [#default] {
-             ArrowFunctionExpression [#cases] {
-               ArrowFunctionExpression [#member] {
-                 ConditionalExpression
-                   (CallExpression (MemberExpression (Identifier "Object") $ StringLiteral "hasOwn")
-                                   [#cases, MemberExpression #member @tag])
-                   (SwitchExpression (MemberExpression #member @tag)
-                                     (case <$> constructors)
-                                     null)
-                   (CallExpression #default [#member])
-               }
-             }
-           }
-         }]
-      |> ObjectExpression
-      |> VariableDeclaration $ Identifier name
-      |> recur names
+      | map (\{name, parameters} -> Property (StringLiteral name) $ reduceRight
+          (\body parameter -> ArrowFunctionExpression [Identifier parameter] body)
+          (parameters
+           | map (\name -> Property (StringLiteral name) (Identifier name))
+           | concat [Property @tag (StringLiteral name)]
+           | ObjectExpression)
+          parameters
+        )
+      | concat [Property @match {
+          #default = Identifier "default";
+          #cases = Identifier "cases";
+          #member = Identifier $ .replace [RegExp "^.", .toLowerCase []] name;
+          case {name, parameters} = {
+            SwitchCase [StringLiteral name] {
+              reduce (\callee name -> CallExpression callee [MemberExpression #member $ StringLiteral name])
+                     (MemberExpression #cases $ StringLiteral name)
+                     parameters
+            }
+          };
+          ArrowFunctionExpression [#default] {
+            ArrowFunctionExpression [#cases] {
+              ArrowFunctionExpression [#member] {
+                ConditionalExpression
+                  (CallExpression (MemberExpression (Identifier "Object") $ StringLiteral "hasOwn")
+                                  [#cases, MemberExpression #member @tag])
+                  (SwitchExpression (MemberExpression #member @tag)
+                                    (case <$> constructors)
+                                    null)
+                  (CallExpression #default [#member])
+              }
+            }
+          }
+        }]
+      | ObjectExpression
+      | VariableDeclaration $ Identifier name
+      | recur names
     },
   }
 };

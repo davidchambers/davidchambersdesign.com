@@ -43,14 +43,14 @@ format {url, status} = {
 
 program = {
   posts >>= (.body) >>= links
-  |> Array.of
-  |> construct Set
-  |> Array.from
-  |> S.sort
-  |> map status
-  |> parallel 16
-  |> map $ map format
-  |> map $ S.joinWith "\n"
+  | Array.of
+  | construct Set
+  | Array.from
+  | S.sort
+  | map status
+  | parallel 16
+  | map $ map format
+  | map $ S.joinWith "\n"
 };
 
 fork console.error console.log program;

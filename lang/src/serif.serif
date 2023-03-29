@@ -7,44 +7,44 @@ import * as serif from "./index.serif";
 import * as path from "./path.serif";
 
 parse filename sourceText = {
-  {serif.parse filename sourceText} |> mapRej \error -> {
+  {serif.parse filename sourceText} | mapRej \error -> {
     lines = {
       sourceText
-      |> .split [apply ["^", "m"] RegExp]
-      |> .map [\(text, index) -> {number: index + 1, text: .trimEnd [] text}]
-      |> chain \line -> {
-           offset = line.number - error.location.start.line;
-           if offset > -5 and offset <= 0 then [line] else []
-         }
+      | .split [apply ["^", "m"] RegExp]
+      | .map [\(text, index) -> {number: index + 1, text: .trimEnd [] text}]
+      | chain \line -> {
+          offset = line.number - error.location.start.line;
+          if offset > -5 and offset <= 0 then [line] else []
+        }
     };
     renderLineNumber = .padStart [4] . String;
     `\n\x1B[1m${
       path.relative (apply [] process.cwd) error.location.source
     }\x1B[0m\n\n${
       lines
-      |> .map [\(line, idx, lines) -> {
-           `\x1B[7m${
-             renderLineNumber line.number
-           }\x1B[0m${
-             if idx < lines.length - 1 then line.text else {
-               `${
-                 .slice [0, error.location.start.column - 1] line.text
-               }\x1B[7m${
-                 .charAt [error.location.start.column - 1] line.text
-               }\x1B[0m${
-                 .slice [error.location.start.column] line.text
-               }`
-             }
-           }\n`
-         }]
-      |> .join [""]
+      | .map [\(line, idx, lines) -> {
+          `\x1B[7m${
+            renderLineNumber line.number
+          }\x1B[0m${
+            if idx < lines.length - 1 then line.text else {
+              `${
+                .slice [0, error.location.start.column - 1] line.text
+              }\x1B[7m${
+                .charAt [error.location.start.column - 1] line.text
+              }\x1B[0m${
+                .slice [error.location.start.column] line.text
+              }`
+            }
+          }\n`
+        }]
+      | .join [""]
     }${
       lines
-      |> .at [-1]
-      |> (.number)
-      |> renderLineNumber
-      |> (.length)
-      |> \length -> .repeat [length + error.location.start.column - 1] " "
+      | .at [-1]
+      | (.number)
+      | renderLineNumber
+      | (.length)
+      | \length -> .repeat [length + error.location.start.column - 1] " "
     }^\n${
       error.message
     }\n`
@@ -105,11 +105,11 @@ orderDependencies tree = {
       serifAst = (.ast) $ .get [serifFilename] tree;
       serifAst' <- serif.rewrite serifAst \importPath -> {
         importPath
-        |> .split ["/"]
-        |> concat [serifDirname]
-        |> path.join
-        |> \filename -> .get [filename] tree
-        |> (.exportedNames)
+        | .split ["/"]
+        | concat [serifDirname]
+        | path.join
+        | \filename -> .get [filename] tree
+        | (.exportedNames)
       };
       serifAst'' = serif.changeExtensions serifAst';
       esAst = serif.esModuleFromSerifModule serifAst'';

@@ -25,18 +25,18 @@ recycled-paper  = "#fef9ec";
 
 tag-background count = {
   0xF7 - Math.log2 count * 5
-  |> Math.floor
-  |> .toString [16]
-  |> .padStart [2, "0"]
-  |> .repeat [3]
-  |> concat "#"
+  | Math.floor
+  | .toString [16]
+  | .padStart [2, "0"]
+  | .repeat [3]
+  | concat "#"
 };
 
 tag-color count = {
   Math.log2 count * 0.1 + 0.3
-  |> .toFixed [3]
-  |> .replace [RegExp "[.]000$|0*$", ""]
-  |> \alpha -> `rgba(0, 0, 0, ${alpha})`
+  | .toFixed [3]
+  | .replace [RegExp "[.]000$|0*$", ""]
+  | \alpha -> `rgba(0, 0, 0, ${alpha})`
 };
 
 screen = `
@@ -766,14 +766,14 @@ screen = `
 
   ${
     S.range 1 20
-    |> map (\count -> `
-         #tags li[data-count='${count}'] a {
-           background: ${tag-background count};
-           color: ${tag-color count};
-         }
-       `)
-    |> .join ["\n"]
-    |> .trimEnd []
+    | map (\count -> `
+        #tags li[data-count='${count}'] a {
+          background: ${tag-background count};
+          color: ${tag-color count};
+        }
+      `)
+    | .join ["\n"]
+    | .trimEnd []
   }
 
   .hashify-editor {
