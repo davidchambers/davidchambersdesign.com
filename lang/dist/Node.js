@@ -84,6 +84,8 @@ const Node = {
         return cases.UnaryExpression(node.operator)(node.argument);
       case "CompositionExpression":
         return cases.CompositionExpression(node.left)(node.right);
+      case "InfixCallExpression":
+        return cases.InfixCallExpression(node.operator)(node.left)(node.right);
       case "BinaryExpression":
         return cases.BinaryExpression(node.operator)(node.left)(node.right);
       case "ConcatenationExpression":
@@ -225,6 +227,12 @@ const Node = {
   }),
   CompositionExpression: left => right => ({
     [Symbol.for("tag")]: "CompositionExpression",
+    left,
+    right
+  }),
+  InfixCallExpression: operator => left => right => ({
+    [Symbol.for("tag")]: "InfixCallExpression",
+    operator,
     left,
     right
   }),

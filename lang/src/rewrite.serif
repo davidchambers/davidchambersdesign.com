@@ -213,6 +213,9 @@ rewriteNode fromPrelude = {
       | ArrowFunctionExpression [param]
       | recur names'
     },
+    InfixCallExpression: \operator left right -> {
+      recur names $ CallExpression (CallExpression operator [left]) [right]
+    },
     BinaryExpression: \operator left right -> {
       switch operator
       when "==" then recur names $ CallExpression (CallExpression (fromPrelude "equals") [right]) [left]

@@ -326,12 +326,17 @@ CompositionExpression
   = exprs:UnaryExpression|1.., _ CompositionOperator _|
     { return exprs.reduceRight((right, left) => Node.CompositionExpression(left)(right)); }
 
+InfixCallExpression
+  = left:CompositionExpression
+    tail:(_ '`' operator:Identifier '`' _ right:CompositionExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => Node.InfixCallExpression(operator)(left)(right), left); }
+
 ExponentiationOperator
   = '**'
 
 ExponentiationExpression
-  = left:CompositionExpression
-    tail:(_ operator:ExponentiationOperator _ right:CompositionExpression { return {operator, right}; })*
+  = left:InfixCallExpression
+    tail:(_ operator:ExponentiationOperator _ right:InfixCallExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 MultiplicativeOperator

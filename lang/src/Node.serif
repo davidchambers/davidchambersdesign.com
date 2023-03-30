@@ -23,6 +23,7 @@ type Node
   | ArrowAssignmentStatement pattern expression
   | UnaryExpression operator argument
   | CompositionExpression left right
+  | InfixCallExpression operator left right
   | BinaryExpression operator left right
   | ConcatenationExpression left right
   | MapExpression left right

@@ -117,6 +117,7 @@ const rewriteNode = fromPrelude => (() => {
       });
       return recur(names$0027)(ArrowFunctionExpression([param])(toCallExpression(CompositionExpression(left)(right))));
     })(),
+    InfixCallExpression: operator => left => right => recur(names)(CallExpression(CallExpression(operator)([left]))([right])),
     BinaryExpression: operator => left => right => (() => {
       switch (operator) {
         case "==":
