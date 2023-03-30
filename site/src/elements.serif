@@ -107,7 +107,7 @@ render-attribute [name, value] = {
   | .trim []
   | .replaceAll ["\n", " "]
   | escape
-  | \value -> ` ${name}="${value}"`  ;; TODO: escape double quotes
+  | \value -> " " + name + "=\"" + value + "\""  ;; TODO: escape double quotes
 };
 
 render-attributes attrs = {
@@ -118,39 +118,33 @@ render-attributes attrs = {
 };
 
 render-block-element context element = {
-  `${
-    .repeat [context.level] context.indent
-  }<${
-    element.name
-  }${
-    render-attributes element.attributes
-  }>\n${
-    element.children
-    | map (.render [{indent: context.indent, level: context.level + 1, inline: context.inline}])
-    | .join [""]
-  }${
-    .repeat [context.level] context.indent
-  }</${
-    element.name
-  }>\n`
+  .repeat [context.level] context.indent
+  + "<"
+  + element.name
+  + render-attributes element.attributes
+  + ">\n"
+  + (element.children
+     | map (.render [{indent: context.indent, level: context.level + 1, inline: context.inline}])
+     | .join [""])
+  + .repeat [context.level] context.indent
+  + "</"
+  + element.name
+  + ">\n"
 };
 
 render-inline-element context element = {
-  `${
-    .repeat [context.level] context.indent
-  }<${
-    element.name
-  }${
-    render-attributes element.attributes
-  }>${
-    element.children
-    | map (.render [{indent: context.indent, level: 0, inline: true}])
-    | .join [""]
-  }</${
-    element.name
-  }>${
-    if context.inline then "" else "\n"
-  }`
+  .repeat [context.level] context.indent
+  + "<"
+  + element.name
+  + render-attributes element.attributes
+  + ">"
+  + (element.children
+     | map (.render [{indent: context.indent, level: 0, inline: true}])
+     | .join [""])
+  + "</"
+  + element.name
+  + ">"
+  + (if context.inline then "" else "\n")
 };
 
 string-to-text-node string-or-node = {
@@ -203,15 +197,12 @@ self-closing-element name attributes = {
     attributes,
     toString: \() -> "",
     render: \{indent, level, inline} -> {
-      `${
-        .repeat [level] indent
-      }<${
-        name
-      }${
-        render-attributes attributes
-      } />${
-        if inline then "" else "\n"
-      }`
+      .repeat [level] indent
+      + "<"
+      + name
+      + render-attributes attributes
+      + " />"
+      + (if inline then "" else "\n")
     },
   };
   element

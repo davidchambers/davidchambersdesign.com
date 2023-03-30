@@ -28,9 +28,9 @@ excerpt = [
   h3 ["System Preferences > Sound > Application Volumes"],
   p [
     img {
-      alt: `
+      alt: """
         Possible interface for application-specific volume settings in Mac OS X
-      `,
+      """,
       src: "/images/posts/windows/application-volumes.png",
     },
   ],

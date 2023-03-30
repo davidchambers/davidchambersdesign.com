@@ -123,11 +123,11 @@ body = [
   ],
 
   p [
-   `Having a dialog comprised of many short clips is very useful.
+    """Having a dialog comprised of many short clips is very useful.
     It enables one to listen to a clip repeatedly to practise a
     difficult word or phrase, or to say each sentence aloud before
     listening to the "answer". And since the clips are contiguous
-    one can still listen to the dialog from beginning to end.`,
+    one can still listen to the dialog from beginning to end.""",
   ],
 
 ];

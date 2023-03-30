@@ -61,7 +61,7 @@ body = [
   p [
    "The question remains as to why these browsers default to ",
     code ["border-box"], " as the ", code ["box-sizing"], " for ",
-    code ["input"], " elements with ", code [`type="search"`], ".
+    code ["input"], " elements with ", code ["type=\"search\""], ".
     I don't know whether default styles are specified at the
     rendering engine level or at the browser level, but either
     way I would say that it's the result of Apple fiddling with

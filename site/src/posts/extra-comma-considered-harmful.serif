@@ -30,7 +30,7 @@ body = [
       though, concerning the acceptability of extra
       commas. Consider the following code snippet:",
     ],
-    code-block "javascript" `
+    code-block "javascript" """
       var ninja = {
           name: 'Hattori Hanzou Masashige',
           shuriken: 5,
@@ -41,7 +41,7 @@ body = [
               }
           },
       };
-    `,
+    """,
     p [
      "JSLint returns an ", em ["extra comma"], " error for the unnecessary
       comma preceding the closing brace. I would argue, though, that this in

@@ -21,7 +21,7 @@ body = [
     than would be the case using ", code ["PNGSaveOptions()"], ".",
   ],
 
-  code-block "javascript" `
+  code-block "javascript" """
     function saveForWebPNG(outputFolderStr, filename)
     {
         var opts, file;
@@ -39,7 +39,7 @@ body = [
             activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);
         }
     }
-  `,
+  """,
 
   p [
    "Photoshop on Mac limits the length of a ", code ["File"], "

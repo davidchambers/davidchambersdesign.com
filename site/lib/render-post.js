@@ -45,12 +45,12 @@ const render$002Dpost = post => related$002Dposts => [article$0027(("article-id"
 })([ul([li$0027({
   class: "shorturl"
 })([a({
-  href: `http://dċd.ws/${post.id}/`
+  href: "http://dċd.ws/" + post.id + "/"
 })(["Short URL"])])]), ...Prelude.equals([])(post.tags) ? [] : [h4(["This post has the following tags:"]), ol(map(tag => li([a({
-  href: `/tag/${tag}/`
+  href: "/tag/" + tag + "/"
 })([tags[tag]])]))(post.tags))]]), ...Prelude.equals([])(related$002Dposts) ? [] : [h3$0027({
   id: "related"
 })(["Possibly related posts"]), ul(map(post => li([a({
-  href: `/${post.slug}/`
+  href: "/" + post.slug + "/"
 })(post.title)]))(related$002Dposts))]])];
 export default render$002Dpost;

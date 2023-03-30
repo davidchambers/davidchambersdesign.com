@@ -71,8 +71,8 @@ io.sockets.on 'connection', (socket) ->
   socket.on 'whisper', (message) ->
     socket.broadcast.emit 'secret', message
 `), p([`Here we've instructed our server to listen for three custom
-    events: "publish", "broadcast", and "whisper". Note that
-    these particular names are not special in any way.`]), p(["When the server receives one of these events, it invokes the\n    appropriate handler with the event's data as the sole argument.\n    Since we're expecting a string argument in each of these cases,\n    we've named the parameter ", code(["message"]), "."]), p(["The \"publish\" handler passes ", code(["message"]), " to ", code(["io.sockets.send"]), ", which forwards it to all the clients.\n    The \"broadcast\" handler invokes ", code(["socket.broadcast.send"]), ",\n    which forwards ", code(["message"]), " to all the clients ", em([`except the one that emitted the "broadcast" event`]), ".\n    The \"whisper\" handler is very different in that it doesn't send\n    a message at all. Rather, it emits yet another event. Again, the\n    name of this event", $2014, `"secret"`, $2014, "is not special in any way."]), p(["Having completed these two steps our server-side code is done,\n    so we could now run ", code(["coffee -c -b socket.io.demo.coffee"]), "\n    to produce the actual JavaScript file we'll run in Node. We're now\n    ready to tackle the client-side component."]), h3(["Step 3: Create the HTML file"]), code$002Dblock("html")(`<!doctype html>
+    events: "publish", "broadcast", and "whisper". Note that these
+    particular names are not special in any way.`]), p(["When the server receives one of these events, it invokes the\n    appropriate handler with the event's data as the sole argument.\n    Since we're expecting a string argument in each of these cases,\n    we've named the parameter ", code(["message"]), "."]), p(["The \"publish\" handler passes ", code(["message"]), " to ", code(["io.sockets.send"]), ", which forwards it to all the clients.\n    The \"broadcast\" handler invokes ", code(["socket.broadcast.send"]), ",\n    which forwards ", code(["message"]), " to all the clients ", em([`except the one that emitted the "broadcast" event`]), ".\n    The \"whisper\" handler is very different in that it doesn't send\n    a message at all. Rather, it emits yet another event. Again, the\n    name of this event", $2014, "\"secret\"", $2014, "is not special in any way."]), p(["Having completed these two steps our server-side code is done,\n    so we could now run ", code(["coffee -c -b socket.io.demo.coffee"]), "\n    to produce the actual JavaScript file we'll run in Node. We're now\n    ready to tackle the client-side component."]), h3(["Step 3: Create the HTML file"]), code$002Dblock("html")(`<!doctype html>
 <html>
   <head>
     <title>Socket.IO demo</title>
@@ -97,8 +97,8 @@ io.sockets.on 'connection', (socket) ->
     </script>
   </body>
 </html>
-`), p([code([`<script src="/socket.io/socket.io.js"></script>`]), " was\n    the line that most confused me in the tutorials I read. I assumed\n    that I'd need to serve this file myself, which turned out not to\n    be the case. Somehow, it just works."]), p([`Note the inclusion of "coffee-script.js", which enables us to
-    write our client-side logic in CoffeeScript, too. :)`]), h3(["Step 4: Add client-side Socket.IO event handlers"]), code$002Dblock("coffeescript")(`$status = $ '#status'
+`), p([code([`<script src="/socket.io/socket.io.js"></script>`]), "\n    was the line that most confused me in the tutorials I read.\n    I assumed that I'd need to serve this file myself, which\n    turned out not to be the case. Somehow, it just works."]), p([`Note the inclusion of "coffee-script.js", which enables
+    us to write our client-side logic in CoffeeScript, too. :)`]), h3(["Step 4: Add client-side Socket.IO event handlers"]), code$002Dblock("coffeescript")(`$status = $ '#status'
 socket = io.connect()
 
 socket.on 'connect', ->

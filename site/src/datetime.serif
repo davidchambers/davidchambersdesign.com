@@ -4,7 +4,7 @@ export default datetime;
 
 datetime date time zone = {
   apply [
-    `${date} ${time} (${zone})`,
+    date + " " + time + " (" + zone + ")",
     "yyyy-MM-dd HH:mm:ss (z)",
     {setZone: true},
   ] luxon.DateTime.fromFormat

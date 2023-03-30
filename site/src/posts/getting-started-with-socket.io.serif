@@ -37,19 +37,19 @@ body = [
     rundown:",
   ],
 
-  code-block "coffeescript" `
+  code-block "coffeescript" """
     qux = foo 'bar', (baz) -> 'Hello, world!'
-  `,
+  """,
 
   p [
    "The above is equivalent to:",
   ],
 
-  code-block "javascript" `
+  code-block "javascript" """
     var qux = foo('bar', function (baz) {
       return 'Hello, world!';
     });
-  `,
+  """,
 
   p [
    "CoffeeScript uses ", code ["->"], " rather than the ",
@@ -63,7 +63,7 @@ body = [
    "This is Node 101 stuff:",
   ],
 
-  code-block "coffeescript" `
+  code-block "coffeescript" """
     fs   = require 'fs'
     http = require 'http'
 
@@ -73,17 +73,17 @@ body = [
         res.end data, 'utf8'
 
     server.listen 1337
-  `,
+  """,
 
   p [
-   `The server we've created simply responds to any request on
+    """The server we've created simply responds to any request on
     port 1337 with the contents of "socket.io.demo.html", which
-    must reside in the same directory as the script we're creating.`,
+    must reside in the same directory as the script we're creating.""",
   ],
 
   h3 ["Step 2: Add server-side event handlers"],
 
-  code-block "coffeescript" `
+  code-block "coffeescript" """
     io = require('socket.io').listen server
 
     io.sockets.on 'connection', (socket) ->
@@ -96,12 +96,12 @@ body = [
 
       socket.on 'whisper', (message) ->
         socket.broadcast.emit 'secret', message
-  `,
+  """,
 
   p [
-   `Here we've instructed our server to listen for three custom
-    events: "publish", "broadcast", and "whisper". Note that
-    these particular names are not special in any way.`,
+    """Here we've instructed our server to listen for three custom
+    events: "publish", "broadcast", and "whisper". Note that these
+    particular names are not special in any way.""",
   ],
 
   p [
@@ -116,10 +116,10 @@ body = [
     code ["io.sockets.send"], ", which forwards it to all the clients.
     The \"broadcast\" handler invokes ", code ["socket.broadcast.send"], ",
     which forwards ", code ["message"], " to all the clients ",
-    em [`except the one that emitted the "broadcast" event`], ".
+    em ["""except the one that emitted the "broadcast" event"""], ".
     The \"whisper\" handler is very different in that it doesn't send
     a message at all. Rather, it emits yet another event. Again, the
-    name of this event", —, `"secret"`, —, "is not special in any way.",
+    name of this event", —, "\"secret\"", —, "is not special in any way.",
   ],
 
   p [
@@ -131,7 +131,7 @@ body = [
 
   h3 ["Step 3: Create the HTML file"],
 
-  code-block "html" `
+  code-block "html" """
     <!doctype html>
     <html>
       <head>
@@ -157,23 +157,23 @@ body = [
         </script>
       </body>
     </html>
-  `,
+  """,
 
   p [
-    code [`<script src="/socket.io/socket.io.js"></script>`], " was
-    the line that most confused me in the tutorials I read. I assumed
-    that I'd need to serve this file myself, which turned out not to
-    be the case. Somehow, it just works.",
+    code ["""<script src="/socket.io/socket.io.js"></script>"""], "
+    was the line that most confused me in the tutorials I read.
+    I assumed that I'd need to serve this file myself, which
+    turned out not to be the case. Somehow, it just works.",
   ],
 
   p [
-   `Note the inclusion of "coffee-script.js", which enables us to
-    write our client-side logic in CoffeeScript, too. :)`,
+    """Note the inclusion of "coffee-script.js", which enables
+    us to write our client-side logic in CoffeeScript, too. :)""",
   ],
 
   h3 ["Step 4: Add client-side Socket.IO event handlers"],
 
-  code-block "coffeescript" `
+  code-block "coffeescript" """
     $status = $ '#status'
     socket = io.connect()
 
@@ -197,7 +197,7 @@ body = [
 
     socket.on 'secret', (message) ->
       console.log message
-  `,
+  """,
 
   p [
    "The first five events", —, "\"connect\", \"disconnect\",
@@ -223,19 +223,19 @@ body = [
 
   h3 ["Step 5: Add DOM event handlers which emit custom events"],
 
-  code-block "coffeescript" `
+  code-block "coffeescript" """
     $input = $ 'input'
 
     $('button').click ->
       socket.emit $(this).text(), $input.val()
       $input.val('').focus()
-  `,
+  """,
 
   p [
-   `Here, we've bound a "click" handler to the three buttons. Whenever one
+    """Here, we've bound a "click" handler to the three buttons. Whenever one
     of these buttons is clicked the appropriate event is emitted ("publish",
     "broadcast", or "whisper" depending on the button clicked). The current
-    value of the text input is used as the event's data.`,
+    value of the text input is used as the event's data.""",
   ],
 
   p [
@@ -246,13 +246,13 @@ body = [
   h3 ["How it all fits together"],
 
   p [
-   `Let's look at exactly what happens when a user types "the password
-    is 1234" into the text field and clicks "whisper".`,
+    """Let's look at exactly what happens when a user types "the password
+    is 1234" into the text field and clicks "whisper".""",
   ],
 
   p [
-   `First, our "click" handler captures the DOM event and in turn emits
-    our custom "whisper" event with "the password is 1234" as its data.`,
+    """First, our "click" handler captures the DOM event and in turn emits
+    our custom "whisper" event with "the password is 1234" as its data.""",
   ],
 
   p [

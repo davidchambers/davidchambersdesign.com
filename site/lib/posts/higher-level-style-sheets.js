@@ -176,7 +176,7 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
   // do stuff
 `), p(["The loop variable, ", code(["$date"]), ", can be\n    interpolated to generate the selectors:"]), code$002Dblock("sass")(`@for $date from 1 through 31
   &[datetime*="#{$date}T"]
-`), p(["Almost. This gives ", code([`datetime*="1T"`]), ", ", code([`datetime*="2T"`]), ", etc. rather than their\n    zero-padded equivalents. Adding a leading zero when\n    required is not difficult:"]), code$002Dblock("sass")(`@for $date from 1 through 31
+`), p(["Almost. This gives ", code(["datetime*=\"1T\""]), ", ", code(["datetime*=\"2T\""]), ", etc. rather than their\n    zero-padded equivalents. Adding a leading zero when\n    required is not difficult:"]), code$002Dblock("sass")(`@for $date from 1 through 31
   @if $date < 10
     $date: "0#{$date}"
   &[datetime*="#{$date}T"]

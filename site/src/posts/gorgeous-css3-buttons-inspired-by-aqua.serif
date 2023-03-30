@@ -113,7 +113,7 @@ body = [
     alt: "Button and hyperlink with consistent padding and font properties",
     src: "/images/posts/39/start-game-button-and-hyperlink-padding-font.png",
     caption: [
-      code [`padding: 0.25em 0.5em; font: bold 12px/15px "Lucida Grande", "Lucida Sans Unicode", sans-serif;`],
+      code ["""padding: 0.25em 0.5em; font: bold 12px/15px "Lucida Grande", "Lucida Sans Unicode", sans-serif;"""],
     ],
   }],
 
@@ -127,11 +127,11 @@ body = [
     appealing and more button-like in modern browsers.",
   ],
 
-  code-block "css" `
+  code-block "css" """
     -webkit-border-radius: 1em;
     -moz-border-radius: 1em;
     border-radius: 1em;
-  `,
+  """,
 
   captioned-images [{
     alt: "Button and hyperlink with rounded corners",
@@ -141,14 +141,14 @@ body = [
     ],
   }],
 
-  code-block "css" `
+  code-block "css" """
     background: -webkit-gradient(linear, left top, left bottom,
         from(#fc6), to(#fc6),
         color-stop(0.1, #fff), color-stop(0.2, #fc6),
         color-stop(0.5, #fc6), color-stop(0.5, #fa2));
     background: -moz-linear-gradient(-90deg,
         #fc6 5%, #fff 15%, #fc6 25%, #fc6 50%, #fa2 50%, #fc6);
-  `,
+  """,
 
   captioned-images [{
     alt: "Button and hyperlink with background gradient",
@@ -199,7 +199,7 @@ body = [
 
   h4 ["Hover"],
 
-  code-block "css" `
+  code-block "css" """
     .aqua:hover {
         border-color: #740;
         background: #fb4;
@@ -212,7 +212,7 @@ body = [
         color: #740;
         cursor: pointer;
     }
-  `,
+  """,
 
   captioned-images [{
     alt: "Hover state",
@@ -224,14 +224,14 @@ body = [
 
   h4 ["Focus"],
 
-  code-block "css" `
+  code-block "css" """
     .aqua:focus {
         -webkit-box-shadow: #740 0 1px 0.75em;
         -moz-box-shadow: #740 0 1px 0.75em;
         color: #740;
         outline: none;
     }
-  `,
+  """,
 
   captioned-images [{
     alt: "Focus state",
@@ -249,7 +249,7 @@ body = [
 
   h4 ["Active"],
 
-  code-block "css" `
+  code-block "css" """
     .aqua:active {
         border-color: #630;
         background: #f90;
@@ -261,7 +261,7 @@ body = [
             #f90 5%, #fd8 15%, #fb4 35%, #fb4 50%, #f90 50%, #f90);
         color: #630;
     }
-  `,
+  """,
 
   captioned-images [{
     alt: "Active state",

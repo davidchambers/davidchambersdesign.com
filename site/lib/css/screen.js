@@ -54,7 +54,7 @@ const mid$002Dgray = "#a9a9a9";
 const pink = "#ff5e99";
 const recycled$002Dpaper = "#fef9ec";
 const tag$002Dbackground = count => concat("#")(Prelude._apply("repeat")([3])(Prelude._apply("padStart")([2, "0"])(Prelude._apply("toString")([16])(Math.floor(247 - Math.log2(count) * 5)))));
-const tag$002Dcolor = count => (alpha => `rgba(0, 0, 0, ${alpha})`)(Prelude._apply("replace")([RegExp("[.]000$|0*$"), ""])(Prelude._apply("toFixed")([3])(Math.log2(count) * 0.1 + 0.3)));
+const tag$002Dcolor = count => (alpha => "rgba(0, 0, 0, " + alpha + ")")(Prelude._apply("replace")([RegExp("[.]000$|0*$"), ""])(Prelude._apply("toFixed")([3])(Math.log2(count) * 0.1 + 0.3)));
 const screen = `html {
   height: 100%;
   background-color: ${base3};

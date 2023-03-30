@@ -36,7 +36,7 @@ const Prelude = {
 };
 const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const render$002Dpost = ({slug, title, datetime}) => li([a({
-  href: `/${slug}`
+  href: "/" + slug
 })(title), " ", time({
   datetime: Prelude._apply("toISO")([])(datetime)
 })([Prelude._apply("toFormat")(["d MMMM y | h:mm"])(datetime) + Prelude._apply("toLowerCase")([])(Prelude._apply("toFormat")(["a"])(datetime))])]);

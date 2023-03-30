@@ -75,9 +75,9 @@ body = [
     ],
     li [
       p [
-       `Select the "Leave disc appendable" checkbox.
+        """Select the "Leave disc appendable" checkbox.
         If you don’t see this option, click the triangle
-        in the upper-right corner.`,
+        in the upper-right corner.""",
       ],
     ],
     li [

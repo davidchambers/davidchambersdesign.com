@@ -33,7 +33,7 @@ evaluateModule sourceText = do {
 };
 
 read serifSource = do {
-  serifAst <- serif.parse "[repl]" `export default ${serifSource};`;
+  serifAst <- serif.parse "[repl]" $ "export default " + serifSource + ";";
   serifAst' <- serif.rewrite serifAst \_importPath -> [];  ;; TODO: support import statements
   serifAst'' = serif.changeExtensions serifAst';
   esAst = serif.esModuleFromSerifModule serifAst'';
@@ -41,31 +41,36 @@ read serifSource = do {
   evaluateModule esSourceText
 };
 
+#0  = "\x1B[0m";
+#32 = "\x1B[32m";
+#33 = "\x1B[33m";
+#35 = "\x1B[35m";
+
 print x = {
   switch apply [Object.prototype.toString, x, []] Reflect.apply
   when "[object Null]",
        "[object Undefined]",
        "[object Boolean]"
-  then `\x1B[35m${x}\x1B[0m`
+  then #35 + x + #0
   when "[object Number]"
-  then `\x1B[33m${x}\x1B[0m`
+  then #33 + x + #0
   when "[object String]"
-  then `\x1B[32m${JSON.stringify x}\x1B[0m`
+  then #32 + JSON.stringify x + #0
   when "[object Symbol]"
-  then `Symbol.for ${print $ Symbol.keyFor x}`
+  then "Symbol.for " + (print $ Symbol.keyFor x)
   when "[object Date]"
-  then `construct Date [${print $ Number x}]`
+  then "construct Date [" + (print $ Number x) + "]"
   when "[object RegExp]"
-  then if x.flags == "" then `RegExp ${print x.source}` else `apply [${print x.source}, ${print x.flags}] RegExp`
+  then if x.flags == "" then "RegExp " + (print x.source) else "construct RegExp [" + (print x.source) + ", " + (print x.flags) + "]"
   when "[object Set]"
-  then `construct Set [${print $ Array.from x}]`
+  then "construct Set [" + (print $ Array.from x) + "]"
   when "[object Map]"
-  then `construct Map [${print $ Array.from x}]`
+  then "construct Map [" + (print $ Array.from x) + "]"
   when "[object Array]"
-  then `[${.join [", "] $ print <$> x}]`
+  then "[" + (.join [", "] $ print <$> x) + "]"
   when "[object Object]"
-  then `{${.join [", "] $ map {\k -> `[${print k}]: ${print x[k]}`} $ Reflect.ownKeys x}}`
-  else `${x}`
+  then "{" + (.join [", "] $ map (\k -> "[" + (print k) + "]: " + (print x[k])) $ Reflect.ownKeys x) + "}"
+  else String x
 };
 
 server = repl.start {

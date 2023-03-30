@@ -106,19 +106,21 @@ UnicodeEscapeSequence
     { return String.fromCharCode(parseInt(digits, 16)); }
 
 TemplateLiteral
-  = '`'
+  = '"""'
     pairs:(quasi:Quasi '${' _ expression:Expression _ '}' { return {quasi, expression}; })*
     quasi:Quasi
-    '`'
+    '"""'
     { return Node.TemplateLiteral([...pairs.map(pair => pair.quasi), quasi])(pairs.map(pair => pair.expression)); }
 
 Quasi
   = $TemplateLiteralCharacter*
 
 TemplateLiteralCharacter
-  = !('`' / '${' / '\\') character:.
+  = !('"' / '${' / '\\') character:.
     { return character; }
-  / '\\' sequence:('`' / '$' / EscapeSequence)
+  / character:'"' !'""'
+    { return character; }
+  / '\\' sequence:('"' / '$' / EscapeSequence)
     { return sequence; }
 
 AndToken            = @$'and'           !IdentifierPart
@@ -215,8 +217,8 @@ PrimaryExpression
   = NullLiteral
   / BooleanLiteral
   / NumberLiteral
-  / StringLiteral
   / TemplateLiteral
+  / StringLiteral
   / BlockExpression
   / DoBlockExpression
   / ObjectExpression

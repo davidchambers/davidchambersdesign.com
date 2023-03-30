@@ -103,13 +103,16 @@ esFromTemplateLiteral quasis expressions = {
   expressions: esFromNode <$> expressions,
   quasis: {
     lineEnding = .find [\lineEnding -> .startsWith [lineEnding] quasis[0]] ["\n", "\r\n"];
-    if lineEnding == undefined then [
-      ...{TemplateElement false <$> .slice [0, -1] quasis},
-      ...{TemplateElement true  <$> .slice [-1]    quasis},
-    ] else {
+    if lineEnding == undefined then {
+      quasis' = .replaceAll ["`", "\\`"] <$> quasis;
+      [
+        ...{TemplateElement false <$> .slice [0, -1] quasis'},
+        ...{TemplateElement true  <$> .slice [-1]    quasis'},
+      ]
+    } else {
       indent = .search [RegExp "(?! )"] $ .slice [lineEnding.length] quasis[0];
-      pattern = apply [`${lineEnding}[ ]{0,${indent}}`, "g"] RegExp;
-      [head, ...tail] = .replace [pattern, lineEnding] <$> quasis;
+      pattern = apply [lineEnding + "[ ]{0," + indent + "}", "g"] RegExp;
+      [head, ...tail] = (.replaceAll ["`", "\\`"] . .replaceAll [pattern, lineEnding]) <$> quasis;
       head' = .slice [lineEnding.length] head;
       if tail == [] then [
         TemplateElement true head',

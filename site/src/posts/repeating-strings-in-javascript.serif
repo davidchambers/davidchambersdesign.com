@@ -20,21 +20,21 @@ body = [
 
   h3' {id: "python"} ["Python"],
 
-  code-block "python" `
+  code-block "python" """
     '=' * 5
-  `,
+  """,
 
   h3' {id: "ruby"} ["Ruby"],
 
-  code-block "ruby" `
+  code-block "ruby" """
     '=' * 5
-  `,
+  """,
 
   h3' {id: "php"} ["PHP"],
 
-  code-block "php" `
+  code-block "php" """
     str_repeat('=', 5)
-  `,
+  """,
 
   h3' {id: "javascript"} ["JavaScript?"],
 
@@ -42,8 +42,8 @@ body = [
     ["True to form, repeating strings in JavaScript is ugly and
       counterintuitive, but kinda cool."],
 
-  code-block "javascript" `
+  code-block "javascript" """
     new Array(5 + 1).join('=')
-  `,
+  """,
 
 ];

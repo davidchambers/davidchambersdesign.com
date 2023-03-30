@@ -48,7 +48,7 @@ body = [
     confined to the development environment, it occasionally causes
     problems at other times. For example, let's say that you've made
     a minor change to a site's source code – you've changed ",
-    code [`<div id="wrapper">`], " to ", code [`<div id="wrap">`],
+    code ["""<div id="wrapper">"""], " to ", code ["""<div id="wrap">"""],
    ". You've also done a find and replace on the style sheet, and
     rolled both changes live. A new visitor to the site will have
     no problems, but a returning visitor may see the site through
@@ -69,17 +69,17 @@ body = [
     several good suggestions, here is the PHP code I have decided upon:",
   ],
 
-  code-block "php" `
+  code-block "php" """
     href="path/to/style.css?<?php echo date('Y-m-d-H-i-s', filectime('path/to/style.css')); ?>"
-  `,
+  """,
 
   p [
    "The above generates something like this:",
   ],
 
-  code-block "html" `
+  code-block "html" """
     href="path/to/style.css?2008-12-16-20-02-53"
-  `,
+  """,
 
   p [
    "The nice thing about using ",

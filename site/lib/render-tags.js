@@ -40,7 +40,7 @@ const render$002Dtags = posts => (() => {
   const from$002Dentry = ([slug, name]) => li$0027({
     ["data-count"]: S.size(filter(S.equals(slug))(Prelude.chain(x => x.tags)(posts)))
   })([a({
-    href: `/tag/${slug}/`
+    href: "/tag/" + slug + "/"
   })([name])]);
   return [h1(["Tags"]), ol$0027({
     id: "tags"

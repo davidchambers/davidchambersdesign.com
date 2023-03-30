@@ -140,10 +140,10 @@ body = [
        "In Terminal, navigate to your ", strong ["Downloads"], "
         folder (or wherever you saved the script).",
       ],
-      code-block "console" `
+      code-block "console" """
         $ cd ~/Downloads
         $ ls
-      `,
+      """,
       p [
        "Run the ", code ["ls"], " command to inspect the contents of
         the directory. If you used Safari to download the script, you
@@ -156,18 +156,18 @@ body = [
         strong ["/bin"], " directory so that it can be run from
         any directory (you'll be asked to enter your password).",
       ],
-      code-block "console" `
+      code-block "console" """
         $ chmod 555 setfileicon
         $ sudo mv setfileicon /bin/setfileicon
-      `,
+      """,
       p [
        "Finally, run the script passing in two arguments: the
         path to the .icns file; and the path to the file, folder,
         or bundle to which you'd like to attach the icons.",
       ],
-      code-block "console" `
+      code-block "console" """
         $ setfileicon ~/icons.icns ~/example
-      `,
+      """,
     ],
   ],
 

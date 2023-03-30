@@ -82,7 +82,7 @@ const orderDependencies = tree => (() => {
     recursive: true
   })(path.dirname(esFilename))))(path.join([absDst, path.relative(absSrc)(serifDirname), esBasename])))(path.basename(serifFilename)(".serif") + ".js"))(apply([esAst, {}])(generate)))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(importPath => (filename => (x => x.exportedNames)(Prelude._apply("get")([filename])(tree)))(path.join(concat([serifDirname])(Prelude._apply("split")(["/"])(importPath)))))))((x => x.ast)(Prelude._apply("get")([serifFilename])(tree))))(path.dirname(serifFilename)))))(orderDependencies(tree)))(reduce(reducer)(resolve(construct(Map)([[]])))(absFilenames));
   return fork(console.error)(filenames => Prelude._apply("forEach")([({serifFilename, esFilename}) => (() => {
-    console.log(`• ${path.relative(cwd)(serifFilename)}`);
-    return console.log(`  ➔ ${path.relative(cwd)(esFilename)}`);
+    console.log("• " + path.relative(cwd)(serifFilename));
+    return console.log("  ➔ " + path.relative(cwd)(esFilename));
   })()])(filenames))(program);
 })();

@@ -23,7 +23,7 @@ body = [
    "The problem I encountered a few minutes ago fell squarely in the
     latter category. I simply wanted to know how to access the MySQL
     shell from the OS X Terminal. I expected my Google search for ",
-    code [`MySQL console Terminal "OS X"`], " to return several
+    code ["MySQL console Terminal \"OS X\""], " to return several
     useful results, but this was not the case.",
   ],
 
@@ -33,8 +33,8 @@ body = [
       ["error 1044 and 1045"], ":",
   ],
 
-  code-block "console" `
+  code-block "console" """
     mysql -u root -p mysql
-  `,
+  """,
 
 ];

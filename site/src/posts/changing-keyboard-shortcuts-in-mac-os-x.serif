@@ -44,23 +44,23 @@ body = [
      "Open ", strong ["System Preferences"], ".",
     ],
     li [
-     "Choose the ", strong [`"Keyboard & Mouse"`], " pane.",
+     "Choose the ", strong ["\"Keyboard & Mouse\""], " pane.",
     ],
     li [
-     `Select the "Keyboard Shortcuts" tab.`,
+     "Select the \"Keyboard Shortcuts\" tab.",
     ],
     li [
-     `Press the "+" button at the bottom of that tab.`,
+     "Press the \"+\" button at the bottom of that tab.",
     ],
     li [
      "In the ", strong ["Application"], " pop-up menu, choose ",
       strong ["<application>"], ".",
     ],
     li [
-     `In the "Menu Title" field, type the exact name of the menu
+      """In the "Menu Title" field, type the exact name of the menu
       item you want to change, and in the "Keyboard Shortcut" field,
       type the new shortcut you want that menu item to have. Press
-      the "OK" button to save the new shortcut.`,
+      the "OK" button to save the new shortcut.""",
     ],
     li [
       "You may now relaunch <application>.",

@@ -41,7 +41,7 @@ body = [
 
   h3 ["Original CSS"],
 
-  code-block "css" `
+  code-block "css" """
     ol.archives {
       margin: 0 0 0 -21px;
       list-style: none;
@@ -127,7 +127,7 @@ body = [
     ol.archives time[datetime*="29T"] { background-position:  -60px -100px; }
     ol.archives time[datetime*="30T"] { background-position:  -80px -100px; }
     ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
-  `,
+  """,
 
   p [
    "That's a lot of text, most of which relates to the calendar sprite.
@@ -149,7 +149,7 @@ body = [
     markup.",
   ],
 
-  code-block "sass" `
+  code-block "sass" """
     ol.archives
       margin: 0 0 0 -21px
       list-style: none
@@ -171,7 +171,7 @@ body = [
         background: url(data:image/png;base64,...) no-repeat
         line-height: 10
         overflow: hidden
-  `,
+  """,
 
   h3 ["Compass's ", code ["inline-image"], " function"],
 
@@ -212,13 +212,13 @@ body = [
     an extremely elegant solution: a Sass function named ",
     a {href: "http://compass-style.org/reference/compass/helpers/inline-data/#inline-image"}
       [code ["inline-image"]], ". When compiled, ",
-    code [`inline-image("calendar.png")`], " becomes a data
+    code ["""inline-image("calendar.png")"""], " becomes a data
     URI – the Base64-encoded representation of calendar.png.
     If calendar.png is changed, ", code ["compass compile"], "
     is all that's required to update the data URI.",
   ],
 
-  code-block "sass" `
+  code-block "sass" """
     ol.archives
       ...
       time
@@ -234,7 +234,7 @@ body = [
         ...
         &[datetime*="31T"]
           background-position: -100px -100px
-  `,
+  """,
 
   h3 ["Generating repetitive CSS programmatically"],
 
@@ -247,41 +247,41 @@ body = [
     existing sprite. The first step is to add a loop:",
   ],
 
-  code-block "sass" `
+  code-block "sass" """
     @for $date from 1 through 31
       // do stuff
-  `,
+  """,
 
   p [
    "The loop variable, ", code ["$date"], ", can be
     interpolated to generate the selectors:",
   ],
 
-  code-block "sass" `
+  code-block "sass" """
     @for $date from 1 through 31
       &[datetime*="#{$date}T"]
-  `,
+  """,
 
   p [
-   "Almost. This gives ", code [`datetime*="1T"`], ", ",
-    code [`datetime*="2T"`], ", etc. rather than their
+   "Almost. This gives ", code ["datetime*=\"1T\""], ", ",
+    code ["datetime*=\"2T\""], ", etc. rather than their
     zero-padded equivalents. Adding a leading zero when
     required is not difficult:",
   ],
 
-  code-block "sass" `
+  code-block "sass" """
     @for $date from 1 through 31
       @if $date < 10
         $date: "0#{$date}"
       &[datetime*="#{$date}T"]
-  `,
+  """,
 
   p [
    "Finally, variables can be used to calculate the ",
     code ["background-position"], " of each element:",
   ],
 
-  code-block "sass" `
+  code-block "sass" """
     $offset: -20px
     $x: 3
     $y: 1
@@ -295,7 +295,7 @@ body = [
           $y: $y + 1
         @else
           $x: $x + 1
-  `,
+  """,
 
   p [
    "These 13 lines of relatively straightforward logic

@@ -26,9 +26,9 @@ body = [
     chat window waiting to be copied (ty, Brodie)).",
   ],
 
-  code-block "TK" `
+  code-block "TK" """
     (add-to-list 'auto-mode-alist '("[.]dhtml$" . html-mode))
-  `,
+  """,
 
   p [
    "Adding the above snippet to my ", strong ["~/.emacs"], " file did

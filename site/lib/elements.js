@@ -40,18 +40,18 @@ const text = value => ({
   toString: () => value,
   render: context => escape(value)
 });
-const render$002Dattribute = ([name, value]) => (value => ` ${name}="${value}"`)(escape(Prelude._apply("replaceAll")(["\n", " "])(Prelude._apply("trim")([])(String(value)))));
+const render$002Dattribute = ([name, value]) => (value => " " + name + "=\"" + value + "\"")(escape(Prelude._apply("replaceAll")(["\n", " "])(Prelude._apply("trim")([])(String(value)))));
 const render$002Dattributes = attrs => Prelude._apply("join")([""])(map(render$002Dattribute)(Object.entries(attrs)));
-const render$002Dblock$002Delement = context => element => `${Prelude._apply("repeat")([context.level])(context.indent)}<${element.name}${render$002Dattributes(element.attributes)}>\n${Prelude._apply("join")([""])(map(Prelude._apply("render")([{
+const render$002Dblock$002Delement = context => element => Prelude._apply("repeat")([context.level])(context.indent) + "<" + element.name + render$002Dattributes(element.attributes) + ">\n" + Prelude._apply("join")([""])(map(Prelude._apply("render")([{
   indent: context.indent,
   level: context.level + 1,
   inline: context.inline
-}]))(element.children))}${Prelude._apply("repeat")([context.level])(context.indent)}</${element.name}>\n`;
-const render$002Dinline$002Delement = context => element => `${Prelude._apply("repeat")([context.level])(context.indent)}<${element.name}${render$002Dattributes(element.attributes)}>${Prelude._apply("join")([""])(map(Prelude._apply("render")([{
+}]))(element.children)) + Prelude._apply("repeat")([context.level])(context.indent) + "</" + element.name + ">\n";
+const render$002Dinline$002Delement = context => element => Prelude._apply("repeat")([context.level])(context.indent) + "<" + element.name + render$002Dattributes(element.attributes) + ">" + Prelude._apply("join")([""])(map(Prelude._apply("render")([{
   indent: context.indent,
   level: 0,
   inline: true
-}]))(element.children))}</${element.name}>${context.inline ? "" : "\n"}`;
+}]))(element.children)) + "</" + element.name + ">" + (context.inline ? "" : "\n");
 const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => Prelude.equals("object")(typeof$(string$002Dor$002Dnode)) ? string$002Dor$002Dnode : text(Prelude._apply("replaceAll")(["\n", ""])(Prelude._apply("replaceAll")([apply(["^[ ]+", "gm"])(RegExp), " "])(string$002Dor$002Dnode)));
 const block$002Delement = name => attributes => children$0021 => (() => {
   const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
@@ -94,7 +94,7 @@ const self$002Dclosing$002Delement = name => attributes => (() => {
     name,
     attributes,
     toString: () => "",
-    render: ({indent, level, inline}) => `${Prelude._apply("repeat")([level])(indent)}<${name}${render$002Dattributes(attributes)} />${inline ? "" : "\n"}`
+    render: ({indent, level, inline}) => Prelude._apply("repeat")([level])(indent) + "<" + name + render$002Dattributes(attributes) + " />" + (inline ? "" : "\n")
   };
   return element;
 })();

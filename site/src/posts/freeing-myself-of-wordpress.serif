@@ -128,8 +128,8 @@ body = [
   ],
 
   p [
-   `As a result, WordPress themes often require customization,
-    where by "customization" I mean hacking to pieces.`,
+   """As a result, WordPress themes often require customization,
+    where by "customization" I mean hacking to pieces.""",
   ],
 
   p [
@@ -138,12 +138,12 @@ body = [
     of places to look for templates.",
   ],
 
-  code-block "python" `
+  code-block "python" """
     TEMPLATE_DIRS = (
         '/webapps/dcd/blog/templates',
         '/webapps/dcd/blog/mango/templates',
     )
-  `,
+  """,
 
   p [
    "If Mango needs ", code ["archives.dhtml"], " it'll first look in

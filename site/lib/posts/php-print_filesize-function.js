@@ -82,7 +82,7 @@ function print_filesize($filename, $before = ' <span class="filesize">(', $after
   href: "/favicon.ico"
 })(["favicon.ico"]), " ", span({
   class: "filesize"
-})(["(≈1.1 kB)"]), ". By default,\n    the function wraps the file's size in a ", code(["span"]), "\n    element with ", code([`class="filesize"`]), ", to provide\n    a hook for styling if required."])];
+})(["(≈1.1 kB)"]), ". By default,\n    the function wraps the file's size in a ", code(["span"]), "\n    element with ", code(["class=\"filesize\""]), ", to provide\n    a hook for styling if required."])];
 export default {
   id: 17,
   slug: "php-print_filesize-function",

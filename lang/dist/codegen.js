@@ -62,10 +62,13 @@ const esFromTemplateLiteral = quasis => expressions => ({
   expressions: Prelude.map(esFromNode)(expressions),
   quasis: (() => {
     const lineEnding = Prelude._apply("find")([lineEnding => Prelude._apply("startsWith")([lineEnding])(quasis[0])])(["\n", "\r\n"]);
-    return Prelude.equals(undefined)(lineEnding) ? [...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(quasis)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(quasis))] : (() => {
+    return Prelude.equals(undefined)(lineEnding) ? (() => {
+      const quasis$0027 = Prelude.map(Prelude._apply("replaceAll")(["`", "\\`"]))(quasis);
+      return [...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(quasis$0027)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(quasis$0027))];
+    })() : (() => {
       const indent = Prelude._apply("search")([RegExp("(?! )")])(Prelude._apply("slice")([lineEnding.length])(quasis[0]));
-      const pattern = apply([`${lineEnding}[ ]{0,${indent}}`, "g"])(RegExp);
-      const [head, ...tail] = Prelude.map(Prelude._apply("replace")([pattern, lineEnding]))(quasis);
+      const pattern = apply([lineEnding + "[ ]{0," + indent + "}", "g"])(RegExp);
+      const [head, ...tail] = Prelude.map(x => Prelude._apply("replaceAll")(["`", "\\`"])(Prelude._apply("replaceAll")([pattern, lineEnding])(x)))(quasis);
       const head$0027 = Prelude._apply("slice")([lineEnding.length])(head);
       return Prelude.equals([])(tail) ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(tail)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(tail))];
     })();

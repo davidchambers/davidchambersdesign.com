@@ -26,11 +26,11 @@ excerpt = [
   ],
   h3 ["Matching @names"],
   p [
-   `Here's the gist: a match will begin with "@" and the at sign must be
+    """Here's the gist: a match will begin with "@" and the at sign must be
     followed by one or more word (letter / number / underscore) characters.
     The @name must either appear at the beginning of the tweet or be preceded
     by a space. This prevents the regular expression from matching "@example"
-    in "me@example.com".`,
+    in "me@example.com".""",
   ],
 ];
 
@@ -40,17 +40,17 @@ body = [
 
   h4 ["JavaScript implementation"],
 
-  code-block "javascript" `
+  code-block "javascript" """
     tweet.replace(/(^|\\s)(@\\w+)/gm, '$1<a href="http://twitter.com/$2">$2</a>');
-  `,
+  """,
 
   p [
    "It would of course be nicer to write:",
   ],
 
-  code-block "javascript" `
+  code-block "javascript" """
     tweet.replace(/(?<=(?:^|\\s))(@\\w+)/gm, '<a href="http://twitter.com/$1">$1</a>');
-  `,
+  """,
 
   p [
    "Unfortunately, JavaScript does not support lookbehinds in
@@ -61,9 +61,9 @@ body = [
 
   h4 ["PHP implementation"],
 
-  code-block "php" `
+  code-block "php" """
     preg_replace('/(^|\\s)(@\\w+)/m', '$1<a href="http://twitter.com/$2">$2</a>', $tweet);
-  `,
+  """,
 
   h4 ["Python implementation"],
 
@@ -73,12 +73,12 @@ body = [
     code ["(?<=^|\\s)"], ". No matter.",
   ],
 
-  code-block "python" `
+  code-block "python" """
     import re
     re.sub(r'(?m)(^|\\s)(@\\w+)',
             lambda m: m.group(1) + '<a href="http://twitter.com/' + m.group(2) + '">' + m.group(2) + '</a>',
             tweet)
-  `,
+  """,
 
   p [
    "For once, Python's syntax is the least elegant!",

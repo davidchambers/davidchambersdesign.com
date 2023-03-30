@@ -48,26 +48,26 @@ const status = url => bichain(err => resolve({
   method: "HEAD",
   redirect: "manual"
 }])(fetch)));
-const bold = text => `\x1B[1m${text}\x1B[22m`;
-const invert = text => `\x1B[7m${text}\x1B[27m`;
-const red = text => `\x1B[31m${text}\x1B[0m`;
-const yellow = text => `\x1B[33m${text}\x1B[0m`;
-const cyan = text => `\x1B[36m${text}\x1B[0m`;
+const bold = text => "\u001b[1m" + text + "\u001b[22m";
+const invert = text => "\u001b[7m" + text + "\u001b[27m";
+const red = text => "\u001b[31m" + text + "\u001b[0m";
+const yellow = text => "\u001b[33m" + text + "\u001b[0m";
+const cyan = text => "\u001b[36m" + text + "\u001b[0m";
 const format = ({url, status}) => (() => {
-  const padding = x => (" ").repeat(S.max(0)(15 - `${x}`.length));
+  const padding = x => (" ").repeat(S.max(0)(15 - (x => x.length)(String(x))));
   const normal = s => s;
   return (() => {
     switch (true) {
       case Prelude.equals("string")(typeof$(status)):
-        return red(`${padding(status)} ${invert(bold(status))} ${url}`);
+        return red(padding(status) + " " + invert(bold(status)) + " " + url);
       case status >= 200 && status < 300:
-        return `${padding(status)} ${normal(bold(status))} ${url}`;
+        return padding(status) + " " + normal(bold(status)) + " " + url;
       case status >= 300 && status < 400:
-        return yellow(`${padding(status)} ${normal(bold(status))} ${url}`);
+        return yellow(padding(status) + " " + normal(bold(status)) + " " + url);
       case status >= 400 && status < 500:
-        return red(`${padding(status)} ${normal(bold(status))} ${url}`);
+        return red(padding(status) + " " + normal(bold(status)) + " " + url);
       default:
-        return cyan(`${padding(status)} ${normal(bold(status))} ${url}`);
+        return cyan(padding(status) + " " + normal(bold(status)) + " " + url);
     }
   })();
 })();

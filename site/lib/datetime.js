@@ -34,7 +34,7 @@ const Prelude = {
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
 const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
-const datetime = date => time => zone => apply([`${date} ${time} (${zone})`, "yyyy-MM-dd HH:mm:ss (z)", {
+const datetime = date => time => zone => apply([date + " " + time + " (" + zone + ")", "yyyy-MM-dd HH:mm:ss (z)", {
   setZone: true
 }])(luxon.DateTime.fromFormat);
 export default datetime;

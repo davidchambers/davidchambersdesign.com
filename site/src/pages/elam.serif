@@ -234,7 +234,7 @@ export default {
       },
     ],
 
-    h4 [`"Insight Drive"`],
+    h4 ["\"Insight Drive\""],
 
     p [
      "While at Insight, I was asked to design the packaging for an unusual

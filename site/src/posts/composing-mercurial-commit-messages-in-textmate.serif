@@ -66,9 +66,9 @@ body = [
     p [
      "To use TextMate as your git editor, run the following command:",
     ],
-    code-block "console" `
+    code-block "console" """
       git config --global core.editor "mate -w"
-    `,
+    """,
     p [
      "This adds ", code ["editor = mate -w"], " to the ", code ["[core]"], "
       section of your ", code ["~/.gitconfig"], " file.",

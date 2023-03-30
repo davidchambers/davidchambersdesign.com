@@ -43,7 +43,7 @@ const add = element => set => construct(Set)([[...set, element]]);
 const union = this$ => that => construct(Set)([[...this$, ...that]]);
 const nextUnusedIdent = names => desiredName => (() => {
   const recur = counter => (() => {
-    const candidate = Prelude$1.equals(0)(counter) ? desiredName : `${desiredName}$${counter}`;
+    const candidate = Prelude$1.equals(0)(counter) ? desiredName : desiredName + "$" + counter;
     return has(candidate)(names) ? recur(counter + 1) : Identifier(candidate);
   })();
   return recur(0);

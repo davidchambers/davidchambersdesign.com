@@ -46,13 +46,13 @@ body = [
       [code [":after"]], " pseudo-elements.",
   ],
 
-  code-block "plain-text" `
+  code-block "plain-text" """
     <a class="more" href="/meaningful-markup/">Read more</a>
 
     .more:after {
         content: " »";
     }
-  `,
+  """,
 
   p [
    "There are many other situations in which ", code [":before"], "/",
@@ -65,7 +65,7 @@ body = [
     (although the change is yet to go live).",
   ],
 
-  code-block "css" `
+  code-block "css" """
     .footer-nav li {
         display: inline;
         list-type: none;
@@ -73,7 +73,7 @@ body = [
     .footer-nav li+li:before {
         content: " | ";
     }
-  `,
+  """,
 
   p [
    "The second selector above may look strange unless you're
@@ -88,9 +88,9 @@ body = [
     the comma-separated list.",
   ],
 
-  code-block "html" `
+  code-block "html" """
     <p><strong>Tags:</strong> Apple, iOS, iPad</p>
-  `,
+  """,
 
   p [
    "This approach is inflexible. Displaying the tags as Twitter-style
@@ -107,14 +107,14 @@ body = [
     is a heading that relates to the list of tags.",
   ],
 
-  code-block "html" `
+  code-block "html" """
     <h4>Tags</h4>
     <ol>
         <li>Apple</li>
         <li>iOS</li>
         <li>iPad</li>
     </ol>
-  `,
+  """,
 
   p [
    "It takes a bit of work to display this markup as a simple
@@ -122,7 +122,7 @@ body = [
     alter the list's appearance without touching the markup.",
   ],
 
-  code-block "css" `
+  code-block "css" """
     h4, ol, li {
         display: inline;
     }
@@ -135,7 +135,7 @@ body = [
     li:last-child:after {
         content: "";
     }
-  `,
+  """,
 
   h2 ["Summary"],
 
@@ -145,7 +145,7 @@ body = [
     content is a separate (though not unrelated) issue. With ",
     code [":before"], ", ", code [":after"], ", and ",
     code ["content"], " at our disposal, let us bid farewell to ",
-    code [`<span class="pipe">|</span>`], " and friends.",
+    code ["""<span class="pipe">|</span>"""], " and friends.",
   ],
 
 ];

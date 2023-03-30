@@ -30,7 +30,7 @@ body = [
     em ["a lot"], ".",
   ],
 
-  code-block "javascript" `
+  code-block "javascript" """
     //    reduce :: (b -> a -> b) -> b -> Array a -> b
     const reduce = f => b => as => as.reduce ((b, a) => f (b) (a), b);
 
@@ -45,7 +45,7 @@ body = [
     .        (['foo', 'bar', 'baz'])
     . .blahs
     [{id: 1, name: 'foo'}, {id: 2, name: 'bar'}, {id: 3, name: 'baz'}]
-  `,
+  """,
 
   p [
    "☝️ This has been my approach for the past several years. The accumulator
@@ -53,13 +53,13 @@ body = [
     whichever fields are relevant (in this case just ", code ["blahs"], ").",
   ],
 
-  code-block "javascript" `
+  code-block "javascript" """
     > reduce (cont => name => id => append (blah (id) (name)) (cont (id + 1)))
     .        (id => [])
     .        (['foo', 'bar', 'baz'])
     .        (1)
     [{id: 3, name: 'foo'}, {id: 2, name: 'bar'}, {id: 1, name: 'baz'}]
-  `,
+  """,
 
   p [
    "☝️ This was my first attempt at using continuations. The problem is
@@ -67,14 +67,14 @@ body = [
     is threaded from right to left, giving the wrong result.",
   ],
 
-  code-block "javascript" `
+  code-block "javascript" """
     > reduce (cont => name => id => blahs => cont (id + 1) (append (blah (id) (name)) (blahs)))
     .        (id => blahs => blahs)
     .        (['foo', 'bar', 'baz'])
     .        (1)
     .        ([])
     [{id: 1, name: 'baz'}, {id: 2, name: 'bar'}, {id: 3, name: 'baz'}]
-  `,
+  """,
 
   p [
    "☝️ This was my second attempt. The order is reversed, but the ",
@@ -90,10 +90,10 @@ body = [
     code ["take"], ".",
   ],
 
-  code-block "javascript" `
+  code-block "javascript" """
     //    take :: (Integer -> Array String -> a) -> a
     const take = give => give (1) ([]);
-  `,
+  """,
 
   p [
     code ["a"], " is a type variable. We have no idea what ",
@@ -109,13 +109,13 @@ body = [
     have the reducing function return a function of that type.",
   ],
 
-  code-block "javascript" `
+  code-block "javascript" """
     > reduce (take => name => give => give (1) ([blah (1) (name)]))
     .        (give => give (1) ([]))
     .        (['foo', 'bar', 'baz'])
     .        (id => blahs => blahs)
     [{id: 1, name: 'baz'}]
-  `,
+  """,
 
   p [
    "☝️ The answer is wrong", —, "we lost ", code ["'foo'"], " and ",
@@ -123,13 +123,13 @@ body = [
     code ["id"], —, "but the types align.",
   ],
 
-  code-block "javascript" `
+  code-block "javascript" """
     > reduce (take => name => take (id => blahs => give => give (id + 1) (append (blah (id) (name)) (blahs))))
     .        (give => give (1) ([]))
     .        (['foo', 'bar', 'baz'])
     .        (id => blahs => blahs)
     [{id: 1, name: 'foo'}, {id: 2, name: 'bar'}, {id: 3, name: 'baz'}]
-  `,
+  """,
 
   p [
    "☝️ Success! We receive a continuation we refer to as ", code ["take"], ".

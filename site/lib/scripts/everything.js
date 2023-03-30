@@ -115,5 +115,5 @@ const render$002Ddocument = element => `<!DOCTYPE html>\n${element.render({
 })}`;
 write$002Dfile(public$(["archives.html"]))(render$002Ddocument(base$002Dtemplate(["Archives"])(render$002Darchives(posts))));
 write$002Dfile(public$(["tags.html"]))(render$002Ddocument(base$002Dtemplate(["Tags"])(render$002Dtags(posts))));
-flip(map)(pages)(page => write$002Dfile(public$([`${page.slug}.html`]))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))));
-flip(map)(posts)(post => write$002Dfile(public$([`${post.slug}.html`]))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post))))));
+flip(map)(pages)(page => write$002Dfile(public$([page.slug + ".html"]))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))));
+flip(map)(posts)(post => write$002Dfile(public$([post.slug + ".html"]))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post))))));

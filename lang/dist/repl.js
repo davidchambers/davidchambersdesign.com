@@ -50,35 +50,39 @@ const evaluateModule = sourceText => (context => (module => Prelude.chain(_ => P
 })())))(map(Object.entries)(attemptP(() => import(specifier))))])(module))))(construct(vm.SourceTextModule)([sourceText, {
   context
 }])))(vm.createContext(global));
-const read = serifSource => Prelude.chain(serifAst => Prelude.chain(serifAst$0027 => (serifAst$0027$0027 => (esAst => (esSourceText => evaluateModule(esSourceText))(apply([esAst, {}])(generate)))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(_importPath => [])))(serif.parse("[repl]")(`export default ${serifSource};`));
+const read = serifSource => Prelude.chain(serifAst => Prelude.chain(serifAst$0027 => (serifAst$0027$0027 => (esAst => (esSourceText => evaluateModule(esSourceText))(apply([esAst, {}])(generate)))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(_importPath => [])))(serif.parse("[repl]")("export default " + serifSource + ";"));
+const $00230 = "\u001b[0m";
+const $002332 = "\u001b[32m";
+const $002333 = "\u001b[33m";
+const $002335 = "\u001b[35m";
 const print = x => (() => {
   switch (apply([Object.prototype.toString, x, []])(Reflect.apply)) {
     case "[object Null]":
-      return `\x1B[35m${x}\x1B[0m`;
+      return $002335 + x + $00230;
     case "[object Undefined]":
-      return `\x1B[35m${x}\x1B[0m`;
+      return $002335 + x + $00230;
     case "[object Boolean]":
-      return `\x1B[35m${x}\x1B[0m`;
+      return $002335 + x + $00230;
     case "[object Number]":
-      return `\x1B[33m${x}\x1B[0m`;
+      return $002333 + x + $00230;
     case "[object String]":
-      return `\x1B[32m${JSON.stringify(x)}\x1B[0m`;
+      return $002332 + JSON.stringify(x) + $00230;
     case "[object Symbol]":
-      return `Symbol.for ${print(Symbol.keyFor(x))}`;
+      return "Symbol.for " + print(Symbol.keyFor(x));
     case "[object Date]":
-      return `construct Date [${print(Number(x))}]`;
+      return "construct Date [" + print(Number(x)) + "]";
     case "[object RegExp]":
-      return Prelude.equals("")(x.flags) ? `RegExp ${print(x.source)}` : `apply [${print(x.source)}, ${print(x.flags)}] RegExp`;
+      return Prelude.equals("")(x.flags) ? "RegExp " + print(x.source) : "construct RegExp [" + print(x.source) + ", " + print(x.flags) + "]";
     case "[object Set]":
-      return `construct Set [${print(Array.from(x))}]`;
+      return "construct Set [" + print(Array.from(x)) + "]";
     case "[object Map]":
-      return `construct Map [${print(Array.from(x))}]`;
+      return "construct Map [" + print(Array.from(x)) + "]";
     case "[object Array]":
-      return `[${Prelude._apply("join")([", "])(Prelude.map(print)(x))}]`;
+      return "[" + Prelude._apply("join")([", "])(Prelude.map(print)(x)) + "]";
     case "[object Object]":
-      return `{${Prelude._apply("join")([", "])(map(k => `[${print(k)}]: ${print(x[k])}`)(Reflect.ownKeys(x)))}}`;
+      return "{" + Prelude._apply("join")([", "])(map(k => "[" + print(k) + "]: " + print(x[k]))(Reflect.ownKeys(x))) + "}";
     default:
-      return `${x}`;
+      return String(x);
   }
 })();
 const server = repl.start({

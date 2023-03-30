@@ -22,7 +22,7 @@ body = [
     code is quite a bit more elegant.",
   ],
 
-  code-block "javascript" `
+  code-block "javascript" """
     // provide input hints
     window.addEvent('domready', function () {
         $$('input[placeholder]').addEvents({
@@ -38,7 +38,7 @@ body = [
             }
         }).fireEvent('blur');
     });
-  `,
+  """,
 
   p [
    "I really appreciate the fact that MooTools provides ",

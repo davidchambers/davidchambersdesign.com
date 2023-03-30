@@ -24,16 +24,16 @@ body = [
     attribute, provides a machine-readable version of dates and times.",
   ],
 
-  code-block "html" `
+  code-block "html" """
     <time datetime="2009-11-01T16:41:53+13:00">1 November 2009</time>
-  `,
+  """,
 
   p [
    "I wrote a function to generate the machine-readable dates and times
     for blog comments.",
   ],
 
-  code-block "php" `
+  code-block "php" """
     <?php
 
     /**
@@ -60,15 +60,15 @@ body = [
     }
 
     ?>
-  `,
+  """,
 
   p [
    "While looping through comments in your WordPress theme,
     call the above function to print a valid datetime string.",
   ],
 
-  code-block "php" `
+  code-block "php" """
     <time datetime="<?php comment_datetime(); ?>">
-  `,
+  """,
 
 ];

@@ -24,23 +24,23 @@ document = html [
     h3 ["Boolean literals"],
     pre [
       code [
-        text `
+        text """
           true
           false
-        `
+        """
       ],
     ],
     h3 ["Number literals"],
     pre [
       code [
-        text `
+        text """
           0
           42
           123.456
           0b111
           0o777
           0xFF
-        `
+        """
       ],
     ],
     p [
@@ -49,19 +49,19 @@ document = html [
     h3 ["String literals"],
     pre [
       code [
-        text `
+        text """
           ""
           "foo bar"
           "\\n"
-        `
+        """
       ],
     ],
     h3 ["Null literal"],
     pre [
       code [
-        text `
+        text """
           null
-        `
+        """
       ],
     ],
     p [
@@ -70,11 +70,11 @@ document = html [
     h3 ["Array literals"],
     pre [
       code [
-        text `
+        text """
           []
           [1, 2, 3]
           [1, 2, 3,]
-        `
+        """
       ],
     ],
     p [
@@ -83,7 +83,7 @@ document = html [
     h3 ["Object literals"],
     pre [
       code [
-        text `
+        text """
           {}
           {[key]: value}
           {["x"]: 1, ["y"]: 2}
@@ -92,7 +92,7 @@ document = html [
           {foo, bar, baz}
           {foo, bar}
           {foo,}
-        `
+        """
       ],
     ],
     p [
@@ -101,16 +101,16 @@ document = html [
     h3 ["Unary operators"],
     pre [
       code [
-        text `
+        text """
           +
           -
-        `
+        """
       ],
     ],
     h3 ["Binary operators"],
     pre [
       code [
-        text `
+        text """
           **
           *
           /
@@ -127,25 +127,25 @@ document = html [
           and
           or
           ??
-        `
+        """
       ],
     ],
     h3 ["Member access"],
     pre [
       code [
-        text `
+        text """
           Math.sqrt
           foo[bar]
-        `
+        """
       ],
     ],
     h3 ["Method calls"],
     pre [
       code [
-        text `
+        text """
           .toUpperCase [] s
           .slice [0, 5] xs
-        `
+        """
       ],
     ],
     p [
@@ -155,5 +155,5 @@ document = html [
 ];
 
 .write [
-  `<!DOCTYPE html>\n${document.render {indent: "  ", level: 0, inline: false}}`
+  "<!DOCTYPE html>\n" + document.render {indent: "  ", level: 0, inline: false}
 ] process.stdout;

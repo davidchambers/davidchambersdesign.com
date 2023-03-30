@@ -36,10 +36,10 @@ css/screen
 | write-file $ public ["css", "screen.css"]
 ;
 render-svg attrs paths = {
-  `<?xml version="1.0" standalone="no"?>\n${
+  """<?xml version="1.0" standalone="no"?>\n${
     {svg {xmlns: "http://www.w3.org/2000/svg", version: "1.1", ...attrs} paths}
     .render {indent: "  ", level: 0, inline: false}
-  }`
+  }"""
 }
 ;
 masthead.fill
@@ -119,7 +119,7 @@ icons/twitter
 | write-file $ public ["svg", "twitter.svg"]
 ;
 render-document element = {
-  `<!DOCTYPE html>\n${element.render {indent: "  ", level: 0, inline: false}}`
+  """<!DOCTYPE html>\n${element.render {indent: "  ", level: 0, inline: false}}"""
 }
 ;
 posts
@@ -139,7 +139,7 @@ flip map pages \page -> {
   | render-page
   | base-template page.title
   | render-document
-  | write-file $ public [`${page.slug}.html`]
+  | write-file $ public [page.slug + ".html"]
 }
 ;
 flip map posts \post -> {
@@ -148,6 +148,6 @@ flip map posts \post -> {
   | render-post post
   | base-template post.title
   | render-document
-  | write-file $ public [`${post.slug}.html`]
+  | write-file $ public [post.slug + ".html"]
 }
 ;

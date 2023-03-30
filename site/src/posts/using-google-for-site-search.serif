@@ -17,7 +17,7 @@ excerpt = [
     satisfied with its search functionality. Last night I decided to
     switch to a very simple solution:",
   ],
-  code-block "html" `
+  code-block "html" """
     <form action="http://www.google.com/search" method="get">
         <div>
             <label for="q">Search davidchambersdesign.com</label>
@@ -28,7 +28,7 @@ excerpt = [
             <input type="submit" value="Search" />
         </div>
     </form>
-  `,
+  """,
 ];
 
 body = [

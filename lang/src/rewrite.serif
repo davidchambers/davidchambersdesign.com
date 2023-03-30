@@ -45,7 +45,7 @@ union this that = construct Set [[...this, ...that]];
 
 nextUnusedIdent names desiredName = {
   recur counter = {
-    candidate = if counter == 0 then desiredName else `${desiredName}$${counter}`;
+    candidate = if counter == 0 then desiredName else desiredName + "$" + counter;
     if has candidate names then recur (counter + 1) else Identifier candidate
   };
   recur 0
@@ -106,7 +106,7 @@ rewriteImportAllDeclaration namesExportedFrom source hiding = {
   namesHiddenNeedlessly = reject (\name -> .includes [name] namesExported) namesHidden;
   if namesHiddenNeedlessly.length > 0 then {
     Future.reject $ Error {
-      `import * from "${
+      """import * from "${
         source.value
       }" hiding {${
         .join [", "] $ namesHidden
@@ -114,7 +114,7 @@ rewriteImportAllDeclaration namesExportedFrom source hiding = {
         format.list namesHiddenNeedlessly
       } ${
         if namesHiddenNeedlessly.length == 1 then "is" else "are"
-      } not exported so need not be hidden.\n`
+      } not exported so need not be hidden.\n"""
     }
   } else {
     namesExported

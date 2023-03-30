@@ -36,10 +36,10 @@ tag-color count = {
   Math.log2 count * 0.1 + 0.3
   | .toFixed [3]
   | .replace [RegExp "[.]000$|0*$", ""]
-  | \alpha -> `rgba(0, 0, 0, ${alpha})`
+  | \alpha -> "rgba(0, 0, 0, " + alpha + ")"
 };
 
-screen = `
+screen = """
   html {
     height: 100%;
     background-color: ${base3};
@@ -766,12 +766,12 @@ screen = `
 
   ${
     S.range 1 20
-    | map (\count -> `
+    | map (\count -> """
         #tags li[data-count='${count}'] a {
           background: ${tag-background count};
           color: ${tag-color count};
         }
-      `)
+      """)
     | .join ["\n"]
     | .trimEnd []
   }
@@ -1639,4 +1639,4 @@ screen = `
   .codehilite .il {
     color: ${cyan};
   }
-`;
+""";

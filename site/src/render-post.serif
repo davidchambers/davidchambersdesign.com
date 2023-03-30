@@ -18,20 +18,20 @@ render-post post related-posts = [
     footer' {class: "metadata"} [
       ul [
         li' {class: "shorturl"} [
-          a {href: `http://dċd.ws/${post.id}/`} ["Short URL"],
+          a {href: "http://dċd.ws/" + post.id + "/"} ["Short URL"],
         ],
       ],
       ...{
         if post.tags == [] then [] else [
           h4 ["This post has the following tags:"],
-          ol $ map (\tag -> li [a {href: `/tag/${tag}/`} [tags[tag]]]) post.tags,
+          ol $ map (\tag -> li [a {href: "/tag/" + tag + "/"} [tags[tag]]]) post.tags,
         ]
       },
     ],
     ...{
       if related-posts == [] then [] else [
         h3' {id: "related"} ["Possibly related posts"],
-        ul $ map (\post -> li [a {href: `/${post.slug}/`} post.title]) related-posts,
+        ul $ map (\post -> li [a {href: "/" + post.slug + "/"} post.title]) related-posts,
       ]
     },
   ],

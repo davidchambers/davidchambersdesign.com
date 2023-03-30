@@ -33,11 +33,11 @@ body = [
   ],
 
   p [
-   `The vast majority of the ensuing discussion focused on the
+    """The vast majority of the ensuing discussion focused on the
     implications of stuffing documents into URLs, and of using bit.ly
     as a document store. While there was much debate as to whether this
     "cool hack" will turn out to have practical application, the one
-    undoubtedly useful component was overlooked.`,
+    undoubtedly useful component was overlooked.""",
   ],
 
   h3 ["Markdown editing for the masses"],

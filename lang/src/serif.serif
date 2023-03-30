@@ -18,24 +18,24 @@ parse filename sourceText = {
         }
     };
     renderLineNumber = .padStart [4] . String;
-    `\n\x1B[1m${
+    """\n\x1B[1m${
       path.relative (apply [] process.cwd) error.location.source
     }\x1B[0m\n\n${
       lines
       | .map [\(line, idx, lines) -> {
-          `\x1B[7m${
+          """\x1B[7m${
             renderLineNumber line.number
           }\x1B[0m${
             if idx < lines.length - 1 then line.text else {
-              `${
+              """${
                 .slice [0, error.location.start.column - 1] line.text
               }\x1B[7m${
                 .charAt [error.location.start.column - 1] line.text
               }\x1B[0m${
                 .slice [error.location.start.column] line.text
-              }`
+              }"""
             }
-          }\n`
+          }\n"""
         }]
       | .join [""]
     }${
@@ -47,7 +47,7 @@ parse filename sourceText = {
       | \length -> .repeat [length + error.location.start.column - 1] " "
     }^\n${
       error.message
-    }\n`
+    }\n"""
   }
 };
 
@@ -127,8 +127,8 @@ orderDependencies tree = {
           ;; List files created:
           .forEach [
             \{serifFilename, esFilename} -> {
-              console.log (`• ${path.relative cwd serifFilename}`);
-              console.log (`  ➔ ${path.relative cwd esFilename}`)
+              console.log ("• " + path.relative cwd serifFilename);
+              console.log ("  ➔ " + path.relative cwd esFilename)
             },
           ] filenames
         })

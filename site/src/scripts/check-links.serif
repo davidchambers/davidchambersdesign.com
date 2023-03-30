@@ -24,21 +24,21 @@ status url = {
           {attemptP \() -> apply [url, {method: "HEAD", redirect: "manual"}] fetch}
 };
 
-bold   text = `\x1B[1m${text}\x1B[22m`;
-invert text = `\x1B[7m${text}\x1B[27m`;
-red    text = `\x1B[31m${text}\x1B[0m`;
-yellow text = `\x1B[33m${text}\x1B[0m`;
-cyan   text = `\x1B[36m${text}\x1B[0m`;
+bold   text = "\x1B[1m" + text + "\x1B[22m";
+invert text = "\x1B[7m" + text + "\x1B[27m";
+red    text = "\x1B[31m" + text + "\x1B[0m";
+yellow text = "\x1B[33m" + text + "\x1B[0m";
+cyan   text = "\x1B[36m" + text + "\x1B[0m";
 
 format {url, status} = {
-  padding x = " ".repeat $ S.max 0 $ 15 - `${x}`.length;
+  padding x = " ".repeat $ S.max 0 $ 15 - ((.length) $ String x);
   normal s = s;
   switch true
-  when typeof status == "string"      then red    `${padding status} ${invert $ bold status} ${url}`
-  when status >= 200 and status < 300 then        `${padding status} ${normal $ bold status} ${url}`
-  when status >= 300 and status < 400 then yellow `${padding status} ${normal $ bold status} ${url}`
-  when status >= 400 and status < 500 then red    `${padding status} ${normal $ bold status} ${url}`
-  else                                     cyan   `${padding status} ${normal $ bold status} ${url}`
+  when typeof status == "string"      then red    ((padding status) + " " + (invert $ bold status) + " " + url)
+  when status >= 200 and status < 300 then        ((padding status) + " " + (normal $ bold status) + " " + url)
+  when status >= 300 and status < 400 then yellow ((padding status) + " " + (normal $ bold status) + " " + url)
+  when status >= 400 and status < 500 then red    ((padding status) + " " + (normal $ bold status) + " " + url)
+  else                                     cyan   ((padding status) + " " + (normal $ bold status) + " " + url)
 };
 
 program = {

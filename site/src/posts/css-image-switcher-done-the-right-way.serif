@@ -63,10 +63,10 @@ body = [
   ],
 
   captioned-images [{
-    alt: `
+    alt: """
       Chris Coyier's CSS image switcher demo displays nothing
       but four unhelpful links when styles are disabled
-    `,
+    """,
     src: "/images/posts/43/css-tricks-image-switcher-demo-sans-styles.png",
     caption: [
      "CSS image switcher demo as seen at CSS-Tricks
@@ -142,7 +142,7 @@ body = [
     a caption, for instance", —, "to be tied to an image:",
   ],
 
-  code-block "html" `
+  code-block "html" """
     <dl>
         <dt><img src="images/ds81.jpg" alt="Vancouver architecture" /></dt>
         <dd>This is not like that</dd>
@@ -150,7 +150,7 @@ body = [
         a story with contrasting elements. — <i>Daily Shoot 81</i></dd>
         ...
     </dl>
-  `,
+  """,
 
   p [
    "Beautiful, isn't it? No pointless (literally) anchors, no meaningless

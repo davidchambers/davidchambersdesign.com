@@ -94,7 +94,7 @@ export default {
   })]), p([img({
     alt: "Exposure magazine spread",
     src: "/images/elam/exposure-spread.jpg"
-  })]), h4([`"Insight Drive"`]), p(["While at Insight, I was asked to design the packaging for an unusual\n      Christmas gift. Earlier in the year, Insight had sent branded model\n      Mini Coopers to its most valued clients. These cars had proven\n      extremely popular, so it was decided that a faster motor would be\n      sent to each Mini owner at the end of the year (to get a little more\n      mileage from the initiative). The engines themselves did not possess\n      much aesthetic appeal, so the challenge was to package them in an\n      exciting way."]), p([img({
+  })]), h4(["\"Insight Drive\""]), p(["While at Insight, I was asked to design the packaging for an unusual\n      Christmas gift. Earlier in the year, Insight had sent branded model\n      Mini Coopers to its most valued clients. These cars had proven\n      extremely popular, so it was decided that a faster motor would be\n      sent to each Mini owner at the end of the year (to get a little more\n      mileage from the initiative). The engines themselves did not possess\n      much aesthetic appeal, so the challenge was to package them in an\n      exciting way."]), p([img({
     alt: "Packaged motors ready to send",
     src: "/images/elam/insight-drive.jpg"
   })])]
