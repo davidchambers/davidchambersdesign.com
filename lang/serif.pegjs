@@ -437,8 +437,8 @@ SwitchExpression
   = SwitchToken
     _ discriminant:Expression
     _ cases:SwitchCase|.., _|
-    default_:(_ ElseToken _ default_:Expression { return default_; })?
-    { return Node.SwitchExpression(discriminant)(cases)(default_); }
+    defaultCase:(_ defaultCase:SwitchCaseDefault { return defaultCase; })?
+    { return Node.SwitchExpression(discriminant)(defaultCase == null ? cases : [...cases, defaultCase]); }
   / ConditionalExpression
 
 SwitchCase
@@ -446,7 +446,12 @@ SwitchCase
     _ predicates:Expression|1.., CommaSeparator|
     _ ThenToken
     _ consequent:Expression
-    { return Node.SwitchCase(predicates)(consequent); }
+    { return Node.SwitchCase(predicates.map(Maybe.Just))(consequent); }
+
+SwitchCaseDefault
+  = ElseToken
+    _ consequent:Expression
+    { return Node.SwitchCase([Maybe.Nothing])(consequent); }
 
 ApplicationOperator
   = '$'

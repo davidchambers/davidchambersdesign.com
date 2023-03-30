@@ -1,3 +1,4 @@
+import Maybe from "./Maybe.js";
 import Node from "./Node.js";
 const Prelude = {
   operators: {
@@ -188,15 +189,20 @@ const fromConditionalExpression = predicate => consequent => alternative => ({
   consequent: fromNode(consequent),
   alternate: fromNode(alternative)
 });
-const fromSwitchCase = ({predicates, consequent}) => Prelude.map(predicate => ({
+const fromSwitchCase = consequent => predicate => ({
   type: "SwitchCase",
-  test: fromNode(predicate),
-  consequent: [{
+  test: Maybe.maybe(null)(fromNode)(predicate),
+  consequent: Maybe.maybe([])(Array.of)(map(argument => ({
     type: "ReturnStatement",
-    argument: fromNode(consequent)
-  }]
-}))(predicates);
-const fromSwitchExpression = discriminant => cases => default$ => ({
+    argument
+  }))(map(fromNode)(consequent)))
+});
+const fromSwitchCases = predicates => consequent => (() => {
+  const init = Prelude._apply("slice")([0, -1])(predicates);
+  const last = Prelude._apply("at")([-1])(predicates);
+  return Prelude.concat(map(fromSwitchCase(Maybe.Nothing))(init))([fromSwitchCase(Maybe.Just(consequent))(last)]);
+})();
+const fromSwitchExpression = discriminant => cases => ({
   type: "CallExpression",
   callee: {
     type: "ArrowFunctionExpression",
@@ -206,17 +212,7 @@ const fromSwitchExpression = discriminant => cases => default$ => ({
       body: [{
         type: "SwitchStatement",
         discriminant: fromNode(discriminant),
-        cases: (() => {
-          const esCases = Prelude.chain(fromSwitchCase)(cases);
-          return Prelude.equals(null)(default$) ? esCases : [...esCases, {
-            type: "SwitchCase",
-            test: null,
-            consequent: [{
-              type: "ReturnStatement",
-              argument: fromNode(default$)
-            }]
-          }];
-        })()
+        cases: Prelude.chain(fromNode)(cases)
       }]
     },
     expression: false
@@ -322,6 +318,7 @@ const fromNode = match(Node)({
   LogicalExpression: fromLogicalExpression,
   ConditionalExpression: fromConditionalExpression,
   SwitchExpression: fromSwitchExpression,
+  SwitchCase: fromSwitchCases,
   CallExpression: fromCallExpression,
   SpreadElement: fromSpreadElement,
   ExpressionStatement: fromExpressionStatement,

@@ -99,7 +99,7 @@ const Node = {
       case "ConditionalExpression":
         return cases.ConditionalExpression(node.predicate)(node.consequent)(node.alternative);
       case "SwitchExpression":
-        return cases.SwitchExpression(node.discriminant)(node.cases)(node.default);
+        return cases.SwitchExpression(node.discriminant)(node.cases);
       case "SwitchCase":
         return cases.SwitchCase(node.predicates)(node.consequent);
       case "PipeExpression":
@@ -269,11 +269,10 @@ const Node = {
     consequent,
     alternative
   }),
-  SwitchExpression: discriminant => cases => default$ => ({
+  SwitchExpression: discriminant => cases => ({
     [Symbol.for("tag")]: "SwitchExpression",
     discriminant,
-    cases,
-    default: default$
+    cases
   }),
   SwitchCase: predicates => consequent => ({
     [Symbol.for("tag")]: "SwitchCase",

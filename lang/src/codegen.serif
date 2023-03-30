@@ -1,4 +1,5 @@
-import Node from "./Node.js";
+import Maybe from "./Maybe.serif";
+import Node from "./Node.serif";
 
 export default fromNode;
 
@@ -229,16 +230,24 @@ fromConditionalExpression predicate consequent alternative = {
   alternate: fromNode alternative,
 };
 
-fromSwitchCase {predicates, consequent} = {\predicate -> {
+fromSwitchCase consequent predicate = {
   type: "SwitchCase",
-  test: fromNode predicate,
-  consequent: [{
-    type: "ReturnStatement",
-    argument: fromNode consequent,
-  }],
-}} <$> predicates;
+  test: Maybe.maybe null fromNode predicate,
+  consequent: {
+    consequent
+    | map fromNode
+    | map (\argument -> {type: "ReturnStatement", argument})
+    | Maybe.maybe [] Array.of
+  },
+};
 
-fromSwitchExpression discriminant cases default = {
+fromSwitchCases predicates consequent = {
+  init = .slice [0, -1] predicates;
+  last = .at       [-1] predicates;
+  map (fromSwitchCase Maybe.Nothing) init <> [fromSwitchCase (Maybe.Just consequent) last]
+};
+
+fromSwitchExpression discriminant cases = {
   type: "CallExpression",
   callee: {
     type: "ArrowFunctionExpression",
@@ -248,17 +257,7 @@ fromSwitchExpression discriminant cases default = {
       body: [{
         type: "SwitchStatement",
         discriminant: fromNode discriminant,
-        cases: {
-          esCases = cases >>= fromSwitchCase;
-          if default == null then esCases else [...esCases, {
-            type: "SwitchCase",
-            test: null,
-            consequent: [{
-              type: "ReturnStatement",
-              argument: fromNode default,
-            }],
-          }]
-        },
+        cases: cases >>= fromNode,
       }],
     },
     expression: false,
@@ -384,6 +383,7 @@ fromNode = match Node {
   LogicalExpression:          fromLogicalExpression,
   ConditionalExpression:      fromConditionalExpression,
   SwitchExpression:           fromSwitchExpression,
+  SwitchCase:                 fromSwitchCases,
   CallExpression:             fromCallExpression,
   SpreadElement:              fromSpreadElement,
   ExpressionStatement:        fromExpressionStatement,

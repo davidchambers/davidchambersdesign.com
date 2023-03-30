@@ -1,5 +1,3 @@
-import S from "sanctuary";
-
 import * from "./elements.serif";
 
 export {

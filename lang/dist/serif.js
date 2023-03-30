@@ -1,5 +1,6 @@
+import process from "node:process";
 import {generate} from "astring";
-import {attempt, fork, mapRej, parallel, resolve} from "fluture";
+import {fork, mapRej, parallel, resolve} from "fluture";
 import Node from "./Node.js";
 import * as fs from "./fs.js";
 import * as serif from "./index.js";

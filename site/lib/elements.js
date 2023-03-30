@@ -1,4 +1,3 @@
-import S from "sanctuary";
 const Prelude = {
   operators: {
     unary: {
@@ -194,4 +193,4 @@ const img = self$002Dclosing$002Delement("img");
 const param = self$002Dclosing$002Delement("param");
 const path = self$002Dclosing$002Delement("path");
 const stop = self$002Dclosing$002Delement("stop");
-export {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockquote$0027, body, body$0027, code, code$0027, dd, dd$0027, del, del$0027, div, dl, dl$0027, dt, dt$0027, em, em$0027, embed, footer, footer$0027, h1, h1$0027, h2, h2$0027, h3, h3$0027, h4, h4$0027, h5, h5$0027, h6, h6$0027, head, head$0027, header, header$0027, hr, hr$0027, html, html$0027, i, i$0027, img, ins, ins$0027, li, li$0027, linearGradient, link, mask, meta, nav, nav$0027, object, ol, ol$0027, p, p$0027, param, path, pre, pre$0027, rect, script, span, stop, strong, strong$0027, svg, time, title, title$0027, ul, ul$0027, var$, var$0027, video};
+export {text, a, address$0027, article, article$0027, aside, aside$0027, b, base, blockquote, blockquote$0027, body, body$0027, code, code$0027, dd, dd$0027, del, del$0027, div, dl, dl$0027, dt, dt$0027, em, em$0027, embed, figcaption$0027, figure$0027, footer, footer$0027, h1, h1$0027, h2, h2$0027, h3, h3$0027, h4, h4$0027, h5, h5$0027, h6, h6$0027, head, head$0027, header, header$0027, hgroup$0027, hr, hr$0027, html, html$0027, i, i$0027, img, ins, ins$0027, li, li$0027, linearGradient, link, main$0027, mask, menu$0027, meta, nav, nav$0027, object, ol, ol$0027, p, p$0027, param, path, pre, pre$0027, rect, script, section$0027, span, stop, strong, strong$0027, style$0027, svg, time, title, title$0027, ul, ul$0027, var$, var$0027, video};

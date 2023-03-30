@@ -5,7 +5,6 @@ import {generate} from "astring";
 import {attemptP, fork, promise, resolve} from "fluture";
 import * as serif from "./index.js";
 import * as path from "./path.js";
-import rewrite from "./rewrite.js";
 const Prelude = {
   operators: {
     unary: {
@@ -53,7 +52,7 @@ const evaluateModule = sourceText => (context => (module => Prelude.chain(_ => P
   return module;
 })())))(map(Object.entries)(attemptP(() => import(specifier))))])(module))))(construct(vm.SourceTextModule)([sourceText, {
   context
-}])))(vm.createContext(global));
+}])))(vm.createContext(globalThis));
 const read = serifSource => Prelude.chain(serifAst => Prelude.chain(serifAst$0027 => (serifAst$0027$0027 => (esAst => (esSourceText => evaluateModule(esSourceText))(apply([esAst, {}])(generate)))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(_importPath => [])))(serif.parse("[repl]")("export default " + serifSource + ";"));
 const $00230 = "\u001b[0m";
 const $002332 = "\u001b[32m";
@@ -62,9 +61,7 @@ const $002335 = "\u001b[35m";
 const print = x => (() => {
   switch (apply([Object.prototype.toString, x, []])(Reflect.apply)) {
     case "[object Null]":
-      return $002335 + x + $00230;
     case "[object Undefined]":
-      return $002335 + x + $00230;
     case "[object Boolean]":
       return $002335 + x + $00230;
     case "[object Number]":

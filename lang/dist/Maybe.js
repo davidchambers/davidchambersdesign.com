@@ -1,6 +1,3 @@
-import S from "sanctuary";
-import {a, div, h1, li$0027, ol$0027} from "./elements.js";
-import tags from "./tags.js";
 const Prelude = {
   operators: {
     unary: {
@@ -39,17 +36,32 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
-const render$002Dtags = posts => (() => {
-  const from$002Dentry = ([slug, name]) => li$0027({
-    ["data-count"]: S.size(filter(S.equals(slug))(Prelude.chain(x => x.tags)(posts)))
-  })([a({
-    href: "/tag/" + slug + "/"
-  })([name])]);
-  return [h1(["Tags"]), ol$0027({
-    id: "tags"
-  })(Prelude.map(from$002Dentry)(Object.entries(tags))), div({
-    class: "clearfix"
-  })([])];
-})();
-export default render$002Dtags;
+const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const Nothing = {
+  [Symbol.for("tag")]: "Nothing",
+  ["fantasy-land/map"]: f => Nothing
+};
+const Just = value => ({
+  [Symbol.for("tag")]: "Just",
+  value,
+  ["fantasy-land/map"]: f => Just(f(value))
+});
+const match = default$ => cases => maybe => apply([cases, maybe[Symbol.for("tag")]])(Object.hasOwn) ? (() => {
+  switch (maybe[Symbol.for("tag")]) {
+    case "Nothing":
+      return cases.Nothing;
+    case "Just":
+      return cases.Just(maybe.value);
+  }
+})() : default$(maybe);
+const maybe = nothing => just => match(null)({
+  Nothing: nothing,
+  Just: just
+});
+const Maybe = {
+  Nothing,
+  Just,
+  [Symbol.for("match")]: match,
+  maybe
+};
+export default Maybe;

@@ -1,4 +1,4 @@
-import {text, a, article, article$0027, aside, aside$0027, b, blockquote, blockquote$0027, body$0027, code, code$0027, dd, dd$0027, del, del$0027, div, dl, dl$0027, dt, dt$0027, em, em$0027, embed, footer, footer$0027, h1, h1$0027, h2, h2$0027, h3, h3$0027, h4, h4$0027, h5, h5$0027, h6, h6$0027, head, head$0027, header, header$0027, hr, hr$0027, html, html$0027, i, i$0027, img, ins, ins$0027, li, li$0027, linearGradient, link, mask, meta, nav, nav$0027, object, ol, ol$0027, p, p$0027, param, path, pre, pre$0027, rect, script, span, stop, strong, strong$0027, svg, time, title, title$0027, ul, ul$0027, var$, var$0027, video} from "../elements.js";
+import {a, li, p, strong, ul} from "../elements.js";
 import datetime from "../datetime.js";
 const Prelude = {
   operators: {
@@ -38,7 +38,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const excerpt = [p(["I've been using OS X almost exclusively for the last three\n    or four years, but it was only recently that I discovered the\n    system-wide method for changing keyboard shortcuts. I think\n    the reason that this feature eluded me for so long is that so\n    many of the hours I've spent on OS X have involved the use of\n    the Adobe applications Photoshop, Illustrator, and InDesign,\n    which provide their own means of changing keyboard shortcuts.\n    I assumed that since application developers sometimes provide\n    their own interfaces for changing keyboard shortcuts, the\n    operating system must lack this functionality. I was wrong."])];
 const body = [...excerpt, p(["I stumbled upon this useful information while reading ", a({
   href: "http://caminobrowser.org/documentation/faq/#cust_change"

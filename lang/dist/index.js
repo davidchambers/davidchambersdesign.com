@@ -50,5 +50,4 @@ const changeExtensionInImportDeclaration = ({source, specifiers}) => (() => {
   return Node.ImportDeclaration(source$0027)(specifiers);
 })();
 const changeExtensions = ({imports, exports, statements}) => Node.Module(Prelude.map(changeExtensionInImportDeclaration)(imports))(exports)(statements);
-const trans = module => namesExportedFrom => Prelude.map(x => esModuleFromSerifModule(changeExtensions(x)))(rewrite(module)(namesExportedFrom));
-export {parse, rewrite, changeExtensions, esModuleFromSerifModule, trans};
+export {parse, rewrite, changeExtensions, esModuleFromSerifModule};

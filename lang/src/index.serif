@@ -10,7 +10,6 @@ export {
   rewrite,
   changeExtensions,
   esModuleFromSerifModule,
-  trans,
 };
 
 parse filename sourceText = {
@@ -24,8 +23,4 @@ changeExtensionInImportDeclaration {source, specifiers} = {
 
 changeExtensions {imports, exports, statements} = {
   Node.Module (changeExtensionInImportDeclaration <$> imports) exports statements
-};
-
-trans module namesExportedFrom = {
-  esModuleFromSerifModule . changeExtensions <$> rewrite module namesExportedFrom
 };

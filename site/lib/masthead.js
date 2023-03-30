@@ -1,6 +1,6 @@
 import S from "sanctuary";
 import {path} from "./elements.js";
-import {render, $21E6, $21E8, $21E7, $21E9, $2190, $2192, $2191, $2193} from "./orthogonal.js";
+import {render, $21E8, $21E7, $21E9, $2190, $2192, $2191, $2193} from "./orthogonal.js";
 const Prelude = {
   operators: {
     unary: {

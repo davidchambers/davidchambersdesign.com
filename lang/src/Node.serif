@@ -30,7 +30,7 @@ type Node
   | BindExpression left right
   | LogicalExpression operator left right
   | ConditionalExpression predicate consequent alternative
-  | SwitchExpression discriminant cases default
+  | SwitchExpression discriminant cases
   | SwitchCase predicates consequent
   | PipeExpression head body
   | MethodCallExpression name

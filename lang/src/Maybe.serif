@@ -1,0 +1,33 @@
+export default Maybe;
+
+Nothing = {
+  [Symbol.for "tag"]: "Nothing",
+  fantasy-land/map: \f -> Nothing,
+};
+
+Just value = {
+  [Symbol.for "tag"]: "Just",
+  value,
+  fantasy-land/map: \f -> Just $ f value,
+};
+
+match default cases maybe = {
+  if apply [cases, maybe[Symbol.for "tag"]] Object.hasOwn then {
+    switch maybe[Symbol.for "tag"]
+    when "Nothing" then cases.Nothing
+    when "Just"    then cases.Just maybe.value
+  } else {
+    default maybe
+  }
+};
+
+maybe nothing just = {
+  match null {Nothing: nothing, Just: just}
+};
+
+Maybe = {
+  Nothing,
+  Just,
+  [Symbol.for "match"]: match,
+  maybe,
+};

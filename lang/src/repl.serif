@@ -7,11 +7,9 @@ import {attemptP, fork, promise, resolve} from "fluture";
 
 import * as serif from "./index.serif";
 import * as path from "./path.serif";
-import rewrite from "./rewrite.serif";
-
 
 evaluateModule sourceText = do {
-  context = vm.createContext global;
+  context = vm.createContext globalThis;
   module = construct vm.SourceTextModule [sourceText, {context,}];
   _ <- attemptP \() -> .link [
     \(specifier, referencingModule) -> {
