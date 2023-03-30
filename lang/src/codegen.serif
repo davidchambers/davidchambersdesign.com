@@ -1,6 +1,6 @@
 import Node from "./Node.js";
 
-export default esFromNode;
+export default fromNode;
 
 ;; https://262.ecma-international.org/13.0/#sec-keywords-and-reserved-words
 RESERVED_WORDS = construct Set [[
@@ -60,12 +60,12 @@ validEsIdentifierName name = {
   .test [name] $ RegExp "^[$_A-Za-z][$_A-Za-z0-9]*$"
 };
 
-esFromEscapedIdentifierName name = {
+fromEscapedIdentifierName name = {
   type: "Identifier",
   name,
 };
 
-esFromIdentifier = {
+fromIdentifier = {
   escapeChar c = {
     c
     | .charCodeAt [0]
@@ -80,15 +80,15 @@ esFromIdentifier = {
     else if validEsIdentifierName name then name
     else .replaceAll [apply ["[^$_A-Za-z0-9]", "g"] RegExp, escapeChar] name
   };
-  esFromEscapedIdentifierName . escape
+  fromEscapedIdentifierName . escape
 };
 
-esFromLiteral value = {
+fromLiteral value = {
   type: "Literal",
   value,
 };
 
-esFromElision = null;
+fromElision = null;
 
 TemplateElement tail raw = {
   type: "TemplateElement",
@@ -98,9 +98,9 @@ TemplateElement tail raw = {
   },
 };
 
-esFromTemplateLiteral quasis expressions = {
+fromTemplateLiteral quasis expressions = {
   type: "TemplateLiteral",
-  expressions: esFromNode <$> expressions,
+  expressions: fromNode <$> expressions,
   quasis: {
     lineEnding = .find [\lineEnding -> .startsWith [lineEnding] quasis[0]] ["\n", "\r\n"];
     if lineEnding == undefined then {
@@ -125,51 +125,51 @@ esFromTemplateLiteral quasis expressions = {
   },
 };
 
-esFromMemberExpression object property = {
+fromMemberExpression object property = {
   computed = not $ match' Node (const false) {StringLiteral: validEsIdentifierName} property;
   {
     type: "MemberExpression",
-    object: esFromNode object,
-    property: if computed then esFromNode property else esFromEscapedIdentifierName property.value,
+    object: fromNode object,
+    property: if computed then fromNode property else fromEscapedIdentifierName property.value,
     computed,
     optional: false,
   }
 };
 
-esFromSpreadElement argument = {
+fromSpreadElement argument = {
   type: "SpreadElement",
-  argument: esFromNode argument,
+  argument: fromNode argument,
 };
 
-esFromArrayExpression elements = {
+fromArrayExpression elements = {
   type: "ArrayExpression",
-  elements: esFromNode <$> elements,
+  elements: fromNode <$> elements,
 };
 
-esFromProperty key value = {
+fromProperty key value = {
   computed = not $ match' Node (const false) {StringLiteral: validEsIdentifierName} key;
-  esKey = if computed then esFromNode key else esFromEscapedIdentifierName key.value;
-  esValue = esFromNode value;
+  esKey = if computed then fromNode key else fromEscapedIdentifierName key.value;
+  esValue = fromNode value;
   shorthand = esKey.type == "Identifier" and esValue.type == "Identifier" and esKey.name == esValue.name;
   {type: "Property", key: esKey, value: esValue, kind: "init", method: false, shorthand, computed}
 };
 
-esFromObjectExpression properties = {
+fromObjectExpression properties = {
   type: "ObjectExpression",
-  properties: esFromNode <$> properties,
+  properties: fromNode <$> properties,
 };
 
-esFromArrowFunctionExpression parameters body = {
-  esBody = esFromNode body;
+fromArrowFunctionExpression parameters body = {
+  esBody = fromNode body;
   {
     type: "ArrowFunctionExpression",
-    params: esFromNode <$> parameters,
+    params: fromNode <$> parameters,
     body: esBody,
     expression: esBody.type != "BlockStatement",
   }
 };
 
-esFromBlockExpression statements = {
+fromBlockExpression statements = {
   type: "CallExpression",
   callee: {
     type: "ArrowFunctionExpression",
@@ -178,15 +178,15 @@ esFromBlockExpression statements = {
       type: "BlockStatement",
       body: match Node {
         VariableDeclaration: \pattern expression init -> (
-          (esFromNode <$> init <> Node.VariableDeclaration pattern expression)
+          (fromNode <$> init <> Node.VariableDeclaration pattern expression)
         ),
         FunctionDeclaration: \name parameters body init -> (
-          (esFromNode <$> init <> Node.FunctionDeclaration name parameters body)
+          (fromNode <$> init <> Node.FunctionDeclaration name parameters body)
           <> [{type: "ReturnStatement", argument: {type: "Identifier", name}}]
         ),
         ExpressionStatement: \expression init -> (
-          (esFromNode <$> init)
-          <> [{type: "ReturnStatement", argument: esFromNode expression}]
+          (fromNode <$> init)
+          <> [{type: "ReturnStatement", argument: fromNode expression}]
         ),
       } (.at [-1] statements) (.slice [0, -1] statements),
     },
@@ -196,21 +196,21 @@ esFromBlockExpression statements = {
   optional: false,
 };
 
-esFromUnaryExpression operator argument = {
+fromUnaryExpression operator argument = {
   type: "UnaryExpression",
   operator,
-  argument: esFromNode argument,
+  argument: fromNode argument,
   prefix: true,
 };
 
-esFromBinaryExpression operator left right = {
+fromBinaryExpression operator left right = {
   type: "BinaryExpression",
   operator,
-  left: esFromNode left,
-  right: esFromNode right,
+  left: fromNode left,
+  right: fromNode right,
 };
 
-esFromLogicalExpression operator left right = {
+fromLogicalExpression operator left right = {
   type: "LogicalExpression",
   operator: {
     switch operator
@@ -218,27 +218,27 @@ esFromLogicalExpression operator left right = {
     when "or"  then "||"
     when "??"  then "??"
   },
-  left: esFromNode left,
-  right: esFromNode right,
+  left: fromNode left,
+  right: fromNode right,
 };
 
-esFromConditionalExpression predicate consequent alternative = {
+fromConditionalExpression predicate consequent alternative = {
   type: "ConditionalExpression",
-  test: esFromNode predicate,
-  consequent: esFromNode consequent,
-  alternate: esFromNode alternative,
+  test: fromNode predicate,
+  consequent: fromNode consequent,
+  alternate: fromNode alternative,
 };
 
-esFromSwitchCase {predicates, consequent} = {\predicate -> {
+fromSwitchCase {predicates, consequent} = {\predicate -> {
   type: "SwitchCase",
-  test: esFromNode predicate,
+  test: fromNode predicate,
   consequent: [{
     type: "ReturnStatement",
-    argument: esFromNode consequent,
+    argument: fromNode consequent,
   }],
 }} <$> predicates;
 
-esFromSwitchExpression discriminant cases default = {
+fromSwitchExpression discriminant cases default = {
   type: "CallExpression",
   callee: {
     type: "ArrowFunctionExpression",
@@ -247,15 +247,15 @@ esFromSwitchExpression discriminant cases default = {
       type: "BlockStatement",
       body: [{
         type: "SwitchStatement",
-        discriminant: esFromNode discriminant,
+        discriminant: fromNode discriminant,
         cases: {
-          esCases = cases >>= esFromSwitchCase;
+          esCases = cases >>= fromSwitchCase;
           if default == null then esCases else [...esCases, {
             type: "SwitchCase",
             test: null,
             consequent: [{
               type: "ReturnStatement",
-              argument: esFromNode default,
+              argument: fromNode default,
             }],
           }]
         },
@@ -267,139 +267,139 @@ esFromSwitchExpression discriminant cases default = {
   optional: false,
 };
 
-esFromCallExpression callee arguments = {
+fromCallExpression callee arguments = {
   type: "CallExpression",
-  callee: esFromNode callee,
-  arguments: esFromNode <$> arguments,
+  callee: fromNode callee,
+  arguments: fromNode <$> arguments,
   optional: false,
 };
 
-esFromVariableDeclaration pattern expression = {
+fromVariableDeclaration pattern expression = {
   type: "VariableDeclaration",
   kind: "const",
   declarations: [{
     type: "VariableDeclarator",
-    id: esFromNode pattern,
-    init: esFromNode expression,
+    id: fromNode pattern,
+    init: fromNode expression,
   }],
 };
 
-esFromFunctionDeclaration name parameters body = {
+fromFunctionDeclaration name parameters body = {
   type: "VariableDeclaration",
   kind: "const",
   declarations: [{
     type: "VariableDeclarator",
-    id: esFromIdentifier name,
+    id: fromIdentifier name,
     init: {
       reduceRight (\esBody param -> {
                      type: "ArrowFunctionExpression",
-                     params: [esFromNode param],
+                     params: [fromNode param],
                      body: esBody,
                      expression: esBody.type != "BlockStatement",
                    })
-                  (esFromNode body)
+                  (fromNode body)
                   parameters
     },
   }],
 };
 
-esFromExpressionStatement expression = {
+fromExpressionStatement expression = {
   type: "ExpressionStatement",
-  expression: esFromNode expression,
+  expression: fromNode expression,
 };
 
-esFromArrayPattern elements = {
+fromArrayPattern elements = {
   type: "ArrayPattern",
-  elements: esFromNode <$> elements,
+  elements: fromNode <$> elements,
 };
 
-esFromObjectPattern properties = {
+fromObjectPattern properties = {
   type: "ObjectPattern",
-  properties: esFromNode <$> properties,
+  properties: fromNode <$> properties,
 };
 
-esFromRestElement argument = {
+fromRestElement argument = {
   type: "RestElement",
-  argument: esFromNode argument,
+  argument: fromNode argument,
 };
 
-esFromExportDefaultDeclaration declaration = {
+fromExportDefaultDeclaration declaration = {
   type: "ExportDefaultDeclaration",
-  declaration: esFromNode declaration,
+  declaration: fromNode declaration,
 };
 
-esFromExportNamedDeclaration specifiers = {
+fromExportNamedDeclaration specifiers = {
   type: "ExportNamedDeclaration",
-  specifiers: esFromNode <$> specifiers,
+  specifiers: fromNode <$> specifiers,
 };
 
-esFromExportSpecifier local exported = {
+fromExportSpecifier local exported = {
   type: "ExportSpecifier",
-  local: esFromNode local,
-  exported: esFromNode exported,
+  local: fromNode local,
+  exported: fromNode exported,
 };
 
-esFromImportDefaultSpecifier local = {
+fromImportDefaultSpecifier local = {
   type: "ImportDefaultSpecifier",
-  local: esFromNode local,
+  local: fromNode local,
 };
 
-esFromImportNamespaceSpecifier local = {
+fromImportNamespaceSpecifier local = {
   type: "ImportNamespaceSpecifier",
-  local: esFromNode local,
+  local: fromNode local,
 };
 
-esFromImportSpecifier local imported = {
+fromImportSpecifier local imported = {
   type: "ImportSpecifier",
-  local: esFromNode local,
-  imported: esFromNode imported,
+  local: fromNode local,
+  imported: fromNode imported,
 };
 
-esFromImportDeclaration source specifiers = {
+fromImportDeclaration source specifiers = {
   type: "ImportDeclaration",
-  specifiers: esFromNode <$> specifiers,
-  source: esFromNode source,
+  specifiers: fromNode <$> specifiers,
+  source: fromNode source,
 };
 
-esFromModule imports exports statements = {
+fromModule imports exports statements = {
   type: "Program",
   sourceType: "module",
-  body: esFromNode <$> imports <> statements <> exports,
+  body: fromNode <$> imports <> statements <> exports,
 };
 
-esFromNode = match Node {
-  NullLiteral:                esFromLiteral null,
-  BooleanLiteral:             esFromLiteral,
-  NumberLiteral:              esFromLiteral,
-  StringLiteral:              esFromLiteral,
-  TemplateLiteral:            esFromTemplateLiteral,
-  MemberExpression:           esFromMemberExpression,
-  Identifier:                 esFromIdentifier,
-  ArrayExpression:            esFromArrayExpression,
-  ObjectExpression:           esFromObjectExpression,
-  ArrowFunctionExpression:    esFromArrowFunctionExpression,
-  BlockExpression:            esFromBlockExpression,
-  UnaryExpression:            esFromUnaryExpression,
-  BinaryExpression:           esFromBinaryExpression,
-  LogicalExpression:          esFromLogicalExpression,
-  ConditionalExpression:      esFromConditionalExpression,
-  SwitchExpression:           esFromSwitchExpression,
-  CallExpression:             esFromCallExpression,
-  SpreadElement:              esFromSpreadElement,
-  ExpressionStatement:        esFromExpressionStatement,
-  VariableDeclaration:        esFromVariableDeclaration,
-  FunctionDeclaration:        esFromFunctionDeclaration,
-  Property:                   esFromProperty,
-  ArrayPattern:               esFromArrayPattern,
-  Elision:                    esFromElision,
-  ObjectPattern:              esFromObjectPattern,
-  RestElement:                esFromRestElement,
-  ImportDeclaration:          esFromImportDeclaration,
-  ImportDefaultSpecifier:     esFromImportDefaultSpecifier,
-  ImportNamespaceSpecifier:   esFromImportNamespaceSpecifier,
-  ImportSpecifier:            esFromImportSpecifier,
-  ExportNamedDeclaration:     esFromExportNamedDeclaration,
-  ExportDefaultDeclaration:   esFromExportDefaultDeclaration,
-  ExportSpecifier:            esFromExportSpecifier,
-  Module:                     esFromModule,
+fromNode = match Node {
+  NullLiteral:                fromLiteral null,
+  BooleanLiteral:             fromLiteral,
+  NumberLiteral:              fromLiteral,
+  StringLiteral:              fromLiteral,
+  TemplateLiteral:            fromTemplateLiteral,
+  MemberExpression:           fromMemberExpression,
+  Identifier:                 fromIdentifier,
+  ArrayExpression:            fromArrayExpression,
+  ObjectExpression:           fromObjectExpression,
+  ArrowFunctionExpression:    fromArrowFunctionExpression,
+  BlockExpression:            fromBlockExpression,
+  UnaryExpression:            fromUnaryExpression,
+  BinaryExpression:           fromBinaryExpression,
+  LogicalExpression:          fromLogicalExpression,
+  ConditionalExpression:      fromConditionalExpression,
+  SwitchExpression:           fromSwitchExpression,
+  CallExpression:             fromCallExpression,
+  SpreadElement:              fromSpreadElement,
+  ExpressionStatement:        fromExpressionStatement,
+  VariableDeclaration:        fromVariableDeclaration,
+  FunctionDeclaration:        fromFunctionDeclaration,
+  Property:                   fromProperty,
+  ArrayPattern:               fromArrayPattern,
+  Elision:                    fromElision,
+  ObjectPattern:              fromObjectPattern,
+  RestElement:                fromRestElement,
+  ImportDeclaration:          fromImportDeclaration,
+  ImportDefaultSpecifier:     fromImportDefaultSpecifier,
+  ImportNamespaceSpecifier:   fromImportNamespaceSpecifier,
+  ImportSpecifier:            fromImportSpecifier,
+  ExportNamedDeclaration:     fromExportNamedDeclaration,
+  ExportDefaultDeclaration:   fromExportDefaultDeclaration,
+  ExportSpecifier:            fromExportSpecifier,
+  Module:                     fromModule,
 };
