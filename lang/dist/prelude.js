@@ -23,6 +23,10 @@ const Prelude$1 = {
   id: x => x,
   const: x => y => x,
   not: x => !x,
+  quot: lhs => rhs => rhs === 0 ? DivisionByZero : lhs / rhs | 0,
+  rem: lhs => rhs => rhs === 0 ? DivisionByZero : lhs % rhs,
+  div: lhs => rhs => rhs === 0 ? DivisionByZero : Math.floor(lhs / rhs),
+  mod: lhs => rhs => rhs === 0 ? DivisionByZero : (lhs % rhs + rhs) % rhs,
   equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude$1.equals(x)(that[idx]))) : this$ === that,
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => x => x[Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
@@ -33,10 +37,12 @@ const Prelude$1 = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
-const {ArrowFunctionExpression, BinaryExpression, CallExpression, CompositionExpression, ConditionalExpression, Identifier, LogicalExpression, MemberExpression, NullLiteral, ObjectExpression, Property, StringLiteral, UnaryExpression} = Node;
+const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
+const {ArrowFunctionExpression, BinaryExpression, CallExpression, CompositionExpression, ConditionalExpression, Identifier, LogicalExpression, MemberExpression, NullLiteral, NumberLiteral, ObjectExpression, Property, StringLiteral, UnaryExpression} = Node;
 const $0023Array = Identifier("Array");
 const $0023CasesNotExhaustive = Identifier("CasesNotExhaustive");
+const $0023DivisionByZero = Identifier("DivisionByZero");
+const $0023Math = Identifier("Math");
 const $0023Reflect = Identifier("Reflect");
 const $0023Symbol = Identifier("Symbol");
 const $0023args = Identifier("args");
@@ -65,6 +71,7 @@ const $0027fantasy$002Dland$002Fmap = StringLiteral("fantasy-land/map");
 const $0027fantasy$002Dland$002Freduce = StringLiteral("fantasy-land/reduce");
 const $0027filter = StringLiteral("filter");
 const $0027flatMap = StringLiteral("flatMap");
+const $0027floor = StringLiteral("floor");
 const $0027for = StringLiteral("for");
 const $0027isArray = StringLiteral("isArray");
 const $0027length = StringLiteral("length");
@@ -91,6 +98,10 @@ const Prelude = fromPrelude => ({
   id: ArrowFunctionExpression([$0023x])($0023x),
   const: ArrowFunctionExpression([$0023x])(ArrowFunctionExpression([$0023y])($0023x)),
   not: ArrowFunctionExpression([$0023x])(UnaryExpression("!")($0023x)),
+  quot: ArrowFunctionExpression([$0023lhs])(ArrowFunctionExpression([$0023rhs])(ConditionalExpression(BinaryExpression("===")($0023rhs)(NumberLiteral(0)))($0023DivisionByZero)(BinaryExpression("|")(BinaryExpression("/")($0023lhs)($0023rhs))(NumberLiteral(0))))),
+  rem: ArrowFunctionExpression([$0023lhs])(ArrowFunctionExpression([$0023rhs])(ConditionalExpression(BinaryExpression("===")($0023rhs)(NumberLiteral(0)))($0023DivisionByZero)(BinaryExpression("%")($0023lhs)($0023rhs)))),
+  div: ArrowFunctionExpression([$0023lhs])(ArrowFunctionExpression([$0023rhs])(ConditionalExpression(BinaryExpression("===")($0023rhs)(NumberLiteral(0)))($0023DivisionByZero)(CallExpression(MemberExpression($0023Math)($0027floor))([BinaryExpression("/")($0023lhs)($0023rhs)])))),
+  mod: ArrowFunctionExpression([$0023lhs])(ArrowFunctionExpression([$0023rhs])(ConditionalExpression(BinaryExpression("===")($0023rhs)(NumberLiteral(0)))($0023DivisionByZero)(BinaryExpression("%")(BinaryExpression("+")(BinaryExpression("%")($0023lhs)($0023rhs))($0023rhs))($0023rhs)))),
   equals: ArrowFunctionExpression([$0023this])(ArrowFunctionExpression([$0023that])(ConditionalExpression(CallExpression(MemberExpression($0023Array)($0027isArray))([$0023this]))(BinaryExpression("&&")(CallExpression(MemberExpression($0023Array)($0027isArray))([$0023that]))(BinaryExpression("&&")(BinaryExpression("===")(MemberExpression($0023this)($0027length))(MemberExpression($0023that)($0027length)))(CallExpression(MemberExpression($0023this)($0027every))([ArrowFunctionExpression([$0023x, $0023idx])(CallExpression(CallExpression(fromPrelude("equals"))([$0023x]))([MemberExpression($0023that)($0023idx)]))]))))(BinaryExpression("===")($0023this)($0023that)))),
   concat: ArrowFunctionExpression([$0023this])(ArrowFunctionExpression([$0023that])(ConditionalExpression(LogicalExpression("or")(CallExpression(MemberExpression($0023Array)($0027isArray))([$0023this]))(BinaryExpression("===")(UnaryExpression("typeof")($0023this))($0027string)))(CallExpression(MemberExpression($0023this)($0027concat))([$0023that]))(CallExpression(MemberExpression($0023this)($0027fantasy$002Dland$002Fconcat))([$0023that])))),
   reduce: ArrowFunctionExpression([$0023f])(ArrowFunctionExpression([$0023y])(ArrowFunctionExpression([$0023x])(CallExpression(MemberExpression($0023x)(ConditionalExpression(CallExpression(MemberExpression($0023Array)($0027isArray))([$0023x]))($0027reduce)($0027fantasy$002Dland$002Freduce)))([ArrowFunctionExpression([$0023y, $0023x])(CallExpression(CallExpression($0023f)([$0023y]))([$0023x])), $0023y])))),

@@ -337,7 +337,6 @@ ExponentiationExpression
 MultiplicativeOperator
   = '*'
   / '/'
-  / '%'
 
 MultiplicativeExpression
   = left:ExponentiationExpression

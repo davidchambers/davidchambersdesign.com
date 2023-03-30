@@ -12,6 +12,7 @@ export default Prelude;
   LogicalExpression,
   MemberExpression,
   NullLiteral,
+  NumberLiteral,
   ObjectExpression,
   Property,
   StringLiteral,
@@ -20,6 +21,8 @@ export default Prelude;
 
 #Array                  = Identifier "Array";
 #CasesNotExhaustive     = Identifier "CasesNotExhaustive";
+#DivisionByZero         = Identifier "DivisionByZero";
+#Math                   = Identifier "Math";
 #Reflect                = Identifier "Reflect";
 #Symbol                 = Identifier "Symbol";
 #args                   = Identifier "args";
@@ -49,6 +52,7 @@ export default Prelude;
 'fantasy-land/reduce    = StringLiteral "fantasy-land/reduce";
 'filter                 = StringLiteral "filter";
 'flatMap                = StringLiteral "flatMap";
+'floor                  = StringLiteral "floor";
 'for                    = StringLiteral "for";
 'isArray                = StringLiteral "isArray";
 'length                 = StringLiteral "length";
@@ -163,6 +167,42 @@ Prelude fromPrelude = {
   not: {
     ArrowFunctionExpression [#x] {
       UnaryExpression "!" #x
+    }
+  },
+  quot: {
+    ArrowFunctionExpression [#lhs] {
+      ArrowFunctionExpression [#rhs] {
+        ConditionalExpression (BinaryExpression "===" #rhs (NumberLiteral 0))
+                              #DivisionByZero
+                              (BinaryExpression "|" (BinaryExpression "/" #lhs #rhs) (NumberLiteral 0))
+      }
+    }
+  },
+  rem: {
+    ArrowFunctionExpression [#lhs] {
+      ArrowFunctionExpression [#rhs] {
+        ConditionalExpression (BinaryExpression "===" #rhs (NumberLiteral 0))
+                              #DivisionByZero
+                              (BinaryExpression "%" #lhs #rhs)
+      }
+    }
+  },
+  div: {
+    ArrowFunctionExpression [#lhs] {
+      ArrowFunctionExpression [#rhs] {
+        ConditionalExpression (BinaryExpression "===" #rhs (NumberLiteral 0))
+                              #DivisionByZero
+                              (CallExpression (MemberExpression #Math 'floor) [BinaryExpression "/" #lhs #rhs])
+      }
+    }
+  },
+  mod: {
+    ArrowFunctionExpression [#lhs] {
+      ArrowFunctionExpression [#rhs] {
+        ConditionalExpression (BinaryExpression "===" #rhs (NumberLiteral 0))
+                              #DivisionByZero
+                              (BinaryExpression "%" (BinaryExpression "+" (BinaryExpression "%" #lhs #rhs) #rhs) #rhs)
+      }
     }
   },
   ;; TODO: generalize to setoid

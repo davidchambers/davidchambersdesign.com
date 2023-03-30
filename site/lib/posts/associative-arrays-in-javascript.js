@@ -24,6 +24,10 @@ const Prelude = {
   id: x => x,
   const: x => y => x,
   not: x => !x,
+  quot: lhs => rhs => rhs === 0 ? DivisionByZero : lhs / rhs | 0,
+  rem: lhs => rhs => rhs === 0 ? DivisionByZero : lhs % rhs,
+  div: lhs => rhs => rhs === 0 ? DivisionByZero : Math.floor(lhs / rhs),
+  mod: lhs => rhs => rhs === 0 ? DivisionByZero : (lhs % rhs + rhs) % rhs,
   equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => x => x[Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
@@ -34,7 +38,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const body = [p([strong(["JavaScript does not have associative arrays."]), "\n    (This will be old news to many.)"]), p(["Confusion arises from the fact that array syntax in JavaScript is\n    very similar to array syntax in PHP, a language that ", em(["does"]), "\n    have associative arrays. Additionally, ", strong(["any object in\n    JavaScript can be treated as an associative array"]), ". This means\n    that if one creates a JavaScript ", code(["Array"]), " object and\n    proceeds to use PHP's associative array syntax in an attempt to\n    add items to it, one ", em(["will"]), " succeed in assigning it\n    attribute–value pairs. The object in question need not be an ", code(["Array"]), " for this to work, though, so for the sake of\n    clarity using a vanilla ", code(["Object"]), " is advisable."]), p(["To gain a more detailed understanding of why JavaScript ", em(["appears"]), " to have associative arrays, read ", a({
   href: "http://andrewdupont.net/2006/05/18/javascript-associative-arrays-considered-harmful/"
 })([`JavaScript "Associative Arrays" Considered Harmful`]), "."])];
