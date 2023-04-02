@@ -128,46 +128,44 @@ vars = match' Node (const empty) {
   DataTypeDeclaration: \name constructors -> declaring $ Set.of name,
 };
 
-rewriteModule module namesExportedFrom = do {
+rewriteModule module namesExportedFrom = {
   {declared, referenced} = vars module;
   undeclared = Set.without declared referenced;
-  imports <- Future.parallel 16 $ rewriteImportDeclaration undeclared namesExportedFrom <$> module.imports;
-  module = Module imports module.exports module.statements;
-  {declared, referenced} = vars module;
-  unreferenced = Set.without referenced declared;
-  undeclared = Set.without declared referenced;
-  preludeIdent = nextUnusedIdent declared "Prelude";
-  declared = Set.add preludeIdent.name declared;
-  fromPrelude = MemberExpression preludeIdent . StringLiteral;
-  rewrite = rewriteNode fromPrelude declared;
-  preludeEntries = Object.entries $ Prelude fromPrelude;
-  preludeNames = (\[name] -> name) <$> preludeEntries;
-  unreferenced' = Set.sub preludeIdent.name unreferenced;
-  undeclared' = Set.without (preludeNames | Set.union globals | Set.add "import" | Set.add "console" | Set.add "fetch") undeclared;
-  if unreferenced'.size > 0 then (unreferenced' | Array.from | .join [", "] | concat "unreferenced: " | console.error);
-  if undeclared'.size   > 0 then (undeclared'   | Array.from | .join [", "] | concat "undeclared: "   | console.error);
-  preludeDefinition = {
-    VariableDeclaration preludeIdent {
-      ObjectExpression {
-        (\[name, value] -> Property (StringLiteral name) value) <$> preludeEntries
-      }
-    }
-  };
-  preludeDestructuring = {
-    VariableDeclaration {
-      ObjectPattern {
-        preludeNames >>= \name -> {
-          ;; Do not unpack if name conflicts with a top-level binding:
-          if Set.has name declared then [] else [Property (StringLiteral name) (Identifier name)]
+  imports = Future.parallel 16 $ rewriteImportDeclaration undeclared namesExportedFrom <$> module.imports;
+  withImports module = {
+    {declared, referenced} = vars module;
+    preludeIdent = nextUnusedIdent declared "Prelude";
+    declared' = Set.add preludeIdent.name declared;
+    fromPrelude = MemberExpression preludeIdent . StringLiteral;
+    rewrite = rewriteNode fromPrelude declared';
+    preludeEntries = Object.entries $ Prelude fromPrelude;
+    preludeNames = (\[name] -> name) <$> preludeEntries;
+    unreferenced = declared | Set.without referenced | Set.sub preludeIdent.name;
+    undeclared = referenced | Set.without declared | Set.without (Set.from preludeNames) | Set.without globals | Set.without (Set.from ["import", "console", "fetch"]);
+    if unreferenced.size > 0 then (unreferenced | Array.from | .join [", "] | concat "unreferenced: " | console.error);
+    if undeclared.size   > 0 then (undeclared   | Array.from | .join [", "] | concat "undeclared: "   | console.error);
+    preludeDefinition = {
+      VariableDeclaration preludeIdent {
+        ObjectExpression {
+          (\[name, value] -> Property (StringLiteral name) value) <$> preludeEntries
         }
       }
-    } preludeIdent
-  };
-  Future.resolve {
+    };
+    preludeDestructuring = {
+      VariableDeclaration {
+        ObjectPattern {
+          preludeNames >>= \name -> {
+            ;; Do not unpack if name conflicts with a top-level binding:
+            if Set.has name declared' then [] else [Property (StringLiteral name) (Identifier name)]
+          }
+        }
+      } preludeIdent
+    };
     Module module.imports
            (rewrite <$> module.exports)
            (rewrite <$> [preludeDefinition, preludeDestructuring, ...module.statements])
-  }
+  };
+  (\imports -> withImports $ Module imports module.exports module.statements) <$> imports
 };
 
 rewriteImportAllDeclaration undeclared namesExportedFrom source hiding = {

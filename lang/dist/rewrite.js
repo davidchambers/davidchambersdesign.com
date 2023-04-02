@@ -123,13 +123,28 @@ const vars = match$0027(Node)(const$(empty))({
   Module: imports => exports => statements => mergeAll(Prelude$1.map(vars)(Prelude$1.concat(imports)(Prelude$1.concat(exports)(statements)))),
   DataTypeDeclaration: name => constructors => declaring(Set.of(name))
 });
-const rewriteModule = module => namesExportedFrom => (({declared, referenced}) => (undeclared => Prelude$1.chain(imports => (module => (({declared, referenced}) => (unreferenced => (undeclared => (preludeIdent => (declared => (fromPrelude => (rewrite => (preludeEntries => (preludeNames => (unreferenced$0027 => (undeclared$0027 => (() => {
-  unreferenced$0027.size > 0 ? console.error(concat("unreferenced: ")(Prelude$1._apply("join")([", "])(Array.from(unreferenced$0027)))) : undefined;
-  return (() => {
-    undeclared$0027.size > 0 ? console.error(concat("undeclared: ")(Prelude$1._apply("join")([", "])(Array.from(undeclared$0027)))) : undefined;
-    return (preludeDefinition => (preludeDestructuring => Future.resolve(Module(module.imports)(Prelude$1.map(rewrite)(module.exports))(Prelude$1.map(rewrite)([preludeDefinition, preludeDestructuring, ...module.statements]))))(VariableDeclaration(ObjectPattern(Prelude$1.chain(name => Set.has(name)(declared) ? [] : [Property(StringLiteral(name))(Identifier(name))])(preludeNames)))(preludeIdent)))(VariableDeclaration(preludeIdent)(ObjectExpression(Prelude$1.map(([name, value]) => Property(StringLiteral(name))(value))(preludeEntries))));
+const rewriteModule = module => namesExportedFrom => (() => {
+  const {declared, referenced} = vars(module);
+  const undeclared = Set.without(declared)(referenced);
+  const imports = Future.parallel(16)(Prelude$1.map(rewriteImportDeclaration(undeclared)(namesExportedFrom))(module.imports));
+  const withImports = module => (() => {
+    const {declared, referenced} = vars(module);
+    const preludeIdent = nextUnusedIdent(declared)("Prelude");
+    const declared$0027 = Set.add(preludeIdent.name)(declared);
+    const fromPrelude = x => MemberExpression(preludeIdent)(StringLiteral(x));
+    const rewrite = rewriteNode(fromPrelude)(declared$0027);
+    const preludeEntries = Object.entries(Prelude(fromPrelude));
+    const preludeNames = Prelude$1.map(([name]) => name)(preludeEntries);
+    const unreferenced = Set.sub(preludeIdent.name)(Set.without(referenced)(declared));
+    const undeclared = Set.without(Set.from(["import", "console", "fetch"]))(Set.without(globals)(Set.without(Set.from(preludeNames))(Set.without(declared)(referenced))));
+    unreferenced.size > 0 ? console.error(concat("unreferenced: ")(Prelude$1._apply("join")([", "])(Array.from(unreferenced)))) : undefined;
+    undeclared.size > 0 ? console.error(concat("undeclared: ")(Prelude$1._apply("join")([", "])(Array.from(undeclared)))) : undefined;
+    const preludeDefinition = VariableDeclaration(preludeIdent)(ObjectExpression(Prelude$1.map(([name, value]) => Property(StringLiteral(name))(value))(preludeEntries)));
+    const preludeDestructuring = VariableDeclaration(ObjectPattern(Prelude$1.chain(name => Set.has(name)(declared$0027) ? [] : [Property(StringLiteral(name))(Identifier(name))])(preludeNames)))(preludeIdent);
+    return Module(module.imports)(Prelude$1.map(rewrite)(module.exports))(Prelude$1.map(rewrite)([preludeDefinition, preludeDestructuring, ...module.statements]));
   })();
-})())(Set.without(Set.add("fetch")(Set.add("console")(Set.add("import")(Set.union(globals)(preludeNames)))))(undeclared)))(Set.sub(preludeIdent.name)(unreferenced)))(Prelude$1.map(([name]) => name)(preludeEntries)))(Object.entries(Prelude(fromPrelude))))(rewriteNode(fromPrelude)(declared)))(x => MemberExpression(preludeIdent)(StringLiteral(x))))(Set.add(preludeIdent.name)(declared)))(nextUnusedIdent(declared)("Prelude")))(Set.without(declared)(referenced)))(Set.without(referenced)(declared)))(vars(module)))(Module(imports)(module.exports)(module.statements)))(Future.parallel(16)(Prelude$1.map(rewriteImportDeclaration(undeclared)(namesExportedFrom))(module.imports))))(Set.without(declared)(referenced)))(vars(module));
+  return Prelude$1.map(imports => withImports(Module(imports)(module.exports)(module.statements)))(imports);
+})();
 const rewriteImportAllDeclaration = undeclared => namesExportedFrom => source => hiding => (() => {
   const namesExported = Prelude$1._apply("endsWith")([".serif"])(source.value) ? namesExportedFrom(source.value) : Prelude$1.map(Object.keys)(Future.attemptP(() => import(source.value)));
   const namesHidden = Prelude$1.map(x => x.name)(hiding);
