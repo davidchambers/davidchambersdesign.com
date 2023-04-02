@@ -8,7 +8,7 @@ export {
 };
 
 basename path_ suffix = {
-  apply [path_, suffix] path.basename
+  apply path.basename [path_, suffix]
 };
 
 dirname = {
@@ -16,9 +16,9 @@ dirname = {
 };
 
 join = {
-  flip apply path.join
+  apply path.join
 };
 
 relative from to = {
-  apply [from, to] path.relative
+  apply path.relative [from, to]
 };

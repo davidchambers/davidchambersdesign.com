@@ -14,7 +14,7 @@ const Prelude$1 = {
     }
   },
   _apply: name => args => target => target[name].apply(target, args),
-  apply: args => target => target.apply(target, args),
+  apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
@@ -89,7 +89,7 @@ const esBinaryOperators = ["<<", ">>", ">>>", "&", "^", "|"];
 const Prelude = fromPrelude => ({
   operators: ObjectExpression([Property($0027unary)(ObjectExpression(map(op => Property(StringLiteral(op))(fromEsUnaryOperator(op)))(esUnaryOperators))), Property($0027binary)(ObjectExpression(map(op => Property(StringLiteral(op))(fromEsBinaryOperator(op)))(esBinaryOperators)))]),
   _apply: ArrowFunctionExpression([$0023name])(ArrowFunctionExpression([$0023args])(ArrowFunctionExpression([$0023target])(CallExpression(MemberExpression(MemberExpression($0023target)($0023name))($0027apply))([$0023target, $0023args])))),
-  apply: ArrowFunctionExpression([$0023args])(ArrowFunctionExpression([$0023target])(CallExpression(MemberExpression($0023target)($0027apply))([$0023target, $0023args]))),
+  apply: ArrowFunctionExpression([$0023f])(ArrowFunctionExpression([$0023args])(CallExpression(MemberExpression($0023f)($0027apply))([NullLiteral, $0023args]))),
   construct: ArrowFunctionExpression([$0023constructor])(ArrowFunctionExpression([$0023args])(CallExpression(MemberExpression($0023Reflect)($0027construct))([$0023constructor, $0023args]))),
   instanceof: ArrowFunctionExpression([$0023constructor])(ArrowFunctionExpression([$0023x])(BinaryExpression("instanceof")($0023x)($0023constructor))),
   typeof: ArrowFunctionExpression([$0023x])(ConditionalExpression(BinaryExpression("===")($0023x)(NullLiteral))($0027null)(UnaryExpression("typeof")($0023x))),

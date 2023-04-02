@@ -13,7 +13,7 @@ const Prelude = {
     }
   },
   _apply: name => args => target => target[name].apply(target, args),
-  apply: args => target => target.apply(target, args),
+  apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,

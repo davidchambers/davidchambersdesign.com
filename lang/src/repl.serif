@@ -35,7 +35,7 @@ read serifSource = do {
   serifAst' <- serif.rewrite serifAst \_importPath -> [];  ;; TODO: support import statements
   serifAst'' = serif.changeExtensions serifAst';
   esAst = serif.esModuleFromSerifModule serifAst'';
-  esSourceText = apply [esAst, {}] generate;
+  esSourceText = apply generate [esAst, {}];
   evaluateModule esSourceText
 };
 
@@ -45,7 +45,7 @@ read serifSource = do {
 #35 = "\x1B[35m";
 
 print x = {
-  switch apply [Object.prototype.toString, x, []] Reflect.apply
+  switch apply Reflect.apply [Object.prototype.toString, x, []]
   when "[object Null]",
        "[object Undefined]",
        "[object Boolean]"
@@ -80,7 +80,7 @@ server = repl.start {
             .displayPrompt [false] server
           })
          (\result -> {
-            apply [null, result] callback
+            apply callback [null, result]
           })
          (read code)
   },
@@ -88,6 +88,6 @@ server = repl.start {
 };
 
 .setupHistory [
-  path.join [apply [] os.homedir, ".serif-repl-history"],
+  path.join [apply os.homedir [], ".serif-repl-history"],
   \error -> undefined
 ] server;

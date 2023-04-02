@@ -16,7 +16,7 @@ const Prelude = {
     }
   },
   _apply: name => args => target => target[name].apply(target, args),
-  apply: args => target => target.apply(target, args),
+  apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
@@ -48,10 +48,10 @@ const status = url => bichain(err => resolve({
 }))(res => resolve({
   url,
   status: res.status
-}))(attemptP(() => apply([url, {
+}))(attemptP(() => apply(fetch)([url, {
   method: "HEAD",
   redirect: "manual"
-}])(fetch)));
+}])));
 const bold = text => "\u001b[1m" + text + "\u001b[22m";
 const invert = text => "\u001b[7m" + text + "\u001b[27m";
 const red = text => "\u001b[31m" + text + "\u001b[0m";

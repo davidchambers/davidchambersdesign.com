@@ -14,7 +14,7 @@ const Prelude = {
     }
   },
   _apply: name => args => target => target[name].apply(target, args),
-  apply: args => target => target.apply(target, args),
+  apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
@@ -38,7 +38,7 @@ const Prelude = {
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
 const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
-const datetime = date => time => zone => apply([date + " " + time + " (" + zone + ")", "yyyy-MM-dd HH:mm:ss (z)", {
+const datetime = date => time => zone => apply(luxon.DateTime.fromFormat)([date + " " + time + " (" + zone + ")", "yyyy-MM-dd HH:mm:ss (z)", {
   setZone: true
-}])(luxon.DateTime.fromFormat);
+}]);
 export default datetime;

@@ -9,13 +9,13 @@ export {
 };
 
 mkdir options path = {
-  attemptP \() -> apply [path, options] fs.mkdir
+  attemptP \() -> apply fs.mkdir [path, options]
 };
 
 readFile filename = {
-  attemptP \() -> apply [filename, "utf8"] fs.readFile
+  attemptP \() -> apply fs.readFile [filename, "utf8"]
 };
 
 writeFile filename data = {
-  attemptP \() -> apply [filename, data] fs.writeFile
+  attemptP \() -> apply fs.writeFile [filename, data]
 };

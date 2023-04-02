@@ -12,7 +12,7 @@ parse filename sourceText = {
   {serif.parse filename sourceText} | mapRej \error -> {
     lines = {
       sourceText
-      | .split [apply ["^", "m"] RegExp]
+      | .split [apply RegExp ["^", "m"]]
       | .map [\(text, index) -> {number: index + 1, text: .trimEnd [] text}]
       | chain \line -> {
           offset = line.number - error.location.start.line;
@@ -21,7 +21,7 @@ parse filename sourceText = {
     };
     renderLineNumber = .padStart [4] . String;
     """\n\x1B[1m${
-      path.relative (apply [] process.cwd) error.location.source
+      path.relative (apply process.cwd []) error.location.source
     }\x1B[0m\n\n${
       lines
       | .map [\(line, idx, lines) -> {
@@ -92,7 +92,7 @@ orderDependencies tree = {
 };
 
 {
-  cwd = apply [] process.cwd;
+  cwd = apply process.cwd [];
   [,, src, dst, ...filenames] = process.argv;
   toAbs abs rel = path.join $ [abs] <> .split ["/"] rel;  ;; use / (even on Windows)
   absSrc = toAbs cwd src;
@@ -115,7 +115,7 @@ orderDependencies tree = {
       };
       serifAst'' = serif.changeExtensions serifAst';
       esAst = serif.esModuleFromSerifModule serifAst'';
-      esSource = apply [esAst, {}] generate;
+      esSource = apply generate [esAst, {}];
       esBasename = path.basename serifFilename ".serif" + ".js";
       esFilename = path.join [absDst, path.relative absSrc serifDirname, esBasename];
       _ <- fs.mkdir {recursive: true} $ path.dirname esFilename;

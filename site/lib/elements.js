@@ -13,7 +13,7 @@ const Prelude = {
     }
   },
   _apply: name => args => target => target[name].apply(target, args),
-  apply: args => target => target.apply(target, args),
+  apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
@@ -55,7 +55,7 @@ const render$002Dinline$002Delement = context => element => Prelude._apply("repe
   level: 0,
   inline: true
 }]))(element.children)) + "</" + element.name + ">" + (context.inline ? "" : "\n");
-const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => Prelude.equals("object")(typeof$(string$002Dor$002Dnode)) ? string$002Dor$002Dnode : text(Prelude._apply("replaceAll")(["\n", ""])(Prelude._apply("replaceAll")([apply(["^[ ]+", "gm"])(RegExp), " "])(string$002Dor$002Dnode)));
+const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => Prelude.equals("object")(typeof$(string$002Dor$002Dnode)) ? string$002Dor$002Dnode : text(Prelude._apply("replaceAll")(["\n", ""])(Prelude._apply("replaceAll")([apply(RegExp)(["^[ ]+", "gm"]), " "])(string$002Dor$002Dnode)));
 const block$002Delement = name => attributes => children$0021 => (() => {
   const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
   const element = {

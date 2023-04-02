@@ -117,9 +117,9 @@ Prelude fromPrelude = {
     }
   },
   apply: {
-    ArrowFunctionExpression [#args] {
-      ArrowFunctionExpression [#target] {
-        CallExpression (MemberExpression #target 'apply) [#target, #args]
+    ArrowFunctionExpression [#f] {
+      ArrowFunctionExpression [#args] {
+        CallExpression (MemberExpression #f 'apply) [NullLiteral, #args]
       }
     }
   },

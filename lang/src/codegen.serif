@@ -79,7 +79,7 @@ fromIdentifier = {
     if name == "import" then "import"
     else if .has [name] RESERVED_WORDS then name + "$"
     else if validEsIdentifierName name then name
-    else .replaceAll [apply ["[^$_A-Za-z0-9]", "g"] RegExp, escapeChar] name
+    else .replaceAll [apply RegExp ["[^$_A-Za-z0-9]", "g"], escapeChar] name
   };
   fromEscapedIdentifierName . escape
 };
@@ -112,7 +112,7 @@ fromTemplateLiteral quasis expressions = {
       ]
     } else {
       indent = .search [RegExp "(?! )"] $ .slice [lineEnding.length] quasis[0];
-      pattern = apply [lineEnding + "[ ]{0," + indent + "}", "g"] RegExp;
+      pattern = apply RegExp [lineEnding + "[ ]{0," + indent + "}", "g"];
       [head, ...tail] = (.replaceAll ["`", "\\`"] . .replaceAll [pattern, lineEnding]) <$> quasis;
       head' = .slice [lineEnding.length] head;
       if tail == [] then [

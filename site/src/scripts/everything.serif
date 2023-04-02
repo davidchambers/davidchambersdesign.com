@@ -25,11 +25,11 @@ import posts from "../posts/index.serif";
 dirname = path.dirname $ url.fileURLToPath import.meta.url
 ;
 public components = {
-  apply [dirname, "..", "..", "public", ...components] path.join
+  apply path.join [dirname, "..", "..", "public", ...components]
 }
 ;
 write-file filename data = {
-  apply [filename, data] fs.writeFileSync
+  apply fs.writeFileSync [filename, data]
 }
 ;
 css/screen

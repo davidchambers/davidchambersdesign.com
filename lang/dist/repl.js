@@ -20,7 +20,7 @@ const Prelude = {
     }
   },
   _apply: name => args => target => target[name].apply(target, args),
-  apply: args => target => target.apply(target, args),
+  apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
@@ -53,13 +53,13 @@ const evaluateModule = sourceText => (context => (module => Prelude.chain(_ => P
 })())))(map(Object.entries)(attemptP(() => import(specifier))))])(module))))(construct(vm.SourceTextModule)([sourceText, {
   context
 }])))(vm.createContext(globalThis));
-const read = serifSource => Prelude.chain(serifAst => Prelude.chain(serifAst$0027 => (serifAst$0027$0027 => (esAst => (esSourceText => evaluateModule(esSourceText))(apply([esAst, {}])(generate)))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(_importPath => [])))(serif.parse("[repl]")("export default " + serifSource + ";"));
+const read = serifSource => Prelude.chain(serifAst => Prelude.chain(serifAst$0027 => (serifAst$0027$0027 => (esAst => (esSourceText => evaluateModule(esSourceText))(apply(generate)([esAst, {}])))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(_importPath => [])))(serif.parse("[repl]")("export default " + serifSource + ";"));
 const $00230 = "\u001b[0m";
 const $002332 = "\u001b[32m";
 const $002333 = "\u001b[33m";
 const $002335 = "\u001b[35m";
 const print = x => (() => {
-  switch (apply([Object.prototype.toString, x, []])(Reflect.apply)) {
+  switch (apply(Reflect.apply)([Object.prototype.toString, x, []])) {
     case "[object Null]":
     case "[object Undefined]":
     case "[object Boolean]":
@@ -92,7 +92,7 @@ const server = repl.start({
     console.error(err);
     console.log("");
     return Prelude._apply("displayPrompt")([false])(server);
-  })())(result => apply([null, result])(callback))(read(code)),
+  })())(result => apply(callback)([null, result]))(read(code)),
   writer: value => print(value) + "\n"
 });
-Prelude._apply("setupHistory")([path.join([apply([])(os.homedir), ".serif-repl-history"]), error => undefined])(server);
+Prelude._apply("setupHistory")([path.join([apply(os.homedir)([]), ".serif-repl-history"]), error => undefined])(server);

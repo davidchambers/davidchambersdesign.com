@@ -13,7 +13,7 @@ export {
 };
 
 parse filename sourceText = {
-  attempt \() -> apply [sourceText, {grammarSource: filename}] grammar.parse
+  attempt \() -> apply grammar.parse [sourceText, {grammarSource: filename}]
 };
 
 changeExtensionInImportDeclaration {source, specifiers} = {

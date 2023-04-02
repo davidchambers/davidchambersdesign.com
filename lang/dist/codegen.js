@@ -15,7 +15,7 @@ const Prelude = {
     }
   },
   _apply: name => args => target => target[name].apply(target, args),
-  apply: args => target => target.apply(target, args),
+  apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
@@ -47,7 +47,7 @@ const fromEscapedIdentifierName = name => ({
 });
 const fromIdentifier = (() => {
   const escapeChar = c => concat("$")(Prelude._apply("padStart")([4, "0"])(Prelude._apply("toUpperCase")([])(Prelude._apply("toString")([16])(Prelude._apply("charCodeAt")([0])(c)))));
-  const escape = name => Prelude.equals("import")(name) ? "import" : Prelude._apply("has")([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : Prelude._apply("replaceAll")([apply(["[^$_A-Za-z0-9]", "g"])(RegExp), escapeChar])(name);
+  const escape = name => Prelude.equals("import")(name) ? "import" : Prelude._apply("has")([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : Prelude._apply("replaceAll")([apply(RegExp)(["[^$_A-Za-z0-9]", "g"]), escapeChar])(name);
   return x => fromEscapedIdentifierName(escape(x));
 })();
 const fromLiteral = value => ({
@@ -72,7 +72,7 @@ const fromTemplateLiteral = quasis => expressions => ({
       return [...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(quasis$0027)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(quasis$0027))];
     })() : (() => {
       const indent = Prelude._apply("search")([RegExp("(?! )")])(Prelude._apply("slice")([lineEnding.length])(quasis[0]));
-      const pattern = apply([lineEnding + "[ ]{0," + indent + "}", "g"])(RegExp);
+      const pattern = apply(RegExp)([lineEnding + "[ ]{0," + indent + "}", "g"]);
       const [head, ...tail] = Prelude.map(x => Prelude._apply("replaceAll")(["`", "\\`"])(Prelude._apply("replaceAll")([pattern, lineEnding])(x)))(quasis);
       const head$0027 = Prelude._apply("slice")([lineEnding.length])(head);
       return Prelude.equals([])(tail) ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(tail)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(tail))];

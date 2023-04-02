@@ -21,7 +21,7 @@ links node = {
 status url = {
   bichain {\err -> resolve {url: url, status: err.cause.code}}
           {\res -> resolve {url: url, status: res.status}}
-          {attemptP \() -> apply [url, {method: "HEAD", redirect: "manual"}] fetch}
+          {attemptP \() -> apply fetch [url, {method: "HEAD", redirect: "manual"}]}
 };
 
 bold   text = "\x1B[1m" + text + "\x1B[22m";

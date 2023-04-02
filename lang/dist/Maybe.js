@@ -13,7 +13,7 @@ const Prelude = {
     }
   },
   _apply: name => args => target => target[name].apply(target, args),
-  apply: args => target => target.apply(target, args),
+  apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
@@ -46,7 +46,7 @@ const Just = value => ({
   value,
   ["fantasy-land/map"]: f => Just(f(value))
 });
-const match = default$ => cases => maybe => apply([cases, maybe[Symbol.for("tag")]])(Object.hasOwn) ? (() => {
+const match = default$ => cases => maybe => apply(Object.hasOwn)([cases, maybe[Symbol.for("tag")]]) ? (() => {
   switch (maybe[Symbol.for("tag")]) {
     case "Nothing":
       return cases.Nothing;
