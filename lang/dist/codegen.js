@@ -187,7 +187,7 @@ const fromConditionalExpression = predicate => consequent => alternative => ({
   type: "ConditionalExpression",
   test: fromNode(predicate),
   consequent: fromNode(consequent),
-  alternate: fromNode(alternative)
+  alternate: Maybe.maybe(fromLiteral(undefined))(fromNode)(alternative)
 });
 const fromSwitchCase = consequent => predicate => ({
   type: "SwitchCase",

@@ -96,7 +96,7 @@ const vars = match$0027(Node)(const$(empty))({
   MapExpression: left => right => merge(vars(left))(vars(right)),
   BindExpression: left => right => merge(vars(left))(vars(right)),
   LogicalExpression: operator => left => right => merge(vars(left))(vars(right)),
-  ConditionalExpression: predicate => consequent => alternative => merge(merge(vars(predicate))(vars(consequent)))(vars(alternative)),
+  ConditionalExpression: predicate => consequent => alternative => merge(merge(vars(predicate))(vars(consequent)))(Maybe.maybe(empty)(vars)(alternative)),
   SwitchExpression: discriminant => cases => mergeAll(Prelude$1.map(vars)([discriminant, ...cases])),
   SwitchCase: predicates => consequent => mergeAll(Prelude$1.map(vars)([...predicates, consequent])),
   PipeExpression: head => body => merge(vars(head))(vars(body)),
@@ -121,8 +121,8 @@ const vars = match$0027(Node)(const$(empty))({
 const rewriteModule = module => namesExportedFrom => (({declared, referenced}) => (undeclared => Prelude$1.chain(imports => (module => (({declared, referenced}) => (unreferenced => (undeclared => (preludeIdent => (declared => (fromPrelude => (rewrite => (preludeEntries => (preludeNames => (_ => (preludeDefinition => (preludeDestructuring => Future.resolve(Module(module.imports)(Prelude$1.map(rewrite)(module.exports))(Prelude$1.map(rewrite)([preludeDefinition, preludeDestructuring, ...module.statements]))))(VariableDeclaration(ObjectPattern(Prelude$1.chain(name => Set.has(name)(declared) ? [] : [Property(StringLiteral(name))(Identifier(name))])(preludeNames)))(preludeIdent)))(VariableDeclaration(preludeIdent)(ObjectExpression(Prelude$1.map(([name, value]) => Property(StringLiteral(name))(value))(preludeEntries)))))((() => {
   const unreferenced$0027 = Set.sub(preludeIdent.name)(unreferenced);
   const undeclared$0027 = Set.without(Set.add("fetch")(Set.add("console")(Set.add("import")(Set.union(globals)(preludeNames)))))(undeclared);
-  Prelude$1.equals(0)(unreferenced$0027.size) ? undefined : console.error(concat("unreferenced: ")(Prelude$1._apply("join")([", "])(Array.from(unreferenced$0027))));
-  Prelude$1.equals(0)(undeclared$0027.size) ? undefined : console.error(concat("undeclared: ")(Prelude$1._apply("join")([", "])(Array.from(undeclared$0027))));
+  unreferenced$0027.size > 0 ? console.error(concat("unreferenced: ")(Prelude$1._apply("join")([", "])(Array.from(unreferenced$0027)))) : undefined;
+  undeclared$0027.size > 0 ? console.error(concat("undeclared: ")(Prelude$1._apply("join")([", "])(Array.from(undeclared$0027)))) : undefined;
   return undefined;
 })()))(Prelude$1.map(([name]) => name)(preludeEntries)))(Object.entries(Prelude(fromPrelude))))(rewriteNode(fromPrelude)(declared)))(x => MemberExpression(preludeIdent)(StringLiteral(x))))(Set.add(preludeIdent.name)(declared)))(nextUnusedIdent(declared)("Prelude")))(Set.without(declared)(referenced)))(Set.without(referenced)(declared)))(vars(module)))(Module(imports)(module.exports)(module.statements)))(Future.parallel(16)(Prelude$1.map(rewriteImportDeclaration(undeclared)(namesExportedFrom))(module.imports))))(Set.without(declared)(referenced)))(vars(module));
 const rewriteImportAllDeclaration = undeclared => namesExportedFrom => source => hiding => (() => {
@@ -183,7 +183,7 @@ const rewriteNode = fromPrelude => (() => {
     MapExpression: left => right => recur(names)(CallExpression(CallExpression(fromPrelude("map"))([left]))([right])),
     BindExpression: left => right => recur(names)(CallExpression(CallExpression(fromPrelude("chain"))([right]))([left])),
     LogicalExpression: operator => left => right => LogicalExpression(operator)(recur(names)(left))(recur(names)(right)),
-    ConditionalExpression: predicate => consequent => alternative => ConditionalExpression(recur(names)(predicate))(recur(names)(consequent))(recur(names)(alternative)),
+    ConditionalExpression: predicate => consequent => alternative => ConditionalExpression(recur(names)(predicate))(recur(names)(consequent))(Prelude$1.map(recur(names))(alternative)),
     SwitchExpression: discriminant => cases => SwitchExpression(recur(names)(discriminant))(Prelude$1.map(recur(names))(cases)),
     SwitchCase: predicates => consequent => SwitchCase(map(map(recur(names)))(predicates))(recur(names)(consequent)),
     PipeExpression: head => body => recur(names)(CallExpression(body)([head])),
@@ -206,7 +206,7 @@ const rewriteNode = fromPrelude => (() => {
         const $0023cases = Identifier("cases");
         const $0023member = Identifier(Prelude$1._apply("replace")([RegExp("^."), Prelude$1._apply("toLowerCase")([])])(name));
         const case$ = ({name, parameters}) => SwitchCase([Maybe.Just(StringLiteral(name))])(reduce(callee => name => CallExpression(callee)([MemberExpression($0023member)(StringLiteral(name))]))(MemberExpression($0023cases)(StringLiteral(name)))(parameters));
-        return ArrowFunctionExpression([$0023default])(ArrowFunctionExpression([$0023cases])(ArrowFunctionExpression([$0023member])(ConditionalExpression(CallExpression(MemberExpression(Identifier("Object"))(StringLiteral("hasOwn")))([$0023cases, MemberExpression($0023member)($0040tag)]))(SwitchExpression(MemberExpression($0023member)($0040tag))(Prelude$1.map(case$)(constructors)))(CallExpression($0023default)([$0023member])))));
+        return ArrowFunctionExpression([$0023default])(ArrowFunctionExpression([$0023cases])(ArrowFunctionExpression([$0023member])(ConditionalExpression(CallExpression(MemberExpression(Identifier("Object"))(StringLiteral("hasOwn")))([$0023cases, MemberExpression($0023member)($0040tag)]))(SwitchExpression(MemberExpression($0023member)($0040tag))(Prelude$1.map(case$)(constructors)))(Maybe.Just(CallExpression($0023default)([$0023member]))))));
       })())])(map(({name, parameters}) => Property(StringLiteral(name))(reduceRight(body => parameter => ArrowFunctionExpression([Identifier(parameter)])(body))(ObjectExpression(concat([Property($0040tag)(StringLiteral(name))])(map(name => Property(StringLiteral(name))(Identifier(name)))(parameters))))(parameters)))(constructors)))));
     })()
   });

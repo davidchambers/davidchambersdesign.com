@@ -1,7 +1,9 @@
+import Maybe from "./Maybe.serif";
 import Node from "./Node.serif";
 
 export default Prelude;
 
+{Just} = Maybe;
 {
   ArrowFunctionExpression,
   BinaryExpression,
@@ -139,7 +141,7 @@ Prelude fromPrelude = {
   },
   typeof: {
     ArrowFunctionExpression [#x] {
-      ConditionalExpression (BinaryExpression "===" #x NullLiteral) 'null (UnaryExpression "typeof" #x)
+      ConditionalExpression (BinaryExpression "===" #x NullLiteral) 'null (Just $ UnaryExpression "typeof" #x)
     }
   },
   match: {
@@ -174,7 +176,7 @@ Prelude fromPrelude = {
       ArrowFunctionExpression [#rhs] {
         ConditionalExpression (BinaryExpression "===" #rhs (NumberLiteral 0))
                               #DivisionByZero
-                              (BinaryExpression "|" (BinaryExpression "/" #lhs #rhs) (NumberLiteral 0))
+                              (Just $ BinaryExpression "|" (BinaryExpression "/" #lhs #rhs) (NumberLiteral 0))
       }
     }
   },
@@ -183,7 +185,7 @@ Prelude fromPrelude = {
       ArrowFunctionExpression [#rhs] {
         ConditionalExpression (BinaryExpression "===" #rhs (NumberLiteral 0))
                               #DivisionByZero
-                              (BinaryExpression "%" #lhs #rhs)
+                              (Just $ BinaryExpression "%" #lhs #rhs)
       }
     }
   },
@@ -192,7 +194,7 @@ Prelude fromPrelude = {
       ArrowFunctionExpression [#rhs] {
         ConditionalExpression (BinaryExpression "===" #rhs (NumberLiteral 0))
                               #DivisionByZero
-                              (CallExpression (MemberExpression #Math 'floor) [BinaryExpression "/" #lhs #rhs])
+                              (Just $ CallExpression (MemberExpression #Math 'floor) [BinaryExpression "/" #lhs #rhs])
       }
     }
   },
@@ -201,7 +203,7 @@ Prelude fromPrelude = {
       ArrowFunctionExpression [#rhs] {
         ConditionalExpression (BinaryExpression "===" #rhs (NumberLiteral 0))
                               #DivisionByZero
-                              (BinaryExpression "%" (BinaryExpression "+" (BinaryExpression "%" #lhs #rhs) #rhs) #rhs)
+                              (Just $ BinaryExpression "%" (BinaryExpression "+" (BinaryExpression "%" #lhs #rhs) #rhs) #rhs)
       }
     }
   },
@@ -220,7 +222,7 @@ Prelude fromPrelude = {
                 (CallExpression (MemberExpression #this 'every)
                                 [ArrowFunctionExpression [#x, #idx] $
                                    CallExpression (CallExpression (fromPrelude "equals") [#x]) [MemberExpression #that #idx]])))
-          (BinaryExpression "===" #this #that)
+          (Just $ BinaryExpression "===" #this #that)
       }
     }
   },
@@ -232,7 +234,7 @@ Prelude fromPrelude = {
                              (CallExpression (MemberExpression #Array 'isArray) [#this])
                              (BinaryExpression "===" (UnaryExpression "typeof" #this) 'string))
           (CallExpression (MemberExpression #this 'concat) [#that])
-          (CallExpression (MemberExpression #this 'fantasy-land/concat) [#that])
+          (Just $ CallExpression (MemberExpression #this 'fantasy-land/concat) [#that])
       }
     }
   },
@@ -242,7 +244,7 @@ Prelude fromPrelude = {
         ArrowFunctionExpression [#x] {
           CallExpression (
             MemberExpression #x {
-              ConditionalExpression (CallExpression (MemberExpression #Array 'isArray) [#x]) 'reduce 'fantasy-land/reduce
+              ConditionalExpression (CallExpression (MemberExpression #Array 'isArray) [#x]) 'reduce (Just 'fantasy-land/reduce)
             }
           ) [
             ArrowFunctionExpression [#y, #x] {
@@ -273,7 +275,7 @@ Prelude fromPrelude = {
         ConditionalExpression
           (CallExpression (MemberExpression #Array 'isArray) [#x])
           (CallExpression (MemberExpression #x 'filter) [ArrowFunctionExpression [#x] $ CallExpression #f [#x]])
-          (CallExpression (MemberExpression #x 'fantasy-land/filter) [#f])
+          (Just $ CallExpression (MemberExpression #x 'fantasy-land/filter) [#f])
       }
     }
   },
@@ -292,7 +294,7 @@ Prelude fromPrelude = {
         ConditionalExpression
           (CallExpression (MemberExpression #Array 'isArray) [#x])
           (CallExpression (MemberExpression #x 'map) [ArrowFunctionExpression [#x] $ CallExpression #f [#x]])
-          (CallExpression (MemberExpression #x 'fantasy-land/map) [#f])
+          (Just $ CallExpression (MemberExpression #x 'fantasy-land/map) [#f])
       }
     }
   },
@@ -312,7 +314,7 @@ Prelude fromPrelude = {
         ConditionalExpression
           (CallExpression (MemberExpression #Array 'isArray) [#x])
           (CallExpression (MemberExpression #x 'flatMap) [ArrowFunctionExpression [#x] $ CallExpression #f [#x]])
-          (CallExpression (MemberExpression #x 'fantasy-land/chain) [#f])
+          (Just $ CallExpression (MemberExpression #x 'fantasy-land/chain) [#f])
       }
     }
   },

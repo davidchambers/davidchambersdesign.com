@@ -98,7 +98,7 @@ vars = match' Node (const empty) {
   MapExpression: \left right -> vars left `merge` vars right,
   BindExpression: \left right -> vars left `merge` vars right,
   LogicalExpression: \operator left right -> vars left `merge` vars right,
-  ConditionalExpression: \predicate consequent alternative -> vars predicate `merge` vars consequent `merge` vars alternative,
+  ConditionalExpression: \predicate consequent alternative -> vars predicate `merge` vars consequent `merge` (Maybe.maybe empty vars alternative),
   SwitchExpression: \discriminant cases -> mergeAll $ vars <$> [discriminant, ...cases],
   SwitchCase: \predicates consequent -> mergeAll $ vars <$> [...predicates, consequent],
   PipeExpression: \head body -> vars head `merge` vars body,
@@ -139,8 +139,8 @@ rewriteModule module namesExportedFrom = do {
   _ = {
     unreferenced' = Set.sub preludeIdent.name unreferenced;
     undeclared' = Set.without (preludeNames | Set.union globals | Set.add "import" | Set.add "console" | Set.add "fetch") undeclared;
-    if unreferenced'.size == 0 then undefined else (unreferenced' | Array.from | .join [", "] | concat "unreferenced: " | console.error);
-    if undeclared'.size   == 0 then undefined else (undeclared'   | Array.from | .join [", "] | concat "undeclared: "   | console.error);
+    if unreferenced'.size > 0 then (unreferenced' | Array.from | .join [", "] | concat "unreferenced: " | console.error);
+    if undeclared'.size   > 0 then (undeclared'   | Array.from | .join [", "] | concat "undeclared: "   | console.error);
     undefined
   };
   preludeDefinition = {
@@ -306,7 +306,7 @@ rewriteNode fromPrelude = {
     ConditionalExpression: \predicate consequent alternative -> {
       ConditionalExpression (recur names predicate)
                             (recur names consequent)
-                            (recur names alternative)
+                            (recur names <$> alternative)
     },
     SwitchExpression: \discriminant cases -> {
       SwitchExpression (recur names discriminant) (recur names <$> cases)
@@ -366,7 +366,7 @@ rewriteNode fromPrelude = {
                   (CallExpression (MemberExpression (Identifier "Object") $ StringLiteral "hasOwn")
                                   [#cases, MemberExpression #member @tag])
                   (SwitchExpression (MemberExpression #member @tag) (case <$> constructors))
-                  (CallExpression #default [#member])
+                  (Maybe.Just $ CallExpression #default [#member])
               }
             }
           }

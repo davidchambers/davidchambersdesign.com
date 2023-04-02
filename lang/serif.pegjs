@@ -424,13 +424,10 @@ BindExpression
     { return exprs.reduce((left, right) => Node.BindExpression(left)(right)); }
 
 ConditionalExpression
-  = IfToken
-    _ predicate:ConditionalExpression
-    _ ThenToken
-    _ consequent:ConditionalExpression
-    _ ElseToken
-    _ alternative:ConditionalExpression
-    { return Node.ConditionalExpression(predicate)(consequent)(alternative); }
+  = IfToken _ predicate:ConditionalExpression
+    _ ThenToken _ consequent:ConditionalExpression
+    alternative:(_ ElseToken _ alternative:ConditionalExpression { return alternative; })?
+    { return Node.ConditionalExpression(predicate)(consequent)(alternative == null ? Maybe.Nothing : Maybe.Just(alternative)); }
   / BindExpression
 
 SwitchExpression
