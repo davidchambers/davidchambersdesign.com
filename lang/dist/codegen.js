@@ -129,27 +129,31 @@ const fromArrowFunctionExpression = parameters => body => (() => {
     expression: Prelude.not(Prelude.equals("BlockStatement")(esBody.type))
   };
 })();
-const fromBlockExpression = statements => ({
+const fromBlockExpression = statements => result => ({
   type: "CallExpression",
   callee: {
     type: "ArrowFunctionExpression",
     params: [],
     body: {
       type: "BlockStatement",
-      body: match(Node)({
-        VariableDeclaration: pattern => expression => init => Prelude.map(fromNode)(Prelude.concat(init)(Node.VariableDeclaration(pattern)(expression))),
-        FunctionDeclaration: name => parameters => body => init => Prelude.concat(Prelude.map(fromNode)(Prelude.concat(init)(Node.FunctionDeclaration(name)(parameters)(body))))([{
-          type: "ReturnStatement",
-          argument: {
-            type: "Identifier",
-            name
-          }
-        }]),
-        ExpressionStatement: expression => init => Prelude.concat(Prelude.map(fromNode)(init))([{
-          type: "ReturnStatement",
-          argument: fromNode(expression)
-        }])
-      })(Prelude._apply("at")([-1])(statements))(Prelude._apply("slice")([0, -1])(statements))
+      body: Prelude.concat(map(fromNode)(statements))([{
+        type: "ReturnStatement",
+        argument: fromNode(result)
+      }])
+    },
+    expression: false
+  },
+  arguments: [],
+  optional: false
+});
+const fromBlockStatement = statements => ({
+  type: "CallExpression",
+  callee: {
+    type: "ArrowFunctionExpression",
+    params: [],
+    body: {
+      type: "BlockStatement",
+      body: Prelude.map(fromNode)(statements)
     },
     expression: false
   },
@@ -313,6 +317,7 @@ const fromNode = match(Node)({
   ObjectExpression: fromObjectExpression,
   ArrowFunctionExpression: fromArrowFunctionExpression,
   BlockExpression: fromBlockExpression,
+  BlockStatement: fromBlockStatement,
   UnaryExpression: fromUnaryExpression,
   BinaryExpression: fromBinaryExpression,
   LogicalExpression: fromLogicalExpression,

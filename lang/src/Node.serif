@@ -18,7 +18,8 @@ type Node
   | RestElement argument
   | ArrowFunctionExpression parameters body
   | PropertyAccessor identifier
-  | BlockExpression statements
+  | BlockExpression statements result
+  | BlockStatement statements
   | DoBlockExpression operations result
   | ArrowAssignmentStatement pattern expression
   | UnaryExpression operator argument

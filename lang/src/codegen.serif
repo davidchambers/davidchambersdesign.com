@@ -170,26 +170,29 @@ fromArrowFunctionExpression parameters body = {
   }
 };
 
-fromBlockExpression statements = {
+fromBlockExpression statements result = {
   type: "CallExpression",
   callee: {
     type: "ArrowFunctionExpression",
     params: [],
     body: {
       type: "BlockStatement",
-      body: match Node {
-        VariableDeclaration: \pattern expression init -> (
-          (fromNode <$> init <> Node.VariableDeclaration pattern expression)
-        ),
-        FunctionDeclaration: \name parameters body init -> (
-          (fromNode <$> init <> Node.FunctionDeclaration name parameters body)
-          <> [{type: "ReturnStatement", argument: {type: "Identifier", name}}]
-        ),
-        ExpressionStatement: \expression init -> (
-          (fromNode <$> init)
-          <> [{type: "ReturnStatement", argument: fromNode expression}]
-        ),
-      } (.at [-1] statements) (.slice [0, -1] statements),
+      body: map fromNode statements <> [{type: "ReturnStatement", argument: fromNode result}],
+    },
+    expression: false,
+  },
+  arguments: [],
+  optional: false,
+};
+
+fromBlockStatement statements = {
+  type: "CallExpression",
+  callee: {
+    type: "ArrowFunctionExpression",
+    params: [],
+    body: {
+      type: "BlockStatement",
+      body: fromNode <$> statements,
     },
     expression: false,
   },
@@ -378,6 +381,7 @@ fromNode = match Node {
   ObjectExpression:           fromObjectExpression,
   ArrowFunctionExpression:    fromArrowFunctionExpression,
   BlockExpression:            fromBlockExpression,
+  BlockStatement:             fromBlockStatement,
   UnaryExpression:            fromUnaryExpression,
   BinaryExpression:           fromBinaryExpression,
   LogicalExpression:          fromLogicalExpression,

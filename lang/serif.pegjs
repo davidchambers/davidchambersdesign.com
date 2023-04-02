@@ -1,7 +1,7 @@
 Module
   = imports:(_ importDeclaration:ImportDeclaration                                   { return importDeclaration; })*
     exports:(_ exportDeclaration:(ExportNamedDeclaration / ExportDefaultDeclaration) { return exportDeclaration; })*
-    statements:(_ statement:Statement _ ';' { return statement; })*
+    statements:(_ statement:Statement { return statement; })*
     _
     { return Node.Module(imports)(exports)(statements); }
 
@@ -220,6 +220,7 @@ PrimaryExpression
   / TemplateLiteral
   / StringLiteral
   / BlockExpression
+  / BlockStatement
   / DoBlockExpression
   / ObjectExpression
   / ArrayExpression
@@ -470,24 +471,25 @@ PropertyAccessor
     { return Node.PropertyAccessor(identifier); }
 
 BlockExpression
-  = '{' _ statements:Statement|1.., SemicolonSeparator| _ '}'
-    { return Node.BlockExpression(statements); }
+  = '{' _ statements:Statement|.., _| _ result:Expression _ '}'
+    { return Node.BlockExpression(statements)(result); }
+
+BlockStatement
+  = '{' _ statements:Statement|1.., _| _ '}'
+    { return Node.BlockStatement(statements); }
 
 DoBlockExpression
-  = DoToken
-    _ '{'
-    operations:(_ operation:DoOperation _ ';' { return operation; })*
-    _ result:Expression
-    _ '}'
+  = DoToken _ '{' _ operations:DoOperation|.., _| _ result:Expression _ '}'
     { return Node.DoBlockExpression(operations)(result); }
 
 DoOperation
   = ArrowAssignmentStatement
   / FunctionDeclaration
   / VariableDeclaration
+  / ExpressionStatement
 
 ArrowAssignmentStatement
-  = pattern:Pattern _ '<-' _ expression:Expression
+  = pattern:Pattern _ '<-' _ expression:Expression _ ';'
     { return Node.ArrowAssignmentStatement(pattern)(expression); }
 
 Statement
@@ -499,11 +501,11 @@ Statement
 FunctionDeclaration
   = ident:Identifier
     parameters:(__ parameter:Pattern { return parameter; })+
-    _ '=' _ body:Expression
+    _ '=' _ body:Expression _ ';'
     { return Node.FunctionDeclaration(ident.name)(parameters)(body); }
 
 VariableDeclaration
-  = pattern:Pattern _ '=' _ expression:Expression
+  = pattern:Pattern _ '=' _ expression:Expression _ ';'
     { return Node.VariableDeclaration(pattern)(expression); }
 
 DataTypeDeclaration
@@ -511,6 +513,7 @@ DataTypeDeclaration
     _ name:(ident:Identifier { return ident.name; })
     _ '='
     _ constructors:DataConstructorDefinition|1.., _ '|' _|
+    _ ';'
     { return Node.DataTypeDeclaration(name)(constructors); }
 
 DataConstructorDefinition
@@ -519,7 +522,7 @@ DataConstructorDefinition
     { return {name, parameters}; }
 
 ExpressionStatement
-  = expression:Expression
+  = expression:Expression _ ';'
     { return Node.ExpressionStatement(expression); }
 
 SpreadElement
@@ -567,9 +570,6 @@ __
 
 CommaSeparator
   = _ ',' _
-
-SemicolonSeparator
-  = _ ';' _
 
 Expression
   = PipeExpression

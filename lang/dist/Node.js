@@ -75,7 +75,9 @@ const Node = {
       case "PropertyAccessor":
         return cases.PropertyAccessor(node.identifier);
       case "BlockExpression":
-        return cases.BlockExpression(node.statements);
+        return cases.BlockExpression(node.statements)(node.result);
+      case "BlockStatement":
+        return cases.BlockStatement(node.statements);
       case "DoBlockExpression":
         return cases.DoBlockExpression(node.operations)(node.result);
       case "ArrowAssignmentStatement":
@@ -206,8 +208,13 @@ const Node = {
     [Symbol.for("tag")]: "PropertyAccessor",
     identifier
   }),
-  BlockExpression: statements => ({
+  BlockExpression: statements => result => ({
     [Symbol.for("tag")]: "BlockExpression",
+    statements,
+    result
+  }),
+  BlockStatement: statements => ({
+    [Symbol.for("tag")]: "BlockStatement",
     statements
   }),
   DoBlockExpression: operations => result => ({

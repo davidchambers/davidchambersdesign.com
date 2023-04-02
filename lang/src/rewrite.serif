@@ -23,6 +23,7 @@ export default rewriteModule;
   RestElement,
   ArrowFunctionExpression,
   BlockExpression,
+  BlockStatement,
   UnaryExpression,
   CompositionExpression,
   BinaryExpression,
@@ -79,7 +80,11 @@ vars = match' Node (const empty) {
   ArrowFunctionExpression: \parameters body -> {
     referencing $ Set.without (referenced $ mergeAll $ vars <$> parameters) (referenced $ vars $ body)
   },
-  BlockExpression: \statements -> {
+  BlockExpression: \statements result -> {
+    {declared, referenced} = reduce merge (vars result) (vars <$> statements);
+    referencing $ Set.without declared referenced
+  },
+  BlockStatement: \statements -> {
     {declared, referenced} = mergeAll (vars <$> statements);
     referencing $ Set.without declared referenced
   },
@@ -88,6 +93,7 @@ vars = match' Node (const empty) {
       FunctionDeclaration:    \name parameters body -> Set.without (referenced $ mergeAll $ vars <$> parameters) $ Set.union names $ referenced $ vars body,
       VariableDeclaration:      \pattern expression -> Set.union (referenced $ vars expression) $ Set.without (referenced $ vars pattern) names,  ;; x <- f x;
       ArrowAssignmentStatement: \pattern expression -> Set.union (referenced $ vars expression) $ Set.without (referenced $ vars pattern) names,  ;; x = f x;
+      ExpressionStatement:              \expression -> Set.union (referenced $ vars expression) names,
     }) (referenced $ vars result) operations
   },
   UnaryExpression: \operator -> vars,
@@ -136,13 +142,10 @@ rewriteModule module namesExportedFrom = do {
   rewrite = rewriteNode fromPrelude declared;
   preludeEntries = Object.entries $ Prelude fromPrelude;
   preludeNames = (\[name] -> name) <$> preludeEntries;
-  _ = {
-    unreferenced' = Set.sub preludeIdent.name unreferenced;
-    undeclared' = Set.without (preludeNames | Set.union globals | Set.add "import" | Set.add "console" | Set.add "fetch") undeclared;
-    if unreferenced'.size > 0 then (unreferenced' | Array.from | .join [", "] | concat "unreferenced: " | console.error);
-    if undeclared'.size   > 0 then (undeclared'   | Array.from | .join [", "] | concat "undeclared: "   | console.error);
-    undefined
-  };
+  unreferenced' = Set.sub preludeIdent.name unreferenced;
+  undeclared' = Set.without (preludeNames | Set.union globals | Set.add "import" | Set.add "console" | Set.add "fetch") undeclared;
+  if unreferenced'.size > 0 then (unreferenced' | Array.from | .join [", "] | concat "unreferenced: " | console.error);
+  if undeclared'.size   > 0 then (undeclared'   | Array.from | .join [", "] | concat "undeclared: "   | console.error);
   preludeDefinition = {
     VariableDeclaration preludeIdent {
       ObjectExpression {
@@ -227,18 +230,15 @@ rewriteNode fromPrelude = {
         }
       }
     },
-    BlockExpression: \statements -> {
-      if statements.length == 1 then {
-        match' Node (\_ ->
-          statements
-          | map (recur $ Set.union names (declared $ mergeAll $ vars <$> statements))
-          | BlockExpression
-        ) {ExpressionStatement: recur names} statements[0]
-      } else {
-        statements
-        | map (recur $ Set.union names (declared $ mergeAll $ vars <$> statements))
-        | BlockExpression
+    BlockExpression: \statements result -> {
+      if statements == [] then recur names result else {
+        names' = Set.union names $ declared $ mergeAll $ vars <$> statements;
+        BlockExpression (recur names' <$> statements) (recur names' result)
       }
+    },
+    BlockStatement: \statements -> {
+      names' = Set.union names $ declared $ mergeAll $ vars <$> statements;
+      BlockStatement (recur names' <$> statements)
     },
     DoBlockExpression: \operations result -> {
       recur names $ reduceRight (\result -> match Node {
@@ -252,6 +252,9 @@ rewriteNode fromPrelude = {
           CallExpression (ArrowFunctionExpression [Identifier name] result) [
             reduceRight (\body param -> ArrowFunctionExpression [param] body) body parameters,
           ]
+        },
+        ExpressionStatement: \expression -> {
+          BlockExpression [ExpressionStatement expression] result
         },
       }) result operations
     },
@@ -375,5 +378,6 @@ rewriteNode fromPrelude = {
       | VariableDeclaration $ Identifier name
       | recur names
     },
-  }
+  };
+  recur
 };
