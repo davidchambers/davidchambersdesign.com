@@ -13,7 +13,6 @@ const Prelude = {
       ["|"]: rhs => lhs => lhs | rhs
     }
   },
-  _apply: name => args => target => target[name].apply(target, args),
   apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
@@ -37,7 +36,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const base03 = "#002b36";
 const base02 = "#073642";
 const base01 = "#586e75";
@@ -57,8 +56,8 @@ const green = "#859900";
 const mid$002Dgray = "#a9a9a9";
 const pink = "#ff5e99";
 const recycled$002Dpaper = "#fef9ec";
-const tag$002Dbackground = count => concat("#")(Prelude._apply("repeat")([3])(Prelude._apply("padStart")([2, "0"])(Prelude._apply("toString")([16])(Math.floor(247 - Math.log2(count) * 5)))));
-const tag$002Dcolor = count => (alpha => "rgba(0, 0, 0, " + alpha + ")")(Prelude._apply("replace")([RegExp("[.]000$|0*$"), ""])(Prelude._apply("toFixed")([3])(Math.log2(count) * 0.1 + 0.3)));
+const tag$002Dbackground = count => concat("#")((args => target => target.repeat.apply(target, args))([3])((args => target => target.padStart.apply(target, args))([2, "0"])((args => target => target.toString.apply(target, args))([16])(Math.floor(247 - Math.log2(count) * 5)))));
+const tag$002Dcolor = count => (alpha => "rgba(0, 0, 0, " + alpha + ")")((args => target => target.replace.apply(target, args))([RegExp("[.]000$|0*$"), ""])((args => target => target.toFixed.apply(target, args))([3])(Math.log2(count) * 0.1 + 0.3)));
 const screen = `html {
   height: 100%;
   background-color: ${base3};
@@ -783,7 +782,7 @@ article > header > dl > dd > a {
   z-index: 99;
 }
 
-${Prelude._apply("trimEnd")([])(Prelude._apply("join")(["\n"])(map(count => `#tags li[data-count='${count}'] a {
+${(args => target => target.trimEnd.apply(target, args))([])((args => target => target.join.apply(target, args))(["\n"])(map(count => `#tags li[data-count='${count}'] a {
   background: ${tag$002Dbackground(count)};
   color: ${tag$002Dcolor(count)};
 }

@@ -14,7 +14,6 @@ const Prelude$1 = {
       ["|"]: rhs => lhs => lhs | rhs
     }
   },
-  _apply: name => args => target => target[name].apply(target, args),
   apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
@@ -38,7 +37,7 @@ const Prelude$1 = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude$1;
 const {Just} = Maybe;
 const {ArrowFunctionExpression, BinaryExpression, CallExpression, CompositionExpression, ConditionalExpression, Identifier, LogicalExpression, MemberExpression, NullLiteral, NumberLiteral, ObjectExpression, Property, StringLiteral, UnaryExpression} = Node;
 const $0023Array = Identifier("Array");
@@ -90,7 +89,6 @@ const esUnaryOperators = ["~"];
 const esBinaryOperators = ["<<", ">>", ">>>", "&", "^", "|"];
 const Prelude = fromPrelude => ({
   operators: ObjectExpression([Property($0027unary)(ObjectExpression(map(op => Property(StringLiteral(op))(fromEsUnaryOperator(op)))(esUnaryOperators))), Property($0027binary)(ObjectExpression(map(op => Property(StringLiteral(op))(fromEsBinaryOperator(op)))(esBinaryOperators)))]),
-  _apply: ArrowFunctionExpression([$0023name])(ArrowFunctionExpression([$0023args])(ArrowFunctionExpression([$0023target])(CallExpression(MemberExpression(MemberExpression($0023target)($0023name))($0027apply))([$0023target, $0023args])))),
   apply: ArrowFunctionExpression([$0023f])(ArrowFunctionExpression([$0023args])(CallExpression(MemberExpression($0023f)($0027apply))([NullLiteral, $0023args]))),
   construct: ArrowFunctionExpression([$0023constructor])(ArrowFunctionExpression([$0023args])(CallExpression(MemberExpression($0023Reflect)($0027construct))([$0023constructor, $0023args]))),
   instanceof: ArrowFunctionExpression([$0023constructor])(ArrowFunctionExpression([$0023x])(BinaryExpression("instanceof")($0023x)($0023constructor))),

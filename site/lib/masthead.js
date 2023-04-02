@@ -15,7 +15,6 @@ const Prelude = {
       ["|"]: rhs => lhs => lhs | rhs
     }
   },
-  _apply: name => args => target => target[name].apply(target, args),
   apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
@@ -39,7 +38,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const mask$002Dchars = {
   A: [$2192(14), $2193(24), $2190(4), $2191(10), $2190(6), $2193(10), $2190(4), $2191(24), $21E8(4), $21E9(4), $2192(6), $2193(6), $2190(6), $2191(6)],
   B: [$2192(14), $2193(24), $2190(14), $2191(24), $21E8(4), $21E9(4), $2192(6), $2193(6), $2190(6), $2191(6), $21E8(0), $21E9(10), $2192(6), $2193(6), $2190(6), $2191(6)],
@@ -128,7 +127,7 @@ const reset = path => (() => {
   })(path);
   return ["m", [w - x, -y]];
 })();
-const paths = chars => [...Prelude.chain(char => [["M", [0, 0]], ...char, reset(char)])(Prelude._apply("slice")([0, 1])(chars)), ...Prelude.chain(char => [["m", [6, 0]], ...char, reset(char)])(Prelude._apply("slice")([1])(chars))];
+const paths = chars => [...Prelude.chain(char => [["M", [0, 0]], ...char, reset(char)])((args => target => target.slice.apply(target, args))([0, 1])(chars)), ...Prelude.chain(char => [["m", [6, 0]], ...char, reset(char)])((args => target => target.slice.apply(target, args))([1])(chars))];
 const chars = Array.from("DAVIDCHAMBERSDESIGN");
 const mask = [path({
   d: render(paths(Prelude.map(char => mask$002Dchars[char])(chars))),

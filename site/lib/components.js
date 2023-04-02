@@ -13,7 +13,6 @@ const Prelude = {
       ["|"]: rhs => lhs => lhs | rhs
     }
   },
-  _apply: name => args => target => target[name].apply(target, args),
   apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
@@ -37,7 +36,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const captioned$002Dimages = images => dl(Prelude.chain(({alt, src, caption}) => [dt([img({
   alt,
   src
@@ -46,7 +45,7 @@ const code$002Dblock = language => source$002Dcode => pre([code([text(source$002
 const update = datetime => body => div({
   class: "update"
 })([h4(["Update — ", time({
-  datetime: Prelude._apply("toISO")([])(datetime)
-})([Prelude._apply("toFormat")(["d MMMM y"])(datetime)])]), ...body]);
+  datetime: (args => target => target.toISO.apply(target, args))([])(datetime)
+})([(args => target => target.toFormat.apply(target, args))(["d MMMM y"])(datetime)])]), ...body]);
 const $2014 = text(" — ");
 export {captioned$002Dimages, code$002Dblock, update, $2014};

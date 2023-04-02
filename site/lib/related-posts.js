@@ -13,7 +13,6 @@ const Prelude = {
       ["|"]: rhs => lhs => lhs | rhs
     }
   },
-  _apply: name => args => target => target[name].apply(target, args),
   apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
@@ -37,11 +36,11 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const related$002Dposts = posts => post => (() => {
   const tags = construct(Set)([post.tags]);
-  const has$002Dtag = tag => Prelude._apply("has")([tag])(tags);
-  return Prelude._apply("slice")([0, 5])(S.sortBy(this$ => S.Pair(-this$.score)(Math.abs((x => x.milliseconds)(Prelude._apply("diff")([post.datetime])(this$.datetime)))))(S.mapMaybe(this$ => Prelude.equals(post.slug)(this$.slug) ? S.Nothing : (() => {
+  const has$002Dtag = tag => (args => target => target.has.apply(target, args))([tag])(tags);
+  return (args => target => target.slice.apply(target, args))([0, 5])(S.sortBy(this$ => S.Pair(-this$.score)(Math.abs((x => x.milliseconds)((args => target => target.diff.apply(target, args))([post.datetime])(this$.datetime)))))(S.mapMaybe(this$ => Prelude.equals(post.slug)(this$.slug) ? S.Nothing : (() => {
     const dividend = (x => x.length)(filter(has$002Dtag)(this$.tags));
     const divisor = Math.sqrt((x => x.size)(construct(Set)([Prelude.concat(post.tags)(this$.tags)])));
     const score = dividend / divisor;

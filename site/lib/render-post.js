@@ -14,7 +14,6 @@ const Prelude = {
       ["|"]: rhs => lhs => lhs | rhs
     }
   },
-  _apply: name => args => target => target[name].apply(target, args),
   apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
@@ -38,13 +37,13 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const render$002Dpost = post => related$002Dposts => [article$0027(("article-id" in post) ? {
   id: post["article-id"]
 } : {})([header([h1(post.title), time({
-  datetime: Prelude._apply("toFormat")(["yyyy-MM-dd'T'HH:mm:ssZZ"])(post.datetime),
+  datetime: (args => target => target.toFormat.apply(target, args))(["yyyy-MM-dd'T'HH:mm:ssZZ"])(post.datetime),
   pubdate: "pubdate"
-})([Prelude._apply("toFormat")(["d MMMM y"])(post.datetime)])]), ...post.body, footer$0027({
+})([(args => target => target.toFormat.apply(target, args))(["d MMMM y"])(post.datetime)])]), ...post.body, footer$0027({
   class: "metadata"
 })([ul([li$0027({
   class: "shorturl"

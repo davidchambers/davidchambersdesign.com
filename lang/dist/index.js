@@ -17,7 +17,6 @@ const Prelude = {
       ["|"]: rhs => lhs => lhs | rhs
     }
   },
-  _apply: name => args => target => target[name].apply(target, args),
   apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
@@ -41,12 +40,12 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const parse = filename => sourceText => attempt(() => apply(grammar.parse)([sourceText, {
   grammarSource: filename
 }]));
 const changeExtensionInImportDeclaration = ({source, specifiers}) => (() => {
-  const source$0027 = Node.StringLiteral(Prelude._apply("replace")([RegExp("[.]serif$"), ".js"])(source.value));
+  const source$0027 = Node.StringLiteral((args => target => target.replace.apply(target, args))([RegExp("[.]serif$"), ".js"])(source.value));
   return Node.ImportDeclaration(source$0027)(specifiers);
 })();
 const changeExtensions = ({imports, exports, statements}) => Node.Module(Prelude.map(changeExtensionInImportDeclaration)(imports))(exports)(statements);

@@ -14,7 +14,6 @@ const Prelude = {
       ["|"]: rhs => lhs => lhs | rhs
     }
   },
-  _apply: name => args => target => target[name].apply(target, args),
   apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
@@ -38,7 +37,7 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const stroke = [$21E8(5), $21E9(0), $2192(6), $2193(1), $2192(1), $2193(1), $2192(1), $2193(1), $2192(1), $2191(1), $2192(1), $2191(1), $2192(1), $2193(7), $2190(7), $2191(1), $2192(1), $2191(1), $2192(1), $2191(1), $2190(1), $2191(1), $2190(4), $2193(1), $2190(1), $2193(1), $2190(1), $2193(4), $2192(1), $2193(1), $2192(1), $2193(1), $2192(4), $2191(1), $2192(1), $2191(1), $2192(1), $2193(1), $2192(1), $2193(1), $2192(1), $2193(1), $2190(1), $2193(1), $2190(1), $2193(1), $2190(1), $2193(1), $2190(6), $2191(1), $2190(1), $2191(1), $2190(1), $2191(1), $2190(1), $2191(1), $2190(1), $2191(1), $2190(1), $2191(6), $2192(1), $2191(1), $2192(1), $2191(1), $2192(1), $2191(1), $2192(1), $2191(1), $2192(1), $2191(1)];
 const fill = [$21E8(5), $21E9(1), $2192(6), $2193(1), $2192(1), $2193(1), $2192(1), $2193(1), $2192(1), $2191(1), $2192(1), $2193(4), $2190(4), $2191(1), $2192(1), $2191(1), $2190(1), $2191(1), $2190(1), $2191(1), $2190(4), $2193(1), $2190(1), $2193(1), $2190(1), $2193(1), $2190(1), $2193(4), $2192(1), $2193(1), $2192(1), $2193(1), $2192(1), $2193(1), $2192(4), $2191(1), $2192(1), $2191(1), $2192(1), $2193(1), $2192(1), $2193(1), $2190(1), $2193(1), $2190(1), $2193(1), $2190(6), $2191(1), $2190(1), $2191(1), $2190(1), $2191(1), $2190(1), $2191(1), $2190(1), $2191(6), $2192(1), $2191(1), $2192(1), $2191(1), $2192(1), $2191(1), $2192(1), $2191(1)];
 const flushcache = [path({

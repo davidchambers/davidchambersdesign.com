@@ -19,7 +19,6 @@ const Prelude = {
       ["|"]: rhs => lhs => lhs | rhs
     }
   },
-  _apply: name => args => target => target[name].apply(target, args),
   apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
@@ -43,9 +42,9 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
-const evaluateModule = sourceText => (context => (module => Prelude.chain(_ => Prelude.chain(_ => resolve(module.namespace.default))(attemptP(() => Prelude._apply("evaluate")([])(module))))(attemptP(() => Prelude._apply("link")([(specifier, referencingModule) => map(map(entries => promise((() => {
-  const module = construct(vm.SyntheticModule)([Prelude.map(([name]) => name)(entries), () => Prelude._apply("forEach")([flip(Prelude._apply("setExport"))(module)])(entries), {
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const evaluateModule = sourceText => (context => (module => Prelude.chain(_ => Prelude.chain(_ => resolve(module.namespace.default))(attemptP(() => (args => target => target.evaluate.apply(target, args))([])(module))))(attemptP(() => (args => target => target.link.apply(target, args))([(specifier, referencingModule) => map(map(entries => promise((() => {
+  const module = construct(vm.SyntheticModule)([Prelude.map(([name]) => name)(entries), () => (args => target => target.forEach.apply(target, args))([flip(args => target => target.setExport.apply(target, args))(module)])(entries), {
     identifier: specifier,
     context: referencingModule.context
   }]);
@@ -79,9 +78,9 @@ const print = x => (() => {
     case "[object Map]":
       return "construct Map [" + print(Array.from(x)) + "]";
     case "[object Array]":
-      return "[" + Prelude._apply("join")([", "])(Prelude.map(print)(x)) + "]";
+      return "[" + (args => target => target.join.apply(target, args))([", "])(Prelude.map(print)(x)) + "]";
     case "[object Object]":
-      return "{" + Prelude._apply("join")([", "])(map(k => "[" + print(k) + "]: " + print(x[k]))(Reflect.ownKeys(x))) + "}";
+      return "{" + (args => target => target.join.apply(target, args))([", "])(map(k => "[" + print(k) + "]: " + print(x[k]))(Reflect.ownKeys(x))) + "}";
     default:
       return String(x);
   }
@@ -91,8 +90,8 @@ const server = repl.start({
   eval: (code, _context, _filename, callback) => fork(err => (() => {
     console.error(err);
     console.log("");
-    return Prelude._apply("displayPrompt")([false])(server);
+    return (args => target => target.displayPrompt.apply(target, args))([false])(server);
   })())(result => apply(callback)([null, result]))(read(code)),
   writer: value => print(value) + "\n"
 });
-Prelude._apply("setupHistory")([path.join([apply(os.homedir)([]), ".serif-repl-history"]), error => undefined])(server);
+(args => target => target.setupHistory.apply(target, args))([path.join([apply(os.homedir)([]), ".serif-repl-history"]), error => undefined])(server);

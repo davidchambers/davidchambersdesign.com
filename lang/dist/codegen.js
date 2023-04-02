@@ -14,7 +14,6 @@ const Prelude = {
       ["|"]: rhs => lhs => lhs | rhs
     }
   },
-  _apply: name => args => target => target[name].apply(target, args),
   apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
@@ -38,16 +37,16 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const RESERVED_WORDS = construct(Set)([["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public", "arguments", "eval"]]);
-const validEsIdentifierName = name => Prelude._apply("test")([name])(RegExp("^[$_A-Za-z][$_A-Za-z0-9]*$"));
+const validEsIdentifierName = name => (args => target => target.test.apply(target, args))([name])(RegExp("^[$_A-Za-z][$_A-Za-z0-9]*$"));
 const fromEscapedIdentifierName = name => ({
   type: "Identifier",
   name
 });
 const fromIdentifier = (() => {
-  const escapeChar = c => concat("$")(Prelude._apply("padStart")([4, "0"])(Prelude._apply("toUpperCase")([])(Prelude._apply("toString")([16])(Prelude._apply("charCodeAt")([0])(c)))));
-  const escape = name => Prelude.equals("import")(name) ? "import" : Prelude._apply("has")([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : Prelude._apply("replaceAll")([apply(RegExp)(["[^$_A-Za-z0-9]", "g"]), escapeChar])(name);
+  const escapeChar = c => concat("$")((args => target => target.padStart.apply(target, args))([4, "0"])((args => target => target.toUpperCase.apply(target, args))([])((args => target => target.toString.apply(target, args))([16])((args => target => target.charCodeAt.apply(target, args))([0])(c)))));
+  const escape = name => Prelude.equals("import")(name) ? "import" : (args => target => target.has.apply(target, args))([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : (args => target => target.replaceAll.apply(target, args))([apply(RegExp)(["[^$_A-Za-z0-9]", "g"]), escapeChar])(name);
   return x => fromEscapedIdentifierName(escape(x));
 })();
 const fromLiteral = value => ({
@@ -66,16 +65,16 @@ const fromTemplateLiteral = quasis => expressions => ({
   type: "TemplateLiteral",
   expressions: Prelude.map(fromNode)(expressions),
   quasis: (() => {
-    const lineEnding = Prelude._apply("find")([lineEnding => Prelude._apply("startsWith")([lineEnding])(quasis[0])])(["\n", "\r\n"]);
+    const lineEnding = (args => target => target.find.apply(target, args))([lineEnding => (args => target => target.startsWith.apply(target, args))([lineEnding])(quasis[0])])(["\n", "\r\n"]);
     return Prelude.equals(undefined)(lineEnding) ? (() => {
-      const quasis$0027 = Prelude.map(Prelude._apply("replaceAll")(["`", "\\`"]))(quasis);
-      return [...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(quasis$0027)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(quasis$0027))];
+      const quasis$0027 = Prelude.map((args => target => target.replaceAll.apply(target, args))(["`", "\\`"]))(quasis);
+      return [...Prelude.map(TemplateElement(false))((args => target => target.slice.apply(target, args))([0, -1])(quasis$0027)), ...Prelude.map(TemplateElement(true))((args => target => target.slice.apply(target, args))([-1])(quasis$0027))];
     })() : (() => {
-      const indent = Prelude._apply("search")([RegExp("(?! )")])(Prelude._apply("slice")([lineEnding.length])(quasis[0]));
+      const indent = (args => target => target.search.apply(target, args))([RegExp("(?! )")])((args => target => target.slice.apply(target, args))([lineEnding.length])(quasis[0]));
       const pattern = apply(RegExp)([lineEnding + "[ ]{0," + indent + "}", "g"]);
-      const [head, ...tail] = Prelude.map(x => Prelude._apply("replaceAll")(["`", "\\`"])(Prelude._apply("replaceAll")([pattern, lineEnding])(x)))(quasis);
-      const head$0027 = Prelude._apply("slice")([lineEnding.length])(head);
-      return Prelude.equals([])(tail) ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...Prelude.map(TemplateElement(false))(Prelude._apply("slice")([0, -1])(tail)), ...Prelude.map(TemplateElement(true))(Prelude._apply("slice")([-1])(tail))];
+      const [head, ...tail] = Prelude.map(x => (args => target => target.replaceAll.apply(target, args))(["`", "\\`"])((args => target => target.replaceAll.apply(target, args))([pattern, lineEnding])(x)))(quasis);
+      const head$0027 = (args => target => target.slice.apply(target, args))([lineEnding.length])(head);
+      return Prelude.equals([])(tail) ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...Prelude.map(TemplateElement(false))((args => target => target.slice.apply(target, args))([0, -1])(tail)), ...Prelude.map(TemplateElement(true))((args => target => target.slice.apply(target, args))([-1])(tail))];
     })();
   })()
 });
@@ -202,8 +201,8 @@ const fromSwitchCase = consequent => predicate => ({
   }))(map(fromNode)(consequent)))
 });
 const fromSwitchCases = predicates => consequent => (() => {
-  const init = Prelude._apply("slice")([0, -1])(predicates);
-  const last = Prelude._apply("at")([-1])(predicates);
+  const init = (args => target => target.slice.apply(target, args))([0, -1])(predicates);
+  const last = (args => target => target.at.apply(target, args))([-1])(predicates);
   return Prelude.concat(map(fromSwitchCase(Maybe.Nothing))(init))([fromSwitchCase(Maybe.Just(consequent))(last)]);
 })();
 const fromSwitchExpression = discriminant => cases => ({

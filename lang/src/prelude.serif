@@ -109,15 +109,6 @@ Prelude fromPrelude = {
     | ObjectExpression
     | Property 'binary,
   ],
-  _apply: {
-    ArrowFunctionExpression [#name] {
-      ArrowFunctionExpression [#args] {
-        ArrowFunctionExpression [#target] {
-          CallExpression (MemberExpression (MemberExpression #target #name) 'apply) [#target, #args]
-        }
-      }
-    }
-  },
   apply: {
     ArrowFunctionExpression [#f] {
       ArrowFunctionExpression [#args] {

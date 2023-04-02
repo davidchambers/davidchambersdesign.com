@@ -14,7 +14,6 @@ const Prelude = {
       ["|"]: rhs => lhs => lhs | rhs
     }
   },
-  _apply: name => args => target => target[name].apply(target, args),
   apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
@@ -38,17 +37,17 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const render$002Dpost = ({slug, title, datetime}) => li([a({
   href: "/" + slug
 })(title), " ", time({
-  datetime: Prelude._apply("toISO")([])(datetime)
-})([Prelude._apply("toFormat")(["d MMMM y | h:mm"])(datetime) + Prelude._apply("toLowerCase")([])(Prelude._apply("toFormat")(["a"])(datetime))])]);
+  datetime: (args => target => target.toISO.apply(target, args))([])(datetime)
+})([(args => target => target.toFormat.apply(target, args))(["d MMMM y | h:mm"])(datetime) + (args => target => target.toLowerCase.apply(target, args))([])((args => target => target.toFormat.apply(target, args))(["a"])(datetime))])]);
 const render$002Dsection = posts => li([h2([posts[0]["formatted-date"]]), ol(Prelude.map(render$002Dpost)(posts))]);
 const render$002Darchives = posts => (archives => [h1(["Archives"]), ol$0027({
   class: "archives"
 })(archives)])(map(render$002Dsection)(S.groupBy(this$ => that => Prelude.equals(that["formatted-date"])(this$["formatted-date"]))(S.sortBy(post => -post.datetime)(map(post => ({
   ...post,
-  ["formatted-date"]: Prelude._apply("toFormat")(["MMMM y"])(post.datetime)
+  ["formatted-date"]: (args => target => target.toFormat.apply(target, args))(["MMMM y"])(post.datetime)
 }))(posts)))));
 export default render$002Darchives;

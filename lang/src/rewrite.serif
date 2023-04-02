@@ -204,6 +204,20 @@ rewriteImportDeclaration undeclared namesExportedFrom = {
   }
 };
 
+#Object         = Identifier "Object";
+#Symbol         = Identifier "Symbol";
+#args           = Identifier "args";
+#cases          = Identifier "cases";
+#default        = Identifier "default";
+#target         = Identifier "target";
+#x              = Identifier "x";
+
+'apply          = StringLiteral "apply";
+'for            = StringLiteral "for";
+'hasOwn         = StringLiteral "hasOwn";
+'match          = StringLiteral "match";
+'tag            = StringLiteral "tag";
+
 rewriteNode fromPrelude = {
   recur names = match' Node id {
     TemplateLiteral: \quasis expressions -> {
@@ -220,7 +234,7 @@ rewriteNode fromPrelude = {
       ArrowFunctionExpression params (recur names' body)
     },
     PropertyAccessor: \identifier -> {
-      param = Identifier "x";
+      param = #x;
       names' = Set.add param.name names;
       recur names' {
         ArrowFunctionExpression [param] {
@@ -319,7 +333,13 @@ rewriteNode fromPrelude = {
       recur names $ CallExpression body [head]
     },
     MethodCallExpression: \name -> {
-      recur names $ CallExpression (fromPrelude "_apply") [StringLiteral name]
+      recur names {
+        ArrowFunctionExpression [#args] {
+          ArrowFunctionExpression [#target] {
+            CallExpression (MemberExpression (MemberExpression #target $ StringLiteral name) 'apply) [#target, #args]
+          }
+        }
+      }
     },
     CallExpression: \callee arguments -> {
       CallExpression (recur names callee) (recur names <$> arguments)
@@ -338,8 +358,8 @@ rewriteNode fromPrelude = {
     Property: \key value -> Property (recur names key) (recur names value),
     ExportDefaultDeclaration: ExportDefaultDeclaration . recur names,
     DataTypeDeclaration: \name constructors -> {
-      @tag = CallExpression (MemberExpression (Identifier "Symbol") $ StringLiteral "for") [StringLiteral "tag"];
-      @match = CallExpression (MemberExpression (Identifier "Symbol") $ StringLiteral "for") [StringLiteral "match"];
+      @tag = CallExpression (MemberExpression #Symbol 'for) ['tag];
+      @match = CallExpression (MemberExpression #Symbol 'for) ['match];
       constructors
       | map (\{name, parameters} -> Property (StringLiteral name) $ reduceRight
           (\body parameter -> ArrowFunctionExpression [Identifier parameter] body)
@@ -350,8 +370,6 @@ rewriteNode fromPrelude = {
           parameters
         )
       | concat [Property @match {
-          #default = Identifier "default";
-          #cases = Identifier "cases";
           #member = Identifier $ .replace [RegExp "^.", .toLowerCase []] name;
           case {name, parameters} = {
             SwitchCase [Maybe.Just $ StringLiteral name] {
@@ -364,8 +382,7 @@ rewriteNode fromPrelude = {
             ArrowFunctionExpression [#cases] {
               ArrowFunctionExpression [#member] {
                 ConditionalExpression
-                  (CallExpression (MemberExpression (Identifier "Object") $ StringLiteral "hasOwn")
-                                  [#cases, MemberExpression #member @tag])
+                  (CallExpression (MemberExpression #Object 'hasOwn) [#cases, MemberExpression #member @tag])
                   (SwitchExpression (MemberExpression #member @tag) (case <$> constructors))
                   (Maybe.Just $ CallExpression #default [#member])
               }

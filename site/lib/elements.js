@@ -12,7 +12,6 @@ const Prelude = {
       ["|"]: rhs => lhs => lhs | rhs
     }
   },
-  _apply: name => args => target => target[name].apply(target, args),
   apply: f => args => f.apply(null, args),
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
@@ -36,26 +35,26 @@ const Prelude = {
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, _apply, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
-const escape = s => Prelude._apply("replaceAll")([">", "&gt;"])(Prelude._apply("replaceAll")(["<", "&lt;"])(Prelude._apply("replaceAll")(["&", "&amp;"])(s)));
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
+const escape = s => (args => target => target.replaceAll.apply(target, args))([">", "&gt;"])((args => target => target.replaceAll.apply(target, args))(["<", "&lt;"])((args => target => target.replaceAll.apply(target, args))(["&", "&amp;"])(s)));
 const text = value => ({
   type: "text",
   toString: () => value,
   render: context => escape(value)
 });
-const render$002Dattribute = ([name, value]) => (value => " " + name + "=\"" + value + "\"")(escape(Prelude._apply("replaceAll")(["\n", " "])(Prelude._apply("trim")([])(String(value)))));
-const render$002Dattributes = attrs => Prelude._apply("join")([""])(map(render$002Dattribute)(Object.entries(attrs)));
-const render$002Dblock$002Delement = context => element => Prelude._apply("repeat")([context.level])(context.indent) + "<" + element.name + render$002Dattributes(element.attributes) + ">\n" + Prelude._apply("join")([""])(map(Prelude._apply("render")([{
+const render$002Dattribute = ([name, value]) => (value => " " + name + "=\"" + value + "\"")(escape((args => target => target.replaceAll.apply(target, args))(["\n", " "])((args => target => target.trim.apply(target, args))([])(String(value)))));
+const render$002Dattributes = attrs => (args => target => target.join.apply(target, args))([""])(map(render$002Dattribute)(Object.entries(attrs)));
+const render$002Dblock$002Delement = context => element => (args => target => target.repeat.apply(target, args))([context.level])(context.indent) + "<" + element.name + render$002Dattributes(element.attributes) + ">\n" + (args => target => target.join.apply(target, args))([""])(map((args => target => target.render.apply(target, args))([{
   indent: context.indent,
   level: context.level + 1,
   inline: context.inline
-}]))(element.children)) + Prelude._apply("repeat")([context.level])(context.indent) + "</" + element.name + ">\n";
-const render$002Dinline$002Delement = context => element => Prelude._apply("repeat")([context.level])(context.indent) + "<" + element.name + render$002Dattributes(element.attributes) + ">" + Prelude._apply("join")([""])(map(Prelude._apply("render")([{
+}]))(element.children)) + (args => target => target.repeat.apply(target, args))([context.level])(context.indent) + "</" + element.name + ">\n";
+const render$002Dinline$002Delement = context => element => (args => target => target.repeat.apply(target, args))([context.level])(context.indent) + "<" + element.name + render$002Dattributes(element.attributes) + ">" + (args => target => target.join.apply(target, args))([""])(map((args => target => target.render.apply(target, args))([{
   indent: context.indent,
   level: 0,
   inline: true
 }]))(element.children)) + "</" + element.name + ">" + (context.inline ? "" : "\n");
-const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => Prelude.equals("object")(typeof$(string$002Dor$002Dnode)) ? string$002Dor$002Dnode : text(Prelude._apply("replaceAll")(["\n", ""])(Prelude._apply("replaceAll")([apply(RegExp)(["^[ ]+", "gm"]), " "])(string$002Dor$002Dnode)));
+const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => Prelude.equals("object")(typeof$(string$002Dor$002Dnode)) ? string$002Dor$002Dnode : text((args => target => target.replaceAll.apply(target, args))(["\n", ""])((args => target => target.replaceAll.apply(target, args))([apply(RegExp)(["^[ ]+", "gm"]), " "])(string$002Dor$002Dnode)));
 const block$002Delement = name => attributes => children$0021 => (() => {
   const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
   const element = {
@@ -64,21 +63,21 @@ const block$002Delement = name => attributes => children$0021 => (() => {
     name,
     attributes,
     children,
-    toString: () => Prelude._apply("join")([""])(Prelude.map(String)(children)),
+    toString: () => (args => target => target.join.apply(target, args))([""])(Prelude.map(String)(children)),
     render: context => render$002Dblock$002Delement(context)(element)
   };
   return element;
 })();
 const inline$002Delement = name => attributes => children$0021 => (() => {
   const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
-  const format = Prelude._apply("some")([node => Prelude.equals("block")(node.format)])(children) ? "block" : "inline";
+  const format = (args => target => target.some.apply(target, args))([node => Prelude.equals("block")(node.format)])(children) ? "block" : "inline";
   const element = {
     type: "element",
     format,
     name,
     attributes,
     children,
-    toString: () => Prelude._apply("join")([""])(Prelude.map(String)(children)),
+    toString: () => (args => target => target.join.apply(target, args))([""])(Prelude.map(String)(children)),
     render: context => (() => {
       switch (format) {
         case "inline":
@@ -97,7 +96,7 @@ const self$002Dclosing$002Delement = name => attributes => (() => {
     name,
     attributes,
     toString: () => "",
-    render: ({indent, level, inline}) => Prelude._apply("repeat")([level])(indent) + "<" + name + render$002Dattributes(attributes) + " />" + (inline ? "" : "\n")
+    render: ({indent, level, inline}) => (args => target => target.repeat.apply(target, args))([level])(indent) + "<" + name + render$002Dattributes(attributes) + " />" + (inline ? "" : "\n")
   };
   return element;
 })();
