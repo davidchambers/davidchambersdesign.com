@@ -39,7 +39,7 @@ type Node
   | ImportDeclaration source specifiers
   | ImportAllDeclaration source hiding
   | ImportDefaultSpecifier local
-  | ImportSpecifier local imported
+  | ImportSpecifier imported local
   | ImportNamespaceSpecifier local
   | ExportNamedDeclaration specifiers
   | ExportDefaultDeclaration declaration

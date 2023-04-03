@@ -351,10 +351,10 @@ fromImportNamespaceSpecifier local = {
   local: fromNode local,
 };
 
-fromImportSpecifier local imported = {
+fromImportSpecifier imported local = {
   type: "ImportSpecifier",
-  local: fromNode local,
   imported: fromNode imported,
+  local: fromNode local,
 };
 
 fromImportDeclaration source specifiers = {

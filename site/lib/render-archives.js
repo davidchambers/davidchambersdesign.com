@@ -1,6 +1,6 @@
 import S from "sanctuary";
 import {a, h1, h2, li, ol, ol$0027, time} from "./elements.js";
-const Prelude = {
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = {
   operators: {
     unary: {
       ["~"]: operand => ~operand
@@ -18,7 +18,7 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
-  match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
+  match: type => match$0027(type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
@@ -27,26 +27,25 @@ const Prelude = {
   rem: lhs => rhs => rhs === 0 ? DivisionByZero : lhs % rhs,
   div: lhs => rhs => rhs === 0 ? DivisionByZero : Math.floor(lhs / rhs),
   mod: lhs => rhs => rhs === 0 ? DivisionByZero : (lhs % rhs + rhs) % rhs,
-  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
+  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that,
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => x => x[Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => x => x.reduceRight((y, x) => f(y)(x), y),
   filter: f => x => Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f),
-  reject: f => Prelude.filter(x => Prelude.not(f(x))),
+  reject: f => filter($ => not(f($))),
   map: f => x => Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const render$002Dpost = ({slug, title, datetime}) => li([a({
   href: "/" + slug
 })(title), " ", time({
   datetime: (args => target => target.toISO.apply(target, args))([])(datetime)
 })([(args => target => target.toFormat.apply(target, args))(["d MMMM y | h:mm"])(datetime) + (args => target => target.toLowerCase.apply(target, args))([])((args => target => target.toFormat.apply(target, args))(["a"])(datetime))])]);
-const render$002Dsection = posts => li([h2([posts[0]["formatted-date"]]), ol(Prelude.map(render$002Dpost)(posts))]);
+const render$002Dsection = posts => li([h2([posts[0]["formatted-date"]]), ol(map(render$002Dpost)(posts))]);
 const render$002Darchives = posts => (archives => [h1(["Archives"]), ol$0027({
   class: "archives"
-})(archives)])(map(render$002Dsection)(S.groupBy(this$ => that => Prelude.equals(that["formatted-date"])(this$["formatted-date"]))(S.sortBy(post => -post.datetime)(map(post => ({
+})(archives)])(map(render$002Dsection)(S.groupBy(this$ => that => equals(that["formatted-date"])(this$["formatted-date"]))(S.sortBy(post => -post.datetime)(map(post => ({
   ...post,
   ["formatted-date"]: (args => target => target.toFormat.apply(target, args))(["MMMM y"])(post.datetime)
 }))(posts)))));

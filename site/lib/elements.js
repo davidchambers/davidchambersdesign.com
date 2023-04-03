@@ -1,4 +1,4 @@
-const Prelude = {
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = {
   operators: {
     unary: {
       ["~"]: operand => ~operand
@@ -16,7 +16,7 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
-  match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
+  match: type => match$0027(type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
@@ -25,17 +25,16 @@ const Prelude = {
   rem: lhs => rhs => rhs === 0 ? DivisionByZero : lhs % rhs,
   div: lhs => rhs => rhs === 0 ? DivisionByZero : Math.floor(lhs / rhs),
   mod: lhs => rhs => rhs === 0 ? DivisionByZero : (lhs % rhs + rhs) % rhs,
-  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
+  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that,
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => x => x[Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => x => x.reduceRight((y, x) => f(y)(x), y),
   filter: f => x => Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f),
-  reject: f => Prelude.filter(x => Prelude.not(f(x))),
+  reject: f => filter($ => not(f($))),
   map: f => x => Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const escape = s => (args => target => target.replaceAll.apply(target, args))([">", "&gt;"])((args => target => target.replaceAll.apply(target, args))(["<", "&lt;"])((args => target => target.replaceAll.apply(target, args))(["&", "&amp;"])(s)));
 const text = value => ({
   type: "text",
@@ -54,30 +53,30 @@ const render$002Dinline$002Delement = context => element => (args => target => t
   level: 0,
   inline: true
 }]))(element.children)) + "</" + element.name + ">" + (context.inline ? "" : "\n");
-const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => Prelude.equals("object")(typeof$(string$002Dor$002Dnode)) ? string$002Dor$002Dnode : text((args => target => target.replaceAll.apply(target, args))(["\n", ""])((args => target => target.replaceAll.apply(target, args))([apply(RegExp)(["^[ ]+", "gm"]), " "])(string$002Dor$002Dnode)));
+const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => equals("object")(typeof$(string$002Dor$002Dnode)) ? string$002Dor$002Dnode : text((args => target => target.replaceAll.apply(target, args))(["\n", ""])((args => target => target.replaceAll.apply(target, args))([apply(RegExp)(["^[ ]+", "gm"]), " "])(string$002Dor$002Dnode)));
 const block$002Delement = name => attributes => children$0021 => (() => {
-  const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
+  const children = map(string$002Dto$002Dtext$002Dnode)(children$0021);
   const element = {
     type: "element",
     format: "block",
     name,
     attributes,
     children,
-    toString: () => (args => target => target.join.apply(target, args))([""])(Prelude.map(String)(children)),
+    toString: () => (args => target => target.join.apply(target, args))([""])(map(String)(children)),
     render: context => render$002Dblock$002Delement(context)(element)
   };
   return element;
 })();
 const inline$002Delement = name => attributes => children$0021 => (() => {
-  const children = Prelude.map(string$002Dto$002Dtext$002Dnode)(children$0021);
-  const format = (args => target => target.some.apply(target, args))([node => Prelude.equals("block")(node.format)])(children) ? "block" : "inline";
+  const children = map(string$002Dto$002Dtext$002Dnode)(children$0021);
+  const format = (args => target => target.some.apply(target, args))([node => equals("block")(node.format)])(children) ? "block" : "inline";
   const element = {
     type: "element",
     format,
     name,
     attributes,
     children,
-    toString: () => (args => target => target.join.apply(target, args))([""])(Prelude.map(String)(children)),
+    toString: () => (args => target => target.join.apply(target, args))([""])(map(String)(children)),
     render: context => (() => {
       switch (format) {
         case "inline":
@@ -161,7 +160,7 @@ const dd = dd$0027({});
 const figure$0027 = block$002Delement("figure");
 const figcaption$0027 = block$002Delement("figcaption");
 const main$0027 = block$002Delement("main");
-const div = block$002Delement("div");
+const $div = block$002Delement("div");
 const b = inline$002Delement("b")({});
 const mask = block$002Delement("mask");
 const rect = self$002Dclosing$002Delement("rect");
@@ -192,4 +191,4 @@ const img = self$002Dclosing$002Delement("img");
 const param = self$002Dclosing$002Delement("param");
 const path = self$002Dclosing$002Delement("path");
 const stop = self$002Dclosing$002Delement("stop");
-export {text, a, address$0027, article, article$0027, aside, aside$0027, b, base, blockquote, blockquote$0027, body, body$0027, code, code$0027, dd, dd$0027, del, del$0027, div, dl, dl$0027, dt, dt$0027, em, em$0027, embed, figcaption$0027, figure$0027, footer, footer$0027, h1, h1$0027, h2, h2$0027, h3, h3$0027, h4, h4$0027, h5, h5$0027, h6, h6$0027, head, head$0027, header, header$0027, hgroup$0027, hr, hr$0027, html, html$0027, i, i$0027, img, ins, ins$0027, li, li$0027, linearGradient, link, main$0027, mask, menu$0027, meta, nav, nav$0027, object, ol, ol$0027, p, p$0027, param, path, pre, pre$0027, rect, script, section$0027, span, stop, strong, strong$0027, style$0027, svg, time, title, title$0027, ul, ul$0027, var$, var$0027, video};
+export {text, a, address$0027, article, article$0027, aside, aside$0027, b, base, blockquote, blockquote$0027, body, body$0027, code, code$0027, dd, dd$0027, del, del$0027, $div as div, dl, dl$0027, dt, dt$0027, em, em$0027, embed, figcaption$0027, figure$0027, footer, footer$0027, h1, h1$0027, h2, h2$0027, h3, h3$0027, h4, h4$0027, h5, h5$0027, h6, h6$0027, head, head$0027, header, header$0027, hgroup$0027, hr, hr$0027, html, html$0027, i, i$0027, img, ins, ins$0027, li, li$0027, linearGradient, link, main$0027, mask, menu$0027, meta, nav, nav$0027, object, ol, ol$0027, p, p$0027, param, path, pre, pre$0027, rect, script, section$0027, span, stop, strong, strong$0027, style$0027, svg, time, title, title$0027, ul, ul$0027, var$, var$0027, video};

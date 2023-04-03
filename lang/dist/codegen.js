@@ -1,6 +1,6 @@
 import Maybe from "./Maybe.js";
 import Node from "./Node.js";
-const Prelude = {
+const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = {
   operators: {
     unary: {
       ["~"]: operand => ~operand
@@ -18,7 +18,7 @@ const Prelude = {
   construct: constructor => args => Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
-  match: type => Prelude["match'"](type)(x => CasesNotExhaustive),
+  match: type => match$0027(type)(x => CasesNotExhaustive),
   ["match'"]: type => type[Symbol.for("match")],
   id: x => x,
   const: x => y => x,
@@ -27,17 +27,16 @@ const Prelude = {
   rem: lhs => rhs => rhs === 0 ? DivisionByZero : lhs % rhs,
   div: lhs => rhs => rhs === 0 ? DivisionByZero : Math.floor(lhs / rhs),
   mod: lhs => rhs => rhs === 0 ? DivisionByZero : (lhs % rhs + rhs) % rhs,
-  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => Prelude.equals(x)(that[idx]))) : this$ === that,
+  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that,
   concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
   reduce: f => y => x => x[Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => x => x.reduceRight((y, x) => f(y)(x), y),
   filter: f => x => Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f),
-  reject: f => Prelude.filter(x => Prelude.not(f(x))),
+  reject: f => filter($ => not(f($))),
   map: f => x => Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
   chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
 };
-const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = Prelude;
 const RESERVED_WORDS = construct(Set)([["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public", "arguments", "eval"]]);
 const validEsIdentifierName = name => (args => target => target.test.apply(target, args))([name])(RegExp("^[$_A-Za-z][$_A-Za-z0-9]*$"));
 const fromEscapedIdentifierName = name => ({
@@ -46,8 +45,8 @@ const fromEscapedIdentifierName = name => ({
 });
 const fromIdentifier = (() => {
   const escapeChar = c => concat("$")((args => target => target.padStart.apply(target, args))([4, "0"])((args => target => target.toUpperCase.apply(target, args))([])((args => target => target.toString.apply(target, args))([16])((args => target => target.charCodeAt.apply(target, args))([0])(c)))));
-  const escape = name => Prelude.equals("import")(name) ? "import" : (args => target => target.has.apply(target, args))([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : (args => target => target.replaceAll.apply(target, args))([apply(RegExp)(["[^$_A-Za-z0-9]", "g"]), escapeChar])(name);
-  return x => fromEscapedIdentifierName(escape(x));
+  const escape = name => equals("import")(name) ? "import" : (args => target => target.has.apply(target, args))([name])(RESERVED_WORDS) ? name + "$" : validEsIdentifierName(name) ? name : (args => target => target.replaceAll.apply(target, args))([apply(RegExp)(["[^$_A-Za-z0-9]", "g"]), escapeChar])(name);
+  return $ => fromEscapedIdentifierName(escape($));
 })();
 const fromLiteral = value => ({
   type: "Literal",
@@ -63,18 +62,18 @@ const TemplateElement = tail => raw => ({
 });
 const fromTemplateLiteral = quasis => expressions => ({
   type: "TemplateLiteral",
-  expressions: Prelude.map(fromNode)(expressions),
+  expressions: map(fromNode)(expressions),
   quasis: (() => {
     const lineEnding = (args => target => target.find.apply(target, args))([lineEnding => (args => target => target.startsWith.apply(target, args))([lineEnding])(quasis[0])])(["\n", "\r\n"]);
-    return Prelude.equals(undefined)(lineEnding) ? (() => {
-      const quasis$0027 = Prelude.map((args => target => target.replaceAll.apply(target, args))(["`", "\\`"]))(quasis);
-      return [...Prelude.map(TemplateElement(false))((args => target => target.slice.apply(target, args))([0, -1])(quasis$0027)), ...Prelude.map(TemplateElement(true))((args => target => target.slice.apply(target, args))([-1])(quasis$0027))];
+    return equals(undefined)(lineEnding) ? (() => {
+      const quasis$0027 = map((args => target => target.replaceAll.apply(target, args))(["`", "\\`"]))(quasis);
+      return [...map(TemplateElement(false))((args => target => target.slice.apply(target, args))([0, -1])(quasis$0027)), ...map(TemplateElement(true))((args => target => target.slice.apply(target, args))([-1])(quasis$0027))];
     })() : (() => {
       const indent = (args => target => target.search.apply(target, args))([RegExp("(?! )")])((args => target => target.slice.apply(target, args))([lineEnding.length])(quasis[0]));
       const pattern = apply(RegExp)([lineEnding + "[ ]{0," + indent + "}", "g"]);
-      const [head, ...tail] = Prelude.map(x => (args => target => target.replaceAll.apply(target, args))(["`", "\\`"])((args => target => target.replaceAll.apply(target, args))([pattern, lineEnding])(x)))(quasis);
+      const [head, ...tail] = map($ => (args => target => target.replaceAll.apply(target, args))(["`", "\\`"])((args => target => target.replaceAll.apply(target, args))([pattern, lineEnding])($)))(quasis);
       const head$0027 = (args => target => target.slice.apply(target, args))([lineEnding.length])(head);
-      return Prelude.equals([])(tail) ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...Prelude.map(TemplateElement(false))((args => target => target.slice.apply(target, args))([0, -1])(tail)), ...Prelude.map(TemplateElement(true))((args => target => target.slice.apply(target, args))([-1])(tail))];
+      return equals([])(tail) ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...map(TemplateElement(false))((args => target => target.slice.apply(target, args))([0, -1])(tail)), ...map(TemplateElement(true))((args => target => target.slice.apply(target, args))([-1])(tail))];
     })();
   })()
 });
@@ -96,7 +95,7 @@ const fromSpreadElement = argument => ({
 });
 const fromArrayExpression = elements => ({
   type: "ArrayExpression",
-  elements: Prelude.map(fromNode)(elements)
+  elements: map(fromNode)(elements)
 });
 const fromProperty = key => value => (() => {
   const computed = not(match$0027(Node)(const$(false))({
@@ -104,7 +103,7 @@ const fromProperty = key => value => (() => {
   })(key));
   const esKey = computed ? fromNode(key) : fromEscapedIdentifierName(key.value);
   const esValue = fromNode(value);
-  const shorthand = Prelude.equals("Identifier")(esKey.type) && Prelude.equals("Identifier")(esValue.type) && Prelude.equals(esValue.name)(esKey.name);
+  const shorthand = equals("Identifier")(esKey.type) && equals("Identifier")(esValue.type) && equals(esValue.name)(esKey.name);
   return {
     type: "Property",
     key: esKey,
@@ -117,15 +116,15 @@ const fromProperty = key => value => (() => {
 })();
 const fromObjectExpression = properties => ({
   type: "ObjectExpression",
-  properties: Prelude.map(fromNode)(properties)
+  properties: map(fromNode)(properties)
 });
 const fromArrowFunctionExpression = parameters => body => (() => {
   const esBody = fromNode(body);
   return {
     type: "ArrowFunctionExpression",
-    params: Prelude.map(fromNode)(parameters),
+    params: map(fromNode)(parameters),
     body: esBody,
-    expression: Prelude.not(Prelude.equals("BlockStatement")(esBody.type))
+    expression: not(equals("BlockStatement")(esBody.type))
   };
 })();
 const fromBlockExpression = statements => result => ({
@@ -135,7 +134,7 @@ const fromBlockExpression = statements => result => ({
     params: [],
     body: {
       type: "BlockStatement",
-      body: Prelude.concat(map(fromNode)(statements))([{
+      body: concat(map(fromNode)(statements))([{
         type: "ReturnStatement",
         argument: fromNode(result)
       }])
@@ -152,7 +151,7 @@ const fromBlockStatement = statements => ({
     params: [],
     body: {
       type: "BlockStatement",
-      body: Prelude.map(fromNode)(statements)
+      body: map(fromNode)(statements)
     },
     expression: false
   },
@@ -203,7 +202,7 @@ const fromSwitchCase = consequent => predicate => ({
 const fromSwitchCases = predicates => consequent => (() => {
   const init = (args => target => target.slice.apply(target, args))([0, -1])(predicates);
   const last = (args => target => target.at.apply(target, args))([-1])(predicates);
-  return Prelude.concat(map(fromSwitchCase(Maybe.Nothing))(init))([fromSwitchCase(Maybe.Just(consequent))(last)]);
+  return concat(map(fromSwitchCase(Maybe.Nothing))(init))([fromSwitchCase(Maybe.Just(consequent))(last)]);
 })();
 const fromSwitchExpression = discriminant => cases => ({
   type: "CallExpression",
@@ -215,7 +214,7 @@ const fromSwitchExpression = discriminant => cases => ({
       body: [{
         type: "SwitchStatement",
         discriminant: fromNode(discriminant),
-        cases: Prelude.chain(fromNode)(cases)
+        cases: chain(fromNode)(cases)
       }]
     },
     expression: false
@@ -226,7 +225,7 @@ const fromSwitchExpression = discriminant => cases => ({
 const fromCallExpression = callee => arguments$ => ({
   type: "CallExpression",
   callee: fromNode(callee),
-  arguments: Prelude.map(fromNode)(arguments$),
+  arguments: map(fromNode)(arguments$),
   optional: false
 });
 const fromVariableDeclaration = pattern => expression => ({
@@ -248,7 +247,7 @@ const fromFunctionDeclaration = name => parameters => body => ({
       type: "ArrowFunctionExpression",
       params: [fromNode(param)],
       body: esBody,
-      expression: Prelude.not(Prelude.equals("BlockStatement")(esBody.type))
+      expression: not(equals("BlockStatement")(esBody.type))
     }))(fromNode(body))(parameters)
   }]
 });
@@ -258,11 +257,11 @@ const fromExpressionStatement = expression => ({
 });
 const fromArrayPattern = elements => ({
   type: "ArrayPattern",
-  elements: Prelude.map(fromNode)(elements)
+  elements: map(fromNode)(elements)
 });
 const fromObjectPattern = properties => ({
   type: "ObjectPattern",
-  properties: Prelude.map(fromNode)(properties)
+  properties: map(fromNode)(properties)
 });
 const fromRestElement = argument => ({
   type: "RestElement",
@@ -274,7 +273,7 @@ const fromExportDefaultDeclaration = declaration => ({
 });
 const fromExportNamedDeclaration = specifiers => ({
   type: "ExportNamedDeclaration",
-  specifiers: Prelude.map(fromNode)(specifiers)
+  specifiers: map(fromNode)(specifiers)
 });
 const fromExportSpecifier = local => exported => ({
   type: "ExportSpecifier",
@@ -289,20 +288,20 @@ const fromImportNamespaceSpecifier = local => ({
   type: "ImportNamespaceSpecifier",
   local: fromNode(local)
 });
-const fromImportSpecifier = local => imported => ({
+const fromImportSpecifier = imported => local => ({
   type: "ImportSpecifier",
-  local: fromNode(local),
-  imported: fromNode(imported)
+  imported: fromNode(imported),
+  local: fromNode(local)
 });
 const fromImportDeclaration = source => specifiers => ({
   type: "ImportDeclaration",
-  specifiers: Prelude.map(fromNode)(specifiers),
+  specifiers: map(fromNode)(specifiers),
   source: fromNode(source)
 });
 const fromModule = imports => exports => statements => ({
   type: "Program",
   sourceType: "module",
-  body: Prelude.map(fromNode)(Prelude.concat(imports)(Prelude.concat(statements)(exports)))
+  body: map(fromNode)(concat(imports)(concat(statements)(exports)))
 });
 const fromNode = match(Node)({
   NullLiteral: fromLiteral(null),

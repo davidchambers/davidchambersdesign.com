@@ -10,12 +10,16 @@ import Prelude from "./prelude.serif";
 export default rewriteModule;
 
 {
+  NullLiteral,
+  BooleanLiteral,
+  NumberLiteral,
   StringLiteral,
   TemplateLiteral,
   MemberExpression,
   Identifier,
   SpreadElement,
   ArrayExpression,
+  Elision,
   Property,
   ObjectExpression,
   ArrayPattern,
@@ -34,27 +38,24 @@ export default rewriteModule;
   CallExpression,
   ImportDeclaration,
   ImportSpecifier,
+  ImportDefaultSpecifier,
+  ImportNamespaceSpecifier,
   ExportDefaultDeclaration,
+  ExportNamedDeclaration,
+  ExportSpecifier,
   VariableDeclaration,
   FunctionDeclaration,
   ExpressionStatement,
   Module,
 } = Node;
 
-nextUnusedIdent names desiredName = {
-  recur counter = {
-    candidate = if counter == 0 then desiredName else desiredName + "$" + counter;
-    if Set.has candidate names then recur (counter + 1) else Identifier candidate
-  };
-  recur 0
-};
+preludeNames = Set.from $ Object.keys $ Prelude;
 
 variables declared referenced = {declared, referenced};
 declaring   names = variables names Set.empty;
 referencing names = variables Set.empty names;
 empty             = variables Set.empty Set.empty;
 
-declared   = (.declared);
 referenced = (.referenced);
 
 merge lhs rhs = {
@@ -64,19 +65,17 @@ merge lhs rhs = {
 
 mergeAll = reduce merge empty;
 
-foo bar = baz;
-
-vars = match' Node (const empty) {
-  TemplateLiteral: \quasis -> mergeAll . map vars,
+vars node = flip (match' Node $ const empty) node {
+  TemplateLiteral: const $ mergeAll . map vars,
   MemberExpression: \object property -> vars object `merge` vars property,
-  Identifier: \name -> referencing $ Set.of name,
-  SpreadElement: \argument -> vars argument,
+  Identifier: referencing . Set.of,
+  SpreadElement: vars,
   ArrayExpression: mergeAll . map vars,
   Property: \key value -> vars key `merge` vars value,
-  ObjectExpression: \properties -> mergeAll $ vars <$> properties,
-  ArrayPattern: \elements -> mergeAll $ vars <$> elements,
-  ObjectPattern: \properties -> mergeAll $ vars <$> properties,
-  RestElement: \argument -> vars argument,
+  ObjectExpression: mergeAll . map vars,
+  ArrayPattern: mergeAll . map vars,
+  ObjectPattern: mergeAll . map vars,
+  RestElement: vars,
   ArrowFunctionExpression: \parameters body -> {
     referencing $ Set.without (referenced $ mergeAll $ vars <$> parameters) (referenced $ vars $ body)
   },
@@ -96,7 +95,7 @@ vars = match' Node (const empty) {
       ExpressionStatement:              \expression -> Set.union (referenced $ vars expression) names,
     }) (referenced $ vars result) operations
   },
-  UnaryExpression: \operator -> vars,
+  UnaryExpression: const vars,
   CompositionExpression: \left right -> vars left `merge` vars right,
   InfixCallExpression: \operator left right -> vars operator `merge` vars left `merge` vars right,
   BinaryExpression: \operator left right -> vars left `merge` vars right,
@@ -109,23 +108,23 @@ vars = match' Node (const empty) {
   SwitchCase: \predicates consequent -> mergeAll $ vars <$> [...predicates, consequent],
   PipeExpression: \head body -> vars head `merge` vars body,
   CallExpression: \callee arguments -> mergeAll $ vars <$> [callee, ...arguments],
-  ImportDeclaration: \source -> mergeAll . map vars,
-  ImportAllDeclaration: \source hiding -> empty,
-  ImportDefaultSpecifier: \local -> declaring $ referenced $ vars local,
-  ImportSpecifier: \local imported -> declaring $ referenced $ vars local,
-  ImportNamespaceSpecifier: \local -> declaring $ referenced $ vars local,
-  ExportNamedDeclaration: \specifiers -> mergeAll $ vars <$> specifiers,
-  ExportDefaultDeclaration: \declaration -> vars declaration,
-  ExportSpecifier: \local exported -> vars local,
+  ImportDeclaration: const $ mergeAll . map vars,
+  ImportAllDeclaration: const $ const $ empty,
+  ImportDefaultSpecifier: declaring . referenced . vars,
+  ImportSpecifier: const $ declaring . referenced . vars,
+  ImportNamespaceSpecifier: declaring . referenced . vars,
+  ExportNamedDeclaration: mergeAll . map vars,
+  ExportDefaultDeclaration: vars,
+  ExportSpecifier: const . vars,
   VariableDeclaration: \pattern expression -> variables (referenced $ vars pattern) (referenced $ vars expression),
   FunctionDeclaration: \name parameters body -> {
     names = Set.add name (referenced $ mergeAll $ vars <$> parameters);
     variables (Set.of name)
               (Set.without names $ referenced $ vars body)
   },
-  ExpressionStatement: \expression -> vars expression,
+  ExpressionStatement: vars,
   Module: \imports exports statements -> mergeAll $ vars <$> imports <> exports <> statements,
-  DataTypeDeclaration: \name constructors -> declaring $ Set.of name,
+  DataTypeDeclaration: const . declaring . Set.of,
 };
 
 rewriteModule module namesExportedFrom = {
@@ -133,65 +132,66 @@ rewriteModule module namesExportedFrom = {
   undeclared = Set.without declared referenced;
   imports = Future.parallel 16 $ rewriteImportDeclaration undeclared namesExportedFrom <$> module.imports;
   withImports module = {
-    {declared, referenced} = vars module;
-    preludeIdent = nextUnusedIdent declared "Prelude";
-    declared' = Set.add preludeIdent.name declared;
-    fromPrelude = MemberExpression preludeIdent . StringLiteral;
-    rewrite = rewriteNode fromPrelude declared';
-    preludeEntries = Object.entries $ Prelude fromPrelude;
-    preludeNames = (\[name] -> name) <$> preludeEntries;
-    unreferenced = declared | Set.without referenced | Set.sub preludeIdent.name;
-    undeclared = referenced | Set.without declared | Set.without (Set.from preludeNames) | Set.without globals | Set.without (Set.from ["import", "console", "fetch"]);
+    ;; desugar first to simplify renaming
+    module' = rewriteNode module;
+    ;; create renaming function based on variable and function declarations
+    rename = reduce (\rename -> match Node {
+      DataTypeDeclaration: const $ const rename,
+      VariableDeclaration: \pattern expression -> updateRenamerFromPattern rename pattern,
+      FunctionDeclaration: \name parameters body -> updateRenamerFromPattern rename $ Identifier name,
+      ExpressionStatement: const rename,
+    }) id module'.statements;
+    ;; wrap renaming function based on import declarations
+    rename' = reduce (\rename -> match Node {
+      ImportSpecifier: \imported local name -> if name == imported.name then local.name else rename name,
+      ImportNamespaceSpecifier: updateRenamerFromPattern rename,
+      ImportDefaultSpecifier: updateRenamerFromPattern rename,
+    }) rename $ module'.imports >>= (.specifiers);
+    ;; rename identifiers
+    {imports, exports, statements} = renameIdentifiers rename' module';
+    ;; insert prelude
+    prelude = {
+      VariableDeclaration
+        (ObjectPattern $ (\name -> Property (StringLiteral name) (Identifier name)) <$> Object.keys Prelude)
+        (ObjectExpression $ (\[name, value] -> Property (StringLiteral name) value) <$> Object.entries Prelude)
+    };
+    module'' = Module imports exports [rewriteNode prelude, ...statements];
+    {declared, referenced} = vars module'';
+    unreferenced = declared | Set.without referenced | Set.without preludeNames;
+    undeclared = referenced | Set.without declared | Set.without globals | Set.without (Set.from ["CasesNotExhaustive", "DivisionByZero", "import", "console", "fetch"]);
     if unreferenced.size > 0 then (unreferenced | Array.from | .join [", "] | concat "unreferenced: " | console.error);
     if undeclared.size   > 0 then (undeclared   | Array.from | .join [", "] | concat "undeclared: "   | console.error);
-    preludeDefinition = {
-      VariableDeclaration preludeIdent {
-        ObjectExpression {
-          (\[name, value] -> Property (StringLiteral name) value) <$> preludeEntries
-        }
-      }
-    };
-    preludeDestructuring = {
-      VariableDeclaration {
-        ObjectPattern {
-          preludeNames >>= \name -> {
-            ;; Do not unpack if name conflicts with a top-level binding:
-            if Set.has name declared' then [] else [Property (StringLiteral name) (Identifier name)]
-          }
-        }
-      } preludeIdent
-    };
-    Module module.imports
-           (rewrite <$> module.exports)
-           (rewrite <$> [preludeDefinition, preludeDestructuring, ...module.statements])
+    module''
   };
   (\imports -> withImports $ Module imports module.exports module.statements) <$> imports
 };
 
 rewriteImportAllDeclaration undeclared namesExportedFrom source hiding = {
-  namesExported = {
+  namesExported = Set.from {
     if .endsWith [".serif"] source.value then namesExportedFrom source.value
     else Object.keys <$> Future.attemptP \() -> import source.value
   };
-  namesHidden = (.name) <$> hiding;
-  namesHiddenNeedlessly = reject (\name -> .includes [name] namesExported) namesHidden;
-  if namesHiddenNeedlessly.length > 0 then {
+  namesHidden = Set.from $ (.name) <$> hiding;
+  namesHiddenNeedlessly = Set.without namesExported namesHidden;
+  if namesHiddenNeedlessly.size > 0 then {
     Future.reject $ Error {
       """import * from "${
         source.value
       }" hiding {${
         .join [", "] $ namesHidden
       }};\n\n${
-        format.list namesHiddenNeedlessly
+        format.list $ Array.from namesHiddenNeedlessly
       } ${
-        if namesHiddenNeedlessly.length == 1 then "is" else "are"
+        if namesHiddenNeedlessly.size == 1 then "is" else "are"
       } not exported so need not be hidden.\n"""
     }
   } else {
     namesExported
-    | filter (flip Set.has undeclared)
-    | reject (\name -> .includes [name] namesHidden)
-    | map (\name -> ImportSpecifier (Identifier name) (Identifier name))
+    | Set.without namesHidden
+    | Set.intersection undeclared
+    | Array.from
+    | map (\name -> ImportSpecifier (Identifier name)
+                                    (Identifier $ if Set.has name preludeNames then "$" + name else name))
     | ImportDeclaration source
     | Future.resolve
   }
@@ -209,8 +209,8 @@ rewriteImportDeclaration undeclared namesExportedFrom = {
 #args           = Identifier "args";
 #cases          = Identifier "cases";
 #default        = Identifier "default";
+#dollar         = Identifier "$";  ;; cannot cause shadowing as $ is not a valid Serif identifier
 #target         = Identifier "target";
-#x              = Identifier "x";
 
 'apply          = StringLiteral "apply";
 'for            = StringLiteral "for";
@@ -218,181 +218,191 @@ rewriteImportDeclaration undeclared namesExportedFrom = {
 'match          = StringLiteral "match";
 'tag            = StringLiteral "tag";
 
-rewriteNode fromPrelude = {
-  recur names = match' Node id {
-    TemplateLiteral: \quasis expressions -> {
-      TemplateLiteral quasis (recur names <$> expressions)
-    },
-    MemberExpression: \object property -> {
-      MemberExpression (recur names object) (recur names property)
-    },
-    ArrayExpression: ArrayExpression . map (recur names),
-    ObjectExpression: ObjectExpression . map (recur names),
-    ArrowFunctionExpression: \parameters body -> {
-      params = recur names <$> parameters;
-      names' = Set.union names $ (.name) <$> params;
-      ArrowFunctionExpression params (recur names' body)
-    },
-    PropertyAccessor: \identifier -> {
-      param = #x;
-      names' = Set.add param.name names;
-      recur names' {
-        ArrowFunctionExpression [param] {
-          MemberExpression param $ StringLiteral identifier.name
+rewriteNode node = flip (match' Node id) node {
+  TemplateLiteral: \quasis expressions -> TemplateLiteral quasis (rewriteNode <$> expressions),
+  MemberExpression: \object property -> MemberExpression (rewriteNode object) (rewriteNode property),
+  ArrayExpression: ArrayExpression . map rewriteNode,
+  ObjectExpression: ObjectExpression . map rewriteNode,
+  ArrowFunctionExpression: \parameters body -> ArrowFunctionExpression (rewriteNode <$> parameters) (rewriteNode body),
+  PropertyAccessor: \{name} -> rewriteNode $ ArrowFunctionExpression [#dollar] $ MemberExpression #dollar $ StringLiteral name,
+  BlockExpression: \statements result -> if statements == [] then rewriteNode result else BlockExpression (rewriteNode <$> statements) (rewriteNode result),
+  BlockStatement: BlockStatement . map rewriteNode,
+  DoBlockExpression: \operations result -> {
+    rewriteNode $ reduceRight (\result -> match Node {
+      ArrowAssignmentStatement: \pattern expression -> {
+        CallExpression (CallExpression (Identifier "chain") [ArrowFunctionExpression [pattern] result]) [expression]
+      },
+      VariableDeclaration: \pattern expression -> {
+        CallExpression (ArrowFunctionExpression [pattern] result) [expression]
+      },
+      FunctionDeclaration: \name parameters body -> {
+        CallExpression (ArrowFunctionExpression [Identifier name] result) [
+          reduceRight (\body param -> ArrowFunctionExpression [param] body) body parameters,
+        ]
+      },
+      ExpressionStatement: \expression -> {
+        BlockExpression [ExpressionStatement expression] result
+      },
+    }) result operations
+  },
+  UnaryExpression: \operator -> UnaryExpression operator . rewriteNode,
+  CompositionExpression: \left right -> {
+    ;; Original expression: f . g . h
+    ;;
+    ;; Representation:   o
+    ;;                  / \
+    ;;                 f   o
+    ;;                    / \
+    ;;                   g   h
+    ;;
+    ;; Rewritten expression: \x -> f (g (h x))
+    recur = match' Node (flip CallExpression [#dollar]) {
+      CompositionExpression: \left right -> CallExpression left [recur right],
+    };
+    rewriteNode $ ArrowFunctionExpression [#dollar] $ recur $ CompositionExpression left right
+  },
+  InfixCallExpression: \operator left right -> {
+    rewriteNode $ CallExpression (CallExpression operator [left]) [right]
+  },
+  BinaryExpression: \operator left right -> {
+    switch operator
+    when "==" then rewriteNode $ CallExpression (CallExpression (Identifier "equals") [right]) [left]
+    when "!=" then rewriteNode $ CallExpression (Identifier "not") [BinaryExpression "==" left right]
+    else BinaryExpression operator (rewriteNode left) (rewriteNode right)
+  },
+  ConcatenationExpression: \left right -> {
+    rewriteNode $ CallExpression (CallExpression (Identifier "concat") [left]) [right]
+  },
+  MapExpression: \left right -> {
+    rewriteNode $ CallExpression (CallExpression (Identifier "map") [left]) [right]
+  },
+  BindExpression: \left right -> {
+    rewriteNode $ CallExpression (CallExpression (Identifier "chain") [right]) [left]
+  },
+  LogicalExpression: \operator left right -> {
+    LogicalExpression operator (rewriteNode left) (rewriteNode right)
+  },
+  ConditionalExpression: \predicate consequent alternative -> {
+    ConditionalExpression (rewriteNode predicate) (rewriteNode consequent) (rewriteNode <$> alternative)
+  },
+  SwitchExpression: \discriminant cases -> {
+    SwitchExpression (rewriteNode discriminant) (rewriteNode <$> cases)
+  },
+  SwitchCase: \predicates consequent -> {
+    SwitchCase (map rewriteNode <$> predicates) (rewriteNode consequent)
+  },
+  PipeExpression: \head body -> rewriteNode $ CallExpression body [head],
+  MethodCallExpression: \name -> {
+    rewriteNode {
+      ArrowFunctionExpression [#args] {
+        ArrowFunctionExpression [#target] {
+          CallExpression (MemberExpression (MemberExpression #target $ StringLiteral name) 'apply) [#target, #args]
         }
       }
-    },
-    BlockExpression: \statements result -> {
-      if statements == [] then recur names result else {
-        names' = Set.union names $ declared $ mergeAll $ vars <$> statements;
-        BlockExpression (recur names' <$> statements) (recur names' result)
-      }
-    },
-    BlockStatement: \statements -> {
-      names' = Set.union names $ declared $ mergeAll $ vars <$> statements;
-      BlockStatement (recur names' <$> statements)
-    },
-    DoBlockExpression: \operations result -> {
-      recur names $ reduceRight (\result -> match Node {
-        ArrowAssignmentStatement: \pattern expression -> {
-          CallExpression (CallExpression (fromPrelude "chain") [ArrowFunctionExpression [pattern] result]) [expression]
-        },
-        VariableDeclaration: \pattern expression -> {
-          CallExpression (ArrowFunctionExpression [pattern] result) [expression]
-        },
-        FunctionDeclaration: \name parameters body -> {
-          CallExpression (ArrowFunctionExpression [Identifier name] result) [
-            reduceRight (\body param -> ArrowFunctionExpression [param] body) body parameters,
-          ]
-        },
-        ExpressionStatement: \expression -> {
-          BlockExpression [ExpressionStatement expression] result
-        },
-      }) result operations
-    },
-    UnaryExpression: \operator argument -> {
-      UnaryExpression operator (recur names argument)
-    },
-    CompositionExpression: \left right -> {
-      ;; Original expression: f . g . h
-      ;;
-      ;; Representation:   o
-      ;;                  / \
-      ;;                 f   o
-      ;;                    / \
-      ;;                   g   h
-      ;;
-      ;; Rewritten expression: \x -> f (g (h x))
-      param = nextUnusedIdent names "x";
-      names' = Set.add param.name names;
-      toCallExpression node = {
-        match' Node (flip CallExpression [param]) {
-          CompositionExpression: \left right -> {
-            CallExpression left [toCallExpression right]
-          },
-        } node
-      };
-      CompositionExpression left right
-      | toCallExpression
-      | ArrowFunctionExpression [param]
-      | recur names'
-    },
-    InfixCallExpression: \operator left right -> {
-      recur names $ CallExpression (CallExpression operator [left]) [right]
-    },
-    BinaryExpression: \operator left right -> {
-      switch operator
-      when "==" then recur names $ CallExpression (CallExpression (fromPrelude "equals") [right]) [left]
-      when "!=" then recur names $ CallExpression (fromPrelude "not") [BinaryExpression "==" left right]
-      else BinaryExpression operator (recur names left) (recur names right)
-    },
-    ConcatenationExpression: \left right -> {
-      recur names $ CallExpression (CallExpression (fromPrelude "concat") [left]) [right]
-    },
-    MapExpression: \left right -> {
-      recur names $ CallExpression (CallExpression (fromPrelude "map") [left]) [right]
-    },
-    BindExpression: \left right -> {
-      recur names $ CallExpression (CallExpression (fromPrelude "chain") [right]) [left]
-    },
-    LogicalExpression: \operator left right -> {
-      LogicalExpression operator (recur names left) (recur names right)
-    },
-    ConditionalExpression: \predicate consequent alternative -> {
-      ConditionalExpression (recur names predicate)
-                            (recur names consequent)
-                            (recur names <$> alternative)
-    },
-    SwitchExpression: \discriminant cases -> {
-      SwitchExpression (recur names discriminant) (recur names <$> cases)
-    },
-    SwitchCase: \predicates consequent -> {
-      SwitchCase (map (map $ recur names) predicates) (recur names consequent)
-    },
-    PipeExpression: \head body -> {
-      recur names $ CallExpression body [head]
-    },
-    MethodCallExpression: \name -> {
-      recur names {
-        ArrowFunctionExpression [#args] {
-          ArrowFunctionExpression [#target] {
-            CallExpression (MemberExpression (MemberExpression #target $ StringLiteral name) 'apply) [#target, #args]
+    }
+  },
+  CallExpression: \callee -> CallExpression (rewriteNode callee) . map rewriteNode,
+  VariableDeclaration: \pattern -> VariableDeclaration (rewriteNode pattern) . rewriteNode,
+  FunctionDeclaration: \name parameters -> FunctionDeclaration name (rewriteNode <$> parameters) . rewriteNode,
+  ExpressionStatement: ExpressionStatement . rewriteNode,
+  ArrayPattern: ArrayPattern . map rewriteNode,
+  ObjectPattern: ObjectPattern . map rewriteNode,
+  SpreadElement: SpreadElement . rewriteNode,
+  RestElement: RestElement . rewriteNode,
+  Property: \key value -> Property (rewriteNode key) (rewriteNode value),
+  ExportDefaultDeclaration: ExportDefaultDeclaration . rewriteNode,
+  DataTypeDeclaration: \name constructors -> {
+    @tag = CallExpression (MemberExpression #Symbol 'for) ['tag];
+    @match = CallExpression (MemberExpression #Symbol 'for) ['match];
+    constructors
+    | map (\{name, parameters} -> Property (StringLiteral name) $ reduceRight
+        (\body parameter -> ArrowFunctionExpression [Identifier parameter] body)
+        (parameters
+         | map (\name -> Property (StringLiteral name) (Identifier name))
+         | concat [Property @tag (StringLiteral name)]
+         | ObjectExpression)
+        parameters
+      )
+    | concat [Property @match {
+        #member = Identifier $ .replace [RegExp "^.", .toLowerCase []] name;
+        case {name, parameters} = {
+          SwitchCase [Maybe.Just $ StringLiteral name] {
+            reduce (\callee name -> CallExpression callee [MemberExpression #member $ StringLiteral name])
+                   (MemberExpression #cases $ StringLiteral name)
+                   parameters
+          }
+        };
+        ArrowFunctionExpression [#default] {
+          ArrowFunctionExpression [#cases] {
+            ArrowFunctionExpression [#member] {
+              ConditionalExpression
+                (CallExpression (MemberExpression #Object 'hasOwn) [#cases, MemberExpression #member @tag])
+                (SwitchExpression (MemberExpression #member @tag) (case <$> constructors))
+                (Maybe.Just $ CallExpression #default [#member])
+            }
           }
         }
-      }
-    },
-    CallExpression: \callee arguments -> {
-      CallExpression (recur names callee) (recur names <$> arguments)
-    },
-    VariableDeclaration: \pattern expression -> {
-      VariableDeclaration (recur names pattern) (recur names expression)
-    },
-    FunctionDeclaration: \name parameters body -> {
-      FunctionDeclaration name (recur names <$> parameters) (recur names body)
-    },
-    ExpressionStatement: ExpressionStatement . recur names,
-    ArrayPattern: ArrayPattern . map (recur names),
-    ObjectPattern: ObjectPattern . map (recur names),
-    SpreadElement: SpreadElement . recur names,
-    RestElement: RestElement . recur names,
-    Property: \key value -> Property (recur names key) (recur names value),
-    ExportDefaultDeclaration: ExportDefaultDeclaration . recur names,
-    DataTypeDeclaration: \name constructors -> {
-      @tag = CallExpression (MemberExpression #Symbol 'for) ['tag];
-      @match = CallExpression (MemberExpression #Symbol 'for) ['match];
-      constructors
-      | map (\{name, parameters} -> Property (StringLiteral name) $ reduceRight
-          (\body parameter -> ArrowFunctionExpression [Identifier parameter] body)
-          (parameters
-           | map (\name -> Property (StringLiteral name) (Identifier name))
-           | concat [Property @tag (StringLiteral name)]
-           | ObjectExpression)
-          parameters
-        )
-      | concat [Property @match {
-          #member = Identifier $ .replace [RegExp "^.", .toLowerCase []] name;
-          case {name, parameters} = {
-            SwitchCase [Maybe.Just $ StringLiteral name] {
-              reduce (\callee name -> CallExpression callee [MemberExpression #member $ StringLiteral name])
-                     (MemberExpression #cases $ StringLiteral name)
-                     parameters
-            }
-          };
-          ArrowFunctionExpression [#default] {
-            ArrowFunctionExpression [#cases] {
-              ArrowFunctionExpression [#member] {
-                ConditionalExpression
-                  (CallExpression (MemberExpression #Object 'hasOwn) [#cases, MemberExpression #member @tag])
-                  (SwitchExpression (MemberExpression #member @tag) (case <$> constructors))
-                  (Maybe.Just $ CallExpression #default [#member])
-              }
-            }
-          }
-        }]
-      | ObjectExpression
-      | VariableDeclaration $ Identifier name
-      | recur names
-    },
+      }]
+    | ObjectExpression
+    | VariableDeclaration $ Identifier name
+    | rewriteNode
+  },
+  Module: \imports exports statements -> {
+    Module (rewriteNode <$> imports) (rewriteNode <$> exports) (rewriteNode <$> statements)
+  },
+};
+
+updateRenamerFromPattern rename node = flip (match Node) node {
+  Identifier: \name -> {
+    if Set.has name preludeNames
+    then \this -> if this == name then "$" + this else rename this
+    else rename
+  },
+  ArrayPattern:   reduce updateRenamerFromPattern rename,
+  ObjectPattern:  reduce updateRenamerFromPattern rename,
+  Property:       const (updateRenamerFromPattern rename),
+  RestElement:    updateRenamerFromPattern rename,
+  Elision:        rename,
+};
+
+renameIdentifiers rename = {
+  recur node = flip (match Node) node {
+    Identifier: Identifier . rename,
+    FunctionDeclaration: \name parameters -> FunctionDeclaration (rename name) (recur <$> parameters) . recur,
+    ArrayExpression: ArrayExpression . map recur,
+    ArrayPattern: ArrayPattern . map recur,
+    ArrowFunctionExpression: \parameters -> ArrowFunctionExpression (recur <$> parameters) . recur,
+    BinaryExpression: \operator left right -> BinaryExpression operator (recur left) (recur right),
+    BlockExpression: \statements -> BlockExpression (recur <$> statements) . recur,
+    BlockStatement: BlockStatement . map recur,
+    BooleanLiteral: BooleanLiteral,
+    CallExpression: \callee arguments -> CallExpression (recur callee) (recur <$> arguments),
+    ConditionalExpression: \predicate consequent alternative -> ConditionalExpression (recur predicate) (recur consequent) (recur <$> alternative),
+    Elision: Elision,
+    ExportDefaultDeclaration: ExportDefaultDeclaration . recur,
+    ExportNamedDeclaration: ExportNamedDeclaration . map recur,
+    ExportSpecifier: ExportSpecifier . recur,
+    ExpressionStatement: ExpressionStatement . recur,
+    ImportDeclaration: \source -> ImportDeclaration source . map recur,
+    ImportDefaultSpecifier: ImportDefaultSpecifier . recur,
+    ImportNamespaceSpecifier: ImportNamespaceSpecifier . recur,
+    ImportSpecifier: \imported -> ImportSpecifier imported . recur,
+    LogicalExpression: \operator left right -> LogicalExpression operator (recur left) (recur right),
+    MemberExpression: \object property -> MemberExpression (recur object) (recur property),
+    Module: \imports exports statements -> Module (recur <$> imports) (recur <$> exports) (recur <$> statements),
+    NullLiteral: NullLiteral,
+    NumberLiteral: NumberLiteral,
+    ObjectExpression: ObjectExpression . map recur,
+    ObjectPattern: ObjectPattern . map recur,
+    Property: \key value -> Property (recur key) (recur value),
+    RestElement: RestElement . recur,
+    SpreadElement: SpreadElement . recur,
+    StringLiteral: StringLiteral,
+    SwitchCase: \predicates consequent -> SwitchCase (map recur <$> predicates) (recur consequent),
+    SwitchExpression: \discriminant cases -> SwitchExpression (recur discriminant) (recur <$> cases),
+    TemplateLiteral: \quasis expressions -> TemplateLiteral quasis (recur <$> expressions),
+    UnaryExpression: \operator operand -> UnaryExpression operator (recur operand),
+    VariableDeclaration: \pattern expression -> VariableDeclaration (recur pattern) (recur expression),
   };
   recur
 };

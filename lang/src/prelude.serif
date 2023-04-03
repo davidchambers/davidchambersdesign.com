@@ -32,10 +32,8 @@ export default Prelude;
 #f                      = Identifier "f";
 #idx                    = Identifier "idx";
 #lhs                    = Identifier "lhs";
-#name                   = Identifier "name";
 #operand                = Identifier "operand";
 #rhs                    = Identifier "rhs";
-#target                 = Identifier "target";
 #that                   = Identifier "that";
 #this                   = Identifier "this";
 #type                   = Identifier "type";
@@ -98,7 +96,7 @@ esBinaryOperators = [
   "|",
 ];
 
-Prelude fromPrelude = {
+Prelude = {
   operators: ObjectExpression [
     esUnaryOperators
     | map (\op -> Property (StringLiteral op) $ fromEsUnaryOperator op)
@@ -137,7 +135,7 @@ Prelude fromPrelude = {
   },
   match: {
     ArrowFunctionExpression [#type] {
-      CallExpression (CallExpression (fromPrelude "match'") [#type]) [ArrowFunctionExpression [#x] #CasesNotExhaustive]
+      CallExpression (CallExpression (Identifier "match'") [#type]) [ArrowFunctionExpression [#x] #CasesNotExhaustive]
     }
   },
   match': {
@@ -212,7 +210,7 @@ Prelude fromPrelude = {
                                   (MemberExpression #that 'length))
                 (CallExpression (MemberExpression #this 'every)
                                 [ArrowFunctionExpression [#x, #idx] $
-                                   CallExpression (CallExpression (fromPrelude "equals") [#x]) [MemberExpression #that #idx]])))
+                                   CallExpression (CallExpression (Identifier "equals") [#x]) [MemberExpression #that #idx]])))
           (Just $ BinaryExpression "===" #this #that)
       }
     }
@@ -273,11 +271,11 @@ Prelude fromPrelude = {
   reject: {
     ;; \predicate -> filter (not . predicate)
     ArrowFunctionExpression [#f] {
-      CallExpression (fromPrelude "filter") [CompositionExpression (fromPrelude "not") #f]
+      CallExpression (Identifier "filter") [CompositionExpression (Identifier "not") #f]
     }
     ;; This may be possible once sectioning is supported:
     ;; filter . (not .)
-    ;; CompositionExpression (fromPrelude "filter") (CompositionExpression (fromPrelude "not"))
+    ;; CompositionExpression (Identifier "filter") (CompositionExpression (Identifier "not"))
   },
   map: {
     ArrowFunctionExpression [#f] {
