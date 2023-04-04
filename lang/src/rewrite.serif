@@ -313,7 +313,11 @@ rewriteNode node = flip (match' Node id) node {
       }
     }
   },
-  CallExpression: \callee -> CallExpression (rewriteNode callee) . map rewriteNode,
+  CallExpression: flip \arguments -> {
+    match' Node (\callee -> CallExpression (rewriteNode callee) (rewriteNode <$> arguments)) {
+      PropertyAccessor: rewriteNode . MemberExpression arguments[0] . StringLiteral . (.name),
+    }
+  },
   VariableDeclaration: \pattern -> VariableDeclaration (rewriteNode pattern) . rewriteNode,
   FunctionDeclaration: \name parameters -> FunctionDeclaration name (rewriteNode <$> parameters) . rewriteNode,
   ExpressionStatement: ExpressionStatement . rewriteNode,

@@ -47,7 +47,7 @@ const parse = filename => sourceText => mapRej(error => (() => {
     text: (args => target => target.trimEnd.apply(target, args))([])(text)
   })])((args => target => target.split.apply(target, args))([apply(RegExp)(["^", "m"])])(sourceText)));
   const renderLineNumber = $ => (args => target => target.padStart.apply(target, args))([4])(String($));
-  return `\n\x1B[1m${path.relative(apply(process.cwd)([]))(error.location.source)}\x1B[0m\n\n${(args => target => target.join.apply(target, args))([""])((args => target => target.map.apply(target, args))([(line, idx, lines) => `\x1B[7m${renderLineNumber(line.number)}\x1B[0m${idx < subtract(1)(lines.length) ? line.text : `${(args => target => target.slice.apply(target, args))([0, subtract(1)(error.location.start.column)])(line.text)}\x1B[7m${(args => target => target.charAt.apply(target, args))([subtract(1)(error.location.start.column)])(line.text)}\x1B[0m${(args => target => target.slice.apply(target, args))([error.location.start.column])(line.text)}`}\n`])(lines))}${(length => (args => target => target.repeat.apply(target, args))([subtract(1)(length + error.location.start.column)])(" "))(($ => $.length)(renderLineNumber(($ => $.number)((args => target => target.at.apply(target, args))([-1])(lines)))))}^\n${error.message}\n`;
+  return `\n\x1B[1m${path.relative(apply(process.cwd)([]))(error.location.source)}\x1B[0m\n\n${(args => target => target.join.apply(target, args))([""])((args => target => target.map.apply(target, args))([(line, idx, lines) => `\x1B[7m${renderLineNumber(line.number)}\x1B[0m${idx < subtract(1)(lines.length) ? line.text : `${(args => target => target.slice.apply(target, args))([0, subtract(1)(error.location.start.column)])(line.text)}\x1B[7m${(args => target => target.charAt.apply(target, args))([subtract(1)(error.location.start.column)])(line.text)}\x1B[0m${(args => target => target.slice.apply(target, args))([error.location.start.column])(line.text)}`}\n`])(lines))}${(length => (args => target => target.repeat.apply(target, args))([subtract(1)(length + error.location.start.column)])(" "))(renderLineNumber((args => target => target.at.apply(target, args))([-1])(lines).number).length)}^\n${error.message}\n`;
 })())(serif.parse(filename)(sourceText));
 const reducer = futureTree => filename => chain(findDependencies(filename))(futureTree);
 const findDependencies = filename => tree => tree.has(filename) ? resolve(tree) : chain(sourceText => chain(ast => (dependencies => (exportedNames => reduce(reducer)(resolve(construct(Map)([[...tree, [filename, {
@@ -56,7 +56,7 @@ const findDependencies = filename => tree => tree.has(filename) ? resolve(tree) 
   dependencies,
   exportedNames
 }]]])))(dependencies))(chain(match$0027(Node)(const$([]))({
-  ExportNamedDeclaration: map($ => ($ => $.name)(($ => $.exported)($)))
+  ExportNamedDeclaration: map($ => $.exported.name)
 }))(ast.exports)))(chain(({source: {value}}) => (args => target => target.test.apply(target, args))([value])(RegExp("^[./].*[.]serif$")) ? [path.join([filename, "..", value])] : [])(ast.imports)))(parse(filename)(sourceText)))(mapRej($ => $.message)(fs.readFile(filename)));
 const orderDependencies = tree => (() => {
   const recur = unsorted$0021 => sorted$0021 => equals([])(unsorted$0021) ? sorted$0021 : (() => {
@@ -79,7 +79,7 @@ const orderDependencies = tree => (() => {
     esFilename
   }))(fs.writeFile(esFilename)(esSource)))(fs.mkdir({
     recursive: true
-  })(path.dirname(esFilename))))(path.join([absDst, path.relative(absSrc)(serifDirname), esBasename])))(path.basename(serifFilename)(".serif") + ".js"))(apply(generate)([esAst, {}])))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(importPath => (filename => ($ => $.exportedNames)((args => target => target.get.apply(target, args))([filename])(tree)))(path.join(concat([serifDirname])((args => target => target.split.apply(target, args))(["/"])(importPath)))))))(($ => $.ast)((args => target => target.get.apply(target, args))([serifFilename])(tree))))(path.dirname(serifFilename)))))(orderDependencies(tree)))(reduce(reducer)(resolve(construct(Map)([[]])))(absFilenames));
+  })(path.dirname(esFilename))))(path.join([absDst, path.relative(absSrc)(serifDirname), esBasename])))(path.basename(serifFilename)(".serif") + ".js"))(apply(generate)([esAst, {}])))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(importPath => (filename => (args => target => target.get.apply(target, args))([filename])(tree).exportedNames)(path.join(concat([serifDirname])((args => target => target.split.apply(target, args))(["/"])(importPath)))))))((args => target => target.get.apply(target, args))([serifFilename])(tree).ast))(path.dirname(serifFilename)))))(orderDependencies(tree)))(reduce(reducer)(resolve(construct(Map)([[]])))(absFilenames));
   return fork(console.error)(filenames => (args => target => target.forEach.apply(target, args))([({serifFilename, esFilename}) => (() => {
     console.log("• " + path.relative(cwd)(serifFilename));
     return console.log("  ➔ " + path.relative(cwd)(esFilename));

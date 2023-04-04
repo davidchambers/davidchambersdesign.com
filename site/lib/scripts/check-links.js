@@ -33,7 +33,7 @@ const red = text => "\u001b[31m" + text + "\u001b[0m";
 const yellow = text => "\u001b[33m" + text + "\u001b[0m";
 const cyan = text => "\u001b[36m" + text + "\u001b[0m";
 const format = ({url, status}) => (() => {
-  const padding = x => (" ").repeat(S.max(0)(subtract(($ => $.length)(String(x)))(15)));
+  const padding = x => (" ").repeat(S.max(0)(subtract(String(x).length)(15)));
   const normal = s => s;
   return (() => {
     switch (true) {

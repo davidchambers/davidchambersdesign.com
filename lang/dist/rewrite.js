@@ -256,7 +256,9 @@ const rewriteNode = node => flip(match$0027(Node)(id))(node)({
   SwitchCase: predicates => consequent => SwitchCase(map(map(rewriteNode))(predicates))(rewriteNode(consequent)),
   PipeExpression: head => body => rewriteNode(CallExpression(body)([head])),
   MethodCallExpression: name => rewriteNode(ArrowFunctionExpression([$0023args])(ArrowFunctionExpression([$0023target])(CallExpression(MemberExpression(MemberExpression($0023target)(StringLiteral(name)))($0027apply))([$0023target, $0023args])))),
-  CallExpression: callee => $ => CallExpression(rewriteNode(callee))(map(rewriteNode)($)),
+  CallExpression: flip(arguments$ => match$0027(Node)(callee => CallExpression(rewriteNode(callee))(map(rewriteNode)(arguments$)))({
+    PropertyAccessor: $ => rewriteNode(MemberExpression(arguments$[0])(StringLiteral($.name)))
+  })),
   VariableDeclaration: pattern => $ => VariableDeclaration(rewriteNode(pattern))(rewriteNode($)),
   FunctionDeclaration: name => parameters => $ => FunctionDeclaration(name)(map(rewriteNode)(parameters))(rewriteNode($)),
   ExpressionStatement: $ => ExpressionStatement(rewriteNode($)),
