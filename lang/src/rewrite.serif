@@ -2,7 +2,6 @@ import * as Future from "fluture";
 
 import Maybe from "./Maybe.serif";
 import Node from "./Node.serif";
-import * as Set from "./Set.serif";
 import * as format from "./format.serif";
 import globals from "./globals.serif";
 import Prelude from "./prelude.serif";
@@ -49,26 +48,26 @@ export default rewriteModule;
   Module,
 } = Node;
 
-preludeNames = Set.from $ Object.keys $ Prelude;
+preludeNames = construct Set [Object.keys Prelude];
 
 variables declared referenced = {declared, referenced};
-declaring   names = variables names Set.empty;
-referencing names = variables Set.empty names;
-empty             = variables Set.empty Set.empty;
+declaring   names = variables names (empty Set);
+referencing names = variables (empty Set) names;
+emptyVariables    = variables (empty Set) (empty Set);
 
 referenced = (.referenced);
 
 merge lhs rhs = {
-  declared:   Set.union lhs.declared rhs.declared,
-  referenced: Set.union lhs.referenced rhs.referenced,
+  declared:   lhs.declared   | rhs.declared,
+  referenced: lhs.referenced | rhs.referenced,
 };
 
-mergeAll = reduce merge empty;
+mergeAll = reduce merge emptyVariables;
 
-vars node = flip (match' Node $ const empty) node {
+vars node = flip (match' Node $ const emptyVariables) node {
   TemplateLiteral: const $ mergeAll . map vars,
   MemberExpression: \object property -> vars object `merge` vars property,
-  Identifier: referencing . Set.of,
+  Identifier: referencing . of Set,
   SpreadElement: vars,
   ArrayExpression: mergeAll . map vars,
   Property: \key value -> vars key `merge` vars value,
@@ -77,22 +76,22 @@ vars node = flip (match' Node $ const empty) node {
   ObjectPattern: mergeAll . map vars,
   RestElement: vars,
   ArrowFunctionExpression: \parameters body -> {
-    referencing $ Set.without (referenced $ mergeAll $ vars <$> parameters) (referenced $ vars $ body)
+    referencing $ referenced (vars $ body) - referenced (mergeAll $ vars <$> parameters)
   },
   BlockExpression: \statements result -> {
     {declared, referenced} = reduce merge (vars result) (vars <$> statements);
-    referencing $ Set.without declared referenced
+    referencing $ referenced - declared
   },
   BlockStatement: \statements -> {
     {declared, referenced} = mergeAll (vars <$> statements);
-    referencing $ Set.without declared referenced
+    referencing $ referenced - declared
   },
   DoBlockExpression: \operations result -> referencing {
     reduceRight (\names -> match Node {
-      FunctionDeclaration:    \name parameters body -> Set.without (referenced $ mergeAll $ vars <$> parameters) $ Set.union names $ referenced $ vars body,
-      VariableDeclaration:      \pattern expression -> Set.union (referenced $ vars expression) $ Set.without (referenced $ vars pattern) names,  ;; x <- f x;
-      ArrowAssignmentStatement: \pattern expression -> Set.union (referenced $ vars expression) $ Set.without (referenced $ vars pattern) names,  ;; x = f x;
-      ExpressionStatement:              \expression -> Set.union (referenced $ vars expression) names,
+      FunctionDeclaration:    \name parameters body -> names | referenced (vars body) - referenced (mergeAll $ vars <$> parameters),
+      VariableDeclaration:      \pattern expression -> referenced (vars pattern) - names | referenced (vars expression),  ;; x <- f x;
+      ArrowAssignmentStatement: \pattern expression -> referenced (vars pattern) - names | referenced (vars expression),  ;; x = f x;
+      ExpressionStatement:              \expression -> names | referenced (vars expression),
     }) (referenced $ vars result) operations
   },
   UnaryExpression: const vars,
@@ -103,13 +102,13 @@ vars node = flip (match' Node $ const empty) node {
   MapExpression: \left right -> vars left `merge` vars right,
   BindExpression: \left right -> vars left `merge` vars right,
   LogicalExpression: \operator left right -> vars left `merge` vars right,
-  ConditionalExpression: \predicate consequent alternative -> vars predicate `merge` vars consequent `merge` (Maybe.maybe empty vars alternative),
+  ConditionalExpression: \predicate consequent alternative -> vars predicate `merge` vars consequent `merge` (Maybe.maybe emptyVariables vars alternative),
   SwitchExpression: \discriminant cases -> mergeAll $ vars <$> [discriminant, ...cases],
   SwitchCase: \predicates consequent -> mergeAll $ vars <$> [...predicates, consequent],
   PipeExpression: \head body -> vars head `merge` vars body,
   CallExpression: \callee arguments -> mergeAll $ vars <$> [callee, ...arguments],
   ImportDeclaration: const $ mergeAll . map vars,
-  ImportAllDeclaration: const $ const $ empty,
+  ImportAllDeclaration: const $ const $ emptyVariables,
   ImportDefaultSpecifier: declaring . referenced . vars,
   ImportSpecifier: const $ declaring . referenced . vars,
   ImportNamespaceSpecifier: declaring . referenced . vars,
@@ -118,18 +117,16 @@ vars node = flip (match' Node $ const empty) node {
   ExportSpecifier: const . vars,
   VariableDeclaration: \pattern expression -> variables (referenced $ vars pattern) (referenced $ vars expression),
   FunctionDeclaration: \name parameters body -> {
-    names = Set.add name (referenced $ mergeAll $ vars <$> parameters);
-    variables (Set.of name)
-              (Set.without names $ referenced $ vars body)
+    variables (of Set name) (referenced (vars body) - of Set name - referenced (mergeAll $ vars <$> parameters))
   },
   ExpressionStatement: vars,
   Module: \imports exports statements -> mergeAll $ vars <$> imports <> exports <> statements,
-  DataTypeDeclaration: const . declaring . Set.of,
+  DataTypeDeclaration: const . declaring . of Set,
 };
 
 rewriteModule module namesExportedFrom = {
   {declared, referenced} = vars module;
-  undeclared = Set.without declared referenced;
+  undeclared = referenced - declared;
   imports = Future.parallel 16 $ rewriteImportDeclaration undeclared namesExportedFrom <$> module.imports;
   withImports module = {
     ;; desugar first to simplify renaming
@@ -155,24 +152,24 @@ rewriteModule module namesExportedFrom = {
         (ObjectPattern $ (\name -> Property (StringLiteral name) (Identifier name)) <$> Object.keys Prelude)
         (ObjectExpression $ (\[name, value] -> Property (StringLiteral name) value) <$> Object.entries Prelude)
     };
-    module'' = Module imports exports [rewriteNode prelude, ...statements];
+    module'' = Module imports exports [prelude, ...statements];
     {declared, referenced} = vars module'';
-    unreferenced = declared | Set.without referenced | Set.without preludeNames;
-    undeclared = referenced | Set.without declared | Set.without globals | Set.without (Set.from ["CasesNotExhaustive", "DivisionByZero", "import", "console", "fetch"]);
-    if unreferenced.size > 0 then (unreferenced | Array.from | .join [", "] | concat "unreferenced: " | console.error);
-    if undeclared.size   > 0 then (undeclared   | Array.from | .join [", "] | concat "undeclared: "   | console.error);
+    unreferenced = declared - referenced - preludeNames;
+    undeclared = referenced - declared - globals - construct Set [["CasesNotExhaustive", "DivisionByZero", "import", "console", "fetch"]];
+    if unreferenced.size > 0 then (unreferenced % Array.from % .join [", "] % concat "unreferenced: " % console.error);
+    if undeclared.size   > 0 then (undeclared   % Array.from % .join [", "] % concat "undeclared: "   % console.error);
     module''
   };
   (\imports -> withImports $ Module imports module.exports module.statements) <$> imports
 };
 
 rewriteImportAllDeclaration undeclared namesExportedFrom source hiding = {
-  namesExported = Set.from {
+  namesExported = construct Set [
     if .endsWith [".serif"] source.value then namesExportedFrom source.value
     else Object.keys <$> Future.attemptP \() -> import source.value
-  };
-  namesHidden = Set.from $ (.name) <$> hiding;
-  namesHiddenNeedlessly = Set.without namesExported namesHidden;
+  ];
+  namesHidden = construct Set [(.name) <$> hiding];
+  namesHiddenNeedlessly = namesHidden - namesExported;
   if namesHiddenNeedlessly.size > 0 then {
     Future.reject $ Error {
       """import * from "${
@@ -186,14 +183,12 @@ rewriteImportAllDeclaration undeclared namesExportedFrom source hiding = {
       } not exported so need not be hidden.\n"""
     }
   } else {
-    namesExported
-    | Set.without namesHidden
-    | Set.intersection undeclared
-    | Array.from
-    | map (\name -> ImportSpecifier (Identifier name)
-                                    (Identifier $ if Set.has name preludeNames then "$" + name else name))
-    | ImportDeclaration source
-    | Future.resolve
+    namesExported - namesHidden ^ undeclared
+    % Array.from
+    % map (\name -> ImportSpecifier (Identifier name)
+                                    (Identifier $ if preludeNames has name then "$" + name else name))
+    % ImportDeclaration source
+    % Future.resolve
   }
 };
 
@@ -214,6 +209,7 @@ rewriteImportDeclaration undeclared namesExportedFrom = {
 
 'apply          = StringLiteral "apply";
 'for            = StringLiteral "for";
+'has            = StringLiteral "has";
 'hasOwn         = StringLiteral "hasOwn";
 'match          = StringLiteral "match";
 'tag            = StringLiteral "tag";
@@ -266,8 +262,13 @@ rewriteNode node = flip (match' Node id) node {
   },
   BinaryExpression: \operator left right -> {
     switch operator
-    when "==" then rewriteNode $ CallExpression (CallExpression (Identifier "equals") [right]) [left]
-    when "!=" then rewriteNode $ CallExpression (Identifier "not") [BinaryExpression "==" left right]
+    when "=="  then rewriteNode $ CallExpression (CallExpression (Identifier "equals") [right]) [left]
+    when "!="  then rewriteNode $ CallExpression (Identifier "not") [BinaryExpression "==" left right]
+    when "has" then rewriteNode $ CallExpression (MemberExpression left 'has) [right]
+    when "in"  then rewriteNode $ CallExpression (CallExpression (Identifier "contains") [left]) [right]
+    when "^"   then rewriteNode $ CallExpression (CallExpression (Identifier "XOR") [right]) [left]
+    when "|"   then rewriteNode $ CallExpression (CallExpression (Identifier "OR") [right]) [left]
+    when "-"   then rewriteNode $ CallExpression (CallExpression (Identifier "subtract") [right]) [left]
     else BinaryExpression operator (rewriteNode left) (rewriteNode right)
   },
   ConcatenationExpression: \left right -> {
@@ -315,15 +316,15 @@ rewriteNode node = flip (match' Node id) node {
     @tag = CallExpression (MemberExpression #Symbol 'for) ['tag];
     @match = CallExpression (MemberExpression #Symbol 'for) ['match];
     constructors
-    | map (\{name, parameters} -> Property (StringLiteral name) $ reduceRight
+    % map (\{name, parameters} -> Property (StringLiteral name) $ reduceRight
         (\body parameter -> ArrowFunctionExpression [Identifier parameter] body)
         (parameters
-         | map (\name -> Property (StringLiteral name) (Identifier name))
-         | concat [Property @tag (StringLiteral name)]
-         | ObjectExpression)
+         % map (\name -> Property (StringLiteral name) (Identifier name))
+         % concat [Property @tag (StringLiteral name)]
+         % ObjectExpression)
         parameters
       )
-    | concat [Property @match {
+    % concat [Property @match {
         #member = Identifier $ .replace [RegExp "^.", .toLowerCase []] name;
         case {name, parameters} = {
           SwitchCase [Maybe.Just $ StringLiteral name] {
@@ -343,9 +344,9 @@ rewriteNode node = flip (match' Node id) node {
           }
         }
       }]
-    | ObjectExpression
-    | VariableDeclaration $ Identifier name
-    | rewriteNode
+    % ObjectExpression
+    % VariableDeclaration $ Identifier name
+    % rewriteNode
   },
   Module: \imports exports statements -> {
     Module (rewriteNode <$> imports) (rewriteNode <$> exports) (rewriteNode <$> statements)
@@ -354,7 +355,7 @@ rewriteNode node = flip (match' Node id) node {
 
 updateRenamerFromPattern rename node = flip (match Node) node {
   Identifier: \name -> {
-    if Set.has name preludeNames
+    if preludeNames has name
     then \this -> if this == name then "$" + this else rename this
     else rename
   },

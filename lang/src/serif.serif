@@ -9,12 +9,12 @@ import * as serif from "./index.serif";
 import * as path from "./path.serif";
 
 parse filename sourceText = {
-  {serif.parse filename sourceText} | mapRej \error -> {
+  {serif.parse filename sourceText} % mapRej \error -> {
     lines = {
       sourceText
-      | .split [apply RegExp ["^", "m"]]
-      | .map [\(text, index) -> {number: index + 1, text: .trimEnd [] text}]
-      | chain \line -> {
+      % .split [apply RegExp ["^", "m"]]
+      % .map [\(text, index) -> {number: index + 1, text: .trimEnd [] text}]
+      % chain \line -> {
           offset = line.number - error.location.start.line;
           if offset > -5 and offset <= 0 then [line] else []
         }
@@ -24,7 +24,7 @@ parse filename sourceText = {
       path.relative (apply process.cwd []) error.location.source
     }\x1B[0m\n\n${
       lines
-      | .map [\(line, idx, lines) -> {
+      % .map [\(line, idx, lines) -> {
           """\x1B[7m${
             renderLineNumber line.number
           }\x1B[0m${
@@ -39,14 +39,14 @@ parse filename sourceText = {
             }
           }\n"""
         }]
-      | .join [""]
+      % .join [""]
     }${
       lines
-      | .at [-1]
-      | (.number)
-      | renderLineNumber
-      | (.length)
-      | \length -> .repeat [length + error.location.start.column - 1] " "
+      % .at [-1]
+      % (.number)
+      % renderLineNumber
+      % (.length)
+      % \length -> .repeat [length + error.location.start.column - 1] " "
     }^\n${
       error.message
     }\n"""
@@ -58,7 +58,7 @@ reducer futureTree filename = {
 };
 
 findDependencies filename tree = {
-  if .has [filename] tree then resolve tree else do {
+  if tree has filename then resolve tree else do {
     sourceText <- mapRej (.message) $ fs.readFile filename;
     ast <- parse filename sourceText;
     dependencies = ast.imports >>= \{source: {value}} -> {
@@ -80,7 +80,7 @@ orderDependencies tree = {
     if unsorted! == [] then sorted! else {
       filename = .shift [] unsorted!;
       {dependencies} = .get [filename] tree;
-      if .every [\filename -> .has [filename] sorted!] dependencies then {
+      if .every [\filename -> sorted! has filename] dependencies then {
         .add [filename] sorted!
       } else {
         .push [filename] unsorted!
@@ -88,7 +88,7 @@ orderDependencies tree = {
       recur unsorted! sorted!
     }
   };
-  Array.from $ recur (Array.from $ .keys [] tree) $ construct Set [[]]
+  Array.from $ recur (Array.from $ .keys [] tree) $ empty Set
 };
 
 {
@@ -107,11 +107,11 @@ orderDependencies tree = {
       serifAst = (.ast) $ .get [serifFilename] tree;
       serifAst' <- serif.rewrite serifAst \importPath -> {
         importPath
-        | .split ["/"]
-        | concat [serifDirname]
-        | path.join
-        | \filename -> .get [filename] tree
-        | (.exportedNames)
+        % .split ["/"]
+        % concat [serifDirname]
+        % path.join
+        % \filename -> .get [filename] tree
+        % (.exportedNames)
       };
       serifAst'' = serif.changeExtensions serifAst';
       esAst = serif.esModuleFromSerifModule serifAst'';

@@ -69,15 +69,15 @@ fromEscapedIdentifierName name = {
 fromIdentifier = {
   escapeChar c = {
     c
-    | .charCodeAt [0]
-    | .toString [16]
-    | .toUpperCase []
-    | .padStart [4, "0"]
-    | concat "$"
+    % .charCodeAt [0]
+    % .toString [16]
+    % .toUpperCase []
+    % .padStart [4, "0"]
+    % concat "$"
   };
   escape name = {
     if name == "import" then "import"
-    else if .has [name] RESERVED_WORDS then name + "$"
+    else if RESERVED_WORDS has name then name + "$"
     else if validEsIdentifierName name then name
     else .replaceAll [apply RegExp ["[^$_A-Za-z0-9]", "g"], escapeChar] name
   };
@@ -238,9 +238,9 @@ fromSwitchCase consequent predicate = {
   test: Maybe.maybe null fromNode predicate,
   consequent: {
     consequent
-    | map fromNode
-    | map (\argument -> {type: "ReturnStatement", argument})
-    | Maybe.maybe [] Array.of
+    % map fromNode
+    % map (\argument -> {type: "ReturnStatement", argument})
+    % Maybe.maybe [] Array.of
   },
 };
 

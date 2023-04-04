@@ -97,9 +97,9 @@ export {
 
 escape s = {
   s
-  | .replaceAll ["&", "&amp;"]
-  | .replaceAll ["<", "&lt;"]
-  | .replaceAll [">", "&gt;"]
+  % .replaceAll ["&", "&amp;"]
+  % .replaceAll ["<", "&lt;"]
+  % .replaceAll [">", "&gt;"]
 };
 
 text value = {
@@ -110,18 +110,18 @@ text value = {
 
 render-attribute [name, value] = {
   value
-  | String
-  | .trim []
-  | .replaceAll ["\n", " "]
-  | escape
-  | \value -> " " + name + "=\"" + value + "\""  ;; TODO: escape double quotes
+  % String
+  % .trim []
+  % .replaceAll ["\n", " "]
+  % escape
+  % \value -> " " + name + "=\"" + value + "\""  ;; TODO: escape double quotes
 };
 
 render-attributes attrs = {
   attrs
-  | Object.entries
-  | map render-attribute
-  | .join [""]
+  % Object.entries
+  % map render-attribute
+  % .join [""]
 };
 
 render-block-element context element = {
@@ -131,8 +131,8 @@ render-block-element context element = {
   + render-attributes element.attributes
   + ">\n"
   + (element.children
-     | map (.render [{indent: context.indent, level: context.level + 1, inline: context.inline}])
-     | .join [""])
+     % map (.render [{indent: context.indent, level: context.level + 1, inline: context.inline}])
+     % .join [""])
   + .repeat [context.level] context.indent
   + "</"
   + element.name
@@ -146,8 +146,8 @@ render-inline-element context element = {
   + render-attributes element.attributes
   + ">"
   + (element.children
-     | map (.render [{indent: context.indent, level: 0, inline: true}])
-     | .join [""])
+     % map (.render [{indent: context.indent, level: 0, inline: true}])
+     % .join [""])
   + "</"
   + element.name
   + ">"
@@ -157,9 +157,9 @@ render-inline-element context element = {
 string-to-text-node string-or-node = {
   if typeof string-or-node == "object" then string-or-node else {
     string-or-node
-    | .replaceAll [apply RegExp ["^[ ]+", "gm"], " "]
-    | .replaceAll ["\n", ""]
-    | text
+    % .replaceAll [apply RegExp ["^[ ]+", "gm"], " "]
+    % .replaceAll ["\n", ""]
+    % text
   }
 };
 

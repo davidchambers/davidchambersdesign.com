@@ -4,7 +4,7 @@ import tags from "./tags.serif";
 export default render-post;
 
 render-post post related-posts = [
-  article' {if "article-id" in post then {id: post.article-id} else {}} [
+  article' {if post.article-id == undefined then {} else {id: post.article-id}} [
     header [
       h1 post.title,
       time {

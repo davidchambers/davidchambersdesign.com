@@ -11,10 +11,10 @@ absolute? url = {
 links node = {
   if node.name == "a" then {
     filter absolute? [node.attributes.href]
-  } else if "children" in node then {
-    node.children >>= links
-  } else {
+  } else if node.children == undefined then {
     []
+  } else {
+    node.children >>= links
   }
 };
 
@@ -42,15 +42,12 @@ format {url, status} = {
 };
 
 program = {
-  posts >>= (.body) >>= links
-  | Array.of
-  | construct Set
-  | Array.from
-  | S.sort
-  | map status
-  | parallel 16
-  | map $ map format
-  | map $ S.joinWith "\n"
+  construct Set [posts >>= (.body) >>= links]
+  % Array.from
+  % S.sort
+  % map status
+  % parallel 16
+  % map (.join ["\n"] . map format)
 };
 
 fork console.error console.log program;

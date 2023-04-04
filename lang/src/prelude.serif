@@ -5,10 +5,11 @@ export default Prelude;
 
 {Just} = Maybe;
 {
+  ArrayExpression,
   ArrowFunctionExpression,
   BinaryExpression,
+  BooleanLiteral,
   CallExpression,
-  CompositionExpression,
   ConditionalExpression,
   Identifier,
   LogicalExpression,
@@ -16,97 +17,140 @@ export default Prelude;
   NullLiteral,
   NumberLiteral,
   ObjectExpression,
-  Property,
+  SpreadElement,
   StringLiteral,
+  SwitchCase,
+  SwitchExpression,
   UnaryExpression,
 } = Node;
 
-#Array                  = Identifier "Array";
+#globalThis             = Identifier "globalThis";
+#Array                  = MemberExpression #globalThis $ StringLiteral "Array";
+#Math                   = MemberExpression #globalThis $ StringLiteral "Math";
+#Object                 = MemberExpression #globalThis $ StringLiteral "Object";
+#Reflect                = MemberExpression #globalThis $ StringLiteral "Reflect";
+#Set                    = MemberExpression #globalThis $ StringLiteral "Set";
+#Symbol                 = MemberExpression #globalThis $ StringLiteral "Symbol";
+
 #CasesNotExhaustive     = Identifier "CasesNotExhaustive";
 #DivisionByZero         = Identifier "DivisionByZero";
-#Math                   = Identifier "Math";
-#Reflect                = Identifier "Reflect";
-#Symbol                 = Identifier "Symbol";
 #args                   = Identifier "args";
 #constructor            = Identifier "constructor";
+#equals                 = Identifier "equals";
 #f                      = Identifier "f";
 #idx                    = Identifier "idx";
 #lhs                    = Identifier "lhs";
-#operand                = Identifier "operand";
+#reduce                 = Identifier "reduce";
 #rhs                    = Identifier "rhs";
 #that                   = Identifier "that";
+#these                  = Identifier "these";
 #this                   = Identifier "this";
 #type                   = Identifier "type";
+#typeRep                = Identifier "typeRep";
 #x                      = Identifier "x";
 #y                      = Identifier "y";
 
+'Array                  = StringLiteral "Array";
+'Function               = StringLiteral "Function";
+'Map                    = StringLiteral "Map";
+'Object                 = StringLiteral "Object";
+'Set                    = StringLiteral "Set";
+'String                 = StringLiteral "String";
 'apply                  = StringLiteral "apply";
-'binary                 = StringLiteral "binary";
 'concat                 = StringLiteral "concat";
 'construct              = StringLiteral "construct";
 'every                  = StringLiteral "every";
 'fantasy-land/chain     = StringLiteral "fantasy-land/chain";
 'fantasy-land/concat    = StringLiteral "fantasy-land/concat";
+'fantasy-land/empty     = StringLiteral "fantasy-land/empty";
 'fantasy-land/filter    = StringLiteral "fantasy-land/filter";
 'fantasy-land/map       = StringLiteral "fantasy-land/map";
+'fantasy-land/of        = StringLiteral "fantasy-land/of";
 'fantasy-land/reduce    = StringLiteral "fantasy-land/reduce";
 'filter                 = StringLiteral "filter";
 'flatMap                = StringLiteral "flatMap";
 'floor                  = StringLiteral "floor";
 'for                    = StringLiteral "for";
+'has                    = StringLiteral "has";
 'isArray                = StringLiteral "isArray";
 'length                 = StringLiteral "length";
 'map                    = StringLiteral "map";
 'match                  = StringLiteral "match";
+'name                   = StringLiteral "name";
 'null                   = StringLiteral "null";
+'of                     = StringLiteral "of";
+'prototype              = StringLiteral "prototype";
 'reduce                 = StringLiteral "reduce";
 'reduceRight            = StringLiteral "reduceRight";
 'string                 = StringLiteral "string";
-'unary                  = StringLiteral "unary";
+'toString               = StringLiteral "toString";
 
-fromEsUnaryOperator operator = {
-  ArrowFunctionExpression [#operand] {
-    UnaryExpression operator #operand
-  }
+Object#toString identifier = {
+  CallExpression (MemberExpression #Reflect 'apply) [
+    MemberExpression (MemberExpression #Object 'prototype) 'toString,
+    identifier,
+    ArrayExpression [],
+  ]
 };
-
-fromEsBinaryOperator operator = {
-  ArrowFunctionExpression [#rhs] {
-    ArrowFunctionExpression [#lhs] {
-      BinaryExpression operator #lhs #rhs
-    }
-  }
-};
-
-esUnaryOperators = [
-  ;; 13.5.6 Bitwise NOT Operator
-  "~",
-];
-
-esBinaryOperators = [
-  ;; 13.9.1 The Left Shift Operator
-  "<<",
-  ;; 13.9.2 The Signed Right Shift Operator
-  ">>",
-  ;; 13.9.3 The Unsigned Right Shift Operator
-  ">>>",
-  ;; 13.12 Binary Bitwise Operators
-  "&",
-  "^",
-  "|",
-];
 
 Prelude = {
-  operators: ObjectExpression [
-    esUnaryOperators
-    | map (\op -> Property (StringLiteral op) $ fromEsUnaryOperator op)
-    | ObjectExpression
-    | Property 'unary,
-    esBinaryOperators
-    | map (\op -> Property (StringLiteral op) $ fromEsBinaryOperator op)
-    | ObjectExpression
-    | Property 'binary,
-  ],
+  XOR: {
+    ArrowFunctionExpression [#rhs] {
+      ArrowFunctionExpression [#lhs] {
+        SwitchExpression (Object#toString #rhs) [
+          SwitchCase [Maybe.Just $ StringLiteral "[object Set]"] {
+            CallExpression (MemberExpression #Reflect 'construct) [
+              #Set,
+              ArrayExpression [
+                CallExpression (MemberExpression (ArrayExpression [SpreadElement #lhs]) 'filter)
+                               [ArrowFunctionExpression [#x] $ CallExpression (MemberExpression #rhs 'has) [#x]],
+              ],
+            ]
+          },
+          SwitchCase [Maybe.Nothing] {
+            BinaryExpression "^" #lhs #rhs
+          },
+        ]
+      }
+    }
+  },
+  OR: {
+    ArrowFunctionExpression [#rhs] {
+      ArrowFunctionExpression [#lhs] {
+        SwitchExpression (Object#toString #rhs) [
+          SwitchCase [Maybe.Just $ StringLiteral "[object Set]"] {
+            CallExpression (MemberExpression #Reflect 'construct) [
+              #Set,
+              ArrayExpression [ArrayExpression [SpreadElement #lhs, SpreadElement #rhs]],
+            ]
+          },
+          SwitchCase [Maybe.Nothing] {
+            BinaryExpression "|" #lhs #rhs
+          },
+        ]
+      }
+    }
+  },
+  subtract: {
+    ArrowFunctionExpression [#rhs] {
+      ArrowFunctionExpression [#lhs] {
+        SwitchExpression (Object#toString #rhs) [
+          SwitchCase [Maybe.Just $ StringLiteral "[object Set]"] {
+            CallExpression (MemberExpression #Reflect 'construct) [
+              #Set,
+              ArrayExpression [
+                CallExpression (MemberExpression (ArrayExpression [SpreadElement #lhs]) 'filter)
+                               [ArrowFunctionExpression [#x] $ UnaryExpression "!" $ CallExpression (MemberExpression #rhs 'has) [#x]],
+              ],
+            ]
+          },
+          SwitchCase [Maybe.Nothing] {
+            BinaryExpression "-" #lhs #rhs
+          },
+        ]
+      }
+    }
+  },
   apply: {
     ArrowFunctionExpression [#f] {
       ArrowFunctionExpression [#args] {
@@ -227,6 +271,27 @@ Prelude = {
       }
     }
   },
+  empty: {
+    ArrowFunctionExpression [#typeRep] {
+      SwitchExpression (MemberExpression #typeRep 'name) [
+        SwitchCase [Maybe.Just 'Array] {
+          ArrayExpression []
+        },
+        SwitchCase [Maybe.Just 'Object] {
+          ObjectExpression []
+        },
+        SwitchCase [Maybe.Just 'String] {
+          StringLiteral ""
+        },
+        SwitchCase [Maybe.Just 'Set, Maybe.Just 'Map] {
+          CallExpression (MemberExpression #Reflect 'construct) [#typeRep, ArrayExpression [ArrayExpression []]]
+        },
+        SwitchCase [Maybe.Nothing] {
+          CallExpression (MemberExpression #typeRep 'fantasy-land/empty) []
+        },
+      ]
+    }
+  },
   reduce: {
     ArrowFunctionExpression [#f] {
       ArrowFunctionExpression [#y] {
@@ -271,7 +336,7 @@ Prelude = {
   reject: {
     ;; \predicate -> filter (not . predicate)
     ArrowFunctionExpression [#f] {
-      CallExpression (Identifier "filter") [CompositionExpression (Identifier "not") #f]
+      CallExpression (Identifier "filter") [ArrowFunctionExpression [#x] $ UnaryExpression "!" $ CallExpression #f [#x]]
     }
     ;; This may be possible once sectioning is supported:
     ;; filter . (not .)
@@ -297,6 +362,29 @@ Prelude = {
       }
     }
   },
+  of: {
+    ArrowFunctionExpression [#typeRep] {
+      SwitchExpression (MemberExpression #typeRep 'name) [
+        SwitchCase [Maybe.Just 'Array] {
+          MemberExpression #Array 'of
+        },
+        SwitchCase [Maybe.Just 'Function] {
+          ArrowFunctionExpression [#x] $ ArrowFunctionExpression [#y] #x
+        },
+        SwitchCase [Maybe.Just 'Set] {
+          ArrowFunctionExpression [#x] {
+            CallExpression (MemberExpression #Reflect 'construct) [
+              #typeRep,
+              ArrayExpression [ArrayExpression [#x]],
+            ]
+          }
+        },
+        SwitchCase [Maybe.Nothing] {
+          MemberExpression #typeRep 'fantasy-land/of
+        },
+      ]
+    }
+  },
   chain: {
     ArrowFunctionExpression [#f] {
       ArrowFunctionExpression [#x] {
@@ -304,6 +392,23 @@ Prelude = {
           (CallExpression (MemberExpression #Array 'isArray) [#x])
           (CallExpression (MemberExpression #x 'flatMap) [ArrowFunctionExpression [#x] $ CallExpression #f [#x]])
           (Just $ CallExpression (MemberExpression #x 'fantasy-land/chain) [#f])
+      }
+    }
+  },
+  contains: {
+    ArrowFunctionExpression [#this] {
+      ArrowFunctionExpression [#these] {
+        CallExpression (
+          CallExpression (
+            CallExpression #reduce [
+              ArrowFunctionExpression [#x] {
+                ArrowFunctionExpression [#that] {
+                  LogicalExpression "or" #x (CallExpression (CallExpression #equals [#this]) [#that])
+                }
+              }
+            ]
+          ) [BooleanLiteral false]
+        ) [#these]
       }
     }
   },

@@ -14,8 +14,8 @@ evaluateModule sourceText = do {
   _ <- attemptP \() -> .link [
     \(specifier, referencingModule) -> {
       attemptP (\() -> import specifier)
-      | map Object.entries
-      | map $ map \entries -> {
+      % map Object.entries
+      % map $ map \entries -> {
           module = construct vm.SyntheticModule [
             {\[name] -> name} <$> entries,
             \() -> .forEach [flip {.setExport} module] entries,
@@ -23,7 +23,7 @@ evaluateModule sourceText = do {
           ];
           module
         }
-      | promise
+      % promise
     },
   ] module;
   _ <- attemptP \() -> .evaluate [] module;

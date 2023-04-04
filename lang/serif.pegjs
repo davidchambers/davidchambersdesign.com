@@ -128,6 +128,7 @@ ArrowToken          = @$'->'            !IdentifierPart
 DoToken             = @$'do'            !IdentifierPart
 ElseToken           = @$'else'          !IdentifierPart
 ExportToken         = @$'export'        !IdentifierPart
+HasToken            = @$'has'           !IdentifierPart
 IfToken             = @$'if'            !IdentifierPart
 ImportToken         = @$'import'        !IdentifierPart
 InToken             = @$'in'            !IdentifierPart
@@ -142,8 +143,12 @@ ReservedWord
   / ExponentiationOperator
   / MultiplicativeOperator
   / AdditiveOperator
+  / ShiftOperator
   / RelationalOperator
   / EqualityOperator
+  / BitwiseANDOperator
+  / BitwiseXOROperator
+  / BitwiseOROperator
   / LogicalANDOperator
   / LogicalOROperator
   / CoalesceOperator
@@ -178,6 +183,7 @@ IdentifierStart
     !'='
     !'$'
     !'|'
+    !'%'
     .
 
 IdentifierPart
@@ -314,6 +320,7 @@ RestElement
 UnaryOperator
   = '+'
   / '-'
+  / '~'
 
 UnaryExpression
   = operator:UnaryOperator _ argument:CallExpression
@@ -365,16 +372,27 @@ ConcatenationExpression
   = exprs:AdditiveExpression|1.., _ ConcatenationOperator _|
     { return exprs.reduceRight((right, left) => Node.ConcatenationExpression(left)(right)); }
 
+ShiftOperator
+  = '<<'
+  / '>>>'
+  / '>>'
+
+ShiftExpression
+  = left:ConcatenationExpression
+    tail:(_ operator:ShiftOperator _ right:ConcatenationExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+
 RelationalOperator
   = '<='
   / '<'
   / '>='
   / '>'
+  / HasToken
   / InToken
 
 RelationalExpression
-  = left:ConcatenationExpression
-    tail:(_ operator:RelationalOperator _ right:ConcatenationExpression { return {operator, right}; })*
+  = left:ShiftExpression
+    tail:(_ operator:RelationalOperator _ right:ShiftExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 EqualityOperator
@@ -393,12 +411,36 @@ MapExpression
   = exprs:EqualityExpression|1.., _ MapOperator _|
     { return exprs.reduceRight((right, left) => Node.MapExpression(left)(right)); }
 
+BitwiseANDOperator
+  = '&'
+
+BitwiseANDExpression
+  = left:MapExpression
+    tail:(_ operator:BitwiseANDOperator _ right:MapExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+
+BitwiseXOROperator
+  = '^'
+
+BitwiseXORExpression
+  = left:BitwiseANDExpression
+    tail:(_ operator:BitwiseXOROperator _ right:BitwiseANDExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+
+BitwiseOROperator
+  = '|'
+
+BitwiseORExpression
+  = left:BitwiseXORExpression
+    tail:(_ operator:BitwiseOROperator _ right:BitwiseXORExpression { return {operator, right}; })*
+    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+
 LogicalANDOperator
   = AndToken
 
 LogicalANDExpression
-  = left:MapExpression
-    tail:(_ operator:LogicalANDOperator _ right:MapExpression { return {operator, right}; })*
+  = left:BitwiseORExpression
+    tail:(_ operator:LogicalANDOperator _ right:BitwiseORExpression { return {operator, right}; })*
     { return tail.reduce((left, {operator, right}) => Node.LogicalExpression(operator)(left)(right), left); }
 
 LogicalOROperator
@@ -460,7 +502,7 @@ ApplicationExpression
     { return args.reduce((callee, arg) => Node.CallExpression(callee)([arg]), callee); }
 
 PipeOperator
-  = '|'
+  = '%'
 
 PipeExpression
   = exprs:ApplicationExpression|1.., _ PipeOperator _|

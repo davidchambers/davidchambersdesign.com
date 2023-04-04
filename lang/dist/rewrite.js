@@ -1,66 +1,104 @@
 import * as Future from "fluture";
 import Maybe from "./Maybe.js";
 import Node from "./Node.js";
-import * as Set from "./Set.js";
 import * as format from "./format.js";
 import globals from "./globals.js";
 import Prelude from "./prelude.js";
-const {operators, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, reduce, reduceRight, filter, reject, map, flip, chain} = {
-  operators: {
-    unary: {
-      ["~"]: operand => ~operand
-    },
-    binary: {
-      ["<<"]: rhs => lhs => lhs << rhs,
-      [">>"]: rhs => lhs => lhs >> rhs,
-      [">>>"]: rhs => lhs => lhs >>> rhs,
-      ["&"]: rhs => lhs => lhs & rhs,
-      ["^"]: rhs => lhs => lhs ^ rhs,
-      ["|"]: rhs => lhs => lhs | rhs
+const {XOR, OR, subtract, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, empty, reduce, reduceRight, filter, reject, map, flip, of, chain, contains} = {
+  XOR: rhs => lhs => (() => {
+    switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+      case "[object Set]":
+        return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => rhs.has(x))]);
+      default:
+        return lhs ^ rhs;
     }
-  },
+  })(),
+  OR: rhs => lhs => (() => {
+    switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+      case "[object Set]":
+        return globalThis.Reflect.construct(globalThis.Set, [[...lhs, ...rhs]]);
+      default:
+        return lhs | rhs;
+    }
+  })(),
+  subtract: rhs => lhs => (() => {
+    switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+      case "[object Set]":
+        return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => !rhs.has(x))]);
+      default:
+        return lhs - rhs;
+    }
+  })(),
   apply: f => args => f.apply(null, args),
-  construct: constructor => args => Reflect.construct(constructor, args),
+  construct: constructor => args => globalThis.Reflect.construct(constructor, args),
   instanceof: constructor => x => x instanceof constructor,
   typeof: x => x === null ? "null" : typeof x,
   match: type => match$0027(type)(x => CasesNotExhaustive),
-  ["match'"]: type => type[Symbol.for("match")],
+  ["match'"]: type => type[globalThis.Symbol.for("match")],
   id: x => x,
   const: x => y => x,
   not: x => !x,
   quot: lhs => rhs => rhs === 0 ? DivisionByZero : lhs / rhs | 0,
   rem: lhs => rhs => rhs === 0 ? DivisionByZero : lhs % rhs,
-  div: lhs => rhs => rhs === 0 ? DivisionByZero : Math.floor(lhs / rhs),
+  div: lhs => rhs => rhs === 0 ? DivisionByZero : globalThis.Math.floor(lhs / rhs),
   mod: lhs => rhs => rhs === 0 ? DivisionByZero : (lhs % rhs + rhs) % rhs,
-  equals: this$ => that => Array.isArray(this$) ? Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that,
-  concat: this$ => that => Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
-  reduce: f => y => x => x[Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
+  equals: this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that,
+  concat: this$ => that => globalThis.Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
+  empty: typeRep => (() => {
+    switch (typeRep.name) {
+      case "Array":
+        return [];
+      case "Object":
+        return {};
+      case "String":
+        return "";
+      case "Set":
+      case "Map":
+        return globalThis.Reflect.construct(typeRep, [[]]);
+      default:
+        return typeRep["fantasy-land/empty"]();
+    }
+  })(),
+  reduce: f => y => x => x[globalThis.Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
   reduceRight: f => y => x => x.reduceRight((y, x) => f(y)(x), y),
-  filter: f => x => Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f),
-  reject: f => filter($ => not(f($))),
-  map: f => x => Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f),
+  filter: f => x => globalThis.Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f),
+  reject: f => filter(x => !f(x)),
+  map: f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f),
   flip: f => y => x => f(x)(y),
-  chain: f => x => Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f)
+  of: typeRep => (() => {
+    switch (typeRep.name) {
+      case "Array":
+        return globalThis.Array.of;
+      case "Function":
+        return x => y => x;
+      case "Set":
+        return x => globalThis.Reflect.construct(typeRep, [[x]]);
+      default:
+        return typeRep["fantasy-land/of"];
+    }
+  })(),
+  chain: f => x => globalThis.Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f),
+  contains: this$ => these => reduce(x => that => x || equals(this$)(that))(false)(these)
 };
 const {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateLiteral, MemberExpression, Identifier, SpreadElement, ArrayExpression, Elision, Property, ObjectExpression, ArrayPattern, ObjectPattern, RestElement, ArrowFunctionExpression, BlockExpression, BlockStatement, UnaryExpression, CompositionExpression, BinaryExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, CallExpression, ImportDeclaration, ImportSpecifier, ImportDefaultSpecifier, ImportNamespaceSpecifier, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} = Node;
-const preludeNames = Set.from(Object.keys(Prelude));
+const preludeNames = construct(Set)([Object.keys(Prelude)]);
 const variables = declared => referenced => ({
   declared,
   referenced
 });
-const declaring = names => variables(names)(Set.empty);
-const referencing = names => variables(Set.empty)(names);
-const empty = variables(Set.empty)(Set.empty);
+const declaring = names => variables(names)(empty(Set));
+const referencing = names => variables(empty(Set))(names);
+const emptyVariables = variables(empty(Set))(empty(Set));
 const referenced = $ => $.referenced;
 const merge = lhs => rhs => ({
-  declared: Set.union(lhs.declared)(rhs.declared),
-  referenced: Set.union(lhs.referenced)(rhs.referenced)
+  declared: OR(rhs.declared)(lhs.declared),
+  referenced: OR(rhs.referenced)(lhs.referenced)
 });
-const mergeAll = reduce(merge)(empty);
-const vars = node => flip(match$0027(Node)(const$(empty)))(node)({
+const mergeAll = reduce(merge)(emptyVariables);
+const vars = node => flip(match$0027(Node)(const$(emptyVariables)))(node)({
   TemplateLiteral: const$($ => mergeAll(map(vars)($))),
   MemberExpression: object => property => merge(vars(object))(vars(property)),
-  Identifier: $ => referencing(Set.of($)),
+  Identifier: $ => referencing(of(Set)($)),
   SpreadElement: vars,
   ArrayExpression: $ => mergeAll(map(vars)($)),
   Property: key => value => merge(vars(key))(vars(value)),
@@ -68,20 +106,20 @@ const vars = node => flip(match$0027(Node)(const$(empty)))(node)({
   ArrayPattern: $ => mergeAll(map(vars)($)),
   ObjectPattern: $ => mergeAll(map(vars)($)),
   RestElement: vars,
-  ArrowFunctionExpression: parameters => body => referencing(Set.without(referenced(mergeAll(map(vars)(parameters))))(referenced(vars(body)))),
+  ArrowFunctionExpression: parameters => body => referencing(subtract(referenced(mergeAll(map(vars)(parameters))))(referenced(vars(body)))),
   BlockExpression: statements => result => (() => {
     const {declared, referenced} = reduce(merge)(vars(result))(map(vars)(statements));
-    return referencing(Set.without(declared)(referenced));
+    return referencing(subtract(declared)(referenced));
   })(),
   BlockStatement: statements => (() => {
     const {declared, referenced} = mergeAll(map(vars)(statements));
-    return referencing(Set.without(declared)(referenced));
+    return referencing(subtract(declared)(referenced));
   })(),
   DoBlockExpression: operations => result => referencing(reduceRight(names => match(Node)({
-    FunctionDeclaration: name => parameters => body => Set.without(referenced(mergeAll(map(vars)(parameters))))(Set.union(names)(referenced(vars(body)))),
-    VariableDeclaration: pattern => expression => Set.union(referenced(vars(expression)))(Set.without(referenced(vars(pattern)))(names)),
-    ArrowAssignmentStatement: pattern => expression => Set.union(referenced(vars(expression)))(Set.without(referenced(vars(pattern)))(names)),
-    ExpressionStatement: expression => Set.union(referenced(vars(expression)))(names)
+    FunctionDeclaration: name => parameters => body => OR(subtract(referenced(mergeAll(map(vars)(parameters))))(referenced(vars(body))))(names),
+    VariableDeclaration: pattern => expression => OR(referenced(vars(expression)))(subtract(names)(referenced(vars(pattern)))),
+    ArrowAssignmentStatement: pattern => expression => OR(referenced(vars(expression)))(subtract(names)(referenced(vars(pattern)))),
+    ExpressionStatement: expression => OR(referenced(vars(expression)))(names)
   }))(referenced(vars(result)))(operations)),
   UnaryExpression: const$(vars),
   CompositionExpression: left => right => merge(vars(left))(vars(right)),
@@ -91,13 +129,13 @@ const vars = node => flip(match$0027(Node)(const$(empty)))(node)({
   MapExpression: left => right => merge(vars(left))(vars(right)),
   BindExpression: left => right => merge(vars(left))(vars(right)),
   LogicalExpression: operator => left => right => merge(vars(left))(vars(right)),
-  ConditionalExpression: predicate => consequent => alternative => merge(merge(vars(predicate))(vars(consequent)))(Maybe.maybe(empty)(vars)(alternative)),
+  ConditionalExpression: predicate => consequent => alternative => merge(merge(vars(predicate))(vars(consequent)))(Maybe.maybe(emptyVariables)(vars)(alternative)),
   SwitchExpression: discriminant => cases => mergeAll(map(vars)([discriminant, ...cases])),
   SwitchCase: predicates => consequent => mergeAll(map(vars)([...predicates, consequent])),
   PipeExpression: head => body => merge(vars(head))(vars(body)),
   CallExpression: callee => arguments$ => mergeAll(map(vars)([callee, ...arguments$])),
   ImportDeclaration: const$($ => mergeAll(map(vars)($))),
-  ImportAllDeclaration: const$(const$(empty)),
+  ImportAllDeclaration: const$(const$(emptyVariables)),
   ImportDefaultSpecifier: $ => declaring(referenced(vars($))),
   ImportSpecifier: const$($ => declaring(referenced(vars($)))),
   ImportNamespaceSpecifier: $ => declaring(referenced(vars($))),
@@ -105,17 +143,14 @@ const vars = node => flip(match$0027(Node)(const$(empty)))(node)({
   ExportDefaultDeclaration: vars,
   ExportSpecifier: $ => const$(vars($)),
   VariableDeclaration: pattern => expression => variables(referenced(vars(pattern)))(referenced(vars(expression))),
-  FunctionDeclaration: name => parameters => body => (() => {
-    const names = Set.add(name)(referenced(mergeAll(map(vars)(parameters))));
-    return variables(Set.of(name))(Set.without(names)(referenced(vars(body))));
-  })(),
+  FunctionDeclaration: name => parameters => body => variables(of(Set)(name))(subtract(referenced(mergeAll(map(vars)(parameters))))(subtract(of(Set)(name))(referenced(vars(body))))),
   ExpressionStatement: vars,
   Module: imports => exports => statements => mergeAll(map(vars)(concat(imports)(concat(exports)(statements)))),
-  DataTypeDeclaration: $ => const$(declaring(Set.of($)))
+  DataTypeDeclaration: $ => const$(declaring(of(Set)($)))
 });
 const rewriteModule = module => namesExportedFrom => (() => {
   const {declared, referenced} = vars(module);
-  const undeclared = Set.without(declared)(referenced);
+  const undeclared = subtract(declared)(referenced);
   const imports = Future.parallel(16)(map(rewriteImportDeclaration(undeclared)(namesExportedFrom))(module.imports));
   const withImports = module => (() => {
     const module$0027 = rewriteNode(module);
@@ -132,10 +167,10 @@ const rewriteModule = module => namesExportedFrom => (() => {
     }))(rename)(chain($ => $.specifiers)(module$0027.imports));
     const {imports, exports, statements} = renameIdentifiers(rename$0027)(module$0027);
     const prelude = VariableDeclaration(ObjectPattern(map(name => Property(StringLiteral(name))(Identifier(name)))(Object.keys(Prelude))))(ObjectExpression(map(([name, value]) => Property(StringLiteral(name))(value))(Object.entries(Prelude))));
-    const module$0027$0027 = Module(imports)(exports)([rewriteNode(prelude), ...statements]);
+    const module$0027$0027 = Module(imports)(exports)([prelude, ...statements]);
     const {declared, referenced} = vars(module$0027$0027);
-    const unreferenced = Set.without(preludeNames)(Set.without(referenced)(declared));
-    const undeclared = Set.without(Set.from(["CasesNotExhaustive", "DivisionByZero", "import", "console", "fetch"]))(Set.without(globals)(Set.without(declared)(referenced)));
+    const unreferenced = subtract(preludeNames)(subtract(referenced)(declared));
+    const undeclared = subtract(construct(Set)([["CasesNotExhaustive", "DivisionByZero", "import", "console", "fetch"]]))(subtract(globals)(subtract(declared)(referenced)));
     unreferenced.size > 0 ? console.error(concat("unreferenced: ")((args => target => target.join.apply(target, args))([", "])(Array.from(unreferenced)))) : undefined;
     undeclared.size > 0 ? console.error(concat("undeclared: ")((args => target => target.join.apply(target, args))([", "])(Array.from(undeclared)))) : undefined;
     return module$0027$0027;
@@ -143,10 +178,10 @@ const rewriteModule = module => namesExportedFrom => (() => {
   return map(imports => withImports(Module(imports)(module.exports)(module.statements)))(imports);
 })();
 const rewriteImportAllDeclaration = undeclared => namesExportedFrom => source => hiding => (() => {
-  const namesExported = Set.from((args => target => target.endsWith.apply(target, args))([".serif"])(source.value) ? namesExportedFrom(source.value) : map(Object.keys)(Future.attemptP(() => import(source.value))));
-  const namesHidden = Set.from(map($ => $.name)(hiding));
-  const namesHiddenNeedlessly = Set.without(namesExported)(namesHidden);
-  return namesHiddenNeedlessly.size > 0 ? Future.reject(Error(`import * from "${source.value}" hiding {${(args => target => target.join.apply(target, args))([", "])(namesHidden)}};\n\n${format.list(Array.from(namesHiddenNeedlessly))} ${equals(1)(namesHiddenNeedlessly.size) ? "is" : "are"} not exported so need not be hidden.\n`)) : Future.resolve(ImportDeclaration(source)(map(name => ImportSpecifier(Identifier(name))(Identifier(Set.has(name)(preludeNames) ? "$" + name : name)))(Array.from(Set.intersection(undeclared)(Set.without(namesHidden)(namesExported))))));
+  const namesExported = construct(Set)([(args => target => target.endsWith.apply(target, args))([".serif"])(source.value) ? namesExportedFrom(source.value) : map(Object.keys)(Future.attemptP(() => import(source.value)))]);
+  const namesHidden = construct(Set)([map($ => $.name)(hiding)]);
+  const namesHiddenNeedlessly = subtract(namesExported)(namesHidden);
+  return namesHiddenNeedlessly.size > 0 ? Future.reject(Error(`import * from "${source.value}" hiding {${(args => target => target.join.apply(target, args))([", "])(namesHidden)}};\n\n${format.list(Array.from(namesHiddenNeedlessly))} ${equals(1)(namesHiddenNeedlessly.size) ? "is" : "are"} not exported so need not be hidden.\n`)) : Future.resolve(ImportDeclaration(source)(map(name => ImportSpecifier(Identifier(name))(Identifier(preludeNames.has(name) ? "$" + name : name)))(Array.from(XOR(undeclared)(subtract(namesHidden)(namesExported))))));
 })();
 const rewriteImportDeclaration = undeclared => namesExportedFrom => match(Node)({
   ImportDeclaration: source => specifiers => Future.resolve(ImportDeclaration(source)(specifiers)),
@@ -161,6 +196,7 @@ const $0023dollar = Identifier("$");
 const $0023target = Identifier("target");
 const $0027apply = StringLiteral("apply");
 const $0027for = StringLiteral("for");
+const $0027has = StringLiteral("has");
 const $0027hasOwn = StringLiteral("hasOwn");
 const $0027match = StringLiteral("match");
 const $0027tag = StringLiteral("tag");
@@ -193,6 +229,16 @@ const rewriteNode = node => flip(match$0027(Node)(id))(node)({
         return rewriteNode(CallExpression(CallExpression(Identifier("equals"))([right]))([left]));
       case "!=":
         return rewriteNode(CallExpression(Identifier("not"))([BinaryExpression("==")(left)(right)]));
+      case "has":
+        return rewriteNode(CallExpression(MemberExpression(left)($0027has))([right]));
+      case "in":
+        return rewriteNode(CallExpression(CallExpression(Identifier("contains"))([left]))([right]));
+      case "^":
+        return rewriteNode(CallExpression(CallExpression(Identifier("XOR"))([right]))([left]));
+      case "|":
+        return rewriteNode(CallExpression(CallExpression(Identifier("OR"))([right]))([left]));
+      case "-":
+        return rewriteNode(CallExpression(CallExpression(Identifier("subtract"))([right]))([left]));
       default:
         return BinaryExpression(operator)(rewriteNode(left))(rewriteNode(right));
     }
@@ -228,7 +274,7 @@ const rewriteNode = node => flip(match$0027(Node)(id))(node)({
   Module: imports => exports => statements => Module(map(rewriteNode)(imports))(map(rewriteNode)(exports))(map(rewriteNode)(statements))
 });
 const updateRenamerFromPattern = rename => node => flip(match(Node))(node)({
-  Identifier: name => Set.has(name)(preludeNames) ? this$ => equals(name)(this$) ? "$" + this$ : rename(this$) : rename,
+  Identifier: name => preludeNames.has(name) ? this$ => equals(name)(this$) ? "$" + this$ : rename(this$) : rename,
   ArrayPattern: reduce(updateRenamerFromPattern)(rename),
   ObjectPattern: reduce(updateRenamerFromPattern)(rename),
   Property: const$(updateRenamerFromPattern(rename)),
