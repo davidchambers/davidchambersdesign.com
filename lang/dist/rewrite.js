@@ -4,82 +4,71 @@ import Node from "./Node.js";
 import * as format from "./format.js";
 import globals from "./globals.js";
 import Prelude from "./prelude.js";
-const {XOR, OR, subtract, apply, construct, instanceof: instanceof$, typeof: typeof$, match, ["match'"]: match$0027, id, const: const$, not, quot, rem, div, mod, equals, concat, empty, reduce, reduceRight, filter, reject, map, flip, of, chain, contains} = {
-  XOR: rhs => lhs => (() => {
-    switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
-      case "[object Set]":
-        return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => rhs.has(x))]);
-      default:
-        return lhs ^ rhs;
-    }
-  })(),
-  OR: rhs => lhs => (() => {
-    switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
-      case "[object Set]":
-        return globalThis.Reflect.construct(globalThis.Set, [[...lhs, ...rhs]]);
-      default:
-        return lhs | rhs;
-    }
-  })(),
-  subtract: rhs => lhs => (() => {
-    switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
-      case "[object Set]":
-        return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => !rhs.has(x))]);
-      default:
-        return lhs - rhs;
-    }
-  })(),
-  apply: f => args => f.apply(null, args),
-  construct: constructor => args => globalThis.Reflect.construct(constructor, args),
-  instanceof: constructor => x => x instanceof constructor,
-  typeof: x => x === null ? "null" : typeof x,
-  match: type => match$0027(type)(x => CasesNotExhaustive),
-  ["match'"]: type => type[globalThis.Symbol.for("match")],
-  id: x => x,
-  const: x => y => x,
-  not: x => !x,
-  quot: lhs => rhs => rhs === 0 ? DivisionByZero : lhs / rhs | 0,
-  rem: lhs => rhs => rhs === 0 ? DivisionByZero : lhs % rhs,
-  div: lhs => rhs => rhs === 0 ? DivisionByZero : globalThis.Math.floor(lhs / rhs),
-  mod: lhs => rhs => rhs === 0 ? DivisionByZero : (lhs % rhs + rhs) % rhs,
-  equals: this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that,
-  concat: this$ => that => globalThis.Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that),
-  empty: typeRep => (() => {
-    switch (typeRep.name) {
-      case "Array":
-        return [];
-      case "Object":
-        return {};
-      case "String":
-        return "";
-      case "Set":
-      case "Map":
-        return globalThis.Reflect.construct(typeRep, [[]]);
-      default:
-        return typeRep["fantasy-land/empty"]();
-    }
-  })(),
-  reduce: f => y => x => x[globalThis.Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y),
-  reduceRight: f => y => x => x.reduceRight((y, x) => f(y)(x), y),
-  filter: f => x => globalThis.Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f),
-  reject: f => filter(x => !f(x)),
-  map: f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f),
-  flip: f => y => x => f(x)(y),
-  of: typeRep => (() => {
-    switch (typeRep.name) {
-      case "Array":
-        return globalThis.Array.of;
-      case "Function":
-        return x => y => x;
-      case "Set":
-        return x => globalThis.Reflect.construct(typeRep, [[x]]);
-      default:
-        return typeRep["fantasy-land/of"];
-    }
-  })(),
-  chain: f => x => globalThis.Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f),
-  contains: this$ => these => reduce(x => that => x || equals(this$)(that))(false)(these)
-};
+const XOR = rhs => lhs => (() => {
+  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+    case "[object Set]":
+      return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => rhs.has(x))]);
+    default:
+      return lhs ^ rhs;
+  }
+})();
+const OR = rhs => lhs => (() => {
+  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+    case "[object Set]":
+      return globalThis.Reflect.construct(globalThis.Set, [[...lhs, ...rhs]]);
+    default:
+      return lhs | rhs;
+  }
+})();
+const subtract = rhs => lhs => (() => {
+  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+    case "[object Set]":
+      return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => !rhs.has(x))]);
+    default:
+      return lhs - rhs;
+  }
+})();
+const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
+const match = type => match$0027(type)(x => CasesNotExhaustive);
+const match$0027 = type => type[globalThis.Symbol.for("match")];
+const id = x => x;
+const const$ = x => y => x;
+const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
+const concat = this$ => that => globalThis.Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that);
+const empty = typeRep => (() => {
+  switch (typeRep.name) {
+    case "Array":
+      return [];
+    case "Object":
+      return {};
+    case "String":
+      return "";
+    case "Set":
+    case "Map":
+      return globalThis.Reflect.construct(typeRep, [[]]);
+    default:
+      return typeRep["fantasy-land/empty"]();
+  }
+})();
+const reduce = f => y => x => x[globalThis.Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y);
+const reduceRight = f => y => x => x.reduceRight((y, x) => f(y)(x), y);
+const filter = f => x => globalThis.Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f);
+const reject = f => filter(x => !f(x));
+const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const flip = f => y => x => f(x)(y);
+const of = typeRep => (() => {
+  switch (typeRep.name) {
+    case "Array":
+      return globalThis.Array.of;
+    case "Function":
+      return x => y => x;
+    case "Set":
+      return x => globalThis.Reflect.construct(typeRep, [[x]]);
+    default:
+      return typeRep["fantasy-land/of"];
+  }
+})();
+const chain = f => x => globalThis.Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f);
 const {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateLiteral, MemberExpression, Identifier, SpreadElement, ArrayExpression, Elision, Property, ObjectExpression, ArrayPattern, ObjectPattern, RestElement, ArrowFunctionExpression, BlockExpression, BlockStatement, UnaryExpression, CompositionExpression, BinaryExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, CallExpression, ImportDeclaration, ImportSpecifier, ImportDefaultSpecifier, ImportNamespaceSpecifier, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} = Node;
 const preludeNames = construct(Set)([Object.keys(Prelude)]);
 const variables = declared => referenced => ({
@@ -142,12 +131,27 @@ const vars = node => flip(match$0027(Node)(const$(emptyVariables)))(node)({
   ExportNamedDeclaration: $ => mergeAll(map(vars)($)),
   ExportDefaultDeclaration: vars,
   ExportSpecifier: $ => const$(vars($)),
-  VariableDeclaration: pattern => expression => variables(referenced(vars(pattern)))(referenced(vars(expression))),
-  FunctionDeclaration: name => parameters => body => variables(of(Set)(name))(subtract(referenced(mergeAll(map(vars)(parameters))))(subtract(of(Set)(name))(referenced(vars(body))))),
+  VariableDeclaration: pattern => expression => (() => {
+    const declared = referenced(vars(pattern));
+    return variables(declared)(subtract(declared)(referenced(vars(expression))));
+  })(),
+  FunctionDeclaration: name => parameters => body => (() => {
+    const declared = of(Set)(name);
+    return variables(declared)(subtract(declared)(subtract(referenced(mergeAll(map(vars)(parameters))))(referenced(vars(body)))));
+  })(),
   ExpressionStatement: vars,
   Module: imports => exports => statements => mergeAll(map(vars)(concat(imports)(concat(exports)(statements)))),
   DataTypeDeclaration: $ => const$(declaring(of(Set)($)))
 });
+const removeUnreferencedPreludeFunctions = module => (() => {
+  const {declared, referenced} = vars(module);
+  const unreferenced = subtract(referenced)(declared);
+  const unnecessary = XOR(preludeNames)(unreferenced);
+  const statements = reject(match$0027(Node)(const$(false))({
+    VariableDeclaration: ({name}) => _ => unnecessary.has(name)
+  }))(module.statements);
+  return equals(module.statements.length)(statements.length) ? module : removeUnreferencedPreludeFunctions(Module(module.imports)(module.exports)(statements));
+})();
 const rewriteModule = module => namesExportedFrom => (() => {
   const {declared, referenced} = vars(module);
   const undeclared = subtract(declared)(referenced);
@@ -166,10 +170,10 @@ const rewriteModule = module => namesExportedFrom => (() => {
       ImportDefaultSpecifier: updateRenamerFromPattern(rename)
     }))(rename)(chain($ => $.specifiers)(module$0027.imports));
     const {imports, exports, statements} = renameIdentifiers(rename$0027)(module$0027);
-    const prelude = VariableDeclaration(ObjectPattern(map(name => Property(StringLiteral(name))(Identifier(name)))(Object.keys(Prelude))))(ObjectExpression(map(([name, value]) => Property(StringLiteral(name))(value))(Object.entries(Prelude))));
-    const module$0027$0027 = Module(imports)(exports)([prelude, ...statements]);
+    const prelude = map(([name, value]) => VariableDeclaration(Identifier(name))(value))(Object.entries(Prelude));
+    const module$0027$0027 = removeUnreferencedPreludeFunctions(Module(imports)(exports)(concat(prelude)(statements)));
     const {declared, referenced} = vars(module$0027$0027);
-    const unreferenced = subtract(preludeNames)(subtract(referenced)(declared));
+    const unreferenced = subtract(referenced)(declared);
     const undeclared = subtract(construct(Set)([["CasesNotExhaustive", "DivisionByZero", "import", "console", "fetch"]]))(subtract(globals)(subtract(declared)(referenced)));
     unreferenced.size > 0 ? console.error(concat("unreferenced: ")((args => target => target.join.apply(target, args))([", "])(Array.from(unreferenced)))) : undefined;
     undeclared.size > 0 ? console.error(concat("undeclared: ")((args => target => target.join.apply(target, args))([", "])(Array.from(undeclared)))) : undefined;

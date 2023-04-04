@@ -115,13 +115,27 @@ vars node = flip (match' Node $ const emptyVariables) node {
   ExportNamedDeclaration: mergeAll . map vars,
   ExportDefaultDeclaration: vars,
   ExportSpecifier: const . vars,
-  VariableDeclaration: \pattern expression -> variables (referenced $ vars pattern) (referenced $ vars expression),
+  VariableDeclaration: \pattern expression -> {
+    declared = referenced $ vars pattern;
+    variables declared $ referenced (vars expression) - declared
+  },
   FunctionDeclaration: \name parameters body -> {
-    variables (of Set name) (referenced (vars body) - of Set name - referenced (mergeAll $ vars <$> parameters))
+    declared = of Set name;
+    variables declared $ referenced (vars body) - referenced (mergeAll $ vars <$> parameters) - declared
   },
   ExpressionStatement: vars,
   Module: \imports exports statements -> mergeAll $ vars <$> imports <> exports <> statements,
   DataTypeDeclaration: const . declaring . of Set,
+};
+
+removeUnreferencedPreludeFunctions module = {
+  {declared, referenced} = vars module;
+  unreferenced = declared - referenced;
+  unnecessary = unreferenced ^ preludeNames;
+  statements = reject (match' Node (const false) {VariableDeclaration: \{name} _ -> unnecessary has name}) module.statements;
+  if statements.length == module.statements.length
+  then module
+  else removeUnreferencedPreludeFunctions (Module module.imports module.exports statements)
 };
 
 rewriteModule module namesExportedFrom = {
@@ -147,14 +161,11 @@ rewriteModule module namesExportedFrom = {
     ;; rename identifiers
     {imports, exports, statements} = renameIdentifiers rename' module';
     ;; insert prelude
-    prelude = {
-      VariableDeclaration
-        (ObjectPattern $ (\name -> Property (StringLiteral name) (Identifier name)) <$> Object.keys Prelude)
-        (ObjectExpression $ (\[name, value] -> Property (StringLiteral name) value) <$> Object.entries Prelude)
-    };
-    module'' = Module imports exports [prelude, ...statements];
+    prelude = (\[name, value] -> VariableDeclaration (Identifier name) value) <$> Object.entries Prelude;
+    ;; remove unreferenced prelude functions
+    module'' = removeUnreferencedPreludeFunctions $ Module imports exports $ prelude <> statements;
     {declared, referenced} = vars module'';
-    unreferenced = declared - referenced - preludeNames;
+    unreferenced = declared - referenced;
     undeclared = referenced - declared - globals - construct Set [["CasesNotExhaustive", "DivisionByZero", "import", "console", "fetch"]];
     if unreferenced.size > 0 then (unreferenced % Array.from % .join [", "] % concat "unreferenced: " % console.error);
     if undeclared.size   > 0 then (undeclared   % Array.from % .join [", "] % concat "undeclared: "   % console.error);
