@@ -168,10 +168,19 @@ const fromConditionalExpression = predicate => consequent => alternative => ({
 const fromSwitchCase = consequent => predicate => ({
   type: "SwitchCase",
   test: Maybe.maybe(null)(fromNode)(predicate),
-  consequent: Maybe.maybe([])(Array.of)(map(argument => ({
-    type: "ReturnStatement",
-    argument
-  }))(map(fromNode)(consequent)))
+  consequent: (() => {
+    const toReturnStatement = node => ({
+      type: "ReturnStatement",
+      argument: fromNode(node)
+    });
+    const toConsequent = match$0027(Node)(toReturnStatement)({
+      BlockExpression: statements => result => ({
+        type: "BlockStatement",
+        body: concat(map(fromNode)(statements))([toReturnStatement(result)])
+      })
+    });
+    return Maybe.maybe([])($ => Array.of(toConsequent($)))(consequent);
+  })()
 });
 const fromSwitchCases = predicates => consequent => (() => {
   const init = (args => target => target.slice.apply(target, args))([0, -1])(predicates);

@@ -237,10 +237,17 @@ fromSwitchCase consequent predicate = {
   type: "SwitchCase",
   test: Maybe.maybe null fromNode predicate,
   consequent: {
-    consequent
-    % map fromNode
-    % map (\argument -> {type: "ReturnStatement", argument})
-    % Maybe.maybe [] Array.of
+    toReturnStatement node = {
+      type: "ReturnStatement",
+      argument: fromNode node,
+    };
+    toConsequent = match' Node toReturnStatement {
+      BlockExpression: \statements result -> {
+        type: "BlockStatement",
+        body: map fromNode statements <> [toReturnStatement result],
+      },
+    };
+    Maybe.maybe [] (Array.of . toConsequent) consequent
   },
 };
 

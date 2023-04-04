@@ -60,7 +60,7 @@ const fill$002Dchars = {
 const next = ({w, x, y}) => ([dir, mag]) => (() => {
   switch (dir) {
     case "h":
-      return (() => {
+      {
         const dx = mag;
         const x$0027 = x + dx;
         return {
@@ -68,9 +68,9 @@ const next = ({w, x, y}) => ([dir, mag]) => (() => {
           x: x$0027,
           y
         };
-      })();
+      }
     case "v":
-      return (() => {
+      {
         const dy = mag;
         const y$0027 = y + dy;
         return {
@@ -78,9 +78,9 @@ const next = ({w, x, y}) => ([dir, mag]) => (() => {
           x,
           y: y$0027
         };
-      })();
+      }
     case "m":
-      return (() => {
+      {
         const [dx, dy] = mag;
         const x$0027 = x + dx;
         const y$0027 = y + dy;
@@ -89,7 +89,7 @@ const next = ({w, x, y}) => ([dir, mag]) => (() => {
           x: x$0027,
           y: y$0027
         };
-      })();
+      }
   }
 })();
 const reset = path => (() => {
