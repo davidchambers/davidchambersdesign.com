@@ -1,5 +1,14 @@
 import {text, code, dd, div as $div, dl, dt, h4, img, pre, time} from "./elements.js";
-const chain = f => x => globalThis.Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f);
+const chain = f => x => (() => {
+  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, x, [])) {
+    case "[object Array]":
+      return x.flatMap(x => f(x));
+    case "[object Function]":
+      return y => x(f(y))(y);
+    default:
+      return x["fantasy-land/chain"](f);
+  }
+})();
 const captioned$002Dimages = images => dl(chain(({alt, src, caption}) => [dt([img({
   alt,
   src

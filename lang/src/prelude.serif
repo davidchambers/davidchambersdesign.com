@@ -3,22 +3,19 @@ import * from "./Node.serif";
 
 export default Prelude;
 
-#globalThis             = Identifier "globalThis";
-#Array                  = MemberExpression #globalThis $ StringLiteral "Array";
-#Math                   = MemberExpression #globalThis $ StringLiteral "Math";
-#Object                 = MemberExpression #globalThis $ StringLiteral "Object";
-#Reflect                = MemberExpression #globalThis $ StringLiteral "Reflect";
-#Set                    = MemberExpression #globalThis $ StringLiteral "Set";
-#Symbol                 = MemberExpression #globalThis $ StringLiteral "Symbol";
-
 #CasesNotExhaustive     = Identifier "CasesNotExhaustive";
 #DivisionByZero         = Identifier "DivisionByZero";
 #args                   = Identifier "args";
+#chain                  = Identifier "chain";
 #constructor            = Identifier "constructor";
 #equals                 = Identifier "equals";
 #f                      = Identifier "f";
+#filter                 = Identifier "filter";
+#globalThis             = Identifier "globalThis";
+#id                     = Identifier "id";
 #idx                    = Identifier "idx";
 #lhs                    = Identifier "lhs";
+#match'                 = Identifier "match'";
 #reduce                 = Identifier "reduce";
 #rhs                    = Identifier "rhs";
 #that                   = Identifier "that";
@@ -28,6 +25,13 @@ export default Prelude;
 #typeRep                = Identifier "typeRep";
 #x                      = Identifier "x";
 #y                      = Identifier "y";
+
+#Array                  = MemberExpression #globalThis $ StringLiteral "Array";
+#Math                   = MemberExpression #globalThis $ StringLiteral "Math";
+#Object                 = MemberExpression #globalThis $ StringLiteral "Object";
+#Reflect                = MemberExpression #globalThis $ StringLiteral "Reflect";
+#Set                    = MemberExpression #globalThis $ StringLiteral "Set";
+#Symbol                 = MemberExpression #globalThis $ StringLiteral "Symbol";
 
 'Array                  = StringLiteral "Array";
 'Function               = StringLiteral "Function";
@@ -158,7 +162,7 @@ Prelude = {
   },
   match: {
     ArrowFunctionExpression [#type] {
-      CallExpression (CallExpression (Identifier "match'") [#type]) [ArrowFunctionExpression [#x] #CasesNotExhaustive]
+      CallExpression (CallExpression #match' [#type]) [ArrowFunctionExpression [#x] #CasesNotExhaustive]
     }
   },
   match': {
@@ -233,7 +237,7 @@ Prelude = {
                                   (MemberExpression #that 'length))
                 (CallExpression (MemberExpression #this 'every)
                                 [ArrowFunctionExpression [#x, #idx] $
-                                   CallExpression (CallExpression (Identifier "equals") [#x]) [MemberExpression #that #idx]])))
+                                   CallExpression (CallExpression #equals [#x]) [MemberExpression #that #idx]])))
           (Just $ BinaryExpression "===" #this #that)
       }
     }
@@ -315,11 +319,11 @@ Prelude = {
   reject: {
     ;; \predicate -> filter (not . predicate)
     ArrowFunctionExpression [#f] {
-      CallExpression (Identifier "filter") [ArrowFunctionExpression [#x] $ UnaryExpression "!" $ CallExpression #f [#x]]
+      CallExpression #filter [ArrowFunctionExpression [#x] $ UnaryExpression "!" $ CallExpression #f [#x]]
     }
     ;; This may be possible once sectioning is supported:
     ;; filter . (not .)
-    ;; CompositionExpression (Identifier "filter") (CompositionExpression (Identifier "not"))
+    ;; CompositionExpression #filter (CompositionExpression #not)
   },
   map: {
     ArrowFunctionExpression [#f] {
@@ -367,12 +371,22 @@ Prelude = {
   chain: {
     ArrowFunctionExpression [#f] {
       ArrowFunctionExpression [#x] {
-        ConditionalExpression
-          (CallExpression (MemberExpression #Array 'isArray) [#x])
-          (CallExpression (MemberExpression #x 'flatMap) [ArrowFunctionExpression [#x] $ CallExpression #f [#x]])
-          (Just $ CallExpression (MemberExpression #x 'fantasy-land/chain) [#f])
+        SwitchExpression (Object#toString #x) [
+          SwitchCase [Just $ StringLiteral "[object Array]"] {
+            CallExpression (MemberExpression #x 'flatMap) [ArrowFunctionExpression [#x] $ CallExpression #f [#x]]
+          },
+          SwitchCase [Just $ StringLiteral "[object Function]"] {
+            ArrowFunctionExpression [#y] $ CallExpression (CallExpression #x [CallExpression #f [#y]]) [#y]
+          },
+          SwitchCase [Nothing] {
+            CallExpression (MemberExpression #x 'fantasy-land/chain) [#f]
+          },
+        ]
       }
     }
+  },
+  join: {
+    CallExpression #chain [#id]
   },
   contains: {
     ArrowFunctionExpression [#this] {

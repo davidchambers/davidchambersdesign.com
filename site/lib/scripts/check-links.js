@@ -14,7 +14,16 @@ const construct = constructor => args => globalThis.Reflect.construct(constructo
 const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
 const filter = f => x => globalThis.Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f);
 const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
-const chain = f => x => globalThis.Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f);
+const chain = f => x => (() => {
+  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, x, [])) {
+    case "[object Array]":
+      return x.flatMap(x => f(x));
+    case "[object Function]":
+      return y => x(f(y))(y);
+    default:
+      return x["fantasy-land/chain"](f);
+  }
+})();
 const absolute$003F = url => url.startsWith("http:") || url.startsWith("https:");
 const links = node => equals("a")(node.name) ? filter(absolute$003F)([node.attributes.href]) : equals(undefined)(node.children) ? [] : chain(links)(node.children);
 const status = url => bichain(err => resolve({

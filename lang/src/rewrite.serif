@@ -85,7 +85,8 @@ vars node = flip (match' Node $ const emptyVariables) node {
   },
   ExpressionStatement: vars,
   Module: \imports exports statements -> mergeAll $ vars <$> imports <> exports <> statements,
-  DataTypeDeclaration: const . declaring . of Set,
+  DataConstructorDefinition: \identifier parameters -> declaring $ of Set identifier.name,
+  DataTypeDeclaration: \identifier -> reduce merge (declaring $ of Set identifier.name) . map vars,
 };
 
 ;; flip f y x -> f x y
@@ -207,6 +208,9 @@ rewriteImportDeclaration undeclared namesExportedFrom = {
 'match          = StringLiteral "match";
 'tag            = StringLiteral "tag";
 
+@match          = CallExpression (MemberExpression #Symbol 'for) ['match];
+@tag            = CallExpression (MemberExpression #Symbol 'for) ['tag];
+
 rewriteNode = transform {
   PropertyAccessor: \{name} -> {
     rewriteNode $ ArrowFunctionExpression [#dollar] $ MemberExpression #dollar $ StringLiteral name
@@ -289,24 +293,39 @@ rewriteNode = transform {
       PropertyAccessor: rewriteNode . MemberExpression arguments[0] . StringLiteral . (.name),
     }
   },
-  DataTypeDeclaration: \name constructors -> {
-    @tag = CallExpression (MemberExpression #Symbol 'for) ['tag];
-    @match = CallExpression (MemberExpression #Symbol 'for) ['match];
-    constructors
-    % map (\{name, parameters} -> Property (StringLiteral name) $ reduceRight
-        (\body parameter -> ArrowFunctionExpression [Identifier parameter] body)
-        (parameters
-         % map (\name -> Property (StringLiteral name) (Identifier name))
-         % concat [Property @tag (StringLiteral name)]
-         % ObjectExpression)
-        parameters
-      )
-    % concat [Property @match {
-        #member = Identifier $ .replace [RegExp "^.", .toLowerCase []] name;
-        case {name, parameters} = {
-          SwitchCase [Just $ StringLiteral name] {
-            reduce (\callee name -> CallExpression callee [MemberExpression #member $ StringLiteral name])
-                   (MemberExpression #cases $ StringLiteral name)
+  DataTypeDeclaration: \identifier constructors -> rewriteNode {
+    pattern = {
+      constructors
+      % map (.identifier)
+      % concat [identifier]
+      % map (join Property)
+      % ObjectPattern
+    };
+    VariableDeclaration pattern {
+      variableDeclarationFromConstructor = match Node {
+        DataConstructorDefinition: \identifier parameters -> {
+          VariableDeclaration identifier $ reduceRight
+            (\body parameter -> ArrowFunctionExpression [parameter] body)
+            (parameters
+             % map (\parameter -> Property (StringLiteral parameter.name) parameter)
+             % concat [Property @tag (StringLiteral identifier.name)]
+             % ObjectExpression)
+            parameters
+        },
+      };
+      variableDeclarations = variableDeclarationFromConstructor <$> constructors;
+      propertyFromConstructor = match Node {
+        DataConstructorDefinition: \identifier parameters -> {
+          Property (StringLiteral identifier.name) identifier
+        },
+      };
+      constructorProperties = propertyFromConstructor <$> constructors;
+      matchProperty = Property @match {
+        #member = Identifier $ .replace [RegExp "^.", .toLowerCase []] identifier.name;
+        case {identifier, parameters} = {
+          SwitchCase [Just $ StringLiteral identifier.name] {
+            reduce (\callee parameter -> CallExpression callee [MemberExpression #member $ StringLiteral parameter.name])
+                   (MemberExpression #cases $ StringLiteral identifier.name)
                    parameters
           }
         };
@@ -320,10 +339,14 @@ rewriteNode = transform {
             }
           }
         }
-      }]
-    % ObjectExpression
-    % VariableDeclaration $ Identifier name
-    % rewriteNode
+      };
+      BlockExpression variableDeclarations {
+        ObjectExpression [
+          Property (StringLiteral identifier.name) $ ObjectExpression [...constructorProperties, matchProperty],
+          ...constructorProperties,
+        ]
+      }
+    }
   },
 };
 
@@ -344,6 +367,13 @@ renameIdentifiers rename = transform {
   Identifier: Identifier . rename,
   ImportSpecifier: \imported local -> ImportSpecifier imported (renameIdentifiers rename local),
   ExportSpecifier: \local exported -> ExportSpecifier (renameIdentifiers rename local) exported,
+  DataConstructorDefinition: \identifier parameters -> {
+    DataConstructorDefinition (renameIdentifier rename identifier) parameters
+  },
+  DataTypeDeclaration: \identifier constructors -> {
+    DataTypeDeclaration (renameIdentifiers rename identifier)
+                        (renameIdentifiers rename <$> constructors)
+  },
   FunctionDeclaration: \name parameters body -> {
     FunctionDeclaration (rename name)
                         (renameIdentifiers rename <$> parameters)

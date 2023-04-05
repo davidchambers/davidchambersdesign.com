@@ -10,7 +10,16 @@ const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Arr
 const concat = this$ => that => globalThis.Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that);
 const reduceRight = f => y => x => x.reduceRight((y, x) => f(y)(x), y);
 const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
-const chain = f => x => globalThis.Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f);
+const chain = f => x => (() => {
+  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, x, [])) {
+    case "[object Array]":
+      return x.flatMap(x => f(x));
+    case "[object Function]":
+      return y => x(f(y))(y);
+    default:
+      return x["fantasy-land/chain"](f);
+  }
+})();
 const RESERVED_WORDS = construct(Set)([["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public", "arguments", "eval"]]);
 const validEsIdentifierName = name => (args => target => target.test.apply(target, args))([name])(RegExp("^[$_A-Za-z][$_A-Za-z0-9]*$"));
 const fromEscapedIdentifierName = name => ({

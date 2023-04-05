@@ -1,6 +1,6 @@
 import * as Future from "fluture";
 import {Nothing, Just, maybe} from "./Maybe.js";
-import Node, {ArrowFunctionExpression, BinaryExpression, BlockExpression, CallExpression, CompositionExpression, ConditionalExpression, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportDeclaration, ImportSpecifier, MemberExpression, Module, ObjectExpression, Property, StringLiteral, SwitchCase, SwitchExpression, VariableDeclaration, transform} from "./Node.js";
+import Node, {ArrowFunctionExpression, BinaryExpression, BlockExpression, CallExpression, CompositionExpression, ConditionalExpression, DataConstructorDefinition, DataTypeDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportDeclaration, ImportSpecifier, MemberExpression, Module, ObjectExpression, ObjectPattern, Property, StringLiteral, SwitchCase, SwitchExpression, VariableDeclaration, transform} from "./Node.js";
 import * as format from "./format.js";
 import globals from "./globals.js";
 import Prelude from "./prelude.js";
@@ -68,7 +68,17 @@ const of = typeRep => (() => {
       return typeRep["fantasy-land/of"];
   }
 })();
-const chain = f => x => globalThis.Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f);
+const chain = f => x => (() => {
+  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, x, [])) {
+    case "[object Array]":
+      return x.flatMap(x => f(x));
+    case "[object Function]":
+      return y => x(f(y))(y);
+    default:
+      return x["fantasy-land/chain"](f);
+  }
+})();
+const join = chain(id);
 const preludeNames = construct(Set)([Object.keys(Prelude)]);
 const variables = declared => referenced => ({
   declared,
@@ -140,7 +150,8 @@ const vars = node => match$0027(Node)(const$(emptyVariables))({
   })(),
   ExpressionStatement: vars,
   Module: imports => exports => statements => mergeAll(map(vars)(concat(imports)(concat(exports)(statements)))),
-  DataTypeDeclaration: $ => const$(declaring(of(Set)($)))
+  DataConstructorDefinition: identifier => parameters => declaring(of(Set)(identifier.name)),
+  DataTypeDeclaration: identifier => $ => reduce(merge)(declaring(of(Set)(identifier.name)))(map(vars)($))
 })(node);
 const applyFlip = transform({
   CallExpression: callee3 => arguments3 => match$0027(Node)(const$(CallExpression(callee3)(arguments3)))({
@@ -212,6 +223,8 @@ const $0027has = StringLiteral("has");
 const $0027hasOwn = StringLiteral("hasOwn");
 const $0027match = StringLiteral("match");
 const $0027tag = StringLiteral("tag");
+const $0040match = CallExpression(MemberExpression($0023Symbol)($0027for))([$0027match]);
+const $0040tag = CallExpression(MemberExpression($0023Symbol)($0027for))([$0027tag]);
 const rewriteNode = transform({
   PropertyAccessor: ({name}) => rewriteNode(ArrowFunctionExpression([$0023dollar])(MemberExpression($0023dollar)(StringLiteral(name)))),
   BlockExpression: statements => result => equals([])(statements) ? rewriteNode(result) : BlockExpression(map(rewriteNode)(statements))(rewriteNode(result)),
@@ -256,15 +269,25 @@ const rewriteNode = transform({
   CallExpression: flip(arguments$ => match$0027(Node)(callee => CallExpression(rewriteNode(callee))(map(rewriteNode)(arguments$)))({
     PropertyAccessor: $ => rewriteNode(MemberExpression(arguments$[0])(StringLiteral($.name)))
   })),
-  DataTypeDeclaration: name => constructors => (() => {
-    const $0040tag = CallExpression(MemberExpression($0023Symbol)($0027for))([$0027tag]);
-    const $0040match = CallExpression(MemberExpression($0023Symbol)($0027for))([$0027match]);
-    return rewriteNode(VariableDeclaration(Identifier(name))(ObjectExpression(concat([Property($0040match)((() => {
-      const $0023member = Identifier((args => target => target.replace.apply(target, args))([RegExp("^."), (args => target => target.toLowerCase.apply(target, args))([])])(name));
-      const case$ = ({name, parameters}) => SwitchCase([Just(StringLiteral(name))])(reduce(callee => name => CallExpression(callee)([MemberExpression($0023member)(StringLiteral(name))]))(MemberExpression($0023cases)(StringLiteral(name)))(parameters));
-      return ArrowFunctionExpression([$0023default])(ArrowFunctionExpression([$0023cases])(ArrowFunctionExpression([$0023member])(ConditionalExpression(CallExpression(MemberExpression($0023Object)($0027hasOwn))([$0023cases, MemberExpression($0023member)($0040tag)]))(SwitchExpression(MemberExpression($0023member)($0040tag))(map(case$)(constructors)))(Just(CallExpression($0023default)([$0023member]))))));
-    })())])(map(({name, parameters}) => Property(StringLiteral(name))(reduceRight(body => parameter => ArrowFunctionExpression([Identifier(parameter)])(body))(ObjectExpression(concat([Property($0040tag)(StringLiteral(name))])(map(name => Property(StringLiteral(name))(Identifier(name)))(parameters))))(parameters)))(constructors)))));
-  })()
+  DataTypeDeclaration: identifier => constructors => rewriteNode((() => {
+    const pattern = ObjectPattern(map(join(Property))(concat([identifier])(map($ => $.identifier)(constructors))));
+    return VariableDeclaration(pattern)((() => {
+      const variableDeclarationFromConstructor = match(Node)({
+        DataConstructorDefinition: identifier => parameters => VariableDeclaration(identifier)(reduceRight(body => parameter => ArrowFunctionExpression([parameter])(body))(ObjectExpression(concat([Property($0040tag)(StringLiteral(identifier.name))])(map(parameter => Property(StringLiteral(parameter.name))(parameter))(parameters))))(parameters))
+      });
+      const variableDeclarations = map(variableDeclarationFromConstructor)(constructors);
+      const propertyFromConstructor = match(Node)({
+        DataConstructorDefinition: identifier => parameters => Property(StringLiteral(identifier.name))(identifier)
+      });
+      const constructorProperties = map(propertyFromConstructor)(constructors);
+      const matchProperty = Property($0040match)((() => {
+        const $0023member = Identifier((args => target => target.replace.apply(target, args))([RegExp("^."), (args => target => target.toLowerCase.apply(target, args))([])])(identifier.name));
+        const case$ = ({identifier, parameters}) => SwitchCase([Just(StringLiteral(identifier.name))])(reduce(callee => parameter => CallExpression(callee)([MemberExpression($0023member)(StringLiteral(parameter.name))]))(MemberExpression($0023cases)(StringLiteral(identifier.name)))(parameters));
+        return ArrowFunctionExpression([$0023default])(ArrowFunctionExpression([$0023cases])(ArrowFunctionExpression([$0023member])(ConditionalExpression(CallExpression(MemberExpression($0023Object)($0027hasOwn))([$0023cases, MemberExpression($0023member)($0040tag)]))(SwitchExpression(MemberExpression($0023member)($0040tag))(map(case$)(constructors)))(Just(CallExpression($0023default)([$0023member]))))));
+      })());
+      return BlockExpression(variableDeclarations)(ObjectExpression([Property(StringLiteral(identifier.name))(ObjectExpression([...constructorProperties, matchProperty])), ...constructorProperties]));
+    })());
+  })())
 });
 const updateRenamerFromPattern = rename => node => match(Node)({
   Identifier: name => preludeNames.has(name) ? this$ => equals(name)(this$) ? "$" + this$ : rename(this$) : rename,
@@ -278,6 +301,8 @@ const renameIdentifiers = rename => transform({
   Identifier: $ => Identifier(rename($)),
   ImportSpecifier: imported => local => ImportSpecifier(imported)(renameIdentifiers(rename)(local)),
   ExportSpecifier: local => exported => ExportSpecifier(renameIdentifiers(rename)(local))(exported),
+  DataConstructorDefinition: identifier => parameters => DataConstructorDefinition(renameIdentifier(rename)(identifier))(parameters),
+  DataTypeDeclaration: identifier => constructors => DataTypeDeclaration(renameIdentifiers(rename)(identifier))(map(renameIdentifiers(rename))(constructors)),
   FunctionDeclaration: name => parameters => body => FunctionDeclaration(rename(name))(map(renameIdentifiers(rename))(parameters))(renameIdentifiers(rename)(body))
 });
 export default rewriteModule;

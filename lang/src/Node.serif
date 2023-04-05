@@ -13,6 +13,7 @@ export {
   CompositionExpression,
   ConcatenationExpression,
   ConditionalExpression,
+  DataConstructorDefinition,
   DataTypeDeclaration,
   DoBlockExpression,
   Elision,
@@ -65,7 +66,8 @@ type Node
   | CompositionExpression left right
   | ConcatenationExpression left right
   | ConditionalExpression predicate consequent alternative
-  | DataTypeDeclaration name constructors
+  | DataConstructorDefinition identifier parameters
+  | DataTypeDeclaration identifier constructors
   | DoBlockExpression operations result
   | Elision
   | ExportDefaultDeclaration declaration
@@ -102,57 +104,6 @@ type Node
   | VariableDeclaration pattern expression
 ;
 
-{
-  ArrayExpression,
-  ArrayPattern,
-  ArrowAssignmentStatement,
-  ArrowFunctionExpression,
-  BinaryExpression,
-  BindExpression,
-  BlockExpression,
-  BlockStatement,
-  BooleanLiteral,
-  CallExpression,
-  CompositionExpression,
-  ConcatenationExpression,
-  ConditionalExpression,
-  DataTypeDeclaration,
-  DoBlockExpression,
-  Elision,
-  ExportDefaultDeclaration,
-  ExportNamedDeclaration,
-  ExportSpecifier,
-  ExpressionStatement,
-  FunctionDeclaration,
-  Identifier,
-  ImportAllDeclaration,
-  ImportDeclaration,
-  ImportDefaultSpecifier,
-  ImportNamespaceSpecifier,
-  ImportSpecifier,
-  InfixCallExpression,
-  LogicalExpression,
-  MapExpression,
-  MemberExpression,
-  MethodCallExpression,
-  Module,
-  NullLiteral,
-  NumberLiteral,
-  ObjectExpression,
-  ObjectPattern,
-  PipeExpression,
-  Property,
-  PropertyAccessor,
-  RestElement,
-  SpreadElement,
-  StringLiteral,
-  SwitchCase,
-  SwitchExpression,
-  TemplateLiteral,
-  UnaryExpression,
-  VariableDeclaration,
-} = Node;
-
 transform cases = {
   recur node = match Node {
     ArrayExpression: ArrayExpression . map recur,
@@ -168,7 +119,8 @@ transform cases = {
     CompositionExpression: \left right -> CompositionExpression (recur left) (recur right),
     ConcatenationExpression: \left right -> ConcatenationExpression (recur left) (recur right),
     ConditionalExpression: \predicate consequent alternative -> ConditionalExpression (recur predicate) (recur consequent) (recur <$> alternative),
-    DataTypeDeclaration: DataTypeDeclaration,
+    DataConstructorDefinition: \identifier parameters -> DataConstructorDefinition (recur identifier) (recur <$> parameters),
+    DataTypeDeclaration: \identifier constructors -> DataTypeDeclaration (recur identifier) (recur <$> constructors),
     DoBlockExpression: \operations result -> DoBlockExpression (recur <$> operations) (recur result),
     Elision: Elision,
     ExportDefaultDeclaration: ExportDefaultDeclaration . recur,

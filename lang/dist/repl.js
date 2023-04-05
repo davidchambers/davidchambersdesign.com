@@ -10,7 +10,16 @@ const construct = constructor => args => globalThis.Reflect.construct(constructo
 const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
 const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
 const flip = f => y => x => f(x)(y);
-const chain = f => x => globalThis.Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f);
+const chain = f => x => (() => {
+  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, x, [])) {
+    case "[object Array]":
+      return x.flatMap(x => f(x));
+    case "[object Function]":
+      return y => x(f(y))(y);
+    default:
+      return x["fantasy-land/chain"](f);
+  }
+})();
 const evaluateModule = sourceText => (context => (module => chain(_ => chain(_ => resolve(module.namespace.default))(attemptP(() => (args => target => target.evaluate.apply(target, args))([])(module))))(attemptP(() => (args => target => target.link.apply(target, args))([(specifier, referencingModule) => map(map(entries => promise((() => {
   const module = construct(vm.SyntheticModule)([map(([name]) => name)(entries), () => (args => target => target.forEach.apply(target, args))([flip(args => target => target.setExport.apply(target, args))(module)])(entries), {
     identifier: specifier,

@@ -560,16 +560,16 @@ VariableDeclaration
 
 DataTypeDeclaration
   = TypeToken
-    _ name:(ident:Identifier { return ident.name; })
+    _ identifier:Identifier
     _ '='
     _ constructors:DataConstructorDefinition|1.., _ '|' _|
     _ ';'
-    { return Node.DataTypeDeclaration(name)(constructors); }
+    { return Node.DataTypeDeclaration(identifier)(constructors); }
 
 DataConstructorDefinition
-  = name:(ident:Identifier { return ident.name; })
-    parameters:(_ ident:Identifier { return ident.name; })*
-    { return {name, parameters}; }
+  = identifier:Identifier
+    parameters:(_ parameter:Identifier { return parameter; })*
+    { return Node.DataConstructorDefinition(identifier)(parameters); }
 
 ExpressionStatement
   = expression:Expression _ ';'
