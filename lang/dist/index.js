@@ -1,5 +1,5 @@
 import {attempt} from "fluture";
-import Node from "./Node.js";
+import {ImportDeclaration, Module, StringLiteral} from "./Node.js";
 import esModuleFromSerifModule from "./codegen.js";
 import * as grammar from "./grammar.js";
 import rewrite from "./rewrite.js";
@@ -9,8 +9,8 @@ const parse = filename => sourceText => attempt(() => apply(grammar.parse)([sour
   grammarSource: filename
 }]));
 const changeExtensionInImportDeclaration = ({source, specifiers}) => (() => {
-  const source$0027 = Node.StringLiteral((args => target => target.replace.apply(target, args))([RegExp("[.]serif$"), ".js"])(source.value));
-  return Node.ImportDeclaration(source$0027)(specifiers);
+  const source$0027 = StringLiteral((args => target => target.replace.apply(target, args))([RegExp("[.]serif$"), ".js"])(source.value));
+  return ImportDeclaration(source$0027)(specifiers);
 })();
-const changeExtensions = ({imports, exports, statements}) => Node.Module(map(changeExtensionInImportDeclaration)(imports))(exports)(statements);
+const changeExtensions = ({imports, exports, statements}) => Module(map(changeExtensionInImportDeclaration)(imports))(exports)(statements);
 export {parse, rewrite, changeExtensions, esModuleFromSerifModule};

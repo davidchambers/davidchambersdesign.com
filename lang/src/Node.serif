@@ -1,52 +1,209 @@
 export default Node;
+export {
+  ArrayExpression,
+  ArrayPattern,
+  ArrowAssignmentStatement,
+  ArrowFunctionExpression,
+  BinaryExpression,
+  BindExpression,
+  BlockExpression,
+  BlockStatement,
+  BooleanLiteral,
+  CallExpression,
+  CompositionExpression,
+  ConcatenationExpression,
+  ConditionalExpression,
+  DataTypeDeclaration,
+  DoBlockExpression,
+  Elision,
+  ExportDefaultDeclaration,
+  ExportNamedDeclaration,
+  ExportSpecifier,
+  ExpressionStatement,
+  FunctionDeclaration,
+  Identifier,
+  ImportAllDeclaration,
+  ImportDeclaration,
+  ImportDefaultSpecifier,
+  ImportNamespaceSpecifier,
+  ImportSpecifier,
+  InfixCallExpression,
+  LogicalExpression,
+  MapExpression,
+  MemberExpression,
+  MethodCallExpression,
+  Module,
+  NullLiteral,
+  NumberLiteral,
+  ObjectExpression,
+  ObjectPattern,
+  PipeExpression,
+  Property,
+  PropertyAccessor,
+  RestElement,
+  SpreadElement,
+  StringLiteral,
+  SwitchCase,
+  SwitchExpression,
+  TemplateLiteral,
+  UnaryExpression,
+  VariableDeclaration,
+  transform,
+};
 
 type Node
-  = NullLiteral
-  | BooleanLiteral value
-  | NumberLiteral value
-  | StringLiteral value
-  | TemplateLiteral quasis expressions
-  | MemberExpression object property
-  | Identifier name
-  | SpreadElement argument
-  | ArrayExpression elements
-  | Property key value
-  | ObjectExpression properties
+  = ArrayExpression elements
   | ArrayPattern elements
-  | Elision
-  | ObjectPattern properties
-  | RestElement argument
+  | ArrowAssignmentStatement pattern expression
   | ArrowFunctionExpression parameters body
-  | PropertyAccessor identifier
+  | BinaryExpression operator left right
+  | BindExpression left right
   | BlockExpression statements result
   | BlockStatement statements
-  | DoBlockExpression operations result
-  | ArrowAssignmentStatement pattern expression
-  | UnaryExpression operator argument
-  | CompositionExpression left right
-  | InfixCallExpression operator left right
-  | BinaryExpression operator left right
-  | ConcatenationExpression left right
-  | MapExpression left right
-  | BindExpression left right
-  | LogicalExpression operator left right
-  | ConditionalExpression predicate consequent alternative
-  | SwitchExpression discriminant cases
-  | SwitchCase predicates consequent
-  | PipeExpression head body
-  | MethodCallExpression name
+  | BooleanLiteral value
   | CallExpression callee arguments
-  | ImportDeclaration source specifiers
-  | ImportAllDeclaration source hiding
-  | ImportDefaultSpecifier local
-  | ImportSpecifier imported local
-  | ImportNamespaceSpecifier local
-  | ExportNamedDeclaration specifiers
-  | ExportDefaultDeclaration declaration
-  | ExportSpecifier local exported
-  | VariableDeclaration pattern expression
-  | FunctionDeclaration name parameters body
-  | ExpressionStatement expression
-  | Module imports exports statements
+  | CompositionExpression left right
+  | ConcatenationExpression left right
+  | ConditionalExpression predicate consequent alternative
   | DataTypeDeclaration name constructors
+  | DoBlockExpression operations result
+  | Elision
+  | ExportDefaultDeclaration declaration
+  | ExportNamedDeclaration specifiers
+  | ExportSpecifier local exported
+  | ExpressionStatement expression
+  | FunctionDeclaration name parameters body
+  | Identifier name
+  | ImportAllDeclaration source default hiding
+  | ImportDeclaration source specifiers
+  | ImportDefaultSpecifier local
+  | ImportNamespaceSpecifier local
+  | ImportSpecifier imported local
+  | InfixCallExpression operator left right
+  | LogicalExpression operator left right
+  | MapExpression left right
+  | MemberExpression object property
+  | MethodCallExpression name
+  | Module imports exports statements
+  | NullLiteral
+  | NumberLiteral value
+  | ObjectExpression properties
+  | ObjectPattern properties
+  | PipeExpression head body
+  | Property key value
+  | PropertyAccessor identifier
+  | RestElement argument
+  | SpreadElement argument
+  | StringLiteral value
+  | SwitchCase predicates consequent
+  | SwitchExpression discriminant cases
+  | TemplateLiteral quasis expressions
+  | UnaryExpression operator argument
+  | VariableDeclaration pattern expression
 ;
+
+{
+  ArrayExpression,
+  ArrayPattern,
+  ArrowAssignmentStatement,
+  ArrowFunctionExpression,
+  BinaryExpression,
+  BindExpression,
+  BlockExpression,
+  BlockStatement,
+  BooleanLiteral,
+  CallExpression,
+  CompositionExpression,
+  ConcatenationExpression,
+  ConditionalExpression,
+  DataTypeDeclaration,
+  DoBlockExpression,
+  Elision,
+  ExportDefaultDeclaration,
+  ExportNamedDeclaration,
+  ExportSpecifier,
+  ExpressionStatement,
+  FunctionDeclaration,
+  Identifier,
+  ImportAllDeclaration,
+  ImportDeclaration,
+  ImportDefaultSpecifier,
+  ImportNamespaceSpecifier,
+  ImportSpecifier,
+  InfixCallExpression,
+  LogicalExpression,
+  MapExpression,
+  MemberExpression,
+  MethodCallExpression,
+  Module,
+  NullLiteral,
+  NumberLiteral,
+  ObjectExpression,
+  ObjectPattern,
+  PipeExpression,
+  Property,
+  PropertyAccessor,
+  RestElement,
+  SpreadElement,
+  StringLiteral,
+  SwitchCase,
+  SwitchExpression,
+  TemplateLiteral,
+  UnaryExpression,
+  VariableDeclaration,
+} = Node;
+
+transform cases = {
+  recur node = match Node {
+    ArrayExpression: ArrayExpression . map recur,
+    ArrayPattern: ArrayPattern . map recur,
+    ArrowAssignmentStatement: \pattern expression -> ArrowAssignmentStatement (recur pattern) (recur expression),
+    ArrowFunctionExpression: \parameters body -> ArrowFunctionExpression (recur <$> parameters) (recur body),
+    BinaryExpression: \operator left right -> BinaryExpression operator (recur left) (recur right),
+    BlockExpression: \statements result -> BlockExpression (recur <$> statements) (recur result),
+    BlockStatement: BlockStatement . map recur,
+    BooleanLiteral: BooleanLiteral,
+    BindExpression: \left right -> BindExpression (recur left) (recur right),
+    CallExpression: \callee arguments -> CallExpression (recur callee) (recur <$> arguments),
+    CompositionExpression: \left right -> CompositionExpression (recur left) (recur right),
+    ConcatenationExpression: \left right -> ConcatenationExpression (recur left) (recur right),
+    ConditionalExpression: \predicate consequent alternative -> ConditionalExpression (recur predicate) (recur consequent) (recur <$> alternative),
+    DataTypeDeclaration: DataTypeDeclaration,
+    DoBlockExpression: \operations result -> DoBlockExpression (recur <$> operations) (recur result),
+    Elision: Elision,
+    ExportDefaultDeclaration: ExportDefaultDeclaration . recur,
+    ExportNamedDeclaration: ExportNamedDeclaration . map recur,
+    ExportSpecifier: \local exported -> ExportSpecifier (recur local) (recur exported),
+    ExpressionStatement: ExpressionStatement . recur,
+    FunctionDeclaration: \name parameters body -> FunctionDeclaration name parameters (recur body),
+    Identifier: Identifier,
+    ImportAllDeclaration: \source default hiding -> ImportAllDeclaration source default (recur <$> hiding),
+    ImportDeclaration: \source specifiers -> ImportDeclaration source (recur <$> specifiers),
+    ImportDefaultSpecifier: ImportDefaultSpecifier . recur,
+    ImportNamespaceSpecifier: ImportNamespaceSpecifier . recur,
+    ImportSpecifier: \imported local -> ImportSpecifier (recur imported) (recur local),
+    InfixCallExpression: \operator left right -> InfixCallExpression operator (recur left) (recur right),
+    LogicalExpression: \operator left right -> LogicalExpression operator (recur left) (recur right),
+    MapExpression: \left right -> MapExpression (recur left) (recur right),
+    MemberExpression: \object property -> MemberExpression (recur object) (recur property),
+    MethodCallExpression: MethodCallExpression,
+    Module: \imports exports statements -> Module (recur <$> imports) (recur <$> exports) (recur <$> statements),
+    NullLiteral: NullLiteral,
+    NumberLiteral: NumberLiteral,
+    ObjectExpression: ObjectExpression . map recur,
+    ObjectPattern: ObjectPattern . map recur,
+    PipeExpression: \head body -> PipeExpression (recur head) (recur body),
+    Property: \key value -> Property (recur key) (recur value),
+    PropertyAccessor: PropertyAccessor . recur,
+    RestElement: RestElement . recur,
+    SpreadElement: SpreadElement . recur,
+    StringLiteral: StringLiteral,
+    SwitchCase: \predicates consequent -> SwitchCase (map recur <$> predicates) (recur consequent),
+    SwitchExpression: \discriminant cases -> SwitchExpression (recur discriminant) (recur <$> cases),
+    TemplateLiteral: \quasis expressions -> TemplateLiteral quasis (recur <$> expressions),
+    UnaryExpression: \operator argument -> UnaryExpression operator (recur argument),
+    VariableDeclaration: \pattern expression -> VariableDeclaration (recur pattern) (recur expression),
+    ...cases,
+  } node;
+  recur
+};

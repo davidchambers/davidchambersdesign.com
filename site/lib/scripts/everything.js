@@ -22,7 +22,6 @@ import pages from "../pages/index.js";
 import posts from "../posts/index.js";
 const apply = f => args => f.apply(null, args);
 const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
-const flip = f => y => x => f(x)(y);
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const public$ = components => apply(path.join)([dirname, "..", "..", "public", ...components]);
 const write$002Dfile = filename => data => apply(fs.writeFileSync)([filename, data]);
@@ -83,5 +82,5 @@ const render$002Ddocument = element => `<!DOCTYPE html>\n${element.render({
 })}`;
 write$002Dfile(public$(["archives.html"]))(render$002Ddocument(base$002Dtemplate(["Archives"])(render$002Darchives(posts))));
 write$002Dfile(public$(["tags.html"]))(render$002Ddocument(base$002Dtemplate(["Tags"])(render$002Dtags(posts))));
-flip(map)(pages)(page => write$002Dfile(public$([page.slug + ".html"]))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))));
-flip(map)(posts)(post => write$002Dfile(public$([post.slug + ".html"]))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post))))));
+map(page => write$002Dfile(public$([page.slug + ".html"]))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))))(pages);
+map(post => write$002Dfile(public$([post.slug + ".html"]))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post))))))(posts);

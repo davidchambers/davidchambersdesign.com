@@ -9,8 +9,12 @@ ImportSpecifier
   = local:Identifier
     { return Node.ImportSpecifier(local)(local); }
 
+ImportSpecifiers
+  = '{' _ '}'                                                                   { return []; }
+  / '{' _ specifiers:ImportSpecifier|.., CommaSeparator| _ ','? _ '}'           { return specifiers; }
+
 ImportNamespaceSpecifier
-  = local:Identifier
+  = '*' _ 'as' _ local:Identifier
     { return Node.ImportNamespaceSpecifier(local); }
 
 ImportDefaultSpecifier
@@ -18,16 +22,20 @@ ImportDefaultSpecifier
     { return Node.ImportDefaultSpecifier(local); }
 
 ImportDeclaration
-  = ImportToken _ '{' _ '}' _ 'from' _ source:StringLiteral _ ';'
-    { return Node.ImportDeclaration(source)([]); }
-  / ImportToken _ '{' _ specifiers:ImportSpecifier|.., CommaSeparator| _ ','? _ '}' _ 'from' _ source:StringLiteral _ ';'
+  = ImportToken _ specifiers:(
+        ImportSpecifiers
+      / specifier:ImportNamespaceSpecifier                                      { return [specifier]; }
+      / specifier:ImportNamespaceSpecifier _ ',' _ specifiers:ImportSpecifiers  { return [specifier, ...specifiers]; }
+      / specifier:ImportDefaultSpecifier                                        { return [specifier]; }
+      / specifier:ImportDefaultSpecifier   _ ',' _ specifiers:ImportSpecifiers  { return [specifier, ...specifiers]; }
+    ) _ 'from' _ source:StringLiteral _ ';'
     { return Node.ImportDeclaration(source)(specifiers); }
-  / ImportToken _ '*' _ 'as' _ specifier:ImportNamespaceSpecifier _ 'from' _ source:StringLiteral _ ';'
-    { return Node.ImportDeclaration(source)([specifier]); }
-  / ImportToken _ '*' _ 'from' _ source:StringLiteral hiding:(_ 'hiding' _ '{' _ hiding:Identifier|.., CommaSeparator| _ '}' { return hiding; })? _ ';'
-    { return Node.ImportAllDeclaration(source)(hiding ?? []); }
-  / ImportToken _ specifier:ImportDefaultSpecifier _ 'from' _ source:StringLiteral _ ';'
-    { return Node.ImportDeclaration(source)([specifier]); }
+  / ImportToken specifier:(
+      _ specifier:ImportDefaultSpecifier _ ','                                  { return specifier; }
+    )? _ '*' _ 'from' _ source:StringLiteral hiding:(
+      _ 'hiding' _ '{' _ hiding:Identifier|.., CommaSeparator| _ '}'            { return hiding; }
+    )? _ ';'
+    { return Node.ImportAllDeclaration(source)(Maybe.fromNullable(specifier))(hiding ?? []); }
 
 ExportSpecifier
   = local:Identifier
@@ -470,7 +478,7 @@ ConditionalExpression
   = IfToken _ predicate:ConditionalExpression
     _ ThenToken _ consequent:ConditionalExpression
     alternative:(_ ElseToken _ alternative:ConditionalExpression { return alternative; })?
-    { return Node.ConditionalExpression(predicate)(consequent)(alternative == null ? Maybe.Nothing : Maybe.Just(alternative)); }
+    { return Node.ConditionalExpression(predicate)(consequent)(Maybe.fromNullable(alternative)); }
   / BindExpression
 
 SwitchExpression

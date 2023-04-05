@@ -1,4 +1,11 @@
-export default Maybe;
+export default {Nothing, Just, [Symbol.for "match"]: match};
+export {
+  Nothing,
+  Just,
+  maybe,
+  fromMaybe,
+  fromNullable,
+};
 
 Nothing = {
   [Symbol.for "tag"]: "Nothing",
@@ -21,13 +28,8 @@ match default cases maybe = {
   }
 };
 
-maybe nothing just = {
-  match null {Nothing: nothing, Just: just}
-};
+maybe Nothing Just = match null {Nothing, Just};
 
-Maybe = {
-  Nothing,
-  Just,
-  [Symbol.for "match"]: match,
-  maybe,
-};
+fromMaybe default = maybe default id;
+
+fromNullable x = if x == null or x == undefined then Nothing else Just x;

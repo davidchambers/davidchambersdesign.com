@@ -1,6 +1,6 @@
 import * as Future from "fluture";
-import Maybe from "./Maybe.js";
-import Node from "./Node.js";
+import {Nothing, Just, maybe} from "./Maybe.js";
+import Node, {ArrowFunctionExpression, BinaryExpression, BlockExpression, CallExpression, CompositionExpression, ConditionalExpression, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportDeclaration, ImportSpecifier, MemberExpression, Module, ObjectExpression, Property, StringLiteral, SwitchCase, SwitchExpression, VariableDeclaration, transform} from "./Node.js";
 import * as format from "./format.js";
 import globals from "./globals.js";
 import Prelude from "./prelude.js";
@@ -69,7 +69,6 @@ const of = typeRep => (() => {
   }
 })();
 const chain = f => x => globalThis.Array.isArray(x) ? x.flatMap(x => f(x)) : x["fantasy-land/chain"](f);
-const {NullLiteral, BooleanLiteral, NumberLiteral, StringLiteral, TemplateLiteral, MemberExpression, Identifier, SpreadElement, ArrayExpression, Elision, Property, ObjectExpression, ArrayPattern, ObjectPattern, RestElement, ArrowFunctionExpression, BlockExpression, BlockStatement, UnaryExpression, CompositionExpression, BinaryExpression, LogicalExpression, ConditionalExpression, SwitchExpression, SwitchCase, CallExpression, ImportDeclaration, ImportSpecifier, ImportDefaultSpecifier, ImportNamespaceSpecifier, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, VariableDeclaration, FunctionDeclaration, ExpressionStatement, Module} = Node;
 const preludeNames = construct(Set)([Object.keys(Prelude)]);
 const variables = declared => referenced => ({
   declared,
@@ -84,7 +83,7 @@ const merge = lhs => rhs => ({
   referenced: OR(rhs.referenced)(lhs.referenced)
 });
 const mergeAll = reduce(merge)(emptyVariables);
-const vars = node => flip(match$0027(Node)(const$(emptyVariables)))(node)({
+const vars = node => match$0027(Node)(const$(emptyVariables))({
   TemplateLiteral: const$($ => mergeAll(map(vars)($))),
   MemberExpression: object => property => merge(vars(object))(vars(property)),
   Identifier: $ => referencing(of(Set)($)),
@@ -118,13 +117,13 @@ const vars = node => flip(match$0027(Node)(const$(emptyVariables)))(node)({
   MapExpression: left => right => merge(vars(left))(vars(right)),
   BindExpression: left => right => merge(vars(left))(vars(right)),
   LogicalExpression: operator => left => right => merge(vars(left))(vars(right)),
-  ConditionalExpression: predicate => consequent => alternative => merge(merge(vars(predicate))(vars(consequent)))(Maybe.maybe(emptyVariables)(vars)(alternative)),
+  ConditionalExpression: predicate => consequent => alternative => merge(merge(vars(predicate))(vars(consequent)))(maybe(emptyVariables)(vars)(alternative)),
   SwitchExpression: discriminant => cases => mergeAll(map(vars)([discriminant, ...cases])),
   SwitchCase: predicates => consequent => mergeAll(map(vars)([...predicates, consequent])),
   PipeExpression: head => body => merge(vars(head))(vars(body)),
   CallExpression: callee => arguments$ => mergeAll(map(vars)([callee, ...arguments$])),
   ImportDeclaration: const$($ => mergeAll(map(vars)($))),
-  ImportAllDeclaration: const$(const$(emptyVariables)),
+  ImportAllDeclaration: source => default$ => hiding => emptyVariables,
   ImportDefaultSpecifier: $ => declaring(referenced(vars($))),
   ImportSpecifier: const$($ => declaring(referenced(vars($)))),
   ImportNamespaceSpecifier: $ => declaring(referenced(vars($))),
@@ -142,6 +141,15 @@ const vars = node => flip(match$0027(Node)(const$(emptyVariables)))(node)({
   ExpressionStatement: vars,
   Module: imports => exports => statements => mergeAll(map(vars)(concat(imports)(concat(exports)(statements)))),
   DataTypeDeclaration: $ => const$(declaring(of(Set)($)))
+})(node);
+const applyFlip = transform({
+  CallExpression: callee3 => arguments3 => match$0027(Node)(const$(CallExpression(callee3)(arguments3)))({
+    CallExpression: callee2 => arguments2 => match$0027(Node)(const$(CallExpression(CallExpression(callee2)(arguments2))(arguments3)))({
+      CallExpression: callee1 => arguments1 => match$0027(Node)(const$(CallExpression(CallExpression(CallExpression(callee1)(arguments1))(arguments2))(arguments3)))({
+        Identifier: name => equals("flip")(name) && equals(1)(arguments1.length) ? CallExpression(CallExpression(arguments1[0])(arguments3))(arguments2) : CallExpression(CallExpression(CallExpression(Identifier(name))(arguments1))(arguments2))(arguments3)
+      })(callee1)
+    })(callee2)
+  })(callee3)
 });
 const removeUnreferencedPreludeFunctions = module => (() => {
   const {declared, referenced} = vars(module);
@@ -169,7 +177,7 @@ const rewriteModule = module => namesExportedFrom => (() => {
       ImportNamespaceSpecifier: updateRenamerFromPattern(rename),
       ImportDefaultSpecifier: updateRenamerFromPattern(rename)
     }))(rename)(chain($ => $.specifiers)(module$0027.imports));
-    const {imports, exports, statements} = renameIdentifiers(rename$0027)(module$0027);
+    const {imports, exports, statements} = applyFlip(renameIdentifiers(rename$0027)(module$0027));
     const prelude = map(([name, value]) => VariableDeclaration(Identifier(name))(value))(Object.entries(Prelude));
     const module$0027$0027 = removeUnreferencedPreludeFunctions(Module(imports)(exports)(concat(prelude)(statements)));
     const {declared, referenced} = vars(module$0027$0027);
@@ -181,11 +189,11 @@ const rewriteModule = module => namesExportedFrom => (() => {
   })();
   return map(imports => withImports(Module(imports)(module.exports)(module.statements)))(imports);
 })();
-const rewriteImportAllDeclaration = undeclared => namesExportedFrom => source => hiding => (() => {
+const rewriteImportAllDeclaration = undeclared => namesExportedFrom => source => default$ => hiding => (() => {
   const namesExported = construct(Set)([(args => target => target.endsWith.apply(target, args))([".serif"])(source.value) ? namesExportedFrom(source.value) : map(Object.keys)(Future.attemptP(() => import(source.value)))]);
   const namesHidden = construct(Set)([map($ => $.name)(hiding)]);
   const namesHiddenNeedlessly = subtract(namesExported)(namesHidden);
-  return namesHiddenNeedlessly.size > 0 ? Future.reject(Error(`import * from "${source.value}" hiding {${(args => target => target.join.apply(target, args))([", "])(namesHidden)}};\n\n${format.list(Array.from(namesHiddenNeedlessly))} ${equals(1)(namesHiddenNeedlessly.size) ? "is" : "are"} not exported so need not be hidden.\n`)) : Future.resolve(ImportDeclaration(source)(map(name => ImportSpecifier(Identifier(name))(Identifier(preludeNames.has(name) ? "$" + name : name)))(Array.from(XOR(undeclared)(subtract(namesHidden)(namesExported))))));
+  return namesHiddenNeedlessly.size > 0 ? Future.reject(Error(`import * from "${source.value}" hiding {${(args => target => target.join.apply(target, args))([", "])(namesHidden)}};\n\n${format.list(Array.from(namesHiddenNeedlessly))} ${equals(1)(namesHiddenNeedlessly.size) ? "is" : "are"} not exported so need not be hidden.\n`)) : Future.resolve(ImportDeclaration(source)(maybe(id)($ => concat(Array.of($)))(default$)(map(name => ImportSpecifier(Identifier(name))(Identifier(preludeNames.has(name) ? "$" + name : name)))(Array.from(XOR(undeclared)(subtract(namesHidden)(namesExported)))))));
 })();
 const rewriteImportDeclaration = undeclared => namesExportedFrom => match(Node)({
   ImportDeclaration: source => specifiers => Future.resolve(ImportDeclaration(source)(specifiers)),
@@ -204,22 +212,15 @@ const $0027has = StringLiteral("has");
 const $0027hasOwn = StringLiteral("hasOwn");
 const $0027match = StringLiteral("match");
 const $0027tag = StringLiteral("tag");
-const rewriteNode = node => flip(match$0027(Node)(id))(node)({
-  TemplateLiteral: quasis => expressions => TemplateLiteral(quasis)(map(rewriteNode)(expressions)),
-  MemberExpression: object => property => MemberExpression(rewriteNode(object))(rewriteNode(property)),
-  ArrayExpression: $ => ArrayExpression(map(rewriteNode)($)),
-  ObjectExpression: $ => ObjectExpression(map(rewriteNode)($)),
-  ArrowFunctionExpression: parameters => body => ArrowFunctionExpression(map(rewriteNode)(parameters))(rewriteNode(body)),
+const rewriteNode = transform({
   PropertyAccessor: ({name}) => rewriteNode(ArrowFunctionExpression([$0023dollar])(MemberExpression($0023dollar)(StringLiteral(name)))),
   BlockExpression: statements => result => equals([])(statements) ? rewriteNode(result) : BlockExpression(map(rewriteNode)(statements))(rewriteNode(result)),
-  BlockStatement: $ => BlockStatement(map(rewriteNode)($)),
   DoBlockExpression: operations => result => rewriteNode(reduceRight(result => match(Node)({
     ArrowAssignmentStatement: pattern => expression => CallExpression(CallExpression(Identifier("chain"))([ArrowFunctionExpression([pattern])(result)]))([expression]),
     VariableDeclaration: pattern => expression => CallExpression(ArrowFunctionExpression([pattern])(result))([expression]),
     FunctionDeclaration: name => parameters => body => CallExpression(ArrowFunctionExpression([Identifier(name)])(result))([reduceRight(body => param => ArrowFunctionExpression([param])(body))(body)(parameters)]),
     ExpressionStatement: expression => BlockExpression([ExpressionStatement(expression)])(result)
   }))(result)(operations)),
-  UnaryExpression: operator => $ => UnaryExpression(operator)(rewriteNode($)),
   CompositionExpression: left => right => (() => {
     const recur = match$0027(Node)(flip(CallExpression)([$0023dollar]))({
       CompositionExpression: left => right => CallExpression(left)([recur(right)])
@@ -250,82 +251,33 @@ const rewriteNode = node => flip(match$0027(Node)(id))(node)({
   ConcatenationExpression: left => right => rewriteNode(CallExpression(CallExpression(Identifier("concat"))([left]))([right])),
   MapExpression: left => right => rewriteNode(CallExpression(CallExpression(Identifier("map"))([left]))([right])),
   BindExpression: left => right => rewriteNode(CallExpression(CallExpression(Identifier("chain"))([right]))([left])),
-  LogicalExpression: operator => left => right => LogicalExpression(operator)(rewriteNode(left))(rewriteNode(right)),
-  ConditionalExpression: predicate => consequent => alternative => ConditionalExpression(rewriteNode(predicate))(rewriteNode(consequent))(map(rewriteNode)(alternative)),
-  SwitchExpression: discriminant => cases => SwitchExpression(rewriteNode(discriminant))(map(rewriteNode)(cases)),
-  SwitchCase: predicates => consequent => SwitchCase(map(map(rewriteNode))(predicates))(rewriteNode(consequent)),
   PipeExpression: head => body => rewriteNode(CallExpression(body)([head])),
   MethodCallExpression: name => rewriteNode(ArrowFunctionExpression([$0023args])(ArrowFunctionExpression([$0023target])(CallExpression(MemberExpression(MemberExpression($0023target)(StringLiteral(name)))($0027apply))([$0023target, $0023args])))),
   CallExpression: flip(arguments$ => match$0027(Node)(callee => CallExpression(rewriteNode(callee))(map(rewriteNode)(arguments$)))({
     PropertyAccessor: $ => rewriteNode(MemberExpression(arguments$[0])(StringLiteral($.name)))
   })),
-  VariableDeclaration: pattern => $ => VariableDeclaration(rewriteNode(pattern))(rewriteNode($)),
-  FunctionDeclaration: name => parameters => $ => FunctionDeclaration(name)(map(rewriteNode)(parameters))(rewriteNode($)),
-  ExpressionStatement: $ => ExpressionStatement(rewriteNode($)),
-  ArrayPattern: $ => ArrayPattern(map(rewriteNode)($)),
-  ObjectPattern: $ => ObjectPattern(map(rewriteNode)($)),
-  SpreadElement: $ => SpreadElement(rewriteNode($)),
-  RestElement: $ => RestElement(rewriteNode($)),
-  Property: key => value => Property(rewriteNode(key))(rewriteNode(value)),
-  ExportDefaultDeclaration: $ => ExportDefaultDeclaration(rewriteNode($)),
   DataTypeDeclaration: name => constructors => (() => {
     const $0040tag = CallExpression(MemberExpression($0023Symbol)($0027for))([$0027tag]);
     const $0040match = CallExpression(MemberExpression($0023Symbol)($0027for))([$0027match]);
     return rewriteNode(VariableDeclaration(Identifier(name))(ObjectExpression(concat([Property($0040match)((() => {
       const $0023member = Identifier((args => target => target.replace.apply(target, args))([RegExp("^."), (args => target => target.toLowerCase.apply(target, args))([])])(name));
-      const case$ = ({name, parameters}) => SwitchCase([Maybe.Just(StringLiteral(name))])(reduce(callee => name => CallExpression(callee)([MemberExpression($0023member)(StringLiteral(name))]))(MemberExpression($0023cases)(StringLiteral(name)))(parameters));
-      return ArrowFunctionExpression([$0023default])(ArrowFunctionExpression([$0023cases])(ArrowFunctionExpression([$0023member])(ConditionalExpression(CallExpression(MemberExpression($0023Object)($0027hasOwn))([$0023cases, MemberExpression($0023member)($0040tag)]))(SwitchExpression(MemberExpression($0023member)($0040tag))(map(case$)(constructors)))(Maybe.Just(CallExpression($0023default)([$0023member]))))));
+      const case$ = ({name, parameters}) => SwitchCase([Just(StringLiteral(name))])(reduce(callee => name => CallExpression(callee)([MemberExpression($0023member)(StringLiteral(name))]))(MemberExpression($0023cases)(StringLiteral(name)))(parameters));
+      return ArrowFunctionExpression([$0023default])(ArrowFunctionExpression([$0023cases])(ArrowFunctionExpression([$0023member])(ConditionalExpression(CallExpression(MemberExpression($0023Object)($0027hasOwn))([$0023cases, MemberExpression($0023member)($0040tag)]))(SwitchExpression(MemberExpression($0023member)($0040tag))(map(case$)(constructors)))(Just(CallExpression($0023default)([$0023member]))))));
     })())])(map(({name, parameters}) => Property(StringLiteral(name))(reduceRight(body => parameter => ArrowFunctionExpression([Identifier(parameter)])(body))(ObjectExpression(concat([Property($0040tag)(StringLiteral(name))])(map(name => Property(StringLiteral(name))(Identifier(name)))(parameters))))(parameters)))(constructors)))));
-  })(),
-  Module: imports => exports => statements => Module(map(rewriteNode)(imports))(map(rewriteNode)(exports))(map(rewriteNode)(statements))
+  })()
 });
-const updateRenamerFromPattern = rename => node => flip(match(Node))(node)({
+const updateRenamerFromPattern = rename => node => match(Node)({
   Identifier: name => preludeNames.has(name) ? this$ => equals(name)(this$) ? "$" + this$ : rename(this$) : rename,
   ArrayPattern: reduce(updateRenamerFromPattern)(rename),
   ObjectPattern: reduce(updateRenamerFromPattern)(rename),
   Property: const$(updateRenamerFromPattern(rename)),
   RestElement: updateRenamerFromPattern(rename),
   Elision: rename
+})(node);
+const renameIdentifiers = rename => transform({
+  Identifier: $ => Identifier(rename($)),
+  ImportSpecifier: imported => local => ImportSpecifier(imported)(renameIdentifiers(rename)(local)),
+  ExportSpecifier: local => exported => ExportSpecifier(renameIdentifiers(rename)(local))(exported),
+  FunctionDeclaration: name => parameters => body => FunctionDeclaration(rename(name))(map(renameIdentifiers(rename))(parameters))(renameIdentifiers(rename)(body))
 });
-const renameIdentifiers = rename => (() => {
-  const recur = node => flip(match(Node))(node)({
-    Identifier: $ => Identifier(rename($)),
-    FunctionDeclaration: name => parameters => $ => FunctionDeclaration(rename(name))(map(recur)(parameters))(recur($)),
-    ArrayExpression: $ => ArrayExpression(map(recur)($)),
-    ArrayPattern: $ => ArrayPattern(map(recur)($)),
-    ArrowFunctionExpression: parameters => $ => ArrowFunctionExpression(map(recur)(parameters))(recur($)),
-    BinaryExpression: operator => left => right => BinaryExpression(operator)(recur(left))(recur(right)),
-    BlockExpression: statements => $ => BlockExpression(map(recur)(statements))(recur($)),
-    BlockStatement: $ => BlockStatement(map(recur)($)),
-    BooleanLiteral,
-    CallExpression: callee => arguments$ => CallExpression(recur(callee))(map(recur)(arguments$)),
-    ConditionalExpression: predicate => consequent => alternative => ConditionalExpression(recur(predicate))(recur(consequent))(map(recur)(alternative)),
-    Elision,
-    ExportDefaultDeclaration: $ => ExportDefaultDeclaration(recur($)),
-    ExportNamedDeclaration: $ => ExportNamedDeclaration(map(recur)($)),
-    ExportSpecifier: $ => ExportSpecifier(recur($)),
-    ExpressionStatement: $ => ExpressionStatement(recur($)),
-    ImportDeclaration: source => $ => ImportDeclaration(source)(map(recur)($)),
-    ImportDefaultSpecifier: $ => ImportDefaultSpecifier(recur($)),
-    ImportNamespaceSpecifier: $ => ImportNamespaceSpecifier(recur($)),
-    ImportSpecifier: imported => $ => ImportSpecifier(imported)(recur($)),
-    LogicalExpression: operator => left => right => LogicalExpression(operator)(recur(left))(recur(right)),
-    MemberExpression: object => property => MemberExpression(recur(object))(recur(property)),
-    Module: imports => exports => statements => Module(map(recur)(imports))(map(recur)(exports))(map(recur)(statements)),
-    NullLiteral,
-    NumberLiteral,
-    ObjectExpression: $ => ObjectExpression(map(recur)($)),
-    ObjectPattern: $ => ObjectPattern(map(recur)($)),
-    Property: key => value => Property(recur(key))(recur(value)),
-    RestElement: $ => RestElement(recur($)),
-    SpreadElement: $ => SpreadElement(recur($)),
-    StringLiteral,
-    SwitchCase: predicates => consequent => SwitchCase(map(map(recur))(predicates))(recur(consequent)),
-    SwitchExpression: discriminant => cases => SwitchExpression(recur(discriminant))(map(recur)(cases)),
-    TemplateLiteral: quasis => expressions => TemplateLiteral(quasis)(map(recur)(expressions)),
-    UnaryExpression: operator => operand => UnaryExpression(operator)(recur(operand)),
-    VariableDeclaration: pattern => expression => VariableDeclaration(recur(pattern))(recur(expression))
-  });
-  return recur;
-})();
 export default rewriteModule;

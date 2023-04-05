@@ -1,4 +1,4 @@
-import Maybe from "./Maybe.serif";
+import {Nothing, Just, maybe} from "./Maybe.serif";
 import Node from "./Node.serif";
 
 export default fromNode;
@@ -230,12 +230,12 @@ fromConditionalExpression predicate consequent alternative = {
   type: "ConditionalExpression",
   test: fromNode predicate,
   consequent: fromNode consequent,
-  alternate: Maybe.maybe (fromLiteral undefined) fromNode alternative,
+  alternate: maybe (fromLiteral undefined) fromNode alternative,
 };
 
 fromSwitchCase consequent predicate = {
   type: "SwitchCase",
-  test: Maybe.maybe null fromNode predicate,
+  test: maybe null fromNode predicate,
   consequent: {
     toReturnStatement node = {
       type: "ReturnStatement",
@@ -247,14 +247,14 @@ fromSwitchCase consequent predicate = {
         body: map fromNode statements <> [toReturnStatement result],
       },
     };
-    Maybe.maybe [] (Array.of . toConsequent) consequent
+    maybe [] (Array.of . toConsequent) consequent
   },
 };
 
 fromSwitchCases predicates consequent = {
   init = .slice [0, -1] predicates;
   last = .at       [-1] predicates;
-  map (fromSwitchCase Maybe.Nothing) init <> [fromSwitchCase (Maybe.Just consequent) last]
+  map (fromSwitchCase Nothing) init <> [fromSwitchCase (Just consequent) last]
 };
 
 fromSwitchExpression discriminant cases = {

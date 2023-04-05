@@ -1,4 +1,4 @@
-import Maybe from "./Maybe.js";
+import {Nothing, Just, maybe} from "./Maybe.js";
 import Node from "./Node.js";
 const apply = f => args => f.apply(null, args);
 const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
@@ -163,11 +163,11 @@ const fromConditionalExpression = predicate => consequent => alternative => ({
   type: "ConditionalExpression",
   test: fromNode(predicate),
   consequent: fromNode(consequent),
-  alternate: Maybe.maybe(fromLiteral(undefined))(fromNode)(alternative)
+  alternate: maybe(fromLiteral(undefined))(fromNode)(alternative)
 });
 const fromSwitchCase = consequent => predicate => ({
   type: "SwitchCase",
-  test: Maybe.maybe(null)(fromNode)(predicate),
+  test: maybe(null)(fromNode)(predicate),
   consequent: (() => {
     const toReturnStatement = node => ({
       type: "ReturnStatement",
@@ -179,13 +179,13 @@ const fromSwitchCase = consequent => predicate => ({
         body: concat(map(fromNode)(statements))([toReturnStatement(result)])
       })
     });
-    return Maybe.maybe([])($ => Array.of(toConsequent($)))(consequent);
+    return maybe([])($ => Array.of(toConsequent($)))(consequent);
   })()
 });
 const fromSwitchCases = predicates => consequent => (() => {
   const init = (args => target => target.slice.apply(target, args))([0, -1])(predicates);
   const last = (args => target => target.at.apply(target, args))([-1])(predicates);
-  return concat(map(fromSwitchCase(Maybe.Nothing))(init))([fromSwitchCase(Maybe.Just(consequent))(last)]);
+  return concat(map(fromSwitchCase(Nothing))(init))([fromSwitchCase(Just(consequent))(last)]);
 })();
 const fromSwitchExpression = discriminant => cases => ({
   type: "CallExpression",

@@ -1,28 +1,7 @@
-import Maybe from "./Maybe.serif";
-import Node from "./Node.serif";
+import {Nothing, Just} from "./Maybe.serif";
+import * from "./Node.serif";
 
 export default Prelude;
-
-{Just} = Maybe;
-{
-  ArrayExpression,
-  ArrowFunctionExpression,
-  BinaryExpression,
-  BooleanLiteral,
-  CallExpression,
-  ConditionalExpression,
-  Identifier,
-  LogicalExpression,
-  MemberExpression,
-  NullLiteral,
-  NumberLiteral,
-  ObjectExpression,
-  SpreadElement,
-  StringLiteral,
-  SwitchCase,
-  SwitchExpression,
-  UnaryExpression,
-} = Node;
 
 #globalThis             = Identifier "globalThis";
 #Array                  = MemberExpression #globalThis $ StringLiteral "Array";
@@ -98,7 +77,7 @@ Prelude = {
     ArrowFunctionExpression [#rhs] {
       ArrowFunctionExpression [#lhs] {
         SwitchExpression (Object#toString #rhs) [
-          SwitchCase [Maybe.Just $ StringLiteral "[object Set]"] {
+          SwitchCase [Just $ StringLiteral "[object Set]"] {
             CallExpression (MemberExpression #Reflect 'construct) [
               #Set,
               ArrayExpression [
@@ -107,7 +86,7 @@ Prelude = {
               ],
             ]
           },
-          SwitchCase [Maybe.Nothing] {
+          SwitchCase [Nothing] {
             BinaryExpression "^" #lhs #rhs
           },
         ]
@@ -118,13 +97,13 @@ Prelude = {
     ArrowFunctionExpression [#rhs] {
       ArrowFunctionExpression [#lhs] {
         SwitchExpression (Object#toString #rhs) [
-          SwitchCase [Maybe.Just $ StringLiteral "[object Set]"] {
+          SwitchCase [Just $ StringLiteral "[object Set]"] {
             CallExpression (MemberExpression #Reflect 'construct) [
               #Set,
               ArrayExpression [ArrayExpression [SpreadElement #lhs, SpreadElement #rhs]],
             ]
           },
-          SwitchCase [Maybe.Nothing] {
+          SwitchCase [Nothing] {
             BinaryExpression "|" #lhs #rhs
           },
         ]
@@ -135,7 +114,7 @@ Prelude = {
     ArrowFunctionExpression [#rhs] {
       ArrowFunctionExpression [#lhs] {
         SwitchExpression (Object#toString #rhs) [
-          SwitchCase [Maybe.Just $ StringLiteral "[object Set]"] {
+          SwitchCase [Just $ StringLiteral "[object Set]"] {
             CallExpression (MemberExpression #Reflect 'construct) [
               #Set,
               ArrayExpression [
@@ -144,7 +123,7 @@ Prelude = {
               ],
             ]
           },
-          SwitchCase [Maybe.Nothing] {
+          SwitchCase [Nothing] {
             BinaryExpression "-" #lhs #rhs
           },
         ]
@@ -274,19 +253,19 @@ Prelude = {
   empty: {
     ArrowFunctionExpression [#typeRep] {
       SwitchExpression (MemberExpression #typeRep 'name) [
-        SwitchCase [Maybe.Just 'Array] {
+        SwitchCase [Just 'Array] {
           ArrayExpression []
         },
-        SwitchCase [Maybe.Just 'Object] {
+        SwitchCase [Just 'Object] {
           ObjectExpression []
         },
-        SwitchCase [Maybe.Just 'String] {
+        SwitchCase [Just 'String] {
           StringLiteral ""
         },
-        SwitchCase [Maybe.Just 'Set, Maybe.Just 'Map] {
+        SwitchCase [Just 'Set, Just 'Map] {
           CallExpression (MemberExpression #Reflect 'construct) [#typeRep, ArrayExpression [ArrayExpression []]]
         },
-        SwitchCase [Maybe.Nothing] {
+        SwitchCase [Nothing] {
           CallExpression (MemberExpression #typeRep 'fantasy-land/empty) []
         },
       ]
@@ -365,13 +344,13 @@ Prelude = {
   of: {
     ArrowFunctionExpression [#typeRep] {
       SwitchExpression (MemberExpression #typeRep 'name) [
-        SwitchCase [Maybe.Just 'Array] {
+        SwitchCase [Just 'Array] {
           MemberExpression #Array 'of
         },
-        SwitchCase [Maybe.Just 'Function] {
+        SwitchCase [Just 'Function] {
           ArrowFunctionExpression [#x] $ ArrowFunctionExpression [#y] #x
         },
-        SwitchCase [Maybe.Just 'Set] {
+        SwitchCase [Just 'Set] {
           ArrowFunctionExpression [#x] {
             CallExpression (MemberExpression #Reflect 'construct) [
               #typeRep,
@@ -379,7 +358,7 @@ Prelude = {
             ]
           }
         },
-        SwitchCase [Maybe.Nothing] {
+        SwitchCase [Nothing] {
           MemberExpression #typeRep 'fantasy-land/of
         },
       ]

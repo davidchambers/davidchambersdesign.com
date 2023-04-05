@@ -1,4 +1,4 @@
 .PHONY: all
 all:
-	node_modules/.bin/peggy --format es --dependencies '{"Maybe": "./Maybe.js", "Node": "./Node.js"}' <serif.pegjs >dist/grammar.js
+	node_modules/.bin/peggy --format es --dependencies '{"* as Maybe": "./Maybe.js", "Node": "./Node.js"}' <serif.pegjs >dist/grammar.js
 	node -- dist/serif.js src dist {repl,serif}.serif
