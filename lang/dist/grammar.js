@@ -6228,20 +6228,20 @@ function peg$parse(input, options) {
     s1 = peg$parseIfToken();
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
-      s3 = peg$parseConditionalExpression();
+      s3 = peg$parsePipeExpression();
       if (s3 !== peg$FAILED) {
         s4 = peg$parse_();
         s5 = peg$parseThenToken();
         if (s5 !== peg$FAILED) {
           s6 = peg$parse_();
-          s7 = peg$parseConditionalExpression();
+          s7 = peg$parsePipeExpression();
           if (s7 !== peg$FAILED) {
             s8 = peg$currPos;
             s9 = peg$parse_();
             s10 = peg$parseElseToken();
             if (s10 !== peg$FAILED) {
               s11 = peg$parse_();
-              s12 = peg$parseConditionalExpression();
+              s12 = peg$parsePipeExpression();
               if (s12 !== peg$FAILED) {
                 peg$savedPos = s8;
                 s8 = peg$f107(s3, s7, s12);

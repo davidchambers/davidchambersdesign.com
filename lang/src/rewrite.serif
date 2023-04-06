@@ -116,7 +116,7 @@ removeUnreferencedPreludeFunctions module = {
   statements = reject (match' Node (const false) {VariableDeclaration: \{name} _ -> unnecessary has name}) module.statements;
   if statements.length == module.statements.length
   then module
-  else removeUnreferencedPreludeFunctions (Module module.imports module.exports statements)
+  else removeUnreferencedPreludeFunctions $ Module module.imports module.exports statements
 };
 
 rewriteModule module namesExportedFrom = {
@@ -169,7 +169,7 @@ rewriteImportAllSpecifier undeclared namesExportedFrom source = {
     ImportAllSpecifier: \hiding -> do {
       namesExported <- {
         if .endsWith [".serif"] source.value
-        then Future.resolve (namesExportedFrom source.value)
+        then Future.resolve $ namesExportedFrom source.value
         else Object.keys <$> Future.attemptP \() -> import source.value
       };
       namesExported = construct Set [namesExported];

@@ -62,7 +62,7 @@ findDependencies filename tree = {
     sourceText <- mapRej (.message) $ fs.readFile filename;
     ast <- parse filename sourceText;
     dependencies = ast.imports >>= \{source: {value}} -> {
-      if .test [value] (RegExp "^[./].*[.]serif$") then {
+      if .test [value] $ RegExp "^[./].*[.]serif$" then {
         [path.join [filename, "..", value]]
       } else {
         []

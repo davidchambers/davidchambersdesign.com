@@ -472,9 +472,9 @@ BindExpression
     { return exprs.reduce((left, right) => Node.BindExpression(left)(right)); }
 
 ConditionalExpression
-  = IfToken _ predicate:ConditionalExpression
-    _ ThenToken _ consequent:ConditionalExpression
-    alternative:(_ ElseToken _ alternative:ConditionalExpression { return alternative; })?
+  = IfToken _ predicate:Expression
+    _ ThenToken _ consequent:Expression
+    alternative:(_ ElseToken _ alternative:Expression { return alternative; })?
     { return Node.ConditionalExpression(predicate)(consequent)(Maybe.fromNullable(alternative)); }
   / BindExpression
 
