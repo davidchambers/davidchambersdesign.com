@@ -1,6 +1,7 @@
-import S from "sanctuary";
+import sanctuary from "sanctuary";
 const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
 const reduce = f => y => x => x[globalThis.Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y);
+const S = sanctuary.unchecked;
 const simplify = paths => equals([])(paths) ? [] : (() => {
   const [head, ...tail] = paths;
   const [prev, path] = reduce(([prev, path]) => curr => equals("M")(curr[0]) ? equals("M")(prev[0]) || equals("m")(prev[0]) ? [curr, path] : [curr, [...path, prev]] : (equals("M")(prev[0]) || equals("m")(prev[0])) && equals("m")(curr[0]) ? [[prev[0], [prev[1][0] + curr[1][0], prev[1][1] + curr[1][1]]], path] : [curr, [...path, prev]])([head, []])(tail);

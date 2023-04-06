@@ -1,9 +1,11 @@
-import S from "sanctuary";
+import sanctuary from "sanctuary";
 
 import {path} from "./elements.serif";
 import * from "./orthogonal.serif";
 
 export {fill, mask};
+
+S = sanctuary.unchecked;
 
 mask-chars = {
   A: [

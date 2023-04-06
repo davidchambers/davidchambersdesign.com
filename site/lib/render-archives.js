@@ -1,7 +1,8 @@
-import S from "sanctuary";
+import sanctuary from "sanctuary";
 import {a, h1, h2, li, ol, ol$0027, time} from "./elements.js";
 const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
 const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const S = sanctuary.unchecked;
 const render$002Dpost = ({slug, title, datetime}) => li([a({
   href: "/" + slug
 })(title), " ", time({

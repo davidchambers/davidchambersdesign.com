@@ -16,6 +16,6 @@
     "peggy": "3.0.0"
   },
   "scripts": {
-    "repl": "node --experimental-vm-modules --no-warnings -- dist/repl.js"
+    "repl": "deno run dist/repl.js"
   }
 }

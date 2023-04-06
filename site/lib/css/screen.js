@@ -1,4 +1,4 @@
-import S from "sanctuary";
+import sanctuary from "sanctuary";
 const subtract = rhs => lhs => (() => {
   switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
     case "[object Set]":
@@ -9,6 +9,7 @@ const subtract = rhs => lhs => (() => {
 })();
 const concat = this$ => that => globalThis.Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that);
 const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const S = sanctuary.unchecked;
 const base03 = "#002b36";
 const base02 = "#073642";
 const base01 = "#586e75";

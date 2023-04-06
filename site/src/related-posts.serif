@@ -1,6 +1,8 @@
-import S from "sanctuary";
+import sanctuary from "sanctuary";
 
 export default related-posts;
+
+S = sanctuary.unchecked;
 
 related-posts posts post = {
   tags = construct Set [post.tags];

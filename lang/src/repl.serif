@@ -1,45 +1,27 @@
-import os from "node:os";
-import repl from "node:repl";
-import vm from "node:vm";
-
+import {attempt, attemptP, fork, resolve} from "fluture";
 import {generate} from "astring";
-import {attemptP, fork, promise, resolve} from "fluture";
 
+import * as Node from "./Node.serif";
 import * as serif from "./index.serif";
-import * as path from "./path.serif";
 
-evaluateModule sourceText = do {
-  context = vm.createContext globalThis;
-  module = construct vm.SourceTextModule [sourceText, {context,}];
-  _ <- attemptP \() -> .link [
-    \(specifier, referencingModule) -> {
-      attemptP (\() -> import specifier)
-      % map Object.entries
-      % map $ map \entries -> {
-          module = construct vm.SyntheticModule [
-            {\[name] -> name} <$> entries,
-            \() -> .forEach [flip {.setExport} module] entries,
-            {identifier: specifier, context: referencingModule.context},
-          ];
-          module
-        }
-      % promise
-    },
-  ] module;
-  _ <- attemptP \() -> .evaluate [] module;
-  resolve module.namespace.default
-};
-
-read serifSource = do {
-  serifAst <- serif.parse "[repl]" $ "export default " + serifSource + ";";
-  serifAst' <- serif.rewrite serifAst \_importPath -> [];  ;; TODO: support import statements
-  serifAst'' = serif.changeExtensions serifAst';
-  esAst = serif.esModuleFromSerifModule serifAst'';
-  esSourceText = apply generate [esAst, {}];
-  evaluateModule esSourceText
+;; good example of interop (not actually used here)
+readInput reader = {
+  decoder = construct TextDecoder [];
+  uint8 = construct Uint8Array [1024];
+  recur text = do {
+    n <- attemptP \() -> reader.read uint8;
+    if n == null
+    then resolve text
+    else recur $ concat text $ decoder.decode $ .slice [0, n] uint8
+  };
+  recur ""
 };
 
 #0  = "\x1B[0m";
+#1  = "\x1B[1m";
+#7  = "\x1B[7m";
+#22 = "\x1B[22m";
+#27 = "\x1B[27m";
 #32 = "\x1B[32m";
 #33 = "\x1B[33m";
 #35 = "\x1B[35m";
@@ -71,23 +53,21 @@ print x = {
   else String x
 };
 
-server = repl.start {
-  prompt: ">>> ",
-  eval: \(code, _context, _filename, callback) -> {
-    fork (\err -> {
-            console.error err;
-            console.log "";
-            .displayPrompt [false] server
-          })
-         (\result -> {
-            apply callback [null, result]
-          })
-         (read code)
-  },
-  writer: \value -> print value + "\n",
+processInput serifSourceText = do {
+  serifAst <- serif.parse "[repl]" $ "export default " <> serifSourceText <> ";";
+  serifAst <- serif.rewrite serifAst \importPath -> [];  ;; TODO: support import statements
+  {exports, statements} = serif.changeExtensions serifAst;
+  esAst = serif.esModuleFromSerifModule $ Node.BlockExpression statements exports[0].declaration;
+  esSourceText = generate esAst;
+  esResult <- attempt \() -> eval esSourceText;
+  resolve $ print esResult
 };
 
-.setupHistory [
-  path.join [apply os.homedir [], ".serif-repl-history"],
-  \error -> undefined
-] server;
+repl _ = {
+  input = prompt "\n>>>";
+  if .trim [] input in [":exit", ":quit"]
+  then { console.log ""; .exit [] Deno }
+  else fork (repl . console.error) (repl . console.log) (processInput input)
+};
+console.log $ #7 <> " Serif REPL " <> #27 <> " " <> #1 <> ":quit" <> #22 <> " to exit";
+repl 8;

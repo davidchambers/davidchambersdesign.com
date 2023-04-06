@@ -1,8 +1,10 @@
-import S from "sanctuary";
+import sanctuary from "sanctuary";
 
 import * from "./elements.serif";
 
 export default render-archives;
+
+S = sanctuary.unchecked;
 
 render-post {slug, title, datetime} = {
   li [

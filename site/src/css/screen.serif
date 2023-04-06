@@ -1,6 +1,8 @@
-import S from "sanctuary";
+import sanctuary from "sanctuary";
 
 export default screen;
+
+S = sanctuary.unchecked;
 
 base03          = "#002b36";
 base02          = "#073642";

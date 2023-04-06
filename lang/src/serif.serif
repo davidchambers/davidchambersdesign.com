@@ -1,5 +1,3 @@
-import process from "node:process";
-
 import {generate} from "astring";
 import {fork, mapRej, parallel, resolve} from "fluture";
 
@@ -21,7 +19,7 @@ parse filename sourceText = {
     };
     renderLineNumber = .padStart [4] . String;
     """\n\x1B[1m${
-      path.relative (apply process.cwd []) error.location.source
+      path.relative (apply Deno.cwd []) error.location.source
     }\x1B[0m\n\n${
       lines
       % .map [\(line, idx, lines) -> {
@@ -88,8 +86,8 @@ orderDependencies tree = {
 };
 
 {
-  cwd = apply process.cwd [];
-  [,, src, dst, ...filenames] = process.argv;
+  cwd = apply Deno.cwd [];
+  [src, dst, ...filenames] = Deno.args;
   toAbs abs rel = path.join $ [abs] <> .split ["/"] rel;  ;; use / (even on Windows)
   absSrc = toAbs cwd src;
   absDst = toAbs cwd dst;

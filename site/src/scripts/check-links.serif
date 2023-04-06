@@ -1,7 +1,9 @@
 import {attemptP, bichain, fork, parallel, resolve} from "fluture";
-import S from "sanctuary";
+import sanctuary from "sanctuary";
 
 import posts from "../posts/index.serif";
+
+S = sanctuary.unchecked;
 
 absolute? url = {
   url.startsWith "http:" or
@@ -19,7 +21,7 @@ links node = {
 };
 
 status url = {
-  bichain {\err -> resolve {url: url, status: err.cause.code}}
+  bichain {\err -> resolve {url: url, status: "XXX"}}
           {\res -> resolve {url: url, status: res.status}}
           {attemptP \() -> apply fetch [url, {method: "HEAD", redirect: "manual"}]}
 };
@@ -31,14 +33,11 @@ yellow text = "\x1B[33m" + text + "\x1B[0m";
 cyan   text = "\x1B[36m" + text + "\x1B[0m";
 
 format {url, status} = {
-  padding x = " ".repeat $ S.max 0 $ 15 - ((.length) $ String x);
-  normal s = s;
-  switch true
-  when typeof status == "string"      then red    ((padding status) + " " + (invert $ bold status) + " " + url)
-  when status >= 200 and status < 300 then        ((padding status) + " " + (normal $ bold status) + " " + url)
-  when status >= 300 and status < 400 then yellow ((padding status) + " " + (normal $ bold status) + " " + url)
-  when status >= 400 and status < 500 then red    ((padding status) + " " + (normal $ bold status) + " " + url)
-  else                                     cyan   ((padding status) + " " + (normal $ bold status) + " " + url)
+  if typeof status == "string"           then red    $ (invert $ bold status) + " " + url
+  else if status >= 200 and status < 300 then          (         bold status) + " " + url
+  else if status >= 300 and status < 400 then yellow $ (         bold status) + " " + url
+  else if status >= 400 and status < 500 then red    $ (         bold status) + " " + url
+  else                                        cyan   $ (         bold status) + " " + url
 };
 
 program = {

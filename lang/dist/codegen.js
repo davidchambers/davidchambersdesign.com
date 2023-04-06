@@ -8,6 +8,7 @@ const const$ = x => y => x;
 const not = x => !x;
 const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
 const concat = this$ => that => globalThis.Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that);
+const reduce = f => y => x => x[globalThis.Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y);
 const reduceRight = f => y => x => x.reduceRight((y, x) => f(y)(x), y);
 const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
 const chain = f => x => (() => {
@@ -20,6 +21,7 @@ const chain = f => x => (() => {
       return x["fantasy-land/chain"](f);
   }
 })();
+const contains = this$ => these => reduce(x => that => x || equals(this$)(that))(false)(these);
 const RESERVED_WORDS = construct(Set)([["await", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "enum", "export", "extends", "false", "finally", "for", "function", "if", "import", "in", "instanceof", "new", "null", "return", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield", "enum", "implements", "interface", "package", "private", "protected", "public", "arguments", "eval"]]);
 const validEsIdentifierName = name => (args => target => target.test.apply(target, args))([name])(RegExp("^[$_A-Za-z][$_A-Za-z0-9]*$"));
 const fromEscapedIdentifierName = name => ({
@@ -28,7 +30,7 @@ const fromEscapedIdentifierName = name => ({
 });
 const fromIdentifier = (() => {
   const escapeChar = c => concat("$")((args => target => target.padStart.apply(target, args))([4, "0"])((args => target => target.toUpperCase.apply(target, args))([])((args => target => target.toString.apply(target, args))([16])((args => target => target.charCodeAt.apply(target, args))([0])(c)))));
-  const escape = name => equals("import")(name) ? "import" : RESERVED_WORDS.has(name) ? name + "$" : validEsIdentifierName(name) ? name : (args => target => target.replaceAll.apply(target, args))([apply(RegExp)(["[^$_A-Za-z0-9]", "g"]), escapeChar])(name);
+  const escape = name => contains(name)(["eval", "import"]) ? name : RESERVED_WORDS.has(name) ? name + "$" : validEsIdentifierName(name) ? name : (args => target => target.replaceAll.apply(target, args))([apply(RegExp)(["[^$_A-Za-z0-9]", "g"]), escapeChar])(name);
   return $ => fromEscapedIdentifierName(escape($));
 })();
 const fromLiteral = value => ({

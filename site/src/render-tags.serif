@@ -1,9 +1,11 @@
-import S from "sanctuary";
+import sanctuary from "sanctuary";
 
 import * from "./elements.serif";
 import tags from "./tags.serif";
 
 export default render-tags;
+
+S = sanctuary.unchecked;
 
 render-tags posts = {
   from-entry = \[slug, name] -> {

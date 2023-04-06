@@ -3,9 +3,9 @@ all: everything
 
 .PHONY: everything
 everything:
-	node -- ../lang/dist/serif.js src lib scripts/{check-links,everything}.serif
-	NODE_ENV=production node -- lib/scripts/everything.js
+	deno run --allow-read=. --allow-write=lib ../lang/dist/serif.js src lib scripts/{check-links,everything}.serif
+	deno run --allow-write=public lib/scripts/everything.js
 
 .PHONY: check-links
 check-links: all
-	NODE_ENV=production node --no-warnings -- lib/scripts/check-links.js
+	deno run --allow-net lib/scripts/check-links.js

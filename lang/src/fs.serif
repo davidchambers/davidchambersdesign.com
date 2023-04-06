@@ -1,5 +1,3 @@
-import fs from "node:fs/promises";
-
 import {attemptP} from "fluture";
 
 export {
@@ -9,13 +7,13 @@ export {
 };
 
 mkdir options path = {
-  attemptP \() -> apply fs.mkdir [path, options]
+  attemptP \() -> apply Deno.mkdir [path, options]
 };
 
 readFile filename = {
-  attemptP \() -> apply fs.readFile [filename, "utf8"]
+  attemptP \() -> Deno.readTextFile filename
 };
 
 writeFile filename data = {
-  attemptP \() -> apply fs.writeFile [filename, data]
+  attemptP \() -> apply Deno.writeTextFile [filename, data]
 };

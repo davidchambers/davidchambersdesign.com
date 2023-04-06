@@ -1,4 +1,3 @@
-import process from "node:process";
 import {generate} from "astring";
 import {fork, mapRej, parallel, resolve} from "fluture";
 import Node from "./Node.js";
@@ -56,7 +55,7 @@ const parse = filename => sourceText => mapRej(error => (() => {
     text: (args => target => target.trimEnd.apply(target, args))([])(text)
   })])((args => target => target.split.apply(target, args))([apply(RegExp)(["^", "m"])])(sourceText)));
   const renderLineNumber = $ => (args => target => target.padStart.apply(target, args))([4])(String($));
-  return `\n\x1B[1m${path.relative(apply(process.cwd)([]))(error.location.source)}\x1B[0m\n\n${(args => target => target.join.apply(target, args))([""])((args => target => target.map.apply(target, args))([(line, idx, lines) => `\x1B[7m${renderLineNumber(line.number)}\x1B[0m${idx < subtract(1)(lines.length) ? line.text : `${(args => target => target.slice.apply(target, args))([0, subtract(1)(error.location.start.column)])(line.text)}\x1B[7m${(args => target => target.charAt.apply(target, args))([subtract(1)(error.location.start.column)])(line.text)}\x1B[0m${(args => target => target.slice.apply(target, args))([error.location.start.column])(line.text)}`}\n`])(lines))}${(length => (args => target => target.repeat.apply(target, args))([subtract(1)(length + error.location.start.column)])(" "))(renderLineNumber((args => target => target.at.apply(target, args))([-1])(lines).number).length)}^\n${error.message}\n`;
+  return `\n\x1B[1m${path.relative(apply(Deno.cwd)([]))(error.location.source)}\x1B[0m\n\n${(args => target => target.join.apply(target, args))([""])((args => target => target.map.apply(target, args))([(line, idx, lines) => `\x1B[7m${renderLineNumber(line.number)}\x1B[0m${idx < subtract(1)(lines.length) ? line.text : `${(args => target => target.slice.apply(target, args))([0, subtract(1)(error.location.start.column)])(line.text)}\x1B[7m${(args => target => target.charAt.apply(target, args))([subtract(1)(error.location.start.column)])(line.text)}\x1B[0m${(args => target => target.slice.apply(target, args))([error.location.start.column])(line.text)}`}\n`])(lines))}${(length => (args => target => target.repeat.apply(target, args))([subtract(1)(length + error.location.start.column)])(" "))(renderLineNumber((args => target => target.at.apply(target, args))([-1])(lines).number).length)}^\n${error.message}\n`;
 })())(serif.parse(filename)(sourceText));
 const reducer = futureTree => filename => chain(findDependencies(filename))(futureTree);
 const findDependencies = filename => tree => tree.has(filename) ? resolve(tree) : chain(sourceText => chain(ast => (dependencies => (exportedNames => reduce(reducer)(resolve(construct(Map)([[...tree, [filename, {
@@ -77,8 +76,8 @@ const orderDependencies = tree => (() => {
   return Array.from(recur(Array.from((args => target => target.keys.apply(target, args))([])(tree)))(empty(Set)));
 })();
 (() => {
-  const cwd = apply(process.cwd)([]);
-  const [, , src, dst, ...filenames] = process.argv;
+  const cwd = apply(Deno.cwd)([]);
+  const [src, dst, ...filenames] = Deno.args;
   const toAbs = abs => rel => path.join(concat([abs])((args => target => target.split.apply(target, args))(["/"])(rel)));
   const absSrc = toAbs(cwd)(src);
   const absDst = toAbs(cwd)(dst);

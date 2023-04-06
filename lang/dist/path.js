@@ -1,4 +1,4 @@
-import path from "node:path";
+import * as path from "https://deno.land/std@0.182.0/path/mod.ts";
 const apply = f => args => f.apply(null, args);
 const basename = path_ => suffix => apply(path.basename)([path_, suffix]);
 const dirname = path.dirname;

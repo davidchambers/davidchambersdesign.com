@@ -1,6 +1,8 @@
-import S from "sanctuary";
+import sanctuary from "sanctuary";
 
 export {render, ⇦, ⇨, ⇧, ⇩, ←, →, ↑, ↓};
+
+S = sanctuary.unchecked;
 
 simplify paths = {
   if paths == [] then [] else {

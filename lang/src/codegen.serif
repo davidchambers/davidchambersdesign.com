@@ -76,7 +76,7 @@ fromIdentifier = {
     % concat "$"
   };
   escape name = {
-    if name == "import" then "import"
+    if name in ["eval", "import"] then name
     else if RESERVED_WORDS has name then name + "$"
     else if validEsIdentifierName name then name
     else .replaceAll [apply RegExp ["[^$_A-Za-z0-9]", "g"], escapeChar] name

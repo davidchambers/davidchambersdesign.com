@@ -154,6 +154,7 @@ document = html [
   ],
 ];
 
-.write [
-  "<!DOCTYPE html>\n" + document.render {indent: "  ", level: 0, inline: false}
-] process.stdout;
+document.render {indent: "  ", level: 0, inline: false}
+% concat "<!DOCTYPE html>\n"
+% .replace [RegExp "\n$", ""]
+% console.log;
