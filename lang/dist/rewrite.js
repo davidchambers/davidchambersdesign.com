@@ -1,6 +1,6 @@
 import * as Future from "fluture";
-import {Nothing, Just, maybe} from "./Maybe.js";
-import Node, {ArrowFunctionExpression, BinaryExpression, BlockExpression, CallExpression, CompositionExpression, ConditionalExpression, DataConstructorDefinition, DataTypeDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportDeclaration, ImportSpecifier, MemberExpression, Module, ObjectExpression, ObjectPattern, Property, StringLiteral, SwitchCase, SwitchExpression, VariableDeclaration, transform} from "./Node.js";
+import {Just, maybe} from "./Maybe.js";
+import Node, {ArrowFunctionExpression, BinaryExpression, BlockExpression, CallExpression, CompositionExpression, ConditionalExpression, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportDeclaration, ImportSpecifier, MemberExpression, Module, ObjectExpression, ObjectPattern, Property, StringLiteral, SwitchCase, SwitchExpression, VariableDeclaration, transform} from "./Node.js";
 import * as format from "./format.js";
 import globals from "./globals.js";
 import Prelude from "./prelude.js";
@@ -133,7 +133,6 @@ const vars = node => match$0027(Node)(const$(emptyVariables))({
   PipeExpression: head => body => merge(vars(head))(vars(body)),
   CallExpression: callee => arguments$ => mergeAll(map(vars)([callee, ...arguments$])),
   ImportDeclaration: const$($ => mergeAll(map(vars)($))),
-  ImportAllDeclaration: source => default$ => hiding => emptyVariables,
   ImportDefaultSpecifier: $ => declaring(referenced(vars($))),
   ImportSpecifier: const$($ => declaring(referenced(vars($)))),
   ImportNamespaceSpecifier: $ => declaring(referenced(vars($))),
@@ -174,7 +173,7 @@ const removeUnreferencedPreludeFunctions = module => (() => {
 const rewriteModule = module => namesExportedFrom => (() => {
   const {declared, referenced} = vars(module);
   const undeclared = subtract(declared)(referenced);
-  const imports = Future.parallel(16)(map(rewriteImportDeclaration(undeclared)(namesExportedFrom))(module.imports));
+  const imports = Future.parallel(16)(map(({source, specifiers}) => map($ => ImportDeclaration(source)(join($)))(Future.parallel(16)(map(rewriteImportAllSpecifier(undeclared)(namesExportedFrom)(source))(specifiers))))(module.imports));
   const withImports = module => (() => {
     const module$0027 = rewriteNode(module);
     const rename = reduce(rename => match(Node)({
@@ -200,15 +199,8 @@ const rewriteModule = module => namesExportedFrom => (() => {
   })();
   return map(imports => withImports(Module(imports)(module.exports)(module.statements)))(imports);
 })();
-const rewriteImportAllDeclaration = undeclared => namesExportedFrom => source => default$ => hiding => (() => {
-  const namesExported = construct(Set)([(args => target => target.endsWith.apply(target, args))([".serif"])(source.value) ? namesExportedFrom(source.value) : map(Object.keys)(Future.attemptP(() => import(source.value)))]);
-  const namesHidden = construct(Set)([map($ => $.name)(hiding)]);
-  const namesHiddenNeedlessly = subtract(namesExported)(namesHidden);
-  return namesHiddenNeedlessly.size > 0 ? Future.reject(Error(`import * from "${source.value}" hiding {${(args => target => target.join.apply(target, args))([", "])(namesHidden)}};\n\n${format.list(Array.from(namesHiddenNeedlessly))} ${equals(1)(namesHiddenNeedlessly.size) ? "is" : "are"} not exported so need not be hidden.\n`)) : Future.resolve(ImportDeclaration(source)(maybe(id)($ => concat(Array.of($)))(default$)(map(name => ImportSpecifier(Identifier(name))(Identifier(preludeNames.has(name) ? "$" + name : name)))(Array.from(XOR(undeclared)(subtract(namesHidden)(namesExported)))))));
-})();
-const rewriteImportDeclaration = undeclared => namesExportedFrom => match(Node)({
-  ImportDeclaration: source => specifiers => Future.resolve(ImportDeclaration(source)(specifiers)),
-  ImportAllDeclaration: rewriteImportAllDeclaration(undeclared)(namesExportedFrom)
+const rewriteImportAllSpecifier = undeclared => namesExportedFrom => source => match$0027(Node)($ => Future.resolve(Array.of($)))({
+  ImportAllSpecifier: hiding => chain(namesExported => (namesExported => (namesHidden => (namesHiddenNeedlessly => namesHiddenNeedlessly.size > 0 ? Future.reject(Error(format.list(Array.from(namesHiddenNeedlessly)) + " " + (equals(1)(namesHiddenNeedlessly.size) ? "is" : "are") + " not exported from " + source.value + " so need not be hidden")) : Future.resolve(map(name => ImportSpecifier(Identifier(name))(Identifier(preludeNames.has(name) ? "$" + name : name)))(Array.from(XOR(undeclared)(subtract(namesHidden)(namesExported))))))(subtract(namesExported)(namesHidden)))(construct(Set)([map($ => $.name)(hiding)])))(construct(Set)([namesExported])))((args => target => target.endsWith.apply(target, args))([".serif"])(source.value) ? Future.resolve(namesExportedFrom(source.value)) : map(Object.keys)(Future.attemptP(() => import(source.value))))
 });
 const $0023Object = Identifier("Object");
 const $0023Symbol = Identifier("Symbol");
@@ -301,8 +293,6 @@ const renameIdentifiers = rename => transform({
   Identifier: $ => Identifier(rename($)),
   ImportSpecifier: imported => local => ImportSpecifier(imported)(renameIdentifiers(rename)(local)),
   ExportSpecifier: local => exported => ExportSpecifier(renameIdentifiers(rename)(local))(exported),
-  DataConstructorDefinition: identifier => parameters => DataConstructorDefinition(renameIdentifier(rename)(identifier))(parameters),
-  DataTypeDeclaration: identifier => constructors => DataTypeDeclaration(renameIdentifiers(rename)(identifier))(map(renameIdentifiers(rename))(constructors)),
   FunctionDeclaration: name => parameters => body => FunctionDeclaration(rename(name))(map(renameIdentifiers(rename))(parameters))(renameIdentifiers(rename)(body))
 });
 export default rewriteModule;

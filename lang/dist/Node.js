@@ -1,7 +1,7 @@
 const match = type => match$0027(type)(x => CasesNotExhaustive);
 const match$0027 = type => type[globalThis.Symbol.for("match")];
 const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
-const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, BinaryExpression, BindExpression, BlockExpression, BlockStatement, BooleanLiteral, CallExpression, CompositionExpression, ConcatenationExpression, ConditionalExpression, DataConstructorDefinition, DataTypeDeclaration, DoBlockExpression, Elision, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllDeclaration, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, LogicalExpression, MapExpression, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PipeExpression, Property, PropertyAccessor, RestElement, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, UnaryExpression, VariableDeclaration} = (() => {
+const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, BinaryExpression, BindExpression, BlockExpression, BlockStatement, BooleanLiteral, CallExpression, CompositionExpression, ConcatenationExpression, ConditionalExpression, DataConstructorDefinition, DataTypeDeclaration, DoBlockExpression, Elision, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, LogicalExpression, MapExpression, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PipeExpression, Property, PropertyAccessor, RestElement, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, UnaryExpression, VariableDeclaration} = (() => {
   const ArrayExpression = elements => ({
     [Symbol.for("tag")]: "ArrayExpression",
     elements
@@ -110,10 +110,8 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
     [Symbol.for("tag")]: "Identifier",
     name
   });
-  const ImportAllDeclaration = source => default$ => hiding => ({
-    [Symbol.for("tag")]: "ImportAllDeclaration",
-    source,
-    default: default$,
+  const ImportAllSpecifier = hiding => ({
+    [Symbol.for("tag")]: "ImportAllSpecifier",
     hiding
   });
   const ImportDeclaration = source => specifiers => ({
@@ -257,7 +255,7 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
       ExpressionStatement,
       FunctionDeclaration,
       Identifier,
-      ImportAllDeclaration,
+      ImportAllSpecifier,
       ImportDeclaration,
       ImportDefaultSpecifier,
       ImportNamespaceSpecifier,
@@ -331,8 +329,8 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
             return cases.FunctionDeclaration(node.name)(node.parameters)(node.body);
           case "Identifier":
             return cases.Identifier(node.name);
-          case "ImportAllDeclaration":
-            return cases.ImportAllDeclaration(node.source)(node.default)(node.hiding);
+          case "ImportAllSpecifier":
+            return cases.ImportAllSpecifier(node.hiding);
           case "ImportDeclaration":
             return cases.ImportDeclaration(node.source)(node.specifiers);
           case "ImportDefaultSpecifier":
@@ -409,7 +407,7 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
     ExpressionStatement,
     FunctionDeclaration,
     Identifier,
-    ImportAllDeclaration,
+    ImportAllSpecifier,
     ImportDeclaration,
     ImportDefaultSpecifier,
     ImportNamespaceSpecifier,
@@ -462,7 +460,7 @@ const transform = cases => (() => {
     ExpressionStatement: $ => ExpressionStatement(recur($)),
     FunctionDeclaration: name => parameters => body => FunctionDeclaration(name)(parameters)(recur(body)),
     Identifier,
-    ImportAllDeclaration: source => default$ => hiding => ImportAllDeclaration(source)(default$)(map(recur)(hiding)),
+    ImportAllSpecifier: $ => ImportAllSpecifier(map(recur)($)),
     ImportDeclaration: source => specifiers => ImportDeclaration(source)(map(recur)(specifiers)),
     ImportDefaultSpecifier: $ => ImportDefaultSpecifier(recur($)),
     ImportNamespaceSpecifier: $ => ImportNamespaceSpecifier(recur($)),
@@ -493,4 +491,4 @@ const transform = cases => (() => {
   return recur;
 })();
 export default Node;
-export {ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, BinaryExpression, BindExpression, BlockExpression, BlockStatement, BooleanLiteral, CallExpression, CompositionExpression, ConcatenationExpression, ConditionalExpression, DataConstructorDefinition, DataTypeDeclaration, DoBlockExpression, Elision, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllDeclaration, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, LogicalExpression, MapExpression, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PipeExpression, Property, PropertyAccessor, RestElement, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, UnaryExpression, VariableDeclaration, transform};
+export {ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, BinaryExpression, BindExpression, BlockExpression, BlockStatement, BooleanLiteral, CallExpression, CompositionExpression, ConcatenationExpression, ConditionalExpression, DataConstructorDefinition, DataTypeDeclaration, DoBlockExpression, Elision, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, LogicalExpression, MapExpression, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PipeExpression, Property, PropertyAccessor, RestElement, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, UnaryExpression, VariableDeclaration, transform};

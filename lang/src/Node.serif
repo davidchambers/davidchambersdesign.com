@@ -23,7 +23,7 @@ export {
   ExpressionStatement,
   FunctionDeclaration,
   Identifier,
-  ImportAllDeclaration,
+  ImportAllSpecifier,
   ImportDeclaration,
   ImportDefaultSpecifier,
   ImportNamespaceSpecifier,
@@ -76,7 +76,7 @@ type Node
   | ExpressionStatement expression
   | FunctionDeclaration name parameters body
   | Identifier name
-  | ImportAllDeclaration source default hiding
+  | ImportAllSpecifier hiding
   | ImportDeclaration source specifiers
   | ImportDefaultSpecifier local
   | ImportNamespaceSpecifier local
@@ -129,7 +129,7 @@ transform cases = {
     ExpressionStatement: ExpressionStatement . recur,
     FunctionDeclaration: \name parameters body -> FunctionDeclaration name parameters (recur body),
     Identifier: Identifier,
-    ImportAllDeclaration: \source default hiding -> ImportAllDeclaration source default (recur <$> hiding),
+    ImportAllSpecifier: ImportAllSpecifier . map recur,
     ImportDeclaration: \source specifiers -> ImportDeclaration source (recur <$> specifiers),
     ImportDefaultSpecifier: ImportDefaultSpecifier . recur,
     ImportNamespaceSpecifier: ImportNamespaceSpecifier . recur,

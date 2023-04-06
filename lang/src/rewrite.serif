@@ -1,6 +1,6 @@
 import * as Future from "fluture";
 
-import {Nothing, Just, maybe} from "./Maybe.serif";
+import {Just, maybe} from "./Maybe.serif";
 import Node, * from "./Node.serif";
 import * as format from "./format.serif";
 import globals from "./globals.serif";
@@ -68,7 +68,6 @@ vars node = flip (match' Node $ const emptyVariables) node {
   PipeExpression: \head body -> vars head `merge` vars body,
   CallExpression: \callee arguments -> mergeAll $ vars <$> [callee, ...arguments],
   ImportDeclaration: const $ mergeAll . map vars,
-  ImportAllDeclaration: \source default hiding -> emptyVariables,
   ImportDefaultSpecifier: declaring . referenced . vars,
   ImportSpecifier: const $ declaring . referenced . vars,
   ImportNamespaceSpecifier: declaring . referenced . vars,
@@ -123,7 +122,16 @@ removeUnreferencedPreludeFunctions module = {
 rewriteModule module namesExportedFrom = {
   {declared, referenced} = vars module;
   undeclared = referenced - declared;
-  imports = Future.parallel 16 $ rewriteImportDeclaration undeclared namesExportedFrom <$> module.imports;
+  imports = {
+    module.imports
+    % map (\{source, specifiers} ->
+        specifiers
+        % map (rewriteImportAllSpecifier undeclared namesExportedFrom source)
+        % Future.parallel 16
+        % map (ImportDeclaration source . join)
+      )
+    % Future.parallel 16
+  };
   withImports module = {
     ;; desugar first to simplify renaming
     module' = rewriteNode module;
@@ -156,40 +164,34 @@ rewriteModule module namesExportedFrom = {
   (\imports -> withImports $ Module imports module.exports module.statements) <$> imports
 };
 
-rewriteImportAllDeclaration undeclared namesExportedFrom source default hiding = {
-  namesExported = construct Set [
-    if .endsWith [".serif"] source.value then namesExportedFrom source.value
-    else Object.keys <$> Future.attemptP \() -> import source.value
-  ];
-  namesHidden = construct Set [(.name) <$> hiding];
-  namesHiddenNeedlessly = namesHidden - namesExported;
-  if namesHiddenNeedlessly.size > 0 then {
-    Future.reject $ Error {
-      """import * from "${
-        source.value
-      }" hiding {${
-        .join [", "] $ namesHidden
-      }};\n\n${
-        format.list $ Array.from namesHiddenNeedlessly
-      } ${
-        if namesHiddenNeedlessly.size == 1 then "is" else "are"
-      } not exported so need not be hidden.\n"""
+rewriteImportAllSpecifier undeclared namesExportedFrom source = {
+  match' Node (Future.resolve . Array.of) {
+    ImportAllSpecifier: \hiding -> do {
+      namesExported <- {
+        if .endsWith [".serif"] source.value
+        then Future.resolve (namesExportedFrom source.value)
+        else Object.keys <$> Future.attemptP \() -> import source.value
+      };
+      namesExported = construct Set [namesExported];
+      namesHidden = construct Set [(.name) <$> hiding];
+      namesHiddenNeedlessly = namesHidden - namesExported;
+      if namesHiddenNeedlessly.size > 0 then {
+        Future.reject $ Error {
+          (format.list $ Array.from namesHiddenNeedlessly)
+          + " "
+          + (if namesHiddenNeedlessly.size == 1 then "is" else "are")
+          + " not exported from "
+          + source.value
+          + " so need not be hidden"
+        }
+      } else {
+        namesExported - namesHidden ^ undeclared
+        % Array.from  ;; TODO: sort
+        % map (\name -> ImportSpecifier (Identifier name)
+                                        (Identifier $ if preludeNames has name then "$" + name else name))
+        % Future.resolve
+      }
     }
-  } else {
-    namesExported - namesHidden ^ undeclared
-    % Array.from
-    % map (\name -> ImportSpecifier (Identifier name)
-                                    (Identifier $ if preludeNames has name then "$" + name else name))
-    % maybe id (concat . Array.of) default
-    % ImportDeclaration source
-    % Future.resolve
-  }
-};
-
-rewriteImportDeclaration undeclared namesExportedFrom = {
-  match Node {
-    ImportDeclaration: \source specifiers -> Future.resolve $ ImportDeclaration source specifiers,
-    ImportAllDeclaration: rewriteImportAllDeclaration undeclared namesExportedFrom,
   }
 };
 
@@ -367,13 +369,6 @@ renameIdentifiers rename = transform {
   Identifier: Identifier . rename,
   ImportSpecifier: \imported local -> ImportSpecifier imported (renameIdentifiers rename local),
   ExportSpecifier: \local exported -> ExportSpecifier (renameIdentifiers rename local) exported,
-  DataConstructorDefinition: \identifier parameters -> {
-    DataConstructorDefinition (renameIdentifier rename identifier) parameters
-  },
-  DataTypeDeclaration: \identifier constructors -> {
-    DataTypeDeclaration (renameIdentifiers rename identifier)
-                        (renameIdentifiers rename <$> constructors)
-  },
   FunctionDeclaration: \name parameters body -> {
     FunctionDeclaration (rename name)
                         (renameIdentifiers rename <$> parameters)

@@ -1,4 +1,4 @@
-import * from "../elements.serif" hiding {body};
+import * hiding {body} from "../elements.serif";
 import {captioned-images, —} from "../components.serif";
 import datetime from "../datetime.serif";
 

@@ -1,5 +1,5 @@
 import {—} from "../components.serif";
-import * from "../elements.serif" hiding {body};
+import * hiding {body} from "../elements.serif";
 import datetime from "../datetime.serif";
 
 export default {

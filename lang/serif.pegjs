@@ -1,41 +1,35 @@
 Module
-  = imports:(_ importDeclaration:ImportDeclaration                                   { return importDeclaration; })*
-    exports:(_ exportDeclaration:(ExportNamedDeclaration / ExportDefaultDeclaration) { return exportDeclaration; })*
+  = imports:(_ importDeclaration:ImportDeclaration                                                  { return importDeclaration; })*
+    exports:(_ exportDeclaration:(ExportNamedDeclaration / ExportDefaultDeclaration)                { return exportDeclaration; })*
     statements:(_ statement:Statement { return statement; })*
     _
     { return Node.Module(imports)(exports)(statements); }
 
 ImportSpecifier
-  = local:Identifier
-    { return Node.ImportSpecifier(local)(local); }
+  = local:Identifier _ AsToken _ imported:Identifier                                                { return Node.ImportSpecifier(local)(imported); }
+  / local:Identifier                                                                                { return Node.ImportSpecifier(local)(local); }
 
 ImportSpecifiers
-  = '{' _ '}'                                                                   { return []; }
-  / '{' _ specifiers:ImportSpecifier|.., CommaSeparator| _ ','? _ '}'           { return specifiers; }
+  = '{' _ '}'                                                                                       { return []; }
+  / '{' _            specifiers:ImportSpecifier|.., CommaSeparator| TrailingComma '}'               { return specifiers; }
+  / '*' _ HidingToken _ '{' _ hiding:Identifier|.., CommaSeparator| TrailingComma '}'               { return [Node.ImportAllSpecifier(hiding)]; }
+  / '*'                                                                                             { return [Node.ImportAllSpecifier([])]; }
 
 ImportNamespaceSpecifier
-  = '*' _ 'as' _ local:Identifier
-    { return Node.ImportNamespaceSpecifier(local); }
+  = '*' _ AsToken _ local:Identifier                                                                { return Node.ImportNamespaceSpecifier(local); }
 
 ImportDefaultSpecifier
-  = local:Identifier
-    { return Node.ImportDefaultSpecifier(local); }
+  = local:Identifier                                                                                { return Node.ImportDefaultSpecifier(local); }
 
 ImportDeclaration
   = ImportToken _ specifiers:(
-        ImportSpecifiers
-      / specifier:ImportNamespaceSpecifier                                      { return [specifier]; }
-      / specifier:ImportNamespaceSpecifier _ ',' _ specifiers:ImportSpecifiers  { return [specifier, ...specifiers]; }
-      / specifier:ImportDefaultSpecifier                                        { return [specifier]; }
-      / specifier:ImportDefaultSpecifier   _ ',' _ specifiers:ImportSpecifiers  { return [specifier, ...specifiers]; }
-    ) _ 'from' _ source:StringLiteral _ ';'
+        defaultSpecifier:ImportDefaultSpecifier _ ',' _ namespaceSpecifier:ImportNamespaceSpecifier { return [defaultSpecifier, namespaceSpecifier]; }
+      / defaultSpecifier:ImportDefaultSpecifier _ ',' _ specifiers:ImportSpecifiers                 { return [defaultSpecifier, ...specifiers]; }
+      / defaultSpecifier:ImportDefaultSpecifier                                                     { return [defaultSpecifier]; }
+      / namespaceSpecifier:ImportNamespaceSpecifier                                                 { return [namespaceSpecifier]; }
+      / ImportSpecifiers
+    ) _ FromToken _ source:StringLiteral _ ';'
     { return Node.ImportDeclaration(source)(specifiers); }
-  / ImportToken specifier:(
-      _ specifier:ImportDefaultSpecifier _ ','                                  { return specifier; }
-    )? _ '*' _ 'from' _ source:StringLiteral hiding:(
-      _ 'hiding' _ '{' _ hiding:Identifier|.., CommaSeparator| _ '}'            { return hiding; }
-    )? _ ';'
-    { return Node.ImportAllDeclaration(source)(Maybe.fromNullable(specifier))(hiding ?? []); }
 
 ExportSpecifier
   = local:Identifier
@@ -48,7 +42,7 @@ ExportDefaultDeclaration
 ExportNamedDeclaration
   = ExportToken _ '{' _ '}' _ ';'
     { return Node.ExportNamedDeclaration([]); }
-  / ExportToken _ '{' _ specifiers:ExportSpecifier|.., CommaSeparator| _ ','? _ '}' _ ';'
+  / ExportToken _ '{' _ specifiers:ExportSpecifier|.., CommaSeparator| TrailingComma '}' _ ';'
     { return Node.ExportNamedDeclaration(specifiers); }
 
 NullLiteral
@@ -133,10 +127,13 @@ TemplateLiteralCharacter
 
 AndToken            = @$'and'           !IdentifierPart
 ArrowToken          = @$'->'            !IdentifierPart
+AsToken             = @$'as'            !IdentifierPart
 DoToken             = @$'do'            !IdentifierPart
 ElseToken           = @$'else'          !IdentifierPart
 ExportToken         = @$'export'        !IdentifierPart
+FromToken           = @$'from'          !IdentifierPart
 HasToken            = @$'has'           !IdentifierPart
+HidingToken         = @$'hiding'        !IdentifierPart
 IfToken             = @$'if'            !IdentifierPart
 ImportToken         = @$'import'        !IdentifierPart
 InToken             = @$'in'            !IdentifierPart
@@ -202,7 +199,7 @@ IdentifierPart
 ArrayExpression
   = '[' _ ']'
     { return Node.ArrayExpression([]); }
-  / '[' _ elements:ArrayElement|1.., CommaSeparator| _ ','? _ ']'
+  / '[' _ elements:ArrayElement|1.., CommaSeparator| TrailingComma ']'
     { return Node.ArrayExpression(elements); }
 
 ArrayElement
@@ -212,7 +209,7 @@ ArrayElement
 ObjectExpression
   = '{' _ '}'
     { return Node.ObjectExpression([]); }
-  / '{' _ properties:ObjectElement|1.., CommaSeparator| _ ','? _ '}'
+  / '{' _ properties:ObjectElement|1.., CommaSeparator| TrailingComma '}'
     { return Node.ObjectExpression(properties); }
 
 ObjectElement
@@ -275,7 +272,7 @@ CallExpression
 ArrowFunctionParameters
   = '(' _ ')'
     { return []; }
-  / '(' _ parameters:Pattern|1.., CommaSeparator| _ ','? _ ')'
+  / '(' _ parameters:Pattern|1.., CommaSeparator| TrailingComma ')'
     { return parameters; }
   / parameter:Pattern
     { return [parameter]; }
@@ -312,7 +309,7 @@ ArrayPatternElement
 ObjectPattern
   = '{' _ '}'
     { return Node.ObjectPattern([]); }
-  / '{' _ properties:ObjectPatternProperty|1.., CommaSeparator| _ ','? _ '}'
+  / '{' _ properties:ObjectPatternProperty|1.., CommaSeparator| TrailingComma '}'
     { return Node.ObjectPattern(properties); }
 
 ObjectPatternProperty
@@ -620,6 +617,9 @@ __
 
 CommaSeparator
   = _ ',' _
+
+TrailingComma
+  = _ ','? _
 
 Expression
   = PipeExpression
