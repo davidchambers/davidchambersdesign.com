@@ -1,6 +1,6 @@
 import * as Future from "fluture";
 
-import {Just, maybe} from "./Maybe.serif";
+import {Just, maybe, fromMaybe} from "./Maybe.serif";
 import Node, * from "./Node.serif";
 import * as format from "./format.serif";
 import globals from "./globals.serif";
@@ -64,7 +64,7 @@ vars node = flip (match' Node $ const emptyVariables) node {
   LogicalExpression: \operator left right -> vars left `merge` vars right,
   ConditionalExpression: \predicate consequent alternative -> vars predicate `merge` vars consequent `merge` (maybe emptyVariables vars alternative),
   SwitchExpression: \discriminant cases -> mergeAll $ vars <$> [discriminant, ...cases],
-  SwitchCase: \predicates consequent -> mergeAll $ vars <$> [...predicates, consequent],
+  SwitchCase: \predicates consequent -> mergeAll $ vars <$> chain (fromMaybe []) predicates <> [consequent],
   PipeExpression: \head body -> vars head `merge` vars body,
   CallExpression: \callee arguments -> mergeAll $ vars <$> [callee, ...arguments],
   ImportDeclaration: const $ mergeAll . map vars,

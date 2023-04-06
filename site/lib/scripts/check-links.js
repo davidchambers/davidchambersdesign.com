@@ -11,6 +11,7 @@ const subtract = rhs => lhs => (() => {
 })();
 const apply = f => args => f.apply(null, args);
 const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
+const typeof$ = x => x === null ? "null" : typeof x;
 const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
 const filter = f => x => globalThis.Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f);
 const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);

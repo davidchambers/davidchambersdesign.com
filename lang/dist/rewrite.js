@@ -1,5 +1,5 @@
 import * as Future from "fluture";
-import {Just, maybe} from "./Maybe.js";
+import {Just, maybe, fromMaybe} from "./Maybe.js";
 import Node, {ArrowFunctionExpression, BinaryExpression, BlockExpression, CallExpression, CompositionExpression, ConditionalExpression, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportDeclaration, ImportSpecifier, MemberExpression, Module, ObjectExpression, ObjectPattern, Property, StringLiteral, SwitchCase, SwitchExpression, VariableDeclaration, transform} from "./Node.js";
 import * as format from "./format.js";
 import globals from "./globals.js";
@@ -129,7 +129,7 @@ const vars = node => match$0027(Node)(const$(emptyVariables))({
   LogicalExpression: operator => left => right => merge(vars(left))(vars(right)),
   ConditionalExpression: predicate => consequent => alternative => merge(merge(vars(predicate))(vars(consequent)))(maybe(emptyVariables)(vars)(alternative)),
   SwitchExpression: discriminant => cases => mergeAll(map(vars)([discriminant, ...cases])),
-  SwitchCase: predicates => consequent => mergeAll(map(vars)([...predicates, consequent])),
+  SwitchCase: predicates => consequent => mergeAll(map(vars)(concat(chain(fromMaybe([]))(predicates))([consequent]))),
   PipeExpression: head => body => merge(vars(head))(vars(body)),
   CallExpression: callee => arguments$ => mergeAll(map(vars)([callee, ...arguments$])),
   ImportDeclaration: const$($ => mergeAll(map(vars)($))),
