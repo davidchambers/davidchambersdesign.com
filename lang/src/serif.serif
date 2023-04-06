@@ -62,11 +62,9 @@ findDependencies filename tree = {
     sourceText <- mapRej (.message) $ fs.readFile filename;
     ast <- parse filename sourceText;
     dependencies = ast.imports >>= \{source: {value}} -> {
-      if .test [value] $ RegExp "^[./].*[.]serif$" then {
-        [path.join [filename, "..", value]]
-      } else {
-        []
-      }
+      if .test [value] $ RegExp "^[./].*[.]serif$"
+      then [path.join [filename, "..", value]]
+      else []
     };
     exportedNames = ast.exports >>= match' Node (const []) {ExportNamedDeclaration: map ((.name) . (.exported))};
     reduce reducer
@@ -80,11 +78,9 @@ orderDependencies tree = {
     if unsorted! == [] then sorted! else {
       filename = .shift [] unsorted!;
       {dependencies} = .get [filename] tree;
-      if .every [\filename -> sorted! has filename] dependencies then {
-        .add [filename] sorted!
-      } else {
-        .push [filename] unsorted!
-      };
+      if .every [\filename -> sorted! has filename] dependencies
+      then .add [filename] sorted!
+      else .push [filename] unsorted!;
       recur unsorted! sorted!
     }
   };
