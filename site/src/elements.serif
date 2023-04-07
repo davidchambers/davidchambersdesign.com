@@ -157,7 +157,7 @@ render-inline-element context element = {
 string-to-text-node string-or-node = {
   if typeof string-or-node == "object" then string-or-node else {
     string-or-node
-    % .replaceAll [apply RegExp ["^[ ]+", "gm"], " "]
+    % .replaceAll [RegExp ("^[ ]+", "gm"), " "]
     % .replaceAll ["\n", ""]
     % text
   }

@@ -27,7 +27,7 @@ readInput reader = {
 #35 = "\x1B[35m";
 
 print x = {
-  switch apply Reflect.apply [Object.prototype.toString, x, []]
+  switch .call [x] Object.prototype.toString
   when "[object Null]",
        "[object Undefined]",
        "[object Boolean]"
@@ -66,7 +66,7 @@ processInput serifSourceText = do {
 repl _ = {
   input = prompt "\n>>>";
   if .trim [] input in [":exit", ":quit"]
-  then { console.log ""; .exit [] Deno }
+  then { console.log ""; Deno.exit () }
   else fork (repl . console.error) (repl . console.log) (processInput input)
 };
 console.log $ #7 <> " Serif REPL " <> #27 <> " " <> #1 <> ":quit" <> #22 <> " to exit";

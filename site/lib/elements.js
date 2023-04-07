@@ -1,4 +1,3 @@
-const apply = f => args => f.apply(null, args);
 const typeof$ = x => x === null ? "null" : typeof x;
 const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
 const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
@@ -20,7 +19,7 @@ const render$002Dinline$002Delement = context => element => (args => target => t
   level: 0,
   inline: true
 }]))(element.children)) + "</" + element.name + ">" + (context.inline ? "" : "\n");
-const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => equals("object")(typeof$(string$002Dor$002Dnode)) ? string$002Dor$002Dnode : text((args => target => target.replaceAll.apply(target, args))(["\n", ""])((args => target => target.replaceAll.apply(target, args))([apply(RegExp)(["^[ ]+", "gm"]), " "])(string$002Dor$002Dnode)));
+const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => equals("object")(typeof$(string$002Dor$002Dnode)) ? string$002Dor$002Dnode : text((args => target => target.replaceAll.apply(target, args))(["\n", ""])((args => target => target.replaceAll.apply(target, args))([RegExp("^[ ]+", "gm"), " "])(string$002Dor$002Dnode)));
 const block$002Delement = name => attributes => children$0021 => (() => {
   const children = map(string$002Dto$002Dtext$002Dnode)(children$0021);
   const element = {

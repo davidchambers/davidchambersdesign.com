@@ -1,6 +1,5 @@
 import {Nothing, Just, maybe} from "./Maybe.js";
 import Node from "./Node.js";
-const apply = f => args => f.apply(null, args);
 const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
 const match = type => match$0027(type)(x => CasesNotExhaustive);
 const match$0027 = type => type[globalThis.Symbol.for("match")];
@@ -30,7 +29,7 @@ const fromEscapedIdentifierName = name => ({
 });
 const fromIdentifier = (() => {
   const escapeChar = c => concat("$")((args => target => target.padStart.apply(target, args))([4, "0"])((args => target => target.toUpperCase.apply(target, args))([])((args => target => target.toString.apply(target, args))([16])((args => target => target.charCodeAt.apply(target, args))([0])(c)))));
-  const escape = name => contains(name)(["eval", "import"]) ? name : RESERVED_WORDS.has(name) ? name + "$" : validEsIdentifierName(name) ? name : (args => target => target.replaceAll.apply(target, args))([apply(RegExp)(["[^$_A-Za-z0-9]", "g"]), escapeChar])(name);
+  const escape = name => contains(name)(["eval", "import"]) ? name : RESERVED_WORDS.has(name) ? name + "$" : validEsIdentifierName(name) ? name : (args => target => target.replaceAll.apply(target, args))([RegExp("[^$_A-Za-z0-9]", "g"), escapeChar])(name);
   return $ => fromEscapedIdentifierName(escape($));
 })();
 const fromLiteral = value => ({
@@ -55,7 +54,7 @@ const fromTemplateLiteral = quasis => expressions => ({
       return [...map(TemplateElement(false))((args => target => target.slice.apply(target, args))([0, -1])(quasis$0027)), ...map(TemplateElement(true))((args => target => target.slice.apply(target, args))([-1])(quasis$0027))];
     })() : (() => {
       const indent = (args => target => target.search.apply(target, args))([RegExp("(?! )")])((args => target => target.slice.apply(target, args))([lineEnding.length])(quasis[0]));
-      const pattern = apply(RegExp)([lineEnding + "[ ]{0," + indent + "}", "g"]);
+      const pattern = RegExp(lineEnding + "[ ]{0," + indent + "}", "g");
       const [head, ...tail] = map($ => (args => target => target.replaceAll.apply(target, args))(["`", "\\`"])((args => target => target.replaceAll.apply(target, args))([pattern, lineEnding])($)))(quasis);
       const head$0027 = (args => target => target.slice.apply(target, args))([lineEnding.length])(head);
       return equals([])(tail) ? [TemplateElement(true)(head$0027)] : [TemplateElement(false)(head$0027), ...map(TemplateElement(false))((args => target => target.slice.apply(target, args))([0, -1])(tail)), ...map(TemplateElement(true))((args => target => target.slice.apply(target, args))([-1])(tail))];

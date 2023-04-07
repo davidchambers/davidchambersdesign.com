@@ -1,7 +1,6 @@
 import {attemptP, bichain, fork, parallel, resolve} from "fluture";
 import sanctuary from "sanctuary";
 import posts from "../posts/index.js";
-const apply = f => args => f.apply(null, args);
 const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
 const typeof$ = x => x === null ? "null" : typeof x;
 const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
@@ -26,10 +25,10 @@ const status = url => bichain(err => resolve({
 }))(res => resolve({
   url,
   status: res.status
-}))(attemptP(() => apply(fetch)([url, {
+}))(attemptP(() => fetch(url, {
   method: "HEAD",
   redirect: "manual"
-}])));
+})));
 const bold = text => "\u001b[1m" + text + "\u001b[22m";
 const invert = text => "\u001b[7m" + text + "\u001b[27m";
 const red = text => "\u001b[31m" + text + "\u001b[0m";

@@ -19,7 +19,7 @@ Just value = {
 };
 
 match default cases maybe = {
-  if apply Object.hasOwn [cases, maybe[Symbol.for "tag"]] then {
+  if Object.hasOwn (cases, maybe[Symbol.for "tag"]) then {
     switch maybe[Symbol.for "tag"]
     when "Nothing" then cases.Nothing
     when "Just"    then cases.Just maybe.value

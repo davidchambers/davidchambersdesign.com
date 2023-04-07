@@ -2,7 +2,6 @@ import {attempt, attemptP, fork, resolve} from "fluture";
 import {generate} from "astring";
 import * as Node from "./Node.js";
 import * as serif from "./index.js";
-const apply = f => args => f.apply(null, args);
 const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
 const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
 const concat = this$ => that => globalThis.Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that);
@@ -34,7 +33,7 @@ const $002332 = "\u001b[32m";
 const $002333 = "\u001b[33m";
 const $002335 = "\u001b[35m";
 const print = x => (() => {
-  switch (apply(Reflect.apply)([Object.prototype.toString, x, []])) {
+  switch ((args => target => target.call.apply(target, args))([x])(Object.prototype.toString)) {
     case "[object Null]":
     case "[object Undefined]":
     case "[object Boolean]":
@@ -66,7 +65,7 @@ const repl = _ => (() => {
   const input = prompt("\n>>>");
   return contains((args => target => target.trim.apply(target, args))([])(input))([":exit", ":quit"]) ? (() => {
     console.log("");
-    return (args => target => target.exit.apply(target, args))([])(Deno);
+    return Deno.exit();
   })() : fork($ => repl(console.error($)))($ => repl(console.log($)))(processInput(input));
 })();
 console.log(concat($00237)(concat(" Serif REPL ")(concat($002327)(concat(" ")(concat($00231)(concat(":quit")(concat($002322)(" to exit"))))))));

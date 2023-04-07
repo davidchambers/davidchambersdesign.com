@@ -8,17 +8,17 @@ export {
 };
 
 basename path_ suffix = {
-  apply path.basename [path_, suffix]
+  path.basename (path_, suffix)
 };
 
 dirname = {
   path.dirname
 };
 
-join = {
-  apply path.join
+join components = {
+  path.join (...components)
 };
 
 relative from to = {
-  apply path.relative [from, to]
+  path.relative (from, to)
 };

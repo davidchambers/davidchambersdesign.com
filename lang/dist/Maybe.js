@@ -1,4 +1,3 @@
-const apply = f => args => f.apply(null, args);
 const id = x => x;
 const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
 const Nothing = {
@@ -10,7 +9,7 @@ const Just = value => ({
   value,
   ["fantasy-land/map"]: f => Just(f(value))
 });
-const $match = default$ => cases => maybe => apply(Object.hasOwn)([cases, maybe[Symbol.for("tag")]]) ? (() => {
+const $match = default$ => cases => maybe => Object.hasOwn(cases, maybe[Symbol.for("tag")]) ? (() => {
   switch (maybe[Symbol.for("tag")]) {
     case "Nothing":
       return cases.Nothing;

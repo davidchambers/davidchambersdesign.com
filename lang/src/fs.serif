@@ -7,7 +7,7 @@ export {
 };
 
 mkdir options path = {
-  attemptP \() -> apply Deno.mkdir [path, options]
+  attemptP \() -> Deno.mkdir (path, options)
 };
 
 readFile filename = {
@@ -15,5 +15,5 @@ readFile filename = {
 };
 
 writeFile filename data = {
-  attemptP \() -> apply Deno.writeTextFile [filename, data]
+  attemptP \() -> Deno.writeTextFile (filename, data)
 };

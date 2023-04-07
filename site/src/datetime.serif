@@ -3,9 +3,9 @@ import luxon from "luxon";
 export default datetime;
 
 datetime date time zone = {
-  apply luxon.DateTime.fromFormat [
+  luxon.DateTime.fromFormat (
     date + " " + time + " (" + zone + ")",
     "yyyy-MM-dd HH:mm:ss (z)",
     {setZone: true},
-  ]
+  )
 };

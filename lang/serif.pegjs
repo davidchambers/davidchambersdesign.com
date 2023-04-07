@@ -264,10 +264,17 @@ CallExpression
   = head:LeftHandSideExpression
     tail:(
         __ arg:LeftHandSideExpression   { return callee => Node.CallExpression(callee)([arg]); }
+      / _ args:Arguments                { return callee => Node.CallExpression(callee)(args); }
       / _ '.' ident:Identifier          { return object => Node.MemberExpression(object)(Node.StringLiteral(ident.name)); }
       / '[' _ property:Expression _ ']' { return object => Node.MemberExpression(object)(property); }
     )*
     { return tail.reduce((expr, wrap) => wrap(expr), head); }
+
+Arguments
+  = '(' _ ')'
+    { return []; }
+  / '(' _ args:(SpreadElement / Expression)|1.., CommaSeparator| TrailingComma ')'
+    { return args; }
 
 ArrowFunctionParameters
   = '(' _ ')'

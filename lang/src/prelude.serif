@@ -134,13 +134,6 @@ Prelude = {
       }
     }
   },
-  apply: {
-    ArrowFunctionExpression [#f] {
-      ArrowFunctionExpression [#args] {
-        CallExpression (MemberExpression #f 'apply) [NullLiteral, #args]
-      }
-    }
-  },
   construct: {
     ArrowFunctionExpression [#constructor] {
       ArrowFunctionExpression [#args] {
