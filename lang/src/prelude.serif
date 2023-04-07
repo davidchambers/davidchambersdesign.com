@@ -85,8 +85,16 @@ Prelude = {
             CallExpression (MemberExpression #Reflect 'construct) [
               #Set,
               ArrayExpression [
-                CallExpression (MemberExpression (ArrayExpression [SpreadElement #lhs]) 'filter)
-                               [ArrowFunctionExpression [#x] $ CallExpression (MemberExpression #rhs 'has) [#x]],
+                ArrayExpression [
+                  SpreadElement {
+                    CallExpression (MemberExpression (ArrayExpression [SpreadElement #lhs]) 'filter)
+                                   [ArrowFunctionExpression [#x] $ UnaryExpression "!" $ CallExpression (MemberExpression #rhs 'has) [#x]]
+                  },
+                  SpreadElement {
+                    CallExpression (MemberExpression (ArrayExpression [SpreadElement #rhs]) 'filter)
+                                   [ArrowFunctionExpression [#x] $ UnaryExpression "!" $ CallExpression (MemberExpression #lhs 'has) [#x]]
+                  },
+                ],
               ],
             ]
           },
@@ -109,6 +117,26 @@ Prelude = {
           },
           SwitchCase [Nothing] {
             BinaryExpression "|" #lhs #rhs
+          },
+        ]
+      }
+    }
+  },
+  AND: {
+    ArrowFunctionExpression [#rhs] {
+      ArrowFunctionExpression [#lhs] {
+        SwitchExpression (Object#toString #rhs) [
+          SwitchCase [Just $ StringLiteral "[object Set]"] {
+            CallExpression (MemberExpression #Reflect 'construct) [
+              #Set,
+              ArrayExpression [
+                CallExpression (MemberExpression (ArrayExpression [SpreadElement #lhs]) 'filter)
+                               [ArrowFunctionExpression [#x] $ CallExpression (MemberExpression #rhs 'has) [#x]],
+              ],
+            ]
+          },
+          SwitchCase [Nothing] {
+            BinaryExpression "&" #lhs #rhs
           },
         ]
       }

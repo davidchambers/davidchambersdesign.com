@@ -112,7 +112,7 @@ applyFlip = transform {
 removeUnreferencedPreludeFunctions module = {
   {declared, referenced} = vars module;
   unreferenced = declared - referenced;
-  unnecessary = unreferenced ^ preludeNames;
+  unnecessary = unreferenced & preludeNames;
   statements = reject (match' Node (const false) {VariableDeclaration: \{name} _ -> unnecessary has name}) module.statements;
   if statements.length == module.statements.length
   then module
@@ -185,7 +185,7 @@ rewriteImportAllSpecifier undeclared namesExportedFrom source = {
           + " so need not be hidden"
         }
       } else {
-        namesExported - namesHidden ^ undeclared
+        namesExported - namesHidden & undeclared
         % Array.from  ;; TODO: sort
         % map (\name -> ImportSpecifier (Identifier name)
                                         (Identifier $ if preludeNames has name then "$" + name else name))
@@ -266,6 +266,7 @@ rewriteNode = transform {
     when "in"  then rewriteNode $ CallExpression (CallExpression (Identifier "contains") [left]) [right]
     when "^"   then rewriteNode $ CallExpression (CallExpression (Identifier "XOR") [right]) [left]
     when "|"   then rewriteNode $ CallExpression (CallExpression (Identifier "OR") [right]) [left]
+    when "&"   then rewriteNode $ CallExpression (CallExpression (Identifier "AND") [right]) [left]
     when "-"   then rewriteNode $ CallExpression (CallExpression (Identifier "subtract") [right]) [left]
     else BinaryExpression operator (rewriteNode left) (rewriteNode right)
   },

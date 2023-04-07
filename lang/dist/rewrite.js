@@ -4,20 +4,20 @@ import Node, {ArrowFunctionExpression, BinaryExpression, BlockExpression, CallEx
 import * as format from "./format.js";
 import globals from "./globals.js";
 import Prelude from "./prelude.js";
-const XOR = rhs => lhs => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
-    case "[object Set]":
-      return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => rhs.has(x))]);
-    default:
-      return lhs ^ rhs;
-  }
-})();
 const OR = rhs => lhs => (() => {
   switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
     case "[object Set]":
       return globalThis.Reflect.construct(globalThis.Set, [[...lhs, ...rhs]]);
     default:
       return lhs | rhs;
+  }
+})();
+const AND = rhs => lhs => (() => {
+  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+    case "[object Set]":
+      return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => rhs.has(x))]);
+    default:
+      return lhs & rhs;
   }
 })();
 const subtract = rhs => lhs => (() => {
@@ -164,7 +164,7 @@ const applyFlip = transform({
 const removeUnreferencedPreludeFunctions = module => (() => {
   const {declared, referenced} = vars(module);
   const unreferenced = subtract(referenced)(declared);
-  const unnecessary = XOR(preludeNames)(unreferenced);
+  const unnecessary = AND(preludeNames)(unreferenced);
   const statements = reject(match$0027(Node)(const$(false))({
     VariableDeclaration: ({name}) => _ => unnecessary.has(name)
   }))(module.statements);
@@ -200,7 +200,7 @@ const rewriteModule = module => namesExportedFrom => (() => {
   return map(imports => withImports(Module(imports)(module.exports)(module.statements)))(imports);
 })();
 const rewriteImportAllSpecifier = undeclared => namesExportedFrom => source => match$0027(Node)($ => Future.resolve(Array.of($)))({
-  ImportAllSpecifier: hiding => chain(namesExported => (namesExported => (namesHidden => (namesHiddenNeedlessly => namesHiddenNeedlessly.size > 0 ? Future.reject(Error(format.list(Array.from(namesHiddenNeedlessly)) + " " + (equals(1)(namesHiddenNeedlessly.size) ? "is" : "are") + " not exported from " + source.value + " so need not be hidden")) : Future.resolve(map(name => ImportSpecifier(Identifier(name))(Identifier(preludeNames.has(name) ? "$" + name : name)))(Array.from(XOR(undeclared)(subtract(namesHidden)(namesExported))))))(subtract(namesExported)(namesHidden)))(construct(Set)([map($ => $.name)(hiding)])))(construct(Set)([namesExported])))((args => target => target.endsWith.apply(target, args))([".serif"])(source.value) ? Future.resolve(namesExportedFrom(source.value)) : map(Object.keys)(Future.attemptP(() => import(source.value))))
+  ImportAllSpecifier: hiding => chain(namesExported => (namesExported => (namesHidden => (namesHiddenNeedlessly => namesHiddenNeedlessly.size > 0 ? Future.reject(Error(format.list(Array.from(namesHiddenNeedlessly)) + " " + (equals(1)(namesHiddenNeedlessly.size) ? "is" : "are") + " not exported from " + source.value + " so need not be hidden")) : Future.resolve(map(name => ImportSpecifier(Identifier(name))(Identifier(preludeNames.has(name) ? "$" + name : name)))(Array.from(AND(undeclared)(subtract(namesHidden)(namesExported))))))(subtract(namesExported)(namesHidden)))(construct(Set)([map($ => $.name)(hiding)])))(construct(Set)([namesExported])))((args => target => target.endsWith.apply(target, args))([".serif"])(source.value) ? Future.resolve(namesExportedFrom(source.value)) : map(Object.keys)(Future.attemptP(() => import(source.value))))
 });
 const $0023Object = Identifier("Object");
 const $0023Symbol = Identifier("Symbol");
@@ -247,6 +247,8 @@ const rewriteNode = transform({
         return rewriteNode(CallExpression(CallExpression(Identifier("XOR"))([right]))([left]));
       case "|":
         return rewriteNode(CallExpression(CallExpression(Identifier("OR"))([right]))([left]));
+      case "&":
+        return rewriteNode(CallExpression(CallExpression(Identifier("AND"))([right]))([left]));
       case "-":
         return rewriteNode(CallExpression(CallExpression(Identifier("subtract"))([right]))([left]));
       default:
