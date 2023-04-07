@@ -1,10 +1,24 @@
 import sanctuary from "sanctuary";
 import {a, div as $div, h1, li$0027, ol$0027} from "./elements.js";
 import tags from "./tags.js";
-const filter = f => x => globalThis.Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f);
-const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const filter = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.filter(x => f(x));
+    default:
+      return xs["fantasy-land/filter"](f);
+  }
+})();
+const map = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.map(x => f(x));
+    default:
+      return xs["fantasy-land/map"](f);
+  }
+})();
 const chain = f => x => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, x, [])) {
+  switch (globalThis.Object.prototype.toString.call(x)) {
     case "[object Array]":
       return x.flatMap(x => f(x));
     case "[object Function]":

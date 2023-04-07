@@ -1,6 +1,27 @@
 import sanctuary from "sanctuary";
-const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
-const reduce = f => y => x => x[globalThis.Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y);
+const equals = this$ => that => (() => {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+      return (() => {
+        switch (globalThis.Object.prototype.toString.call(that)) {
+          case "[object Array]":
+            return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
+          default:
+            return false;
+        }
+      })();
+    default:
+      return this$ === that;
+  }
+})();
+const reduce = f => y => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.reduce((y, x) => f(y)(x), y);
+    default:
+      return xs["fantasy-land/reduce"](f, y);
+  }
+})();
 const S = sanctuary.unchecked;
 const simplify = paths => equals([])(paths) ? [] : (() => {
   const [head, ...tail] = paths;

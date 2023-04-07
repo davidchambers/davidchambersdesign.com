@@ -1,7 +1,28 @@
 import {a, article$0027, footer$0027, h1, h3$0027, h4, header, li, li$0027, ol, time, ul} from "./elements.js";
 import tags from "./tags.js";
-const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
-const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const equals = this$ => that => (() => {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+      return (() => {
+        switch (globalThis.Object.prototype.toString.call(that)) {
+          case "[object Array]":
+            return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
+          default:
+            return false;
+        }
+      })();
+    default:
+      return this$ === that;
+  }
+})();
+const map = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.map(x => f(x));
+    default:
+      return xs["fantasy-land/map"](f);
+  }
+})();
 const render$002Dpost = post => related$002Dposts => [article$0027(equals(undefined)(post["article-id"]) ? {} : {
   id: post["article-id"]
 })([header([h1(post.title), time({

@@ -195,6 +195,9 @@ IdentifierPart
   = IdentifierStart
   / [0-9]
   / '-'
+  / '='
+  / '|'
+  / '%'
 
 ArrayExpression
   = '[' _ ']'
@@ -287,6 +290,7 @@ ArrowFunctionParameters
 Pattern
   = ArrayPattern
   / ObjectPattern
+  / RestElement
   / Identifier
 
 ArrayPattern
@@ -296,22 +300,16 @@ ArrayPattern
     { return Node.ArrayPattern(elisions); }
   / '['
     elements:(
-        _ elision:Elision                   { return elision; }
-      / _ element:ArrayPatternElement _ ',' { return element; }
+        _ elision:Elision       { return elision; }
+      / _ element:Pattern _ ',' { return element; }
     )*
-    _ element:ArrayPatternElement?
+    _ element:Pattern?
     _ ']'
     { return Node.ArrayPattern(element == null ? elements : [...elements, element]); }
 
 Elision
   = ','
     { return Node.Elision; }
-
-ArrayPatternElement
-  = ArrayPattern
-  / ObjectPattern
-  / RestElement
-  / Identifier
 
 ObjectPattern
   = '{' _ '}'

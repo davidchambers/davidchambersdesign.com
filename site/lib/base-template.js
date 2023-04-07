@@ -1,5 +1,12 @@
 import {text, a, body, div as $div, footer, head, header, hr, html, li, link, meta, nav$0027, p, script, span, strong, title, ul} from "./elements.js";
-const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const map = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.map(x => f(x));
+    default:
+      return xs["fantasy-land/map"](f);
+  }
+})();
 const base$002Dtemplate = document$002Dtitle => main => html([head([meta({
   charset: "utf-8"
 }), title(map(String)(document$002Dtitle)), link({

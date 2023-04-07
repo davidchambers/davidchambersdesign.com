@@ -5,7 +5,7 @@ import * as format from "./format.js";
 import globals from "./globals.js";
 import Prelude from "./prelude.js";
 const OR = rhs => lhs => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+  switch (globalThis.Object.prototype.toString.call(rhs)) {
     case "[object Set]":
       return globalThis.Reflect.construct(globalThis.Set, [[...lhs, ...rhs]]);
     default:
@@ -13,7 +13,7 @@ const OR = rhs => lhs => (() => {
   }
 })();
 const AND = rhs => lhs => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+  switch (globalThis.Object.prototype.toString.call(rhs)) {
     case "[object Set]":
       return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => rhs.has(x))]);
     default:
@@ -21,7 +21,7 @@ const AND = rhs => lhs => (() => {
   }
 })();
 const subtract = rhs => lhs => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+  switch (globalThis.Object.prototype.toString.call(rhs)) {
     case "[object Set]":
       return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => !rhs.has(x))]);
     default:
@@ -33,8 +33,30 @@ const match = type => match$0027(type)(x => CasesNotExhaustive);
 const match$0027 = type => type[globalThis.Symbol.for("match")];
 const id = x => x;
 const const$ = x => y => x;
-const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
-const concat = this$ => that => globalThis.Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that);
+const equals = this$ => that => (() => {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+      return (() => {
+        switch (globalThis.Object.prototype.toString.call(that)) {
+          case "[object Array]":
+            return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
+          default:
+            return false;
+        }
+      })();
+    default:
+      return this$ === that;
+  }
+})();
+const concat = this$ => that => (() => {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+    case "[object String]":
+      return this$.concat(that);
+    default:
+      return this$["fantasy-land/concat"](that);
+  }
+})();
 const empty = typeRep => (() => {
   switch (typeRep.name) {
     case "Array":
@@ -44,17 +66,39 @@ const empty = typeRep => (() => {
     case "String":
       return "";
     case "Set":
+      return globalThis.Reflect.construct(globalThis.Set, [[]]);
     case "Map":
-      return globalThis.Reflect.construct(typeRep, [[]]);
+      return globalThis.Reflect.construct(globalThis.Map, [[]]);
     default:
       return typeRep["fantasy-land/empty"]();
   }
 })();
-const reduce = f => y => x => x[globalThis.Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y);
+const reduce = f => y => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.reduce((y, x) => f(y)(x), y);
+    default:
+      return xs["fantasy-land/reduce"](f, y);
+  }
+})();
 const reduceRight = f => y => x => x.reduceRight((y, x) => f(y)(x), y);
-const filter = f => x => globalThis.Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f);
+const filter = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.filter(x => f(x));
+    default:
+      return xs["fantasy-land/filter"](f);
+  }
+})();
 const reject = f => filter(x => !f(x));
-const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const map = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.map(x => f(x));
+    default:
+      return xs["fantasy-land/map"](f);
+  }
+})();
 const flip = f => y => x => f(x)(y);
 const of = typeRep => (() => {
   switch (typeRep.name) {
@@ -63,13 +107,14 @@ const of = typeRep => (() => {
     case "Function":
       return x => y => x;
     case "Set":
-      return x => globalThis.Reflect.construct(typeRep, [[x]]);
+      return x => globalThis.Reflect.construct(globalThis.Set, [[x]]);
     default:
       return typeRep["fantasy-land/of"];
   }
 })();
+const prepend = x => xs => concat(of(xs.constructor)(x))(xs);
 const chain = f => x => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, x, [])) {
+  switch (globalThis.Object.prototype.toString.call(x)) {
     case "[object Array]":
       return x.flatMap(x => f(x));
     case "[object Function]":
@@ -264,10 +309,10 @@ const rewriteNode = transform({
     PropertyAccessor: $ => rewriteNode(MemberExpression(arguments$[0])(StringLiteral($.name)))
   })),
   DataTypeDeclaration: identifier => constructors => rewriteNode((() => {
-    const pattern = ObjectPattern(map(join(Property))(concat([identifier])(map($ => $.identifier)(constructors))));
+    const pattern = ObjectPattern(map(join(Property))(prepend(identifier)(map($ => $.identifier)(constructors))));
     return VariableDeclaration(pattern)((() => {
       const variableDeclarationFromConstructor = match(Node)({
-        DataConstructorDefinition: identifier => parameters => VariableDeclaration(identifier)(reduceRight(body => parameter => ArrowFunctionExpression([parameter])(body))(ObjectExpression(concat([Property($0040tag)(StringLiteral(identifier.name))])(map(parameter => Property(StringLiteral(parameter.name))(parameter))(parameters))))(parameters))
+        DataConstructorDefinition: identifier => parameters => VariableDeclaration(identifier)(reduceRight(body => parameter => ArrowFunctionExpression([parameter])(body))(ObjectExpression(prepend(Property($0040tag)(StringLiteral(identifier.name)))(map(parameter => Property(StringLiteral(parameter.name))(parameter))(parameters))))(parameters))
       });
       const variableDeclarations = map(variableDeclarationFromConstructor)(constructors);
       const propertyFromConstructor = match(Node)({

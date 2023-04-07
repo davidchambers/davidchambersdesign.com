@@ -5,7 +5,7 @@ import * as fs from "./fs.js";
 import * as serif from "./index.js";
 import * as path from "./path.js";
 const subtract = rhs => lhs => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+  switch (globalThis.Object.prototype.toString.call(rhs)) {
     case "[object Set]":
       return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => !rhs.has(x))]);
     default:
@@ -15,8 +15,30 @@ const subtract = rhs => lhs => (() => {
 const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
 const match$0027 = type => type[globalThis.Symbol.for("match")];
 const const$ = x => y => x;
-const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
-const concat = this$ => that => globalThis.Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that);
+const equals = this$ => that => (() => {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+      return (() => {
+        switch (globalThis.Object.prototype.toString.call(that)) {
+          case "[object Array]":
+            return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
+          default:
+            return false;
+        }
+      })();
+    default:
+      return this$ === that;
+  }
+})();
+const concat = this$ => that => (() => {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+    case "[object String]":
+      return this$.concat(that);
+    default:
+      return this$["fantasy-land/concat"](that);
+  }
+})();
 const empty = typeRep => (() => {
   switch (typeRep.name) {
     case "Array":
@@ -26,17 +48,45 @@ const empty = typeRep => (() => {
     case "String":
       return "";
     case "Set":
+      return globalThis.Reflect.construct(globalThis.Set, [[]]);
     case "Map":
-      return globalThis.Reflect.construct(typeRep, [[]]);
+      return globalThis.Reflect.construct(globalThis.Map, [[]]);
     default:
       return typeRep["fantasy-land/empty"]();
   }
 })();
-const reduce = f => y => x => x[globalThis.Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y);
-const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const reduce = f => y => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.reduce((y, x) => f(y)(x), y);
+    default:
+      return xs["fantasy-land/reduce"](f, y);
+  }
+})();
+const map = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.map(x => f(x));
+    default:
+      return xs["fantasy-land/map"](f);
+  }
+})();
 const flip = f => y => x => f(x)(y);
+const of = typeRep => (() => {
+  switch (typeRep.name) {
+    case "Array":
+      return globalThis.Array.of;
+    case "Function":
+      return x => y => x;
+    case "Set":
+      return x => globalThis.Reflect.construct(globalThis.Set, [[x]]);
+    default:
+      return typeRep["fantasy-land/of"];
+  }
+})();
+const prepend = x => xs => concat(of(xs.constructor)(x))(xs);
 const chain = f => x => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, x, [])) {
+  switch (globalThis.Object.prototype.toString.call(x)) {
     case "[object Array]":
       return x.flatMap(x => f(x));
     case "[object Function]":
@@ -86,7 +136,7 @@ const orderDependencies = tree => (() => {
     esFilename
   }))(fs.writeFile(esFilename)(esSource)))(fs.mkdir({
     recursive: true
-  })(path.dirname(esFilename))))(path.join([absDst, path.relative(absSrc)(serifDirname), esBasename])))(path.basename(serifFilename)(".serif") + ".js"))(generate(esAst, {})))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(importPath => (filename => (args => target => target.get.apply(target, args))([filename])(tree).exportedNames)(path.join(concat([serifDirname])((args => target => target.split.apply(target, args))(["/"])(importPath)))))))((args => target => target.get.apply(target, args))([serifFilename])(tree).ast))(path.dirname(serifFilename)))))(orderDependencies(tree)))(reduce(reducer)(resolve(construct(Map)([[]])))(absFilenames));
+  })(path.dirname(esFilename))))(path.join([absDst, path.relative(absSrc)(serifDirname), esBasename])))(path.basename(serifFilename)(".serif") + ".js"))(generate(esAst, {})))(serif.esModuleFromSerifModule(serifAst$0027$0027)))(serif.changeExtensions(serifAst$0027)))(serif.rewrite(serifAst)(importPath => (filename => (args => target => target.get.apply(target, args))([filename])(tree).exportedNames)(path.join(prepend(serifDirname)((args => target => target.split.apply(target, args))(["/"])(importPath)))))))((args => target => target.get.apply(target, args))([serifFilename])(tree).ast))(path.dirname(serifFilename)))))(orderDependencies(tree)))(reduce(reducer)(resolve(construct(Map)([[]])))(absFilenames));
   return fork(console.error)(filenames => (args => target => target.forEach.apply(target, args))([({serifFilename, esFilename}) => (() => {
     console.log("• " + path.relative(cwd)(serifFilename));
     return console.log("  ➔ " + path.relative(cwd)(esFilename));

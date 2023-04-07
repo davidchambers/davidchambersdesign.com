@@ -1,8 +1,37 @@
 import sanctuary from "sanctuary";
 const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
-const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
-const concat = this$ => that => globalThis.Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that);
-const filter = f => x => globalThis.Array.isArray(x) ? x.filter(x => f(x)) : x["fantasy-land/filter"](f);
+const equals = this$ => that => (() => {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+      return (() => {
+        switch (globalThis.Object.prototype.toString.call(that)) {
+          case "[object Array]":
+            return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
+          default:
+            return false;
+        }
+      })();
+    default:
+      return this$ === that;
+  }
+})();
+const concat = this$ => that => (() => {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+    case "[object String]":
+      return this$.concat(that);
+    default:
+      return this$["fantasy-land/concat"](that);
+  }
+})();
+const filter = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.filter(x => f(x));
+    default:
+      return xs["fantasy-land/filter"](f);
+  }
+})();
 const S = sanctuary.unchecked;
 const related$002Dposts = posts => post => (() => {
   const tags = construct(Set)([post.tags]);

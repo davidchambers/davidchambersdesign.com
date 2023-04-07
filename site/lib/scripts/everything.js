@@ -20,7 +20,14 @@ import icons$002Ftwitter from "../icons/twitter.js";
 import {date$002D0, date$002D1, date$002D2, date$002D3, date$002D4, date$002D5, date$002D6, date$002D7, date$002D8, date$002D9} from "../icons/dates.js";
 import pages from "../pages/index.js";
 import posts from "../posts/index.js";
-const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const map = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.map(x => f(x));
+    default:
+      return xs["fantasy-land/map"](f);
+  }
+})();
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const public$ = components => path.join(dirname, "..", "..", "public", ...components);
 const write$002Dfile = filename => data => fs.writeFileSync(filename, data);

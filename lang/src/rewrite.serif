@@ -300,7 +300,7 @@ rewriteNode = transform {
     pattern = {
       constructors
       % map (.identifier)
-      % concat [identifier]
+      % prepend identifier
       % map (join Property)
       % ObjectPattern
     };
@@ -311,7 +311,7 @@ rewriteNode = transform {
             (\body parameter -> ArrowFunctionExpression [parameter] body)
             (parameters
              % map (\parameter -> Property (StringLiteral parameter.name) parameter)
-             % concat [Property @tag (StringLiteral identifier.name)]
+             % prepend (Property @tag (StringLiteral identifier.name))
              % ObjectExpression)
             parameters
         },

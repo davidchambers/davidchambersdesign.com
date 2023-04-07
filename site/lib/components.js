@@ -1,6 +1,6 @@
 import {text, code, dd, div as $div, dl, dt, h4, img, pre, time} from "./elements.js";
 const chain = f => x => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, x, [])) {
+  switch (globalThis.Object.prototype.toString.call(x)) {
     case "[object Array]":
       return x.flatMap(x => f(x));
     case "[object Function]":

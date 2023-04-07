@@ -1,6 +1,13 @@
 const match = type => match$0027(type)(x => CasesNotExhaustive);
 const match$0027 = type => type[globalThis.Symbol.for("match")];
-const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const map = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.map(x => f(x));
+    default:
+      return xs["fantasy-land/map"](f);
+  }
+})();
 const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, BinaryExpression, BindExpression, BlockExpression, BlockStatement, BooleanLiteral, CallExpression, CompositionExpression, ConcatenationExpression, ConditionalExpression, DataConstructorDefinition, DataTypeDeclaration, DoBlockExpression, Elision, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, LogicalExpression, MapExpression, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PipeExpression, Property, PropertyAccessor, RestElement, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, UnaryExpression, VariableDeclaration} = (() => {
   const ArrayExpression = elements => ({
     [Symbol.for("tag")]: "ArrayExpression",

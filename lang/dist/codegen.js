@@ -5,13 +5,49 @@ const match = type => match$0027(type)(x => CasesNotExhaustive);
 const match$0027 = type => type[globalThis.Symbol.for("match")];
 const const$ = x => y => x;
 const not = x => !x;
-const equals = this$ => that => globalThis.Array.isArray(this$) ? globalThis.Array.isArray(that) && (this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]))) : this$ === that;
-const concat = this$ => that => globalThis.Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that);
-const reduce = f => y => x => x[globalThis.Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y);
+const equals = this$ => that => (() => {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+      return (() => {
+        switch (globalThis.Object.prototype.toString.call(that)) {
+          case "[object Array]":
+            return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
+          default:
+            return false;
+        }
+      })();
+    default:
+      return this$ === that;
+  }
+})();
+const concat = this$ => that => (() => {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+    case "[object String]":
+      return this$.concat(that);
+    default:
+      return this$["fantasy-land/concat"](that);
+  }
+})();
+const reduce = f => y => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.reduce((y, x) => f(y)(x), y);
+    default:
+      return xs["fantasy-land/reduce"](f, y);
+  }
+})();
 const reduceRight = f => y => x => x.reduceRight((y, x) => f(y)(x), y);
-const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const map = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.map(x => f(x));
+    default:
+      return xs["fantasy-land/map"](f);
+  }
+})();
 const chain = f => x => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, x, [])) {
+  switch (globalThis.Object.prototype.toString.call(x)) {
     case "[object Array]":
       return x.flatMap(x => f(x));
     case "[object Function]":

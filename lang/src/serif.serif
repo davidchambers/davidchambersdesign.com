@@ -102,7 +102,7 @@ orderDependencies tree = {
       serifAst' <- serif.rewrite serifAst \importPath -> {
         importPath
         % .split ["/"]
-        % concat [serifDirname]
+        % prepend serifDirname
         % path.join
         % \filename -> .get [filename] tree
         % (.exportedNames)

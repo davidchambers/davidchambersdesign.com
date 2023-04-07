@@ -3,7 +3,14 @@ import {ImportDeclaration, Module, StringLiteral} from "./Node.js";
 import esModuleFromSerifModule from "./codegen.js";
 import * as grammar from "./grammar.js";
 import rewrite from "./rewrite.js";
-const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const map = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.map(x => f(x));
+    default:
+      return xs["fantasy-land/map"](f);
+  }
+})();
 const parse = filename => sourceText => attempt(() => grammar.parse(sourceText, {
   grammarSource: filename
 }));

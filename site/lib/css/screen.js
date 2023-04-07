@@ -1,14 +1,29 @@
 import sanctuary from "sanctuary";
 const subtract = rhs => lhs => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+  switch (globalThis.Object.prototype.toString.call(rhs)) {
     case "[object Set]":
       return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => !rhs.has(x))]);
     default:
       return lhs - rhs;
   }
 })();
-const concat = this$ => that => globalThis.Array.isArray(this$) || typeof this$ === "string" ? this$.concat(that) : this$["fantasy-land/concat"](that);
-const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const concat = this$ => that => (() => {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+    case "[object String]":
+      return this$.concat(that);
+    default:
+      return this$["fantasy-land/concat"](that);
+  }
+})();
+const map = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.map(x => f(x));
+    default:
+      return xs["fantasy-land/map"](f);
+  }
+})();
 const S = sanctuary.unchecked;
 const base03 = "#002b36";
 const base02 = "#073642";

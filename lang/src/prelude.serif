@@ -3,427 +3,135 @@ import * from "./Node.serif";
 
 export default Prelude;
 
-#CasesNotExhaustive     = Identifier "CasesNotExhaustive";
-#DivisionByZero         = Identifier "DivisionByZero";
-#args                   = Identifier "args";
-#chain                  = Identifier "chain";
-#constructor            = Identifier "constructor";
-#equals                 = Identifier "equals";
-#f                      = Identifier "f";
-#filter                 = Identifier "filter";
-#globalThis             = Identifier "globalThis";
-#id                     = Identifier "id";
-#idx                    = Identifier "idx";
-#lhs                    = Identifier "lhs";
-#match'                 = Identifier "match'";
-#reduce                 = Identifier "reduce";
-#rhs                    = Identifier "rhs";
-#that                   = Identifier "that";
-#these                  = Identifier "these";
-#this                   = Identifier "this";
-#type                   = Identifier "type";
-#typeRep                = Identifier "typeRep";
-#x                      = Identifier "x";
-#y                      = Identifier "y";
+compose' = flip compose;
+curry2 f x y = f (x, y);
 
-#Array                  = MemberExpression #globalThis $ StringLiteral "Array";
-#Math                   = MemberExpression #globalThis $ StringLiteral "Math";
-#Object                 = MemberExpression #globalThis $ StringLiteral "Object";
-#Reflect                = MemberExpression #globalThis $ StringLiteral "Reflect";
-#Set                    = MemberExpression #globalThis $ StringLiteral "Set";
-#Symbol                 = MemberExpression #globalThis $ StringLiteral "Symbol";
-
-'Array                  = StringLiteral "Array";
-'Function               = StringLiteral "Function";
-'Map                    = StringLiteral "Map";
-'Object                 = StringLiteral "Object";
-'Set                    = StringLiteral "Set";
-'String                 = StringLiteral "String";
-'apply                  = StringLiteral "apply";
-'concat                 = StringLiteral "concat";
-'construct              = StringLiteral "construct";
-'every                  = StringLiteral "every";
-'fantasy-land/chain     = StringLiteral "fantasy-land/chain";
-'fantasy-land/concat    = StringLiteral "fantasy-land/concat";
-'fantasy-land/empty     = StringLiteral "fantasy-land/empty";
-'fantasy-land/filter    = StringLiteral "fantasy-land/filter";
-'fantasy-land/map       = StringLiteral "fantasy-land/map";
-'fantasy-land/of        = StringLiteral "fantasy-land/of";
-'fantasy-land/reduce    = StringLiteral "fantasy-land/reduce";
-'filter                 = StringLiteral "filter";
-'flatMap                = StringLiteral "flatMap";
-'floor                  = StringLiteral "floor";
-'for                    = StringLiteral "for";
-'has                    = StringLiteral "has";
-'isArray                = StringLiteral "isArray";
-'length                 = StringLiteral "length";
-'map                    = StringLiteral "map";
-'match                  = StringLiteral "match";
-'name                   = StringLiteral "name";
-'null                   = StringLiteral "null";
-'of                     = StringLiteral "of";
-'prototype              = StringLiteral "prototype";
-'reduce                 = StringLiteral "reduce";
-'reduceRight            = StringLiteral "reduceRight";
-'string                 = StringLiteral "string";
-'toString               = StringLiteral "toString";
-
-Object#toString identifier = {
-  CallExpression (MemberExpression #Reflect 'apply) [
-    MemberExpression (MemberExpression #Object 'prototype) 'toString,
-    identifier,
-    ArrayExpression [],
-  ]
+ident   = Identifier;
+boolean = BooleanLiteral;
+number  = NumberLiteral;
+string  = StringLiteral;
+array   = ArrayExpression;
+object  = ObjectExpression;
+spread  = SpreadElement;
+member  = MemberExpression;
+member' = compose' string . member;
+lambda  = flip $ reduceRight $ flip $ ArrowFunctionExpression . Array.of;
+apply   = reduce $ compose' Array.of . CallExpression;
+invoke object names ...arguments = {
+  CallExpression (reduce member' object names) arguments
 };
+
+#CasesNotExhaustive = ident "CasesNotExhaustive";
+#DivisionByZero     = ident "DivisionByZero";
+#args               = ident "args";
+#constructor        = ident "constructor";
+#f                  = ident "f";
+#g                  = ident "g";
+#globalThis         = ident "globalThis";
+#idx                = ident "idx";
+#lhs                = ident "lhs";
+#rhs                = ident "rhs";
+#that               = ident "that";
+#these              = ident "these";
+#this               = ident "this";
+#type               = ident "type";
+#typeRep            = ident "typeRep";
+#x                  = ident "x";
+#xs                 = ident "xs";
+#y                  = ident "y";
+
+_typeof_      = UnaryExpression "typeof";
+_!_           = UnaryExpression "!";
+_/_           = BinaryExpression "/";
+_%_           = BinaryExpression "%";
+_+_           = BinaryExpression "+";
+_-_           = BinaryExpression "-";
+_instanceof_  = BinaryExpression "instanceof";
+_===_         = BinaryExpression "===";
+_&_           = BinaryExpression "&";
+_^_           = BinaryExpression "^";
+_|_           = BinaryExpression "|";
+_and_         = LogicalExpression "and";
+_or_          = LogicalExpression "or";
+
+construct = curry2 $ invoke #globalThis ["Reflect", "construct"];
+Set = construct (member' #globalThis "Set") . array . Array.of;
+Map = construct (member' #globalThis "Map") . array . Array.of;
+
+cond predicate consequent alternative = {
+  ConditionalExpression predicate consequent $ Just alternative
+};
+
+defineSwitch discriminant transform default = {
+  SwitchExpression discriminant
+  . append (SwitchCase [Nothing] default)
+  . map (\[names, expr] -> SwitchCase (Just . string . transform <$> .split ["/"] names) expr)
+  . Object.entries
+};
+
+typeSwitch identifier = {
+  defineSwitch (invoke #globalThis ["Object", "prototype", "toString", "call"] identifier) \tag -> "[object " + tag + "]"
+};
+
+typeRepSwitch typeRep = {
+  defineSwitch (member' typeRep "name") id
+};
+
+filter predicate xs = invoke xs ["filter"] predicate;
 
 Prelude = {
   XOR: {
-    ArrowFunctionExpression [#rhs] {
-      ArrowFunctionExpression [#lhs] {
-        SwitchExpression (Object#toString #rhs) [
-          SwitchCase [Just $ StringLiteral "[object Set]"] {
-            CallExpression (MemberExpression #Reflect 'construct) [
-              #Set,
-              ArrayExpression [
-                ArrayExpression [
-                  SpreadElement {
-                    CallExpression (MemberExpression (ArrayExpression [SpreadElement #lhs]) 'filter)
-                                   [ArrowFunctionExpression [#x] $ UnaryExpression "!" $ CallExpression (MemberExpression #rhs 'has) [#x]]
-                  },
-                  SpreadElement {
-                    CallExpression (MemberExpression (ArrayExpression [SpreadElement #rhs]) 'filter)
-                                   [ArrowFunctionExpression [#x] $ UnaryExpression "!" $ CallExpression (MemberExpression #lhs 'has) [#x]]
-                  },
-                ],
-              ],
-            ]
-          },
-          SwitchCase [Nothing] {
-            BinaryExpression "^" #lhs #rhs
-          },
-        ]
+    lambda [#rhs, #lhs] {
+      typeSwitch #rhs (#lhs `_^_` #rhs) {
+        Set: Set $ array [
+          spread $ filter (lambda [#x] $ _!_ $ invoke #rhs ["has"] #x) $ array [spread #lhs],
+          spread $ filter (lambda [#x] $ _!_ $ invoke #lhs ["has"] #x) $ array [spread #rhs],
+        ],
       }
     }
   },
-  OR: {
-    ArrowFunctionExpression [#rhs] {
-      ArrowFunctionExpression [#lhs] {
-        SwitchExpression (Object#toString #rhs) [
-          SwitchCase [Just $ StringLiteral "[object Set]"] {
-            CallExpression (MemberExpression #Reflect 'construct) [
-              #Set,
-              ArrayExpression [ArrayExpression [SpreadElement #lhs, SpreadElement #rhs]],
-            ]
-          },
-          SwitchCase [Nothing] {
-            BinaryExpression "|" #lhs #rhs
-          },
-        ]
-      }
-    }
-  },
-  AND: {
-    ArrowFunctionExpression [#rhs] {
-      ArrowFunctionExpression [#lhs] {
-        SwitchExpression (Object#toString #rhs) [
-          SwitchCase [Just $ StringLiteral "[object Set]"] {
-            CallExpression (MemberExpression #Reflect 'construct) [
-              #Set,
-              ArrayExpression [
-                CallExpression (MemberExpression (ArrayExpression [SpreadElement #lhs]) 'filter)
-                               [ArrowFunctionExpression [#x] $ CallExpression (MemberExpression #rhs 'has) [#x]],
-              ],
-            ]
-          },
-          SwitchCase [Nothing] {
-            BinaryExpression "&" #lhs #rhs
-          },
-        ]
-      }
-    }
-  },
-  subtract: {
-    ArrowFunctionExpression [#rhs] {
-      ArrowFunctionExpression [#lhs] {
-        SwitchExpression (Object#toString #rhs) [
-          SwitchCase [Just $ StringLiteral "[object Set]"] {
-            CallExpression (MemberExpression #Reflect 'construct) [
-              #Set,
-              ArrayExpression [
-                CallExpression (MemberExpression (ArrayExpression [SpreadElement #lhs]) 'filter)
-                               [ArrowFunctionExpression [#x] $ UnaryExpression "!" $ CallExpression (MemberExpression #rhs 'has) [#x]],
-              ],
-            ]
-          },
-          SwitchCase [Nothing] {
-            BinaryExpression "-" #lhs #rhs
-          },
-        ]
-      }
-    }
-  },
-  construct: {
-    ArrowFunctionExpression [#constructor] {
-      ArrowFunctionExpression [#args] {
-        CallExpression (MemberExpression #Reflect 'construct) [#constructor, #args]
-      }
-    }
-  },
-  instanceof: {
-    ArrowFunctionExpression [#constructor] {
-      ArrowFunctionExpression [#x] {
-        BinaryExpression "instanceof" #x #constructor
-      }
-    }
-  },
-  typeof: {
-    ArrowFunctionExpression [#x] {
-      ConditionalExpression (BinaryExpression "===" #x NullLiteral) 'null (Just $ UnaryExpression "typeof" #x)
-    }
-  },
-  match: {
-    ArrowFunctionExpression [#type] {
-      CallExpression (CallExpression #match' [#type]) [ArrowFunctionExpression [#x] #CasesNotExhaustive]
-    }
-  },
-  match': {
-    ArrowFunctionExpression [#type] {
-      MemberExpression #type $ CallExpression (MemberExpression #Symbol 'for) ['match]
-    }
-  },
-  id: {
-    ArrowFunctionExpression [#x] {
-      #x
-    }
-  },
-  const: {
-    ArrowFunctionExpression [#x] {
-      ArrowFunctionExpression [#y] {
-        #x
-      }
-    }
-  },
-  not: {
-    ArrowFunctionExpression [#x] {
-      UnaryExpression "!" #x
-    }
-  },
-  quot: {
-    ArrowFunctionExpression [#lhs] {
-      ArrowFunctionExpression [#rhs] {
-        ConditionalExpression (BinaryExpression "===" #rhs (NumberLiteral 0))
-                              #DivisionByZero
-                              (Just $ BinaryExpression "|" (BinaryExpression "/" #lhs #rhs) (NumberLiteral 0))
-      }
-    }
-  },
-  rem: {
-    ArrowFunctionExpression [#lhs] {
-      ArrowFunctionExpression [#rhs] {
-        ConditionalExpression (BinaryExpression "===" #rhs (NumberLiteral 0))
-                              #DivisionByZero
-                              (Just $ BinaryExpression "%" #lhs #rhs)
-      }
-    }
-  },
-  div: {
-    ArrowFunctionExpression [#lhs] {
-      ArrowFunctionExpression [#rhs] {
-        ConditionalExpression (BinaryExpression "===" #rhs (NumberLiteral 0))
-                              #DivisionByZero
-                              (Just $ CallExpression (MemberExpression #Math 'floor) [BinaryExpression "/" #lhs #rhs])
-      }
-    }
-  },
-  mod: {
-    ArrowFunctionExpression [#lhs] {
-      ArrowFunctionExpression [#rhs] {
-        ConditionalExpression (BinaryExpression "===" #rhs (NumberLiteral 0))
-                              #DivisionByZero
-                              (Just $ BinaryExpression "%" (BinaryExpression "+" (BinaryExpression "%" #lhs #rhs) #rhs) #rhs)
-      }
-    }
-  },
+  OR:             lambda [#rhs, #lhs] $ typeSwitch #rhs (#lhs `_|_` #rhs) {Set: Set $ array [spread #lhs, spread #rhs]},
+  AND:            lambda [#rhs, #lhs] $ typeSwitch #rhs (#lhs `_&_` #rhs) {Set: Set $ filter (lambda [#x] $ invoke #rhs ["has"] #x) $ array [spread #lhs]},
+  subtract:       lambda [#rhs, #lhs] $ typeSwitch #rhs (#lhs `_-_` #rhs) {Set: Set $ filter (lambda [#x] $ _!_ $ invoke #rhs ["has"] #x) $ array [spread #lhs]},
+  construct:      lambda [#constructor, #args] $ construct #constructor #args,
+  instanceof:     lambda [#constructor, #x] $ #x `_instanceof_` #constructor,
+  typeof:         lambda [#x] $ cond (#x `_===_` NullLiteral) (string "null") (_typeof_ #x),
+  match:          lambda [#type] $ apply (ident "match'") [#type, lambda [#x] #CasesNotExhaustive],
+  match':         lambda [#type] $ member #type $ invoke #globalThis ["Symbol", "for"] $ string "match",
+  id:             lambda [#x] #x,
+  const:          lambda [#x, #y] #x,
+  not:            lambda [#x] $ _!_ #x,
+  quot:           lambda [#lhs, #rhs] $ cond (#rhs `_===_` number 0) #DivisionByZero (#lhs `_/_` #rhs `_|_` number 0),
+  rem:            lambda [#lhs, #rhs] $ cond (#rhs `_===_` number 0) #DivisionByZero (#lhs `_%_` #rhs),
+  div:            lambda [#lhs, #rhs] $ cond (#rhs `_===_` number 0) #DivisionByZero (invoke #globalThis ["Math", "floor"] $ #lhs `_/_` #rhs),
+  mod:            lambda [#lhs, #rhs] $ cond (#rhs `_===_` number 0) #DivisionByZero (#lhs `_%_` #rhs `_+_` #rhs `_%_` #rhs),
   ;; TODO: generalize to setoid
   equals: {
-    ArrowFunctionExpression [#this] {
-      ArrowFunctionExpression [#that] {
-        ConditionalExpression
-          (CallExpression (MemberExpression #Array 'isArray) [#this])
-          (BinaryExpression "&&"
-             (CallExpression (MemberExpression #Array 'isArray) [#that])
-             (BinaryExpression "&&"
-                (BinaryExpression "==="
-                                  (MemberExpression #this 'length)
-                                  (MemberExpression #that 'length))
-                (CallExpression (MemberExpression #this 'every)
-                                [ArrowFunctionExpression [#x, #idx] $
-                                   CallExpression (CallExpression #equals [#x]) [MemberExpression #that #idx]])))
-          (Just $ BinaryExpression "===" #this #that)
-      }
-    }
-  },
-  concat: {
-    ArrowFunctionExpression [#this] {
-      ArrowFunctionExpression [#that] {
-        ConditionalExpression
-          (LogicalExpression "or"
-                             (CallExpression (MemberExpression #Array 'isArray) [#this])
-                             (BinaryExpression "===" (UnaryExpression "typeof" #this) 'string))
-          (CallExpression (MemberExpression #this 'concat) [#that])
-          (Just $ CallExpression (MemberExpression #this 'fantasy-land/concat) [#that])
-      }
-    }
-  },
-  empty: {
-    ArrowFunctionExpression [#typeRep] {
-      SwitchExpression (MemberExpression #typeRep 'name) [
-        SwitchCase [Just 'Array] {
-          ArrayExpression []
-        },
-        SwitchCase [Just 'Object] {
-          ObjectExpression []
-        },
-        SwitchCase [Just 'String] {
-          StringLiteral ""
-        },
-        SwitchCase [Just 'Set, Just 'Map] {
-          CallExpression (MemberExpression #Reflect 'construct) [#typeRep, ArrayExpression [ArrayExpression []]]
-        },
-        SwitchCase [Nothing] {
-          CallExpression (MemberExpression #typeRep 'fantasy-land/empty) []
-        },
-      ]
-    }
-  },
-  reduce: {
-    ArrowFunctionExpression [#f] {
-      ArrowFunctionExpression [#y] {
-        ArrowFunctionExpression [#x] {
-          CallExpression (
-            MemberExpression #x {
-              ConditionalExpression (CallExpression (MemberExpression #Array 'isArray) [#x]) 'reduce (Just 'fantasy-land/reduce)
-            }
-          ) [
-            ArrowFunctionExpression [#y, #x] {
-              CallExpression (CallExpression #f [#y]) [#x]
-            },
-            #y,
-          ]
-        }
-      }
-    }
-  },
-  ;; TODO: generalize to foldable
-  reduceRight: {
-    ArrowFunctionExpression [#f] {
-      ArrowFunctionExpression [#y] {
-        ArrowFunctionExpression [#x] {
-          CallExpression (MemberExpression #x 'reduceRight) [
-            ArrowFunctionExpression [#y, #x] $ CallExpression (CallExpression #f [#y]) [#x],
-            #y,
-          ]
-        }
-      }
-    }
-  },
-  filter: {
-    ArrowFunctionExpression [#f] {
-      ArrowFunctionExpression [#x] {
-        ConditionalExpression
-          (CallExpression (MemberExpression #Array 'isArray) [#x])
-          (CallExpression (MemberExpression #x 'filter) [ArrowFunctionExpression [#x] $ CallExpression #f [#x]])
-          (Just $ CallExpression (MemberExpression #x 'fantasy-land/filter) [#f])
-      }
-    }
-  },
-  reject: {
-    ;; \predicate -> filter (not . predicate)
-    ArrowFunctionExpression [#f] {
-      CallExpression #filter [ArrowFunctionExpression [#x] $ UnaryExpression "!" $ CallExpression #f [#x]]
-    }
-    ;; This may be possible once sectioning is supported:
-    ;; filter . (not .)
-    ;; CompositionExpression #filter (CompositionExpression #not)
-  },
-  map: {
-    ArrowFunctionExpression [#f] {
-      ArrowFunctionExpression [#x] {
-        ConditionalExpression
-          (CallExpression (MemberExpression #Array 'isArray) [#x])
-          (CallExpression (MemberExpression #x 'map) [ArrowFunctionExpression [#x] $ CallExpression #f [#x]])
-          (Just $ CallExpression (MemberExpression #x 'fantasy-land/map) [#f])
-      }
-    }
-  },
-  ;; TODO: generalize to functor
-  flip: {
-    ArrowFunctionExpression [#f] {
-      ArrowFunctionExpression [#y] {
-        ArrowFunctionExpression [#x] {
-          CallExpression (CallExpression #f [#x]) [#y]
-        }
-      }
-    }
-  },
-  of: {
-    ArrowFunctionExpression [#typeRep] {
-      SwitchExpression (MemberExpression #typeRep 'name) [
-        SwitchCase [Just 'Array] {
-          MemberExpression #Array 'of
-        },
-        SwitchCase [Just 'Function] {
-          ArrowFunctionExpression [#x] $ ArrowFunctionExpression [#y] #x
-        },
-        SwitchCase [Just 'Set] {
-          ArrowFunctionExpression [#x] {
-            CallExpression (MemberExpression #Reflect 'construct) [
-              #typeRep,
-              ArrayExpression [ArrayExpression [#x]],
-            ]
+    lambda [#this, #that] {
+      typeSwitch #this (#this `_===_` #that) {
+        Array: {
+          typeSwitch #that (boolean false) {
+            Array: (member' #this "length" `_===_` member' #that "length") `_and_` (invoke #this ["every"] $ ArrowFunctionExpression [#x, #idx] $ apply (ident "equals") [#x, member #that #idx]),
           }
         },
-        SwitchCase [Nothing] {
-          MemberExpression #typeRep 'fantasy-land/of
-        },
-      ]
-    }
-  },
-  chain: {
-    ArrowFunctionExpression [#f] {
-      ArrowFunctionExpression [#x] {
-        SwitchExpression (Object#toString #x) [
-          SwitchCase [Just $ StringLiteral "[object Array]"] {
-            CallExpression (MemberExpression #x 'flatMap) [ArrowFunctionExpression [#x] $ CallExpression #f [#x]]
-          },
-          SwitchCase [Just $ StringLiteral "[object Function]"] {
-            ArrowFunctionExpression [#y] $ CallExpression (CallExpression #x [CallExpression #f [#y]]) [#y]
-          },
-          SwitchCase [Nothing] {
-            CallExpression (MemberExpression #x 'fantasy-land/chain) [#f]
-          },
-        ]
       }
     }
   },
-  join: {
-    CallExpression #chain [#id]
-  },
-  contains: {
-    ArrowFunctionExpression [#this] {
-      ArrowFunctionExpression [#these] {
-        CallExpression (
-          CallExpression (
-            CallExpression #reduce [
-              ArrowFunctionExpression [#x] {
-                ArrowFunctionExpression [#that] {
-                  LogicalExpression "or" #x (CallExpression (CallExpression #equals [#this]) [#that])
-                }
-              }
-            ]
-          ) [BooleanLiteral false]
-        ) [#these]
-      }
-    }
-  },
+  compose:        lambda [#f, #g] $ typeSwitch #g (invoke #g ["fantasy-land/compose"] #f) {Function: lambda [#x] $ apply #f [apply #g [#x]]},
+  concat:         lambda [#this, #that] $ typeSwitch #this (invoke #this ["fantasy-land/concat"] #that) {Array/String: invoke #this ["concat"] #that},
+  empty:          lambda [#typeRep] $ typeRepSwitch #typeRep (invoke #typeRep ["fantasy-land/empty"] ()) {Array: array [], Object: object [], String: string "", Set: Set $ array [], Map: Map $ array []},
+  reduce:         lambda [#f, #y, #xs] $ typeSwitch #xs (invoke #xs ["fantasy-land/reduce"] (#f, #y)) {Array: invoke #xs ["reduce"] (ArrowFunctionExpression [#y, #x] $ apply #f [#y, #x], #y)},
+  ;; TODO: generalize to foldable
+  reduceRight:    lambda [#f, #y, #x] $ invoke #x ["reduceRight"] (ArrowFunctionExpression [#y, #x] $ apply #f [#y, #x], #y),
+  filter:         lambda [#f, #xs] $ typeSwitch #xs (invoke #xs ["fantasy-land/filter"] #f) {Array: filter (lambda [#x] $ apply #f [#x]) #xs},
+  reject:         lambda [#f] $ apply (ident "filter") [lambda [#x] $ _!_ $ apply #f [#x]],
+  map:            lambda [#f, #xs] $ typeSwitch #xs (invoke #xs ["fantasy-land/map"] #f) {Array: invoke #xs ["map"] $ lambda [#x] $ apply #f [#x]},
+  ;; TODO: generalize to functor
+  flip:           lambda [#f, #y, #x] $ apply #f [#x, #y],
+  of:             lambda [#typeRep] $ typeRepSwitch #typeRep (member' #typeRep "fantasy-land/of") {Array: reduce member' #globalThis ["Array", "of"], Function: lambda [#x, #y] #x, Set: lambda [#x] $ Set $ array [#x]},
+  append:         lambda [#x, #xs] $ apply (ident "concat") [#xs, apply (ident "of") [member' #xs "constructor", #x]],
+  prepend:        lambda [#x, #xs] $ apply (ident "concat") [apply (ident "of") [member' #xs "constructor", #x], #xs],
+  chain:          lambda [#f, #x] $ typeSwitch #x (invoke #x ["fantasy-land/chain"] #f) {Array: invoke #x ["flatMap"] $ lambda [#x] $ apply #f [#x], Function: lambda [#y] $ apply #x [apply #f [#y], #y]},
+  join:           apply (ident "chain") [ident "id"],
+  contains:       lambda [#this, #these] $ apply (ident "reduce") [lambda [#x, #that] $ #x `_or_` (apply (ident "equals") [#this, #that]), boolean false, #these],
 };

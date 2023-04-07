@@ -2,17 +2,31 @@ import sanctuary from "sanctuary";
 import {path} from "./elements.js";
 import {render, $21E8, $21E7, $21E9, $2190, $2192, $2191, $2193} from "./orthogonal.js";
 const subtract = rhs => lhs => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, rhs, [])) {
+  switch (globalThis.Object.prototype.toString.call(rhs)) {
     case "[object Set]":
       return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => !rhs.has(x))]);
     default:
       return lhs - rhs;
   }
 })();
-const reduce = f => y => x => x[globalThis.Array.isArray(x) ? "reduce" : "fantasy-land/reduce"]((y, x) => f(y)(x), y);
-const map = f => x => globalThis.Array.isArray(x) ? x.map(x => f(x)) : x["fantasy-land/map"](f);
+const reduce = f => y => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.reduce((y, x) => f(y)(x), y);
+    default:
+      return xs["fantasy-land/reduce"](f, y);
+  }
+})();
+const map = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.map(x => f(x));
+    default:
+      return xs["fantasy-land/map"](f);
+  }
+})();
 const chain = f => x => (() => {
-  switch (globalThis.Reflect.apply(globalThis.Object.prototype.toString, x, [])) {
+  switch (globalThis.Object.prototype.toString.call(x)) {
     case "[object Array]":
       return x.flatMap(x => f(x));
     case "[object Function]":
