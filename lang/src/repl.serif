@@ -41,7 +41,7 @@ print x = {
   when "[object Date]"
   then "construct Date [" + (print $ Number x) + "]"
   when "[object RegExp]"
-  then if x.flags == "" then "RegExp " + (print x.source) else "construct RegExp [" + (print x.source) + ", " + (print x.flags) + "]"
+  then if x.flags == "" then "RegExp " + (print x.source) else "RegExp (" + (print x.source) + ", " + (print x.flags) + ")"
   when "[object Set]"
   then "construct Set [" + (print $ Array.from x) + "]"
   when "[object Map]"

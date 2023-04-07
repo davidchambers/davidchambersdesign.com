@@ -47,7 +47,7 @@ const print = x => (() => {
     case "[object Date]":
       return "construct Date [" + print(Number(x)) + "]";
     case "[object RegExp]":
-      return equals("")(x.flags) ? "RegExp " + print(x.source) : "construct RegExp [" + print(x.source) + ", " + print(x.flags) + "]";
+      return equals("")(x.flags) ? "RegExp " + print(x.source) : "RegExp (" + print(x.source) + ", " + print(x.flags) + ")";
     case "[object Set]":
       return "construct Set [" + print(Array.from(x)) + "]";
     case "[object Map]":
