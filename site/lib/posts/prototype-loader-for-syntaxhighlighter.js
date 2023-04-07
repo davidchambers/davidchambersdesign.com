@@ -12,7 +12,7 @@ const body = [p(["Skip to ", a({
   href: "#setup"
 })(["setup"]), "\n    or ", a({
   href: "#usage"
-})(["usage"])]), ...excerpt, update(datetime("2009-06-27")("06:21:00")("Pacific/Auckland"))([p(["I have completely rewritten the code so that it no longer\n      requires empty functions inside the brush files to act as\n      indicators of readiness. Instead, the required brushes are\n      retrieved in a daisy chain. This is both more elegant and\n      more reliable. Additionally, style sheets are now also\n      retrieved on demand."])]), h3$0027({
+})(["usage"])]), ...excerpt, update(datetime("2009-06-27 06:21:00 (Pacific/Auckland)"))([p(["I have completely rewritten the code so that it no longer\n      requires empty functions inside the brush files to act as\n      indicators of readiness. Instead, the required brushes are\n      retrieved in a daisy chain. This is both more elegant and\n      more reliable. Additionally, style sheets are now also\n      retrieved on demand."])]), h3$0027({
   id: "setup"
 })(["Setup"]), p([strong(["Requires Prototype!"])]), p(["If you are not already using Prototype on your site,\n    I recommend using SyntaxHighlighter in the conventional\n    manner, since there is significant overhead associated\n    with loading ", code(["prototype.js"]), "."]), p(["If you ", em(["are"]), " using Prototype, follow these steps\n    to have brushes retrieved dynamically:"]), ol([li([p(["Download ", a({
   href: "/downloads/loader.js"
@@ -57,14 +57,14 @@ const body = [p(["Skip to ", a({
 }
 `), p(["Many thanks to Dan Breslau for letting me know about ", code(["SyntaxHighlighter.highlight()"]), " and for his thorough\n    testing of each of the early iterations of this code. Dan's ", a({
   href: "http://www.outofwhatbox.com/blog/2009/06/syntaxhighlighter-revised-again-works-on-its-own-once-again/"
-})(["SyntaxHighlighter improvements"]), " are well worth a look!"]), update(datetime("2009-06-27")("06:21:00")("Pacific/Auckland"))([p(["Thanks also to Bob Matsuoka for sharing his ", a({
+})(["SyntaxHighlighter improvements"]), " are well worth a look!"]), update(datetime("2009-06-27 06:21:00 (Pacific/Auckland)"))([p(["Thanks also to Bob Matsuoka for sharing his ", a({
   href: "http://ajaxian.com/archives/a-technique-for-lazy-script-loading"
-})(["technique for lazy script loading"]), " which provides\n      workarounds for browsers that do not support the onload\n      event when applied to script elements."])]), update(datetime("2009-08-16")("01:24:00")("Pacific/Auckland"))([p(["I've updated the script to ensure that the XML brush is always\n      loaded when at least one of the following conditions is true:"]), ol([li([code(["settings.defaults['html-script']"]), " is set to ", code(["true"])]), li(["a pre element to be highlighted has ", code(["html-script: true"]), " in its class name"])])])];
+})(["technique for lazy script loading"]), " which provides\n      workarounds for browsers that do not support the onload\n      event when applied to script elements."])]), update(datetime("2009-08-16 01:24:00 (Pacific/Auckland)"))([p(["I've updated the script to ensure that the XML brush is always\n      loaded when at least one of the following conditions is true:"]), ol([li([code(["settings.defaults['html-script']"]), " is set to ", code(["true"])]), li(["a pre element to be highlighted has ", code(["html-script: true"]), " in its class name"])])])];
 export default {
   id: 18,
   slug: "prototype-loader-for-syntaxhighlighter",
   title: ["Prototype loader for SyntaxHighlighter"],
-  datetime: datetime("2009-06-22")("01:04:00")("Pacific/Auckland"),
+  datetime: datetime("2009-06-22 01:04:00 (Pacific/Auckland)"),
   tags: ["javascript", "optimization", "prototype", "syntaxhighlighter"],
   body
 };

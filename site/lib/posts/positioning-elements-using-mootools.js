@@ -8,7 +8,7 @@ export default {
   id: 60,
   slug: "positioning-elements-using-mootools",
   title: ["Positioning elements using MooTools"],
-  datetime: datetime("2010-07-19")("17:45:00")("Pacific/Auckland"),
+  datetime: datetime("2010-07-19 17:45:00 (Pacific/Auckland)"),
   tags: ["javascript", "mootools"],
   body
 };

@@ -45,7 +45,7 @@ export default {
   id: 95,
   slug: "give-and-take-of-continuation-passing-style",
   title: ["The ", code(["give"]), " and ", code(["take"]), "\n    of continuation-passing style"],
-  datetime: datetime("2020-10-08")("10:41:26")("Europe/Berlin"),
+  datetime: datetime("2020-10-08 10:41:26 (Europe/Berlin)"),
   tags: ["continuation-passing-style", "javascript", "programming"],
   body
 };

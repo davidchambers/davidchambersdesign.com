@@ -14,7 +14,7 @@ if (numbers.every(function (n) { return n % 3 == 0; })) {
 `), p(["Python lists have no comparable method, so how would one write\n    this in Python?"]), code$002Dblock("python")(`numbers = [87, 33, 21, 75]
 if [n for n in numbers if n % 3 == 0] == numbers:
     print 'The numbers are all divisible by 3.'
-`), p(["This approach involves using a list comprehension to create a\n    list of numbers which are divisible by 3, and comparing this list\n    to ", code(["numbers"]), ". If the lists are equal, everything in ", code(["numbers"]), " is divisible by 3."]), update(datetime("2012-06-20")("14:15:00")("America/Los_Angeles"))([p(["As ", a({
+`), p(["This approach involves using a list comprehension to create a\n    list of numbers which are divisible by 3, and comparing this list\n    to ", code(["numbers"]), ". If the lists are equal, everything in ", code(["numbers"]), " is divisible by 3."]), update(datetime("2012-06-20 14:15:00 (America/Los_Angeles)"))([p(["As ", a({
   href: "https://twitter.com/rafael_ab/status/215428832872771584"
 })(["Rafael Almeida pointed out on Twitter"]), ",\n     there ", em(["is"]), " an elegant way to express this in Python:"]), code$002Dblock("python")(`if all((n % 3 == 0 for n in numbers)):
      print 'The numbers are all divisible by 3.'
@@ -48,7 +48,7 @@ export default {
   id: 66,
   slug: "python-loops-can-have-else-clause",
   title: ["Python loops can have else clause?!"],
-  datetime: datetime("2010-07-25")("18:11:00")("Pacific/Auckland"),
+  datetime: datetime("2010-07-25 18:11:00 (Pacific/Auckland)"),
   tags: ["javascript", "mootools", "programming", "python"],
   body
 };

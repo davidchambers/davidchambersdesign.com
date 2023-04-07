@@ -12,7 +12,7 @@ export default {
   id: 71,
   slug: "bike-shelf",
   title: ["Bike shelf"],
-  datetime: datetime("2010-09-20")("19:53:00")("Pacific/Auckland"),
+  datetime: datetime("2010-09-20 19:53:00 (Pacific/Auckland)"),
   tags: ["design"],
   body
 };

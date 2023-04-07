@@ -8,7 +8,7 @@ const excerpt = [p(["In my post titled ", a({
 })(["Easy Slider 1.5"]), "."]), p(["I had a look at the Easy Slider source code and decided to\n    write my own image slider using Prototype rather than hacking\n    someone else's code to pieces. It's a proof of concept rather\n    than a full-blown \"plugin\", but it demonstrates that such\n    functionality is achievable using elegant, meaningful markup."]), p(["Check out the ", a({
   href: "/examples/prototype-image-slider/"
 })(["Prototype image slider demo"]), " to see the code in action."])];
-const body = [...excerpt, update(datetime("2009-09-17")("01:17:00")("Pacific/Auckland"))([p(["I noticed that the script was failing miserably in Safari,\n      which didn't like the following line:"]), code$002Dblock("javascript")(`li: new Element('li', { class: 'prev' }),
+const body = [...excerpt, update(datetime("2009-09-17 01:17:00 (Pacific/Auckland)"))([p(["I noticed that the script was failing miserably in Safari,\n      which didn't like the following line:"]), code$002Dblock("javascript")(`li: new Element('li', { class: 'prev' }),
 `), p(["Wrapping the word \"class\" in quotes as per this ", a({
   href: "http://www.prototypejs.org/2007/5/12/dom-builder#comment-15777"
 })(["recommendation by Tobie Langel"]), " did the trick!"])]), h3$0027({
@@ -28,14 +28,14 @@ const body = [...excerpt, update(datetime("2009-09-17")("01:17:00")("Pacific/Auc
 new Slider('slider', 1.0, 3);  // fourth slide displayed first
 new Slider('slider', 1.0, -1); // last slide displayed first
 new Slider('slider', 1.5, -1); // slower transitions; last slide displayed first
-`), p(["If you find this code useful and would like me to flesh it out,\n    let me know."]), update(datetime("2009-09-21")("11:53:00")("Pacific/Auckland"))([p(["I neglected to mention that this code also requires ", a({
+`), p(["If you find this code useful and would like me to flesh it out,\n    let me know."]), update(datetime("2009-09-21 11:53:00 (Pacific/Auckland)"))([p(["I neglected to mention that this code also requires ", a({
   href: "http://script.aculo.us/"
 })(["script.aculo.us"]), "."])])];
 export default {
   id: 26,
   slug: "prototype-image-slider",
   title: ["Prototype image slider"],
-  datetime: datetime("2009-09-16")("23:43:00")("Pacific/Auckland"),
+  datetime: datetime("2009-09-16 23:43:00 (Pacific/Auckland)"),
   tags: ["css", "html", "javascript", "meaningful-markup", "prototype"],
   body
 };

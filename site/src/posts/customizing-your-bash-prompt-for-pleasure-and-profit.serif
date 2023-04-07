@@ -6,7 +6,7 @@ export default {
   id: 80,
   slug: "customizing-your-bash-prompt-for-pleasure-and-profit",
   title: ["Customizing your bash prompt for pleasure and profit"],
-  datetime: datetime "2011-02-13" "01:30:00" "America/Los_Angeles",
+  datetime: datetime "2011-02-13 01:30:00 (America/Los_Angeles)",
   tags: ["mac-os-x", "productivity", "terminal.app"],
   body,
 };
@@ -103,7 +103,7 @@ body = [
     preventing it from \"spilling out\".",
   ],
 
-  update {datetime "2011-04-03" "21:00:00" "America/Los_Angeles"} [
+  update {datetime "2011-04-03 21:00:00 (America/Los_Angeles)"} [
     p [
      "When first this post was published colour codes were not
       preceded by ", code ["\\["], ". The colour codes themselves
@@ -114,7 +114,7 @@ body = [
     ],
   ],
 
-  update {datetime "2012-04-20" "01:15:00" "America/Los_Angeles"} [
+  update {datetime "2012-04-20 01:15:00 (America/Los_Angeles)"} [
     p [
      "I've recently taken up Vim. In Vim, one can enter ",
       code [":shell"], " while in command mode to open a shell.

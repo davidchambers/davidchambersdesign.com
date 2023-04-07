@@ -14,7 +14,7 @@ export default {
   id: 92,
   slug: "helveticards",
   title: ["Helveticards"],
-  datetime: datetime("2011-11-20")("22:00:00")("America/Los_Angeles"),
+  datetime: datetime("2011-11-20 22:00:00 (America/Los_Angeles)"),
   tags: ["design", "typography"],
   body
 };

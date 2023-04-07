@@ -11,14 +11,14 @@ const body = [p(["I love ", a({
   alt: "Django syntax highlighting in Coda",
   src: "/images/posts/11/django-syntax-highlighting-in-coda.png",
   caption: ["Django syntax highlighting in Coda"]
-}]), update(datetime("2010-11-14")("14:00:00")("Australia/Sydney"))([p(["I've since discovered an alternative mode which\n      is actively maintained over on GitHub. I now use ", a({
+}]), update(datetime("2010-11-14 14:00:00 (Australia/Sydney)"))([p(["I've since discovered an alternative mode which\n      is actively maintained over on GitHub. I now use ", a({
   href: "https://github.com/jbergantine/Django-Template"
 })(["jbergantine's Django-Template"]), "."])])];
 export default {
   id: 11,
   slug: "django-syntax-highlighting-for-coda",
   title: ["Django syntax highlighting for Coda"],
-  datetime: datetime("2009-04-16")("22:15:00")("Pacific/Auckland"),
+  datetime: datetime("2009-04-16 22:15:00 (Pacific/Auckland)"),
   tags: ["coda", "django", "mac-os-x"],
   body
 };

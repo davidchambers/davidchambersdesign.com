@@ -6,7 +6,7 @@ export default {
   id: 11,
   slug: "django-syntax-highlighting-for-coda",
   title: ["Django syntax highlighting for Coda"],
-  datetime: datetime "2009-04-16" "22:15:00" "Pacific/Auckland",
+  datetime: datetime "2009-04-16 22:15:00 (Pacific/Auckland)",
   tags: ["coda", "django", "mac-os-x"],
   body,
 };
@@ -36,7 +36,7 @@ body = [
     ],
   }],
 
-  update {datetime "2010-11-14" "14:00:00" "Australia/Sydney"} [
+  update {datetime "2010-11-14 14:00:00 (Australia/Sydney)"} [
     p [
      "I've since discovered an alternative mode which
       is actively maintained over on GitHub. I now use ",

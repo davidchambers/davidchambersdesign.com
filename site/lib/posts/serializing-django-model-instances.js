@@ -24,7 +24,7 @@ export default {
   id: 49,
   slug: "serializing-django-model-instances",
   title: ["Serializing Django model instances"],
-  datetime: datetime("2010-04-13")("08:16:00")("Pacific/Auckland"),
+  datetime: datetime("2010-04-13 08:16:00 (Pacific/Auckland)"),
   tags: ["django", "python"],
   body
 };

@@ -64,7 +64,7 @@ setTimeout(function () {
     element.style.webkitTransitionProperty = 'left';
     element.style.webkitTransitionDuration = '2s';
 }, 0);
-`), p(["For some reason wrapping the ", code(["webkitTransition*"]), "\n    declarations in an anonymous function passed to ", code(["setTimeout"]), " with no delay prevents the transition\n    from being applied retroactively. I wondered whether closure\n    would be sufficient, but no, ", code(["setTimeout"]), " seems\n    to be the remedy for this \"quirk\"."]), p(["I'd love to know whether the behaviour described here\n    is correct behaviour. If I manage to find the answer to\n    this I'll post an update. If you are able to enlighten me,\n    please do so by leaving a comment!"]), update(datetime("2010-06-02")("00:15:00")("Pacific/Auckland"))([p(["I've just been watching one of the ", a({
+`), p(["For some reason wrapping the ", code(["webkitTransition*"]), "\n    declarations in an anonymous function passed to ", code(["setTimeout"]), " with no delay prevents the transition\n    from being applied retroactively. I wondered whether closure\n    would be sufficient, but no, ", code(["setTimeout"]), " seems\n    to be the remedy for this \"quirk\"."]), p(["I'd love to know whether the behaviour described here\n    is correct behaviour. If I manage to find the answer to\n    this I'll post an update. If you are able to enlighten me,\n    please do so by leaving a comment!"]), update(datetime("2010-06-02 00:15:00 (Pacific/Auckland)"))([p(["I've just been watching one of the ", a({
   href: "http://developer.apple.com/videos/wwdc/2010/"
 })(["WWDC 2010 session videos"]), ", and it turns out the fix\n      I stumbled upon is actually the \"correct\" solution."]), p(["From ", i(["Session 504 – CSS Effects, Part 2: Galleries and 3D Effects"]), ":"]), h3(["Aside: How Browsers Apply CSS Styles"]), ul([li(["Browsers optimize away redundant style changes"]), li(["This matters with transitions, because they are temporal"])]), code$002Dblock("javascript")(`var box = document.getElementById('box');
 box.style.backgroundColor = 'red';
@@ -77,7 +77,7 @@ export default {
   id: 55,
   slug: "settimeout-fix-for-webkit-transition",
   title: ["setTimeout fix for -webkit-transition"],
-  datetime: datetime("2010-06-18")("03:12:00")("Pacific/Auckland"),
+  datetime: datetime("2010-06-18 03:12:00 (Pacific/Auckland)"),
   tags: ["css3", "javascript"],
   body
 };

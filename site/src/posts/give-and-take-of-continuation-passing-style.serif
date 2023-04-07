@@ -9,7 +9,7 @@ export default {
    "The ", code ["give"], " and ", code ["take"], "
     of continuation-passing style",
   ],
-  datetime: datetime "2020-10-08" "10:41:26" "Europe/Berlin",
+  datetime: datetime "2020-10-08 10:41:26 (Europe/Berlin)",
   tags: ["continuation-passing-style", "javascript", "programming"],
   body,
 };

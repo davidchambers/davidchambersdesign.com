@@ -17,7 +17,7 @@ export default {
   id: 25,
   slug: "embed-youtube-clips-using-valid-xhtml-markup",
   title: ["Embed YouTube clips using valid XHTML markup"],
-  datetime: datetime("2009-09-14")("14:17:00")("Pacific/Auckland"),
+  datetime: datetime("2009-09-14 14:17:00 (Pacific/Auckland)"),
   tags: ["css", "html", "video"],
   body
 };

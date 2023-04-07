@@ -1,5 +1,4 @@
-import luxon from "luxon";
-const datetime = date => time => zone => luxon.DateTime.fromFormat(date + " " + time + " (" + zone + ")", "yyyy-MM-dd HH:mm:ss (z)", {
+import {DateTime} from "luxon";
+export default formatted => DateTime.fromFormat(formatted, "yyyy-MM-dd HH:mm:ss (z)", {
   setZone: true
 });
-export default datetime;

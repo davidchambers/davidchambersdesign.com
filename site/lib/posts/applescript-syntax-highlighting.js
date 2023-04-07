@@ -70,13 +70,13 @@ end if
 `)])]), h3$0027({
   id: "usage"
 })(["Usage"]), p(["To have SyntaxHighlighter parse a block of AppleScript,\n    wrap the code in ", code(["pre"]), " tags like so:"]), code$002Dblock("html")(`<pre class="brush: applescript; class-name: applescript;"></pre>
-`), p([code(["brush: applescript;"]), " tells SyntaxHighlighter to\n    use the AppleScript brush for the text within the pre tag. ", code(["class-name: applescript;"]), " tells SyntaxHighlighter\n    to add the class name \"applescript\" to the container div\n    that is inserted into the page. (Hopefully I'm able to\n    convince Alex that the brush name should be added as a\n    class name automatically, which would remove the need to\n    include ", code(["class-name: applescript;"]), " each time.)"]), update(datetime("2012-02-22")("23:11:00")("America/Los_Angeles"))([p(["Providing a ", code(["class-name"]), " in the, ahem, class name\n      is no longer necessary (apparently I made a convincing argument).\n      This is now sufficient:"]), code$002Dblock("html")(`<pre class="brush:applescript"></pre>
+`), p([code(["brush: applescript;"]), " tells SyntaxHighlighter to\n    use the AppleScript brush for the text within the pre tag. ", code(["class-name: applescript;"]), " tells SyntaxHighlighter\n    to add the class name \"applescript\" to the container div\n    that is inserted into the page. (Hopefully I'm able to\n    convince Alex that the brush name should be added as a\n    class name automatically, which would remove the need to\n    include ", code(["class-name: applescript;"]), " each time.)"]), update(datetime("2012-02-22 23:11:00 (America/Los_Angeles)"))([p(["Providing a ", code(["class-name"]), " in the, ahem, class name\n      is no longer necessary (apparently I made a convincing argument).\n      This is now sufficient:"]), code$002Dblock("html")(`<pre class="brush:applescript"></pre>
 `)]), p(["Note that including ", code(["ruler: true;"]), " will have no effect.\n    Since AppleScript is displayed in a variable-width font, the ruler\n    serves no purpose. The ruler is still inserted into the page\n    (unless ", code(["ruler: false;"]), " is included), but is hidden\n    by the style sheet."])];
 export default {
   id: 15,
   slug: "applescript-syntax-highlighting",
   title: ["AppleScript syntax highlighting"],
-  datetime: datetime("2009-06-04")("03:12:00")("Pacific/Auckland"),
+  datetime: datetime("2009-06-04 03:12:00 (Pacific/Auckland)"),
   tags: ["applescript", "javascript", "mac-os-x", "syntaxhighlighter"],
   body
 };

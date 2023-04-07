@@ -21,7 +21,7 @@ export default {
   id: 2,
   slug: "show-full-directory-path-in-finder-window-title-bar",
   title: ["Show full directory path in Finder window title bar"],
-  datetime: datetime("2008-11-29")("19:07:00")("Pacific/Auckland"),
+  datetime: datetime("2008-11-29 19:07:00 (Pacific/Auckland)"),
   tags: ["mac-os-x"],
   body
 };

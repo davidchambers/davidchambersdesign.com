@@ -6,7 +6,7 @@ export default {
   id: 18,
   slug: "prototype-loader-for-syntaxhighlighter",
   title: ["Prototype loader for SyntaxHighlighter"],
-  datetime: datetime "2009-06-22" "01:04:00" "Pacific/Auckland",
+  datetime: datetime "2009-06-22 01:04:00 (Pacific/Auckland)",
   tags: ["javascript", "optimization", "prototype", "syntaxhighlighter"],
   body,
 };
@@ -39,7 +39,7 @@ body = [
 
   ...excerpt,
 
-  update {datetime "2009-06-27" "06:21:00" "Pacific/Auckland"} [
+  update {datetime "2009-06-27 06:21:00 (Pacific/Auckland)"} [
     p [
      "I have completely rewritten the code so that it no longer
       requires empty functions inside the brush files to act as
@@ -193,7 +193,7 @@ body = [
       ["SyntaxHighlighter improvements"], " are well worth a look!",
   ],
 
-  update {datetime "2009-06-27" "06:21:00" "Pacific/Auckland"} [
+  update {datetime "2009-06-27 06:21:00 (Pacific/Auckland)"} [
     p [
      "Thanks also to Bob Matsuoka for sharing his ",
       a {href: "http://ajaxian.com/archives/a-technique-for-lazy-script-loading"}
@@ -203,7 +203,7 @@ body = [
     ],
   ],
 
-  update {datetime "2009-08-16" "01:24:00" "Pacific/Auckland"} [
+  update {datetime "2009-08-16 01:24:00 (Pacific/Auckland)"} [
     p [
      "I've updated the script to ensure that the XML brush is always
       loaded when at least one of the following conditions is true:",

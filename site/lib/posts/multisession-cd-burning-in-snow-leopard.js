@@ -13,7 +13,7 @@ export default {
   id: 29,
   slug: "multisession-cd-burning-in-snow-leopard",
   title: ["Multisession CD burning in Snow Leopard"],
-  datetime: datetime("2009-10-27")("08:58:00")("Pacific/Auckland"),
+  datetime: datetime("2009-10-27 08:58:00 (Pacific/Auckland)"),
   tags: ["mac-os-x", "snow-leopard"],
   body
 };

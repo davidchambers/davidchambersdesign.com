@@ -23,7 +23,7 @@ export default {
   id: 48,
   slug: "linkify-tweets-with-regex",
   title: ["Linkify tweets with regex"],
-  datetime: datetime("2010-04-10")("03:22:00")("Pacific/Auckland"),
+  datetime: datetime("2010-04-10 03:22:00 (Pacific/Auckland)"),
   tags: ["javascript", "php", "python", "regex", "regular-expressions"],
   body
 };

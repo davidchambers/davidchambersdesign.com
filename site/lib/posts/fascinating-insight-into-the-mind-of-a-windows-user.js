@@ -17,7 +17,7 @@ export default {
   id: 44,
   slug: "fascinating-insight-into-the-mind-of-a-windows-user",
   title: ["Fascinating insight into the mind of a Windows user"],
-  datetime: datetime("2010-03-25")("15:06:00")("Pacific/Auckland"),
+  datetime: datetime("2010-03-25 15:06:00 (Pacific/Auckland)"),
   tags: ["mac-os-x", "windows"],
   body
 };

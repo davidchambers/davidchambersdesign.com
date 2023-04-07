@@ -6,7 +6,7 @@ const excerpt = [p(["It's not uncommon to start watching a video online and disc
 `,
   src: "/images/posts/windows/application-volumes.png"
 })]), p(["Wouldn't this be nice? Many months ago I did some Googling to find out\n    whether it's possible to control volume on an application-by-application\n    basis in OS X. The closest thing to a solution was an X11 (read: ugly)\n    app that ", em(["kinda"]), " worked."])];
-const body = [...excerpt, p(["Apple, I don't bug you often, but here I will. ", strong(["Please build this into the OS and keep the neighbours happy."]), "\n    It'd be particularly sexy if applications such as iTunes which ", em(["do"]), " currently grant the user control of the application's\n    volume synchronized their volume settings with the ones in System\n    Preferences. That is, adjusting the volume in iTunes would adjust\n    the iTunes volume setting in System Preferences, and vice versa."]), p(["+1 in the comments if you'd like to see this feature implemented. :)"]), update(datetime("2010-04-15")("14:36:00")("Pacific/Auckland"))([p([a({
+const body = [...excerpt, p(["Apple, I don't bug you often, but here I will. ", strong(["Please build this into the OS and keep the neighbours happy."]), "\n    It'd be particularly sexy if applications such as iTunes which ", em(["do"]), " currently grant the user control of the application's\n    volume synchronized their volume settings with the ones in System\n    Preferences. That is, adjusting the volume in iTunes would adjust\n    the iTunes volume setting in System Preferences, and vice versa."]), p(["+1 in the comments if you'd like to see this feature implemented. :)"]), update(datetime("2010-04-15 14:36:00 (Pacific/Auckland)"))([p([a({
   href: "http://www.joesoft.com/products/hear.php"
 })(["Hear"]), "\n      offers this functionality, but isn't cheap. I hope Hear's\n      developers decide to release a preference pane that provides\n      the functionality of Hear's mixer pane and nothing more\n      (I'm about to make this request)."]), p([img({
   alt: "Hear's mixer pane",
@@ -21,7 +21,7 @@ export default {
   id: 47,
   slug: "application-specific-volume-control-in-mac-os-x",
   title: ["Application-specific volume control in Mac OS X?"],
-  datetime: datetime("2010-04-07")("02:04:00")("Pacific/Auckland"),
+  datetime: datetime("2010-04-07 02:04:00 (Pacific/Auckland)"),
   tags: ["mac-os-x", "ux"],
   body
 };

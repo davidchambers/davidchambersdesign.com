@@ -4,7 +4,7 @@ import datetime from "../datetime.js";
 const excerpt = [p(["Yesterday I wrote a simple class which auto-populates\n    input fields, and thought it worth sharing. I was originally\n    inspired to write this code by Roger Johansson's post titled ", a({
   href: "http://www.456bereastreet.com/archive/200710/autopopulating_text_input_fields_with_javascript/"
 })(["Autopopulating text input fields with JavaScript"]), ".\n    While I approached the problem from a slightly different angle,\n    I made sure to avoid the pitfalls Roger mentions."])];
-const body = [...excerpt, update(datetime("2010-06-09")("23:31:00")("Pacific/Auckland"))(["I've written an update to this article for those interested in ", a({
+const body = [...excerpt, update(datetime("2010-06-09 23:31:00 (Pacific/Auckland)"))(["I've written an update to this article for those interested in ", a({
   href: "/autopopulating-input-fields-with-mootools/"
 })(["auto-populating input fields with MooTools"]), "."]), h3(["Contents"]), ul([li([a({
   href: "#behaviour"
@@ -60,7 +60,7 @@ const body = [...excerpt, update(datetime("2010-06-09")("23:31:00")("Pacific/Auc
         new Placeholder(input);
     });
 });
-`), update(datetime("2010-03-30")("17:17:00")("Pacific/Auckland"))([p(["I've updated the selector used in the above example. Selecting\n      all inputs with placeholder attributes is far more elegant than\n      listing each input explicitly. It also means that an input added\n      anywhere on the site will automatically receive this special\n      treatment (provided that it has a placeholder attribute)."])]), p([strong(["This site's search field shows the code in action."])]), update(datetime("2010-04-16")("00:59:00")("Pacific/Auckland"))([p(["For those that would like placeholder text in ", em(["password"]), "\n      input fields not to appear as dots or asterisks in older browsers,\n      I've written an alternative snippet. I drew inspiration from a post on ", a({
+`), update(datetime("2010-03-30 17:17:00 (Pacific/Auckland)"))([p(["I've updated the selector used in the above example. Selecting\n      all inputs with placeholder attributes is far more elegant than\n      listing each input explicitly. It also means that an input added\n      anywhere on the site will automatically receive this special\n      treatment (provided that it has a placeholder attribute)."])]), p([strong(["This site's search field shows the code in action."])]), update(datetime("2010-04-16 00:59:00 (Pacific/Auckland)"))([p(["For those that would like placeholder text in ", em(["password"]), "\n      input fields not to appear as dots or asterisks in older browsers,\n      I've written an alternative snippet. I drew inspiration from a post on ", a({
   href: "http://blog.decaf.de/2009/07/iphone-like-password-fields-using-jquery/"
 })(["iPhone-like password fields using jQuery"]), "."]), code$002Dblock("javascript")(`// provide input hints
 document.observe('dom:loaded', function () {
@@ -125,7 +125,7 @@ export default {
   id: 33,
   slug: "autopopulating-input-fields-with-prototype",
   title: ["Auto-populating input fields with Prototype"],
-  datetime: datetime("2010-01-07")("22:03:00")("Pacific/Auckland"),
+  datetime: datetime("2010-01-07 22:03:00 (Pacific/Auckland)"),
   tags: ["html5", "javascript", "prototype", "ux"],
   body
 };

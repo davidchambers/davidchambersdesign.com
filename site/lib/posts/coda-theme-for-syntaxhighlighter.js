@@ -124,14 +124,14 @@ def daily_sales_total(*all_sales):
   id: "setup"
 })(["Setup"]), ol([li(["Download and unzip ", a({
   href: "/downloads/coda-theme-for-syntaxhighlighter.zip"
-})(["coda-theme-for-syntaxhighlighter.zip"]), "."]), li(["Open ", strong(["example.html"]), " to confirm that everything\n      is working correctly."]), li(["Upload ", strong(["styles/shThemeCoda.css"]), " to your\n      SyntaxHighlighter ", strong(["styles"]), " directory."]), li(["Upload ", strong(["styles/bg.png"]), " to your SyntaxHighlighter ", strong(["styles"]), " directory."]), li(["Upload the brushes in ", strong(["scripts/"]), " to your\n      SyntaxHighlighter ", strong(["scripts"]), " directory, replacing\n      the existing CSS, JavaScript, PHP, Python, and XML brushes.\n      Three versions of each brush are included: ", strong([".js"]), ", ", strong([".min.js"]), " (minified), and ", strong([".min.js.gz"]), "\n      (minified and gzipped). Use whichever version suits you best."]), li(["Add a link to the Coda theme wherever you link to shCore.css.\n      If you're using the standard setup, this will be in the head\n      section of the document."])]), update(datetime("2009-08-24")("22:51:00")("Pacific/Auckland"))([p([`Coda theme has been updated so that comments are now italicized
+})(["coda-theme-for-syntaxhighlighter.zip"]), "."]), li(["Open ", strong(["example.html"]), " to confirm that everything\n      is working correctly."]), li(["Upload ", strong(["styles/shThemeCoda.css"]), " to your\n      SyntaxHighlighter ", strong(["styles"]), " directory."]), li(["Upload ", strong(["styles/bg.png"]), " to your SyntaxHighlighter ", strong(["styles"]), " directory."]), li(["Upload the brushes in ", strong(["scripts/"]), " to your\n      SyntaxHighlighter ", strong(["scripts"]), " directory, replacing\n      the existing CSS, JavaScript, PHP, Python, and XML brushes.\n      Three versions of each brush are included: ", strong([".js"]), ", ", strong([".min.js"]), " (minified), and ", strong([".min.js.gz"]), "\n      (minified and gzipped). Use whichever version suits you best."]), li(["Add a link to the Coda theme wherever you link to shCore.css.\n      If you're using the standard setup, this will be in the head\n      section of the document."])]), update(datetime("2009-08-24 22:51:00 (Pacific/Auckland)"))([p([`Coda theme has been updated so that comments are now italicized
       (as they are in Coda). XML brush for Coda theme now applies the
       correct class name ("xml-comment") to HTML comments.`])])];
 export default {
   id: 22,
   slug: "coda-theme-for-syntaxhighlighter",
   title: ["Coda theme for SyntaxHighlighter"],
-  datetime: datetime("2009-08-16")("08:53:00")("Pacific/Auckland"),
+  datetime: datetime("2009-08-16 08:53:00 (Pacific/Auckland)"),
   tags: ["coda", "css", "javascript", "prototype", "syntaxhighlighter"],
   body
 };

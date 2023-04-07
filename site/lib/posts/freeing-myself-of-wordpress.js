@@ -45,7 +45,7 @@ export default {
   id: 50,
   slug: "freeing-myself-of-wordpress",
   title: ["Freeing myself of WordPress"],
-  datetime: datetime("2010-06-03")("02:56:00")("Pacific/Auckland"),
+  datetime: datetime("2010-06-03 02:56:00 (Pacific/Auckland)"),
   tags: ["django", "mango", "wordpress"],
   body
 };

@@ -10,13 +10,13 @@ const body = [p([img({
   href: "http://daringfireball.net/projects/markdown/syntax"
 })(["Markdown"]), "\n    highlighting and previewing – yes, I write commit messages in Markdown!"]), p([strong(["To set TextMate as Mercurial's editor, add ", code(["editor = mate -w"]), " to the ", code(["[ui]"]), "\n      section of your ", code(["~/.hgrc"]), " file."])]), p([a({
   href: "http://vincecima.com/post/578017364/using-textmate-as-mercurials-editor"
-})(["Vince Cima explains"]), ":"]), blockquote([p(["Next time you do ", code(["hg commit"]), " TextMate will open\n      a temporary file you write your commit message into. Type your\n      message, save the file and then close the window to finish the\n      commit. The ", code(["-w"]), " flag on the ", code(["mate"]), "\n      command tells TextMate not to return control to the command\n      line until the editor window has been closed."])]), update(datetime("2011-01-22")("15:20:00")("Australia/Sydney"))([p(["To use TextMate as your git editor, run the following command:"]), code$002Dblock("console")(`git config --global core.editor "mate -w"
+})(["Vince Cima explains"]), ":"]), blockquote([p(["Next time you do ", code(["hg commit"]), " TextMate will open\n      a temporary file you write your commit message into. Type your\n      message, save the file and then close the window to finish the\n      commit. The ", code(["-w"]), " flag on the ", code(["mate"]), "\n      command tells TextMate not to return control to the command\n      line until the editor window has been closed."])]), update(datetime("2011-01-22 15:20:00 (Australia/Sydney)"))([p(["To use TextMate as your git editor, run the following command:"]), code$002Dblock("console")(`git config --global core.editor "mate -w"
 `), p(["This adds ", code(["editor = mate -w"]), " to the ", code(["[core]"]), "\n      section of your ", code(["~/.gitconfig"]), " file."])])];
 export default {
   id: 76,
   slug: "composing-mercurial-commit-messages-in-textmate",
   title: ["Composing Mercurial commit messages in TextMate"],
-  datetime: datetime("2011-01-10")("01:25:00")("Australia/Sydney"),
+  datetime: datetime("2011-01-10 01:25:00 (Australia/Sydney)"),
   tags: ["hg", "mac-os-x", "markdown", "mercurial", "textmate"],
   body
 };

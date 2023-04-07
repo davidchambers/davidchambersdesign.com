@@ -6,7 +6,7 @@ export default {
   id: 3,
   slug: "rounded-rectangles-in-adobe-illustrator-cs3",
   title: ["Rounded rectangles in Adobe Illustrator CS3"],
-  datetime: datetime "2008-12-03" "12:49:00" "Pacific/Auckland",
+  datetime: datetime "2008-12-03 12:49:00 (Pacific/Auckland)",
   tags: ["adobe", "cs3", "illustrator"],
   body,
 };

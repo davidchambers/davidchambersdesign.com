@@ -35,7 +35,7 @@ export default {
   id: 74,
   slug: "javascript-date-and-time-localization",
   title: ["JavaScript date and time localization"],
-  datetime: datetime("2010-11-28")("01:45:00")("Australia/Sydney"),
+  datetime: datetime("2010-11-28 01:45:00 (Australia/Sydney)"),
   tags: ["html5", "i18n", "javascript", "jquery", "localization", "meaningful-markup"],
   body
 };

@@ -6,7 +6,7 @@ export default {
   id: 22,
   slug: "coda-theme-for-syntaxhighlighter",
   title: ["Coda theme for SyntaxHighlighter"],
-  datetime: datetime "2009-08-16" "08:53:00" "Pacific/Auckland",
+  datetime: datetime "2009-08-16 08:53:00 (Pacific/Auckland)",
   tags: ["coda", "css", "javascript", "prototype", "syntaxhighlighter"],
   body,
 };
@@ -313,7 +313,7 @@ body = [
     ],
   ],
 
-  update {datetime "2009-08-24" "22:51:00" "Pacific/Auckland"} [
+  update {datetime "2009-08-24 22:51:00 (Pacific/Auckland)"} [
     p [
       """Coda theme has been updated so that comments are now italicized
       (as they are in Coda). XML brush for Coda theme now applies the

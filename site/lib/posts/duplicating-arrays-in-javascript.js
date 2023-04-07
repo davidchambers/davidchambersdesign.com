@@ -21,7 +21,7 @@ export default {
   id: 35,
   slug: "duplicating-arrays-in-javascript",
   title: ["Duplicating arrays in JavaScript"],
-  datetime: datetime("2010-01-09")("19:26:00")("Pacific/Auckland"),
+  datetime: datetime("2010-01-09 19:26:00 (Pacific/Auckland)"),
   tags: ["javascript"],
   body
 };

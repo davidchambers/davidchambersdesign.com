@@ -21,7 +21,7 @@ export default {
   id: 37,
   slug: "resize-browser-window-to-match-iphone-viewport-dimensions",
   title: ["Resize browser window to match iPhone viewport dimensions"],
-  datetime: datetime("2010-02-16")("03:20:00")("Pacific/Auckland"),
+  datetime: datetime("2010-02-16 03:20:00 (Pacific/Auckland)"),
   tags: ["bookmarklets", "iphone", "javascript"],
   body
 };
