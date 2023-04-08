@@ -51,8 +51,8 @@ _===_         = BinaryExpression "===";
 _&_           = BinaryExpression "&";
 _^_           = BinaryExpression "^";
 _|_           = BinaryExpression "|";
-_and_         = LogicalExpression "and";
-_or_          = LogicalExpression "or";
+_&&_          = LogicalExpression "&&";
+_||_          = LogicalExpression "||";
 
 construct = curry2 $ invoke #globalThis ["Reflect", "construct"];
 Set = construct (member' #globalThis "Set") . array . Array.of;
@@ -111,7 +111,7 @@ Prelude = {
       typeSwitch #this (#this `_===_` #that) {
         Array: {
           typeSwitch #that (boolean false) {
-            Array: (member' #this "length" `_===_` member' #that "length") `_and_` (invoke #this ["every"] $ ArrowFunctionExpression [#x, #idx] $ apply (ident "equals") [#x, member #that #idx]),
+            Array: (member' #this "length" `_===_` member' #that "length") `_&&_` (invoke #this ["every"] $ ArrowFunctionExpression [#x, #idx] $ apply (ident "equals") [#x, member #that #idx]),
           }
         },
       }
@@ -133,5 +133,5 @@ Prelude = {
   prepend:        lambda [#x, #xs] $ apply (ident "concat") [apply (ident "of") [member' #xs "constructor", #x], #xs],
   chain:          lambda [#f, #x] $ typeSwitch #x (invoke #x ["fantasy-land/chain"] #f) {Array: invoke #x ["flatMap"] $ lambda [#x] $ apply #f [#x], Function: lambda [#y] $ apply #x [apply #f [#y], #y]},
   join:           apply (ident "chain") [ident "id"],
-  contains:       lambda [#this, #these] $ apply (ident "reduce") [lambda [#x, #that] $ #x `_or_` (apply (ident "equals") [#this, #that]), boolean false, #these],
+  contains:       lambda [#this, #these] $ apply (ident "reduce") [lambda [#x, #that] $ #x `_||_` (apply (ident "equals") [#this, #that]), boolean false, #these],
 };

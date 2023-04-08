@@ -97,7 +97,7 @@ applyFlip = transform {
           CallExpression: \callee1 arguments1 -> {
             match' Node (const $ CallExpression (CallExpression (CallExpression callee1 arguments1) arguments2) arguments3) {
               Identifier: \name -> {
-                if name == "flip" and arguments1.length == 1
+                if name == "flip" && arguments1.length == 1
                 then CallExpression (CallExpression arguments1[0] arguments3) arguments2
                 else CallExpression (CallExpression (CallExpression (Identifier name) arguments1) arguments2) arguments3
               }

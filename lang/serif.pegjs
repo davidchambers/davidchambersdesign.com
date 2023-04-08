@@ -125,7 +125,6 @@ TemplateLiteralCharacter
   / '\\' sequence:('"' / '$' / EscapeSequence)
     { return sequence; }
 
-AndToken            = @$'and'           !IdentifierPart
 ArrowToken          = @$'->'            !IdentifierPart
 AsToken             = @$'as'            !IdentifierPart
 DoToken             = @$'do'            !IdentifierPart
@@ -137,7 +136,6 @@ HidingToken         = @$'hiding'        !IdentifierPart
 IfToken             = @$'if'            !IdentifierPart
 ImportToken         = @$'import'        !IdentifierPart
 InToken             = @$'in'            !IdentifierPart
-OrToken             = @$'or'            !IdentifierPart
 SwitchToken         = @$'switch'        !IdentifierPart
 ThenToken           = @$'then'          !IdentifierPart
 TypeToken           = @$'type'          !IdentifierPart
@@ -446,7 +444,7 @@ BitwiseORExpression
     { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
 
 LogicalANDOperator
-  = AndToken
+  = '&&'
 
 LogicalANDExpression
   = left:BitwiseORExpression
@@ -454,7 +452,7 @@ LogicalANDExpression
     { return tail.reduce((left, {operator, right}) => Node.LogicalExpression(operator)(left)(right), left); }
 
 LogicalOROperator
-  = OrToken
+  = '||'
 
 LogicalORExpression
   = left:LogicalANDExpression

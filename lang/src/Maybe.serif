@@ -32,4 +32,4 @@ maybe Nothing Just = match null {Nothing, Just};
 
 fromMaybe default = maybe default id;
 
-fromNullable x = if x == null or x == undefined then Nothing else Just x;
+fromNullable x = if x == null || x == undefined then Nothing else Just x;

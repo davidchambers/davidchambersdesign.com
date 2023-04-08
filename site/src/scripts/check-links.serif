@@ -6,7 +6,7 @@ import posts from "../posts/index.serif";
 S = sanctuary.unchecked;
 
 absolute? url = {
-  url.startsWith "http:" or
+  url.startsWith "http:" ||
   url.startsWith "https:"
 };
 
@@ -33,11 +33,11 @@ yellow text = "\x1B[33m" + text + "\x1B[0m";
 cyan   text = "\x1B[36m" + text + "\x1B[0m";
 
 format {url, status} = {
-  if typeof status == "string"           then red    $ (invert $ bold status) + " " + url
-  else if status >= 200 and status < 300 then          (         bold status) + " " + url
-  else if status >= 300 and status < 400 then yellow $ (         bold status) + " " + url
-  else if status >= 400 and status < 500 then red    $ (         bold status) + " " + url
-  else                                        cyan   $ (         bold status) + " " + url
+  if typeof status == "string"          then red    $ (invert $ bold status) + " " + url
+  else if status >= 200 && status < 300 then          (         bold status) + " " + url
+  else if status >= 300 && status < 400 then yellow $ (         bold status) + " " + url
+  else if status >= 400 && status < 500 then red    $ (         bold status) + " " + url
+  else                                       cyan   $ (         bold status) + " " + url
 };
 
 program = {

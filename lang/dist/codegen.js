@@ -192,16 +192,7 @@ const fromBinaryExpression = operator => left => right => ({
 });
 const fromLogicalExpression = operator => left => right => ({
   type: "LogicalExpression",
-  operator: (() => {
-    switch (operator) {
-      case "and":
-        return "&&";
-      case "or":
-        return "||";
-      case "??":
-        return "??";
-    }
-  })(),
+  operator,
   left: fromNode(left),
   right: fromNode(right)
 });

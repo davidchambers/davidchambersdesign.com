@@ -151,7 +151,7 @@ fromProperty key value = {
   computed = not $ match' Node (const false) {StringLiteral: validEsIdentifierName} key;
   esKey = if computed then fromNode key else fromEscapedIdentifierName key.value;
   esValue = fromNode value;
-  shorthand = esKey.type == "Identifier" and esValue.type == "Identifier" and esKey.name == esValue.name;
+  shorthand = esKey.type == "Identifier" && esValue.type == "Identifier" && esKey.name == esValue.name;
   {type: "Property", key: esKey, value: esValue, kind: "init", method: false, shorthand, computed}
 };
 
@@ -216,12 +216,7 @@ fromBinaryExpression operator left right = {
 
 fromLogicalExpression operator left right = {
   type: "LogicalExpression",
-  operator: {
-    switch operator
-    when "and" then "&&"
-    when "or"  then "||"
-    when "??"  then "??"
-  },
+  operator,
   left: fromNode left,
   right: fromNode right,
 };

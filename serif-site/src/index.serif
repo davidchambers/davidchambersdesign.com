@@ -124,8 +124,8 @@ document = html [
           in
           ==
           !=
-          and
-          or
+          &&
+          ||
           ??
         """
       ],

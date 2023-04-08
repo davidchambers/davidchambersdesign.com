@@ -92,8 +92,8 @@ const _$003D$003D$003D_ = BinaryExpression("===");
 const _$0026_ = BinaryExpression("&");
 const _$005E_ = BinaryExpression("^");
 const _$007C_ = BinaryExpression("|");
-const _and_ = LogicalExpression("and");
-const _or_ = LogicalExpression("or");
+const _$0026$0026_ = LogicalExpression("&&");
+const _$007C$007C_ = LogicalExpression("||");
 const $construct = curry2(invoke($0023globalThis)(["Reflect", "construct"]));
 const Set = $ => $construct(member$0027($0023globalThis)("Set"))(array(Array.of($)));
 const Map = $ => $construct(member$0027($0023globalThis)("Map"))(array(Array.of($)));
@@ -129,7 +129,7 @@ const Prelude = {
   mod: lambda([$0023lhs, $0023rhs])(cond(_$003D$003D$003D_($0023rhs)(number(0)))($0023DivisionByZero)(_$0025_(_$002B_(_$0025_($0023lhs)($0023rhs))($0023rhs))($0023rhs))),
   equals: lambda([$0023this, $0023that])(typeSwitch($0023this)(_$003D$003D$003D_($0023this)($0023that))({
     Array: typeSwitch($0023that)(boolean(false))({
-      Array: _and_(_$003D$003D$003D_(member$0027($0023this)("length"))(member$0027($0023that)("length")))(invoke($0023this)(["every"])(ArrowFunctionExpression([$0023x, $0023idx])(apply(ident("equals"))([$0023x, member($0023that)($0023idx)]))))
+      Array: _$0026$0026_(_$003D$003D$003D_(member$0027($0023this)("length"))(member$0027($0023that)("length")))(invoke($0023this)(["every"])(ArrowFunctionExpression([$0023x, $0023idx])(apply(ident("equals"))([$0023x, member($0023that)($0023idx)]))))
     })
   })),
   compose: lambda([$0023f, $0023g])(typeSwitch($0023g)(invoke($0023g)(["fantasy-land/compose"])($0023f))({
@@ -169,6 +169,6 @@ const Prelude = {
     Function: lambda([$0023y])(apply($0023x)([apply($0023f)([$0023y]), $0023y]))
   })),
   join: apply(ident("chain"))([ident("id")]),
-  contains: lambda([$0023this, $0023these])(apply(ident("reduce"))([lambda([$0023x, $0023that])(_or_($0023x)(apply(ident("equals"))([$0023this, $0023that]))), boolean(false), $0023these]))
+  contains: lambda([$0023this, $0023these])(apply(ident("reduce"))([lambda([$0023x, $0023that])(_$007C$007C_($0023x)(apply(ident("equals"))([$0023this, $0023that]))), boolean(false), $0023these]))
 };
 export default Prelude;
