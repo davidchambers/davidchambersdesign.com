@@ -1,6 +1,7 @@
 import {attempt, attemptP, fork, resolve} from "fluture";
 import {generate} from "astring";
 
+import {Just} from "./Maybe.serif";
 import * as Node from "./Node.serif";
 import * as serif from "./index.serif";
 
@@ -57,7 +58,7 @@ processInput serifSourceText = do {
   serifAst <- serif.parse "[repl]" $ "export default " <> serifSourceText <> ";";
   serifAst <- serif.rewrite serifAst \importPath -> [];  ;; TODO: support import statements
   {exports, statements} = serif.changeExtensions serifAst;
-  esAst = serif.esModuleFromSerifModule $ Node.BlockExpression statements exports[0].declaration;
+  esAst = serif.esModuleFromSerifModule $ Node.Block statements $ Just exports[0].declaration;
   esSourceText = generate esAst;
   esResult <- attempt \() -> eval esSourceText;
   resolve $ print esResult

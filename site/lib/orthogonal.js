@@ -14,6 +14,14 @@ const equals = this$ => that => (() => {
       return this$ === that;
   }
 })();
+const compose = f => g => (() => {
+  switch (globalThis.Object.prototype.toString.call(g)) {
+    case "[object Function]":
+      return x => f(g(x));
+    default:
+      return g["fantasy-land/compose"](f);
+  }
+})();
 const reduce = f => y => xs => (() => {
   switch (globalThis.Object.prototype.toString.call(xs)) {
     case "[object Array]":
@@ -28,7 +36,7 @@ const simplify = paths => equals([])(paths) ? [] : (() => {
   const [prev, path] = reduce(([prev, path]) => curr => equals("M")(curr[0]) ? equals("M")(prev[0]) || equals("m")(prev[0]) ? [curr, path] : [curr, [...path, prev]] : (equals("M")(prev[0]) || equals("m")(prev[0])) && equals("m")(curr[0]) ? [[prev[0], [prev[1][0] + curr[1][0], prev[1][1] + curr[1][1]]], path] : [curr, [...path, prev]])([head, []])(tail);
   return [...path, prev];
 })();
-const render = $ => S.unwords(S.join(simplify($)));
+const render = compose(S.unwords)(compose(S.join)(simplify));
 const $21E6 = x => ["m", [-x, 0]];
 const $21E8 = x => ["m", [+x, 0]];
 const $21E7 = y => ["m", [0, -y]];

@@ -3,7 +3,6 @@ import * from "./Node.serif";
 
 export default Prelude;
 
-compose' = flip compose;
 curry2 f x y = f (x, y);
 
 ident   = Identifier;
@@ -14,9 +13,11 @@ array   = ArrayExpression;
 object  = ObjectExpression;
 spread  = SpreadElement;
 member  = MemberExpression;
-member' = compose' string . member;
+member' = (. string) . member;
+prefix  = PrefixExpression;
+infix   = InfixExpression;
 lambda  = flip $ reduceRight $ flip $ ArrowFunctionExpression . Array.of;
-apply   = reduce $ compose' Array.of . CallExpression;
+apply   = reduce $ (. Array.of) . CallExpression;
 invoke object names ...arguments = {
   CallExpression (reduce member' object names) arguments
 };
@@ -40,19 +41,19 @@ invoke object names ...arguments = {
 #xs                 = ident "xs";
 #y                  = ident "y";
 
-_typeof_      = UnaryExpression "typeof";
-_!_           = UnaryExpression "!";
-_/_           = BinaryExpression "/";
-_%_           = BinaryExpression "%";
-_+_           = BinaryExpression "+";
-_-_           = BinaryExpression "-";
-_instanceof_  = BinaryExpression "instanceof";
-_===_         = BinaryExpression "===";
-_&_           = BinaryExpression "&";
-_^_           = BinaryExpression "^";
-_|_           = BinaryExpression "|";
-_&&_          = LogicalExpression "&&";
-_||_          = LogicalExpression "||";
+_typeof_      = prefix "typeof";
+_!_           = prefix "!";
+_/_           = infix "/";
+_%_           = infix "%";
+_+_           = infix "+";
+_-_           = infix "-";
+_instanceof_  = infix "instanceof";
+_===_         = infix "===";
+_&_           = infix "&";
+_^_           = infix "^";
+_|_           = infix "|";
+_&&_          = infix "&&";
+_||_          = infix "||";
 
 construct = curry2 $ invoke #globalThis ["Reflect", "construct"];
 Set = construct (member' #globalThis "Set") . array . Array.of;

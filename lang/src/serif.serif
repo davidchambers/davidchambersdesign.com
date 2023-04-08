@@ -1,9 +1,10 @@
 import {generate} from "astring";
-import {fork, mapRej, parallel, resolve} from "fluture";
+import {fork, mapRej, resolve} from "fluture";
 
 import Node from "./Node.js";
 import * as fs from "./fs.serif";
 import * as serif from "./index.serif";
+import parallel from "./parallel.serif";
 import * as path from "./path.serif";
 
 parse filename sourceText = {
@@ -96,7 +97,7 @@ orderDependencies tree = {
     tree <- reduce reducer (resolve $ construct Map [[]]) absFilenames;
     filenames = orderDependencies tree;
     ;; Create JavaScript module for each Serif module:
-    parallel 16 $ flip map filenames \serifFilename -> do {
+    parallel $ flip map filenames \serifFilename -> do {
       serifDirname = path.dirname serifFilename;
       serifAst = (.ast) $ .get [serifFilename] tree;
       serifAst' <- serif.rewrite serifAst \importPath -> {

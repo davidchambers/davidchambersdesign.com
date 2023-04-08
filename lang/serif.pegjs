@@ -142,19 +142,8 @@ TypeToken           = @$'type'          !IdentifierPart
 WhenToken           = @$'when'          !IdentifierPart
 
 ReservedWord
-  = UnaryOperator
-  / ExponentiationOperator
-  / MultiplicativeOperator
-  / AdditiveOperator
-  / ShiftOperator
-  / RelationalOperator
-  / EqualityOperator
-  / BitwiseANDOperator
-  / BitwiseXOROperator
-  / BitwiseOROperator
-  / LogicalANDOperator
-  / LogicalOROperator
-  / CoalesceOperator
+  = PrefixOperator
+  / InfixOperator
   / IfToken
   / ThenToken
   / ElseToken
@@ -162,6 +151,26 @@ ReservedWord
   / WhenToken
   / DoToken
   / ExportToken
+
+InfixOperator
+  = CompositionOperator                 // .
+  / ExponentiationOperator              // **
+  / MultiplicativeOperator              // * /
+  / AdditiveOperator                    // + -
+  / ConcatenationOperator               // <>
+  / ShiftOperator                       // << >> >>>
+  / RelationalOperator                  // < > <= >= has in
+  / EqualityOperator                    // == !=
+  / MapOperator                         // <$>
+  / BitwiseANDOperator                  // &
+  / BitwiseXOROperator                  // ^
+  / BitwiseOROperator                   // |
+  / LogicalANDOperator                  // &&
+  / LogicalOROperator                   // ||
+  / CoalesceOperator                    // ??
+  / BindOperator                        // >>=
+  / ApplicationOperator                 // $
+  / PipeOperator                        // %
 
 Identifier
   = !ReservedWord name:$(IdentifierStart IdentifierPart*)
@@ -194,6 +203,7 @@ IdentifierPart
   / [0-9]
   / '-'
   / '='
+  / '$'
   / '|'
   / '%'
 
@@ -238,6 +248,9 @@ PrimaryExpression
   / ArrayExpression
   / Identifier
   / PropertyAccessor
+  / LeftSection
+  / RightSection
+  / EmptySection
 
 MemberExpression
   = object:PrimaryExpression
@@ -325,14 +338,14 @@ RestElement
   = '...' argument:Identifier
     { return Node.RestElement(argument); }
 
-UnaryOperator
+PrefixOperator
   = '+'
   / '-'
   / '~'
 
 UnaryExpression
-  = operator:UnaryOperator _ argument:CallExpression
-    { return Node.UnaryExpression(operator)(argument); }
+  = operator:PrefixOperator _ argument:CallExpression
+    { return Node.PrefixExpression(operator)(argument); }
   / CallExpression
 
 CompositionOperator
@@ -340,7 +353,7 @@ CompositionOperator
 
 CompositionExpression
   = exprs:UnaryExpression|1.., _ CompositionOperator _|
-    { return exprs.reduceRight((right, left) => Node.CompositionExpression(left)(right)); }
+    { return exprs.reduceRight((right, left) => Node.InfixExpression('.')(left)(right)); }
 
 InfixCallExpression
   = left:CompositionExpression
@@ -353,16 +366,16 @@ ExponentiationOperator
 ExponentiationExpression
   = left:InfixCallExpression
     tail:(_ operator:ExponentiationOperator _ right:InfixCallExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+    { return tail.reduce((left, {operator, right}) => Node.InfixExpression(operator)(left)(right), left); }
 
 MultiplicativeOperator
-  = '*'
+  = $('*' !'*')
   / '/'
 
 MultiplicativeExpression
   = left:ExponentiationExpression
     tail:(_ operator:MultiplicativeOperator _ right:ExponentiationExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+    { return tail.reduce((left, {operator, right}) => Node.InfixExpression(operator)(left)(right), left); }
 
 AdditiveOperator
   = '+'
@@ -371,37 +384,37 @@ AdditiveOperator
 AdditiveExpression
   = left:MultiplicativeExpression
     tail:(_ operator:AdditiveOperator _ right:MultiplicativeExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+    { return tail.reduce((left, {operator, right}) => Node.InfixExpression(operator)(left)(right), left); }
 
 ConcatenationOperator
   = '<>'
 
 ConcatenationExpression
   = exprs:AdditiveExpression|1.., _ ConcatenationOperator _|
-    { return exprs.reduceRight((right, left) => Node.ConcatenationExpression(left)(right)); }
+    { return exprs.reduceRight((right, left) => Node.InfixExpression('<>')(left)(right)); }
 
 ShiftOperator
   = '<<'
+  / $('>>' !'>' !'=')
   / '>>>'
-  / '>>'
 
 ShiftExpression
   = left:ConcatenationExpression
     tail:(_ operator:ShiftOperator _ right:ConcatenationExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+    { return tail.reduce((left, {operator, right}) => Node.InfixExpression(operator)(left)(right), left); }
 
 RelationalOperator
-  = '<='
-  / '<'
+  = $('<' !'<' !'=' !'>' !'$>')
+  / $('>' !'>' !'=')
+  / '<='
   / '>='
-  / '>'
   / HasToken
   / InToken
 
 RelationalExpression
   = left:ShiftExpression
     tail:(_ operator:RelationalOperator _ right:ShiftExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+    { return tail.reduce((left, {operator, right}) => Node.InfixExpression(operator)(left)(right), left); }
 
 EqualityOperator
   = '=='
@@ -410,22 +423,22 @@ EqualityOperator
 EqualityExpression
   = left:RelationalExpression
     tail:(_ operator:EqualityOperator _ right:RelationalExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+    { return tail.reduce((left, {operator, right}) => Node.InfixExpression(operator)(left)(right), left); }
 
 MapOperator
   = '<$>'
 
 MapExpression
   = exprs:EqualityExpression|1.., _ MapOperator _|
-    { return exprs.reduceRight((right, left) => Node.MapExpression(left)(right)); }
+    { return exprs.reduceRight((right, left) => Node.InfixExpression('<$>')(left)(right)); }
 
 BitwiseANDOperator
-  = '&'
+  = $('&' !'&')
 
 BitwiseANDExpression
   = left:MapExpression
     tail:(_ operator:BitwiseANDOperator _ right:MapExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+    { return tail.reduce((left, {operator, right}) => Node.InfixExpression(operator)(left)(right), left); }
 
 BitwiseXOROperator
   = '^'
@@ -433,15 +446,15 @@ BitwiseXOROperator
 BitwiseXORExpression
   = left:BitwiseANDExpression
     tail:(_ operator:BitwiseXOROperator _ right:BitwiseANDExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+    { return tail.reduce((left, {operator, right}) => Node.InfixExpression(operator)(left)(right), left); }
 
 BitwiseOROperator
-  = '|'
+  = $('|' !'|')
 
 BitwiseORExpression
   = left:BitwiseXORExpression
     tail:(_ operator:BitwiseOROperator _ right:BitwiseXORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.BinaryExpression(operator)(left)(right), left); }
+    { return tail.reduce((left, {operator, right}) => Node.InfixExpression(operator)(left)(right), left); }
 
 LogicalANDOperator
   = '&&'
@@ -449,7 +462,7 @@ LogicalANDOperator
 LogicalANDExpression
   = left:BitwiseORExpression
     tail:(_ operator:LogicalANDOperator _ right:BitwiseORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.LogicalExpression(operator)(left)(right), left); }
+    { return tail.reduce((left, {operator, right}) => Node.InfixExpression(operator)(left)(right), left); }
 
 LogicalOROperator
   = '||'
@@ -457,7 +470,7 @@ LogicalOROperator
 LogicalORExpression
   = left:LogicalANDExpression
     tail:(_ operator:LogicalOROperator _ right:LogicalANDExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.LogicalExpression(operator)(left)(right), left); }
+    { return tail.reduce((left, {operator, right}) => Node.InfixExpression(operator)(left)(right), left); }
 
 CoalesceOperator
   = '??'
@@ -465,14 +478,14 @@ CoalesceOperator
 CoalesceExpression
   = left:LogicalORExpression
     tail:(_ operator:CoalesceOperator _ right:LogicalORExpression { return {operator, right}; })*
-    { return tail.reduce((left, {operator, right}) => Node.LogicalExpression(operator)(left)(right), left); }
+    { return tail.reduce((left, {operator, right}) => Node.InfixExpression(operator)(left)(right), left); }
 
 BindOperator
   = '>>='
 
 BindExpression
   = exprs:CoalesceExpression|1.., _ BindOperator _|
-    { return exprs.reduce((left, right) => Node.BindExpression(left)(right)); }
+    { return exprs.reduce((left, right) => Node.InfixExpression('>>=')(left)(right)); }
 
 ConditionalExpression
   = IfToken _ predicate:Expression
@@ -507,26 +520,38 @@ ApplicationOperator
 ApplicationExpression
   = callee:SwitchExpression
     args:(_ ApplicationOperator _ arg:ApplicationExpression { return arg; })*
-    { return args.reduce((callee, arg) => Node.CallExpression(callee)([arg]), callee); }
+    { return args.reduce((callee, arg) => Node.InfixExpression('$')(callee)(arg), callee); }
 
 PipeOperator
   = '%'
 
 PipeExpression
   = exprs:ApplicationExpression|1.., _ PipeOperator _|
-    { return exprs.reduce((head, body) => Node.PipeExpression(head)(body)); }
+    { return exprs.reduce((head, body) => Node.InfixExpression('%')(head)(body)); }
 
 PropertyAccessor
   = '(' '.' identifier:Identifier ')'
     { return Node.PropertyAccessor(identifier); }
 
+LeftSection
+  = '(' left:Expression __ operator:InfixOperator ')'
+    { return Node.LeftSection(operator)(left); }
+
+RightSection
+  = '(' operator:InfixOperator __ right:Expression ')'
+    { return Node.RightSection(operator)(right); }
+
+EmptySection
+  = '(' operator:InfixOperator ')'
+    { return Node.EmptySection(operator); }
+
 BlockExpression
   = '{' _ statements:Statement|.., _| _ result:Expression _ '}'
-    { return Node.BlockExpression(statements)(result); }
+    { return Node.Block(statements)(Maybe.Just(result)); }
 
 BlockStatement
   = '{' _ statements:Statement|1.., _| _ '}'
-    { return Node.BlockStatement(statements); }
+    { return Node.Block(statements)(Maybe.Nothing); }
 
 DoBlockExpression
   = DoToken _ '{' _ operations:DoOperation|.., _| _ result:Expression _ '}'

@@ -18,6 +18,14 @@ const equals = this$ => that => (() => {
       return this$ === that;
   }
 })();
+const compose = f => g => (() => {
+  switch (globalThis.Object.prototype.toString.call(g)) {
+    case "[object Function]":
+      return x => f(g(x));
+    default:
+      return g["fantasy-land/compose"](f);
+  }
+})();
 const filter = f => xs => (() => {
   switch (globalThis.Object.prototype.toString.call(xs)) {
     case "[object Array]":
@@ -63,5 +71,5 @@ const red = text => "\u001b[31m" + text + "\u001b[0m";
 const yellow = text => "\u001b[33m" + text + "\u001b[0m";
 const cyan = text => "\u001b[36m" + text + "\u001b[0m";
 const format = ({url, status}) => equals("string")(typeof$(status)) ? red(invert(bold(status)) + " " + url) : status >= 200 && status < 300 ? bold(status) + " " + url : status >= 300 && status < 400 ? yellow(bold(status) + " " + url) : status >= 400 && status < 500 ? red(bold(status) + " " + url) : cyan(bold(status) + " " + url);
-const program = map($ => (args => target => target.join.apply(target, args))(["\n"])(map(format)($)))(parallel(16)(map(status)(S.sort(Array.from(construct(Set)([chain(links)(chain($ => $.body)(posts))]))))));
+const program = map(compose((args => target => target.join.apply(target, args))(["\n"]))(map(format)))(parallel(16)(map(status)(S.sort(Array.from(construct(Set)([chain(links)(chain($ => $.body)(posts))]))))));
 fork(console.error)(console.log)(program);

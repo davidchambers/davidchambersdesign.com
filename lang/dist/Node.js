@@ -8,7 +8,7 @@ const map = f => xs => (() => {
       return xs["fantasy-land/map"](f);
   }
 })();
-const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, BinaryExpression, BindExpression, BlockExpression, BlockStatement, BooleanLiteral, CallExpression, CompositionExpression, ConcatenationExpression, ConditionalExpression, DataConstructorDefinition, DataTypeDeclaration, DoBlockExpression, Elision, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, LogicalExpression, MapExpression, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PipeExpression, Property, PropertyAccessor, RestElement, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, UnaryExpression, VariableDeclaration} = (() => {
+const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, Block, BooleanLiteral, CallExpression, ConditionalExpression, DataConstructorDefinition, DataTypeDeclaration, DoBlockExpression, Elision, EmptySection, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, InfixExpression, LeftSection, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PrefixExpression, Property, PropertyAccessor, RestElement, RightSection, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, VariableDeclaration} = (() => {
   const ArrayExpression = elements => ({
     [Symbol.for("tag")]: "ArrayExpression",
     elements
@@ -27,25 +27,10 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
     parameters,
     body
   });
-  const BinaryExpression = operator => left => right => ({
-    [Symbol.for("tag")]: "BinaryExpression",
-    operator,
-    left,
-    right
-  });
-  const BindExpression = left => right => ({
-    [Symbol.for("tag")]: "BindExpression",
-    left,
-    right
-  });
-  const BlockExpression = statements => result => ({
-    [Symbol.for("tag")]: "BlockExpression",
+  const Block = statements => result => ({
+    [Symbol.for("tag")]: "Block",
     statements,
     result
-  });
-  const BlockStatement = statements => ({
-    [Symbol.for("tag")]: "BlockStatement",
-    statements
   });
   const BooleanLiteral = value => ({
     [Symbol.for("tag")]: "BooleanLiteral",
@@ -55,16 +40,6 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
     [Symbol.for("tag")]: "CallExpression",
     callee,
     arguments: arguments$
-  });
-  const CompositionExpression = left => right => ({
-    [Symbol.for("tag")]: "CompositionExpression",
-    left,
-    right
-  });
-  const ConcatenationExpression = left => right => ({
-    [Symbol.for("tag")]: "ConcatenationExpression",
-    left,
-    right
   });
   const ConditionalExpression = predicate => consequent => alternative => ({
     [Symbol.for("tag")]: "ConditionalExpression",
@@ -90,6 +65,10 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
   const Elision = {
     [Symbol.for("tag")]: "Elision"
   };
+  const EmptySection = operator => ({
+    [Symbol.for("tag")]: "EmptySection",
+    operator
+  });
   const ExportDefaultDeclaration = declaration => ({
     [Symbol.for("tag")]: "ExportDefaultDeclaration",
     declaration
@@ -145,16 +124,16 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
     left,
     right
   });
-  const LogicalExpression = operator => left => right => ({
-    [Symbol.for("tag")]: "LogicalExpression",
+  const InfixExpression = operator => left => right => ({
+    [Symbol.for("tag")]: "InfixExpression",
     operator,
     left,
     right
   });
-  const MapExpression = left => right => ({
-    [Symbol.for("tag")]: "MapExpression",
-    left,
-    right
+  const LeftSection = operator => operand => ({
+    [Symbol.for("tag")]: "LeftSection",
+    operator,
+    operand
   });
   const MemberExpression = object => property => ({
     [Symbol.for("tag")]: "MemberExpression",
@@ -186,10 +165,10 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
     [Symbol.for("tag")]: "ObjectPattern",
     properties
   });
-  const PipeExpression = head => body => ({
-    [Symbol.for("tag")]: "PipeExpression",
-    head,
-    body
+  const PrefixExpression = operator => operand => ({
+    [Symbol.for("tag")]: "PrefixExpression",
+    operator,
+    operand
   });
   const Property = key => value => ({
     [Symbol.for("tag")]: "Property",
@@ -203,6 +182,11 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
   const RestElement = argument => ({
     [Symbol.for("tag")]: "RestElement",
     argument
+  });
+  const RightSection = operator => operand => ({
+    [Symbol.for("tag")]: "RightSection",
+    operator,
+    operand
   });
   const SpreadElement = argument => ({
     [Symbol.for("tag")]: "SpreadElement",
@@ -227,11 +211,6 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
     quasis,
     expressions
   });
-  const UnaryExpression = operator => argument => ({
-    [Symbol.for("tag")]: "UnaryExpression",
-    operator,
-    argument
-  });
   const VariableDeclaration = pattern => expression => ({
     [Symbol.for("tag")]: "VariableDeclaration",
     pattern,
@@ -243,19 +222,15 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
       ArrayPattern,
       ArrowAssignmentStatement,
       ArrowFunctionExpression,
-      BinaryExpression,
-      BindExpression,
-      BlockExpression,
-      BlockStatement,
+      Block,
       BooleanLiteral,
       CallExpression,
-      CompositionExpression,
-      ConcatenationExpression,
       ConditionalExpression,
       DataConstructorDefinition,
       DataTypeDeclaration,
       DoBlockExpression,
       Elision,
+      EmptySection,
       ExportDefaultDeclaration,
       ExportNamedDeclaration,
       ExportSpecifier,
@@ -268,8 +243,8 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
       ImportNamespaceSpecifier,
       ImportSpecifier,
       InfixCallExpression,
-      LogicalExpression,
-      MapExpression,
+      InfixExpression,
+      LeftSection,
       MemberExpression,
       MethodCallExpression,
       Module,
@@ -277,16 +252,16 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
       NumberLiteral,
       ObjectExpression,
       ObjectPattern,
-      PipeExpression,
+      PrefixExpression,
       Property,
       PropertyAccessor,
       RestElement,
+      RightSection,
       SpreadElement,
       StringLiteral,
       SwitchCase,
       SwitchExpression,
       TemplateLiteral,
-      UnaryExpression,
       VariableDeclaration,
       [Symbol.for("match")]: default$ => cases => node => Object.hasOwn(cases, node[Symbol.for("tag")]) ? (() => {
         switch (node[Symbol.for("tag")]) {
@@ -298,22 +273,12 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
             return cases.ArrowAssignmentStatement(node.pattern)(node.expression);
           case "ArrowFunctionExpression":
             return cases.ArrowFunctionExpression(node.parameters)(node.body);
-          case "BinaryExpression":
-            return cases.BinaryExpression(node.operator)(node.left)(node.right);
-          case "BindExpression":
-            return cases.BindExpression(node.left)(node.right);
-          case "BlockExpression":
-            return cases.BlockExpression(node.statements)(node.result);
-          case "BlockStatement":
-            return cases.BlockStatement(node.statements);
+          case "Block":
+            return cases.Block(node.statements)(node.result);
           case "BooleanLiteral":
             return cases.BooleanLiteral(node.value);
           case "CallExpression":
             return cases.CallExpression(node.callee)(node.arguments);
-          case "CompositionExpression":
-            return cases.CompositionExpression(node.left)(node.right);
-          case "ConcatenationExpression":
-            return cases.ConcatenationExpression(node.left)(node.right);
           case "ConditionalExpression":
             return cases.ConditionalExpression(node.predicate)(node.consequent)(node.alternative);
           case "DataConstructorDefinition":
@@ -324,6 +289,8 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
             return cases.DoBlockExpression(node.operations)(node.result);
           case "Elision":
             return cases.Elision;
+          case "EmptySection":
+            return cases.EmptySection(node.operator);
           case "ExportDefaultDeclaration":
             return cases.ExportDefaultDeclaration(node.declaration);
           case "ExportNamedDeclaration":
@@ -348,10 +315,10 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
             return cases.ImportSpecifier(node.imported)(node.local);
           case "InfixCallExpression":
             return cases.InfixCallExpression(node.operator)(node.left)(node.right);
-          case "LogicalExpression":
-            return cases.LogicalExpression(node.operator)(node.left)(node.right);
-          case "MapExpression":
-            return cases.MapExpression(node.left)(node.right);
+          case "InfixExpression":
+            return cases.InfixExpression(node.operator)(node.left)(node.right);
+          case "LeftSection":
+            return cases.LeftSection(node.operator)(node.operand);
           case "MemberExpression":
             return cases.MemberExpression(node.object)(node.property);
           case "MethodCallExpression":
@@ -366,14 +333,16 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
             return cases.ObjectExpression(node.properties);
           case "ObjectPattern":
             return cases.ObjectPattern(node.properties);
-          case "PipeExpression":
-            return cases.PipeExpression(node.head)(node.body);
+          case "PrefixExpression":
+            return cases.PrefixExpression(node.operator)(node.operand);
           case "Property":
             return cases.Property(node.key)(node.value);
           case "PropertyAccessor":
             return cases.PropertyAccessor(node.identifier);
           case "RestElement":
             return cases.RestElement(node.argument);
+          case "RightSection":
+            return cases.RightSection(node.operator)(node.operand);
           case "SpreadElement":
             return cases.SpreadElement(node.argument);
           case "StringLiteral":
@@ -384,8 +353,6 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
             return cases.SwitchExpression(node.discriminant)(node.cases);
           case "TemplateLiteral":
             return cases.TemplateLiteral(node.quasis)(node.expressions);
-          case "UnaryExpression":
-            return cases.UnaryExpression(node.operator)(node.argument);
           case "VariableDeclaration":
             return cases.VariableDeclaration(node.pattern)(node.expression);
         }
@@ -395,19 +362,15 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
     ArrayPattern,
     ArrowAssignmentStatement,
     ArrowFunctionExpression,
-    BinaryExpression,
-    BindExpression,
-    BlockExpression,
-    BlockStatement,
+    Block,
     BooleanLiteral,
     CallExpression,
-    CompositionExpression,
-    ConcatenationExpression,
     ConditionalExpression,
     DataConstructorDefinition,
     DataTypeDeclaration,
     DoBlockExpression,
     Elision,
+    EmptySection,
     ExportDefaultDeclaration,
     ExportNamedDeclaration,
     ExportSpecifier,
@@ -420,8 +383,8 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
     ImportNamespaceSpecifier,
     ImportSpecifier,
     InfixCallExpression,
-    LogicalExpression,
-    MapExpression,
+    InfixExpression,
+    LeftSection,
     MemberExpression,
     MethodCallExpression,
     Module,
@@ -429,73 +392,119 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
     NumberLiteral,
     ObjectExpression,
     ObjectPattern,
-    PipeExpression,
+    PrefixExpression,
     Property,
     PropertyAccessor,
     RestElement,
+    RightSection,
     SpreadElement,
     StringLiteral,
     SwitchCase,
     SwitchExpression,
     TemplateLiteral,
-    UnaryExpression,
     VariableDeclaration
   };
 })();
 const transform = cases => (() => {
-  const recur = node => match(Node)({
-    ArrayExpression: $ => ArrayExpression(map(recur)($)),
-    ArrayPattern: $ => ArrayPattern(map(recur)($)),
+  const recur = match(Node)({
+    ArrayExpression: elements => ArrayExpression(map(recur)(elements)),
+    ArrayPattern: elements => ArrayPattern(map(recur)(elements)),
     ArrowAssignmentStatement: pattern => expression => ArrowAssignmentStatement(recur(pattern))(recur(expression)),
     ArrowFunctionExpression: parameters => body => ArrowFunctionExpression(map(recur)(parameters))(recur(body)),
-    BinaryExpression: operator => left => right => BinaryExpression(operator)(recur(left))(recur(right)),
-    BlockExpression: statements => result => BlockExpression(map(recur)(statements))(recur(result)),
-    BlockStatement: $ => BlockStatement(map(recur)($)),
-    BooleanLiteral,
-    BindExpression: left => right => BindExpression(recur(left))(recur(right)),
+    Block: statements => result => Block(map(recur)(statements))(map(recur)(result)),
+    BooleanLiteral: value => BooleanLiteral(value),
     CallExpression: callee => arguments$ => CallExpression(recur(callee))(map(recur)(arguments$)),
-    CompositionExpression: left => right => CompositionExpression(recur(left))(recur(right)),
-    ConcatenationExpression: left => right => ConcatenationExpression(recur(left))(recur(right)),
     ConditionalExpression: predicate => consequent => alternative => ConditionalExpression(recur(predicate))(recur(consequent))(map(recur)(alternative)),
     DataConstructorDefinition: identifier => parameters => DataConstructorDefinition(recur(identifier))(map(recur)(parameters)),
     DataTypeDeclaration: identifier => constructors => DataTypeDeclaration(recur(identifier))(map(recur)(constructors)),
     DoBlockExpression: operations => result => DoBlockExpression(map(recur)(operations))(recur(result)),
     Elision,
-    ExportDefaultDeclaration: $ => ExportDefaultDeclaration(recur($)),
-    ExportNamedDeclaration: $ => ExportNamedDeclaration(map(recur)($)),
+    EmptySection: operator => EmptySection(operator),
+    ExportDefaultDeclaration: declaration => ExportDefaultDeclaration(recur(declaration)),
+    ExportNamedDeclaration: specifiers => ExportNamedDeclaration(map(recur)(specifiers)),
     ExportSpecifier: local => exported => ExportSpecifier(recur(local))(recur(exported)),
-    ExpressionStatement: $ => ExpressionStatement(recur($)),
+    ExpressionStatement: expression => ExpressionStatement(recur(expression)),
     FunctionDeclaration: name => parameters => body => FunctionDeclaration(name)(parameters)(recur(body)),
     Identifier,
-    ImportAllSpecifier: $ => ImportAllSpecifier(map(recur)($)),
+    ImportAllSpecifier: hiding => ImportAllSpecifier(map(recur)(hiding)),
     ImportDeclaration: source => specifiers => ImportDeclaration(source)(map(recur)(specifiers)),
-    ImportDefaultSpecifier: $ => ImportDefaultSpecifier(recur($)),
-    ImportNamespaceSpecifier: $ => ImportNamespaceSpecifier(recur($)),
+    ImportDefaultSpecifier: local => ImportDefaultSpecifier(recur(local)),
+    ImportNamespaceSpecifier: local => ImportNamespaceSpecifier(recur(local)),
     ImportSpecifier: imported => local => ImportSpecifier(recur(imported))(recur(local)),
     InfixCallExpression: operator => left => right => InfixCallExpression(operator)(recur(left))(recur(right)),
-    LogicalExpression: operator => left => right => LogicalExpression(operator)(recur(left))(recur(right)),
-    MapExpression: left => right => MapExpression(recur(left))(recur(right)),
+    InfixExpression: operator => left => right => InfixExpression(operator)(recur(left))(recur(right)),
+    LeftSection: operator => operand => LeftSection(operator)(recur(operand)),
     MemberExpression: object => property => MemberExpression(recur(object))(recur(property)),
     MethodCallExpression,
     Module: imports => exports => statements => Module(map(recur)(imports))(map(recur)(exports))(map(recur)(statements)),
     NullLiteral,
     NumberLiteral,
-    ObjectExpression: $ => ObjectExpression(map(recur)($)),
-    ObjectPattern: $ => ObjectPattern(map(recur)($)),
-    PipeExpression: head => body => PipeExpression(recur(head))(recur(body)),
+    ObjectExpression: properties => ObjectExpression(map(recur)(properties)),
+    ObjectPattern: properties => ObjectPattern(map(recur)(properties)),
+    PrefixExpression: operator => operand => PrefixExpression(operator)(recur(operand)),
     Property: key => value => Property(recur(key))(recur(value)),
-    PropertyAccessor: $ => PropertyAccessor(recur($)),
-    RestElement: $ => RestElement(recur($)),
-    SpreadElement: $ => SpreadElement(recur($)),
+    PropertyAccessor: identifier => PropertyAccessor(recur(identifier)),
+    RestElement: argument => RestElement(recur(argument)),
+    RightSection: operator => operand => RightSection(operator)(recur(operand)),
+    SpreadElement: argument => SpreadElement(recur(argument)),
     StringLiteral,
     SwitchCase: predicates => consequent => SwitchCase(map(map(recur))(predicates))(recur(consequent)),
     SwitchExpression: discriminant => cases => SwitchExpression(recur(discriminant))(map(recur)(cases)),
     TemplateLiteral: quasis => expressions => TemplateLiteral(quasis)(map(recur)(expressions)),
-    UnaryExpression: operator => argument => UnaryExpression(operator)(recur(argument)),
     VariableDeclaration: pattern => expression => VariableDeclaration(recur(pattern))(recur(expression)),
     ...cases
-  })(node);
+  });
+  return recur;
+})();
+const foldRec = cases => (() => {
+  const recur = match(Node)({
+    ArrayExpression: elements => cases.ArrayExpression(map(recur)(elements)),
+    ArrayPattern: elements => cases.ArrayPattern(map(recur)(elements)),
+    ArrowAssignmentStatement: pattern => expression => cases.ArrowAssignmentStatement(recur(pattern))(recur(expression)),
+    ArrowFunctionExpression: parameters => body => cases.ArrowFunctionExpression(map(recur)(parameters))(recur(body)),
+    Block: statements => result => cases.Block(map(recur)(statements))(map(recur)(result)),
+    BooleanLiteral: cases.BooleanLiteral,
+    CallExpression: callee => arguments$ => cases.CallExpression(recur(callee))(map(recur)(arguments$)),
+    ConditionalExpression: predicate => consequent => alternative => cases.ConditionalExpression(recur(predicate))(recur(consequent))(map(recur)(alternative)),
+    DataConstructorDefinition: identifier => parameters => cases.DataConstructorDefinition(recur(identifier))(map(recur)(parameters)),
+    DataTypeDeclaration: identifier => constructors => cases.DataTypeDeclaration(recur(identifier))(map(recur)(constructors)),
+    DoBlockExpression: operations => result => cases.DoBlockExpression(map(recur)(operations))(recur(result)),
+    Elision: cases.Elision,
+    EmptySection: operator => cases.EmptySection(operator),
+    ExportDefaultDeclaration: declaration => cases.ExportDefaultDeclaration(recur(declaration)),
+    ExportNamedDeclaration: specifiers => cases.ExportNamedDeclaration(map(recur)(specifiers)),
+    ExportSpecifier: local => exported => cases.ExportSpecifier(recur(local))(recur(exported)),
+    ExpressionStatement: expression => cases.ExpressionStatement(recur(expression)),
+    FunctionDeclaration: name => parameters => body => cases.FunctionDeclaration(name)(parameters)(recur(body)),
+    Identifier: cases.Identifier,
+    ImportAllSpecifier: hiding => cases.ImportAllSpecifier(map(recur)(hiding)),
+    ImportDeclaration: source => specifiers => cases.ImportDeclaration(source)(map(recur)(specifiers)),
+    ImportDefaultSpecifier: local => cases.ImportDefaultSpecifier(recur(local)),
+    ImportNamespaceSpecifier: local => cases.ImportNamespaceSpecifier(recur(local)),
+    ImportSpecifier: imported => local => cases.ImportSpecifier(recur(imported))(recur(local)),
+    InfixCallExpression: operator => left => right => cases.InfixCallExpression(operator)(recur(left))(recur(right)),
+    InfixExpression: operator => left => right => cases.InfixExpression(operator)(recur(left))(recur(right)),
+    LeftSection: operator => operand => cases.LeftSection(operator)(recur(operand)),
+    MemberExpression: object => property => cases.MemberExpression(recur(object))(recur(property)),
+    MethodCallExpression: cases.MethodCallExpression,
+    Module: imports => exports => statements => cases.Module(map(recur)(imports))(map(recur)(exports))(map(recur)(statements)),
+    NullLiteral: cases.NullLiteral,
+    NumberLiteral: cases.NumberLiteral,
+    ObjectExpression: properties => cases.ObjectExpression(map(recur)(properties)),
+    ObjectPattern: properties => cases.ObjectPattern(map(recur)(properties)),
+    PrefixExpression: operator => operand => cases.PrefixExpression(operator)(recur(operand)),
+    Property: key => value => cases.Property(recur(key))(recur(value)),
+    PropertyAccessor: identifier => cases.PropertyAccessor(recur(identifier)),
+    RestElement: argument => cases.RestElement(recur(argument)),
+    RightSection: operator => operand => cases.RightSection(operator)(recur(operand)),
+    SpreadElement: argument => cases.SpreadElement(recur(argument)),
+    StringLiteral: cases.StringLiteral,
+    SwitchCase: predicates => consequent => cases.SwitchCase(map(map(recur))(predicates))(recur(consequent)),
+    SwitchExpression: discriminant => switchCases => cases.SwitchExpression(recur(discriminant))(map(recur)(switchCases)),
+    TemplateLiteral: quasis => expressions => cases.TemplateLiteral(quasis)(map(recur)(expressions)),
+    VariableDeclaration: pattern => expression => cases.VariableDeclaration(recur(pattern))(recur(expression))
+  });
   return recur;
 })();
 export default Node;
-export {ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, BinaryExpression, BindExpression, BlockExpression, BlockStatement, BooleanLiteral, CallExpression, CompositionExpression, ConcatenationExpression, ConditionalExpression, DataConstructorDefinition, DataTypeDeclaration, DoBlockExpression, Elision, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, LogicalExpression, MapExpression, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PipeExpression, Property, PropertyAccessor, RestElement, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, UnaryExpression, VariableDeclaration, transform};
+export {ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, Block, BooleanLiteral, CallExpression, ConditionalExpression, DataConstructorDefinition, DataTypeDeclaration, DoBlockExpression, Elision, EmptySection, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, InfixExpression, LeftSection, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PrefixExpression, Property, PropertyAccessor, RestElement, RightSection, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, VariableDeclaration, transform, foldRec};

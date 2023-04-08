@@ -1,4 +1,5 @@
 const id = x => x;
+const const$ = x => y => x;
 const equals = this$ => that => (() => {
   switch (globalThis.Object.prototype.toString.call(this$)) {
     case "[object Array]":
@@ -14,6 +15,7 @@ const equals = this$ => that => (() => {
       return this$ === that;
   }
 })();
+const flip = f => y => x => f(x)(y);
 const Nothing = {
   [Symbol.for("tag")]: "Nothing",
   ["fantasy-land/map"]: f => Nothing
@@ -36,10 +38,11 @@ const maybe = Nothing => Just => $match(null)({
   Just
 });
 const fromMaybe = default$ => maybe(default$)(id);
+const fromJust$0021 = flip(maybe(_ => fromJust)(const$))(null);
 const fromNullable = x => equals(null)(x) || equals(undefined)(x) ? Nothing : Just(x);
 export default {
   Nothing,
   Just,
   [Symbol.for("match")]: $match
 };
-export {Nothing, Just, maybe, fromMaybe, fromNullable};
+export {Nothing, Just, maybe, fromMaybe, fromJust$0021, fromNullable};

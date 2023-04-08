@@ -15,7 +15,6 @@ const map = f => xs => (() => {
       return xs["fantasy-land/map"](f);
   }
 })();
-const flip = f => y => x => f(x)(y);
 const list = strings => (() => {
   switch (strings.length) {
     case 0:
@@ -25,10 +24,7 @@ const list = strings => (() => {
     case 2:
       return concat(strings[0])(concat(" and ")(strings[1]));
     default:
-      {
-        const concat$0027 = flip(concat);
-        return concat$0027(concat(" and ")((args => target => target.at.apply(target, args))([-1])(strings)))((args => target => target.join.apply(target, args))([" "])(map(concat$0027(","))((args => target => target.slice.apply(target, args))([0, -1])(strings))));
-      }
+      return ($lhs => concat($lhs)(concat(" and ")((args => target => target.at.apply(target, args))([-1])(strings))))((args => target => target.join.apply(target, args))([" "])(map($lhs => concat($lhs)(","))((args => target => target.slice.apply(target, args))([0, -1])(strings))));
   }
 })();
 export {list};

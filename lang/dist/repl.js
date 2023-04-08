@@ -1,5 +1,6 @@
 import {attempt, attemptP, fork, resolve} from "fluture";
 import {generate} from "astring";
+import {Just} from "./Maybe.js";
 import * as Node from "./Node.js";
 import * as serif from "./index.js";
 const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
@@ -16,6 +17,14 @@ const equals = this$ => that => (() => {
       })();
     default:
       return this$ === that;
+  }
+})();
+const compose = f => g => (() => {
+  switch (globalThis.Object.prototype.toString.call(g)) {
+    case "[object Function]":
+      return x => f(g(x));
+    default:
+      return g["fantasy-land/compose"](f);
   }
 })();
 const concat = this$ => that => (() => {
@@ -96,13 +105,13 @@ const print = x => (() => {
       return String(x);
   }
 })();
-const processInput = serifSourceText => chain(serifAst => chain(serifAst => (({exports, statements}) => (esAst => (esSourceText => chain(esResult => resolve(print(esResult)))(attempt(() => eval(esSourceText))))(generate(esAst)))(serif.esModuleFromSerifModule(Node.BlockExpression(statements)(exports[0].declaration))))(serif.changeExtensions(serifAst)))(serif.rewrite(serifAst)(importPath => [])))(serif.parse("[repl]")(concat("export default ")(concat(serifSourceText)(";"))));
+const processInput = serifSourceText => chain(serifAst => chain(serifAst => (({exports, statements}) => (esAst => (esSourceText => chain(esResult => resolve(print(esResult)))(attempt(() => eval(esSourceText))))(generate(esAst)))(serif.esModuleFromSerifModule(Node.Block(statements)(Just(exports[0].declaration)))))(serif.changeExtensions(serifAst)))(serif.rewrite(serifAst)(importPath => [])))(serif.parse("[repl]")(concat("export default ")(concat(serifSourceText)(";"))));
 const repl = _ => (() => {
   const input = prompt("\n>>>");
   return contains((args => target => target.trim.apply(target, args))([])(input))([":exit", ":quit"]) ? (() => {
     console.log("");
     return Deno.exit();
-  })() : fork($ => repl(console.error($)))($ => repl(console.log($)))(processInput(input));
+  })() : fork(compose(repl)(console.error))(compose(repl)(console.log))(processInput(input));
 })();
 console.log(concat($00237)(concat(" Serif REPL ")(concat($002327)(concat(" ")(concat($00231)(concat(":quit")(concat($002322)(" to exit"))))))));
 repl(8);

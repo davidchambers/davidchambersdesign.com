@@ -7,12 +7,5 @@ list strings = {
   when 0 then ""
   when 1 then strings[0]
   when 2 then strings[0] <> " and " <> strings[1]
-  else {
-    concat' = flip concat;
-    strings
-    % .slice [0, -1]
-    % map $ concat' ","
-    % .join [" "]
-    % concat' $ " and " <> .at [-1] strings
-  }
+  else strings % .slice [0, -1] % map (<> ",") % .join [" "] % (<> " and " <> .at [-1] strings)
 };

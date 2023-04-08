@@ -4,6 +4,7 @@ export {
   Just,
   maybe,
   fromMaybe,
+  fromJust!,
   fromNullable,
 };
 
@@ -31,5 +32,7 @@ match default cases maybe = {
 maybe Nothing Just = match null {Nothing, Just};
 
 fromMaybe default = maybe default id;
+
+fromJust! = flip (maybe (\_ -> fromJust) const) null;
 
 fromNullable x = if x == null || x == undefined then Nothing else Just x;

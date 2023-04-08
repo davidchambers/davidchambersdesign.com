@@ -1,8 +1,9 @@
 import {generate} from "astring";
-import {fork, mapRej, parallel, resolve} from "fluture";
+import {fork, mapRej, resolve} from "fluture";
 import Node from "./Node.js";
 import * as fs from "./fs.js";
 import * as serif from "./index.js";
+import parallel from "./parallel.js";
 import * as path from "./path.js";
 const subtract = rhs => lhs => (() => {
   switch (globalThis.Object.prototype.toString.call(rhs)) {
@@ -28,6 +29,14 @@ const equals = this$ => that => (() => {
       })();
     default:
       return this$ === that;
+  }
+})();
+const compose = f => g => (() => {
+  switch (globalThis.Object.prototype.toString.call(g)) {
+    case "[object Function]":
+      return x => f(g(x));
+    default:
+      return g["fantasy-land/compose"](f);
   }
 })();
 const concat = this$ => that => (() => {
@@ -103,7 +112,7 @@ const parse = filename => sourceText => mapRej(error => (() => {
     number: index + 1,
     text: (args => target => target.trimEnd.apply(target, args))([])(text)
   })])((args => target => target.split.apply(target, args))([RegExp("^", "m")])(sourceText)));
-  const renderLineNumber = $ => (args => target => target.padStart.apply(target, args))([4])(String($));
+  const renderLineNumber = compose((args => target => target.padStart.apply(target, args))([4]))(String);
   return `\n\x1B[1m${path.relative(Deno.cwd())(error.location.source)}\x1B[0m\n\n${(args => target => target.join.apply(target, args))([""])((args => target => target.map.apply(target, args))([(line, idx, lines) => `\x1B[7m${renderLineNumber(line.number)}\x1B[0m${idx < subtract(1)(lines.length) ? line.text : `${(args => target => target.slice.apply(target, args))([0, subtract(1)(error.location.start.column)])(line.text)}\x1B[7m${(args => target => target.charAt.apply(target, args))([subtract(1)(error.location.start.column)])(line.text)}\x1B[0m${(args => target => target.slice.apply(target, args))([error.location.start.column])(line.text)}`}\n`])(lines))}${(length => (args => target => target.repeat.apply(target, args))([subtract(1)(length + error.location.start.column)])(" "))(renderLineNumber((args => target => target.at.apply(target, args))([-1])(lines).number).length)}^\n${error.message}\n`;
 })())(serif.parse(filename)(sourceText));
 const reducer = futureTree => filename => chain(findDependencies(filename))(futureTree);
@@ -113,7 +122,7 @@ const findDependencies = filename => tree => tree.has(filename) ? resolve(tree) 
   dependencies,
   exportedNames
 }]]])))(dependencies))(chain(match$0027(Node)(const$([]))({
-  ExportNamedDeclaration: map($ => $.exported.name)
+  ExportNamedDeclaration: map(compose($ => $.name)($ => $.exported))
 }))(ast.exports)))(chain(({source: {value}}) => (args => target => target.test.apply(target, args))([value])(RegExp("^[./].*[.]serif$")) ? [path.join([filename, "..", value])] : [])(ast.imports)))(parse(filename)(sourceText)))(mapRej($ => $.message)(fs.readFile(filename)));
 const orderDependencies = tree => (() => {
   const recur = unsorted$0021 => sorted$0021 => equals([])(unsorted$0021) ? sorted$0021 : (() => {
@@ -131,7 +140,7 @@ const orderDependencies = tree => (() => {
   const absSrc = toAbs(cwd)(src);
   const absDst = toAbs(cwd)(dst);
   const absFilenames = map(toAbs(absSrc))(filenames);
-  const program = chain(tree => (filenames => parallel(16)(flip(map)(filenames)(serifFilename => (serifDirname => (serifAst => chain(serifAst$0027 => (serifAst$0027$0027 => (esAst => (esSource => (esBasename => (esFilename => chain(_ => chain(_ => resolve({
+  const program = chain(tree => (filenames => parallel(flip(map)(filenames)(serifFilename => (serifDirname => (serifAst => chain(serifAst$0027 => (serifAst$0027$0027 => (esAst => (esSource => (esBasename => (esFilename => chain(_ => chain(_ => resolve({
     serifFilename,
     esFilename
   }))(fs.writeFile(esFilename)(esSource)))(fs.mkdir({

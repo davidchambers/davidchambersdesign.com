@@ -134,7 +134,7 @@ posts
 % render-document
 % write-file $ public ["tags.html"]
 ;
-flip map pages \page -> {
+pages % map \page -> {
   page
   % render-page
   % base-template page.title
@@ -142,7 +142,7 @@ flip map pages \page -> {
   % write-file $ public [page.slug + ".html"]
 }
 ;
-flip map posts \post -> {
+posts % map \post -> {
   post
   % related-posts posts
   % render-post post

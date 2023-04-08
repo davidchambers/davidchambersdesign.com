@@ -84,13 +84,6 @@ fromIdentifier = {
   fromEscapedIdentifierName . escape
 };
 
-fromLiteral value = {
-  type: "Literal",
-  value,
-};
-
-fromElision = null;
-
 TemplateElement tail raw = {
   type: "TemplateElement",
   tail,
@@ -137,16 +130,6 @@ fromMemberExpression object property = {
   }
 };
 
-fromSpreadElement argument = {
-  type: "SpreadElement",
-  argument: fromNode argument,
-};
-
-fromArrayExpression elements = {
-  type: "ArrayExpression",
-  elements: fromNode <$> elements,
-};
-
 fromProperty key value = {
   computed = not $ match' Node (const false) {StringLiteral: validEsIdentifierName} key;
   esKey = if computed then fromNode key else fromEscapedIdentifierName key.value;
@@ -155,101 +138,35 @@ fromProperty key value = {
   {type: "Property", key: esKey, value: esValue, kind: "init", method: false, shorthand, computed}
 };
 
-fromObjectExpression properties = {
-  type: "ObjectExpression",
-  properties: fromNode <$> properties,
+fromBlock statements result = {
+  type: "CallExpression",
+  callee: {
+    type: "ArrowFunctionExpression",
+    params: [],
+    body: {
+      type: "BlockStatement",
+      body: maybe id (\result -> (<> [{type: "ReturnStatement", argument: fromNode result}])) result $ fromNode <$> statements,
+    },
+    expression: false,
+  },
+  arguments: [],
+  optional: false,
 };
 
-fromArrowFunctionExpression parameters body = {
-  esBody = fromNode body;
-  {
-    type: "ArrowFunctionExpression",
-    params: fromNode <$> parameters,
-    body: esBody,
-    expression: esBody.type != "BlockStatement",
+fromSwitchCase predicates consequent = {
+  toReturnStatement node = {type: "ReturnStatement", argument: fromNode node};
+  predicates.map \(pred, idx, preds) -> {
+    type: "SwitchCase",
+    test: maybe null fromNode pred,
+    consequent: if idx + 1 < preds.length then [] else [
+      consequent % match' Node toReturnStatement {
+        Block: \statements result -> {
+          type: "BlockStatement",
+          body: maybe id (append . toReturnStatement) result (fromNode <$> statements),
+        }
+      }
+    ],
   }
-};
-
-fromBlockExpression statements result = {
-  type: "CallExpression",
-  callee: {
-    type: "ArrowFunctionExpression",
-    params: [],
-    body: {
-      type: "BlockStatement",
-      body: map fromNode statements <> [{type: "ReturnStatement", argument: fromNode result}],
-    },
-    expression: false,
-  },
-  arguments: [],
-  optional: false,
-};
-
-fromBlockStatement statements = {
-  type: "CallExpression",
-  callee: {
-    type: "ArrowFunctionExpression",
-    params: [],
-    body: {
-      type: "BlockStatement",
-      body: fromNode <$> statements,
-    },
-    expression: false,
-  },
-  arguments: [],
-  optional: false,
-};
-
-fromUnaryExpression operator argument = {
-  type: "UnaryExpression",
-  operator,
-  argument: fromNode argument,
-  prefix: true,
-};
-
-fromBinaryExpression operator left right = {
-  type: "BinaryExpression",
-  operator,
-  left: fromNode left,
-  right: fromNode right,
-};
-
-fromLogicalExpression operator left right = {
-  type: "LogicalExpression",
-  operator,
-  left: fromNode left,
-  right: fromNode right,
-};
-
-fromConditionalExpression predicate consequent alternative = {
-  type: "ConditionalExpression",
-  test: fromNode predicate,
-  consequent: fromNode consequent,
-  alternate: maybe (fromLiteral undefined) fromNode alternative,
-};
-
-fromSwitchCase consequent predicate = {
-  type: "SwitchCase",
-  test: maybe null fromNode predicate,
-  consequent: {
-    toReturnStatement node = {
-      type: "ReturnStatement",
-      argument: fromNode node,
-    };
-    toConsequent = match' Node toReturnStatement {
-      BlockExpression: \statements result -> {
-        type: "BlockStatement",
-        body: map fromNode statements <> [toReturnStatement result],
-      },
-    };
-    maybe [] (Array.of . toConsequent) consequent
-  },
-};
-
-fromSwitchCases predicates consequent = {
-  init = .slice [0, -1] predicates;
-  last = .at       [-1] predicates;
-  map (fromSwitchCase Nothing) init <> [fromSwitchCase (Just consequent) last]
 };
 
 fromSwitchExpression discriminant cases = {
@@ -271,141 +188,38 @@ fromSwitchExpression discriminant cases = {
   optional: false,
 };
 
-fromCallExpression callee arguments = {
-  type: "CallExpression",
-  callee: fromNode callee,
-  arguments: fromNode <$> arguments,
-  optional: false,
-};
-
-fromVariableDeclaration pattern expression = {
-  type: "VariableDeclaration",
-  kind: "const",
-  declarations: [{
-    type: "VariableDeclarator",
-    id: fromNode pattern,
-    init: fromNode expression,
-  }],
-};
-
-fromFunctionDeclaration name parameters body = {
-  type: "VariableDeclaration",
-  kind: "const",
-  declarations: [{
-    type: "VariableDeclarator",
-    id: fromIdentifier name,
-    init: {
-      reduceRight (\esBody param -> {
-                     type: "ArrowFunctionExpression",
-                     params: [fromNode param],
-                     body: esBody,
-                     expression: esBody.type != "BlockStatement",
-                   })
-                  (fromNode body)
-                  parameters
-    },
-  }],
-};
-
-fromExpressionStatement expression = {
-  type: "ExpressionStatement",
-  expression: fromNode expression,
-};
-
-fromArrayPattern elements = {
-  type: "ArrayPattern",
-  elements: fromNode <$> elements,
-};
-
-fromObjectPattern properties = {
-  type: "ObjectPattern",
-  properties: fromNode <$> properties,
-};
-
-fromRestElement argument = {
-  type: "RestElement",
-  argument: fromNode argument,
-};
-
-fromExportDefaultDeclaration declaration = {
-  type: "ExportDefaultDeclaration",
-  declaration: fromNode declaration,
-};
-
-fromExportNamedDeclaration specifiers = {
-  type: "ExportNamedDeclaration",
-  specifiers: fromNode <$> specifiers,
-};
-
-fromExportSpecifier local exported = {
-  type: "ExportSpecifier",
-  local: fromNode local,
-  exported: fromNode exported,
-};
-
-fromImportDefaultSpecifier local = {
-  type: "ImportDefaultSpecifier",
-  local: fromNode local,
-};
-
-fromImportNamespaceSpecifier local = {
-  type: "ImportNamespaceSpecifier",
-  local: fromNode local,
-};
-
-fromImportSpecifier imported local = {
-  type: "ImportSpecifier",
-  imported: fromNode imported,
-  local: fromNode local,
-};
-
-fromImportDeclaration source specifiers = {
-  type: "ImportDeclaration",
-  specifiers: fromNode <$> specifiers,
-  source: fromNode source,
-};
-
-fromModule imports exports statements = {
-  type: "Program",
-  sourceType: "module",
-  body: fromNode <$> imports <> statements <> exports,
-};
-
 fromNode = match Node {
-  NullLiteral:                fromLiteral null,
-  BooleanLiteral:             fromLiteral,
-  NumberLiteral:              fromLiteral,
-  StringLiteral:              fromLiteral,
+  NullLiteral:                {type: "Literal", value: null},
+  BooleanLiteral:             \value -> {type: "Literal", value},
+  NumberLiteral:              \value -> {type: "Literal", value},
+  StringLiteral:              \value -> {type: "Literal", value},
   TemplateLiteral:            fromTemplateLiteral,
   MemberExpression:           fromMemberExpression,
   Identifier:                 fromIdentifier,
-  ArrayExpression:            fromArrayExpression,
-  ObjectExpression:           fromObjectExpression,
-  ArrowFunctionExpression:    fromArrowFunctionExpression,
-  BlockExpression:            fromBlockExpression,
-  BlockStatement:             fromBlockStatement,
-  UnaryExpression:            fromUnaryExpression,
-  BinaryExpression:           fromBinaryExpression,
-  LogicalExpression:          fromLogicalExpression,
-  ConditionalExpression:      fromConditionalExpression,
+  ArrayExpression:            \elements -> {type: "ArrayExpression", elements: fromNode <$> elements},
+  ObjectExpression:           \properties -> {type: "ObjectExpression", properties: fromNode <$> properties},
+  ArrowFunctionExpression:    \parameters body -> { esBody = fromNode body; {type: "ArrowFunctionExpression", params: fromNode <$> parameters, body: esBody, expression: esBody.type != "BlockStatement"} },
+  Block:                      fromBlock,
+  PrefixExpression:           \operator operand -> {type: "UnaryExpression", operator, argument: fromNode operand, prefix: true},
+  InfixExpression:            \operator left right -> {type: if operator in ["&&", "||", "??"] then "LogicalExpression" else "BinaryExpression", operator, left: fromNode left, right: fromNode right},
+  ConditionalExpression:      \predicate consequent alternative -> {type: "ConditionalExpression", test: fromNode predicate, consequent: fromNode consequent, alternate: maybe {type: "Literal", value: undefined} fromNode alternative},
   SwitchExpression:           fromSwitchExpression,
-  SwitchCase:                 fromSwitchCases,
-  CallExpression:             fromCallExpression,
-  SpreadElement:              fromSpreadElement,
-  ExpressionStatement:        fromExpressionStatement,
-  VariableDeclaration:        fromVariableDeclaration,
-  FunctionDeclaration:        fromFunctionDeclaration,
+  SwitchCase:                 fromSwitchCase,
+  CallExpression:             \callee arguments -> {type: "CallExpression", callee: fromNode callee, arguments: fromNode <$> arguments, optional: false},
+  SpreadElement:              \argument -> {type: "SpreadElement", argument: fromNode argument},
+  ExpressionStatement:        \expression -> {type: "ExpressionStatement", expression: fromNode expression},
+  VariableDeclaration:        \pattern expression -> {type: "VariableDeclaration", kind: "const", declarations: [{type: "VariableDeclarator", id: fromNode pattern, init: fromNode expression}]},
   Property:                   fromProperty,
-  ArrayPattern:               fromArrayPattern,
-  Elision:                    fromElision,
-  ObjectPattern:              fromObjectPattern,
-  RestElement:                fromRestElement,
-  ImportDeclaration:          fromImportDeclaration,
-  ImportDefaultSpecifier:     fromImportDefaultSpecifier,
-  ImportNamespaceSpecifier:   fromImportNamespaceSpecifier,
-  ImportSpecifier:            fromImportSpecifier,
-  ExportNamedDeclaration:     fromExportNamedDeclaration,
-  ExportDefaultDeclaration:   fromExportDefaultDeclaration,
-  ExportSpecifier:            fromExportSpecifier,
-  Module:                     fromModule,
+  ArrayPattern:               \elements -> {type: "ArrayPattern", elements: fromNode <$> elements},
+  Elision:                    null,
+  ObjectPattern:              \properties -> {type: "ObjectPattern", properties: fromNode <$> properties},
+  RestElement:                \argument -> {type: "RestElement", argument: fromNode argument},
+  ImportDeclaration:          \source specifiers -> {type: "ImportDeclaration", specifiers: fromNode <$> specifiers, source: fromNode source},
+  ImportDefaultSpecifier:     \local -> {type: "ImportDefaultSpecifier", local: fromNode local},
+  ImportNamespaceSpecifier:   \local -> {type: "ImportNamespaceSpecifier", local: fromNode local},
+  ImportSpecifier:            \imported local -> {type: "ImportSpecifier", imported: fromNode imported, local: fromNode local},
+  ExportNamedDeclaration:     \specifiers -> {type: "ExportNamedDeclaration", specifiers: fromNode <$> specifiers},
+  ExportDefaultDeclaration:   \declaration -> {type: "ExportDefaultDeclaration", declaration: fromNode declaration},
+  ExportSpecifier:            \local exported -> {type: "ExportSpecifier", local: fromNode local, exported: fromNode exported},
+  Module:                     \imports exports statements -> {type: "Program", sourceType: "module", body: fromNode <$> imports <> statements <> exports},
 };
