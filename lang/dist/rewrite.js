@@ -188,15 +188,6 @@ const vars = foldRec({
     return variables(declared)(subtract(declared)(referenced(varsExpression)));
   })()
 });
-const applyFlip = transform({
-  CallExpression: callee3 => arguments3 => match$0027(Node)(const$(CallExpression(callee3)(arguments3)))({
-    CallExpression: callee2 => arguments2 => match$0027(Node)(const$(CallExpression(CallExpression(callee2)(arguments2))(arguments3)))({
-      CallExpression: callee1 => arguments1 => match$0027(Node)(const$(CallExpression(CallExpression(CallExpression(callee1)(arguments1))(arguments2))(arguments3)))({
-        Identifier: name => equals("flip")(name) && equals(1)(arguments1.length) ? CallExpression(CallExpression(arguments1[0])(arguments3))(arguments2) : CallExpression(CallExpression(CallExpression(Identifier(name))(arguments1))(arguments2))(arguments3)
-      })(callee1)
-    })(callee2)
-  })(callee3)
-});
 const removeUnreferencedPreludeFunctions = module => (() => {
   const {declared, referenced} = vars(module);
   const unreferenced = subtract(referenced)(declared);
@@ -212,7 +203,7 @@ const rewriteModule = module => namesExportedFrom => (module => (({imports, expo
     undeclared.size > 0 ? console.error(concat("undeclared: ")((args => target => target.join.apply(target, args))([", "])(Array.from(undeclared)))) : undefined;
     return Future.resolve(module);
   })();
-})())(subtract(construct(Set)([["CasesNotExhaustive", "DivisionByZero", "import", "console", "fetch"]]))(subtract(globals)(subtract(declared)(referenced)))))(subtract(referenced)(declared)))(vars(module)))(removeUnreferencedPreludeFunctions(Module(imports)(exports)(concat(prelude)(statements)))))(map(([name, value]) => VariableDeclaration(Identifier(name))(value))(Object.entries(Prelude))))(applyFlip(renameIdentifiers(rename)(Module(imports)(exports)(statements)))))(reduce(rename => match(Node)({
+})())(subtract(construct(Set)([["CasesNotExhaustive", "DivisionByZero", "import", "console", "fetch"]]))(subtract(globals)(subtract(declared)(referenced)))))(subtract(referenced)(declared)))(vars(module)))(removeUnreferencedPreludeFunctions(Module(imports)(exports)(concat(prelude)(statements)))))(map(([name, value]) => VariableDeclaration(Identifier(name))(value))(Object.entries(Prelude))))(renameIdentifiers(rename)(Module(imports)(exports)(statements))))(reduce(rename => match(Node)({
   ImportSpecifier: imported => local => name => equals(imported.name)(name) ? local.name : rename(name),
   ImportNamespaceSpecifier: updateRenamerFromPattern(rename),
   ImportDefaultSpecifier: updateRenamerFromPattern(rename)

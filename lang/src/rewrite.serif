@@ -61,27 +61,6 @@ vars = foldRec {
   VariableDeclaration:                     \varsPattern varsExpression -> { declared = referenced varsPattern; variables declared $ referenced varsExpression - declared },
 };
 
-;; flip f y x -> f x y
-applyFlip = transform {
-  CallExpression: \callee3 arguments3 -> {
-    match' Node (const $ CallExpression callee3 arguments3) {
-      CallExpression: \callee2 arguments2 -> {
-        match' Node (const $ CallExpression (CallExpression callee2 arguments2) arguments3) {
-          CallExpression: \callee1 arguments1 -> {
-            match' Node (const $ CallExpression (CallExpression (CallExpression callee1 arguments1) arguments2) arguments3) {
-              Identifier: \name -> {
-                if name == "flip" && arguments1.length == 1
-                then CallExpression (CallExpression arguments1[0] arguments3) arguments2
-                else CallExpression (CallExpression (CallExpression (Identifier name) arguments1) arguments2) arguments3
-              }
-            } callee1
-          }
-        } callee2
-      }
-    } callee3
-  }
-};
-
 removeUnreferencedPreludeFunctions module = {
   {declared, referenced} = vars module;
   unreferenced = declared - referenced;
@@ -118,7 +97,7 @@ rewriteModule module namesExportedFrom = do {
     ImportDefaultSpecifier: updateRenamerFromPattern rename,
   }) rename $ imports >>= (.specifiers);
   ;; rename identifiers
-  {imports, exports, statements} = applyFlip $ renameIdentifiers rename $ Module imports exports statements;
+  {imports, exports, statements} = renameIdentifiers rename $ Module imports exports statements;
   ;; insert prelude
   prelude = (\[name, value] -> VariableDeclaration (Identifier name) value) <$> Object.entries Prelude;
   ;; remove unreferenced prelude functions
