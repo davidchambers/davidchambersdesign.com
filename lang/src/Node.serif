@@ -9,6 +9,7 @@ export {
   CallExpression,
   ConditionalExpression,
   DataConstructorDefinition,
+  DataConstructorParameter,
   DataTypeDeclaration,
   DoBlockExpression,
   Elision,
@@ -45,170 +46,53 @@ export {
   SwitchExpression,
   TemplateLiteral,
   VariableDeclaration,
-  transform,
-  foldRec,
 };
 
 type Node
-  = ArrayExpression elements
-  | ArrayPattern elements
-  | ArrowAssignmentStatement pattern expression
-  | ArrowFunctionExpression parameters body
-  | Block statements result
+  = ArrayExpression [elements]
+  | ArrayPattern [elements]
+  | ArrowAssignmentStatement (pattern) (expression)
+  | ArrowFunctionExpression [parameters] (body)
+  | Block [statements] [result]
   | BooleanLiteral value
-  | CallExpression callee arguments
-  | ConditionalExpression predicate consequent alternative
-  | DataConstructorDefinition identifier parameters
-  | DataTypeDeclaration identifier constructors
-  | DoBlockExpression operations result
+  | CallExpression (callee) [arguments]
+  | ConditionalExpression (predicate) (consequent) [alternative]
+  | DataConstructorDefinition (identifier) [parameters]
+  | DataConstructorParameter (identifier) recursionDepth
+  | DataTypeDeclaration (identifier) [constructors]
+  | DoBlockExpression [operations] (result)
   | Elision
   | EmptySection operator
-  | ExportDefaultDeclaration declaration
-  | ExportNamedDeclaration specifiers
-  | ExportSpecifier local exported
-  | ExpressionStatement expression
-  | FunctionDeclaration name parameters body
+  | ExportDefaultDeclaration (declaration)
+  | ExportNamedDeclaration [specifiers]
+  | ExportSpecifier (local) (exported)
+  | ExpressionStatement (expression)
+  | FunctionDeclaration name parameters (body)
   | Identifier name
-  | ImportAllSpecifier hiding
-  | ImportDeclaration source specifiers
-  | ImportDefaultSpecifier local
-  | ImportNamespaceSpecifier local
-  | ImportSpecifier imported local
-  | InfixCallExpression operator left right
-  | InfixExpression operator left right
-  | LeftSection operator operand
-  | MemberExpression object property
+  | ImportAllSpecifier [hiding]
+  | ImportDeclaration source [specifiers]
+  | ImportDefaultSpecifier (local)
+  | ImportNamespaceSpecifier (local)
+  | ImportSpecifier (imported) (local)
+  | InfixCallExpression operator (left) (right)
+  | InfixExpression operator (left) (right)
+  | LeftSection operator (operand)
+  | MemberExpression (object) (property)
   | MethodCallExpression name
-  | Module imports exports statements
+  | Module [imports] [exports] [statements]
   | NullLiteral
   | NumberLiteral value
-  | ObjectExpression properties
-  | ObjectPattern properties
-  | PrefixExpression operator operand
-  | Property key value
-  | PropertyAccessor identifier
-  | RestElement argument
-  | RightSection operator operand
-  | SpreadElement argument
+  | ObjectExpression [properties]
+  | ObjectPattern [properties]
+  | PrefixExpression operator (operand)
+  | Property (key) (value)
+  | PropertyAccessor (identifier)
+  | RestElement (argument)
+  | RightSection operator (operand)
+  | SpreadElement (argument)
   | StringLiteral value
-  | SwitchCase predicates consequent
-  | SwitchExpression discriminant cases
-  | TemplateLiteral quasis expressions
-  | VariableDeclaration pattern expression
+  | SwitchCase [[predicates]] (consequent)
+  | SwitchExpression (discriminant) [cases]
+  | TemplateLiteral quasis [expressions]
+  | VariableDeclaration (pattern) (expression)
 ;
-
-;;  transform and foldRec appear to be similar, but there are several
-;;  differences between the two functions:
-;;
-;;    - transform produces a Node -> Node function, whereas foldRec
-;;      produces a function with any desired return type;
-;;
-;;    - transform permits the omission of cases, whereas foldRec
-;;      requires every case to be specified; and
-;;
-;;    - transform recurses only for unspecified cases (although specified
-;;      cases may perform recursion explicitly), whereas foldRec recurses
-;;      unconditionally in every case.
-
-transform cases = {
-  recur = match Node {
-    ArrayExpression:                               \elements -> ArrayExpression (recur <$> elements),
-    ArrayPattern:                                  \elements -> ArrayPattern (recur <$> elements),
-    ArrowAssignmentStatement:            \pattern expression -> ArrowAssignmentStatement (recur pattern) (recur expression),
-    ArrowFunctionExpression:                \parameters body -> ArrowFunctionExpression (recur <$> parameters) (recur body),
-    Block:                                \statements result -> Block (recur <$> statements) (recur <$> result),
-    BooleanLiteral:                                   \value -> BooleanLiteral value,
-    CallExpression:                        \callee arguments -> CallExpression (recur callee) (recur <$> arguments),
-    ConditionalExpression: \predicate consequent alternative -> ConditionalExpression (recur predicate) (recur consequent) (recur <$> alternative),
-    DataConstructorDefinition:        \identifier parameters -> DataConstructorDefinition (recur identifier) (recur <$> parameters),
-    DataTypeDeclaration:            \identifier constructors -> DataTypeDeclaration (recur identifier) (recur <$> constructors),
-    DoBlockExpression:                    \operations result -> DoBlockExpression (recur <$> operations) (recur result),
-    Elision:                                                    Elision,
-    EmptySection:                                  \operator -> EmptySection operator,
-    ExportDefaultDeclaration:                   \declaration -> ExportDefaultDeclaration (recur declaration),
-    ExportNamedDeclaration:                      \specifiers -> ExportNamedDeclaration (recur <$> specifiers),
-    ExportSpecifier:                         \local exported -> ExportSpecifier (recur local) (recur exported),
-    ExpressionStatement:                         \expression -> ExpressionStatement (recur expression),
-    FunctionDeclaration:               \name parameters body -> FunctionDeclaration name parameters (recur body),
-    Identifier:                                                 Identifier,
-    ImportAllSpecifier:                              \hiding -> ImportAllSpecifier (recur <$> hiding),
-    ImportDeclaration:                    \source specifiers -> ImportDeclaration source (recur <$> specifiers),
-    ImportDefaultSpecifier:                           \local -> ImportDefaultSpecifier (recur local),
-    ImportNamespaceSpecifier:                         \local -> ImportNamespaceSpecifier (recur local),
-    ImportSpecifier:                         \imported local -> ImportSpecifier (recur imported) (recur local),
-    InfixCallExpression:                \operator left right -> InfixCallExpression operator (recur left) (recur right),
-    InfixExpression:                    \operator left right -> InfixExpression operator (recur left) (recur right),
-    LeftSection:                           \operator operand -> LeftSection operator (recur operand),
-    MemberExpression:                       \object property -> MemberExpression (recur object) (recur property),
-    MethodCallExpression:                                       MethodCallExpression,
-    Module:                      \imports exports statements -> Module (recur <$> imports) (recur <$> exports) (recur <$> statements),
-    NullLiteral:                                                NullLiteral,
-    NumberLiteral:                                              NumberLiteral,
-    ObjectExpression:                            \properties -> ObjectExpression (recur <$> properties),
-    ObjectPattern:                               \properties -> ObjectPattern (recur <$> properties),
-    PrefixExpression:                      \operator operand -> PrefixExpression operator (recur operand),
-    Property:                                     \key value -> Property (recur key) (recur value),
-    PropertyAccessor:                            \identifier -> PropertyAccessor (recur identifier),
-    RestElement:                                   \argument -> RestElement (recur argument),
-    RightSection:                          \operator operand -> RightSection operator (recur operand),
-    SpreadElement:                                 \argument -> SpreadElement (recur argument),
-    StringLiteral:                                              StringLiteral,
-    SwitchCase:                       \predicates consequent -> SwitchCase (map recur <$> predicates) (recur consequent),
-    SwitchExpression:                    \discriminant cases -> SwitchExpression (recur discriminant) (recur <$> cases),
-    TemplateLiteral:                     \quasis expressions -> TemplateLiteral quasis (recur <$> expressions),
-    VariableDeclaration:                 \pattern expression -> VariableDeclaration (recur pattern) (recur expression),
-    ...cases,
-  };
-  recur
-};
-
-foldRec cases = {
-  recur = match Node {
-    ArrayExpression:                               \elements -> cases.ArrayExpression (recur <$> elements),
-    ArrayPattern:                                  \elements -> cases.ArrayPattern (recur <$> elements),
-    ArrowAssignmentStatement:            \pattern expression -> cases.ArrowAssignmentStatement (recur pattern) (recur expression),
-    ArrowFunctionExpression:                \parameters body -> cases.ArrowFunctionExpression (recur <$> parameters) (recur body),
-    Block:                                \statements result -> cases.Block (recur <$> statements) (recur <$> result),
-    BooleanLiteral:                                             cases.BooleanLiteral,
-    CallExpression:                        \callee arguments -> cases.CallExpression (recur callee) (recur <$> arguments),
-    ConditionalExpression: \predicate consequent alternative -> cases.ConditionalExpression (recur predicate) (recur consequent) (recur <$> alternative),
-    DataConstructorDefinition:        \identifier parameters -> cases.DataConstructorDefinition (recur identifier) (recur <$> parameters),
-    DataTypeDeclaration:            \identifier constructors -> cases.DataTypeDeclaration (recur identifier) (recur <$> constructors),
-    DoBlockExpression:                    \operations result -> cases.DoBlockExpression (recur <$> operations) (recur result),
-    Elision:                                                    cases.Elision,
-    EmptySection:                                  \operator -> cases.EmptySection operator,
-    ExportDefaultDeclaration:                   \declaration -> cases.ExportDefaultDeclaration (recur declaration),
-    ExportNamedDeclaration:                      \specifiers -> cases.ExportNamedDeclaration (recur <$> specifiers),
-    ExportSpecifier:                         \local exported -> cases.ExportSpecifier (recur local) (recur exported),
-    ExpressionStatement:                         \expression -> cases.ExpressionStatement (recur expression),
-    FunctionDeclaration:               \name parameters body -> cases.FunctionDeclaration name parameters (recur body),
-    Identifier:                                                 cases.Identifier,
-    ImportAllSpecifier:                              \hiding -> cases.ImportAllSpecifier (recur <$> hiding),
-    ImportDeclaration:                    \source specifiers -> cases.ImportDeclaration source (recur <$> specifiers),
-    ImportDefaultSpecifier:                           \local -> cases.ImportDefaultSpecifier (recur local),
-    ImportNamespaceSpecifier:                         \local -> cases.ImportNamespaceSpecifier (recur local),
-    ImportSpecifier:                         \imported local -> cases.ImportSpecifier (recur imported) (recur local),
-    InfixCallExpression:                \operator left right -> cases.InfixCallExpression operator (recur left) (recur right),
-    InfixExpression:                    \operator left right -> cases.InfixExpression operator (recur left) (recur right),
-    LeftSection:                           \operator operand -> cases.LeftSection operator (recur operand),
-    MemberExpression:                       \object property -> cases.MemberExpression (recur object) (recur property),
-    MethodCallExpression:                                       cases.MethodCallExpression,
-    Module:                      \imports exports statements -> cases.Module (recur <$> imports) (recur <$> exports) (recur <$> statements),
-    NullLiteral:                                                cases.NullLiteral,
-    NumberLiteral:                                              cases.NumberLiteral,
-    ObjectExpression:                            \properties -> cases.ObjectExpression (recur <$> properties),
-    ObjectPattern:                               \properties -> cases.ObjectPattern (recur <$> properties),
-    PrefixExpression:                      \operator operand -> cases.PrefixExpression operator (recur operand),
-    Property:                                     \key value -> cases.Property (recur key) (recur value),
-    PropertyAccessor:                            \identifier -> cases.PropertyAccessor (recur identifier),
-    RestElement:                                   \argument -> cases.RestElement (recur argument),
-    RightSection:                          \operator operand -> cases.RightSection operator (recur operand),
-    SpreadElement:                                 \argument -> cases.SpreadElement (recur argument),
-    StringLiteral:                                              cases.StringLiteral,
-    SwitchCase:                       \predicates consequent -> cases.SwitchCase (map recur <$> predicates) (recur consequent),
-    SwitchExpression:              \discriminant switchCases -> cases.SwitchExpression (recur discriminant) (recur <$> switchCases),
-    TemplateLiteral:                     \quasis expressions -> cases.TemplateLiteral quasis (recur <$> expressions),
-    VariableDeclaration:                 \pattern expression -> cases.VariableDeclaration (recur pattern) (recur expression),
-  };
-  recur
-};

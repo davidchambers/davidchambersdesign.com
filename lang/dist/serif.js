@@ -14,7 +14,6 @@ const subtract = rhs => lhs => (() => {
   }
 })();
 const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
-const match$0027 = type => type[globalThis.Symbol.for("match")];
 const const$ = x => y => x;
 const equals = this$ => that => (() => {
   switch (globalThis.Object.prototype.toString.call(this$)) {
@@ -121,7 +120,7 @@ const findDependencies = filename => tree => tree.has(filename) ? resolve(tree) 
   ast,
   dependencies,
   exportedNames
-}]]])))(dependencies))(chain(match$0027(Node)(const$([]))({
+}]]])))(dependencies))(chain(Node.matchOr(const$([]))({
   ExportNamedDeclaration: map(compose($ => $.name)($ => $.exported))
 }))(ast.exports)))(chain(({source: {value}}) => (args => target => target.test.apply(target, args))([value])(RegExp("^[./].*[.]serif$")) ? [path.join([filename, "..", value])] : [])(ast.imports)))(parse(filename)(sourceText)))(mapRej($ => $.message)(fs.readFile(filename)));
 const orderDependencies = tree => (() => {

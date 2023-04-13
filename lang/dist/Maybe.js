@@ -25,24 +25,15 @@ const Just = value => ({
   value,
   ["fantasy-land/map"]: f => Just(f(value))
 });
-const $match = default$ => cases => maybe => Object.hasOwn(cases, maybe[Symbol.for("tag")]) ? (() => {
-  switch (maybe[Symbol.for("tag")]) {
+const maybe = y => f => m => (() => {
+  switch (m[Symbol.for("tag")]) {
     case "Nothing":
-      return cases.Nothing;
+      return y;
     case "Just":
-      return cases.Just(maybe.value);
+      return f(m.value);
   }
-})() : default$(maybe);
-const maybe = Nothing => Just => $match(null)({
-  Nothing,
-  Just
-});
+})();
 const fromMaybe = default$ => maybe(default$)(id);
 const fromJust$0021 = flip(maybe(_ => fromJust)(const$))(null);
 const fromNullable = x => equals(null)(x) || equals(undefined)(x) ? Nothing : Just(x);
-export default {
-  Nothing,
-  Just,
-  [Symbol.for("match")]: $match
-};
 export {Nothing, Just, maybe, fromMaybe, fromJust$0021, fromNullable};

@@ -1,8 +1,6 @@
 import {Nothing, Just, maybe} from "./Maybe.js";
 import Node from "./Node.js";
 const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
-const match = type => match$0027(type)(x => CasesNotExhaustive);
-const match$0027 = type => type[globalThis.Symbol.for("match")];
 const id = x => x;
 const const$ = x => y => x;
 const not = x => !x;
@@ -114,7 +112,7 @@ const fromTemplateLiteral = quasis => expressions => ({
   })()
 });
 const fromMemberExpression = object => property => (() => {
-  const computed = not(match$0027(Node)(const$(false))({
+  const computed = not(Node.matchOr(const$(false))({
     StringLiteral: validEsIdentifierName
   })(property));
   return {
@@ -126,7 +124,7 @@ const fromMemberExpression = object => property => (() => {
   };
 })();
 const fromProperty = key => value => (() => {
-  const computed = not(match$0027(Node)(const$(false))({
+  const computed = not(Node.matchOr(const$(false))({
     StringLiteral: validEsIdentifierName
   })(key));
   const esKey = computed ? fromNode(key) : fromEscapedIdentifierName(key.value);
@@ -167,7 +165,7 @@ const fromSwitchCase = predicates => consequent => (() => {
   return predicates.map((pred, idx, preds) => ({
     type: "SwitchCase",
     test: maybe(null)(fromNode)(pred),
-    consequent: idx + 1 < preds.length ? [] : [match$0027(Node)(toReturnStatement)({
+    consequent: idx + 1 < preds.length ? [] : [Node.matchOr(toReturnStatement)({
       Block: statements => result => ({
         type: "BlockStatement",
         body: maybe(id)(compose(append)(toReturnStatement))(result)(map(fromNode)(statements))
@@ -193,7 +191,7 @@ const fromSwitchExpression = discriminant => cases => ({
   arguments: [],
   optional: false
 });
-const fromNode = match(Node)({
+const fromNode = Node.match({
   NullLiteral: {
     type: "Literal",
     value: null

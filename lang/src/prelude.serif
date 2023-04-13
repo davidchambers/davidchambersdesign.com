@@ -97,8 +97,6 @@ Prelude = {
   construct:      lambda [#constructor, #args] $ construct #constructor #args,
   instanceof:     lambda [#constructor, #x] $ #x `_instanceof_` #constructor,
   typeof:         lambda [#x] $ cond (#x `_===_` NullLiteral) (string "null") (_typeof_ #x),
-  match:          lambda [#type] $ apply (ident "match'") [#type, lambda [#x] #CasesNotExhaustive],
-  match':         lambda [#type] $ member #type $ invoke #globalThis ["Symbol", "for"] $ string "match",
   id:             lambda [#x] #x,
   const:          lambda [#x, #y] #x,
   not:            lambda [#x] $ _!_ #x,

@@ -119,8 +119,6 @@ const Prelude = {
   construct: lambda([$0023constructor, $0023args])($construct($0023constructor)($0023args)),
   instanceof: lambda([$0023constructor, $0023x])(_instanceof_($0023x)($0023constructor)),
   typeof: lambda([$0023x])(cond(_$003D$003D$003D_($0023x)(NullLiteral))(string("null"))(_typeof_($0023x))),
-  match: lambda([$0023type])(apply(ident("match'"))([$0023type, lambda([$0023x])($0023CasesNotExhaustive)])),
-  ["match'"]: lambda([$0023type])(member($0023type)(invoke($0023globalThis)(["Symbol", "for"])(string("match")))),
   id: lambda([$0023x])($0023x),
   const: lambda([$0023x, $0023y])($0023x),
   not: lambda([$0023x])(_$0021_($0023x)),

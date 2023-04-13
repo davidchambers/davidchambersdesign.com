@@ -120,7 +120,7 @@ fromTemplateLiteral quasis expressions = {
 };
 
 fromMemberExpression object property = {
-  computed = not $ match' Node (const false) {StringLiteral: validEsIdentifierName} property;
+  computed = not $ Node.matchOr (const false) {StringLiteral: validEsIdentifierName} property;
   {
     type: "MemberExpression",
     object: fromNode object,
@@ -131,7 +131,7 @@ fromMemberExpression object property = {
 };
 
 fromProperty key value = {
-  computed = not $ match' Node (const false) {StringLiteral: validEsIdentifierName} key;
+  computed = not $ Node.matchOr (const false) {StringLiteral: validEsIdentifierName} key;
   esKey = if computed then fromNode key else fromEscapedIdentifierName key.value;
   esValue = fromNode value;
   shorthand = esKey.type == "Identifier" && esValue.type == "Identifier" && esKey.name == esValue.name;
@@ -159,7 +159,7 @@ fromSwitchCase predicates consequent = {
     type: "SwitchCase",
     test: maybe null fromNode pred,
     consequent: if idx + 1 < preds.length then [] else [
-      consequent % match' Node toReturnStatement {
+      consequent % Node.matchOr toReturnStatement {
         Block: \statements result -> {
           type: "BlockStatement",
           body: maybe id (append . toReturnStatement) result (fromNode <$> statements),
@@ -188,7 +188,7 @@ fromSwitchExpression discriminant cases = {
   optional: false,
 };
 
-fromNode = match Node {
+fromNode = Node.match {
   NullLiteral:                {type: "Literal", value: null},
   BooleanLiteral:             \value -> {type: "Literal", value},
   NumberLiteral:              \value -> {type: "Literal", value},

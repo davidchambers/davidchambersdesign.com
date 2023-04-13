@@ -25,7 +25,7 @@ merge lhs rhs = {
 
 mergeAll = reduce merge emptyVariables;
 
-vars = foldRec {
+vars = Node.foldRec {
   ArrayExpression:                                     \varsProperties -> mergeAll varsProperties,
   ArrayPattern:                                        \varsProperties -> mergeAll varsProperties,
   ArrowFunctionExpression:                    \varsParameters varsBody -> referencing $ referenced varsBody - referenced (mergeAll varsParameters),
@@ -65,7 +65,7 @@ removeUnreferencedPreludeFunctions module = {
   {declared, referenced} = vars module;
   unreferenced = declared - referenced;
   unnecessary = unreferenced & preludeNames;
-  statements = reject (match' Node (const false) {VariableDeclaration: \{name} _ -> unnecessary has name}) module.statements;
+  statements = reject (Node.matchOr (const false) {VariableDeclaration: \{name} _ -> unnecessary has name}) module.statements;
   if statements.length == module.statements.length
   then module
   else removeUnreferencedPreludeFunctions $ Module module.imports module.exports statements
@@ -76,7 +76,7 @@ rewriteModule module namesExportedFrom = do {
   module = rewriteNode module;
   {imports, exports, statements} = module;
   {declared, referenced} = vars module;
-  imports <- parallel $ (<$> imports) $ match Node {
+  imports <- parallel $ (<$> imports) $ Node.match {
     ImportDeclaration: \source specifiers -> {
       specifiers
       % map (rewriteImportAllSpecifier (referenced - declared) namesExportedFrom source)
@@ -85,13 +85,13 @@ rewriteModule module namesExportedFrom = do {
     },
   };
   ;; create renaming function based on variable and function declarations
-  rename = reduce (\rename -> match Node {
+  rename = reduce (\rename -> Node.match {
     DataTypeDeclaration: const $ const rename,
     VariableDeclaration: \pattern expression -> updateRenamerFromPattern rename pattern,
     ExpressionStatement: const rename,
   }) id statements;
   ;; wrap renaming function based on import declarations
-  rename = reduce (\rename -> match Node {
+  rename = reduce (\rename -> Node.match {
     ImportSpecifier: \imported local name -> if name == imported.name then local.name else rename name,
     ImportNamespaceSpecifier: updateRenamerFromPattern rename,
     ImportDefaultSpecifier: updateRenamerFromPattern rename,
@@ -111,7 +111,7 @@ rewriteModule module namesExportedFrom = do {
 };
 
 rewriteImportAllSpecifier undeclared namesExportedFrom source = {
-  match' Node (Future.resolve . Array.of) {
+  Node.matchOr (Future.resolve . Array.of) {
     ImportAllSpecifier: \hiding -> do {
       namesExported <- {
         if .endsWith [".serif"] source.value
@@ -141,27 +141,30 @@ rewriteImportAllSpecifier undeclared namesExportedFrom source = {
   }
 };
 
-#$              = Identifier "$";  ;; cannot cause shadowing as $ is not a valid Serif identifier
-#$lhs           = Identifier "$lhs";  ;; cannot cause shadowing as $lhs is not a valid Serif identifier
-#$rhs           = Identifier "$rhs";  ;; cannot cause shadowing as $rhs is not a valid Serif identifier
+#$              = Identifier "$";
+#$cases         = Identifier "$cases";
+#$default       = Identifier "$default";
+#$lhs           = Identifier "$lhs";
+#$rhs           = Identifier "$rhs";
 #Object         = Identifier "Object";
 #Symbol         = Identifier "Symbol";
 #args           = Identifier "args";
-#cases          = Identifier "cases";
-#default        = Identifier "default";
+#map            = Identifier "map";
+#match          = Identifier "match";
+#recur          = Identifier "recur";
 #target         = Identifier "target";
 
 'apply          = StringLiteral "apply";
+'foldRec        = StringLiteral "foldRec";
 'for            = StringLiteral "for";
 'has            = StringLiteral "has";
 'hasOwn         = StringLiteral "hasOwn";
-'match          = StringLiteral "match";
 'tag            = StringLiteral "tag";
+'transform      = StringLiteral "transform";
 
-@match          = CallExpression (MemberExpression #Symbol 'for) ['match];
 @tag            = CallExpression (MemberExpression #Symbol 'for) ['tag];
 
-rewriteNode = transform {
+rewriteNode = Node.transform {
   PropertyAccessor: \{name} -> {
     rewriteNode $ ArrowFunctionExpression [#$] $ MemberExpression #$ $ StringLiteral name
   },
@@ -180,7 +183,7 @@ rewriteNode = transform {
     else Block (rewriteNode <$> statements) (rewriteNode <$> result)
   },
   DoBlockExpression: \operations result -> {
-    rewriteNode $ reduceRight (\result -> match Node {
+    rewriteNode $ reduceRight (\result -> Node.match {
       ArrowAssignmentStatement: \pattern expression -> {
         CallExpression (CallExpression (Identifier "chain") [ArrowFunctionExpression [pattern] result]) [expression]
       },
@@ -228,7 +231,7 @@ rewriteNode = transform {
     }
   },
   CallExpression: flip \arguments -> {
-    match' Node (\callee -> CallExpression (rewriteNode callee) (rewriteNode <$> arguments)) {
+    Node.matchOr (\callee -> CallExpression (rewriteNode callee) (rewriteNode <$> arguments)) {
       PropertyAccessor: rewriteNode . MemberExpression arguments[0] . StringLiteral . (.name),
     }
   },
@@ -237,6 +240,8 @@ rewriteNode = transform {
                         (reduceRight (flip $ ArrowFunctionExpression . Array.of) body parameters)
   },
   DataTypeDeclaration: \identifier constructors -> rewriteNode {
+    #member = Identifier $ .replace [RegExp "^.", .toLowerCase []] identifier.name;
+
     pattern = {
       constructors
       % map (.identifier)
@@ -245,55 +250,132 @@ rewriteNode = transform {
       % ObjectPattern
     };
     VariableDeclaration pattern {
-      variableDeclarationFromConstructor = match Node {
+      #$matchOr   = Identifier "$matchOr";
+      #$match     = Identifier "$match";
+      #$transform = Identifier "$transform";
+      #$foldRec   = Identifier "$foldRec";
+
+      variableDeclarationFromConstructor = Node.match {
         DataConstructorDefinition: \identifier parameters -> {
           VariableDeclaration identifier $ reduceRight
-            (\body parameter -> ArrowFunctionExpression [parameter] body)
+            (\body parameter -> ArrowFunctionExpression [parameter.identifier] body)
             (parameters
+             % map (.identifier)
              % map (\parameter -> Property (StringLiteral parameter.name) parameter)
              % prepend (Property @tag (StringLiteral identifier.name))
              % ObjectExpression)
             parameters
         },
       };
-      variableDeclarations = variableDeclarationFromConstructor <$> constructors;
-      propertyFromConstructor = match Node {
-        DataConstructorDefinition: \identifier parameters -> {
-          Property (StringLiteral identifier.name) identifier
-        },
-      };
-      constructorProperties = propertyFromConstructor <$> constructors;
-      matchProperty = Property @match {
-        #member = Identifier $ .replace [RegExp "^.", .toLowerCase []] identifier.name;
+
+      matchOr = {
         case {identifier, parameters} = {
           SwitchCase [Just $ StringLiteral identifier.name] {
-            reduce (\callee parameter -> CallExpression callee [MemberExpression #member $ StringLiteral parameter.name])
-                   (MemberExpression #cases $ StringLiteral identifier.name)
+            reduce (\callee parameter -> CallExpression callee [MemberExpression #member $ StringLiteral parameter.identifier.name])
+                   (MemberExpression #$cases $ StringLiteral identifier.name)
                    parameters
           }
         };
-        ArrowFunctionExpression [#default] {
-          ArrowFunctionExpression [#cases] {
+        ArrowFunctionExpression [#$default] {
+          ArrowFunctionExpression [#$cases] {
             ArrowFunctionExpression [#member] {
               ConditionalExpression
-                (CallExpression (MemberExpression #Object 'hasOwn) [#cases, MemberExpression #member @tag])
+                (CallExpression (MemberExpression #Object 'hasOwn) [#$cases, MemberExpression #member @tag])
                 (SwitchExpression (MemberExpression #member @tag) (case <$> constructors))
-                (Just $ CallExpression #default [#member])
+                (Just $ CallExpression #$default [#member])
             }
           }
         }
       };
-      Block variableDeclarations $ Just {
-        ObjectExpression [
-          Property (StringLiteral identifier.name) $ ObjectExpression [...constructorProperties, matchProperty],
-          ...constructorProperties,
+
+      withRecursion expr recur depth = {
+        switch depth
+        when 0 then expr
+        when 1 then CallExpression recur [expr]
+        else withRecursion expr (CallExpression #map [recur]) (depth - 1)
+      };
+
+      transform = {
+        ArrowFunctionExpression [#$cases] {
+          Block [
+            VariableDeclaration #recur {
+              CallExpression (CallExpression #$matchOr [identifier]) [
+                constructors
+                % map (Node.match {
+                    DataConstructorDefinition: \identifier parameters -> Property (StringLiteral identifier.name) {
+                      reduceRight (\body parameter -> ArrowFunctionExpression [parameter.identifier] body)
+                                  (reduce (\callee -> Node.match {
+                                             DataConstructorParameter: \identifier recursionDepth -> {
+                                               CallExpression callee [withRecursion identifier #recur recursionDepth]
+                                             }
+                                           })
+                                          identifier
+                                          parameters)
+                                  parameters
+                    }
+                  })
+                % append (SpreadElement #$cases)
+                % ObjectExpression
+              ]
+            },
+          ] $ Just #recur
+        }
+      };
+
+      foldRec = {
+        ArrowFunctionExpression [#$cases] {
+          Block [
+            VariableDeclaration #recur {
+              CallExpression (CallExpression #$matchOr [identifier]) [
+                constructors
+                % map (Node.match {
+                    DataConstructorDefinition: \identifier parameters -> Property (StringLiteral identifier.name) {
+                      reduceRight (\body parameter -> ArrowFunctionExpression [parameter.identifier] body)
+                                  (reduce (\callee -> Node.match {
+                                             DataConstructorParameter: \identifier recursionDepth -> {
+                                               CallExpression callee [withRecursion identifier #recur recursionDepth]
+                                             }
+                                           })
+                                          (MemberExpression #$cases $ StringLiteral identifier.name)
+                                          parameters)
+                                  parameters
+                    }
+                  })
+                % ObjectExpression
+              ]
+            },
+          ] $ Just #recur
+        }
+      };
+
+      constructors
+      % map (Node.match {
+          DataConstructorDefinition: \identifier parameters -> {
+            Property (StringLiteral identifier.name) identifier
+          }
+        })
+      % append {
+          Property (StringLiteral identifier.name) $ ObjectExpression [
+            Property (StringLiteral "matchOr"  ) #$matchOr,
+            Property (StringLiteral "match"    ) #$match,
+            Property (StringLiteral "transform") #$transform,
+            Property (StringLiteral "foldRec"  ) #$foldRec,
+          ]
+        }
+      % ObjectExpression
+      % Just
+      % Block [
+          ...(variableDeclarationFromConstructor <$> constructors),
+          VariableDeclaration #$matchOr matchOr,
+          VariableDeclaration #$match $ CallExpression #$matchOr [ArrowFunctionExpression [#member] $ Identifier "CasesNotExhaustive"],
+          VariableDeclaration #$transform transform,
+          VariableDeclaration #$foldRec foldRec,
         ]
-      }
     }
   },
 };
 
-updateRenamerFromPattern rename = match Node {
+updateRenamerFromPattern rename = Node.match {
   Identifier:          \name -> if preludeNames has name then \this -> if this == name then "$" + this else rename this else rename,
   ArrayPattern:    \elements -> reduce updateRenamerFromPattern rename elements,
   ObjectPattern: \properties -> reduce updateRenamerFromPattern rename properties,
@@ -302,7 +384,7 @@ updateRenamerFromPattern rename = match Node {
   Elision:                      rename,
 };
 
-renameIdentifiers rename = transform {
+renameIdentifiers rename = Node.transform {
   Identifier: Identifier . rename,
   ImportSpecifier: \imported local -> ImportSpecifier imported (renameIdentifiers rename local),
   ExportSpecifier: \local exported -> ExportSpecifier (renameIdentifiers rename local) exported,

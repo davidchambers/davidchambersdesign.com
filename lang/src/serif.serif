@@ -65,7 +65,7 @@ findDependencies filename tree = {
       then [path.join [filename, "..", value]]
       else []
     };
-    exportedNames = ast.exports >>= match' Node (const []) {ExportNamedDeclaration: map ((.name) . (.exported))};
+    exportedNames = ast.exports >>= Node.matchOr (const []) {ExportNamedDeclaration: map ((.name) . (.exported))};
     reduce reducer
            (resolve $ construct Map [[...tree, [filename, {sourceText, ast, dependencies, exportedNames}]]])
            dependencies

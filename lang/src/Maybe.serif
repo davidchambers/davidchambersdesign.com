@@ -1,4 +1,3 @@
-export default {Nothing, Just, [Symbol.for "match"]: match};
 export {
   Nothing,
   Just,
@@ -19,17 +18,11 @@ Just value = {
   fantasy-land/map: \f -> Just $ f value,
 };
 
-match default cases maybe = {
-  if Object.hasOwn (cases, maybe[Symbol.for "tag"]) then {
-    switch maybe[Symbol.for "tag"]
-    when "Nothing" then cases.Nothing
-    when "Just"    then cases.Just maybe.value
-  } else {
-    default maybe
-  }
+maybe y f m = {
+  switch m[Symbol.for "tag"]
+  when "Nothing" then y
+  when "Just"    then f m.value
 };
-
-maybe Nothing Just = match null {Nothing, Just};
 
 fromMaybe default = maybe default id;
 

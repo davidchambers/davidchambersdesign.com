@@ -593,8 +593,27 @@ DataTypeDeclaration
 
 DataConstructorDefinition
   = identifier:Identifier
-    parameters:(_ parameter:Identifier { return parameter; })*
+    parameters:(_ parameter:DataConstructorParameter { return parameter; })*
     { return Node.DataConstructorDefinition(identifier)(parameters); }
+
+DataConstructorParameter
+  = depth:DataConstructorParameterTerminal          { return depth(0); }
+  / depth:DataConstructorParameterRecursive         { return depth(1); }
+  / depth:DataConstructorParameterRecursiveFunctor  { return depth(2); }
+
+DataConstructorParameterTerminal
+  = identifier:Identifier
+    { return Node.DataConstructorParameter(identifier); }
+
+DataConstructorParameterRecursive
+  = '(' identifier:Identifier ')'
+    { return Node.DataConstructorParameter(identifier); }
+
+DataConstructorParameterRecursiveFunctor
+  = '[' identifier:Identifier ']'
+    { return Node.DataConstructorParameter(identifier); }
+  / '[' recur:DataConstructorParameterRecursiveFunctor ']'
+    { return depth => recur(depth + 1); }
 
 ExpressionStatement
   = expression:Expression _ ';'
