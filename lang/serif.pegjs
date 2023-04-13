@@ -587,6 +587,7 @@ DataTypeDeclaration
   = TypeToken
     _ identifier:Identifier
     _ '='
+    _ '|'?
     _ constructors:DataConstructorDefinition|1.., _ '|' _|
     _ ';'
     { return Node.DataTypeDeclaration(identifier)(constructors); }

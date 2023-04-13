@@ -48,8 +48,8 @@ export {
   VariableDeclaration,
 };
 
-type Node
-  = ArrayExpression [elements]
+type Node =
+  | ArrayExpression [elements]
   | ArrayPattern [elements]
   | ArrowAssignmentStatement (pattern) (expression)
   | ArrowFunctionExpression [parameters] (body)
