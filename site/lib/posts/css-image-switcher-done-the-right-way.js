@@ -1,4 +1,4 @@
-import {a, code, em, h3, h4, li, ol, p, strong} from "../elements.js";
+import {h3, h4, p, ol, li, a, code, em, strong} from "../elements.js";
 import {captioned$002Dimages, code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p([strong(["Chris Coyier has done it again."]), "\n    Compelled me to stay up all night, that is\n    (it's 7am as I type this). In Chris's latest screencast, ", a({

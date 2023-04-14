@@ -1,4 +1,4 @@
-import {code, em, p, strong} from "../elements.js";
+import {p, code, em, strong} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["Sometimes we require users to log in to a WordPress site in order\n    to access ", em(["front-end"]), " functionality hidden from guests.\n    In such instances, we can simply provide a standard login link:"]), code$002Dblock("php")(`<a href="<?php bloginfo('url'); ?>/wp-login.php">log in</a>

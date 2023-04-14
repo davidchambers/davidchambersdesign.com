@@ -1,4 +1,4 @@
-import {a, p} from "../elements.js";
+import {p, a} from "../elements.js";
 import {captioned$002Dimages, update, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const body = [update(datetime("2009-08-28 18:12:00 (Pacific/Auckland)"))([p(["An update to this post has been published: ", a({

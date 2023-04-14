@@ -1,4 +1,4 @@
-import {a, blockquote, em, img, p} from "../elements.js";
+import {p, blockquote, a, em, img} from "../elements.js";
 import datetime from "../datetime.js";
 const body = [p([img({
   alt: "Helveticards",

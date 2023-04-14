@@ -1,4 +1,4 @@
-import {a, blockquote, p} from "../elements.js";
+import {p, blockquote, a} from "../elements.js";
 import datetime from "../datetime.js";
 const body = [p([a({
   href: "http://www.youtube.com/watch?v=A6-wA-7QIeE"

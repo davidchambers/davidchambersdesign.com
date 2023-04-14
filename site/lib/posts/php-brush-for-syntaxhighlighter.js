@@ -1,4 +1,4 @@
-import {a, code, li, p, p$0027, strong, ul} from "../elements.js";
+import {p$0027, p, ul, li, a, code, strong} from "../elements.js";
 import {captioned$002Dimages, code$002Dblock, update} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["Alex Gorbatchev's ", a({

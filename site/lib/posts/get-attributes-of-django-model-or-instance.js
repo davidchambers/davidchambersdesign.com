@@ -1,4 +1,4 @@
-import {code, em, h3, li, p, ul} from "../elements.js";
+import {h3, p, ul, li, code, em} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["What is the best way to get the attributes of a Django model\n    or instance?"]), code$002Dblock("python")(`from django.db import models

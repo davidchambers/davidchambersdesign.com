@@ -1,4 +1,4 @@
-import {text, a, body, div as $div, footer, head, header, hr, html, li, link, meta, nav$0027, p, script, span, strong, title, ul} from "./elements.js";
+import {text, html, head, title, link, meta, body, nav$0027, header, footer, p, hr, ul, li, div as $div, a, script, span, strong} from "./elements.js";
 const map = f => xs => (() => {
   switch (globalThis.Object.prototype.toString.call(xs)) {
     case "[object Array]":

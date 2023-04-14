@@ -1,4 +1,4 @@
-import {a, code, em, img, li, ol, p} from "../elements.js";
+import {p, ol, li, a, code, em, img} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["This turned out to be quite a bit easier than I'd imagined.\n    Here are the things I did:"]), ol([li([p(["I saved ", a({

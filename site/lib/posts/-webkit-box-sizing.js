@@ -1,4 +1,4 @@
-import {code, p} from "../elements.js";
+import {p, code} from "../elements.js";
 import {captioned$002Dimages} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["This site's search field has been virtually unusable in Chrome\n    and Safari on Windows for several months. Fixing it was not high\n    on my priority list, but I finally got to it this evening."]), captioned$002Dimages([{

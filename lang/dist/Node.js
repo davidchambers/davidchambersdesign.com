@@ -6,7 +6,7 @@ const map = f => xs => (() => {
       return xs["fantasy-land/map"](f);
   }
 })();
-const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, Block, BooleanLiteral, CallExpression, ConditionalExpression, DataConstructorDefinition, DataConstructorParameter, DataTypeDeclaration, DoBlockExpression, Elision, EmptySection, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, InfixExpression, LeftSection, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PrefixExpression, Property, PropertyAccessor, RestElement, RightSection, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, VariableDeclaration} = (() => {
+const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, Block, BooleanLiteral, CallExpression, ConditionalExpression, DataConstructorDefinition, DataConstructorParameter, DataTypeDeclaration, DoBlockExpression, Elision, EmptySection, ExportAllSpecifier, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, InfixExpression, LeftSection, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PrefixExpression, Property, PropertyAccessor, RestElement, RightSection, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, VariableDeclaration} = (() => {
   const ArrayExpression = elements => ({
     [Symbol.for("tag")]: "ArrayExpression",
     elements
@@ -71,6 +71,10 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
   const EmptySection = operator => ({
     [Symbol.for("tag")]: "EmptySection",
     operator
+  });
+  const ExportAllSpecifier = hiding => ({
+    [Symbol.for("tag")]: "ExportAllSpecifier",
+    hiding
   });
   const ExportDefaultDeclaration = declaration => ({
     [Symbol.for("tag")]: "ExportDefaultDeclaration",
@@ -249,6 +253,8 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
         return $cases.Elision;
       case "EmptySection":
         return $cases.EmptySection(node.operator);
+      case "ExportAllSpecifier":
+        return $cases.ExportAllSpecifier(node.hiding);
       case "ExportDefaultDeclaration":
         return $cases.ExportDefaultDeclaration(node.declaration);
       case "ExportNamedDeclaration":
@@ -332,6 +338,7 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
       DoBlockExpression: operations => result => DoBlockExpression(map(recur)(operations))(recur(result)),
       Elision,
       EmptySection: operator => EmptySection(operator),
+      ExportAllSpecifier: hiding => ExportAllSpecifier(map(recur)(hiding)),
       ExportDefaultDeclaration: declaration => ExportDefaultDeclaration(recur(declaration)),
       ExportNamedDeclaration: specifiers => ExportNamedDeclaration(map(recur)(specifiers)),
       ExportSpecifier: local => exported => ExportSpecifier(recur(local))(recur(exported)),
@@ -384,6 +391,7 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
       DoBlockExpression: operations => result => $cases.DoBlockExpression(map(recur)(operations))(recur(result)),
       Elision: $cases.Elision,
       EmptySection: operator => $cases.EmptySection(operator),
+      ExportAllSpecifier: hiding => $cases.ExportAllSpecifier(map(recur)(hiding)),
       ExportDefaultDeclaration: declaration => $cases.ExportDefaultDeclaration(recur(declaration)),
       ExportNamedDeclaration: specifiers => $cases.ExportNamedDeclaration(map(recur)(specifiers)),
       ExportSpecifier: local => exported => $cases.ExportSpecifier(recur(local))(recur(exported)),
@@ -434,6 +442,7 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
     DoBlockExpression,
     Elision,
     EmptySection,
+    ExportAllSpecifier,
     ExportDefaultDeclaration,
     ExportNamedDeclaration,
     ExportSpecifier,
@@ -475,4 +484,4 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
   };
 })();
 export default Node;
-export {ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, Block, BooleanLiteral, CallExpression, ConditionalExpression, DataConstructorDefinition, DataConstructorParameter, DataTypeDeclaration, DoBlockExpression, Elision, EmptySection, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, InfixExpression, LeftSection, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PrefixExpression, Property, PropertyAccessor, RestElement, RightSection, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, VariableDeclaration};
+export {ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, Block, BooleanLiteral, CallExpression, ConditionalExpression, DataConstructorDefinition, DataConstructorParameter, DataTypeDeclaration, DoBlockExpression, Elision, EmptySection, ExportAllSpecifier, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, InfixExpression, LeftSection, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PrefixExpression, Property, PropertyAccessor, RestElement, RightSection, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, VariableDeclaration};

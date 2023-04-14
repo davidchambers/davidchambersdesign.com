@@ -1,4 +1,4 @@
-import {a, li, ol, p, strong} from "../elements.js";
+import {p, ol, li, a, strong} from "../elements.js";
 import {update} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["I followed ", a({

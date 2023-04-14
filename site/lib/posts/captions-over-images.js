@@ -1,4 +1,4 @@
-import {a, em, li, p, strong, ul} from "../elements.js";
+import {p, ul, li, a, em, strong} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["This is my response to Chris Coyier's screencast titled ", a({

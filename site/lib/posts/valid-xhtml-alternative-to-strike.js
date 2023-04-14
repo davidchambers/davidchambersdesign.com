@@ -1,4 +1,4 @@
-import {a, code, del, ins, p} from "../elements.js";
+import {p, a, code, del, ins} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["Today I noticed that a page on this site failed validation. ", a({

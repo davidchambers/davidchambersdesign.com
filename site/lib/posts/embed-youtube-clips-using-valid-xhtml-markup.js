@@ -1,4 +1,4 @@
-import {code, p} from "../elements.js";
+import {p, code} from "../elements.js";
 import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["There are blog posts all over the Web explaining how to\n    write valid XHTML markup to embed YouTube videos. There\n    are also a number of online converters that generate this\n    markup automatically."]), p(["I've always found it easier to write the markup myself,\n    as there's really nothing to it. Simply replace both\n    instances of ", code(["video_id"]), " in the following\n    code with", $2014, "you guessed it", $2014, "the video's ID."]), code$002Dblock("html")(`<object class="youtube"

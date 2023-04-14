@@ -1,4 +1,4 @@
-import {code, p} from "../elements.js";
+import {p, code} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["When using Django's cache, ensure that empty collections\n    (", code(["[]"]), ", ", code(["()"]), ", ", code(["{}"]), ")\n    are treated as valid cache data."]), code$002Dblock("python")(`cached = cache.get(cache_key)

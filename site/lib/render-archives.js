@@ -1,5 +1,5 @@
 import sanctuary from "sanctuary";
-import {a, h1, h2, li, ol, ol$0027, time} from "./elements.js";
+import {h1, h2, ol$0027, ol, li, a, time} from "./elements.js";
 const equals = this$ => that => (() => {
   switch (globalThis.Object.prototype.toString.call(this$)) {
     case "[object Array]":

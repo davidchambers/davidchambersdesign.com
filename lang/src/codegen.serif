@@ -1,4 +1,4 @@
-import {Nothing, Just, maybe} from "./Maybe.serif";
+import {maybe} from "./Maybe.serif";
 import Node from "./Node.serif";
 
 export default fromNode;

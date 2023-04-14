@@ -71,6 +71,15 @@ const reduce = f => y => xs => (() => {
       return xs["fantasy-land/reduce"](f, y);
   }
 })();
+const filter = f => xs => (() => {
+  switch (globalThis.Object.prototype.toString.call(xs)) {
+    case "[object Array]":
+      return xs.filter(x => f(x));
+    default:
+      return xs["fantasy-land/filter"](f);
+  }
+})();
+const reject = f => filter(x => !f(x));
 const map = f => xs => (() => {
   switch (globalThis.Object.prototype.toString.call(xs)) {
     case "[object Array]":
@@ -115,14 +124,32 @@ const parse = filename => sourceText => mapRej(error => (() => {
   return `\n\x1B[1m${path.relative(Deno.cwd())(error.location.source)}\x1B[0m\n\n${(args => target => target.join.apply(target, args))([""])((args => target => target.map.apply(target, args))([(line, idx, lines) => `\x1B[7m${renderLineNumber(line.number)}\x1B[0m${idx < subtract(1)(lines.length) ? line.text : `${(args => target => target.slice.apply(target, args))([0, subtract(1)(error.location.start.column)])(line.text)}\x1B[7m${(args => target => target.charAt.apply(target, args))([subtract(1)(error.location.start.column)])(line.text)}\x1B[0m${(args => target => target.slice.apply(target, args))([error.location.start.column])(line.text)}`}\n`])(lines))}${(length => (args => target => target.repeat.apply(target, args))([subtract(1)(length + error.location.start.column)])(" "))(renderLineNumber((args => target => target.at.apply(target, args))([-1])(lines).number).length)}^\n${error.message}\n`;
 })())(serif.parse(filename)(sourceText));
 const reducer = futureTree => filename => chain(findDependencies(filename))(futureTree);
-const findDependencies = filename => tree => tree.has(filename) ? resolve(tree) : chain(sourceText => chain(ast => (dependencies => (exportedNames => reduce(reducer)(resolve(construct(Map)([[...tree, [filename, {
+const findDependencies = filename => tree => tree.has(filename) ? resolve(tree) : chain(sourceText => chain(ast => (dependencies => (namesInPattern => (declaredNames => (exportedNames => reduce(reducer)(resolve(construct(Map)([[...tree, [filename, {
   sourceText,
   ast,
   dependencies,
   exportedNames
 }]]])))(dependencies))(chain(Node.matchOr(const$([]))({
-  ExportNamedDeclaration: map(compose($ => $.name)($ => $.exported))
-}))(ast.exports)))(chain(({source: {value}}) => (args => target => target.test.apply(target, args))([value])(RegExp("^[./].*[.]serif$")) ? [path.join([filename, "..", value])] : [])(ast.imports)))(parse(filename)(sourceText)))(mapRej($ => $.message)(fs.readFile(filename)));
+  ExportNamedDeclaration: specifiers => chain(Node.match({
+    ExportSpecifier: local => exported => [exported.name],
+    ExportAllSpecifier: hiding => (() => {
+      const hidden = construct(Set)([map($ => $.name)(hiding)]);
+      return reject(name => hidden.has(name))(declaredNames);
+    })()
+  }))(specifiers)
+}))(ast.exports)))(chain(Node.matchOr(const$([]))({
+  VariableDeclaration: pattern => expression => namesInPattern(pattern),
+  FunctionDeclaration: name => parameters => body => [name],
+  DataTypeDeclaration: identifier => compose($rhs => concat(namesInPattern(identifier))($rhs))($lhs => chain(Node.match({
+    DataConstructorDefinition: compose(const$)(namesInPattern)
+  }))($lhs))
+}))(ast.statements)))(Node.match({
+  ArrayPattern: elements => chain(namesInPattern)(elements),
+  ObjectPattern: properties => chain(namesInPattern)(properties),
+  Property: key => value => namesInPattern(key),
+  RestElement: argument => namesInPattern(argument),
+  Identifier: name => [name]
+})))(chain(({source: {value}}) => (args => target => target.test.apply(target, args))([value])(RegExp("^[./].*[.]serif$")) ? [path.join([filename, "..", value])] : [])(ast.imports)))(parse(filename)(sourceText)))(mapRej($ => $.message)(fs.readFile(filename)));
 const orderDependencies = tree => (() => {
   const recur = unsorted$0021 => sorted$0021 => equals([])(unsorted$0021) ? sorted$0021 : (() => {
     const filename = (args => target => target.shift.apply(target, args))([])(unsorted$0021);

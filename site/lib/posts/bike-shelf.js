@@ -1,4 +1,4 @@
-import {a, img, p} from "../elements.js";
+import {p, a, img} from "../elements.js";
 import datetime from "../datetime.js";
 const body = [p(["Simple design executed beatifully."]), p([img({
   alt: "Bike shelf",

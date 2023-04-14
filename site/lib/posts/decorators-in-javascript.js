@@ -1,4 +1,4 @@
-import {em, p} from "../elements.js";
+import {p, em} from "../elements.js";
 import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["A decorator is a function which takes a function and returns a function:"]), code$002Dblock("coffeescript")(`decorator = (fn) -> fn

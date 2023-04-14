@@ -1,4 +1,4 @@
-import {a, code, p} from "../elements.js";
+import {p, a, code} from "../elements.js";
 import {captioned$002Dimages} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["Gmail currently serves up two possible favicons, a 16x16 ", code(["shortcut icon"]), " and a 32x32 ", code(["icon"]), ".\n    I've no idea why the latter is included, but my browser\n    is happy to accept either version, which can lead to a\n    rather amusing situation."]), captioned$002Dimages([{

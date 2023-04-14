@@ -1,4 +1,4 @@
-import {Nothing, Just, maybe} from "./Maybe.js";
+import {maybe} from "./Maybe.js";
 import Node from "./Node.js";
 const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
 const id = x => x;

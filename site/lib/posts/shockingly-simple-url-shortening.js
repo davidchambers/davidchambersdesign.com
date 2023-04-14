@@ -1,4 +1,4 @@
-import {a, em, h3, li, p, strong, ul} from "../elements.js";
+import {h3, p, ul, li, a, em, strong} from "../elements.js";
 import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["URL shortening is something that's been\n    at the back of my mind since listening to ", a({

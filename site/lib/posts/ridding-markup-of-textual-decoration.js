@@ -1,4 +1,4 @@
-import {a, code, em, h2, p, strong} from "../elements.js";
+import {h2, p, a, code, em, strong} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["On the Web it's not uncommon to see characters with\n    no inherent meaning used for stylistic reasons. A good\n    example is the ", a({

@@ -1,6 +1,6 @@
 import * as Future from "fluture";
 import {Just, maybe, fromMaybe, fromJust$0021} from "./Maybe.js";
-import Node, {ArrowFunctionExpression, Block, CallExpression, ConditionalExpression, ExportSpecifier, ExpressionStatement, Identifier, ImportDeclaration, ImportSpecifier, InfixExpression, MemberExpression, Module, ObjectExpression, ObjectPattern, Property, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, VariableDeclaration} from "./Node.js";
+import Node, {ArrowFunctionExpression, Block, CallExpression, ConditionalExpression, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, Identifier, ImportDeclaration, ImportSpecifier, InfixExpression, MemberExpression, Module, ObjectExpression, ObjectPattern, Property, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, VariableDeclaration} from "./Node.js";
 import * as format from "./format.js";
 import globals from "./globals.js";
 import parallel from "./parallel.js";
@@ -157,6 +157,7 @@ const vars = Node.foldRec({
   BooleanLiteral: value => emptyVariables,
   CallExpression: varsCallee => varsArguments => merge(varsCallee)(mergeAll(varsArguments)),
   ConditionalExpression: varsPredicate => varsConsequent => varsAlternative => merge(merge(varsPredicate)(varsConsequent))(fromMaybe(emptyVariables)(varsAlternative)),
+  ExportAllSpecifier: hiding => emptyVariables,
   ExportDefaultDeclaration: varsDeclaration => varsDeclaration,
   ExportNamedDeclaration: varsSpecifiers => mergeAll(varsSpecifiers),
   ExportSpecifier: varsLocal => exported => varsLocal,
@@ -196,7 +197,7 @@ const removeUnreferencedPreludeFunctions = module => (() => {
   }))(module.statements);
   return equals(module.statements.length)(statements.length) ? module : removeUnreferencedPreludeFunctions(Module(module.imports)(module.exports)(statements));
 })();
-const rewriteModule = module => namesExportedFrom => (module => (({imports, exports, statements}) => (({declared, referenced}) => chain(imports => (rename => (rename => (({imports, exports, statements}) => (prelude => (module => (({declared, referenced}) => (unreferenced => (undeclared => (() => {
+const rewriteModule = module => namesExportedFrom => (module => (({imports, exports, statements}) => (({declared, referenced}) => chain(imports => (exports => (rename => (rename => (({imports, exports, statements}) => (prelude => (module => (({declared, referenced}) => (unreferenced => (undeclared => (() => {
   unreferenced.size > 0 ? console.error(concat("unreferenced: ")((args => target => target.join.apply(target, args))([", "])(Array.from(unreferenced)))) : undefined;
   return (() => {
     undeclared.size > 0 ? console.error(concat("undeclared: ")((args => target => target.join.apply(target, args))([", "])(Array.from(undeclared)))) : undefined;
@@ -210,7 +211,11 @@ const rewriteModule = module => namesExportedFrom => (module => (({imports, expo
   DataTypeDeclaration: const$(const$(rename)),
   VariableDeclaration: pattern => expression => updateRenamerFromPattern(rename)(pattern),
   ExpressionStatement: const$(rename)
-}))(id)(statements)))(parallel(($lhs => map($lhs)(imports))(Node.match({
+}))(id)(statements)))(($lhs => map($lhs)(exports))(Node.matchOr(id)({
+  ExportNamedDeclaration: specifiers => ExportNamedDeclaration(chain(Node.matchOr(Array.of)({
+    ExportAllSpecifier: hiding => map(compose(join(ExportSpecifier))(Identifier))(Array.from(subtract(construct(Set)([map($ => $.name)(hiding)]))(mergeAll(map(vars)(statements)).declared)))
+  }))(specifiers))
+}))))(parallel(($lhs => map($lhs)(imports))(Node.match({
   ImportDeclaration: source => specifiers => map(compose(ImportDeclaration(source))(join))(parallel(map(rewriteImportAllSpecifier(subtract(declared)(referenced))(namesExportedFrom)(source))(specifiers)))
 })))))(vars(module)))(module))(rewriteNode(module));
 const rewriteImportAllSpecifier = undeclared => namesExportedFrom => source => Node.matchOr(compose(Future.resolve)(Array.of))({
@@ -225,16 +230,13 @@ const $0023Object = Identifier("Object");
 const $0023Symbol = Identifier("Symbol");
 const $0023args = Identifier("args");
 const $0023map = Identifier("map");
-const $0023match = Identifier("match");
 const $0023recur = Identifier("recur");
 const $0023target = Identifier("target");
 const $0027apply = StringLiteral("apply");
-const $0027foldRec = StringLiteral("foldRec");
 const $0027for = StringLiteral("for");
 const $0027has = StringLiteral("has");
 const $0027hasOwn = StringLiteral("hasOwn");
 const $0027tag = StringLiteral("tag");
-const $0027transform = StringLiteral("transform");
 const $0040tag = CallExpression(MemberExpression($0023Symbol)($0027for))([$0027tag]);
 const rewriteNode = Node.transform({
   PropertyAccessor: ({name}) => rewriteNode(ArrowFunctionExpression([$0023$])(MemberExpression($0023$)(StringLiteral(name)))),

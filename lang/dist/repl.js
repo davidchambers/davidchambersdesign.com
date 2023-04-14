@@ -1,9 +1,8 @@
-import {attempt, attemptP, fork, resolve} from "fluture";
+import {attempt, fork, resolve} from "fluture";
 import {generate} from "astring";
 import {Just} from "./Maybe.js";
 import * as Node from "./Node.js";
 import * as serif from "./index.js";
-const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
 const equals = this$ => that => (() => {
   switch (globalThis.Object.prototype.toString.call(this$)) {
     case "[object Array]":
@@ -63,12 +62,6 @@ const chain = f => x => (() => {
   }
 })();
 const contains = this$ => these => reduce(x => that => x || equals(this$)(that))(false)(these);
-const readInput = reader => (() => {
-  const decoder = construct(TextDecoder)([]);
-  const uint8 = construct(Uint8Array)([1024]);
-  const recur = text => chain(n => equals(null)(n) ? resolve(text) : recur(concat(text)(decoder.decode((args => target => target.slice.apply(target, args))([0, n])(uint8)))))(attemptP(() => reader.read(uint8)));
-  return recur("");
-})();
 const $00230 = "\u001b[0m";
 const $00231 = "\u001b[1m";
 const $00237 = "\u001b[7m";

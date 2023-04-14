@@ -1,4 +1,4 @@
-import {a, code, em, h3, p} from "../elements.js";
+import {h3, p, a, code, em} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["When dealing with dates, it's not uncommon to need to convert an\n    integer into an ordinal number (1st, 2nd, 3rd, etc.). While making\n    improvements to ", a({

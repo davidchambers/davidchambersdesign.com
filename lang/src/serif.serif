@@ -1,7 +1,7 @@
 import {generate} from "astring";
 import {fork, mapRej, resolve} from "fluture";
 
-import Node from "./Node.js";
+import Node from "./Node.serif";
 import * as fs from "./fs.serif";
 import * as serif from "./index.serif";
 import parallel from "./parallel.serif";
@@ -65,7 +65,29 @@ findDependencies filename tree = {
       then [path.join [filename, "..", value]]
       else []
     };
-    exportedNames = ast.exports >>= Node.matchOr (const []) {ExportNamedDeclaration: map ((.name) . (.exported))};
+    namesInPattern = Node.match {
+      ArrayPattern:    \elements -> elements >>= namesInPattern,
+      ObjectPattern: \properties -> properties >>= namesInPattern,
+      Property:       \key value -> namesInPattern key,
+      RestElement:     \argument -> namesInPattern argument,
+      Identifier:          \name -> [name],
+    };
+    declaredNames = ast.statements >>= Node.matchOr (const []) {
+      VariableDeclaration: \pattern expression -> namesInPattern pattern,
+      FunctionDeclaration: \name parameters body -> [name],
+      DataTypeDeclaration: \identifier -> {
+        (namesInPattern identifier <>) . (>>= Node.match {DataConstructorDefinition: const . namesInPattern})
+      }
+    };
+    exportedNames = ast.exports >>= Node.matchOr (const []) {
+      ExportNamedDeclaration: \specifiers -> specifiers >>= Node.match {
+        ExportSpecifier: \local exported -> [exported.name],
+        ExportAllSpecifier: \hiding -> {
+          hidden = construct Set [(.name) <$> hiding];
+          declaredNames % reject \name -> hidden has name
+        }
+      }
+    };
     reduce reducer
            (resolve $ construct Map [[...tree, [filename, {sourceText, ast, dependencies, exportedNames}]]])
            dependencies

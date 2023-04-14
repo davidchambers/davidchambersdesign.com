@@ -1,22 +1,9 @@
-import {attempt, attemptP, fork, resolve} from "fluture";
+import {attempt, fork, resolve} from "fluture";
 import {generate} from "astring";
 
 import {Just} from "./Maybe.serif";
 import * as Node from "./Node.serif";
 import * as serif from "./index.serif";
-
-;; good example of interop (not actually used here)
-readInput reader = {
-  decoder = construct TextDecoder [];
-  uint8 = construct Uint8Array [1024];
-  recur text = do {
-    n <- attemptP \() -> reader.read uint8;
-    if n == null
-    then resolve text
-    else recur $ concat text $ decoder.decode $ .slice [0, n] uint8
-  };
-  recur ""
-};
 
 #0  = "\x1B[0m";
 #1  = "\x1B[1m";

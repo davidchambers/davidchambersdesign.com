@@ -1,4 +1,4 @@
-import {code, em, h3, h4, p, strong} from "../elements.js";
+import {h3, h4, p, code, em, strong} from "../elements.js";
 import {captioned$002Dimages, code$002Dblock, update} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["Mac OS X's default bash prompt is dull and uninformative."]), captioned$002Dimages([{

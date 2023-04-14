@@ -1,4 +1,4 @@
-import {a, code, em, p} from "../elements.js";
+import {p, a, code, em} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["I was delighted to discover this \"trick\"\n    over on CSS-Tricks in a post titled ", a({

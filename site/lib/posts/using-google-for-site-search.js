@@ -1,4 +1,4 @@
-import {a, dd, dl, dt, dt$0027, p} from "../elements.js";
+import {p, dl, dt$0027, dt, dd, a} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["WordPress is a great piece of software, although I've never been\n    satisfied with its search functionality. Last night I decided to\n    switch to a very simple solution:"]), code$002Dblock("html")(`<form action="http://www.google.com/search" method="get">

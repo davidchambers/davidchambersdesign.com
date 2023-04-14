@@ -33,6 +33,7 @@ vars = Node.foldRec {
   BooleanLiteral:                                               \value -> emptyVariables,
   CallExpression:                            \varsCallee varsArguments -> varsCallee `merge` mergeAll varsArguments,
   ConditionalExpression: \varsPredicate varsConsequent varsAlternative -> varsPredicate `merge` varsConsequent `merge` fromMaybe emptyVariables varsAlternative,
+  ExportAllSpecifier:                                          \hiding -> emptyVariables,
   ExportDefaultDeclaration:                           \varsDeclaration -> varsDeclaration,
   ExportNamedDeclaration:                              \varsSpecifiers -> mergeAll varsSpecifiers,
   ExportSpecifier:                                 \varsLocal exported -> varsLocal,
@@ -82,6 +83,21 @@ rewriteModule module namesExportedFrom = do {
       % map (rewriteImportAllSpecifier (referenced - declared) namesExportedFrom source)
       % parallel
       % map (ImportDeclaration source . join)
+    },
+  };
+  exports = (<$> exports) $ Node.matchOr id {
+    ExportNamedDeclaration: \specifiers -> {
+      ExportNamedDeclaration (specifiers >>= Node.matchOr Array.of {
+        ExportAllSpecifier: \hiding -> {
+          statements
+          % map vars
+          % mergeAll
+          % (.declared)
+          % subtract (construct Set [(.name) <$> hiding])
+          % Array.from  ;; TODO: sort
+          % map (join ExportSpecifier . Identifier)
+        },
+      })
     },
   };
   ;; create renaming function based on variable and function declarations
@@ -150,17 +166,14 @@ rewriteImportAllSpecifier undeclared namesExportedFrom source = {
 #Symbol         = Identifier "Symbol";
 #args           = Identifier "args";
 #map            = Identifier "map";
-#match          = Identifier "match";
 #recur          = Identifier "recur";
 #target         = Identifier "target";
 
 'apply          = StringLiteral "apply";
-'foldRec        = StringLiteral "foldRec";
 'for            = StringLiteral "for";
 'has            = StringLiteral "has";
 'hasOwn         = StringLiteral "hasOwn";
 'tag            = StringLiteral "tag";
-'transform      = StringLiteral "transform";
 
 @tag            = CallExpression (MemberExpression #Symbol 'for) ['tag];
 

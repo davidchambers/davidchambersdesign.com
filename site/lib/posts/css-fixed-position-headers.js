@@ -1,4 +1,4 @@
-import {a, code, em, h3, li, li$0027, p, strong, ul} from "../elements.js";
+import {h3, p, ul, li$0027, li, a, code, em, strong} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["I began this post three months ago, got stuck, and put it in\n    the too hard basket. I wanted to devise a workable solution\n    to my stumbling block before publishing this information.\n    I'm getting ahead of myself, though. First, the background."]), p(["As I began writing this post, I had just completed a redesign\n    of this site. The new design removed unnecessary distractions\n    to allow readers to focus on the clearly presented content.\n    I moved site navigation from the sidebar (which I axed\n    altogether) to the header. I decided to fix the header in\n    place so that the navigation and search form would always be\n    visible. This required very little effort, but overcoming the ", a({

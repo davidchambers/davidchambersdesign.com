@@ -1,4 +1,4 @@
-import {a, em, p} from "../elements.js";
+import {p, a, em} from "../elements.js";
 import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["Generally speaking browsers rerender elements as required\n    – in response to DOM changes effected via JavaScript, for\n    instance. There are times, though, when the browser ", em(["Internet Explorer, I'm looking at you!"]), "\n    needs a gentle nudge."]), p([a({

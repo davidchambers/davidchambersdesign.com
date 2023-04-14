@@ -1,4 +1,4 @@
-import {a, blockquote, em, p} from "../elements.js";
+import {p, blockquote, a, em} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["I recently came across an interesting article at ", a({

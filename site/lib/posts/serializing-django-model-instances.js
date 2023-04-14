@@ -1,4 +1,4 @@
-import {a, code, em, p} from "../elements.js";
+import {p, a, code, em} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["One might expect the following code to serialize a Django model instance:"]), code$002Dblock("python")(`import simplejson

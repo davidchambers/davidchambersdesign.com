@@ -1,4 +1,4 @@
-import {code, p, strong} from "../elements.js";
+import {p, code, strong} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["So you have some number, ", code(["x"]), ", which you want to round\n    to the nearest integer. Easy, right?"]), code$002Dblock("javascript")(`x = Math.round(x);

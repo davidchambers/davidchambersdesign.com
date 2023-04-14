@@ -1,4 +1,4 @@
-import {a, p, strong} from "../elements.js";
+import {p, a, strong} from "../elements.js";
 import {captioned$002Dimages, update} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["I love ", a({

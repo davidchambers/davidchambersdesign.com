@@ -1,4 +1,4 @@
-import {a, code, em, h3, img, li, p, strong, ul} from "../elements.js";
+import {h3, p, ul, li, a, code, em, strong, img} from "../elements.js";
 import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p([strong(["I wanted to simplify everything."]), "\n    I wanted to write posts in ", a({

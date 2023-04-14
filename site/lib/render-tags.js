@@ -1,5 +1,5 @@
 import sanctuary from "sanctuary";
-import {a, div as $div, h1, li$0027, ol$0027} from "./elements.js";
+import {h1, ol$0027, li$0027, div as $div, a} from "./elements.js";
 import tags from "./tags.js";
 const filter = f => xs => (() => {
   switch (globalThis.Object.prototype.toString.call(xs)) {

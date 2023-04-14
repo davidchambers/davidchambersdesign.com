@@ -1,4 +1,4 @@
-import {a, b, p} from "../elements.js";
+import {p, b, a} from "../elements.js";
 import {captioned$002Dimages} from "../components.js";
 export default {
   slug: "about",

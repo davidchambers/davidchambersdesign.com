@@ -1,4 +1,4 @@
-import {a, blockquote, code, img, li, p, strong, ul} from "../elements.js";
+import {p, blockquote, ul, li, a, code, strong, img} from "../elements.js";
 import {code$002Dblock, update} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p([img({

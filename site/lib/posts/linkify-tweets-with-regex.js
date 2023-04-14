@@ -1,4 +1,4 @@
-import {a, code, em, h3, h4, img, p} from "../elements.js";
+import {h3, h4, p, a, code, em, img} from "../elements.js";
 import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p([img({

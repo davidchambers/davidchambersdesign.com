@@ -1,4 +1,4 @@
-import {a, code, em, h3, h4, img, p, strong} from "../elements.js";
+import {h3, h4, p, a, code, em, strong, img} from "../elements.js";
 import {captioned$002Dimages, code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["Modern browsers can display exciting visual effects such\n    as drop shadows (without the use of background images).\n    CSS3 makes it possible to turn submit inputs and even links\n    into rich, Aqua-like buttons in these browsers (alternative\n    style rules can be provided for older browsers)."]), p([img({

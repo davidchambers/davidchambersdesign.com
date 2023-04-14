@@ -1,4 +1,4 @@
-import {img, li, li$0027, ol, p, strong} from "../elements.js";
+import {p, ol, li$0027, li, strong, img} from "../elements.js";
 import {captioned$002Dimages} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p([img({

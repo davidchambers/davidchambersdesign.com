@@ -1,4 +1,4 @@
-import {a, em, p} from "../elements.js";
+import {p, a, em} from "../elements.js";
 import datetime from "../datetime.js";
 const body = [p(["Recording of Yehuda Katz's presentation from Bay Area jQuery Conf 2011."]), p([a({
   href: "http://vimeo.com/22687694"

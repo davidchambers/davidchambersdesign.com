@@ -1,4 +1,4 @@
-import {a, code, em, h3, h3$0027, li, p, strong, ul} from "../elements.js";
+import {h3$0027, h3, p, ul, li, a, code, em, strong} from "../elements.js";
 import {code$002Dblock, update} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["Yesterday I wrote a simple class which auto-populates\n    input fields, and thought it worth sharing. I was originally\n    inspired to write this code by Roger Johansson's post titled ", a({

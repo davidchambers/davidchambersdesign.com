@@ -1,4 +1,4 @@
-import {a, blockquote, em, img, p, strong} from "../elements.js";
+import {p, blockquote, a, em, strong, img} from "../elements.js";
 import datetime from "../datetime.js";
 const body = [p([img({
   alt: "DigitalColor Meter",

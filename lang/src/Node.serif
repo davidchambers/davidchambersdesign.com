@@ -1,52 +1,5 @@
 export default Node;
-export {
-  ArrayExpression,
-  ArrayPattern,
-  ArrowAssignmentStatement,
-  ArrowFunctionExpression,
-  Block,
-  BooleanLiteral,
-  CallExpression,
-  ConditionalExpression,
-  DataConstructorDefinition,
-  DataConstructorParameter,
-  DataTypeDeclaration,
-  DoBlockExpression,
-  Elision,
-  EmptySection,
-  ExportDefaultDeclaration,
-  ExportNamedDeclaration,
-  ExportSpecifier,
-  ExpressionStatement,
-  FunctionDeclaration,
-  Identifier,
-  ImportAllSpecifier,
-  ImportDeclaration,
-  ImportDefaultSpecifier,
-  ImportNamespaceSpecifier,
-  ImportSpecifier,
-  InfixCallExpression,
-  InfixExpression,
-  LeftSection,
-  MemberExpression,
-  MethodCallExpression,
-  Module,
-  NullLiteral,
-  NumberLiteral,
-  ObjectExpression,
-  ObjectPattern,
-  PrefixExpression,
-  Property,
-  PropertyAccessor,
-  RestElement,
-  RightSection,
-  SpreadElement,
-  StringLiteral,
-  SwitchCase,
-  SwitchExpression,
-  TemplateLiteral,
-  VariableDeclaration,
-};
+export * hiding {Node};
 
 type Node =
   | ArrayExpression [elements]
@@ -63,6 +16,7 @@ type Node =
   | DoBlockExpression [operations] (result)
   | Elision
   | EmptySection operator
+  | ExportAllSpecifier [hiding]
   | ExportDefaultDeclaration (declaration)
   | ExportNamedDeclaration [specifiers]
   | ExportSpecifier (local) (exported)

@@ -1,4 +1,4 @@
-import {a, code, h3, img, li, ol, p, strong} from "../elements.js";
+import {h3, p, ol, li, a, code, strong, img} from "../elements.js";
 import {captioned$002Dimages, code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["Customizing the appearance of files and folders in OS X is\n    a cinch. ⌘C, ⌘I, ⌘V, punctuated by a few mouse clicks."]), p([strong(["Actually, that's total bullshit."])]), p(["Sure, in the simplest of cases the copy and paste approach\n    gets the job done, assuming one knows to copy from Preview.app\n    if copying from the original source fails. As soon as one decides\n    to do something a bit more advanced, such as providing versions\n    for display at different sizes, one's shit outta luck."])];

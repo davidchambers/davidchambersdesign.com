@@ -1,4 +1,4 @@
-import {a, p, strong} from "../elements.js";
+import {p, a, strong} from "../elements.js";
 import {captioned$002Dimages, code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["Recently I've been on a mission to minimize the number\n    of HTTP requests made while loading pages on this site.\n    Until yesterday, the ", a({

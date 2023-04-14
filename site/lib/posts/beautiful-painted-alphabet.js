@@ -1,4 +1,4 @@
-import {a, blockquote, dd, dl, dt, p} from "../elements.js";
+import {p, blockquote, dl, dt, dd, a} from "../elements.js";
 import datetime from "../datetime.js";
 const body = [p(["I came across this recently while browsing ", a({
   href: "http://markboulton.co.uk/"

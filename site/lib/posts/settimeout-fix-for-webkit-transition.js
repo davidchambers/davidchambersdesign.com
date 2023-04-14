@@ -1,4 +1,4 @@
-import {a, code, em, h3, i, li, ol, p, p$0027, script, ul} from "../elements.js";
+import {h3, p$0027, p, ol, ul, li, a, code, em, i, script} from "../elements.js";
 import {code$002Dblock, update, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["Here's a simple animation which utilizes ", code(["webkitTransition"]), ":"]), p$0027({

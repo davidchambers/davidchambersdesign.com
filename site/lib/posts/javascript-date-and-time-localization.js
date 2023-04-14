@@ -1,4 +1,4 @@
-import {a, code, del, h3, i, ins, p, strong} from "../elements.js";
+import {h3, p, a, code, del, i, ins, strong} from "../elements.js";
 import {captioned$002Dimages, code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p([strong(["This post has been a long time coming."])]), captioned$002Dimages([{

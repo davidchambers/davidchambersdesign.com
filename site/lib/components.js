@@ -1,4 +1,4 @@
-import {text, code, dd, div as $div, dl, dt, h4, img, pre, time} from "./elements.js";
+import {text, h4, pre, dl, dt, dd, div as $div, code, time, img} from "./elements.js";
 const chain = f => x => (() => {
   switch (globalThis.Object.prototype.toString.call(x)) {
     case "[object Array]":

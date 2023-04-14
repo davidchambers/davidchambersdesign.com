@@ -1,4 +1,4 @@
-import {a, dd, dl, dt, object, p, param, strong} from "../elements.js";
+import {p, dl, dt, dd, object, a, strong, param} from "../elements.js";
 import datetime from "../datetime.js";
 const body = [p(["One of my flatmates linked me to this clip recently. It's titled ", a({
   href: "http://www.ted.com/index.php/talks/david_carson_on_design.html"

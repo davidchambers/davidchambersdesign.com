@@ -1,4 +1,4 @@
-import {a, code, h3$0027, p} from "../elements.js";
+import {h3$0027, p, a, code} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["So, you're about to style an unordered list of some sort..."]), code$002Dblock("html")(`<h1>TXJS 2011 Speakers</h1>

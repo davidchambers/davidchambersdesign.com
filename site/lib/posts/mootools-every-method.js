@@ -1,4 +1,4 @@
-import {a, code, em, h3, li, ol, p, strong, var$} from "../elements.js";
+import {h3, p, ol, li, a, code, em, strong, var$} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["A reasonably common task is to determine whether a particular\n    statement evaluates as true for every item in a collection.\n    Take ", var$(["list"]), ", for example, an Array containing\n    several numbers:"]), code$002Dblock("javascript")(`var list = [4, -1, 3, 2, 5];

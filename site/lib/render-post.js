@@ -1,4 +1,4 @@
-import {a, article$0027, footer$0027, h1, h3$0027, h4, header, li, li$0027, ol, time, ul} from "./elements.js";
+import {article$0027, h1, h3$0027, h4, header, footer$0027, ol, ul, li$0027, li, a, time} from "./elements.js";
 import tags from "./tags.js";
 const equals = this$ => that => (() => {
   switch (globalThis.Object.prototype.toString.call(this$)) {

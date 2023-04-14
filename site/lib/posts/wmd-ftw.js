@@ -1,5 +1,5 @@
 import {$2014} from "../components.js";
-import {a, code, em, p, video} from "../elements.js";
+import {p, a, code, em, video} from "../elements.js";
 import datetime from "../datetime.js";
 const body = [p(["Comment forms that don't provide previews", $2014, "or at least an\n    indication of how comments are processed", $2014, "really annoy me.\n    If I decide to leave a comment I take care to avoid spelling\n    mistakes and grammatical errors. It's quite upsetting, then,\n    to see my code snippet completely mangled and my carefully\n    typed links displayed in plain text (<a href=\"...)."]), p(["Despite my appreciation of the preview, not one of my sites\n    provided this service until a few hours ago. Now that I've\n    migrated from WordPress to ", a({
   href: "http://mango.io/"

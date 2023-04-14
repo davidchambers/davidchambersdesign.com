@@ -1,4 +1,4 @@
-import {a, blockquote, code, em, h3, p, strong} from "../elements.js";
+import {h3, p, blockquote, a, code, em, strong} from "../elements.js";
 import {code$002Dblock, update, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["I write a lot of Python. I also write a lot of JavaScript. As I switch\n    between the two (often several times in a day) I sometimes find myself\n    trying to do something in one using the syntax of the other. The most\n    common example is joining a list."]), p(["Python:"]), code$002Dblock("python")(`' '.join(['foo', 'bar'])

@@ -1,12 +1,12 @@
 Module
-  = imports:(_ importDeclaration:ImportDeclaration                                                  { return importDeclaration; })*
-    exports:(_ exportDeclaration:(ExportNamedDeclaration / ExportDefaultDeclaration)                { return exportDeclaration; })*
-    statements:(_ statement:Statement { return statement; })*
+  = _ imports:ImportDeclaration|.., _|
+    _ exports:ExportDeclaration|.., _|
+    _ statements:Statement|.., _|
     _
     { return Node.Module(imports)(exports)(statements); }
 
 ImportSpecifier
-  = local:Identifier _ AsToken _ imported:Identifier                                                { return Node.ImportSpecifier(local)(imported); }
+  = imported:Identifier _ AsToken _ local:Identifier                                                { return Node.ImportSpecifier(imported)(local); }
   / local:Identifier                                                                                { return Node.ImportSpecifier(local)(local); }
 
 ImportSpecifiers
@@ -32,18 +32,24 @@ ImportDeclaration
     { return Node.ImportDeclaration(source)(specifiers); }
 
 ExportSpecifier
-  = local:Identifier
-    { return Node.ExportSpecifier(local)(local); }
+  = local:Identifier _ AsToken _ exported:Identifier                                                { return Node.ExportSpecifier(local)(exported); }
+  / local:Identifier                                                                                { return Node.ExportSpecifier(local)(local); }
+
+ExportSpecifiers
+  = '{' _ '}'                                                                                       { return []; }
+  / '{' _            specifiers:ExportSpecifier|.., CommaSeparator| TrailingComma '}'               { return specifiers; }
+  / '*' _ HidingToken _ '{' _ hiding:Identifier|.., CommaSeparator| TrailingComma '}'               { return [Node.ExportAllSpecifier(hiding)]; }
+  / '*'                                                                                             { return [Node.ExportAllSpecifier([])]; }
 
 ExportDefaultDeclaration
-  = ExportToken _ 'default' _ declaration:Expression _ ';'
-    { return Node.ExportDefaultDeclaration(declaration); }
+  = ExportToken _ 'default' _ declaration:Expression _ ';'                                          { return Node.ExportDefaultDeclaration(declaration); }
 
 ExportNamedDeclaration
-  = ExportToken _ '{' _ '}' _ ';'
-    { return Node.ExportNamedDeclaration([]); }
-  / ExportToken _ '{' _ specifiers:ExportSpecifier|.., CommaSeparator| TrailingComma '}' _ ';'
-    { return Node.ExportNamedDeclaration(specifiers); }
+  = ExportToken _ specifiers:ExportSpecifiers _ ';'                                                 { return Node.ExportNamedDeclaration(specifiers); }
+
+ExportDeclaration
+  = ExportDefaultDeclaration
+  / ExportNamedDeclaration
 
 NullLiteral
   = 'null'  { return Node.NullLiteral; }

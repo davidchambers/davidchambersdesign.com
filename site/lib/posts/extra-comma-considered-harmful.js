@@ -1,4 +1,4 @@
-import {a, blockquote, em, p, time} from "../elements.js";
+import {p, blockquote, a, em, time} from "../elements.js";
 import {code$002Dblock} from "../components.js";
 import datetime from "../datetime.js";
 const body = [p(["On ", time({

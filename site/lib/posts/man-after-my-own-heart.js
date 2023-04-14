@@ -1,4 +1,4 @@
-import {a, blockquote, i, p} from "../elements.js";
+import {p, blockquote, a, i} from "../elements.js";
 import datetime from "../datetime.js";
 const body = [p(["From Wikipedia on Mies van der Rohe's ", a({
   href: "http://en.wikipedia.org/wiki/Seagram_Building"
