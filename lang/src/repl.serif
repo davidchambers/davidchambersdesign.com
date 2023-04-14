@@ -43,7 +43,7 @@ print x = {
 
 processInput serifSourceText = do {
   serifAst <- serif.parse "[repl]" $ "export default " <> serifSourceText <> ";";
-  serifAst <- serif.rewrite serifAst \importPath -> [];  ;; TODO: support import statements
+  serifAst = serif.rewrite serifAst;
   {exports, statements} = serif.changeExtensions serifAst;
   esAst = serif.esModuleFromSerifModule $ Node.Block statements $ Just exports[0].declaration;
   esSourceText = generate esAst;

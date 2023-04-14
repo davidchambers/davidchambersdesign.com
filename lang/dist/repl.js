@@ -98,7 +98,7 @@ const print = x => (() => {
       return String(x);
   }
 })();
-const processInput = serifSourceText => chain(serifAst => chain(serifAst => (({exports, statements}) => (esAst => (esSourceText => chain(esResult => resolve(print(esResult)))(attempt(() => eval(esSourceText))))(generate(esAst)))(serif.esModuleFromSerifModule(Node.Block(statements)(Just(exports[0].declaration)))))(serif.changeExtensions(serifAst)))(serif.rewrite(serifAst)(importPath => [])))(serif.parse("[repl]")(concat("export default ")(concat(serifSourceText)(";"))));
+const processInput = serifSourceText => chain(serifAst => (serifAst => (({exports, statements}) => (esAst => (esSourceText => chain(esResult => resolve(print(esResult)))(attempt(() => eval(esSourceText))))(generate(esAst)))(serif.esModuleFromSerifModule(Node.Block(statements)(Just(exports[0].declaration)))))(serif.changeExtensions(serifAst)))(serif.rewrite(serifAst)))(serif.parse("[repl]")(concat("export default ")(concat(serifSourceText)(";"))));
 const repl = _ => (() => {
   const input = prompt("\n>>>");
   return contains((args => target => target.trim.apply(target, args))([])(input))([":exit", ":quit"]) ? (() => {

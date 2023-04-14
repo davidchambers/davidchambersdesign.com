@@ -1,18 +1,8 @@
-import * as Future from "fluture";
-import {Just, maybe, fromMaybe, fromJust$0021} from "./Maybe.js";
-import Node, {ArrowFunctionExpression, Block, CallExpression, ConditionalExpression, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, Identifier, ImportDeclaration, ImportSpecifier, InfixExpression, MemberExpression, Module, ObjectExpression, ObjectPattern, Property, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, VariableDeclaration} from "./Node.js";
-import * as format from "./format.js";
+import {Just, fromJust$0021} from "./Maybe.js";
+import Node, {ArrowFunctionExpression, Block, CallExpression, ConditionalExpression, ExportSpecifier, ExpressionStatement, Identifier, ImportSpecifier, InfixExpression, MemberExpression, Module, ObjectExpression, ObjectPattern, Property, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, VariableDeclaration} from "./Node.js";
 import globals from "./globals.js";
-import parallel from "./parallel.js";
 import Prelude from "./prelude.js";
-const OR = rhs => lhs => (() => {
-  switch (globalThis.Object.prototype.toString.call(rhs)) {
-    case "[object Set]":
-      return globalThis.Reflect.construct(globalThis.Set, [[...lhs, ...rhs]]);
-    default:
-      return lhs | rhs;
-  }
-})();
+import vars from "./vars.js";
 const AND = rhs => lhs => (() => {
   switch (globalThis.Object.prototype.toString.call(rhs)) {
     case "[object Set]":
@@ -62,22 +52,6 @@ const concat = this$ => that => (() => {
       return this$.concat(that);
     default:
       return this$["fantasy-land/concat"](that);
-  }
-})();
-const empty = typeRep => (() => {
-  switch (typeRep.name) {
-    case "Array":
-      return [];
-    case "Object":
-      return {};
-    case "String":
-      return "";
-    case "Set":
-      return globalThis.Reflect.construct(globalThis.Set, [[]]);
-    case "Map":
-      return globalThis.Reflect.construct(globalThis.Map, [[]]);
-    default:
-      return typeRep["fantasy-land/empty"]();
   }
 })();
 const reduce = f => y => xs => (() => {
@@ -133,61 +107,6 @@ const chain = f => x => (() => {
 })();
 const join = chain(id);
 const preludeNames = construct(Set)([Object.keys(Prelude)]);
-const variables = declared => referenced => ({
-  declared,
-  referenced
-});
-const declaring = names => variables(names)(empty(Set));
-const referencing = names => variables(empty(Set))(names);
-const emptyVariables = variables(empty(Set))(empty(Set));
-const referenced = $ => $.referenced;
-const merge = lhs => rhs => ({
-  declared: OR(rhs.declared)(lhs.declared),
-  referenced: OR(rhs.referenced)(lhs.referenced)
-});
-const mergeAll = reduce(merge)(emptyVariables);
-const vars = Node.foldRec({
-  ArrayExpression: varsProperties => mergeAll(varsProperties),
-  ArrayPattern: varsProperties => mergeAll(varsProperties),
-  ArrowFunctionExpression: varsParameters => varsBody => referencing(subtract(referenced(mergeAll(varsParameters)))(referenced(varsBody))),
-  Block: varsStatements => varsResult => (() => {
-    const {declared, referenced} = maybe(id)(merge)(varsResult)(mergeAll(varsStatements));
-    return referencing(subtract(declared)(referenced));
-  })(),
-  BooleanLiteral: value => emptyVariables,
-  CallExpression: varsCallee => varsArguments => merge(varsCallee)(mergeAll(varsArguments)),
-  ConditionalExpression: varsPredicate => varsConsequent => varsAlternative => merge(merge(varsPredicate)(varsConsequent))(fromMaybe(emptyVariables)(varsAlternative)),
-  ExportAllSpecifier: hiding => emptyVariables,
-  ExportDefaultDeclaration: varsDeclaration => varsDeclaration,
-  ExportNamedDeclaration: varsSpecifiers => mergeAll(varsSpecifiers),
-  ExportSpecifier: varsLocal => exported => varsLocal,
-  ExpressionStatement: varsExpression => varsExpression,
-  Identifier: name => referencing(of(Set)(name)),
-  ImportAllSpecifier: hiding => emptyVariables,
-  ImportDeclaration: source => varsSpecifiers => mergeAll(varsSpecifiers),
-  ImportDefaultSpecifier: varsLocal => declaring(referenced(varsLocal)),
-  ImportNamespaceSpecifier: varsLocal => declaring(referenced(varsLocal)),
-  ImportSpecifier: imported => varsLocal => declaring(referenced(varsLocal)),
-  InfixExpression: operator => varsLeft => varsRight => merge(varsLeft)(varsRight),
-  MemberExpression: varsObject => varsProperty => merge(varsObject)(varsProperty),
-  Module: varsImports => varsExports => varsStatements => merge(merge(mergeAll(varsImports))(mergeAll(varsExports)))(mergeAll(varsStatements)),
-  NullLiteral: emptyVariables,
-  NumberLiteral: value => emptyVariables,
-  ObjectExpression: varsProperties => mergeAll(varsProperties),
-  ObjectPattern: varsProperties => mergeAll(varsProperties),
-  PrefixExpression: operator => varsOperand => varsOperand,
-  Property: varsKey => varsValue => merge(varsKey)(varsValue),
-  RestElement: varsArgument => varsArgument,
-  SpreadElement: varsArgument => varsArgument,
-  StringLiteral: value => emptyVariables,
-  SwitchCase: varsPredicates => varsConsequent => merge(mergeAll(chain(fromMaybe([]))(varsPredicates)))(varsConsequent),
-  SwitchExpression: varsDiscriminant => varsCases => merge(varsDiscriminant)(mergeAll(varsCases)),
-  TemplateLiteral: quasis => varsExpressions => mergeAll(varsExpressions),
-  VariableDeclaration: varsPattern => varsExpression => (() => {
-    const declared = referenced(varsPattern);
-    return variables(declared)(subtract(declared)(referenced(varsExpression)));
-  })()
-});
 const removeUnreferencedPreludeFunctions = module => (() => {
   const {declared, referenced} = vars(module);
   const unreferenced = subtract(referenced)(declared);
@@ -197,30 +116,29 @@ const removeUnreferencedPreludeFunctions = module => (() => {
   }))(module.statements);
   return equals(module.statements.length)(statements.length) ? module : removeUnreferencedPreludeFunctions(Module(module.imports)(module.exports)(statements));
 })();
-const rewriteModule = module => namesExportedFrom => (module => (({imports, exports, statements}) => (({declared, referenced}) => chain(imports => (exports => (rename => (rename => (({imports, exports, statements}) => (prelude => (module => (({declared, referenced}) => (unreferenced => (undeclared => (() => {
+const rewriteModule = module => (() => {
+  const module$0027 = rewriteNode(module);
+  const rename = reduce(rename => Node.match({
+    DataTypeDeclaration: const$(const$(rename)),
+    VariableDeclaration: pattern => expression => updateRenamerFromPattern(rename)(pattern),
+    ExpressionStatement: const$(rename)
+  }))(id)(module$0027.statements);
+  const rename$0027 = reduce(rename => Node.match({
+    ImportSpecifier: imported => local => name => equals(imported.name)(name) ? local.name : rename(name),
+    ImportNamespaceSpecifier: updateRenamerFromPattern(rename),
+    ImportDefaultSpecifier: updateRenamerFromPattern(rename)
+  }))(rename)(chain($ => $.specifiers)(module$0027.imports));
+  const module$0027$0027 = renameIdentifiers(rename$0027)(module$0027);
+  const prelude = map(([name, value]) => VariableDeclaration(Identifier(name))(value))(Object.entries(Prelude));
+  const module$0027$0027$0027 = Module(module$0027$0027.imports)(module$0027$0027.exports)(concat(prelude)(module$0027$0027.statements));
+  const module$0027$0027$0027$0027 = removeUnreferencedPreludeFunctions(module$0027$0027$0027);
+  const {declared, referenced} = vars(module$0027$0027$0027$0027);
+  const unreferenced = subtract(referenced)(declared);
+  const undeclared = subtract(construct(Set)([["CasesNotExhaustive", "DivisionByZero", "import", "console", "fetch"]]))(subtract(globals)(subtract(declared)(referenced)));
   unreferenced.size > 0 ? console.error(concat("unreferenced: ")((args => target => target.join.apply(target, args))([", "])(Array.from(unreferenced)))) : undefined;
-  return (() => {
-    undeclared.size > 0 ? console.error(concat("undeclared: ")((args => target => target.join.apply(target, args))([", "])(Array.from(undeclared)))) : undefined;
-    return Future.resolve(module);
-  })();
-})())(subtract(construct(Set)([["CasesNotExhaustive", "DivisionByZero", "import", "console", "fetch"]]))(subtract(globals)(subtract(declared)(referenced)))))(subtract(referenced)(declared)))(vars(module)))(removeUnreferencedPreludeFunctions(Module(imports)(exports)(concat(prelude)(statements)))))(map(([name, value]) => VariableDeclaration(Identifier(name))(value))(Object.entries(Prelude))))(renameIdentifiers(rename)(Module(imports)(exports)(statements))))(reduce(rename => Node.match({
-  ImportSpecifier: imported => local => name => equals(imported.name)(name) ? local.name : rename(name),
-  ImportNamespaceSpecifier: updateRenamerFromPattern(rename),
-  ImportDefaultSpecifier: updateRenamerFromPattern(rename)
-}))(rename)(chain($ => $.specifiers)(imports))))(reduce(rename => Node.match({
-  DataTypeDeclaration: const$(const$(rename)),
-  VariableDeclaration: pattern => expression => updateRenamerFromPattern(rename)(pattern),
-  ExpressionStatement: const$(rename)
-}))(id)(statements)))(($lhs => map($lhs)(exports))(Node.matchOr(id)({
-  ExportNamedDeclaration: specifiers => ExportNamedDeclaration(chain(Node.matchOr(Array.of)({
-    ExportAllSpecifier: hiding => map(compose(join(ExportSpecifier))(Identifier))(Array.from(subtract(construct(Set)([map($ => $.name)(hiding)]))(mergeAll(map(vars)(statements)).declared)))
-  }))(specifiers))
-}))))(parallel(($lhs => map($lhs)(imports))(Node.match({
-  ImportDeclaration: source => specifiers => map(compose(ImportDeclaration(source))(join))(parallel(map(rewriteImportAllSpecifier(subtract(declared)(referenced))(namesExportedFrom)(source))(specifiers)))
-})))))(vars(module)))(module))(rewriteNode(module));
-const rewriteImportAllSpecifier = undeclared => namesExportedFrom => source => Node.matchOr(compose(Future.resolve)(Array.of))({
-  ImportAllSpecifier: hiding => chain(namesExported => (namesExported => (namesHidden => (namesHiddenNeedlessly => namesHiddenNeedlessly.size > 0 ? Future.reject(Error(format.list(Array.from(namesHiddenNeedlessly)) + " " + (equals(1)(namesHiddenNeedlessly.size) ? "is" : "are") + " not exported from " + source.value + " so need not be hidden")) : Future.resolve(map(name => ImportSpecifier(Identifier(name))(Identifier(preludeNames.has(name) ? "$" + name : name)))(Array.from(AND(undeclared)(subtract(namesHidden)(namesExported))))))(subtract(namesExported)(namesHidden)))(construct(Set)([map($ => $.name)(hiding)])))(construct(Set)([namesExported])))((args => target => target.endsWith.apply(target, args))([".serif"])(source.value) ? Future.resolve(namesExportedFrom(source.value)) : map(Object.keys)(Future.attemptP(() => import(source.value))))
-});
+  undeclared.size > 0 ? console.error(concat("undeclared: ")((args => target => target.join.apply(target, args))([", "])(Array.from(undeclared)))) : undefined;
+  return module$0027$0027$0027$0027;
+})();
 const $0023$ = Identifier("$");
 const $0023$cases = Identifier("$cases");
 const $0023$default = Identifier("$default");

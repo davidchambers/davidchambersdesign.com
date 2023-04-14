@@ -1,66 +1,12 @@
-import * as Future from "fluture";
-
 import * from "./Maybe.serif";
 import Node, * from "./Node.serif";
-import * as format from "./format.serif";
 import globals from "./globals.serif";
-import parallel from "./parallel.serif";
 import Prelude from "./prelude.serif";
+import vars from "./vars.serif";
 
 export default rewriteModule;
 
 preludeNames = construct Set [Object.keys Prelude];
-
-variables declared referenced = {declared, referenced};
-declaring   names = variables names (empty Set);
-referencing names = variables (empty Set) names;
-emptyVariables    = variables (empty Set) (empty Set);
-
-referenced = (.referenced);
-
-merge lhs rhs = {
-  declared:   lhs.declared   | rhs.declared,
-  referenced: lhs.referenced | rhs.referenced,
-};
-
-mergeAll = reduce merge emptyVariables;
-
-vars = Node.foldRec {
-  ArrayExpression:                                     \varsProperties -> mergeAll varsProperties,
-  ArrayPattern:                                        \varsProperties -> mergeAll varsProperties,
-  ArrowFunctionExpression:                    \varsParameters varsBody -> referencing $ referenced varsBody - referenced (mergeAll varsParameters),
-  Block:                                    \varsStatements varsResult -> { {declared, referenced} = maybe id merge varsResult $ mergeAll varsStatements; referencing $ referenced - declared },
-  BooleanLiteral:                                               \value -> emptyVariables,
-  CallExpression:                            \varsCallee varsArguments -> varsCallee `merge` mergeAll varsArguments,
-  ConditionalExpression: \varsPredicate varsConsequent varsAlternative -> varsPredicate `merge` varsConsequent `merge` fromMaybe emptyVariables varsAlternative,
-  ExportAllSpecifier:                                          \hiding -> emptyVariables,
-  ExportDefaultDeclaration:                           \varsDeclaration -> varsDeclaration,
-  ExportNamedDeclaration:                              \varsSpecifiers -> mergeAll varsSpecifiers,
-  ExportSpecifier:                                 \varsLocal exported -> varsLocal,
-  ExpressionStatement:                                 \varsExpression -> varsExpression,
-  Identifier:                                                    \name -> referencing $ of Set name,
-  ImportAllSpecifier:                                          \hiding -> emptyVariables,
-  ImportDeclaration:                            \source varsSpecifiers -> mergeAll varsSpecifiers,
-  ImportDefaultSpecifier:                                   \varsLocal -> declaring $ referenced varsLocal,
-  ImportNamespaceSpecifier:                                 \varsLocal -> declaring $ referenced varsLocal,
-  ImportSpecifier:                                 \imported varsLocal -> declaring $ referenced varsLocal,
-  InfixExpression:                        \operator varsLeft varsRight -> varsLeft `merge` varsRight,
-  MemberExpression:                           \varsObject varsProperty -> varsObject `merge` varsProperty,
-  Module:                      \varsImports varsExports varsStatements -> mergeAll varsImports `merge` mergeAll varsExports `merge` mergeAll varsStatements,
-  NullLiteral:                                                            emptyVariables,
-  NumberLiteral:                                                \value -> emptyVariables,
-  ObjectExpression:                                    \varsProperties -> mergeAll varsProperties,
-  ObjectPattern:                                       \varsProperties -> mergeAll varsProperties,
-  PrefixExpression:                              \operator varsOperand -> varsOperand,
-  Property:                                         \varsKey varsValue -> varsKey `merge` varsValue,
-  RestElement:                                           \varsArgument -> varsArgument,
-  SpreadElement:                                         \varsArgument -> varsArgument,
-  StringLiteral:                                                \value -> emptyVariables,
-  SwitchCase:                           \varsPredicates varsConsequent -> mergeAll (varsPredicates >>= fromMaybe []) `merge` varsConsequent,
-  SwitchExpression:                        \varsDiscriminant varsCases -> varsDiscriminant `merge` mergeAll varsCases,
-  TemplateLiteral:                             \quasis varsExpressions -> mergeAll varsExpressions,
-  VariableDeclaration:                     \varsPattern varsExpression -> { declared = referenced varsPattern; variables declared $ referenced varsExpression - declared },
-};
 
 removeUnreferencedPreludeFunctions module = {
   {declared, referenced} = vars module;
@@ -72,89 +18,34 @@ removeUnreferencedPreludeFunctions module = {
   else removeUnreferencedPreludeFunctions $ Module module.imports module.exports statements
 };
 
-rewriteModule module namesExportedFrom = do {
+rewriteModule module = {
   ;; desugar first to simplify subsequent steps
-  module = rewriteNode module;
-  {imports, exports, statements} = module;
-  {declared, referenced} = vars module;
-  imports <- parallel $ (<$> imports) $ Node.match {
-    ImportDeclaration: \source specifiers -> {
-      specifiers
-      % map (rewriteImportAllSpecifier (referenced - declared) namesExportedFrom source)
-      % parallel
-      % map (ImportDeclaration source . join)
-    },
-  };
-  exports = (<$> exports) $ Node.matchOr id {
-    ExportNamedDeclaration: \specifiers -> {
-      ExportNamedDeclaration (specifiers >>= Node.matchOr Array.of {
-        ExportAllSpecifier: \hiding -> {
-          statements
-          % map vars
-          % mergeAll
-          % (.declared)
-          % subtract (construct Set [(.name) <$> hiding])
-          % Array.from  ;; TODO: sort
-          % map (join ExportSpecifier . Identifier)
-        },
-      })
-    },
-  };
+  module' = rewriteNode module;
   ;; create renaming function based on variable and function declarations
   rename = reduce (\rename -> Node.match {
     DataTypeDeclaration: const $ const rename,
     VariableDeclaration: \pattern expression -> updateRenamerFromPattern rename pattern,
     ExpressionStatement: const rename,
-  }) id statements;
+  }) id module'.statements;
   ;; wrap renaming function based on import declarations
-  rename = reduce (\rename -> Node.match {
+  rename' = reduce (\rename -> Node.match {
     ImportSpecifier: \imported local name -> if name == imported.name then local.name else rename name,
     ImportNamespaceSpecifier: updateRenamerFromPattern rename,
     ImportDefaultSpecifier: updateRenamerFromPattern rename,
-  }) rename $ imports >>= (.specifiers);
+  }) rename $ module'.imports >>= (.specifiers);
   ;; rename identifiers
-  {imports, exports, statements} = renameIdentifiers rename $ Module imports exports statements;
+  module'' = renameIdentifiers rename' module';
   ;; insert prelude
   prelude = (\[name, value] -> VariableDeclaration (Identifier name) value) <$> Object.entries Prelude;
+  module''' = Module module''.imports module''.exports $ prelude <> module''.statements;
   ;; remove unreferenced prelude functions
-  module = removeUnreferencedPreludeFunctions $ Module imports exports $ prelude <> statements;
-  {declared, referenced} = vars module;
+  module'''' = removeUnreferencedPreludeFunctions module''';
+  {declared, referenced} = vars module'''';
   unreferenced = declared - referenced;
   undeclared = referenced - declared - globals - construct Set [["CasesNotExhaustive", "DivisionByZero", "import", "console", "fetch"]];
   if unreferenced.size > 0 then (unreferenced % Array.from % .join [", "] % concat "unreferenced: " % console.error);
   if undeclared.size   > 0 then (undeclared   % Array.from % .join [", "] % concat "undeclared: "   % console.error);
-  Future.resolve module
-};
-
-rewriteImportAllSpecifier undeclared namesExportedFrom source = {
-  Node.matchOr (Future.resolve . Array.of) {
-    ImportAllSpecifier: \hiding -> do {
-      namesExported <- {
-        if .endsWith [".serif"] source.value
-        then Future.resolve $ namesExportedFrom source.value
-        else Object.keys <$> Future.attemptP \() -> import source.value
-      };
-      namesExported = construct Set [namesExported];
-      namesHidden = construct Set [(.name) <$> hiding];
-      namesHiddenNeedlessly = namesHidden - namesExported;
-      if namesHiddenNeedlessly.size > 0 then {
-        Future.reject $ Error {
-          (format.list $ Array.from namesHiddenNeedlessly)
-          + " "
-          + (if namesHiddenNeedlessly.size == 1 then "is" else "are")
-          + " not exported from "
-          + source.value
-          + " so need not be hidden"
-        }
-      } else {
-        namesExported - namesHidden & undeclared
-        % Array.from  ;; TODO: sort
-        % map (\name -> ImportSpecifier (Identifier name)
-                                        (Identifier $ if preludeNames has name then "$" + name else name))
-        % Future.resolve
-      }
-    }
-  }
+  module''''
 };
 
 #$              = Identifier "$";

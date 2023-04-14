@@ -1,14 +1,18 @@
 import {generate} from "astring";
-import {fork, mapRej, resolve} from "fluture";
+import * as Future from "fluture";
 
-import Node from "./Node.serif";
+import Node, * from "./Node.serif";
 import * as fs from "./fs.serif";
 import * as serif from "./index.serif";
 import parallel from "./parallel.serif";
 import * as path from "./path.serif";
+import Prelude from "./prelude.serif";
+import vars, {declared, mergeAll} from "./vars.serif";
+
+preludeNames = construct Set [Object.keys Prelude];
 
 parse filename sourceText = {
-  {serif.parse filename sourceText} % mapRej \error -> {
+  {serif.parse filename sourceText} % Future.mapRej \error -> {
     lines = {
       sourceText
       % .split [RegExp ("^", "m")]
@@ -52,60 +56,47 @@ parse filename sourceText = {
   }
 };
 
-reducer futureTree filename = {
-  futureTree >>= findDependencies filename
-};
-
-findDependencies filename tree = {
-  if tree has filename then resolve tree else do {
-    sourceText <- mapRej (.message) $ fs.readFile filename;
-    ast <- parse filename sourceText;
-    dependencies = ast.imports >>= \{source: {value}} -> {
-      if .test [value] $ RegExp "^[./].*[.]serif$"
-      then [path.join [filename, "..", value]]
+createTree = reduce \futureTree filename -> {
+  futureTree >>= \tree -> if tree has filename then Future.resolve tree else do {
+    sourceText <- Future.mapRej (.message) $ fs.readFile filename;
+    {imports, exports, statements} <- parse filename sourceText;
+    dependencies = imports >>= \{source} -> {
+      if .test [source.value] $ RegExp "^[./].*[.]serif$"
+      then [path.join [filename, "..", source.value]]
       else []
     };
-    namesInPattern = Node.match {
-      ArrayPattern:    \elements -> elements >>= namesInPattern,
-      ObjectPattern: \properties -> properties >>= namesInPattern,
-      Property:       \key value -> namesInPattern key,
-      RestElement:     \argument -> namesInPattern argument,
-      Identifier:          \name -> [name],
-    };
-    declaredNames = ast.statements >>= Node.matchOr (const []) {
-      VariableDeclaration: \pattern expression -> namesInPattern pattern,
-      FunctionDeclaration: \name parameters body -> [name],
-      DataTypeDeclaration: \identifier -> {
-        (namesInPattern identifier <>) . (>>= Node.match {DataConstructorDefinition: const . namesInPattern})
-      }
-    };
-    exportedNames = ast.exports >>= Node.matchOr (const []) {
-      ExportNamedDeclaration: \specifiers -> specifiers >>= Node.match {
-        ExportSpecifier: \local exported -> [exported.name],
+    exports = (<$> exports) $ Node.matchOr id {
+      ExportNamedDeclaration: ExportNamedDeclaration . chain (Node.matchOr Array.of {
         ExportAllSpecifier: \hiding -> {
-          hidden = construct Set [(.name) <$> hiding];
-          declaredNames % reject \name -> hidden has name
+          statements
+          % map vars
+          % mergeAll
+          % declared
+          % subtract (construct Set [(.name) <$> hiding])
+          % Array.from  ;; TODO: sort
+          % map (join ExportSpecifier . Identifier)
         }
-      }
+      })
     };
-    reduce reducer
-           (resolve $ construct Map [[...tree, [filename, {sourceText, ast, dependencies, exportedNames}]]])
-           dependencies
+    module = Module imports exports statements;
+    initial = Future.resolve $ construct Map [[...tree, [filename, {sourceText, ast: module, dependencies}]]];
+    createTree initial dependencies
   }
 };
 
 orderDependencies tree = {
-  recur unsorted! sorted! = {
+  unsorted! = Array.from $ .keys [] tree;
+  sorted! = empty Set;
+  recur = \() -> {
     if unsorted! == [] then sorted! else {
       filename = .shift [] unsorted!;
-      {dependencies} = .get [filename] tree;
-      if .every [\filename -> sorted! has filename] dependencies
+      if .every [\filename -> sorted! has filename] $ (.dependencies) $ .get [filename] tree
       then .add [filename] sorted!
       else .push [filename] unsorted!;
-      recur unsorted! sorted!
+      recur ()
     }
   };
-  Array.from $ recur (Array.from $ .keys [] tree) $ empty Set
+  Array.from $ recur ()
 };
 
 {
@@ -116,40 +107,76 @@ orderDependencies tree = {
   absDst = toAbs cwd dst;
   absFilenames = toAbs absSrc <$> filenames;
   program = do {
-    tree <- reduce reducer (resolve $ construct Map [[]]) absFilenames;
+    tree <- createTree (Future.resolve $ construct Map [[]]) absFilenames;
     filenames = orderDependencies tree;
     ;; Create JavaScript module for each Serif module:
     parallel $ flip map filenames \serifFilename -> do {
       serifDirname = path.dirname serifFilename;
       serifAst = (.ast) $ .get [serifFilename] tree;
-      serifAst' <- serif.rewrite serifAst \importPath -> {
-        importPath
-        % .split ["/"]
-        % prepend serifDirname
-        % path.join
-        % \filename -> .get [filename] tree
-        % (.exportedNames)
+      {imports, exports, statements} = serifAst;
+      {declared, referenced} = vars serifAst;
+      undeclared = referenced - declared;
+      imports <- parallel $ (<$> serifAst.imports) $ Node.match {
+        ImportDeclaration: \source -> {
+          map (ImportDeclaration source . join) . parallel . map (Node.matchOr (Future.resolve . Array.of) {
+            ImportAllSpecifier: \hiding -> do {
+              namesExported <- construct Set . Array.of <$> {
+                if .endsWith [".serif"] source.value then {
+                  source.value
+                  % .split ["/"]
+                  % concat [serifDirname]
+                  % path.join
+                  % \filename -> .get [filename] tree
+                  % (.ast)
+                  % (.exports)
+                  % chain (Node.matchOr (const []) {ExportNamedDeclaration: map ((.name) . (.exported))})
+                  % Future.resolve
+                } else {
+                  Object.keys <$> Future.attemptP \() -> import source.value
+                }
+              };
+              namesHidden = construct Set [(.name) <$> hiding];
+              namesHiddenNeedlessly = namesHidden - namesExported;
+              if namesHiddenNeedlessly.size > 0 then {
+                Future.reject $ Error {
+                  (format.list $ Array.from namesHiddenNeedlessly)
+                  + " "
+                  + (if namesHiddenNeedlessly.size == 1 then "is" else "are")
+                  + " not exported from "
+                  + source.value
+                  + " so need not be hidden"
+                }
+              } else {
+                namesExported - namesHidden & undeclared
+                % Array.from  ;; TODO: sort
+                % map (\name -> ImportSpecifier (Identifier name)
+                                                (Identifier $ if preludeNames has name then "$" + name else name))
+                % Future.resolve
+              }
+            }
+          })
+        }
       };
-      serifAst'' = serif.changeExtensions serifAst';
-      esAst = serif.esModuleFromSerifModule serifAst'';
+      serifAst = serif.changeExtensions $ serif.rewrite $ Module imports exports statements;
+      esAst = serif.esModuleFromSerifModule serifAst;
       esSource = generate (esAst, {});
       esBasename = path.basename serifFilename ".serif" + ".js";
       esFilename = path.join [absDst, path.relative absSrc serifDirname, esBasename];
       _ <- fs.mkdir {recursive: true} $ path.dirname esFilename;
       _ <- fs.writeFile esFilename esSource;
-      resolve {serifFilename, esFilename}
+      Future.resolve {serifFilename, esFilename}
     }
   };
 
-  fork (console.error)
-       (\filenames -> {
-          ;; List files created:
-          .forEach [
-            \{serifFilename, esFilename} -> {
-              console.log ("• " + path.relative cwd serifFilename);
-              console.log ("  ➔ " + path.relative cwd esFilename)
-            },
-          ] filenames
-        })
-       (program)
+  Future.fork (console.error)
+              (\filenames -> {
+                 ;; List files created:
+                 .forEach [
+                   \{serifFilename, esFilename} -> {
+                     console.log ("• " + path.relative cwd serifFilename);
+                     console.log ("  ➔ " + path.relative cwd esFilename)
+                   },
+                 ] filenames
+               })
+              (program)
 };

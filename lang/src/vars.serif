@@ -1,0 +1,68 @@
+import {maybe, fromMaybe} from "./Maybe.serif";
+import Node from "./Node.serif";
+
+export default vars;
+export {declared, referenced, merge, mergeAll};
+
+variables declared referenced = {declared, referenced};
+declaring   names = variables names (empty Set);
+referencing names = variables (empty Set) names;
+emptyVariables    = variables (empty Set) (empty Set);
+
+declared = (.declared);
+referenced = (.referenced);
+
+merge lhs rhs = {
+  declared:   lhs.declared   | rhs.declared,
+  referenced: lhs.referenced | rhs.referenced,
+};
+
+mergeAll = reduce merge emptyVariables;
+
+vars = Node.foldRec {
+  ArrayExpression:                                     \varsProperties -> mergeAll varsProperties,
+  ArrayPattern:                                        \varsProperties -> mergeAll varsProperties,
+  ArrowAssignmentStatement:                \varsPattern varsExpression -> declaring (referenced varsPattern) `merge` varsExpression,
+  ArrowFunctionExpression:                    \varsParameters varsBody -> referencing $ referenced varsBody - referenced (mergeAll varsParameters),
+  Block:                                    \varsStatements varsResult -> { {declared, referenced} = maybe id merge varsResult $ mergeAll varsStatements; referencing $ referenced - declared },
+  BooleanLiteral:                                               \value -> emptyVariables,
+  CallExpression:                            \varsCallee varsArguments -> varsCallee `merge` mergeAll varsArguments,
+  ConditionalExpression: \varsPredicate varsConsequent varsAlternative -> varsPredicate `merge` varsConsequent `merge` fromMaybe emptyVariables varsAlternative,
+  DataConstructorDefinition:            \varsIdentifier varsParameters -> varsIdentifier,
+  DataConstructorParameter:             \varsIdentifier recursionDepth -> emptyVariables,
+  DataTypeDeclaration:                \varsIdentifier varsConstructors -> declaring $ referenced $ varsIdentifier `merge` mergeAll varsConstructors,
+  DoBlockExpression:                        \varsOperations varsResult -> mergeAll varsOperations `merge` varsResult,
+  ExportAllSpecifier:                                          \hiding -> emptyVariables,
+  ExportDefaultDeclaration:                           \varsDeclaration -> varsDeclaration,
+  ExportNamedDeclaration:                              \varsSpecifiers -> mergeAll varsSpecifiers,
+  ExportSpecifier:                                 \varsLocal exported -> varsLocal,
+  ExpressionStatement:                                 \varsExpression -> varsExpression,
+  FunctionDeclaration:                   \name varsParameters varsBody -> variables (of Set name) (referenced varsBody - referenced (mergeAll varsParameters) - of Set name),
+  Identifier:                                                    \name -> referencing $ of Set name,
+  ImportAllSpecifier:                                          \hiding -> emptyVariables,
+  ImportDeclaration:                            \source varsSpecifiers -> mergeAll varsSpecifiers,
+  ImportDefaultSpecifier:                                   \varsLocal -> declaring $ referenced varsLocal,
+  ImportNamespaceSpecifier:                                 \varsLocal -> declaring $ referenced varsLocal,
+  ImportSpecifier:                                 \imported varsLocal -> declaring $ referenced varsLocal,
+  InfixCallExpression:                    \operator varsLeft varsRight -> varsLeft `merge` varsRight,
+  InfixExpression:                        \operator varsLeft varsRight -> varsLeft `merge` varsRight,
+  LeftSection:                                   \operator varsOperand -> varsOperand,
+  MemberExpression:                           \varsObject varsProperty -> varsObject `merge` varsProperty,
+  MethodCallExpression:                                          \name -> emptyVariables,
+  Module:                      \varsImports varsExports varsStatements -> mergeAll varsImports `merge` mergeAll varsExports `merge` mergeAll varsStatements,
+  NullLiteral:                                                            emptyVariables,
+  NumberLiteral:                                                \value -> emptyVariables,
+  ObjectExpression:                                    \varsProperties -> mergeAll varsProperties,
+  ObjectPattern:                                       \varsProperties -> mergeAll varsProperties,
+  PrefixExpression:                              \operator varsOperand -> varsOperand,
+  Property:                                         \varsKey varsValue -> varsKey `merge` varsValue,
+  PropertyAccessor:                                    \varsIdentifier -> emptyVariables,
+  RestElement:                                           \varsArgument -> varsArgument,
+  RightSection:                                  \operator varsOperand -> varsOperand,
+  SpreadElement:                                         \varsArgument -> varsArgument,
+  StringLiteral:                                                \value -> emptyVariables,
+  SwitchCase:                           \varsPredicates varsConsequent -> mergeAll (varsPredicates >>= fromMaybe []) `merge` varsConsequent,
+  SwitchExpression:                        \varsDiscriminant varsCases -> varsDiscriminant `merge` mergeAll varsCases,
+  TemplateLiteral:                             \quasis varsExpressions -> mergeAll varsExpressions,
+  VariableDeclaration:                     \varsPattern varsExpression -> { declared = referenced varsPattern; variables declared $ referenced varsExpression - declared },
+};

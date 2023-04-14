@@ -21,7 +21,7 @@ type Node =
   | ExportNamedDeclaration [specifiers]
   | ExportSpecifier (local) (exported)
   | ExpressionStatement (expression)
-  | FunctionDeclaration name parameters (body)
+  | FunctionDeclaration name [parameters] (body)
   | Identifier name
   | ImportAllSpecifier [hiding]
   | ImportDeclaration source [specifiers]

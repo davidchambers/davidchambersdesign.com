@@ -77,7 +77,6 @@ const $0023rhs = ident("rhs");
 const $0023that = ident("that");
 const $0023these = ident("these");
 const $0023this = ident("this");
-const $0023type = ident("type");
 const $0023typeRep = ident("typeRep");
 const $0023x = ident("x");
 const $0023xs = ident("xs");

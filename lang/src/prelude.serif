@@ -35,7 +35,6 @@ invoke object names ...arguments = {
 #that               = ident "that";
 #these              = ident "these";
 #this               = ident "this";
-#type               = ident "type";
 #typeRep            = ident "typeRep";
 #x                  = ident "x";
 #xs                 = ident "xs";
