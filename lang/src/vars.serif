@@ -1,68 +1,71 @@
-import {maybe, fromMaybe} from "./Maybe.serif";
-import Node from "./Node.serif";
+import List, {Nil} from "./List.serif";
+import {maybe} from "./Maybe.serif";
 
-export default vars;
-export {declared, referenced, merge, mergeAll};
+export default \node -> {
+  {declared, referenced} = vars node;
+  add! set x = set.add x;
+  {declared: reduce add! (empty Set) declared, referenced: reduce add! (empty Set) referenced}
+};
 
-variables declared referenced = {declared, referenced};
-declaring   names = variables names (empty Set);
-referencing names = variables (empty Set) names;
-emptyVariables    = variables (empty Set) (empty Set);
+emptyVariables = {declared: Nil, referenced: Nil};
 
-declared = (.declared);
-referenced = (.referenced);
+without lhs rhs = reject (in rhs) lhs;
 
 merge lhs rhs = {
-  declared:   lhs.declared   | rhs.declared,
-  referenced: lhs.referenced | rhs.referenced,
+  declared:   lhs.declared <> rhs.declared,
+  referenced: lhs.referenced <> rhs.referenced,
 };
 
 mergeAll = reduce merge emptyVariables;
 
-vars = Node.foldRec {
-  ArrayExpression:                                     \varsProperties -> mergeAll varsProperties,
-  ArrayPattern:                                        \varsProperties -> mergeAll varsProperties,
-  ArrowAssignmentStatement:                \varsPattern varsExpression -> declaring (referenced varsPattern) `merge` varsExpression,
-  ArrowFunctionExpression:                    \varsParameters varsBody -> referencing $ referenced varsBody - referenced (mergeAll varsParameters),
-  Block:                                    \varsStatements varsResult -> { {declared, referenced} = maybe id merge varsResult $ mergeAll varsStatements; referencing $ referenced - declared },
-  BooleanLiteral:                                               \value -> emptyVariables,
-  CallExpression:                            \varsCallee varsArguments -> varsCallee `merge` mergeAll varsArguments,
-  ConditionalExpression: \varsPredicate varsConsequent varsAlternative -> varsPredicate `merge` varsConsequent `merge` fromMaybe emptyVariables varsAlternative,
-  DataConstructorDefinition:            \varsIdentifier varsParameters -> varsIdentifier,
-  DataConstructorParameter:             \varsIdentifier recursionDepth -> emptyVariables,
-  DataTypeDeclaration:                \varsIdentifier varsConstructors -> declaring $ referenced $ varsIdentifier `merge` mergeAll varsConstructors,
-  DoBlockExpression:                        \varsOperations varsResult -> mergeAll varsOperations `merge` varsResult,
-  ExportAllSpecifier:                                          \hiding -> emptyVariables,
-  ExportDefaultDeclaration:                           \varsDeclaration -> varsDeclaration,
-  ExportNamedDeclaration:                              \varsSpecifiers -> mergeAll varsSpecifiers,
-  ExportSpecifier:                                 \varsLocal exported -> varsLocal,
-  ExpressionStatement:                                 \varsExpression -> varsExpression,
-  FunctionDeclaration:                   \name varsParameters varsBody -> variables (of Set name) (referenced varsBody - referenced (mergeAll varsParameters) - of Set name),
-  Identifier:                                                    \name -> referencing $ of Set name,
-  ImportAllSpecifier:                                          \hiding -> emptyVariables,
-  ImportDeclaration:                            \source varsSpecifiers -> mergeAll varsSpecifiers,
-  ImportDefaultSpecifier:                                   \varsLocal -> declaring $ referenced varsLocal,
-  ImportNamespaceSpecifier:                                 \varsLocal -> declaring $ referenced varsLocal,
-  ImportSpecifier:                                 \imported varsLocal -> declaring $ referenced varsLocal,
-  InfixCallExpression:                    \operator varsLeft varsRight -> varsLeft `merge` varsRight,
-  InfixExpression:                        \operator varsLeft varsRight -> varsLeft `merge` varsRight,
-  LeftSection:                                   \operator varsOperand -> varsOperand,
-  MemberExpression:                           \varsObject varsProperty -> varsObject `merge` varsProperty,
-  MethodCallExpression:                                          \name -> emptyVariables,
-  Module:                      \varsImports varsExports varsStatements -> mergeAll varsImports `merge` mergeAll varsExports `merge` mergeAll varsStatements,
-  NullLiteral:                                                            emptyVariables,
-  NumberLiteral:                                                \value -> emptyVariables,
-  ObjectExpression:                                    \varsProperties -> mergeAll varsProperties,
-  ObjectPattern:                                       \varsProperties -> mergeAll varsProperties,
-  PrefixExpression:                              \operator varsOperand -> varsOperand,
-  Property:                                         \varsKey varsValue -> varsKey `merge` varsValue,
-  PropertyAccessor:                                    \varsIdentifier -> emptyVariables,
-  RestElement:                                           \varsArgument -> varsArgument,
-  RightSection:                                  \operator varsOperand -> varsOperand,
-  SpreadElement:                                         \varsArgument -> varsArgument,
-  StringLiteral:                                                \value -> emptyVariables,
-  SwitchCase:                           \varsPredicates varsConsequent -> mergeAll (varsPredicates >>= fromMaybe []) `merge` varsConsequent,
-  SwitchExpression:                        \varsDiscriminant varsCases -> varsDiscriminant `merge` mergeAll varsCases,
-  TemplateLiteral:                             \quasis varsExpressions -> mergeAll varsExpressions,
-  VariableDeclaration:                     \varsPattern varsExpression -> { declared = referenced varsPattern; variables declared $ referenced varsExpression - declared },
-};
+vars node = case node of [
+  ArrayExpression properties                                  -> mergeAll (vars <$> properties),
+  ArrayPattern properties                                     -> mergeAll (vars <$> properties),
+  ArrowAssignmentStatement pattern expression                 -> {declared: (.referenced) $ vars pattern, referenced: Nil} `merge` vars expression,
+  ArrowFunctionExpression parameters body                     -> {declared: Nil, referenced: (.referenced) (vars body) `without` (.referenced) (mergeAll $ vars <$> parameters)},
+  AssignmentExpression operator left right                    -> vars left `merge` vars right,
+  Block statements result                                     -> { {declared, referenced} = maybe id merge (vars <$> result) $ mergeAll (vars <$> statements); {declared: Nil, referenced: referenced `without` declared} },
+  BlockStatement statements                                   -> { {declared, referenced} = mergeAll (vars <$> statements); {declared: Nil, referenced: referenced `without` declared} },
+  CallExpression callee arguments                             -> vars callee `merge` mergeAll (vars <$> arguments),
+  CaseClause predicate consequent                             -> vars consequent,
+  CaseExpression discriminant cases                           -> vars discriminant `merge` mergeAll (vars <$> cases),
+  ConditionalExpression predicate consequent alternative      -> vars predicate `merge` vars consequent `merge` maybe emptyVariables vars alternative,
+  DataConstructorDefinition identifier parameters             -> vars identifier,
+  DataTypeDeclaration identifier constructors implementations -> {declared: (.referenced) $ mergeAll (vars <$> constructors), referenced: Nil},
+  DoBlockExpression operations result                         -> mergeAll (vars <$> operations) `merge` vars result,
+  ExportDefaultDeclaration declaration                        -> vars declaration,
+  ExportNamedDeclaration specifiers                           -> mergeAll $ vars <$> specifiers,
+  ExportSpecifier local exported                              -> vars local,
+  ExpressionStatement expression                              -> vars expression,
+  ForStatement init test update body                          -> vars init `merge` vars test `merge` vars update `merge` vars body,
+  FunctionDeclaration identifier parameters body              -> {declared: (.referenced) $ vars identifier, referenced: (.referenced) (vars body) `without` (.referenced) (mergeAll $ vars <$> parameters) `without` (.referenced) (vars identifier)},
+  FunctionExpression parameters body                          -> {declared: Nil, referenced: (.referenced) (vars body) `without` (.referenced) (mergeAll $ vars <$> parameters)},
+  GeneratorFunctionDeclaration identifier parameters body     -> {declared: (.referenced) $ vars identifier, referenced: (.referenced) (vars body) `without` (.referenced) (mergeAll $ vars <$> parameters) `without` (.referenced) (vars identifier)},
+  Identifier name                                             -> {declared: Nil, referenced: pure List name},
+  IfElseStatement predicate consequent alternative            -> vars predicate `merge` vars consequent `merge` vars alternative,
+  IfStatement predicate consequent                            -> vars predicate `merge` vars consequent,
+  ImportDeclaration source specifiers                         -> mergeAll $ vars <$> specifiers,
+  ImportDefaultSpecifier local                                -> {declared: (.referenced) $ vars local, referenced: Nil},
+  ImportNamespaceSpecifier local                              -> {declared: (.referenced) $ vars local, referenced: Nil},
+  ImportSpecifier imported local                              -> {declared: (.referenced) $ vars local, referenced: Nil},
+  InfixCallExpression operator left right                     -> vars left `merge` vars right,
+  InfixExpression operator left right                         -> vars left `merge` vars right,
+  LabeledStatement label body                                 -> vars body,
+  LambdaCaseExpression cases                                  -> mergeAll (vars <$> cases),
+  LeftSection operator operand                                -> vars operand,
+  LetDeclaration pattern expression                           -> { declared = (.referenced) $ vars pattern; {declared, referenced: (.referenced) (vars expression) `without` declared} },
+  MemberExpression object property                            -> vars object `merge` vars property,
+  Module imports exports statements                           -> mergeAll (vars <$> imports) `merge` mergeAll (vars <$> exports) `merge` mergeAll (vars <$> statements),
+  ObjectExpression properties                                 -> mergeAll $ vars <$> properties,
+  ObjectPattern properties                                    -> mergeAll $ vars <$> properties,
+  PrefixExpression operator operand                           -> vars operand,
+  Property key value                                          -> vars key `merge` vars value,
+  RestElement argument                                        -> vars argument,
+  ReturnStatement argument                                    -> vars argument,
+  RightSection operator operand                               -> vars operand,
+  SpreadElement argument                                      -> vars argument,
+  SwitchCase predicates statements                            -> mergeAll (maybe emptyVariables vars <$> predicates) `merge` mergeAll (vars <$> statements),
+  SwitchStatement discriminant cases                          -> vars discriminant `merge` mergeAll (vars <$> cases),
+  VariableDeclaration pattern expression                      -> { declared = (.referenced) $ vars pattern; {declared, referenced: (.referenced) (vars expression) `without` declared} },
+  _                                                           -> emptyVariables,
+];

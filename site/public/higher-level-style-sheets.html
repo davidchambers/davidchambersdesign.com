@@ -132,7 +132,7 @@ ol.archives time[datetime*="28T"] { background-position:  -40px -100px; }
 ol.archives time[datetime*="29T"] { background-position:  -60px -100px; }
 ol.archives time[datetime*="30T"] { background-position:  -80px -100px; }
 ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
-</code></pre>
+  </code></pre>
           <p>That's a lot of text, most of which relates to the calendar sprite. To start, though...</p>
           <h3>Significant whitespace and nesting</h3>
           <p>As in Python and CoffeeScript, whitespace is significant in Sass. As a result, squiggly brackets are not required to delimit blocks, and semicolons are not required to separate one rule from the next.</p>
@@ -158,7 +158,7 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
     background: url(data:image/png;base64,...) no-repeat
     line-height: 10
     overflow: hidden
-</code></pre>
+  </code></pre>
           <h3>Compass's <code>inline-image</code> function</h3>
           <p>For an image that's <em>design</em> rather than content, it's better to link to it from a style sheet than to include it as an <code>img</code>. Better still, it can be Base64 encoded and embedded in the style sheet as a data URI, saving an HTTP request.</p>
           <p>Until yesterday, I'd always done this by hand. It's a bit of a pain, but I'm pretty familiar with the routine:</p>
@@ -185,22 +185,22 @@ ol.archives time[datetime*="31T"] { background-position: -100px -100px; }
     ...
     &amp;[datetime*="31T"]
       background-position: -100px -100px
-</code></pre>
+  </code></pre>
           <h3>Generating repetitive CSS programmatically</h3>
           <p>Having a placeholder for the data URI is great; 31 <code>background-position</code> declarations not so much. Compass provides helpers for generating and working with sprites, but in this case all that's required is to generate background positions for an existing sprite. The first step is to add a loop:</p>
           <pre><code>@for $date from 1 through 31
   // do stuff
-</code></pre>
+  </code></pre>
           <p>The loop variable, <code>$date</code>, can be interpolated to generate the selectors:</p>
           <pre><code>@for $date from 1 through 31
   &amp;[datetime*="#{$date}T"]
-</code></pre>
+  </code></pre>
           <p>Almost. This gives <code>datetime*="1T"</code>, <code>datetime*="2T"</code>, etc. rather than their zero-padded equivalents. Adding a leading zero when required is not difficult:</p>
           <pre><code>@for $date from 1 through 31
   @if $date &lt; 10
     $date: "0#{$date}"
   &amp;[datetime*="#{$date}T"]
-</code></pre>
+  </code></pre>
           <p>Finally, variables can be used to calculate the <code>background-position</code> of each element:</p>
           <pre><code>$offset: -20px
 $x: 3
@@ -215,7 +215,7 @@ $y: 1
       $y: $y + 1
     @else
       $x: $x + 1
-</code></pre>
+  </code></pre>
           <p>These 13 lines of relatively straightforward logic produce the same output as the 62 lines they replace.</p>
           <h3>The right level of abstraction</h3>
           <p>In <a href="http://5by5.tv/hypercritical/14">A Dark Age of Objective-C</a> and in <a href="http://5by5.tv/hypercritical/15">The Bridges of Siracusa County</a>, John Siracusa made the claim that software developers have an insatiable desire for ever higher-level programming languages and frameworks. In and of itself, though, abstraction is not a virtue. Most abstractions fail for one reason or another: they aren't sufficiently flexible, or they are so generic that they provide very little utility, or they don't fit well with people's mental models.</p>

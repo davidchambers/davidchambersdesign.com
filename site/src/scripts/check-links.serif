@@ -41,12 +41,13 @@ format {url, status} = {
 };
 
 program = {
-  construct Set [posts >>= (.body) >>= links]
-  % Array.from
-  % S.sort
-  % map status
-  % parallel 16
-  % map (.join ["\n"] . map format)
+  posts >>= (.body) >>= links
+  & Set.new
+  & Array.from
+  & S.sort
+  & map status
+  & parallel 16
+  & map (joinWith "\n" . map format)
 };
 
 fork console.error console.log program;

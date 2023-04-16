@@ -17,11 +17,11 @@ body = [
     strong ["Nothing new here."], " I've combined ",
     a {href: "http://prototypejs.org/2009/9/1/prototype-1-6-1-released"}
       ["Prototype 1.6.1"], " and the various files that make up ",
-    a {href: "http://script.aculo.us/downloads"} ["script.aculo.us 1.8.3"], "
-    (except unittest.js) into one file, which I've minified using the ",
+    a {href: "http://script.aculo.us/downloads"} ["script.aculo.us 1.8.3"], " ",
+    "(except unittest.js) into one file, which I've minified using the ",
     a {href: "http://developer.yahoo.com/yui/compressor/"}
-      ["YUI Compressor"], ". Further compression has been achieved by gzipping
-    the minified file. All three versions are available for download:",
+      ["YUI Compressor"], ". Further compression has been achieved by gzipping ",
+    "the minified file. All three versions are available for download:",
   ],
 
   ul [
@@ -40,19 +40,19 @@ body = [
   ],
 
   p [
-   "I suggest including the Prototype and script.aculo.us version
-    numbers in the ", code ["src"], ":",
+    "I suggest including the Prototype and script.aculo.us version ",
+    "numbers in the ", code ["src"], ":",
   ],
 
-  code-block "html" """
+  code-block "html" [|
     <script src="/scripts/prototype+scriptaculous.min.js?p=1.6.1&amp;s=1.8.3"></script>
-  """,
+  |],
 
   p [
-   "This prevents caching issues that might otherwise arise
-    upon updating to a newer version of prototype+scriptaculous
-    (I'll update the three files", —, "and this post", —,
-   "each time a new version of Prototype is released).",
+    "This prevents caching issues that might otherwise arise ",
+    "upon updating to a newer version of prototype+scriptaculous ",
+    "(I'll update the three files", —, "and this post", —,
+    "each time a new version of Prototype is released).",
   ],
 
 ];

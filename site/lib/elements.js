@@ -1,8 +1,11 @@
-const typeof$ = x => x === null ? "null" : typeof x;
-const equals = this$ => that => (() => {
+const null$ = globalThis.JSON.parse("null");
+const typeof$ = x => x === null$ ? "null" : typeof x;
+const id = x => x;
+const joinWith = separator => xs => xs.join(separator);
+const equals = this$ => that => (function () {
   switch (globalThis.Object.prototype.toString.call(this$)) {
     case "[object Array]":
-      return (() => {
+      return (function () {
         switch (globalThis.Object.prototype.toString.call(that)) {
           case "[object Array]":
             return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
@@ -14,7 +17,16 @@ const equals = this$ => that => (() => {
       return this$ === that;
   }
 })();
-const map = f => xs => (() => {
+const concat = this$ => that => (function () {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+    case "[object String]":
+      return this$.concat(that);
+    default:
+      return this$["fantasy-land/concat"](that);
+  }
+})();
+const map = f => xs => (function () {
   switch (globalThis.Object.prototype.toString.call(xs)) {
     case "[object Array]":
       return xs.map(x => f(x));
@@ -25,67 +37,91 @@ const map = f => xs => (() => {
 const escape = s => (args => target => target.replaceAll.apply(target, args))([">", "&gt;"])((args => target => target.replaceAll.apply(target, args))(["<", "&lt;"])((args => target => target.replaceAll.apply(target, args))(["&", "&amp;"])(s)));
 const text = value => ({
   type: "text",
-  toString: () => value,
-  render: context => escape(value)
+  toString: function () {
+    return value;
+  },
+  render: function (context) {
+    return escape(value);
+  }
 });
-const render$002Dattribute = ([name, value]) => (value => " " + name + "=\"" + value + "\"")(escape((args => target => target.replaceAll.apply(target, args))(["\n", " "])((args => target => target.trim.apply(target, args))([])(String(value)))));
-const render$002Dattributes = attrs => (args => target => target.join.apply(target, args))([""])(map(render$002Dattribute)(Object.entries(attrs)));
-const render$002Dblock$002Delement = context => element => (args => target => target.repeat.apply(target, args))([context.level])(context.indent) + "<" + element.name + render$002Dattributes(element.attributes) + ">\n" + (args => target => target.join.apply(target, args))([""])(map((args => target => target.render.apply(target, args))([{
-  indent: context.indent,
-  level: context.level + 1,
-  inline: context.inline
-}]))(element.children)) + (args => target => target.repeat.apply(target, args))([context.level])(context.indent) + "</" + element.name + ">\n";
-const render$002Dinline$002Delement = context => element => (args => target => target.repeat.apply(target, args))([context.level])(context.indent) + "<" + element.name + render$002Dattributes(element.attributes) + ">" + (args => target => target.join.apply(target, args))([""])(map((args => target => target.render.apply(target, args))([{
-  indent: context.indent,
-  level: 0,
-  inline: true
-}]))(element.children)) + "</" + element.name + ">" + (context.inline ? "" : "\n");
-const string$002Dto$002Dtext$002Dnode = string$002Dor$002Dnode => equals("object")(typeof$(string$002Dor$002Dnode)) ? string$002Dor$002Dnode : text((args => target => target.replaceAll.apply(target, args))(["\n", ""])((args => target => target.replaceAll.apply(target, args))([RegExp("^[ ]+", "gm"), " "])(string$002Dor$002Dnode)));
+const render$002Dattribute = ([name, value]) => (function (value) {
+  return " " + name + "=\"" + value + "\"";
+})(escape((args => target => target.replaceAll.apply(target, args))(["\n", " "])((args => target => target.trim.apply(target, args))([])(String(value)))));
+const render$002Dattributes = attrs => joinWith("")(map(render$002Dattribute)(Object.entries(attrs)));
+const string$002Dto$002Dtext$002Dnode = node => equals("string")(typeof$(node)) ? text(node) : node;
 const block$002Delement = name => attributes => children$0021 => (() => {
   const children = map(string$002Dto$002Dtext$002Dnode)(children$0021);
-  const element = {
+  return {
     type: "element",
     format: "block",
     name,
     attributes,
     children,
-    toString: () => (args => target => target.join.apply(target, args))([""])(map(String)(children)),
-    render: context => render$002Dblock$002Delement(context)(element)
+    toString: function () {
+      return joinWith("")(map(String)(children));
+    },
+    render: function ({indent, level, inline}) {
+      return (() => {
+        const $2192 = level => (args => target => target.repeat.apply(target, args))([level])(indent);
+        return "<" + name + render$002Dattributes(attributes) + ">" + joinWith("")(map(function (child) {
+          return concat("\n")(concat($2192(level + 1))(child.render({
+            indent,
+            level: level + 1,
+            inline
+          })));
+        })(children)) + "\n" + $2192(level) + "</" + name + ">";
+      })();
+    }
   };
-  return element;
 })();
 const inline$002Delement = name => attributes => children$0021 => (() => {
   const children = map(string$002Dto$002Dtext$002Dnode)(children$0021);
-  const format = (args => target => target.some.apply(target, args))([node => equals("block")(node.format)])(children) ? "block" : "inline";
-  const element = {
+  const format = (args => target => target.some.apply(target, args))([function (node) {
+    return equals("block")(node.format);
+  }])(children) ? "inline-block" : "inline";
+  return {
     type: "element",
     format,
     name,
     attributes,
     children,
-    toString: () => (args => target => target.join.apply(target, args))([""])(map(String)(children)),
-    render: context => (() => {
-      switch (format) {
-        case "inline":
-          return render$002Dinline$002Delement(context)(element);
-        case "block":
-          return render$002Dblock$002Delement(context)(element);
-      }
-    })()
+    toString: function () {
+      return joinWith("")(map(String)(children));
+    },
+    render: function ({indent, level, inline}) {
+      return ($discriminant => equals("inline")($discriminant) ? "<" + name + render$002Dattributes(attributes) + ">" + joinWith("")(map((args => target => target.render.apply(target, args))([{
+        indent,
+        level,
+        inline
+      }]))(children)) + "</" + name + ">" : equals("inline-block")($discriminant) ? (() => {
+        const $2192 = level => (args => target => target.repeat.apply(target, args))([level])(indent);
+        const render$002Dchild = indent$003F => child => (indent$003F ? $rhs => concat(concat("\n")($2192(level + 1)))($rhs) : id)(child.render({
+          indent,
+          level: level + 1,
+          inline
+        }));
+        return "<" + name + render$002Dattributes(attributes) + ">" + joinWith("")(equals([])(children) ? [] : (() => {
+          const [head, ...tail] = children;
+          return concat([render$002Dchild(true)(head)])(map(function (child) {
+            return render$002Dchild(equals("block")(child.format))(child);
+          })(tail));
+        })()) + "\n" + $2192(level) + "</" + name + ">";
+      })() : CasesNotExhaustive)(format);
+    }
   };
-  return element;
 })();
-const self$002Dclosing$002Delement = name => attributes => (() => {
-  const element = {
-    type: "element",
-    format: "inline",
-    name,
-    attributes,
-    toString: () => "",
-    render: ({indent, level, inline}) => (args => target => target.repeat.apply(target, args))([level])(indent) + "<" + name + render$002Dattributes(attributes) + " />" + (inline ? "" : "\n")
-  };
-  return element;
-})();
+const self$002Dclosing$002Delement = name => attributes => ({
+  type: "element",
+  format: "inline",
+  name,
+  attributes,
+  toString: function () {
+    return "";
+  },
+  render: function (_) {
+    return "<" + name + render$002Dattributes(attributes) + " />";
+  }
+});
 const html$0027 = block$002Delement("html");
 const html = html$0027({});
 const head$0027 = block$002Delement("head");
@@ -147,7 +183,20 @@ const dd = dd$0027({});
 const figure$0027 = block$002Delement("figure");
 const figcaption$0027 = block$002Delement("figcaption");
 const main$0027 = block$002Delement("main");
+const main = main$0027({});
 const $div = block$002Delement("div");
+const table$0027 = block$002Delement("table");
+const table = table$0027({});
+const thead$0027 = block$002Delement("thead");
+const thead = thead$0027({});
+const tbody$0027 = block$002Delement("tbody");
+const tbody = tbody$0027({});
+const tr$0027 = block$002Delement("tr");
+const tr = tr$0027({});
+const th$0027 = inline$002Delement("th");
+const th = th$0027({});
+const td$0027 = inline$002Delement("td");
+const td = td$0027({});
 const b = inline$002Delement("b")({});
 const mask = block$002Delement("mask");
 const rect = self$002Dclosing$002Delement("rect");
@@ -178,4 +227,4 @@ const img = self$002Dclosing$002Delement("img");
 const param = self$002Dclosing$002Delement("param");
 const path = self$002Dclosing$002Delement("path");
 const stop = self$002Dclosing$002Delement("stop");
-export {text, html$0027, html, head$0027, head, title$0027, title, base, link, meta, style$0027, body$0027, body, article$0027, article, section$0027, nav$0027, nav, aside$0027, aside, h1$0027, h1, h2$0027, h2, h3$0027, h3, h4$0027, h4, h5$0027, h5, h6$0027, h6, hgroup$0027, header$0027, header, footer$0027, footer, address$0027, p$0027, p, hr$0027, hr, pre$0027, pre, blockquote$0027, blockquote, ol$0027, ol, ul$0027, ul, menu$0027, li$0027, li, dl$0027, dl, dt$0027, dt, dd$0027, dd, figure$0027, figcaption$0027, main$0027, $div as div, b, mask, rect, linearGradient, object, svg, a, code$0027, code, del$0027, del, em$0027, em, i$0027, i, ins$0027, ins, script, span, strong$0027, strong, time, var$0027, var$, video, embed, img, param, path, stop};
+export {text, html$0027, html, head$0027, head, title$0027, title, base, link, meta, style$0027, body$0027, body, article$0027, article, section$0027, nav$0027, nav, aside$0027, aside, h1$0027, h1, h2$0027, h2, h3$0027, h3, h4$0027, h4, h5$0027, h5, h6$0027, h6, hgroup$0027, header$0027, header, footer$0027, footer, address$0027, p$0027, p, hr$0027, hr, pre$0027, pre, blockquote$0027, blockquote, ol$0027, ol, ul$0027, ul, menu$0027, li$0027, li, dl$0027, dl, dt$0027, dt, dd$0027, dd, figure$0027, figcaption$0027, main$0027, main, $div as div, table$0027, table, thead$0027, thead, tbody$0027, tbody, tr$0027, tr, th$0027, th, td$0027, td, b, mask, rect, linearGradient, object, svg, a, code$0027, code, del$0027, del, em$0027, em, i$0027, i, ins$0027, ins, script, span, strong$0027, strong, time, var$0027, var$, video, embed, img, param, path, stop};

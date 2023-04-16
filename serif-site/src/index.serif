@@ -1,160 +1,1181 @@
 import * from "./elements.serif";
 
+styled class copy = span {class} [text copy];
+
+comment           = styled "comment";
+delimGroup        = styled "delimiter group";
+delimArray        = styled "delimiter array";
+delimObject       = styled "delimiter object";
+delimiter         = styled "delimiter";
+separator         = styled "separator";
+identIntro        = styled "identifier introduction";
+identRef          = styled "identifier reference";
+boolean           = styled "boolean";
+nullLiteral       = styled "null" "null";
+undefinedLiteral  = styled "undefined" "undefined";
+number            = styled "number";
+string            = styled "string";
+propertyName      = styled "property-name";
+propertyAccessor  = styled "property-accessor";
+operator          = styled "operator";
+signature         = styled "signature";
+
+_ = text " ";
+en = [_, separator "\x2013", _];
+
+operators [op, ...ops] = {
+  link op = a {href: "#operator:" <> op} [code [operator op]];
+  [link op] <> (ops >>= \op -> [text " ", link op])
+};
+
+expression = code' {class: "expression"} . (<> [text "\n"]);
+result     = code' {class: "result"}     . (<> [text "\n"]);
+
 document = html [
   head [
     meta {charset: "utf-8"},
-    link {rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Source+Sans+3:normal,bold|Source+Code+Pro"},
+    link {rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Crimson+Text:regular,italic,semibold|Fira+Code|Poppins:medium,bold"},
     link {rel: "stylesheet", href: "./style.css"},
   ],
   body [
-    h1 ["Serif"],
-    p [
-      "Serif is an expressive, practical functional programming language."
+    header [
+      h1 ["Serif"],
     ],
-    p [
-      "Serif is dynamically typed and strictly evaluated."
-    ],
-    p [
-      "Serif code most closely resembles Haskell code, but the experience of programming with Serif feels ", em ["light"], " in some indescribable way."
-    ],
-    p [
-      "Serif is fully interoperable with JavaScript: Serif modules can import ES modules; Serif modules are transpiled to ES modules that can be imported by ES modules written in JavaScript or TypeScript.",
-    ],
-    h2 ["Literals"],
-    h3 ["Boolean literals"],
-    pre [
-      code [
-        text """
-          true
-          false
-        """
+    main [
+      section' {id: "introduction"} [
+        p [
+          "Serif is an ", em ["expressive"], ", ", em ["practical"], ", ", em ["dynamically typed"], " programming language inspired by Haskell",
+          svg {xmlns: "http://www.w3.org/2000/svg", viewBox: "0,0 102,72"} [
+            path {fill: "#453a62", d: "m 0,0 h 18 l 24,36 l -24,36 h -18 l 24,-36 z"},
+            path {fill: "#5e5086", d: "m 24,0 h 18 l 48,72 h -18 z m 24,36 h 18 l -24,36 h -18 z"},
+            path {fill: "#8f4e8b", d: "m 62,21 h 40 v 12 h -32 z m 12,18 h 28 v 12 h -20 z"},
+          ],
+        ],
+        p [
+          "Serif is ", em ["fully interoperable"], " with JavaScript",
+          svg {xmlns: "http://www.w3.org/2000/svg", viewBox: "0,0 630,630"} [
+            rect {fill: "#f7df1e", width: "100%", height: "100%"},
+            path {d: "m 165.65,526.47375 48.2125,-29.1775 C 223.16375,513.7875 231.625,527.74 251.92,527.74 c 19.45375,0 31.71875,-7.60975 31.71875,-37.21 l 0,-201.3 59.20375,0 0,202.1375 c 0,61.32 -35.94375,89.23125 -88.385,89.23125 -47.36125,0 -74.8525,-24.52875 -88.8075,-54.13"},
+            path {d: "m 375,520.13 48.20625,-27.91125 c 12.69,20.72375 29.1825,35.9475 58.36125,35.9475 24.53125,0 40.17375,-12.26475 40.17375,-29.18125 0,-20.29875 -16.06875,-27.48875 -43.135,-39.32625 l -14.7975,-6.3475 c -42.715,-18.18125 -71.05,-41.0175 -71.05,-89.2275 0,-44.40375 33.83125,-78.2375 86.695,-78.2375 37.6375,0 64.7025,13.11125 84.15375,47.36625 l -46.09625,29.60125 c -10.15,-18.1825 -21.1425,-25.37125 -38.0575,-25.37125 -17.33875,0 -28.335,10.995 -28.335,25.37125 0,17.7625 10.99625,24.9525 36.3675,35.94875 l 14.8,6.3425 c 50.325,21.56875 78.66,43.5575 78.66,93.03375 0,53.2875 -41.86625,82.465 -98.11,82.465 -54.97625,0 -90.5,-26.2175 -107.83625,-60.47375"},
+          ],
+        ],
+        p [
+          "Serif leverages the ", a {href: "https://github.com/fantasyland/fantasy-land#readme"} ["Fantasy Land specification"],
+          svg {xmlns: "http://www.w3.org/2000/svg", viewBox: "0,0 10,10"} [
+--          path {fill: "#000", d: "m 0,0 h 4 v 2 h -2 v 2 h 2 v 2 h -2 v 4 h -2 z"},
+--          path {fill: "#000", d: "m 6,0 h 2 v 8 h 2 v 2 h -4 z"},
+            path {fill: "#f90", d: "m 0,4 v -4 h 4 z"},
+            path {fill: "#fc0", d: "m 4,0 v 2 h -2 v 2 h 2 l -4,4 v -4 z m 2,2 v -2 h 2 z"},
+            path {fill: "#9e0", d: "m 4,4 v 2 h -2 v 4 h -2 v -2 z m 4,-4 v 4 l -2,2 v -4 z"},
+            path {fill: "#6cf", d: "m 8,4 v 4 l -2,2 v -4 z"},
+            path {fill: "#66f", d: "m 8,8 h 2 v 2 h -4 z"},
+          ],
+        ],
       ],
-    ],
-    h3 ["Number literals"],
-    pre [
-      code [
-        text """
-          0
-          42
-          123.456
-          0b111
-          0o777
-          0xFF
-        """
+      p [
+        "Here is an example of Serif code:",
       ],
-    ],
-    p [
-      "Negative numbers can be represented by negating a literal (", code ["-1"], ") or variable (", code ["-x"], ").",
-    ],
-    h3 ["String literals"],
-    pre [
-      code [
-        text """
-          ""
-          "foo bar"
-          "\\n"
-        """
+      pre [
+        code [
+          identIntro "createTree", _, operator "=", _, identRef "reduce", _, operator "\\", identIntro "futureTree", _, identIntro "filename", _, operator "->", _, delimObject "{", text "\n",
+          text "  ", identRef "futureTree", _, operator ">>=", _, operator "\\", identIntro "tree", _, operator "->", _, operator "if", _, identRef "tree", _, operator "has", _, identRef "filename", _, operator "then", _, identRef "Future", propertyAccessor ".", propertyName "resolve", _, identRef "tree", _, operator "else", _, operator "do", _, delimObject "{", text "\n",
+          text "    ", identIntro "sourceText", _, operator "<-", _, identRef "Future", propertyAccessor ".", propertyName "mapRej", _, delimGroup "(", propertyAccessor ".", propertyName "message", delimGroup ")", _, operator "$", _, identRef "fs", propertyAccessor ".", propertyName "readFile", _, identRef "filename", delimiter ";", text "\n",
+          text "    ", delimObject "{", identIntro "imports", separator ",", _, identIntro "exports", separator ",", _, identIntro "statements", delimObject "}", _, operator "<-", _, identRef "parse", _, identRef "filename", _, identRef "sourceText", delimiter ";", text "\n",
+          text "    ", identIntro "dependencies", _, operator "=", _, identRef "imports", _, operator ">>=", _, operator "\\", delimObject "{", identIntro "source", delimObject "}", _, operator "->", _, delimObject "{", text "\n",
+          text "      ", operator "if", _, propertyAccessor ".", propertyName "test", _, delimArray "[", identRef "source", propertyAccessor ".", propertyName "value", delimArray "]", _, operator "$", _, identRef "RegExp", _, string "\"^[./].*[.]serif$\"", text "\n",
+          text "      ", operator "then", _, delimArray "[", identRef "path", propertyAccessor ".", propertyName "join", _, delimArray "[", identRef "filename", separator ",", _, string "\"..\"", separator ",", _, identRef "source", propertyAccessor ".", propertyName "value", delimArray "]", delimArray "]", text "\n",
+          text "      ", operator "else", _, delimArray "[", delimArray "]", text "\n",
+          text "    ", delimObject "}", delimiter ";", text "\n",
+          text "    ", identIntro "exports", _, operator "=", _, delimGroup "(", operator "<$>", _, identRef "exports", delimGroup ")", _, operator "$", _, identRef "Node", propertyAccessor ".", propertyName "matchOr", _, identRef "id", _, delimObject "{", text "\n",
+          text "      ", propertyName "ExportNamedDeclaration", separator ":", _, identRef "ExportNamedDeclaration", _, operator ".", _, identRef "chain", _, delimGroup "(", identRef "Node", propertyAccessor ".", propertyName "matchOr", _, identRef "Array", propertyAccessor ".", propertyName "of", _, delimObject "{", text "\n",
+          text "        ", propertyName "ExportAllSpecifier", separator ":", _, operator "\\", identIntro "hiding", _, operator "->", _, delimObject "{", text "\n",
+          text "          ", identRef "statements", text "\n",
+          text "          ", operator "&", _, identRef "map", _, identRef "vars", text "\n",
+          text "          ", operator "&", _, identRef "mergeAll", text "\n",
+          text "          ", operator "&", _, identRef "declared", text "\n",
+          text "          ", operator "&", _, identRef "subtract", _, delimGroup "(", identRef "construct", _, identRef "Set", _, delimArray "[", delimGroup "(", propertyAccessor ".", propertyName "name", delimGroup ")", _, operator "<$>", _, identRef "hiding", delimArray "]", delimGroup ")", text "\n",
+          text "          ", operator "&", _, identRef "Array", propertyAccessor ".", propertyName "from", text "  ", comment "-- TODO: sort", text "\n",
+          text "          ", operator "&", _, identRef "map", _, delimGroup "(", identRef "join", _, identRef "ExportSpecifier", _, operator ".", _, identRef "Identifier", delimGroup ")", text "\n",
+          text "        ", delimObject "}", text "\n",
+          text "      ", delimObject "}", delimGroup ")", text "\n",
+          text "    ", delimObject "}", delimiter ";", text "\n",
+          text "    ", identIntro "module", _, operator "=", _, identRef "Module", _, identRef "imports", _, identRef "exports", _, identRef "statements", delimiter ";", text "\n",
+          text "    ", identIntro "initial", _, operator "=", _, identRef "Future", propertyAccessor ".", propertyName "resolve", _, operator "$", _, identRef "construct", _, identRef "Map", _, delimArray "[", text "\n",
+          text "      ", delimArray "[", operator "...", identRef "tree", separator ",", _, delimArray "[", identRef "filename", separator ",", _, delimObject "{", propertyName "sourceText", separator ",", _, propertyName "ast", separator ":", _, identRef "module", separator ",", _, propertyName "dependencies", delimObject "}", delimArray "]", delimArray "]", separator ",", text "\n",
+          text "    ", delimArray "]", delimiter ";", text "\n",
+          text "    ", identRef "createTree", _, identRef "initial", _, identRef "dependencies", text "\n",
+          text "  ", delimObject "}", text "\n",
+          delimObject "}", delimiter ";", text "\n",
+        ],
       ],
-    ],
-    h3 ["Null literal"],
-    pre [
-      code [
-        text """
-          null
-        """
+      h2 ["Comments"],
+      p [
+        "A comment begins with ", code [comment "--"], " and continues until the end of the line.",
       ],
-    ],
-    p [
-      "This is provided for JavaScript interoperability."
-    ],
-    h3 ["Array literals"],
-    pre [
-      code [
-        text """
-          []
-          [1, 2, 3]
-          [1, 2, 3,]
-        """
+      pre [
+        code [
+          comment "-- rename identifiers", text "\n",
+        ],
       ],
-    ],
-    p [
-      "Array literals begin with ", code ["["], " and end with ", code ["]"], ", and contain zero or more elements separated by ", code [","], ". A trailing comma is permitted.",
-    ],
-    h3 ["Object literals"],
-    pre [
-      code [
-        text """
-          {}
-          {[key]: value}
-          {["x"]: 1, ["y"]: 2}
-          {x: 1, y: 2}
-          {x: 1, y: 2,}
-          {foo, bar, baz}
-          {foo, bar}
-          {foo,}
-        """
+      p [
+        "There are no block comments.",
       ],
-    ],
-    p [
-      "Object literals begin with ", code ["{"], " and end with ", code ["}"], ", and contain zero or more entries separated by ", code [","], ". An entry is a key and a value separated by ", code [":"], ". The most flexible form permits an expression to appear between ", code ["["], " and ", code ["]"], " to determine the property name dynamically. ", code ["{x: 1, y: 2}"], " is shorthand for ", code ["{[\"x\"]: 1, [\"y\"]: 2}"], ". ", code ["{foo, bar}"], " is shorthand for ", code ["{foo: foo, bar: bar}"], ". A trailing comma is permitted, and required in the case of ", code ["{foo}"], "—an object with a single shorthand entry—to avoid being interpreted as a block expression.",
-    ],
-    h3 ["Unary operators"],
-    pre [
-      code [
-        text """
-          +
-          -
-        """
+      h2 ["Literals"],
+      h3 ["Boolean literals"],
+      pre [
+        code [
+          boolean "true", text "\n",
+          boolean "false", text "\n",
+        ],
       ],
-    ],
-    h3 ["Binary operators"],
-    pre [
-      code [
-        text """
-          **
-          *
-          /
-          %
-          +
-          -
-          <
-          >
-          <=
-          >=
-          in
-          ==
-          !=
-          &&
-          ||
-          ??
-        """
+      h3 ["Number literals"],
+      pre [
+        code [
+          number "0", text "\n",
+          number "42", text "\n",
+          number "123.456", text "\n",
+          number "0b111", text "\n",
+          number "0o777", text "\n",
+          number "0xFF", text "\n",
+        ],
       ],
-    ],
-    h3 ["Member access"],
-    pre [
-      code [
-        text """
-          Math.sqrt
-          foo[bar]
-        """
+      p [
+        "Negative numbers can be represented by negating a literal (", code [operator "-", number "1"], ") or variable (", code [operator "-", identRef "x"], ").",
       ],
-    ],
-    h3 ["Method calls"],
-    pre [
-      code [
-        text """
-          .toUpperCase [] s
-          .slice [0, 5] xs
-        """
+      h3 ["String literals"],
+      pre [
+        code [
+          string "\"\"", text "\n",
+          string "\"foo bar\"", text "\n",
+          string "\"\\n\"", text "\n",
+        ],
       ],
-    ],
-    p [
-      "This functionality is provided for JavaScript interoperability. Idiomatic Serif code is based on modules and functions rather than objects and methods.",
+      h3 ["Array literals"],
+      pre [
+        code [
+          delimArray "[", delimArray "]", text "\n",
+          delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+          delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", separator ",", delimArray "]", text "\n",
+        ],
+      ],
+      p [
+        "Array literals begin with ", code [delimArray "["], " and end with ", code [delimArray "]"], ", and contain zero or more elements separated by ", code [separator ","], ". A trailing comma is permitted.",
+      ],
+      h3 ["Object literals"],
+      pre [
+        code [
+          delimObject "{", delimObject "}", text "\n",
+          delimObject "{", delimArray "[", identRef "key", delimArray "]", separator ":", _, identRef "value", delimObject "}", text "\n",
+          delimObject "{", delimArray "[", string "\"x\"", delimArray "]", separator ":", _, number "1", separator ",", _, delimArray "[", string "\"y\"", delimArray "]", separator ":", _, number "2", delimObject "}", text "\n",
+          delimObject "{", propertyName "x", separator ":", _, number "1", separator ",", _, propertyName "y", separator ":", _, number "2", delimObject "}", text "\n",
+          delimObject "{", propertyName "x", separator ":", _, number "1", separator ",", _, propertyName "y", separator ":", _, number "2", separator ",", delimObject "}", text "\n",
+          delimObject "{", propertyName "foo", separator ",", _, propertyName "bar", delimObject "}", text "\n",
+        ],
+      ],
+      p [
+        "Object literals begin with ", code [delimObject "{"], " and end with ", code [delimObject "}"], ", and contain zero or more entries separated by ", code [separator ","], ". An entry is a key and a value separated by ", code [separator ":"], ". The most flexible form permits an expression to appear between ", code [delimArray "["], " and ", code [delimArray "]"], " to determine the property name dynamically. ", code [delimObject "{", propertyName "x", separator ":", _, number "1", separator ",", _, propertyName "y", separator ":", _, number "2", delimObject "}"], " is shorthand for ", code [delimObject "{", delimArray "[", string "\"x\"", delimArray "]", separator ":", _, number "1", separator ",", _, delimArray "[", string "\"y\"", delimArray "]", separator ":", _, number "2", delimObject "}"], ". ", code [delimObject "{", propertyName "foo", separator ",", _, propertyName "bar", delimObject "}"], " is shorthand for ", code [delimObject "{", propertyName "foo", separator ":", _, identRef "foo", separator ",", _, propertyName "bar", separator ":", _, identRef "bar", delimObject "}"], ". A trailing comma is permitted.",
+      ],
+      section' {id: "section:operators"} [
+        h3 ["Prefix operators"],
+        p [
+          "There are three prefix operators: ", code [operator "+"], text ", ", code [operator "-"], text ", and ", code [operator "~"], text ".",
+        ],
+        h3 ["Infix operators"],
+        table [
+          thead [
+            tr [
+              th ["Precedence"],
+              th ["Left-associative operators"],
+              th ["Non-associative operators"],
+              th ["Right-associative operators"],
+            ],
+          ],
+          tbody [
+            tr [
+              th [code ["17"]],
+              td [],
+              td [],
+              td $ operators ["."],
+            ],
+            tr [
+              th [code ["16"]],
+              td [],
+              td [],
+              td $ operators ["^"],
+            ],
+            tr [
+              th [code ["15"]],
+              td $ operators ["*", "/"],
+              td [],
+              td [],
+            ],
+            tr [
+              th [code ["14"]],
+              td $ operators ["+", "-"],
+              td [],
+              td [],
+            ],
+            tr [
+              th [code ["13"]],
+              td $ operators [".<.", ".>.", ".0>."],
+              td [],
+              td [],
+            ],
+            tr [
+              th [code ["12"]],
+              td $ operators [".&."],
+              td [],
+              td [],
+            ],
+            tr [
+              th [code ["11"]],
+              td $ operators [".^."],
+              td [],
+              td [],
+            ],
+            tr [
+              th [code ["10"]],
+              td $ operators [".|."],
+              td [],
+              td [],
+            ],
+            tr [
+              th [code ["9"]],
+              td [],
+              td [],
+              td $ operators ["<>"],
+            ],
+            tr [
+              th [code ["8"]],
+              td $ operators ["<$>", "<*>"],
+              td [],
+              td [],
+            ],
+            tr [
+              th [code ["7"]],
+              td [],
+              td $ operators ["<", "<=", ">", ">=", "has", "in"],
+              td [],
+            ],
+            tr [
+              th [code ["6"]],
+              td [],
+              td $ operators ["==", "/="],
+              td [],
+            ],
+            tr [
+              th [code ["5"]],
+              td $ operators ["&&"],
+              td [],
+              td [],
+            ],
+            tr [
+              th [code ["4"]],
+              td $ operators ["||"],
+              td [],
+              td [],
+            ],
+            tr [
+              th [code ["3"]],
+              td $ operators ["<&>", ">>="],
+              td [],
+              td [],
+            ],
+            tr [
+              th [code ["2"]],
+              td $ operators ["&"],
+              td [],
+              td [],
+            ],
+            tr [
+              th [code ["1"]],
+              td [],
+              td [],
+              td $ operators ["$"],
+            ],
+          ],
+        ],
+        section' {id: "operator:."} [
+          h1 [a {href: "#operator:."} [code [operator "."]], ...en, "Composition operator"],
+          dl [
+            dt ["Precedence"],
+            dd ["17"],
+            dt ["Associativity"],
+            dd ["Right: ", code [identRef "f", _, operator ".", _, identRef "g", _, operator ".", _, identRef "h", _, operator "==", _, identRef "f", _, operator ".", _, delimGroup "(", identRef "g", _, operator ".", _, identRef "h", delimGroup ")"]],
+          ],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              delimGroup "(", identRef "negate", _, operator ".", _, identRef "Math", propertyAccessor ".", propertyName "sqrt", delimGroup ")", _, number "64",
+            ],
+            result [
+              operator "-", number "8",
+            ],
+          ],
+        ],
+        section' {id: "operator:^"} [
+          h1 [a {href: "#operator:^"} [code [operator "^"]], ...en, "Exponentiation operator"],
+          dl [
+            dt ["Precedence"],
+            dd ["16"],
+            dt ["Associativity"],
+            dd ["Right: ", code [identRef "x", _, operator "^", _, identRef "y", _, operator "^", _, identRef "z", _, operator "==", _, identRef "x", _, operator "^", _, delimGroup "(", identRef "y", _, operator "^", _, identRef "z", delimGroup ")"]],
+          ],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              number "10", _, operator "^", _, number "2",
+            ],
+            result [
+              number "100",
+            ],
+            expression [
+              number "2", _, operator "^", _, number "10",
+            ],
+            result [
+              number "1024",
+            ],
+          ],
+        ],
+        section' {id: "operator:*"} [
+          h1 [a {href: "#operator:*"} [code [operator "*"]], ...en, "Multiplication operator"],
+          dl [
+            dt ["Precedence"],
+            dd ["15"],
+            dt ["Associativity"],
+            dd ["Left: ", code [identRef "x", _, operator "*", _, identRef "y", _, operator "*", _, identRef "z", _, operator "==", _, delimGroup "(", identRef "x", _, operator "*", _, identRef "y", delimGroup ")", _, operator "*", _, identRef "z"]],
+          ],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              number "5", _, operator "*", _, number "8.4",
+            ],
+            result [
+              number "42",
+            ],
+          ],
+        ],
+        section' {id: "operator:/"} [
+          h1 [a {href: "#operator:/"} [code [operator "/"]], ...en, "Division operator"],
+        ],
+        section' {id: "operator:+"} [
+          h1 [a {href: "#operator:+"} [code [operator "+"]], ...en, "Addition operator"],
+        ],
+        section' {id: "operator:-"} [
+          h1 [a {href: "#operator:-"} [code [operator "-"]], ...en, "Subtraction operator"],
+        ],
+        section' {id: "operator:.<."} [
+          h1 [a {href: "#operator:.<."} [code [operator ".<."]], ...en, "Left shift operator"],
+        ],
+        section' {id: "operator:.>."} [
+          h1 [a {href: "#operator:.>."} [code [operator ".>."]], ...en, "Right shift operator"],
+        ],
+        section' {id: "operator:.0>."} [
+          h1 [a {href: "#operator:.0>."} [code [operator ".0>."]], ...en, "Zero-fill right shift operator"],
+        ],
+        section' {id: "operator:.&."} [
+          h1 [a {href: "#operator:.&."} [code [operator ".&."]], ...en, "Bitwise AND operator"],
+        ],
+        section' {id: "operator:.^."} [
+          h1 [a {href: "#operator:.^."} [code [operator ".^."]], ...en, "Bitwise XOR operator"],
+        ],
+        section' {id: "operator:.|."} [
+          h1 [a {href: "#operator:.|."} [code [operator ".|."]], ...en, "Bitwise OR operator"],
+        ],
+        section' {id: "operator:<>"} [
+          h1 [a {href: "#operator:<>"} [code [operator "<>"]], ...en, "Concatenation operator"],
+        ],
+        section' {id: "operator:<$>"} [
+          h1 [a {href: "#operator:<$>"} [code [operator "<$>"]], ...en, "Map operator"],
+        ],
+        section' {id: "operator:<*>"} [
+          h1 [a {href: "#operator:<*>"} [code [operator "<*>"]], ...en, "Ap operator"],
+        ],
+        section' {id: "operator:<"} [
+          h1 [a {href: "#operator:<"} [code [operator "<"]], ...en, "Less than operator"],
+        ],
+        section' {id: "operator:<="} [
+          h1 [a {href: "#operator:<="} [code [operator "<="]], ...en, "Less than or equal to operator"],
+        ],
+        section' {id: "operator:>"} [
+          h1 [a {href: "#operator:>"} [code [operator ">"]], ...en, "Greater than operator"],
+        ],
+        section' {id: "operator:>="} [
+          h1 [a {href: "#operator:>="} [code [operator ">="]], ...en, "Greater than or equal to operator"],
+        ],
+        section' {id: "operator:has"} [
+          h1 [a {href: "#operator:has"} [code [operator "has"]]],
+        ],
+        section' {id: "operator:in"} [
+          h1 [a {href: "#operator:in"} [code [operator "in"]], ...en, "Membership operator"],
+        ],
+        section' {id: "operator:=="} [
+          h1 [a {href: "#operator:=="} [code [operator "=="]], ...en, "Equality operator"],
+        ],
+        section' {id: "operator:/="} [
+          h1 [a {href: "#operator:/="} [code [operator "/="]], ...en, "TK operator"],
+        ],
+        section' {id: "operator:&&"} [
+          h1 [a {href: "#operator:&&"} [code [operator "&&"]], ...en, "Logical AND operator"],
+        ],
+        section' {id: "operator:||"} [
+          h1 [a {href: "#operator:||"} [code [operator "||"]], ...en, "Logical OR operator"],
+        ],
+        section' {id: "operator:<&>"} [
+          h1 [a {href: "#operator:<&>"} [code [operator "<&>"]], ...en, "Flipped map operator"],
+        ],
+        section' {id: "operator:>>="} [
+          h1 [a {href: "#operator:>>="} [code [operator ">>="]], ...en, "Bind operator"],
+        ],
+        section' {id: "operator:&"} [
+          h1 [a {href: "#operator:&"} [code [operator "&"]], ...en, "Pipe operator"],
+        ],
+        section' {id: "operator:$"} [
+          h1 [a {href: "#operator:$"} [code [operator "$"]], ...en, "Application operator"],
+        ],
+      ],
+      h3 ["Member access"],
+      pre [
+        code [
+          identRef "Math", propertyAccessor ".", propertyName "sqrt", text "\n",
+          identRef "foo", delimArray "[", identRef "bar", delimArray "]", text "\n",
+        ],
+      ],
+      h3 ["Method calls"],
+      pre [
+        code [
+          propertyAccessor ".", propertyName "toUpperCase", _, delimArray "[", delimArray "]", _, identRef "s", text "\n",
+          propertyAccessor ".", propertyName "slice", _, delimArray "[", number "0", separator ",", _, number "5", delimArray "]", _, identRef "xs", text "\n",
+        ],
+      ],
+      p [
+        "This functionality is provided for JavaScript interoperability. Idiomatic Serif code is based on modules and functions rather than objects and methods.",
+      ],
+      section' {id: "section:prelude"} [
+        h1 ["Prelude"],
+        p [
+          "The prelude is a set of functions automatically available to every Serif module.",
+        ],
+        p [
+          "Only those prelude functions referenced within a module are included in the corresponding ECMAScript module.",
+        ],
+        p [
+          "Prelude function names are not reserved. They may be shadowed by variables introduced anywhere (even at the top level of a Serif module). If ", code [identIntro "id"], ", say, is introduced in a particular scope, ", a {href: "#id"} [code [identRef "id"]], " is of course inaccessible within that scope.",
+        ],
+        section' {id: "null"} [
+          h1 [code [identRef "null", _, separator "::", _, signature "Null"]],
+          p [
+            "Provided for JavaScript interoperability. ", code [identRef "null"], " is an identifier in Serif, not a literal as it is in JavaScript.",
+          ],
+        ],
+        section' {id: "complement"} [
+          h1 [code [identRef "complement", _, separator "::", _, signature "Integer -> Integer"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              identRef "complement", _, number "0b11111111111111111111111111111101", _, operator "==", _, number "0b00000000000000000000000000000010",
+            ],
+            result [
+              boolean "true",
+            ],
+          ],
+        ],
+        section' {id: "instanceof"} [
+          h1 [code [identRef "instanceof", _, separator "::", _, signature "a -> Constructor b -> Boolean"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              identRef "instanceof", _, identRef "Map", _, delimGroup "(", identRef "construct", _, identRef "Map", _, delimArray "[", delimArray "[", delimArray "]", delimArray "]", delimGroup ")",
+            ],
+            result [
+              boolean "true",
+            ],
+            expression [
+              identRef "instanceof", _, identRef "Map", _, delimGroup "(", identRef "construct", _, identRef "Set", _, delimArray "[", delimArray "[", delimArray "]", delimArray "]", delimGroup ")",
+            ],
+            result [
+              boolean "false",
+            ],
+          ],
+        ],
+        section' {id: "typeof"} [
+          h1 [code [identRef "typeof", _, separator "::", _, signature "a -> String"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              identRef "typeof", _, string "\"abc\"",
+            ],
+            result [
+              string "\"string\"",
+            ],
+            expression [
+              identRef "typeof", _, delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]",
+            ],
+            result [
+              string "\"object\"",
+            ],
+            expression [
+              identRef "typeof", _, nullLiteral,
+            ],
+            result [
+              string "\"null\"",
+            ],
+            expression [
+              identRef "typeof", _, undefinedLiteral,
+            ],
+            result [
+              string "\"undefined\"",
+            ],
+          ],
+          p [
+            "Note that ", code [identRef "typeof", _, nullLiteral], " evaluates to ", code [string "\"null\""], " (it evaluates to ", code [string "\"object\""], " in JavaScript).",
+          ],
+        ],
+        section' {id: "id"} [
+          h1 [code [identRef "id", _, separator "::", _, signature "a -> a"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              identRef "id", _, string "\"abc\"",
+            ],
+            result [
+              string "\"abc\"",
+            ],
+          ],
+        ],
+        section' {id: "const"} [
+          h1 [code [identRef "const", _, separator "::", _, signature "a -> b -> a"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              identRef "const", _, string "\"always\"", _, string "\"ignored\"",
+            ],
+            result [
+              string "\"always\"",
+            ],
+            expression [
+              identRef "map", _, delimGroup "(", identRef "const", _, number "0", delimGroup ")", _, delimArray "[", string "\"foo\"", separator ",", _, string "\"bar\"", separator ",", _, string "\"baz\"", delimArray "]",
+            ],
+            result [
+              delimArray "[", number "0", separator ",", _, number "0", separator ",", _, number "0", delimArray "]",
+            ],
+          ],
+        ],
+        section' {id: "not"} [
+          h1 [code [identRef "not", _, separator "::", _, signature "Boolean -> Boolean"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              identRef "not", _, boolean "true",
+            ],
+            result [
+              boolean "false",
+            ],
+            expression [
+              identRef "not", _, boolean "false",
+            ],
+            result [
+              boolean "true",
+            ],
+          ],
+        ],
+        section' {id: "negate"} [
+          h1 [code [identRef "negate", _, separator "::", _, signature "Number -> Number"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              identRef "negate", _, number "1",
+            ],
+            result [
+              operator "-", number "1",
+            ],
+            expression [
+              identRef "negate", _, delimGroup "(", identRef "negate", _, number "1", delimGroup ")",
+            ],
+            result [
+              number "1",
+            ],
+          ],
+        ],
+        section' {id: "quot"} [
+          h1 [code [identRef "quot", _, separator "::", _, signature "Integer -> Integer -> Integer"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "rem"} [
+          h1 [code [identRef "rem", _, separator "::", _, signature "Integer -> Integer -> Integer"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "div"} [
+          h1 [code [identRef "div", _, separator "::", _, signature "Integer -> Integer -> Integer"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "mod"} [
+          h1 [code [identRef "mod", _, separator "::", _, signature "Integer -> Integer -> Integer"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "charAt"} [
+          h1 [code [identRef "charAt", _, separator "::", _, signature "Integer -> String -> String"]],
+          pre [
+            expression [
+              identRef "charAt", _, number "0", _, string "\"Serif\"",
+            ],
+            result [
+              string "\"S\"",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charAt"} [code ["String.prototype.charAt"]], ".",
+          ],
+        ],
+        section' {id: "charCodeAt"} [
+          h1 [code [identRef "charCodeAt", _, separator "::", _, signature "Integer -> String -> Integer"]],
+          pre [
+            expression [
+              identRef "charCodeAt", _, number "0", _, string "\"Serif\"",
+            ],
+            result [
+              number "83",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt"} [code ["String.prototype.charCodeAt"]], ".",
+          ],
+        ],
+        section' {id: "codePointAt"} [
+          h1 [code [identRef "codePointAt", _, separator "::", _, signature "Integer -> String -> Integer"]],
+          pre [
+            expression [
+              identRef "codePointAt", _, number "0", _, string "\"😍\"",
+            ],
+            result [
+              number "128525",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt"} [code ["String.prototype.codePointAt"]], ".",
+          ],
+        ],
+        section' {id: "startsWith"} [
+          h1 [code [identRef "startsWith", _, separator "::", _, signature "String -> String -> Boolean"]],
+          pre [
+            expression [
+              identRef "startsWith", _, string "\"file://\"", _, string "\"file:///etc/hosts\"",
+            ],
+            result [
+              boolean "true",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith"} [code ["String.prototype.startsWith"]], ".",
+          ],
+        ],
+        section' {id: "endsWith"} [
+          h1 [code [identRef "endsWith", _, separator "::", _, signature "String -> String -> Boolean"]],
+          pre [
+            expression [
+              identRef "endsWith", _, string "\".serif\"", _, string "\"repl.serif\"",
+            ],
+            result [
+              boolean "true",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith"} [code ["String.prototype.endsWith"]], ".",
+          ],
+        ],
+        section' {id: "toLower"} [
+          h1 [code [identRef "toLower", _, separator "::", _, signature "String -> String"]],
+          pre [
+            expression [
+              identRef "toLower", _, string "\"Serif\"",
+            ],
+            result [
+              string "\"serif\"",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase"} [code ["String.prototype.toLowerCase"]], ".",
+          ],
+        ],
+        section' {id: "toUpper"} [
+          h1 [code [identRef "toUpper", _, separator "::", _, signature "String -> String"]],
+          pre [
+            expression [
+              identRef "toUpper", _, string "\"Serif\"",
+            ],
+            result [
+              string "\"SERIF\"",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase"} [code ["String.prototype.toUpperCase"]], ".",
+          ],
+        ],
+        section' {id: "trim"} [
+          h1 [code [identRef "trim", _, separator "::", _, signature "String -> String"]],
+          pre [
+            expression [
+              identRef "trim", _, string "\"\\t\\t Serif \\n\\n\"",
+            ],
+            result [
+              string "\"Serif\"",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim"} [code ["String.prototype.trim"]], ".",
+          ],
+        ],
+        section' {id: "trimStart"} [
+          h1 [code [identRef "trimStart", _, separator "::", _, signature "String -> String"]],
+          pre [
+            expression [
+              identRef "trimStart", _, string "\"\\t\\t Serif \\n\\n\"",
+            ],
+            result [
+              string "\"Serif \\n\\n\"",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trimStart"} [code ["String.prototype.trimStart"]], ".",
+          ],
+        ],
+        section' {id: "trimEnd"} [
+          h1 [code [identRef "trimEnd", _, separator "::", _, signature "String -> String"]],
+          pre [
+            expression [
+              identRef "trimEnd", _, string "\"\\t\\t Serif \\n\\n\"",
+            ],
+            result [
+              string "\"\\t\\t Serif\"",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trimEnd"} [code ["String.prototype.trimEnd"]], ".",
+          ],
+        ],
+        section' {id: "replace"} [
+          h1 [code [identRef "replace", _, separator "::", _, signature "String -> String -> String"]],
+          pre [
+            expression [
+              identRef "replace", _, string "\" \"", _, string "\"-\"", _, string "\"foo bar baz\"",
+            ],
+            result [
+              string "\"foo-bar baz\"",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace"} [code ["String.prototype.replace"]], ".",
+          ],
+        ],
+        section' {id: "replaceAll"} [
+          h1 [code [identRef "replaceAll", _, separator "::", _, signature "String -> String -> String"]],
+          pre [
+            expression [
+              identRef "replaceAll", _, string "\" \"", _, string "\"-\"", _, string "\"foo bar baz\"",
+            ],
+            result [
+              string "\"foo-bar-baz\"",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll"} [code ["String.prototype.replaceAll"]], ".",
+          ],
+        ],
+        section' {id: "splitOn"} [
+          h1 [code [identRef "splitOn", _, separator "::", _, signature "String -> String -> Array String"]],
+          pre [
+            expression [
+              identRef "splitOn", _, string "\"-\"", _, string "\"foo-bar-baz\"",
+            ],
+            result [
+              delimArray "[", string "\"foo\"", separator ",", _, string "\"bar\"", separator ",", _, string "\"baz\"", delimArray "]",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split"} [code ["String.prototype.split"]], ".",
+          ],
+        ],
+        section' {id: "joinWith"} [
+          h1 [code [identRef "joinWith", _, separator "::", _, signature "String -> Array String -> String"]],
+          pre [
+            expression [
+              identRef "joinWith", _, string "\"-\"", _, delimArray "[", string "\"foo\"", separator ",", _, string "\"bar\"", separator ",", _, string "\"baz\"", delimArray "]",
+            ],
+            result [
+              string "\"foo-bar-baz\"",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join"} [code ["Array.prototype.join"]], ".",
+          ],
+        ],
+        section' {id: "slice"} [
+          h1 [code [identRef "slice", _, separator "::", _, signature "Integer -> Integer -> Array a -> Array a"]],
+          pre [
+            expression [
+              identRef "slice", _, number "1", _, number "3", _, delimArray "[", string "\"foo\"", separator ",", _, string "\"bar\"", separator ",", _, string "\"baz\"", separator ",", _, string "\"quux\"", delimArray "]",
+            ],
+            result [
+              delimArray "[", string "\"bar\"", separator ",", _, string "\"baz\"", delimArray "]",
+            ],
+            expression [
+              identRef "slice", _, number "1", _, delimGroup "(", operator "-", number "1", delimGroup ")", _, delimArray "[", string "\"foo\"", separator ",", _, string "\"bar\"", separator ",", _, string "\"baz\"", separator ",", _, string "\"quux\"", delimArray "]",
+            ],
+            result [
+              delimArray "[", string "\"bar\"", separator ",", _, string "\"baz\"", delimArray "]",
+            ],
+          ],
+          p [
+            "See also ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice"} [code ["Array.prototype.slice"]], " and ", a {href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice"} [code ["String.prototype.slice"]], ".",
+          ],
+        ],
+        section' {id: "sliceFrom"} [
+          h1 [code [identRef "sliceFrom", _, separator "::", _, signature "Integer -> Array a -> Array a"]],
+          pre [
+            expression [
+              identRef "sliceFrom", _, number "1", _, delimArray "[", string "\"foo\"", separator ",", _, string "\"bar\"", separator ",", _, string "\"baz\"", separator ",", _, string "\"quux\"", delimArray "]",
+            ],
+            result [
+              delimArray "[", string "\"bar\"", separator ",", _, string "\"baz\"", _, string "\"quux\"", delimArray "]",
+            ],
+            expression [
+              identRef "sliceFrom", _, delimGroup "(", operator "-", number "2", delimGroup ")", _, delimArray "[", string "\"foo\"", separator ",", _, string "\"bar\"", separator ",", _, string "\"baz\"", separator ",", _, string "\"quux\"", delimArray "]",
+            ],
+            result [
+              delimArray "[", string "\"baz\"", _, string "\"quux\"", delimArray "]",
+            ],
+          ],
+        ],
+        section' {id: "sliceTo"} [
+          h1 [code [identRef "sliceTo", _, separator "::", _, signature "Integer -> Array a -> Array a"]],
+          pre [
+            expression [
+              identRef "sliceTo", _, number "3", _, delimArray "[", string "\"foo\"", separator ",", _, string "\"bar\"", separator ",", _, string "\"baz\"", separator ",", _, string "\"quux\"", delimArray "]",
+            ],
+            result [
+              delimArray "[", string "\"foo\"", separator ",", _, string "\"bar\"", separator ",", _, string "\"baz\"", delimArray "]",
+            ],
+            expression [
+              identRef "sliceTo", _, delimGroup "(", operator "-", number "2", delimGroup ")", _, delimArray "[", string "\"foo\"", separator ",", _, string "\"bar\"", separator ",", _, string "\"baz\"", separator ",", _, string "\"quux\"", delimArray "]",
+            ],
+            result [
+              delimArray "[", string "\"foo\"", _, string "\"bar\"", delimArray "]",
+            ],
+          ],
+        ],
+        section' {id: "equals"} [
+          h1 [code [identRef "equals", _, separator "::", _, signature "Setoid a => a -> a -> Boolean"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              identRef "equals", _, string "\"foo\"", _, string "\"foo\"",
+            ],
+            result [
+              boolean "true",
+            ],
+            expression [
+              identRef "equals", _, string "\"foo\"", _, string "\"bar\"",
+            ],
+            result [
+              boolean "false",
+            ],
+            expression [
+              identRef "equals", _, delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", _, delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]",
+            ],
+            result [
+              boolean "true",
+            ],
+          ],
+        ],
+        section' {id: "compose"} [
+          h1 [code [identRef "compose", _, separator "::", _, signature "Semigroupoid s => s b c -> s a b -> s a c"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              identRef "compose", _, identRef "Math", propertyAccessor ".", propertyName "sqrt", _, identRef "Math", propertyAccessor ".", propertyName "abs", _, delimGroup "(", operator "-", number "64", delimGroup ")",
+            ],
+            result [
+              number "8",
+            ],
+          ],
+          p [
+            code [identRef "compose"], " is more general than ", code [delimGroup "(", operator ".", delimGroup ")"], ". The latter is preferable for function composition as it produces more efficient JavaScript code.",
+          ],
+        ],
+        section' {id: "concat"} [
+          h1 [code [identRef "concat", _, separator "::", _, signature "Semigroup a => a -> a -> a"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              identRef "concat", _, string "\"abc\"", _, string "\"def\"",
+            ],
+            result [
+              string "\"abcdef\"",
+            ],
+            expression [
+              identRef "concat", _, delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", _, delimArray "[", number "4", separator ",", _, number "5", separator ",", _, number "6", delimArray "]",
+            ],
+            result [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", separator ",", _, number "4", separator ",", _, number "5", separator ",", _, number "6", delimArray "]",
+            ],
+          ],
+          p [
+            code [identRef "concat"], " is equivalent to ", code [delimGroup "(", operator "<>", delimGroup ")"], ".",
+          ],
+        ],
+        section' {id: "empty"} [
+          h1 [code [identRef "empty", _, separator "::", _, signature "Monoid a => TypeRep a -> a"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            expression [
+              identRef "empty", _, identRef "String",
+            ],
+            result [
+              string "\"\"",
+            ],
+            expression [
+              identRef "empty", _, identRef "Array",
+            ],
+            result [
+              delimArray "[", delimArray "]",
+            ],
+            expression [
+              identRef "empty", _, identRef "Set",
+            ],
+            result [
+              identRef "construct", _, identRef "Set", _, delimArray "[", delimArray "[", delimArray "]", delimArray "]",
+            ],
+            expression [
+              identRef "empty", _, identRef "Map",
+            ],
+            result [
+              identRef "construct", _, identRef "Map", _, delimArray "[", delimArray "[", delimArray "]", delimArray "]",
+            ],
+          ],
+        ],
+        section' {id: "reduce"} [
+          h1 [code [identRef "reduce", _, separator "::", _, signature "Foldable f => (b -> a -> b) -> b -> f a -> b"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "reduceRight"} [
+          h1 [code [identRef "reduceRight", _, separator "::", _, signature "Foldable f => (b -> a -> b) -> b -> f a -> b"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "filter"} [
+          h1 [code [identRef "filter", _, separator "::", _, signature "Filterable f => (a -> Boolean) -> f a -> f a"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "reject"} [
+          h1 [code [identRef "reject", _, separator "::", _, signature "Filterable f => (a -> Boolean) -> f a -> f a"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "map"} [
+          h1 [code [identRef "map", _, separator "::", _, signature "Functor f => (a -> b) -> f a -> f b"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "flip"} [
+          h1 [code [identRef "flip", _, separator "::", _, signature "Functor f => f (a -> b) -> a -> f b"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "pure"} [
+          h1 [code [identRef "pure", _, separator "::", _, signature "Applicative f => TypeRep f -> a -> f a"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "ap"} [
+          h1 [code [identRef "ap", _, separator "::", _, signature "Apply f => f (a -> b) -> f a -> f b"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "append"} [
+          h1 [code [identRef "append", _, separator "::", _, signature "(Applicative f, Semigroup (f a)) => a -> f a -> f a"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "prepend"} [
+          h1 [code [identRef "prepend", _, separator "::", _, signature "(Applicative f, Semigroup (f a)) => a -> f a -> f a"]],
+          p [
+            "TK.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "chain"} [
+          h1 [code [identRef "chain", _, separator "::", _, signature "Chain m => (a -> m b) -> m a -> m b"]],
+          p [
+            "Function form of ", a {href: "#operator:>>="} [code [operator ">>="]], " operator.",
+          ],
+          pre [
+            code [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", text "\n",
+            ],
+          ],
+        ],
+        section' {id: "join"} [
+          h1 [code [identRef "join", _, separator "::", _, signature "Chain m => m (m a) -> m a"]],
+          p [
+            "Removes one level of nesting from a nested monadic structure.",
+          ],
+          pre [
+            expression [
+              identRef "join", _, delimArray "[", delimArray "[", number "1", delimArray "]", separator ",", _, delimArray "[", number "2", delimArray "]", separator ",", _, delimArray "[", number "3", delimArray "]", delimArray "]",
+            ],
+            result [
+              delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]",
+            ],
+            expression [
+              identRef "join", _, delimArray "[", delimArray "[", delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", delimArray "]", delimArray "]",
+            ],
+            result [
+              delimArray "[", delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]", delimArray "]",
+            ],
+          ],
+        ],
+        section' {id: "contains"} [
+          h1 [code [identRef "contains", _, separator "::", _, signature "(Setoid a, Foldable f) => a -> f a -> Boolean"]],
+          p [
+            "Function form of ", a {href: "#operator:in"} [code [operator "in"]], " operator.",
+          ],
+          pre [
+            expression [
+              identRef "contains", _, number "2", _, delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]",
+            ],
+            result [
+              boolean "true",
+            ],
+            expression [
+              identRef "contains", _, number "4", _, delimArray "[", number "1", separator ",", _, number "2", separator ",", _, number "3", delimArray "]",
+            ],
+            result [
+              boolean "false",
+            ],
+          ],
+        ],
+      ],
     ],
   ],
 ];
 
 document.render {indent: "  ", level: 0, inline: false}
-% concat "<!DOCTYPE html>\n"
-% .replace [RegExp "\n$", ""]
-% console.log;
+& concat "<!DOCTYPE html>\n"
+& .replace [RegExp "\n$", ""]
+& console.log;

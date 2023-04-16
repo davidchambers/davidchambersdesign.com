@@ -21,11 +21,11 @@ code-block language source-code = {
 update datetime body = {
   div {class: "update"} [
     h4 [
-      "Update \u2014 ",
+      "Update \x2014 ",
       time {datetime: .toISO [] datetime} [.toFormat ["d MMMM y"] datetime],
     ],
     ...body,
   ]
 };
 
-— = text "\u2009\u2014\u2009";
+— = text "\x2009\x2014\x2009";

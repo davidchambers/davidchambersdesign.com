@@ -1,51 +1,7 @@
 import {p, em} from "../elements.js";
 import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
-const body = [p(["A decorator is a function which takes a function and returns a function:"]), code$002Dblock("coffeescript")(`decorator = (fn) -> fn
-`), p(["Obviously, this doesn't do anything useful. It's the fact that a\n    decorator can return a function which behaves ", em(["similarly"]), "\n    to the function passed to it that makes the pattern interesting.\n    Commonly a decorator will simply wrap a function invocation in a\n    check of some sort:"]), code$002Dblock("javascript")(`var loginRequired = function (fn) {
-  return function () {
-    if (!user.authenticated) {
-      return window.location.replace('/login');
-    }
-    fn.apply(null, [].slice.apply(arguments));
-  };
-};
-`), p(["The above decorator could be used to \"guard\" actions that only\n    authenticated users are permitted to perform:"]), code$002Dblock("javascript")(`var changeUsername = loginRequired(function (username) {
-  $.ajax({
-    type: 'PUT',
-    url: '/api/1.0/users/' + user.id,
-    data: {username: username}
-  })});
-
-var changePassword = loginRequired(function (password) {
-  $.ajax({
-    type: 'PUT',
-    url: '/api/1.0/users/' + user.id,
-    data: {password: password}
-  })});
-
-var deleteAccount = loginRequired(function () {
-  $.ajax({
-    type: 'DELETE',
-    url: '/api/1.0/users/' + user.id
-  })});
-`), p(["The CoffeeScript equivalent is quite a bit clearer:"]), code$002Dblock("coffeescript")(`changeUsername = loginRequired (username) ->
-  $.ajax
-    type: 'PUT'
-    url: "/api/1.0/users/#{user.id}"
-    data: {username}
-
-changePassword = loginRequired (password) ->
-  $.ajax
-    type: 'PUT'
-    url: "/api/1.0/users/#{user.id}"
-    data: {password}
-
-deleteAccount = loginRequired ->
-  $.ajax
-    type: 'DELETE'
-    url: "/api/1.0/users/#{user.id}"
-`), p(["Decorators are commonly used in Python", $2014, "which provides special syntax\n    for \"decorating\" functions", $2014, "but are rarely seen in JavaScript code.\n    This despite the fact that JavaScript's first-class functions are ideally\n    suited to the task. Perhaps CoffeeScript's lighter-weight function syntax\n    will result in decorators making more frequent appearances in JavaScript\n    code."])];
+const body = [p(["A decorator is a function which takes a function and returns a function:"]), code$002Dblock("coffeescript")("decorator = (fn) -> fn\n  "), p(["Obviously, this doesn't do anything useful. It's the fact that a ", "decorator can return a function which behaves ", em(["similarly"]), " ", "to the function passed to it that makes the pattern interesting. ", "Commonly a decorator will simply wrap a function invocation in a ", "check of some sort:"]), code$002Dblock("javascript")("var loginRequired = function (fn) {\n  return function () {\n    if (!user.authenticated) {\n      return window.location.replace('/login');\n    }\n    fn.apply(null, [].slice.apply(arguments));\n  };\n};\n  "), p(["The above decorator could be used to \"guard\" actions that only ", "authenticated users are permitted to perform:"]), code$002Dblock("javascript")("var changeUsername = loginRequired(function (username) {\n  $.ajax({\n    type: 'PUT',\n    url: '/api/1.0/users/' + user.id,\n    data: {username: username}\n  })});\n\nvar changePassword = loginRequired(function (password) {\n  $.ajax({\n    type: 'PUT',\n    url: '/api/1.0/users/' + user.id,\n    data: {password: password}\n  })});\n\nvar deleteAccount = loginRequired(function () {\n  $.ajax({\n    type: 'DELETE',\n    url: '/api/1.0/users/' + user.id\n  })});\n  "), p(["The CoffeeScript equivalent is quite a bit clearer:"]), code$002Dblock("coffeescript")("changeUsername = loginRequired (username) ->\n  $.ajax\n    type: 'PUT'\n    url: \"/api/1.0/users/#{user.id}\"\n    data: {username}\n\nchangePassword = loginRequired (password) ->\n  $.ajax\n    type: 'PUT'\n    url: \"/api/1.0/users/#{user.id}\"\n    data: {password}\n\ndeleteAccount = loginRequired ->\n  $.ajax\n    type: 'DELETE'\n    url: \"/api/1.0/users/#{user.id}\"\n  "), p(["Decorators are commonly used in Python", $2014, "which provides ", "special syntax for \"decorating\" functions", $2014, "but are rarely ", "seen in JavaScript code. This despite the fact that JavaScript's ", "first-class functions are ideally suited to the task. Perhaps ", "CoffeeScript's lighter-weight function syntax will result in ", "decorators making more frequent appearances in JavaScript code."])];
 export default {
   id: 89,
   slug: "decorators-in-javascript",

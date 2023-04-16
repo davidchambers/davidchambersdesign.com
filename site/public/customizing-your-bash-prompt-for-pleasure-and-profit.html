@@ -53,7 +53,7 @@
           <h3>Configuring the bash prompt</h3>
           <p>Add something like the following to your <strong>~/.bashrc</strong>.</p>
           <pre><code>PS1="\n\[\e[1;36m\]\w\n\[\e[1;32m\]&gt; \[\e[0m\]"
-</code></pre>
+  </code></pre>
           <h4>What the heck does all this mean?</h4>
           <p><code>PS1</code> refers to the bash prompt. <code>PS2</code>, <code>PS3</code>, and <code>PS4</code> relate to similar things.</p>
           <p><code>\n</code> is a newline.</p>
@@ -74,14 +74,14 @@
             <p>I've recently taken up Vim. In Vim, one can enter <code>:shell</code> while in command mode to open a shell. The first time I did so I noticed that the colour codes appeared in the prompt. Feature detection can be used to ensure that colour codes are only provided to "smart" terminals:</p>
             <pre><code>[[ "$TERM" == dumb ]] &amp;&amp; PS1="\n\w\n&gt; "
 [[ "$TERM" != dumb ]] &amp;&amp; PS1="\n\[\e[1;36m\]\w\n\[\e[1;32m\]&gt; \[\e[0m\]"
-</code></pre>
+    </code></pre>
           </div>
           <h4>Note for Mac OS X users</h4>
           <p>Terminal loads your <strong>~/.bash_profile</strong> but not your <strong>~/.bashrc</strong>. As a result, your <strong>~/.bash_profile</strong> should contain the following snippet.</p>
           <pre><code>if [ -f ~/.bashrc ]; then
   source ~/.bashrc
 fi
-</code></pre>
+  </code></pre>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/80/">Short URL</a></li>

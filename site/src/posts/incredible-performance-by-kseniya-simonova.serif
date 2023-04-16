@@ -13,11 +13,11 @@ export default {
 body = [
 
   p [
-   "In this performance from ", i ["Ukraine's Got Talent"], ",
-    Kseniya Simonova uses the simplest of tools (a lightbox,
-    sand, and her own body) to create a captivating animation.
-    I really enjoyed the accompanying \"Nothing Else Matters\"
-    instrumental, as well.",
+    "In this performance from ", i ["Ukraine's Got Talent"], ", ",
+    "Kseniya Simonova uses the simplest of tools (a lightbox, ",
+    "sand, and her own body) to create a captivating animation. ",
+    "I really enjoyed the accompanying \"Nothing Else Matters\" ",
+    "instrumental, as well.",
   ],
 
   p [

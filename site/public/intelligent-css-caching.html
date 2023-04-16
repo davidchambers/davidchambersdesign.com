@@ -47,10 +47,10 @@
           <p>I decided that it was time to find a reliable solution to the above problems. I came across an article on <a href="http://css-tricks.com/can-we-prevent-css-caching/">timestamping CSS</a> which suggests appending a unique string to a style sheet's href when linking to it in a page's <code>&lt;head&gt;</code>.</p>
           <p>After reading the replies to the above post, and taking on board several good suggestions, here is the PHP code I have decided upon:</p>
           <pre><code>href="path/to/style.css?&lt;?php echo date('Y-m-d-H-i-s', filectime('path/to/style.css')); ?&gt;"
-</code></pre>
+  </code></pre>
           <p>The above generates something like this:</p>
           <pre><code>href="path/to/style.css?2008-12-16-20-02-53"
-</code></pre>
+  </code></pre>
           <p>The nice thing about using <a href="http://php.net/manual/en/function.filectime.php">PHP's filectime function</a> is that the timestamp is dependent on the time at which the CSS file was last modified. This means that the cached style sheet is used when it is <strong>up to date</strong>, but the file is retrieved from the server when it has been <strong>changed in any way</strong>.</p>
           <footer class="metadata">
             <ul>

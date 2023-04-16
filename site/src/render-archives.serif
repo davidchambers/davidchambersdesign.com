@@ -11,8 +11,8 @@ render-post {slug, title, datetime} = {
     a {href: "/" + slug} title,
     " ",
     time {datetime: .toISO [] datetime} [
-      {datetime % .toFormat ["d MMMM y | h:mm"]} +
-      {datetime % .toFormat ["a"] % .toLowerCase []},
+      {datetime & .toFormat ["d MMMM y | h:mm"]} +
+      {datetime & .toFormat ["a"] & .toLowerCase []},
     ],
   ]
 };
@@ -26,11 +26,11 @@ render-section posts = {
 
 render-archives posts = {
   posts
-  % map (\post -> {...post, formatted-date: .toFormat ["MMMM y"] post.datetime})
-  % S.sortBy (\post -> -post.datetime)
-  % S.groupBy (\this that -> this.formatted-date == that.formatted-date)
-  % map render-section
-  % \archives -> [
+  & map (\post -> {...post, formatted-date: .toFormat ["MMMM y"] post.datetime})
+  & S.sortBy (\post -> -post.datetime)
+  & S.groupBy (\post1 post2 -> post1.formatted-date == post2.formatted-date)
+  & map render-section
+  & \archives -> [
     h1 ["Archives"],
     ol' {class: "archives"} archives,
   ]

@@ -47,14 +47,14 @@
         repository.retrieve(id)
         for id in ids)
     if obj)
-</code></pre>
+  </code></pre>
           <p>Ruby:</p>
           <pre><code>ids.map do |id|
   repository.retrieve(id)
 end.compact.map do |obj|
   obj.name
 end.join('\n')
-</code></pre>
+  </code></pre>
           <p>The Ruby code (the one beginning with <code>ids.map</code>) reads top to bottom and is easy to follow. The Python code is equally succinct but takes a bit of effort to decipher.</p>
           <p>I've been greatly enjoying the act of writing JavaScript lately, so simply for pleasure I worked out the JavaScript equivalent.</p>
           <p>My first attempt used the <code>filter</code> array method.</p>
@@ -62,7 +62,7 @@ end.join('\n')
     var obj = repository.retrieve(id);
     return obj &amp;&amp; obj.name;
 }).join('\n');
-</code></pre>
+  </code></pre>
           <p><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Filter"><code>filter</code></a>, though, just removes from an array the items which fail the provided "test". So the code above is on the right track, but fails to produce a list of names.</p>
           <p><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/Reduce"><code>reduce</code></a> is the correct method for the job. <code>reduce</code> "reduces" an array to a single value, which could be a string, an object, another array — whatever!</p>
           <p>Note the empty array (<code>[]</code>) on line 5 – that's our "accumulator".</p>
@@ -71,7 +71,7 @@ end.join('\n')
     if (obj &amp;&amp; obj.name) ids.push(obj.name);
     return ids;
 }, []).join('\n');
-</code></pre>
+  </code></pre>
           <p>Not bad. It's not as elegant as the Ruby code, but it's not "inside out" the way the Python code is.</p>
           <footer class="metadata">
             <ul>

@@ -48,13 +48,13 @@
         return saved
     return _
 cache = cache()
-</code></pre>
+  </code></pre>
           <p>If (the rebound) <code>cache</code> is passed no arguments (or <code>None</code>), <code>saved</code> is returned. Otherwise, <code>thing</code> is assigned to <code>saved</code> and returned.</p>
           <pre><code>&gt;&gt;&gt; cache(2**3)
 8
 &gt;&gt;&gt; cache()
 8
-</code></pre>
+  </code></pre>
           <p>This works thanks to the <code>nonlocal</code> keyword introduced in Python 3, which enables variables in outer scopes to be rebound. So how would one achieve the same result in earlier versions of Python?</p>
           <h3>Bringing lexical scoping to Python 2.x</h3>
           <pre><code>def cache(saved=None):
@@ -65,14 +65,14 @@ cache = cache()
         return saved
     return _
 cache = cache()
-</code></pre>
+  </code></pre>
           <p>The <code>nonlocal</code> line is commented out as it's a syntax error in Python 2.x.</p>
           <pre><code>&gt;&gt;&gt; cache(2**3)
 8
 &gt;&gt;&gt; cache()
 ...
 UnboundLocalError: local variable 'saved' referenced before assignment
-</code></pre>
+  </code></pre>
           <p>When <code>cache</code> is passed a (non-<code>None</code>) <code>thing</code>, a <em>new</em> <code>saved</code> is created within the local scope. When <code>cache</code> is passed no arguments (or <code>None</code>), execution skips to <code>return saved</code>. At this point, <code>saved</code> is expected to exist within the local scope – it does not, which explains the <code>UnboundLocalError</code>.</p>
           <p>It is possible to simulate lexical scoping in Python 2.x. The approaches I find most palatable utilize a dictionary or a function object as a namespace accessible to both the inner and outer functions.</p>
           <h4>Dictionary</h4>
@@ -84,7 +84,7 @@ UnboundLocalError: local variable 'saved' referenced before assignment
         return ns['saved']
     return _
 cache = cache()
-</code></pre>
+  </code></pre>
           <h4>Function object</h4>
           <pre><code>def cache():
     def ns(): pass
@@ -95,7 +95,7 @@ cache = cache()
         return ns.saved
     return _
 cache = cache()
-</code></pre>
+  </code></pre>
           <p>The dictionary approach is arguably more correct, but subscript notation hurts my eyes so I prefer to stick things on a function object. It's useful that <code>def ns(): pass</code> looks odd, as it alerts the reader to the fact that something <em>is</em> odd.</p>
           <footer class="metadata">
             <ul>

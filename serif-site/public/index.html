@@ -2,85 +2,706 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+3:normal,bold|Source+Code+Pro" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text:regular,italic,semibold|Fira+Code|Poppins:medium,bold" />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <h1>Serif</h1>
-    <p>Serif is an expressive, practical functional programming language.</p>
-    <p>Serif is dynamically typed and strictly evaluated.</p>
-    <p>Serif code most closely resembles Haskell code, but the experience of programming with Serif feels <em>light</em> in some indescribable way.</p>
-    <p>Serif is fully interoperable with JavaScript: Serif modules can import ES modules; Serif modules are transpiled to ES modules that can be imported by ES modules written in JavaScript or TypeScript.</p>
-    <h2>Literals</h2>
-    <h3>Boolean literals</h3>
-    <pre><code>true
-false
+    <header>
+      <h1>Serif</h1>
+    </header>
+    <main>
+      <section id="introduction">
+        <p>
+          Serif is an <em>expressive</em>, <em>practical</em>, <em>dynamically typed</em> programming language inspired by Haskell
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0 102,72">
+            <path fill="#453a62" d="m 0,0 h 18 l 24,36 l -24,36 h -18 l 24,-36 z" />
+            <path fill="#5e5086" d="m 24,0 h 18 l 48,72 h -18 z m 24,36 h 18 l -24,36 h -18 z" />
+            <path fill="#8f4e8b" d="m 62,21 h 40 v 12 h -32 z m 12,18 h 28 v 12 h -20 z" />
+          </svg>
+        </p>
+        <p>
+          Serif is <em>fully interoperable</em> with JavaScript
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0 630,630">
+            <rect fill="#f7df1e" width="100%" height="100%" />
+            <path d="m 165.65,526.47375 48.2125,-29.1775 C 223.16375,513.7875 231.625,527.74 251.92,527.74 c 19.45375,0 31.71875,-7.60975 31.71875,-37.21 l 0,-201.3 59.20375,0 0,202.1375 c 0,61.32 -35.94375,89.23125 -88.385,89.23125 -47.36125,0 -74.8525,-24.52875 -88.8075,-54.13" />
+            <path d="m 375,520.13 48.20625,-27.91125 c 12.69,20.72375 29.1825,35.9475 58.36125,35.9475 24.53125,0 40.17375,-12.26475 40.17375,-29.18125 0,-20.29875 -16.06875,-27.48875 -43.135,-39.32625 l -14.7975,-6.3475 c -42.715,-18.18125 -71.05,-41.0175 -71.05,-89.2275 0,-44.40375 33.83125,-78.2375 86.695,-78.2375 37.6375,0 64.7025,13.11125 84.15375,47.36625 l -46.09625,29.60125 c -10.15,-18.1825 -21.1425,-25.37125 -38.0575,-25.37125 -17.33875,0 -28.335,10.995 -28.335,25.37125 0,17.7625 10.99625,24.9525 36.3675,35.94875 l 14.8,6.3425 c 50.325,21.56875 78.66,43.5575 78.66,93.03375 0,53.2875 -41.86625,82.465 -98.11,82.465 -54.97625,0 -90.5,-26.2175 -107.83625,-60.47375" />
+          </svg>
+        </p>
+        <p>
+          Serif leverages the <a href="https://github.com/fantasyland/fantasy-land#readme">Fantasy Land specification</a>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0 10,10">
+            <path fill="#f90" d="m 0,4 v -4 h 4 z" />
+            <path fill="#fc0" d="m 4,0 v 2 h -2 v 2 h 2 l -4,4 v -4 z m 2,2 v -2 h 2 z" />
+            <path fill="#9e0" d="m 4,4 v 2 h -2 v 4 h -2 v -2 z m 4,-4 v 4 l -2,2 v -4 z" />
+            <path fill="#6cf" d="m 8,4 v 4 l -2,2 v -4 z" />
+            <path fill="#66f" d="m 8,8 h 2 v 2 h -4 z" />
+          </svg>
+        </p>
+      </section>
+      <p>Here is an example of Serif code:</p>
+      <pre><code><span class="identifier introduction">createTree</span> <span class="operator">=</span> <span class="identifier reference">reduce</span> <span class="operator">\</span><span class="identifier introduction">futureTree</span> <span class="identifier introduction">filename</span> <span class="operator">-&gt;</span> <span class="delimiter object">{</span>
+  <span class="identifier reference">futureTree</span> <span class="operator">&gt;&gt;=</span> <span class="operator">\</span><span class="identifier introduction">tree</span> <span class="operator">-&gt;</span> <span class="operator">if</span> <span class="identifier reference">tree</span> <span class="operator">has</span> <span class="identifier reference">filename</span> <span class="operator">then</span> <span class="identifier reference">Future</span><span class="property-accessor">.</span><span class="property-name">resolve</span> <span class="identifier reference">tree</span> <span class="operator">else</span> <span class="operator">do</span> <span class="delimiter object">{</span>
+    <span class="identifier introduction">sourceText</span> <span class="operator">&lt;-</span> <span class="identifier reference">Future</span><span class="property-accessor">.</span><span class="property-name">mapRej</span> <span class="delimiter group">(</span><span class="property-accessor">.</span><span class="property-name">message</span><span class="delimiter group">)</span> <span class="operator">$</span> <span class="identifier reference">fs</span><span class="property-accessor">.</span><span class="property-name">readFile</span> <span class="identifier reference">filename</span><span class="delimiter">;</span>
+    <span class="delimiter object">{</span><span class="identifier introduction">imports</span><span class="separator">,</span> <span class="identifier introduction">exports</span><span class="separator">,</span> <span class="identifier introduction">statements</span><span class="delimiter object">}</span> <span class="operator">&lt;-</span> <span class="identifier reference">parse</span> <span class="identifier reference">filename</span> <span class="identifier reference">sourceText</span><span class="delimiter">;</span>
+    <span class="identifier introduction">dependencies</span> <span class="operator">=</span> <span class="identifier reference">imports</span> <span class="operator">&gt;&gt;=</span> <span class="operator">\</span><span class="delimiter object">{</span><span class="identifier introduction">source</span><span class="delimiter object">}</span> <span class="operator">-&gt;</span> <span class="delimiter object">{</span>
+      <span class="operator">if</span> <span class="property-accessor">.</span><span class="property-name">test</span> <span class="delimiter array">[</span><span class="identifier reference">source</span><span class="property-accessor">.</span><span class="property-name">value</span><span class="delimiter array">]</span> <span class="operator">$</span> <span class="identifier reference">RegExp</span> <span class="string">"^[./].*[.]serif$"</span>
+      <span class="operator">then</span> <span class="delimiter array">[</span><span class="identifier reference">path</span><span class="property-accessor">.</span><span class="property-name">join</span> <span class="delimiter array">[</span><span class="identifier reference">filename</span><span class="separator">,</span> <span class="string">".."</span><span class="separator">,</span> <span class="identifier reference">source</span><span class="property-accessor">.</span><span class="property-name">value</span><span class="delimiter array">]</span><span class="delimiter array">]</span>
+      <span class="operator">else</span> <span class="delimiter array">[</span><span class="delimiter array">]</span>
+    <span class="delimiter object">}</span><span class="delimiter">;</span>
+    <span class="identifier introduction">exports</span> <span class="operator">=</span> <span class="delimiter group">(</span><span class="operator">&lt;$&gt;</span> <span class="identifier reference">exports</span><span class="delimiter group">)</span> <span class="operator">$</span> <span class="identifier reference">Node</span><span class="property-accessor">.</span><span class="property-name">matchOr</span> <span class="identifier reference">id</span> <span class="delimiter object">{</span>
+      <span class="property-name">ExportNamedDeclaration</span><span class="separator">:</span> <span class="identifier reference">ExportNamedDeclaration</span> <span class="operator">.</span> <span class="identifier reference">chain</span> <span class="delimiter group">(</span><span class="identifier reference">Node</span><span class="property-accessor">.</span><span class="property-name">matchOr</span> <span class="identifier reference">Array</span><span class="property-accessor">.</span><span class="property-name">of</span> <span class="delimiter object">{</span>
+        <span class="property-name">ExportAllSpecifier</span><span class="separator">:</span> <span class="operator">\</span><span class="identifier introduction">hiding</span> <span class="operator">-&gt;</span> <span class="delimiter object">{</span>
+          <span class="identifier reference">statements</span>
+          <span class="operator">&amp;</span> <span class="identifier reference">map</span> <span class="identifier reference">vars</span>
+          <span class="operator">&amp;</span> <span class="identifier reference">mergeAll</span>
+          <span class="operator">&amp;</span> <span class="identifier reference">declared</span>
+          <span class="operator">&amp;</span> <span class="identifier reference">subtract</span> <span class="delimiter group">(</span><span class="identifier reference">construct</span> <span class="identifier reference">Set</span> <span class="delimiter array">[</span><span class="delimiter group">(</span><span class="property-accessor">.</span><span class="property-name">name</span><span class="delimiter group">)</span> <span class="operator">&lt;$&gt;</span> <span class="identifier reference">hiding</span><span class="delimiter array">]</span><span class="delimiter group">)</span>
+          <span class="operator">&amp;</span> <span class="identifier reference">Array</span><span class="property-accessor">.</span><span class="property-name">from</span>  <span class="comment">-- TODO: sort</span>
+          <span class="operator">&amp;</span> <span class="identifier reference">map</span> <span class="delimiter group">(</span><span class="identifier reference">join</span> <span class="identifier reference">ExportSpecifier</span> <span class="operator">.</span> <span class="identifier reference">Identifier</span><span class="delimiter group">)</span>
+        <span class="delimiter object">}</span>
+      <span class="delimiter object">}</span><span class="delimiter group">)</span>
+    <span class="delimiter object">}</span><span class="delimiter">;</span>
+    <span class="identifier introduction">module</span> <span class="operator">=</span> <span class="identifier reference">Module</span> <span class="identifier reference">imports</span> <span class="identifier reference">exports</span> <span class="identifier reference">statements</span><span class="delimiter">;</span>
+    <span class="identifier introduction">initial</span> <span class="operator">=</span> <span class="identifier reference">Future</span><span class="property-accessor">.</span><span class="property-name">resolve</span> <span class="operator">$</span> <span class="identifier reference">construct</span> <span class="identifier reference">Map</span> <span class="delimiter array">[</span>
+      <span class="delimiter array">[</span><span class="operator">...</span><span class="identifier reference">tree</span><span class="separator">,</span> <span class="delimiter array">[</span><span class="identifier reference">filename</span><span class="separator">,</span> <span class="delimiter object">{</span><span class="property-name">sourceText</span><span class="separator">,</span> <span class="property-name">ast</span><span class="separator">:</span> <span class="identifier reference">module</span><span class="separator">,</span> <span class="property-name">dependencies</span><span class="delimiter object">}</span><span class="delimiter array">]</span><span class="delimiter array">]</span><span class="separator">,</span>
+    <span class="delimiter array">]</span><span class="delimiter">;</span>
+    <span class="identifier reference">createTree</span> <span class="identifier reference">initial</span> <span class="identifier reference">dependencies</span>
+  <span class="delimiter object">}</span>
+<span class="delimiter object">}</span><span class="delimiter">;</span>
 </code></pre>
-    <h3>Number literals</h3>
-    <pre><code>0
-42
-123.456
-0b111
-0o777
-0xFF
+      <h2>Comments</h2>
+      <p>A comment begins with <code><span class="comment">--</span></code> and continues until the end of the line.</p>
+      <pre><code><span class="comment">-- rename identifiers</span>
 </code></pre>
-    <p>Negative numbers can be represented by negating a literal (<code>-1</code>) or variable (<code>-x</code>).</p>
-    <h3>String literals</h3>
-    <pre><code>""
-"foo bar"
-"\n"
+      <p>There are no block comments.</p>
+      <h2>Literals</h2>
+      <h3>Boolean literals</h3>
+      <pre><code><span class="boolean">true</span>
+<span class="boolean">false</span>
 </code></pre>
-    <h3>Null literal</h3>
-    <pre><code>null
+      <h3>Number literals</h3>
+      <pre><code><span class="number">0</span>
+<span class="number">42</span>
+<span class="number">123.456</span>
+<span class="number">0b111</span>
+<span class="number">0o777</span>
+<span class="number">0xFF</span>
 </code></pre>
-    <p>This is provided for JavaScript interoperability.</p>
-    <h3>Array literals</h3>
-    <pre><code>[]
-[1, 2, 3]
-[1, 2, 3,]
+      <p>Negative numbers can be represented by negating a literal (<code><span class="operator">-</span><span class="number">1</span></code>) or variable (<code><span class="operator">-</span><span class="identifier reference">x</span></code>).</p>
+      <h3>String literals</h3>
+      <pre><code><span class="string">""</span>
+<span class="string">"foo bar"</span>
+<span class="string">"\n"</span>
 </code></pre>
-    <p>Array literals begin with <code>[</code> and end with <code>]</code>, and contain zero or more elements separated by <code>,</code>. A trailing comma is permitted.</p>
-    <h3>Object literals</h3>
-    <pre><code>{}
-{[key]: value}
-{["x"]: 1, ["y"]: 2}
-{x: 1, y: 2}
-{x: 1, y: 2,}
-{foo, bar, baz}
-{foo, bar}
-{foo,}
+      <h3>Array literals</h3>
+      <pre><code><span class="delimiter array">[</span><span class="delimiter array">]</span>
+<span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+<span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="separator">,</span><span class="delimiter array">]</span>
 </code></pre>
-    <p>Object literals begin with <code>{</code> and end with <code>}</code>, and contain zero or more entries separated by <code>,</code>. An entry is a key and a value separated by <code>:</code>. The most flexible form permits an expression to appear between <code>[</code> and <code>]</code> to determine the property name dynamically. <code>{x: 1, y: 2}</code> is shorthand for <code>{["x"]: 1, ["y"]: 2}</code>. <code>{foo, bar}</code> is shorthand for <code>{foo: foo, bar: bar}</code>. A trailing comma is permitted, and required in the case of <code>{foo}</code>—an object with a single shorthand entry—to avoid being interpreted as a block expression.</p>
-    <h3>Unary operators</h3>
-    <pre><code>+
--
+      <p>Array literals begin with <code><span class="delimiter array">[</span></code> and end with <code><span class="delimiter array">]</span></code>, and contain zero or more elements separated by <code><span class="separator">,</span></code>. A trailing comma is permitted.</p>
+      <h3>Object literals</h3>
+      <pre><code><span class="delimiter object">{</span><span class="delimiter object">}</span>
+<span class="delimiter object">{</span><span class="delimiter array">[</span><span class="identifier reference">key</span><span class="delimiter array">]</span><span class="separator">:</span> <span class="identifier reference">value</span><span class="delimiter object">}</span>
+<span class="delimiter object">{</span><span class="delimiter array">[</span><span class="string">"x"</span><span class="delimiter array">]</span><span class="separator">:</span> <span class="number">1</span><span class="separator">,</span> <span class="delimiter array">[</span><span class="string">"y"</span><span class="delimiter array">]</span><span class="separator">:</span> <span class="number">2</span><span class="delimiter object">}</span>
+<span class="delimiter object">{</span><span class="property-name">x</span><span class="separator">:</span> <span class="number">1</span><span class="separator">,</span> <span class="property-name">y</span><span class="separator">:</span> <span class="number">2</span><span class="delimiter object">}</span>
+<span class="delimiter object">{</span><span class="property-name">x</span><span class="separator">:</span> <span class="number">1</span><span class="separator">,</span> <span class="property-name">y</span><span class="separator">:</span> <span class="number">2</span><span class="separator">,</span><span class="delimiter object">}</span>
+<span class="delimiter object">{</span><span class="property-name">foo</span><span class="separator">,</span> <span class="property-name">bar</span><span class="delimiter object">}</span>
 </code></pre>
-    <h3>Binary operators</h3>
-    <pre><code>**
-*
-/
-%
-+
--
-&lt;
-&gt;
-&lt;=
-&gt;=
-in
-==
-!=
-&amp;&amp;
-||
-??
+      <p>Object literals begin with <code><span class="delimiter object">{</span></code> and end with <code><span class="delimiter object">}</span></code>, and contain zero or more entries separated by <code><span class="separator">,</span></code>. An entry is a key and a value separated by <code><span class="separator">:</span></code>. The most flexible form permits an expression to appear between <code><span class="delimiter array">[</span></code> and <code><span class="delimiter array">]</span></code> to determine the property name dynamically. <code><span class="delimiter object">{</span><span class="property-name">x</span><span class="separator">:</span> <span class="number">1</span><span class="separator">,</span> <span class="property-name">y</span><span class="separator">:</span> <span class="number">2</span><span class="delimiter object">}</span></code> is shorthand for <code><span class="delimiter object">{</span><span class="delimiter array">[</span><span class="string">"x"</span><span class="delimiter array">]</span><span class="separator">:</span> <span class="number">1</span><span class="separator">,</span> <span class="delimiter array">[</span><span class="string">"y"</span><span class="delimiter array">]</span><span class="separator">:</span> <span class="number">2</span><span class="delimiter object">}</span></code>. <code><span class="delimiter object">{</span><span class="property-name">foo</span><span class="separator">,</span> <span class="property-name">bar</span><span class="delimiter object">}</span></code> is shorthand for <code><span class="delimiter object">{</span><span class="property-name">foo</span><span class="separator">:</span> <span class="identifier reference">foo</span><span class="separator">,</span> <span class="property-name">bar</span><span class="separator">:</span> <span class="identifier reference">bar</span><span class="delimiter object">}</span></code>. A trailing comma is permitted.</p>
+      <section id="section:operators">
+        <h3>Prefix operators</h3>
+        <p>There are three prefix operators: <code><span class="operator">+</span></code>, <code><span class="operator">-</span></code>, and <code><span class="operator">~</span></code>.</p>
+        <h3>Infix operators</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Precedence</th>
+              <th>Left-associative operators</th>
+              <th>Non-associative operators</th>
+              <th>Right-associative operators</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th><code>17</code></th>
+              <td></td>
+              <td></td>
+              <td><a href="#operator:."><code><span class="operator">.</span></code></a></td>
+            </tr>
+            <tr>
+              <th><code>16</code></th>
+              <td></td>
+              <td></td>
+              <td><a href="#operator:^"><code><span class="operator">^</span></code></a></td>
+            </tr>
+            <tr>
+              <th><code>15</code></th>
+              <td><a href="#operator:*"><code><span class="operator">*</span></code></a> <a href="#operator:/"><code><span class="operator">/</span></code></a></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>14</code></th>
+              <td><a href="#operator:+"><code><span class="operator">+</span></code></a> <a href="#operator:-"><code><span class="operator">-</span></code></a></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>13</code></th>
+              <td><a href="#operator:.&lt;."><code><span class="operator">.&lt;.</span></code></a> <a href="#operator:.&gt;."><code><span class="operator">.&gt;.</span></code></a> <a href="#operator:.0&gt;."><code><span class="operator">.0&gt;.</span></code></a></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>12</code></th>
+              <td><a href="#operator:.&amp;."><code><span class="operator">.&amp;.</span></code></a></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>11</code></th>
+              <td><a href="#operator:.^."><code><span class="operator">.^.</span></code></a></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>10</code></th>
+              <td><a href="#operator:.|."><code><span class="operator">.|.</span></code></a></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>9</code></th>
+              <td></td>
+              <td></td>
+              <td><a href="#operator:&lt;&gt;"><code><span class="operator">&lt;&gt;</span></code></a></td>
+            </tr>
+            <tr>
+              <th><code>8</code></th>
+              <td><a href="#operator:&lt;$&gt;"><code><span class="operator">&lt;$&gt;</span></code></a> <a href="#operator:&lt;*&gt;"><code><span class="operator">&lt;*&gt;</span></code></a></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>7</code></th>
+              <td></td>
+              <td><a href="#operator:&lt;"><code><span class="operator">&lt;</span></code></a> <a href="#operator:&lt;="><code><span class="operator">&lt;=</span></code></a> <a href="#operator:&gt;"><code><span class="operator">&gt;</span></code></a> <a href="#operator:&gt;="><code><span class="operator">&gt;=</span></code></a> <a href="#operator:has"><code><span class="operator">has</span></code></a> <a href="#operator:in"><code><span class="operator">in</span></code></a></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>6</code></th>
+              <td></td>
+              <td><a href="#operator:=="><code><span class="operator">==</span></code></a> <a href="#operator:/="><code><span class="operator">/=</span></code></a></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>5</code></th>
+              <td><a href="#operator:&amp;&amp;"><code><span class="operator">&amp;&amp;</span></code></a></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>4</code></th>
+              <td><a href="#operator:||"><code><span class="operator">||</span></code></a></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>3</code></th>
+              <td><a href="#operator:&lt;&amp;&gt;"><code><span class="operator">&lt;&amp;&gt;</span></code></a> <a href="#operator:&gt;&gt;="><code><span class="operator">&gt;&gt;=</span></code></a></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>2</code></th>
+              <td><a href="#operator:&amp;"><code><span class="operator">&amp;</span></code></a></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><code>1</code></th>
+              <td></td>
+              <td></td>
+              <td><a href="#operator:$"><code><span class="operator">$</span></code></a></td>
+            </tr>
+          </tbody>
+        </table>
+        <section id="operator:.">
+          <h1><a href="#operator:."><code><span class="operator">.</span></code></a> <span class="separator">–</span> Composition operator</h1>
+          <dl>
+            <dt>Precedence</dt>
+            <dd>17</dd>
+            <dt>Associativity</dt>
+            <dd>Right: <code><span class="identifier reference">f</span> <span class="operator">.</span> <span class="identifier reference">g</span> <span class="operator">.</span> <span class="identifier reference">h</span> <span class="operator">==</span> <span class="identifier reference">f</span> <span class="operator">.</span> <span class="delimiter group">(</span><span class="identifier reference">g</span> <span class="operator">.</span> <span class="identifier reference">h</span><span class="delimiter group">)</span></code></dd>
+          </dl>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="delimiter group">(</span><span class="identifier reference">negate</span> <span class="operator">.</span> <span class="identifier reference">Math</span><span class="property-accessor">.</span><span class="property-name">sqrt</span><span class="delimiter group">)</span> <span class="number">64</span>
+</code><code class="result"><span class="operator">-</span><span class="number">8</span>
 </code></pre>
-    <h3>Member access</h3>
-    <pre><code>Math.sqrt
-foo[bar]
+        </section>
+        <section id="operator:^">
+          <h1><a href="#operator:^"><code><span class="operator">^</span></code></a> <span class="separator">–</span> Exponentiation operator</h1>
+          <dl>
+            <dt>Precedence</dt>
+            <dd>16</dd>
+            <dt>Associativity</dt>
+            <dd>Right: <code><span class="identifier reference">x</span> <span class="operator">^</span> <span class="identifier reference">y</span> <span class="operator">^</span> <span class="identifier reference">z</span> <span class="operator">==</span> <span class="identifier reference">x</span> <span class="operator">^</span> <span class="delimiter group">(</span><span class="identifier reference">y</span> <span class="operator">^</span> <span class="identifier reference">z</span><span class="delimiter group">)</span></code></dd>
+          </dl>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="number">10</span> <span class="operator">^</span> <span class="number">2</span>
+</code><code class="result"><span class="number">100</span>
+</code><code class="expression"><span class="number">2</span> <span class="operator">^</span> <span class="number">10</span>
+</code><code class="result"><span class="number">1024</span>
 </code></pre>
-    <h3>Method calls</h3>
-    <pre><code>.toUpperCase [] s
-.slice [0, 5] xs
+        </section>
+        <section id="operator:*">
+          <h1><a href="#operator:*"><code><span class="operator">*</span></code></a> <span class="separator">–</span> Multiplication operator</h1>
+          <dl>
+            <dt>Precedence</dt>
+            <dd>15</dd>
+            <dt>Associativity</dt>
+            <dd>Left: <code><span class="identifier reference">x</span> <span class="operator">*</span> <span class="identifier reference">y</span> <span class="operator">*</span> <span class="identifier reference">z</span> <span class="operator">==</span> <span class="delimiter group">(</span><span class="identifier reference">x</span> <span class="operator">*</span> <span class="identifier reference">y</span><span class="delimiter group">)</span> <span class="operator">*</span> <span class="identifier reference">z</span></code></dd>
+          </dl>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="number">5</span> <span class="operator">*</span> <span class="number">8.4</span>
+</code><code class="result"><span class="number">42</span>
 </code></pre>
-    <p>This functionality is provided for JavaScript interoperability. Idiomatic Serif code is based on modules and functions rather than objects and methods.</p>
+        </section>
+        <section id="operator:/">
+          <h1><a href="#operator:/"><code><span class="operator">/</span></code></a> <span class="separator">–</span> Division operator</h1>
+        </section>
+        <section id="operator:+">
+          <h1><a href="#operator:+"><code><span class="operator">+</span></code></a> <span class="separator">–</span> Addition operator</h1>
+        </section>
+        <section id="operator:-">
+          <h1><a href="#operator:-"><code><span class="operator">-</span></code></a> <span class="separator">–</span> Subtraction operator</h1>
+        </section>
+        <section id="operator:.&lt;.">
+          <h1><a href="#operator:.&lt;."><code><span class="operator">.&lt;.</span></code></a> <span class="separator">–</span> Left shift operator</h1>
+        </section>
+        <section id="operator:.&gt;.">
+          <h1><a href="#operator:.&gt;."><code><span class="operator">.&gt;.</span></code></a> <span class="separator">–</span> Right shift operator</h1>
+        </section>
+        <section id="operator:.0&gt;.">
+          <h1><a href="#operator:.0&gt;."><code><span class="operator">.0&gt;.</span></code></a> <span class="separator">–</span> Zero-fill right shift operator</h1>
+        </section>
+        <section id="operator:.&amp;.">
+          <h1><a href="#operator:.&amp;."><code><span class="operator">.&amp;.</span></code></a> <span class="separator">–</span> Bitwise AND operator</h1>
+        </section>
+        <section id="operator:.^.">
+          <h1><a href="#operator:.^."><code><span class="operator">.^.</span></code></a> <span class="separator">–</span> Bitwise XOR operator</h1>
+        </section>
+        <section id="operator:.|.">
+          <h1><a href="#operator:.|."><code><span class="operator">.|.</span></code></a> <span class="separator">–</span> Bitwise OR operator</h1>
+        </section>
+        <section id="operator:&lt;&gt;">
+          <h1><a href="#operator:&lt;&gt;"><code><span class="operator">&lt;&gt;</span></code></a> <span class="separator">–</span> Concatenation operator</h1>
+        </section>
+        <section id="operator:&lt;$&gt;">
+          <h1><a href="#operator:&lt;$&gt;"><code><span class="operator">&lt;$&gt;</span></code></a> <span class="separator">–</span> Map operator</h1>
+        </section>
+        <section id="operator:&lt;*&gt;">
+          <h1><a href="#operator:&lt;*&gt;"><code><span class="operator">&lt;*&gt;</span></code></a> <span class="separator">–</span> Ap operator</h1>
+        </section>
+        <section id="operator:&lt;">
+          <h1><a href="#operator:&lt;"><code><span class="operator">&lt;</span></code></a> <span class="separator">–</span> Less than operator</h1>
+        </section>
+        <section id="operator:&lt;=">
+          <h1><a href="#operator:&lt;="><code><span class="operator">&lt;=</span></code></a> <span class="separator">–</span> Less than or equal to operator</h1>
+        </section>
+        <section id="operator:&gt;">
+          <h1><a href="#operator:&gt;"><code><span class="operator">&gt;</span></code></a> <span class="separator">–</span> Greater than operator</h1>
+        </section>
+        <section id="operator:&gt;=">
+          <h1><a href="#operator:&gt;="><code><span class="operator">&gt;=</span></code></a> <span class="separator">–</span> Greater than or equal to operator</h1>
+        </section>
+        <section id="operator:has">
+          <h1><a href="#operator:has"><code><span class="operator">has</span></code></a></h1>
+        </section>
+        <section id="operator:in">
+          <h1><a href="#operator:in"><code><span class="operator">in</span></code></a> <span class="separator">–</span> Membership operator</h1>
+        </section>
+        <section id="operator:==">
+          <h1><a href="#operator:=="><code><span class="operator">==</span></code></a> <span class="separator">–</span> Equality operator</h1>
+        </section>
+        <section id="operator:/=">
+          <h1><a href="#operator:/="><code><span class="operator">/=</span></code></a> <span class="separator">–</span> TK operator</h1>
+        </section>
+        <section id="operator:&amp;&amp;">
+          <h1><a href="#operator:&amp;&amp;"><code><span class="operator">&amp;&amp;</span></code></a> <span class="separator">–</span> Logical AND operator</h1>
+        </section>
+        <section id="operator:||">
+          <h1><a href="#operator:||"><code><span class="operator">||</span></code></a> <span class="separator">–</span> Logical OR operator</h1>
+        </section>
+        <section id="operator:&lt;&amp;&gt;">
+          <h1><a href="#operator:&lt;&amp;&gt;"><code><span class="operator">&lt;&amp;&gt;</span></code></a> <span class="separator">–</span> Flipped map operator</h1>
+        </section>
+        <section id="operator:&gt;&gt;=">
+          <h1><a href="#operator:&gt;&gt;="><code><span class="operator">&gt;&gt;=</span></code></a> <span class="separator">–</span> Bind operator</h1>
+        </section>
+        <section id="operator:&amp;">
+          <h1><a href="#operator:&amp;"><code><span class="operator">&amp;</span></code></a> <span class="separator">–</span> Pipe operator</h1>
+        </section>
+        <section id="operator:$">
+          <h1><a href="#operator:$"><code><span class="operator">$</span></code></a> <span class="separator">–</span> Application operator</h1>
+        </section>
+      </section>
+      <h3>Member access</h3>
+      <pre><code><span class="identifier reference">Math</span><span class="property-accessor">.</span><span class="property-name">sqrt</span>
+<span class="identifier reference">foo</span><span class="delimiter array">[</span><span class="identifier reference">bar</span><span class="delimiter array">]</span>
+</code></pre>
+      <h3>Method calls</h3>
+      <pre><code><span class="property-accessor">.</span><span class="property-name">toUpperCase</span> <span class="delimiter array">[</span><span class="delimiter array">]</span> <span class="identifier reference">s</span>
+<span class="property-accessor">.</span><span class="property-name">slice</span> <span class="delimiter array">[</span><span class="number">0</span><span class="separator">,</span> <span class="number">5</span><span class="delimiter array">]</span> <span class="identifier reference">xs</span>
+</code></pre>
+      <p>This functionality is provided for JavaScript interoperability. Idiomatic Serif code is based on modules and functions rather than objects and methods.</p>
+      <section id="section:prelude">
+        <h1>Prelude</h1>
+        <p>The prelude is a set of functions automatically available to every Serif module.</p>
+        <p>Only those prelude functions referenced within a module are included in the corresponding ECMAScript module.</p>
+        <p>Prelude function names are not reserved. They may be shadowed by variables introduced anywhere (even at the top level of a Serif module). If <code><span class="identifier introduction">id</span></code>, say, is introduced in a particular scope, <a href="#id"><code><span class="identifier reference">id</span></code></a> is of course inaccessible within that scope.</p>
+        <section id="null">
+          <h1><code><span class="identifier reference">null</span> <span class="separator">::</span> <span class="signature">Null</span></code></h1>
+          <p>Provided for JavaScript interoperability. <code><span class="identifier reference">null</span></code> is an identifier in Serif, not a literal as it is in JavaScript.</p>
+        </section>
+        <section id="complement">
+          <h1><code><span class="identifier reference">complement</span> <span class="separator">::</span> <span class="signature">Integer -&gt; Integer</span></code></h1>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="identifier reference">complement</span> <span class="number">0b11111111111111111111111111111101</span> <span class="operator">==</span> <span class="number">0b00000000000000000000000000000010</span>
+</code><code class="result"><span class="boolean">true</span>
+</code></pre>
+        </section>
+        <section id="instanceof">
+          <h1><code><span class="identifier reference">instanceof</span> <span class="separator">::</span> <span class="signature">a -&gt; Constructor b -&gt; Boolean</span></code></h1>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="identifier reference">instanceof</span> <span class="identifier reference">Map</span> <span class="delimiter group">(</span><span class="identifier reference">construct</span> <span class="identifier reference">Map</span> <span class="delimiter array">[</span><span class="delimiter array">[</span><span class="delimiter array">]</span><span class="delimiter array">]</span><span class="delimiter group">)</span>
+</code><code class="result"><span class="boolean">true</span>
+</code><code class="expression"><span class="identifier reference">instanceof</span> <span class="identifier reference">Map</span> <span class="delimiter group">(</span><span class="identifier reference">construct</span> <span class="identifier reference">Set</span> <span class="delimiter array">[</span><span class="delimiter array">[</span><span class="delimiter array">]</span><span class="delimiter array">]</span><span class="delimiter group">)</span>
+</code><code class="result"><span class="boolean">false</span>
+</code></pre>
+        </section>
+        <section id="typeof">
+          <h1><code><span class="identifier reference">typeof</span> <span class="separator">::</span> <span class="signature">a -&gt; String</span></code></h1>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="identifier reference">typeof</span> <span class="string">"abc"</span>
+</code><code class="result"><span class="string">"string"</span>
+</code><code class="expression"><span class="identifier reference">typeof</span> <span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="string">"object"</span>
+</code><code class="expression"><span class="identifier reference">typeof</span> <span class="null">null</span>
+</code><code class="result"><span class="string">"null"</span>
+</code><code class="expression"><span class="identifier reference">typeof</span> <span class="undefined">undefined</span>
+</code><code class="result"><span class="string">"undefined"</span>
+</code></pre>
+          <p>Note that <code><span class="identifier reference">typeof</span> <span class="null">null</span></code> evaluates to <code><span class="string">"null"</span></code> (it evaluates to <code><span class="string">"object"</span></code> in JavaScript).</p>
+        </section>
+        <section id="id">
+          <h1><code><span class="identifier reference">id</span> <span class="separator">::</span> <span class="signature">a -&gt; a</span></code></h1>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="identifier reference">id</span> <span class="string">"abc"</span>
+</code><code class="result"><span class="string">"abc"</span>
+</code></pre>
+        </section>
+        <section id="const">
+          <h1><code><span class="identifier reference">const</span> <span class="separator">::</span> <span class="signature">a -&gt; b -&gt; a</span></code></h1>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="identifier reference">const</span> <span class="string">"always"</span> <span class="string">"ignored"</span>
+</code><code class="result"><span class="string">"always"</span>
+</code><code class="expression"><span class="identifier reference">map</span> <span class="delimiter group">(</span><span class="identifier reference">const</span> <span class="number">0</span><span class="delimiter group">)</span> <span class="delimiter array">[</span><span class="string">"foo"</span><span class="separator">,</span> <span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="delimiter array">[</span><span class="number">0</span><span class="separator">,</span> <span class="number">0</span><span class="separator">,</span> <span class="number">0</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="not">
+          <h1><code><span class="identifier reference">not</span> <span class="separator">::</span> <span class="signature">Boolean -&gt; Boolean</span></code></h1>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="identifier reference">not</span> <span class="boolean">true</span>
+</code><code class="result"><span class="boolean">false</span>
+</code><code class="expression"><span class="identifier reference">not</span> <span class="boolean">false</span>
+</code><code class="result"><span class="boolean">true</span>
+</code></pre>
+        </section>
+        <section id="negate">
+          <h1><code><span class="identifier reference">negate</span> <span class="separator">::</span> <span class="signature">Number -&gt; Number</span></code></h1>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="identifier reference">negate</span> <span class="number">1</span>
+</code><code class="result"><span class="operator">-</span><span class="number">1</span>
+</code><code class="expression"><span class="identifier reference">negate</span> <span class="delimiter group">(</span><span class="identifier reference">negate</span> <span class="number">1</span><span class="delimiter group">)</span>
+</code><code class="result"><span class="number">1</span>
+</code></pre>
+        </section>
+        <section id="quot">
+          <h1><code><span class="identifier reference">quot</span> <span class="separator">::</span> <span class="signature">Integer -&gt; Integer -&gt; Integer</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="rem">
+          <h1><code><span class="identifier reference">rem</span> <span class="separator">::</span> <span class="signature">Integer -&gt; Integer -&gt; Integer</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="div">
+          <h1><code><span class="identifier reference">div</span> <span class="separator">::</span> <span class="signature">Integer -&gt; Integer -&gt; Integer</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="mod">
+          <h1><code><span class="identifier reference">mod</span> <span class="separator">::</span> <span class="signature">Integer -&gt; Integer -&gt; Integer</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="charAt">
+          <h1><code><span class="identifier reference">charAt</span> <span class="separator">::</span> <span class="signature">Integer -&gt; String -&gt; String</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">charAt</span> <span class="number">0</span> <span class="string">"Serif"</span>
+</code><code class="result"><span class="string">"S"</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charAt"><code>String.prototype.charAt</code></a>.</p>
+        </section>
+        <section id="charCodeAt">
+          <h1><code><span class="identifier reference">charCodeAt</span> <span class="separator">::</span> <span class="signature">Integer -&gt; String -&gt; Integer</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">charCodeAt</span> <span class="number">0</span> <span class="string">"Serif"</span>
+</code><code class="result"><span class="number">83</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt"><code>String.prototype.charCodeAt</code></a>.</p>
+        </section>
+        <section id="codePointAt">
+          <h1><code><span class="identifier reference">codePointAt</span> <span class="separator">::</span> <span class="signature">Integer -&gt; String -&gt; Integer</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">codePointAt</span> <span class="number">0</span> <span class="string">"😍"</span>
+</code><code class="result"><span class="number">128525</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt"><code>String.prototype.codePointAt</code></a>.</p>
+        </section>
+        <section id="startsWith">
+          <h1><code><span class="identifier reference">startsWith</span> <span class="separator">::</span> <span class="signature">String -&gt; String -&gt; Boolean</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">startsWith</span> <span class="string">"file://"</span> <span class="string">"file:///etc/hosts"</span>
+</code><code class="result"><span class="boolean">true</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith"><code>String.prototype.startsWith</code></a>.</p>
+        </section>
+        <section id="endsWith">
+          <h1><code><span class="identifier reference">endsWith</span> <span class="separator">::</span> <span class="signature">String -&gt; String -&gt; Boolean</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">endsWith</span> <span class="string">".serif"</span> <span class="string">"repl.serif"</span>
+</code><code class="result"><span class="boolean">true</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith"><code>String.prototype.endsWith</code></a>.</p>
+        </section>
+        <section id="toLower">
+          <h1><code><span class="identifier reference">toLower</span> <span class="separator">::</span> <span class="signature">String -&gt; String</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">toLower</span> <span class="string">"Serif"</span>
+</code><code class="result"><span class="string">"serif"</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase"><code>String.prototype.toLowerCase</code></a>.</p>
+        </section>
+        <section id="toUpper">
+          <h1><code><span class="identifier reference">toUpper</span> <span class="separator">::</span> <span class="signature">String -&gt; String</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">toUpper</span> <span class="string">"Serif"</span>
+</code><code class="result"><span class="string">"SERIF"</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase"><code>String.prototype.toUpperCase</code></a>.</p>
+        </section>
+        <section id="trim">
+          <h1><code><span class="identifier reference">trim</span> <span class="separator">::</span> <span class="signature">String -&gt; String</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">trim</span> <span class="string">"\t\t Serif \n\n"</span>
+</code><code class="result"><span class="string">"Serif"</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim"><code>String.prototype.trim</code></a>.</p>
+        </section>
+        <section id="trimStart">
+          <h1><code><span class="identifier reference">trimStart</span> <span class="separator">::</span> <span class="signature">String -&gt; String</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">trimStart</span> <span class="string">"\t\t Serif \n\n"</span>
+</code><code class="result"><span class="string">"Serif \n\n"</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trimStart"><code>String.prototype.trimStart</code></a>.</p>
+        </section>
+        <section id="trimEnd">
+          <h1><code><span class="identifier reference">trimEnd</span> <span class="separator">::</span> <span class="signature">String -&gt; String</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">trimEnd</span> <span class="string">"\t\t Serif \n\n"</span>
+</code><code class="result"><span class="string">"\t\t Serif"</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trimEnd"><code>String.prototype.trimEnd</code></a>.</p>
+        </section>
+        <section id="replace">
+          <h1><code><span class="identifier reference">replace</span> <span class="separator">::</span> <span class="signature">String -&gt; String -&gt; String</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">replace</span> <span class="string">" "</span> <span class="string">"-"</span> <span class="string">"foo bar baz"</span>
+</code><code class="result"><span class="string">"foo-bar baz"</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace"><code>String.prototype.replace</code></a>.</p>
+        </section>
+        <section id="replaceAll">
+          <h1><code><span class="identifier reference">replaceAll</span> <span class="separator">::</span> <span class="signature">String -&gt; String -&gt; String</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">replaceAll</span> <span class="string">" "</span> <span class="string">"-"</span> <span class="string">"foo bar baz"</span>
+</code><code class="result"><span class="string">"foo-bar-baz"</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll"><code>String.prototype.replaceAll</code></a>.</p>
+        </section>
+        <section id="splitOn">
+          <h1><code><span class="identifier reference">splitOn</span> <span class="separator">::</span> <span class="signature">String -&gt; String -&gt; Array String</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">splitOn</span> <span class="string">"-"</span> <span class="string">"foo-bar-baz"</span>
+</code><code class="result"><span class="delimiter array">[</span><span class="string">"foo"</span><span class="separator">,</span> <span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span><span class="delimiter array">]</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split"><code>String.prototype.split</code></a>.</p>
+        </section>
+        <section id="joinWith">
+          <h1><code><span class="identifier reference">joinWith</span> <span class="separator">::</span> <span class="signature">String -&gt; Array String -&gt; String</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">joinWith</span> <span class="string">"-"</span> <span class="delimiter array">[</span><span class="string">"foo"</span><span class="separator">,</span> <span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="string">"foo-bar-baz"</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join"><code>Array.prototype.join</code></a>.</p>
+        </section>
+        <section id="slice">
+          <h1><code><span class="identifier reference">slice</span> <span class="separator">::</span> <span class="signature">Integer -&gt; Integer -&gt; Array a -&gt; Array a</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">slice</span> <span class="number">1</span> <span class="number">3</span> <span class="delimiter array">[</span><span class="string">"foo"</span><span class="separator">,</span> <span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span><span class="separator">,</span> <span class="string">"quux"</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="delimiter array">[</span><span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span><span class="delimiter array">]</span>
+</code><code class="expression"><span class="identifier reference">slice</span> <span class="number">1</span> <span class="delimiter group">(</span><span class="operator">-</span><span class="number">1</span><span class="delimiter group">)</span> <span class="delimiter array">[</span><span class="string">"foo"</span><span class="separator">,</span> <span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span><span class="separator">,</span> <span class="string">"quux"</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="delimiter array">[</span><span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span><span class="delimiter array">]</span>
+</code></pre>
+          <p>See also <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice"><code>Array.prototype.slice</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice"><code>String.prototype.slice</code></a>.</p>
+        </section>
+        <section id="sliceFrom">
+          <h1><code><span class="identifier reference">sliceFrom</span> <span class="separator">::</span> <span class="signature">Integer -&gt; Array a -&gt; Array a</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">sliceFrom</span> <span class="number">1</span> <span class="delimiter array">[</span><span class="string">"foo"</span><span class="separator">,</span> <span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span><span class="separator">,</span> <span class="string">"quux"</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="delimiter array">[</span><span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span> <span class="string">"quux"</span><span class="delimiter array">]</span>
+</code><code class="expression"><span class="identifier reference">sliceFrom</span> <span class="delimiter group">(</span><span class="operator">-</span><span class="number">2</span><span class="delimiter group">)</span> <span class="delimiter array">[</span><span class="string">"foo"</span><span class="separator">,</span> <span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span><span class="separator">,</span> <span class="string">"quux"</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="delimiter array">[</span><span class="string">"baz"</span> <span class="string">"quux"</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="sliceTo">
+          <h1><code><span class="identifier reference">sliceTo</span> <span class="separator">::</span> <span class="signature">Integer -&gt; Array a -&gt; Array a</span></code></h1>
+          <pre><code class="expression"><span class="identifier reference">sliceTo</span> <span class="number">3</span> <span class="delimiter array">[</span><span class="string">"foo"</span><span class="separator">,</span> <span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span><span class="separator">,</span> <span class="string">"quux"</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="delimiter array">[</span><span class="string">"foo"</span><span class="separator">,</span> <span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span><span class="delimiter array">]</span>
+</code><code class="expression"><span class="identifier reference">sliceTo</span> <span class="delimiter group">(</span><span class="operator">-</span><span class="number">2</span><span class="delimiter group">)</span> <span class="delimiter array">[</span><span class="string">"foo"</span><span class="separator">,</span> <span class="string">"bar"</span><span class="separator">,</span> <span class="string">"baz"</span><span class="separator">,</span> <span class="string">"quux"</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="delimiter array">[</span><span class="string">"foo"</span> <span class="string">"bar"</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="equals">
+          <h1><code><span class="identifier reference">equals</span> <span class="separator">::</span> <span class="signature">Setoid a =&gt; a -&gt; a -&gt; Boolean</span></code></h1>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="identifier reference">equals</span> <span class="string">"foo"</span> <span class="string">"foo"</span>
+</code><code class="result"><span class="boolean">true</span>
+</code><code class="expression"><span class="identifier reference">equals</span> <span class="string">"foo"</span> <span class="string">"bar"</span>
+</code><code class="result"><span class="boolean">false</span>
+</code><code class="expression"><span class="identifier reference">equals</span> <span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span> <span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="boolean">true</span>
+</code></pre>
+        </section>
+        <section id="compose">
+          <h1><code><span class="identifier reference">compose</span> <span class="separator">::</span> <span class="signature">Semigroupoid s =&gt; s b c -&gt; s a b -&gt; s a c</span></code></h1>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="identifier reference">compose</span> <span class="identifier reference">Math</span><span class="property-accessor">.</span><span class="property-name">sqrt</span> <span class="identifier reference">Math</span><span class="property-accessor">.</span><span class="property-name">abs</span> <span class="delimiter group">(</span><span class="operator">-</span><span class="number">64</span><span class="delimiter group">)</span>
+</code><code class="result"><span class="number">8</span>
+</code></pre>
+          <p><code><span class="identifier reference">compose</span></code> is more general than <code><span class="delimiter group">(</span><span class="operator">.</span><span class="delimiter group">)</span></code>. The latter is preferable for function composition as it produces more efficient JavaScript code.</p>
+        </section>
+        <section id="concat">
+          <h1><code><span class="identifier reference">concat</span> <span class="separator">::</span> <span class="signature">Semigroup a =&gt; a -&gt; a -&gt; a</span></code></h1>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="identifier reference">concat</span> <span class="string">"abc"</span> <span class="string">"def"</span>
+</code><code class="result"><span class="string">"abcdef"</span>
+</code><code class="expression"><span class="identifier reference">concat</span> <span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span> <span class="delimiter array">[</span><span class="number">4</span><span class="separator">,</span> <span class="number">5</span><span class="separator">,</span> <span class="number">6</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="separator">,</span> <span class="number">4</span><span class="separator">,</span> <span class="number">5</span><span class="separator">,</span> <span class="number">6</span><span class="delimiter array">]</span>
+</code></pre>
+          <p><code><span class="identifier reference">concat</span></code> is equivalent to <code><span class="delimiter group">(</span><span class="operator">&lt;&gt;</span><span class="delimiter group">)</span></code>.</p>
+        </section>
+        <section id="empty">
+          <h1><code><span class="identifier reference">empty</span> <span class="separator">::</span> <span class="signature">Monoid a =&gt; TypeRep a -&gt; a</span></code></h1>
+          <p>TK.</p>
+          <pre><code class="expression"><span class="identifier reference">empty</span> <span class="identifier reference">String</span>
+</code><code class="result"><span class="string">""</span>
+</code><code class="expression"><span class="identifier reference">empty</span> <span class="identifier reference">Array</span>
+</code><code class="result"><span class="delimiter array">[</span><span class="delimiter array">]</span>
+</code><code class="expression"><span class="identifier reference">empty</span> <span class="identifier reference">Set</span>
+</code><code class="result"><span class="identifier reference">construct</span> <span class="identifier reference">Set</span> <span class="delimiter array">[</span><span class="delimiter array">[</span><span class="delimiter array">]</span><span class="delimiter array">]</span>
+</code><code class="expression"><span class="identifier reference">empty</span> <span class="identifier reference">Map</span>
+</code><code class="result"><span class="identifier reference">construct</span> <span class="identifier reference">Map</span> <span class="delimiter array">[</span><span class="delimiter array">[</span><span class="delimiter array">]</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="reduce">
+          <h1><code><span class="identifier reference">reduce</span> <span class="separator">::</span> <span class="signature">Foldable f =&gt; (b -&gt; a -&gt; b) -&gt; b -&gt; f a -&gt; b</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="reduceRight">
+          <h1><code><span class="identifier reference">reduceRight</span> <span class="separator">::</span> <span class="signature">Foldable f =&gt; (b -&gt; a -&gt; b) -&gt; b -&gt; f a -&gt; b</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="filter">
+          <h1><code><span class="identifier reference">filter</span> <span class="separator">::</span> <span class="signature">Filterable f =&gt; (a -&gt; Boolean) -&gt; f a -&gt; f a</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="reject">
+          <h1><code><span class="identifier reference">reject</span> <span class="separator">::</span> <span class="signature">Filterable f =&gt; (a -&gt; Boolean) -&gt; f a -&gt; f a</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="map">
+          <h1><code><span class="identifier reference">map</span> <span class="separator">::</span> <span class="signature">Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="flip">
+          <h1><code><span class="identifier reference">flip</span> <span class="separator">::</span> <span class="signature">Functor f =&gt; f (a -&gt; b) -&gt; a -&gt; f b</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="pure">
+          <h1><code><span class="identifier reference">pure</span> <span class="separator">::</span> <span class="signature">Applicative f =&gt; TypeRep f -&gt; a -&gt; f a</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="ap">
+          <h1><code><span class="identifier reference">ap</span> <span class="separator">::</span> <span class="signature">Apply f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="append">
+          <h1><code><span class="identifier reference">append</span> <span class="separator">::</span> <span class="signature">(Applicative f, Semigroup (f a)) =&gt; a -&gt; f a -&gt; f a</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="prepend">
+          <h1><code><span class="identifier reference">prepend</span> <span class="separator">::</span> <span class="signature">(Applicative f, Semigroup (f a)) =&gt; a -&gt; f a -&gt; f a</span></code></h1>
+          <p>TK.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="chain">
+          <h1><code><span class="identifier reference">chain</span> <span class="separator">::</span> <span class="signature">Chain m =&gt; (a -&gt; m b) -&gt; m a -&gt; m b</span></code></h1>
+          <p>Function form of <a href="#operator:&gt;&gt;="><code><span class="operator">&gt;&gt;=</span></code></a> operator.</p>
+          <pre><code><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="join">
+          <h1><code><span class="identifier reference">join</span> <span class="separator">::</span> <span class="signature">Chain m =&gt; m (m a) -&gt; m a</span></code></h1>
+          <p>Removes one level of nesting from a nested monadic structure.</p>
+          <pre><code class="expression"><span class="identifier reference">join</span> <span class="delimiter array">[</span><span class="delimiter array">[</span><span class="number">1</span><span class="delimiter array">]</span><span class="separator">,</span> <span class="delimiter array">[</span><span class="number">2</span><span class="delimiter array">]</span><span class="separator">,</span> <span class="delimiter array">[</span><span class="number">3</span><span class="delimiter array">]</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code><code class="expression"><span class="identifier reference">join</span> <span class="delimiter array">[</span><span class="delimiter array">[</span><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span><span class="delimiter array">]</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="delimiter array">[</span><span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span><span class="delimiter array">]</span>
+</code></pre>
+        </section>
+        <section id="contains">
+          <h1><code><span class="identifier reference">contains</span> <span class="separator">::</span> <span class="signature">(Setoid a, Foldable f) =&gt; a -&gt; f a -&gt; Boolean</span></code></h1>
+          <p>Function form of <a href="#operator:in"><code><span class="operator">in</span></code></a> operator.</p>
+          <pre><code class="expression"><span class="identifier reference">contains</span> <span class="number">2</span> <span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="boolean">true</span>
+</code><code class="expression"><span class="identifier reference">contains</span> <span class="number">4</span> <span class="delimiter array">[</span><span class="number">1</span><span class="separator">,</span> <span class="number">2</span><span class="separator">,</span> <span class="number">3</span><span class="delimiter array">]</span>
+</code><code class="result"><span class="boolean">false</span>
+</code></pre>
+        </section>
+      </section>
+    </main>
   </body>
 </html>

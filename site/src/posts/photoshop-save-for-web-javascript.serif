@@ -14,14 +14,14 @@ export default {
 body = [
 
   p [
-   "This is a JavaScript function for Photoshop which saves
-    the active document as a 24-bit PNG file. It is equivalent to
-    manually selecting ", strong ["File > Save for Web & Devices..."], "
-    which means that the file size of the resulting PNG will be smaller
-    than would be the case using ", code ["PNGSaveOptions()"], ".",
+    "This is a JavaScript function for Photoshop which saves the active ",
+    "document as a 24-bit PNG file. It is equivalent to manually selecting ",
+    strong ["File > Save for Web & Devices..."], " which means that the file ",
+    "size of the resulting PNG will be smaller than would be the case using ",
+    code ["PNGSaveOptions()"], ".",
   ],
 
-  code-block "javascript" """
+  code-block "javascript" [|
     function saveForWebPNG(outputFolderStr, filename)
     {
         var opts, file;
@@ -39,13 +39,13 @@ body = [
             activeDocument.exportDocument(file, ExportType.SAVEFORWEB, opts);
         }
     }
-  """,
+  |],
 
   p [
-   "Photoshop on Mac limits the length of a ", code ["File"], "
-    object's file name to 31 characters. Credit for the rename
-    workaround should go to Mark Walsh who posted the solution
-    on the Adobe forums in a thread titled ",
+    "Photoshop on Mac limits the length of a ", code ["File"], " ",
+    "object's file name to 31 characters. Credit for the rename ",
+    "workaround should go to Mark Walsh who posted the solution ",
+    "on the Adobe forums in a thread titled ",
     a {href: "http://forums.adobe.com/thread/290409"}
       ["Save for web filename problems"], ".",
   ],

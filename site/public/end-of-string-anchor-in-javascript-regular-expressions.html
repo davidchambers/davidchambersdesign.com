@@ -48,7 +48,7 @@ true
 false
 &gt; /bar(?![\s\S])/m.test('foo\nbar\nbaz')
 false
-</code></pre>
+  </code></pre>
           <p><code>(?![\s\S])</code> at the end of the pattern is equivalent to <code>\Z</code>.</p>
           <h3>Start of string anchor?</h3>
           <p>Unfortunately, since JavaScript offers lookahead but not lookbehind, this approach can't be used to simulate <code>\A</code>.</p>

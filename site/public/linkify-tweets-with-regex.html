@@ -45,21 +45,21 @@
           <p>Here's the gist: a match will begin with "@" and the at sign must be followed by one or more word (letter / number / underscore) characters. The @name must either appear at the beginning of the tweet or be preceded by a space. This prevents the regular expression from matching "@example" in "me@example.com".</p>
           <h4>JavaScript implementation</h4>
           <pre><code>tweet.replace(/(^|\s)(@\w+)/gm, '$1&lt;a href="http://twitter.com/$2"&gt;$2&lt;/a&gt;');
-</code></pre>
+  </code></pre>
           <p>It would of course be nicer to write:</p>
           <pre><code>tweet.replace(/(?&lt;=(?:^|\s))(@\w+)/gm, '&lt;a href="http://twitter.com/$1"&gt;$1&lt;/a&gt;');
-</code></pre>
+  </code></pre>
           <p>Unfortunately, JavaScript does not support lookbehinds in regular expressions, so one's forced to capture the preceding space character (if in fact there is one) and spit it out in the replacement string.</p>
           <h4>PHP implementation</h4>
           <pre><code>preg_replace('/(^|\s)(@\w+)/m', '$1&lt;a href="http://twitter.com/$2"&gt;$2&lt;/a&gt;', $tweet);
-</code></pre>
+  </code></pre>
           <h4>Python implementation</h4>
           <p>Python <em>does</em> support lookbehinds, but only <em>fixed-width</em> lookbehinds, so it won't allow <code>(?&lt;=^|\s)</code>. No matter.</p>
           <pre><code>import re
 re.sub(r'(?m)(^|\s)(@\w+)',
         lambda m: m.group(1) + '&lt;a href="http://twitter.com/' + m.group(2) + '"&gt;' + m.group(2) + '&lt;/a&gt;',
         tweet)
-</code></pre>
+  </code></pre>
           <p>For once, Python's syntax is the least elegant!</p>
           <p>Interestingly, while testing these snippets I found I did not need to specify multi-line mode. Perhaps multi-line mode is assumed? I'd like to know the answer.</p>
           <h3>Matching hyperlinks</h3>

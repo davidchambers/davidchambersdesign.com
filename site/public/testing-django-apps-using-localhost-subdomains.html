@@ -49,18 +49,18 @@
         host_s = host.replace('www.', '').split('.')
         if len(host_s) &gt; 2:
             request.subdomain = ''.join(host_s[:-2])
-</code></pre></li>
+      </code></pre></li>
             <li><p>I added this to my project's <code>MIDDLEWARE_CLASSES</code>:</p><pre><code>MIDDLEWARE_CLASSES = (
     ...,
     'middleware.SubdomainMiddleware',
 )
-</code></pre></li>
+      </code></pre></li>
             <li><p>I edited my <code>/etc/hosts</code> file as per Dave's suggestion:</p><pre><code>127.0.0.1 test.com
 127.0.0.1 blog.test.com
 127.0.0.1 search.test.com
-</code></pre><p>Initially I replaced <code>test.com</code> with the site's domain name, but I decided that it's useful to be able to access both the live site and the test site without editing the <code>/etc/hosts</code> file.</p><p>At this point I expected everything to work as advertised. Instead, I got this:</p><p><img alt="It works!" src="/images/posts/windows/it-works!.png" /></p><p>That would depend on one's definition of "works". I wanted my Django site to appear, which required a very simple tweak...</p></li>
+      </code></pre><p>Initially I replaced <code>test.com</code> with the site's domain name, but I decided that it's useful to be able to access both the live site and the test site without editing the <code>/etc/hosts</code> file.</p><p>At this point I expected everything to work as advertised. Instead, I got this:</p><p><img alt="It works!" src="/images/posts/windows/it-works!.png" /></p><p>That would depend on one's definition of "works". I wanted my Django site to appear, which required a very simple tweak...</p></li>
             <li><p>I added the port number to the address:</p><pre><code>http://test.com:8000/
-</code></pre><p>This <em>actually</em> worked. :)</p></li>
+      </code></pre><p>This <em>actually</em> worked. :)</p></li>
           </ol>
           <footer class="metadata">
             <ul>

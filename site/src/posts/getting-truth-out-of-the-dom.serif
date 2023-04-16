@@ -13,7 +13,7 @@ export default {
 body = [
 
   p [
-   "Recording of Yehuda Katz's presentation from Bay Area jQuery Conf 2011.",
+    "Recording of Yehuda Katz's presentation from Bay Area jQuery Conf 2011.",
   ],
 
   p [
@@ -21,10 +21,10 @@ body = [
   ],
 
   p [
-   "While watching this it ", em ["finally"], " became clear to me why
-    storing state in the DOM is a terrible idea for complex applications.
-    The approach comes unstuck as soon as one wishes to display an entity
-    more than once in a view (such as in a list–details split view).",
+    "While watching this it ", em ["finally"], " became clear to me why ",
+    "storing state in the DOM is a terrible idea for complex applications. ",
+    "The approach comes unstuck as soon as one wishes to display an entity ",
+    "more than once in a view (such as in a list–details split view).",
   ],
 
 ];

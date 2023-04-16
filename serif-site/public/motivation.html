@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text:regular,italic,semibold|Fira+Code|Poppins:medium,bold" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Serif</h1>
+    </header>
+    <main>
+      <h1>Motivation</h1>
+      <p>There are many well-designed programming languages in existence. Why create a new one?</p>
+      <p>Before explaining my reasons I must share a few things about myself. While studying graphic design at university I became interested in web development. In 2008 I began to learn Python, PHP, and JavaScript in order to build websites. In 2010 I began programming professionally. Since then I have become deeply involved in the JavaScript ecosystem.</p>
+      <p>In 2015 I updated my website to read as follows:</p>
+      <blockquote>
+        <p>I <b>fight complexity</b> in the software industry.</p>
+        <p>I’m currently <b>fixing JavaScript</b>, which will take some time!</p>
+      </blockquote>
+      <p>That same year I began developing <a href="https://sanctuary.js.org/">Sanctuary</a>, a functional programming library I viewed as the successor to <a href="https://ramdajs.com">Ramda</a>. Sanctuary exposed the JavaScript community to good ideas from functional programming languages: curried functions, parametric polymorphism, and algebraic data types.</p>
+      <p>In 2020 I began developing a static site generator. I chose Node.js as the runtime so I could leverage Sanctuary and other JavaScript libraries I know and like.</p>
+      <p>Creating a DSL in JavaScript was a frustrating experience; JSX exists because any JavaScript representation of an HTML document contains significant syntactic noise.</p>
+      <pre><code>
+            article([
+              header([
+                h1(post.title),
+                time({
+                  datetime: post.datetime.toFormat("yyyy-MM-dd'T'HH:mm:ssZZ"),
+                  pubdate: "pubdate",
+                }, [
+                  post.datetime.toFormat("d MMMM y"),
+                ]),
+              ]),
+              ...post.body,
+              footer({class: "metadata"}, [
+                ...{
+                  post.tags.length === 0 ? [] : [
+                    h4("This post has the following tags:"),
+                    ol(post.tags.map(tag =&gt;
+                      li([a({href: "/tag/" + tag + "/"}, [tags[tag]]]))
+                    )),
+                  ]
+                },
+              ]),
+            ])
+          </code></pre>
+      <h2>Why not Haskell?</h2>
+      <p>TK.</p>
+      <h2>Why not PureScript?</h2>
+      <p>TK.</p>
+      <h2>Why not Elm?</h2>
+      <p>TK.</p>
+      <h2>Why not TypeScript?</h2>
+      <p>TK.</p>
+      <h2>Why not JavaScript?</h2>
+      <p>TK.</p>
+    </main>
+  </body>
+</html>

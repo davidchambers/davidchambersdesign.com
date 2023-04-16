@@ -2,7 +2,7 @@ import {attempt, fork, resolve} from "fluture";
 import {generate} from "astring";
 
 import {Just} from "./Maybe.serif";
-import * as Node from "./Node.serif";
+import * from "./Node.serif";
 import * as serif from "./index.serif";
 
 #0  = "\x1B[0m";
@@ -14,46 +14,35 @@ import * as serif from "./index.serif";
 #33 = "\x1B[33m";
 #35 = "\x1B[35m";
 
-print x = {
-  switch .call [x] Object.prototype.toString
-  when "[object Null]",
-       "[object Undefined]",
-       "[object Boolean]"
-  then #35 + x + #0
-  when "[object Number]"
-  then #33 + x + #0
-  when "[object String]"
-  then #32 + JSON.stringify x + #0
-  when "[object Symbol]"
-  then "Symbol.for " + (print $ Symbol.keyFor x)
-  when "[object Date]"
-  then "construct Date [" + (print $ Number x) + "]"
-  when "[object RegExp]"
-  then if x.flags == "" then "RegExp " + (print x.source) else "RegExp (" + (print x.source) + ", " + (print x.flags) + ")"
-  when "[object Set]"
-  then "construct Set [" + (print $ Array.from x) + "]"
-  when "[object Map]"
-  then "construct Map [" + (print $ Array.from x) + "]"
-  when "[object Array]"
-  then "[" + (.join [", "] $ print <$> x) + "]"
-  when "[object Object]"
-  then "{" + (.join [", "] $ map (\k -> "[" + (print k) + "]: " + (print x[k])) $ Reflect.ownKeys x) + "}"
-  else String x
-};
+print x = case Object.prototype.toString.call x of [
+  "[object Null]"      -> #35 + x + #0,
+  "[object Undefined]" -> #35 + x + #0,
+  "[object Boolean]"   -> #35 + x + #0,
+  "[object Number]"    -> #33 + x + #0,
+  "[object String]"    -> #32 + JSON.stringify x + #0,
+  "[object Symbol]"    -> "Symbol.for " + (print $ Symbol.keyFor x),
+  "[object Date]"      -> "Date.new " + (print $ Number x),
+  "[object RegExp]"    -> if x.flags == "" then "RegExp " + (print x.source) else "RegExp (" + (print x.source) + ", " + (print x.flags) + ")",
+  "[object Set]"       -> "Set.new " + (print $ Array.from x),
+  "[object Map]"       -> "Map.new " + (print $ Array.from x),
+  "[object Array]"     -> "[" + (joinWith ", " $ print <$> x) + "]",
+  "[object Object]"    -> "{" + (joinWith ", " $ map (\k -> "[" + (print k) + "]: " + (print x[k])) $ Reflect.ownKeys x) + "}",
+  x                    -> String x,
+];
 
 processInput serifSourceText = do {
   serifAst <- serif.parse "[repl]" $ "export default " <> serifSourceText <> ";";
   serifAst = serif.rewrite serifAst;
   {exports, statements} = serif.changeExtensions serifAst;
-  esAst = serif.esModuleFromSerifModule $ Node.Block statements $ Just exports[0].declaration;
+  esAst = serif.esModuleFromSerifModule $ Block statements $ Just exports[0].declaration;
   esSourceText = generate esAst;
   esResult <- attempt \() -> eval esSourceText;
   resolve $ print esResult
 };
 
 repl _ = {
-  input = prompt "\n>>>";
-  if .trim [] input in [":exit", ":quit"]
+  input = window.prompt "\n>>>";
+  if trim input in [":exit", ":quit"]
   then { console.log ""; Deno.exit () }
   else fork (repl . console.error) (repl . console.log) (processInput input)
 };

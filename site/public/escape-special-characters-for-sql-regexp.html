@@ -41,7 +41,7 @@
           </header>
           <p>While using the <a href="http://search.mtg-apps.com/">MTG card search</a> that I've been developing recently, I encountered an error that MySQL reported as follows:</p>
           <pre><code>Got error 'repetition-operator operand invalid' from regexp
-</code></pre>
+  </code></pre>
           <p>The problem resulted from an unescaped <strong>{</strong> being passed to MySQL's REGEXP function. Because this character has a special meaning in regex, it must be escaped when it is being used literally within a string. This is done by preceding it with a backslash (<strong>\</strong>).</p>
           <p>Developers will be familiar with using PHP's <a href="http://php.net/manual/en/function.mysql-real-escape-string.php">mysql_real_escape_string</a> to escape problematic characters before submitting a query. When the query in question involves MySQL's REGEXP function, however, we need to go one step further and escape regex's special characters.</p>
           <p>I had a look on php.net to see whether such a function exists. Having failed to find one there, I did a Google search but again came away empty-handed. I wrote my own function for the job, and thought I'd share it in case others encounter the same problem:</p>
@@ -61,7 +61,7 @@ function mysql_regexp_escape_string($string)
 }
 
 ?&gt;
-</code></pre>
+  </code></pre>
           <p>It is quite possible that a solution to this problem already exists. If this is the case, I am eager to know about it.</p>
           <footer class="metadata">
             <ul>

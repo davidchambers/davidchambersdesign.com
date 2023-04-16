@@ -13,32 +13,33 @@ export default {
 
 excerpt = [
   p [
-   "It's not uncommon to start watching a video online and discover
-    that its audio is quite quiet. This is not a problem in and of
-    itself, as one can simply crank up the output volume. What ",
-    em ["is"], " a problem, however, is a message then arriving in
-    one's inbox and waking the neighbours!",
+    "It's not uncommon to start watching a video online and discover ",
+    "that its audio is quite quiet. This is not a problem in and of ",
+    "itself, as one can simply crank up the output volume. What ",
+    em ["is"], " a problem, however, is a message then arriving in ",
+    "one's inbox and waking the neighbours!",
   ],
   p [
-   "This situation could be avoided if it were possible adjust the
-    browser's output volume without affecting the rest of the system.
-    As it is, though, one is forced to increase the volume of ",
+    "This situation could be avoided if it were possible adjust the ",
+    "browser's output volume without affecting the rest of the system. ",
+    "As it is, though, one is forced to increase the volume of ",
     em ["everything"], ". Not ideal.",
   ],
   h3 ["System Preferences > Sound > Application Volumes"],
   p [
     img {
-      alt: """
+      alt: [|
         Possible interface for application-specific volume settings in Mac OS X
-      """,
+      |],
       src: "/images/posts/windows/application-volumes.png",
     },
   ],
   p [
-   "Wouldn't this be nice? Many months ago I did some Googling to find out
-    whether it's possible to control volume on an application-by-application
-    basis in OS X. The closest thing to a solution was an X11 (read: ugly)
-    app that ", em ["kinda"], " worked.",
+    "Wouldn't this be nice? Many months ago I did some Googling ",
+    "to find out whether it's possible to control volume on an ",
+    "application-by-application basis in OS X. The closest thing ",
+    "to a solution was an X11 (read: ugly) app that ", em ["kinda"], " ",
+    "worked.",
   ],
 ];
 
@@ -47,26 +48,26 @@ body = [
   ...excerpt,
 
   p [
-   "Apple, I don't bug you often, but here I will. ",
-    strong ["Please build this into the OS and keep the neighbours happy."], "
-    It'd be particularly sexy if applications such as iTunes which ",
-    em ["do"], " currently grant the user control of the application's
-    volume synchronized their volume settings with the ones in System
-    Preferences. That is, adjusting the volume in iTunes would adjust
-    the iTunes volume setting in System Preferences, and vice versa.",
+    "Apple, I don't bug you often, but here I will. ",
+    strong ["Please build this into the OS and keep the neighbours happy."], " ",
+    "It'd be particularly sexy if applications such as iTunes which ",
+    em ["do"], " currently grant the user control of the application's ",
+    "volume synchronized their volume settings with the ones in System ",
+    "Preferences. That is, adjusting the volume in iTunes would adjust ",
+    "the iTunes volume setting in System Preferences, and vice versa.",
   ],
 
   p [
-   "+1 in the comments if you'd like to see this feature implemented. :)",
+    "+1 in the comments if you'd like to see this feature implemented. :)",
   ],
 
   update {datetime "2010-04-15 14:36:00 (Pacific/Auckland)"} [
     p [
-      a {href: "http://www.joesoft.com/products/hear.php"} ["Hear"], "
-      offers this functionality, but isn't cheap. I hope Hear's
-      developers decide to release a preference pane that provides
-      the functionality of Hear's mixer pane and nothing more
-      (I'm about to make this request).",
+      a {href: "http://www.joesoft.com/products/hear.php"} ["Hear"], " ",
+      "offers this functionality, but isn't cheap. I hope Hear's ",
+      "developers decide to release a preference pane that provides ",
+      "the functionality of Hear's mixer pane and nothing more ",
+      "(I'm about to make this request).",
     ],
     p [
       img {
@@ -79,9 +80,9 @@ body = [
   h4 ["Bonus titbit"],
 
   p [
-   "While faking the drop shadow on the Sound window above I discovered
-    a combination of drop shadow values which pretty much perfectly match
-    those of an active window in OS X:",
+    "While faking the drop shadow on the Sound window above I discovered ",
+    "a combination of drop shadow values which pretty much perfectly match ",
+    "those of an active window in OS X:",
   ],
 
   p [

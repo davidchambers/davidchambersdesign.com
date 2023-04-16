@@ -5,7 +5,7 @@ const body = [p(["Simple design executed beatifully."]), p([img({
   src: "http://knifeandsaw.files.wordpress.com/2010/09/photo_bikerack_cu_bars.jpg"
 })]), p(["The article from which this photograph is lifted, entitled ", a({
   href: "http://knifeandsaw.wordpress.com/furniture/bike-shelf/"
-})(["Bike Shelf"]), ",\n    is over on ", a({
+})(["Bike Shelf"]), ", ", "is over on ", a({
   href: "http://knifeandsaw.wordpress.com/"
 })(["Knife & Saw"]), "."])];
 export default {

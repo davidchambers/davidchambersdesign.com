@@ -43,7 +43,7 @@
           <p>Internet Explorer displays a (completely pointless) inactive scrollbar in empty <code>textarea</code> elements, unlike other browsers which wait until a scrollbar is actually <em>required</em> before displaying it.</p>
           <p>As it turns out, there's a dead simple way to prevent this, and once again its everybody's friend <code>overflow</code> to the rescue.</p>
           <pre><code>textarea { overflow: auto; }
-</code></pre>
+  </code></pre>
           <p>The <code>overflow</code> property seems to be a magical remedy for a variety of different ailments, most significant of which is the collapsing of an element whose children are all floated. Applying <code>overflow: auto</code> makes the element wrap its children rather than letting them "hang".</p>
           <p>One thing that I sometimes ponder, though, is why <code>visible</code> was selected as the default <code>overflow</code> value – it seems inferior to <code>auto</code> in most use cases.</p>
           <footer class="metadata">

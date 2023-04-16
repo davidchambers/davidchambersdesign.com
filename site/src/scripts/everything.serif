@@ -33,121 +33,124 @@ write-file filename data = {
 }
 ;
 css/screen
-% write-file $ public ["css", "screen.css"]
+& write-file (public ["css", "screen.css"])
 ;
 render-svg attrs paths = {
-  """<?xml version="1.0" standalone="no"?>\n${
-    {svg {xmlns: "http://www.w3.org/2000/svg", version: "1.1", ...attrs} paths}
-    .render {indent: "  ", level: 0, inline: false}
-  }"""
+  [|<?xml version="1.0" standalone="no"?>|]
+  + "\n"
+  + (svg {xmlns: "http://www.w3.org/2000/svg", version: "1.1", ...attrs} paths
+     & .render [{indent: "  ", level: 0, inline: false}])
+  + "\n"
 }
 ;
 masthead.fill
-% render-svg {}
-% write-file $ public ["svg", "masthead.svg"]
+& render-svg {}
+& write-file (public ["svg", "masthead.svg"])
 ;
 masthead.mask
-% render-svg {}
-% write-file $ public ["svg", "masthead-mask.svg"]
+& render-svg {}
+& write-file (public ["svg", "masthead-mask.svg"])
 ;
 date-0
-% render-svg {}
-% write-file $ public ["svg", "dates-0.svg"]
+& render-svg {}
+& write-file (public ["svg", "dates-0.svg"])
 ;
 date-1
-% render-svg {}
-% write-file $ public ["svg", "dates-1.svg"]
+& render-svg {}
+& write-file (public ["svg", "dates-1.svg"])
 ;
 date-2
-% render-svg {}
-% write-file $ public ["svg", "dates-2.svg"]
+& render-svg {}
+& write-file (public ["svg", "dates-2.svg"])
 ;
 date-3
-% render-svg {}
-% write-file $ public ["svg", "dates-3.svg"]
+& render-svg {}
+& write-file (public ["svg", "dates-3.svg"])
 ;
 date-4
-% render-svg {}
-% write-file $ public ["svg", "dates-4.svg"]
+& render-svg {}
+& write-file (public ["svg", "dates-4.svg"])
 ;
 date-5
-% render-svg {}
-% write-file $ public ["svg", "dates-5.svg"]
+& render-svg {}
+& write-file (public ["svg", "dates-5.svg"])
 ;
 date-6
-% render-svg {}
-% write-file $ public ["svg", "dates-6.svg"]
+& render-svg {}
+& write-file (public ["svg", "dates-6.svg"])
 ;
 date-7
-% render-svg {}
-% write-file $ public ["svg", "dates-7.svg"]
+& render-svg {}
+& write-file (public ["svg", "dates-7.svg"])
 ;
 date-8
-% render-svg {}
-% write-file $ public ["svg", "dates-8.svg"]
+& render-svg {}
+& write-file (public ["svg", "dates-8.svg"])
 ;
 date-9
-% render-svg {}
-% write-file $ public ["svg", "dates-9.svg"]
+& render-svg {}
+& write-file (public ["svg", "dates-9.svg"])
 ;
 icons/about
-% render-svg {width: 16, height: 16}
-% write-file $ public ["svg", "about.svg"]
+& render-svg {width: 16, height: 16}
+& write-file (public ["svg", "about.svg"])
 ;
 icons/archives
-% render-svg {width: 16, height: 16}
-% write-file $ public ["svg", "archives.svg"]
+& render-svg {width: 16, height: 16}
+& write-file (public ["svg", "archives.svg"])
 ;
 icons/bitbucket
-% render-svg {width: 16, height: 16}
-% write-file $ public ["svg", "bitbucket.svg"]
+& render-svg {width: 16, height: 16}
+& write-file (public ["svg", "bitbucket.svg"])
 ;
 icons/contact
-% render-svg {width: 16, height: 16}
-% write-file $ public ["svg", "contact.svg"]
+& render-svg {width: 16, height: 16}
+& write-file (public ["svg", "contact.svg"])
 ;
 icons/flushcache
-% render-svg {width: 16, height: 16}
-% write-file $ public ["svg", "flushcache.svg"]
+& render-svg {width: 16, height: 16}
+& write-file (public ["svg", "flushcache.svg"])
 ;
 icons/tags
-% render-svg {width: 16, height: 16}
-% write-file $ public ["svg", "tags.svg"]
+& render-svg {width: 16, height: 16}
+& write-file (public ["svg", "tags.svg"])
 ;
 icons/twitter
-% render-svg {width: 16, height: 16}
-% write-file $ public ["svg", "twitter.svg"]
+& render-svg {width: 16, height: 16}
+& write-file (public ["svg", "twitter.svg"])
 ;
 render-document element = {
-  """<!DOCTYPE html>\n${element.render {indent: "  ", level: 0, inline: false}}"""
+  "<!DOCTYPE html>\n"
+  + element.render {indent: "  ", level: 0, inline: false}
+  + "\n"
 }
 ;
 posts
-% render-archives
-% base-template ["Archives"]
-% render-document
-% write-file $ public ["archives.html"]
+& render-archives
+& base-template ["Archives"]
+& render-document
+& write-file (public ["archives.html"])
 ;
 posts
-% render-tags
-% base-template ["Tags"]
-% render-document
-% write-file $ public ["tags.html"]
+& render-tags
+& base-template ["Tags"]
+& render-document
+& write-file (public ["tags.html"])
 ;
-pages % map \page -> {
+pages & map \page -> {
   page
-  % render-page
-  % base-template page.title
-  % render-document
-  % write-file $ public [page.slug + ".html"]
+  & render-page
+  & base-template page.title
+  & render-document
+  & write-file (public [page.slug + ".html"])
 }
 ;
-posts % map \post -> {
+posts & map \post -> {
   post
-  % related-posts posts
-  % render-post post
-  % base-template post.title
-  % render-document
-  % write-file $ public [post.slug + ".html"]
+  & related-posts posts
+  & render-post post
+  & base-template post.title
+  & render-document
+  & write-file (public [post.slug + ".html"])
 }
 ;

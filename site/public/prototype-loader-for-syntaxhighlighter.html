@@ -62,7 +62,7 @@
 &lt;script src="/path/to/scripts/shBrushXml.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;SyntaxHighlighter.all()&lt;/script&gt;
-</code></pre><p>with:</p><pre><code>&lt;script&gt;
+      </code></pre><p>with:</p><pre><code>&lt;script&gt;
     function Brush(name, filename, aliases)
     {
         this.name = name;
@@ -79,7 +79,7 @@
     };
 &lt;/script&gt;
 &lt;script src="/path/to/scripts/loader.js"&gt;&lt;/script&gt;
-</code></pre></li>
+      </code></pre></li>
             <li><p>Replace both instances of <code>http://example.com/sh/</code> in the above snippet with the path to your <strong>SyntaxHighlighter</strong> directory.</p></li>
           </ol>
           <h3 id="usage">Usage</h3>
@@ -87,12 +87,12 @@
           <p><strong>Selector.</strong> By default, <code>settings.selector</code> is set to 'head', which means that script elements will be inserted into the head element. This can be replaced with any CSS selector to have script elements inserted into a different element.</p>
           <p><strong>Style sheets.</strong> By default, <code>settings.stylesheets</code> is an array containing just the default style sheet. This can easily be modified:</p>
           <pre><code>stylesheets: ['shThemeCoda', 'shThemeAppleScript'],
-</code></pre>
+  </code></pre>
           <p><strong>Brushes.</strong> By default, <code>settings.brushes</code> is an empty array. All the bundled brushes are handled automatically, but additional brushes can be included by adding them to this array:</p>
           <pre><code>brushes: [
     new Brush('AppleScript', 'shBrushAppleScript', ['applescript'])
 ],
-</code></pre>
+  </code></pre>
           <p>When creating a <code>Brush</code> object, provide the constructor with the brush's name, its file name (sans extension), and an array of aliases.</p>
           <p><strong>Extensions.</strong> By default, <code>settings.extensions</code> has 'css' set against <code>stylesheet</code> and 'js' set against <code>brush</code>. It is useful to be able to change these values if, for example, gzipped versions of the brushes are to be used.</p>
           <p><strong>Defaults.</strong> SyntaxHighlighter defaults can be set by modifying <code>settings.defaults</code>:</p>
@@ -100,7 +100,7 @@
     'auto-links': false,
     'html-script': true
 }
-</code></pre>
+  </code></pre>
           <p>Many thanks to Dan Breslau for letting me know about <code>SyntaxHighlighter.highlight()</code> and for his thorough testing of each of the early iterations of this code. Dan's <a href="http://www.outofwhatbox.com/blog/2009/06/syntaxhighlighter-revised-again-works-on-its-own-once-again/">SyntaxHighlighter improvements</a> are well worth a look!</p>
           <div class="update">
             <h4>Update — <time datetime="2009-06-27T06:21:00.000+12:00">27 June 2009</time></h4>

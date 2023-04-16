@@ -13,11 +13,11 @@ export default {
 
 excerpt = [
   p [
-   "WordPress is a great piece of software, although I've never been
-    satisfied with its search functionality. Last night I decided to
-    switch to a very simple solution:",
+    "WordPress is a great piece of software, although I've never been ",
+    "satisfied with its search functionality. Last night I decided to ",
+    "switch to a very simple solution:",
   ],
-  code-block "html" """
+  code-block "html" [|
     <form action="http://www.google.com/search" method="get">
         <div>
             <label for="q">Search davidchambersdesign.com</label>
@@ -28,7 +28,7 @@ excerpt = [
             <input type="submit" value="Search" />
         </div>
     </form>
-  """,
+  |],
 ];
 
 body = [
@@ -36,9 +36,9 @@ body = [
   ...excerpt,
 
   p [
-   "Search queries on this site are now submitted to Google with the
-    specification that only results from this domain are to be returned.
-    Here's a breakdown of the various query parameters I included:",
+    "Search queries on this site are now submitted to Google with the ",
+    "specification that only results from this domain are to be returned. ",
+    "Here's a breakdown of the various query parameters I included:",
   ],
 
   dl [
@@ -56,7 +56,7 @@ body = [
   ],
 
   p [
-   "If you decide to implement this yourself you may find the documentation on ",
+    "If you decide to implement this yourself you may find the documentation on ",
     a {href: "http://www.google.com/cse/docs/resultsxml.html#wsRequestParameters"}
       ["Google custom search request parameters"], " useful.",
   ],

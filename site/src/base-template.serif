@@ -32,47 +32,47 @@ base-template document-title main = {
                 li [
                   a {href: "/about/"} [
                     span {} [
-                      strong ["About."], "
-                      Who I am and what I do.",
+                      strong ["About."], " ",
+                      "Who I am and what I do.",
                     ],
                   ],
                 ],
                 li [
                   a {href: "/contact/"} [
                     span {} [
-                      strong ["Contact."], "
-                      Just in case you want to get in touch.",
+                      strong ["Contact."], " ",
+                      "Just in case you want to get in touch.",
                     ],
                   ],
                 ],
                 li [
                   a {href: "/archives/"} [
                     span {} [
-                      strong ["Archives."], "
-                      Old posts, recent posts, they're all here.",
+                      strong ["Archives."], " ",
+                      "Old posts, recent posts, they're all here.",
                     ],
                   ],
                 ],
                 li [
                   a {href: "/tags/"} [
                     span {} [
-                      strong ["Tags."], "
-                      Helpful if you're after posts on a particular topic.",
+                      strong ["Tags."], " ",
+                      "Helpful if you're after posts on a particular topic.",
                     ],
                   ],
                 ],
                 li [
                   a {href: "https://bitbucket.org/davidchambers"} [
                     span {} [
-                      strong ["Bitbucket."], "
-                      Home to most of my open-source projects."],
+                      strong ["Bitbucket."], " ",
+                      "Home to most of my open-source projects."],
                     ],
                 ],
                 li [
                   a {href: "/twitter/"} [
                     span {} [
-                      strong ["Twitter."], "
-                      It's where I chirrup… or chirp… or something.",
+                      strong ["Twitter."], " ",
+                      "It's where I chirrup… or chirp… or something.",
                     ],
                   ],
                 ],

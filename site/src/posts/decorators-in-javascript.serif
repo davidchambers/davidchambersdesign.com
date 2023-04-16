@@ -14,22 +14,22 @@ export default {
 body = [
 
   p [
-   "A decorator is a function which takes a function and returns a function:",
+    "A decorator is a function which takes a function and returns a function:",
   ],
 
-  code-block "coffeescript" """
+  code-block "coffeescript" [|
     decorator = (fn) -> fn
-  """,
+  |],
 
   p [
-   "Obviously, this doesn't do anything useful. It's the fact that a
-    decorator can return a function which behaves ", em ["similarly"], "
-    to the function passed to it that makes the pattern interesting.
-    Commonly a decorator will simply wrap a function invocation in a
-    check of some sort:",
+    "Obviously, this doesn't do anything useful. It's the fact that a ",
+    "decorator can return a function which behaves ", em ["similarly"], " ",
+    "to the function passed to it that makes the pattern interesting. ",
+    "Commonly a decorator will simply wrap a function invocation in a ",
+    "check of some sort:",
   ],
 
-  code-block "javascript" """
+  code-block "javascript" [|
     var loginRequired = function (fn) {
       return function () {
         if (!user.authenticated) {
@@ -38,14 +38,14 @@ body = [
         fn.apply(null, [].slice.apply(arguments));
       };
     };
-  """,
+  |],
 
   p [
-   "The above decorator could be used to \"guard\" actions that only
-    authenticated users are permitted to perform:",
+    "The above decorator could be used to \"guard\" actions that only ",
+    "authenticated users are permitted to perform:",
   ],
 
-  code-block "javascript" """
+  code-block "javascript" [|
     var changeUsername = loginRequired(function (username) {
       $.ajax({
         type: 'PUT',
@@ -65,13 +65,13 @@ body = [
         type: 'DELETE',
         url: '/api/1.0/users/' + user.id
       })});
-  """,
+  |],
 
   p [
-   "The CoffeeScript equivalent is quite a bit clearer:",
+    "The CoffeeScript equivalent is quite a bit clearer:",
   ],
 
-  code-block "coffeescript" """
+  code-block "coffeescript" [|
     changeUsername = loginRequired (username) ->
       $.ajax
         type: 'PUT'
@@ -88,15 +88,15 @@ body = [
       $.ajax
         type: 'DELETE'
         url: "/api/1.0/users/#{user.id}"
-  """,
+  |],
 
   p [
-   "Decorators are commonly used in Python", —, "which provides special syntax
-    for \"decorating\" functions", —, "but are rarely seen in JavaScript code.
-    This despite the fact that JavaScript's first-class functions are ideally
-    suited to the task. Perhaps CoffeeScript's lighter-weight function syntax
-    will result in decorators making more frequent appearances in JavaScript
-    code.",
+    "Decorators are commonly used in Python", —, "which provides ",
+    "special syntax for \"decorating\" functions", —, "but are rarely ",
+    "seen in JavaScript code. This despite the fact that JavaScript's ",
+    "first-class functions are ideally suited to the task. Perhaps ",
+    "CoffeeScript's lighter-weight function syntax will result in ",
+    "decorators making more frequent appearances in JavaScript code.",
   ],
 
 ];

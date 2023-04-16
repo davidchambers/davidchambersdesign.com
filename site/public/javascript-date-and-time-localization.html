@@ -54,7 +54,7 @@
           <p>For localization to be possible date, time, and time zone information must be stored somewhere. In the past we'd have been forced to misappropriate <code>title</code> or <code>rel</code>, or use an unsupported attribute and accept invalid markup. We can now have our cake and eat it too: HTML5 sanctions arbitrary attribute names, prefixed with <code>data-</code>.</p>
           <p>As it turns out, though, HTML5 provides the perfect hook for date and time localization: the <code>time</code> element, whose <code>datetime</code> attribute provides the canonical representation of a point in time.</p>
           <pre><code>&lt;time datetime="1984-04-26"&gt;26 April 1984&lt;/time&gt;
-</code></pre>
+  </code></pre>
           <p>Simply by using the <code>time</code> element correctly our scripts gain access to date, time, and even time zone information.</p>
           <h3>jQuery</h3>
           <p>I was not quick to embrace <a href="http://jquery.com/">jQuery</a>. Soon after I discovered DOM scripting and the incompatible DOM APIs provided by the various browsers, I understood the need for a JavaScript library. Soon after that I <del>decided</del> <ins>stumbled</ins> upon <a href="http://prototypejs.org/">Prototype</a>. More recently I became an advocate of <a href="http://mootools.net/">MooTools</a> which — like Prototype — fixes deficiencies in the JavaScript language itself, in addition to fixing the DOM.</p>
@@ -63,13 +63,13 @@
           <p>At <a href="http://www.atlassian.com/">Atlassian</a> we're lucky enough to have "20 percent time". A couple of weeks ago I spent the day working on <a href="http://bitbucket.org/davidchambers/jquery.localize">jQuery.localize</a>, my first jQuery plugin. I've spent much of the last two weekends making the plugin more flexible and documenting its relatively simple API.</p>
           <p>Assume that a page contains the following <code>time</code> element.</p>
           <pre><code>&lt;time datetime="2010-11-27T13:30-00:00"&gt;27 November 2010&lt;/time&gt;
-</code></pre>
+  </code></pre>
           <p>We could localize this element (along with any other <code>time</code> elements on the page) with a simple call to <code>localize</code>.</p>
           <pre><code>$('time').localize();
-</code></pre>
+  </code></pre>
           <p>This updates both the visible text and the value of the <code>datetime</code> attribute.</p>
           <pre><code>&lt;time datetime="2010-11-28T00:30+11:00"&gt;28 November 2010&lt;/time&gt;
-</code></pre>
+  </code></pre>
           <p>Date and time formats are fully customizable via <a href="http://bitbucket.org/davidchambers/jquery.localize/src#directives">directives</a>, and there is support for <a href="http://bitbucket.org/davidchambers/jquery.localize/src#i18n">internationalization</a>. I won't go into the details here; there's extensive <a href="http://bitbucket.org/davidchambers/jquery.localize/src#wiki">documentation</a> at the project's home on Bitbucket.</p>
           <footer class="metadata">
             <ul>

@@ -1,9 +1,9 @@
 import sanctuary from "sanctuary";
-const construct = constructor => args => globalThis.Reflect.construct(constructor, args);
-const equals = this$ => that => (() => {
+const sliceTo = to => xs => xs.slice(0, to);
+const equals = this$ => that => (function () {
   switch (globalThis.Object.prototype.toString.call(this$)) {
     case "[object Array]":
-      return (() => {
+      return (function () {
         switch (globalThis.Object.prototype.toString.call(that)) {
           case "[object Array]":
             return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
@@ -15,7 +15,7 @@ const equals = this$ => that => (() => {
       return this$ === that;
   }
 })();
-const concat = this$ => that => (() => {
+const concat = this$ => that => (function () {
   switch (globalThis.Object.prototype.toString.call(this$)) {
     case "[object Array]":
     case "[object String]":
@@ -24,25 +24,33 @@ const concat = this$ => that => (() => {
       return this$["fantasy-land/concat"](that);
   }
 })();
-const filter = f => xs => (() => {
+const filter = f => xs => (function () {
   switch (globalThis.Object.prototype.toString.call(xs)) {
     case "[object Array]":
       return xs.filter(x => f(x));
+    case "[object Set]":
+      return globalThis.Reflect.construct(globalThis.Set, [filter(f)([...xs])]);
     default:
       return xs["fantasy-land/filter"](f);
   }
 })();
 const S = sanctuary.unchecked;
 const related$002Dposts = posts => post => (() => {
-  const tags = construct(Set)([post.tags]);
-  return (args => target => target.slice.apply(target, args))([0, 5])(S.sortBy(this$ => S.Pair(-this$.score)(Math.abs((args => target => target.diff.apply(target, args))([post.datetime])(this$.datetime).milliseconds)))(S.mapMaybe(this$ => equals(post.slug)(this$.slug) ? S.Nothing : (() => {
-    const dividend = filter(tag => tags.has(tag))(this$.tags).length;
-    const divisor = Math.sqrt(construct(Set)([concat(post.tags)(this$.tags)]).size);
-    const score = dividend / divisor;
-    return score < 0.5 ? S.Nothing : S.Just({
-      ...this$,
-      score
-    });
-  })())(posts)));
+  const tags = globalThis.Reflect.construct(Set, [post.tags]);
+  return sliceTo(5)(S.sortBy(function (self) {
+    return S.Pair(-self.score)(Math.abs((args => target => target.diff.apply(target, args))([post.datetime])(self.datetime).milliseconds));
+  })(S.mapMaybe(function (self) {
+    return equals(post.slug)(self.slug) ? S.Nothing : (() => {
+      const dividend = filter(function (tag) {
+        return tags.has(tag);
+      })(self.tags).length;
+      const divisor = Math.sqrt(globalThis.Reflect.construct(Set, [concat(post.tags)(self.tags)]).size);
+      const score = dividend / divisor;
+      return score < 0.5 ? S.Nothing : S.Just({
+        ...self,
+        score
+      });
+    })();
+  })(posts)));
 })();
 export default related$002Dposts;

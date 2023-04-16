@@ -13,7 +13,7 @@ export default {
 body = [
 
   p [
-   "Simple design executed beatifully.",
+    "Simple design executed beatifully.",
   ],
 
   p [
@@ -24,10 +24,10 @@ body = [
   ],
 
   p [
-   "The article from which this photograph is lifted, entitled ",
+    "The article from which this photograph is lifted, entitled ",
     a {href: "http://knifeandsaw.wordpress.com/furniture/bike-shelf/"}
-      ["Bike Shelf"], ",
-    is over on ",
+      ["Bike Shelf"], ", ",
+    "is over on ",
     a {href: "http://knifeandsaw.wordpress.com/"} ["Knife & Saw"], ".",
   ],
 

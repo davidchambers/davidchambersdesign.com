@@ -2,10 +2,9 @@ export {
   list,
 };
 
-list strings = {
-  switch strings.length
-  when 0 then ""
-  when 1 then strings[0]
-  when 2 then strings[0] <> " and " <> strings[1]
-  else strings % .slice [0, -1] % map (<> ",") % .join [" "] % (<> " and " <> .at [-1] strings)
-};
+list strings = case strings of [
+  []              -> "",
+  [first]         -> first,
+  [first, second] -> first <> " and " <> second,
+  [...init, last] -> init & map (<> ",") & joinWith " " & (<> " and " <> last),
+];

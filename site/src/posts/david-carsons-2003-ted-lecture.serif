@@ -13,10 +13,10 @@ export default {
 body = [
 
   p [
-   "One of my flatmates linked me to this clip recently. It's titled ",
+    "One of my flatmates linked me to this clip recently. It's titled ",
     a {href: "http://www.ted.com/index.php/talks/david_carson_on_design.html"}
-      ["Design, discovery and humor"], " and certainly delivers the
-    entertainment it promises. It's well worth a look.",
+      ["Design, discovery and humor"], " and certainly delivers the ",
+    "entertainment it promises. It's well worth a look.",
   ],
 
   dl [
@@ -35,8 +35,8 @@ body = [
     ],
     dd [
       p [
-       "David Carson presents ", strong ["Design, discovery and humor"], "
-        at TED, February 2003",
+        "David Carson presents ", strong ["Design, discovery and humor"], " ",
+        "at TED, February 2003",
       ],
     ],
   ],

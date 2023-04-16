@@ -14,7 +14,7 @@ export default {
 body = [
 
   p [
-   "Hooray! It's now possible to ",
+    "Hooray! It's now possible to ",
     a {href: "http://gmailblog.blogspot.com/2009/04/new-in-labs-inserting-images.html"}
       ["insert images into Gmail messages"], ". About time, I say.",
   ],
@@ -23,7 +23,7 @@ body = [
     alt: "Gmail insert image icon",
     src: "/images/posts/10/gmail-insert-image-icon.png",
     caption: [
-     "Gmail's insert image icon, visible in rich formatting mode",
+      "Gmail's insert image icon, visible in rich formatting mode",
     ],
   }],
 

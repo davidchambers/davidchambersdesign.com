@@ -41,7 +41,7 @@
           </header>
           <p>A decorator is a function which takes a function and returns a function:</p>
           <pre><code>decorator = (fn) -&gt; fn
-</code></pre>
+  </code></pre>
           <p>Obviously, this doesn't do anything useful. It's the fact that a decorator can return a function which behaves <em>similarly</em> to the function passed to it that makes the pattern interesting. Commonly a decorator will simply wrap a function invocation in a check of some sort:</p>
           <pre><code>var loginRequired = function (fn) {
   return function () {
@@ -51,7 +51,7 @@
     fn.apply(null, [].slice.apply(arguments));
   };
 };
-</code></pre>
+  </code></pre>
           <p>The above decorator could be used to "guard" actions that only authenticated users are permitted to perform:</p>
           <pre><code>var changeUsername = loginRequired(function (username) {
   $.ajax({
@@ -72,7 +72,7 @@ var deleteAccount = loginRequired(function () {
     type: 'DELETE',
     url: '/api/1.0/users/' + user.id
   })});
-</code></pre>
+  </code></pre>
           <p>The CoffeeScript equivalent is quite a bit clearer:</p>
           <pre><code>changeUsername = loginRequired (username) -&gt;
   $.ajax
@@ -90,7 +90,7 @@ deleteAccount = loginRequired -&gt;
   $.ajax
     type: 'DELETE'
     url: "/api/1.0/users/#{user.id}"
-</code></pre>
+  </code></pre>
           <p>Decorators are commonly used in Python — which provides special syntax for "decorating" functions — but are rarely seen in JavaScript code. This despite the fact that JavaScript's first-class functions are ideally suited to the task. Perhaps CoffeeScript's lighter-weight function syntax will result in decorators making more frequent appearances in JavaScript code.</p>
           <footer class="metadata">
             <ul>

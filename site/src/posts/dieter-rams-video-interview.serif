@@ -19,14 +19,14 @@ body = [
 
   blockquote [
     p [
-     "The media have to learn [...] that the spectacular things are not
-      the important things – the unspectacular things are the important
-      things, especially in the future.",
+      "The media have to learn [...] that the spectacular things are not ",
+      "the important things – the unspectacular things are the important ",
+      "things, especially in the future.",
     ],
   ],
 
   p [
-   "via ", a {href: "http://kottke.org/"} ["kottke"],
+    "via ", a {href: "http://kottke.org/"} ["kottke"],
   ],
 
 ];

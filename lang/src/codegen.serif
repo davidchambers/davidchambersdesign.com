@@ -1,11 +1,10 @@
 import {maybe} from "./Maybe.serif";
-import Node from "./Node.serif";
 
 export default fromNode;
 
-;; https://262.ecma-international.org/13.0/#sec-keywords-and-reserved-words
-RESERVED_WORDS = construct Set [[
-  ;; reserved words
+-- https://262.ecma-international.org/13.0/#sec-keywords-and-reserved-words
+RESERVED_WORDS = Set.new [
+  -- reserved words
   "await",
   "break",
   "case",
@@ -44,7 +43,7 @@ RESERVED_WORDS = construct Set [[
   "while",
   "with",
   "yield",
-  ;; future reserved words
+  -- future reserved words
   "enum",
   "implements",
   "interface",
@@ -52,10 +51,10 @@ RESERVED_WORDS = construct Set [[
   "private",
   "protected",
   "public",
-  ;; reserved in strict mode
+  -- reserved in strict mode
   "arguments",
   "eval",
-]];
+];
 
 validEsIdentifierName name = {
   .test [name] $ RegExp "^[$_A-Za-z][$_A-Za-z0-9]*$"
@@ -69,74 +68,61 @@ fromEscapedIdentifierName name = {
 fromIdentifier = {
   escapeChar c = {
     c
-    % .charCodeAt [0]
-    % .toString [16]
-    % .toUpperCase []
-    % .padStart [4, "0"]
-    % concat "$"
+    & charCodeAt 0
+    & .toString [16]
+    & toUpper
+    & .padStart [4, "0"]
+    & concat "$"
   };
   escape name = {
     if name in ["eval", "import"] then name
     else if RESERVED_WORDS has name then name + "$"
     else if validEsIdentifierName name then name
-    else .replaceAll [RegExp ("[^$_A-Za-z0-9]", "g"), escapeChar] name
+    else replaceAll (RegExp ("[^$_A-Za-z0-9]", "g")) escapeChar name
   };
   fromEscapedIdentifierName . escape
 };
 
-TemplateElement tail raw = {
-  type: "TemplateElement",
-  tail,
-  value: {
-    raw,
-  },
-};
-
-fromTemplateLiteral quasis expressions = {
-  type: "TemplateLiteral",
-  expressions: fromNode <$> expressions,
-  quasis: {
-    lineEnding = .find [\lineEnding -> .startsWith [lineEnding] quasis[0]] ["\n", "\r\n"];
-    if lineEnding == undefined then {
-      quasis' = .replaceAll ["`", "\\`"] <$> quasis;
-      [
-        ...{TemplateElement false <$> .slice [0, -1] quasis'},
-        ...{TemplateElement true  <$> .slice [-1]    quasis'},
-      ]
+fromMemberExpression object property = case property of [
+  StringLiteral value -> {
+    if validEsIdentifierName value then{
+      type: "MemberExpression",
+      object: fromNode object,
+      property: fromEscapedIdentifierName value,
+      computed: false,
+      optional: false,
     } else {
-      indent = .search [RegExp "(?! )"] $ .slice [lineEnding.length] quasis[0];
-      pattern = RegExp (lineEnding + "[ ]{0," + indent + "}", "g");
-      [head, ...tail] = (.replaceAll ["`", "\\`"] . .replaceAll [pattern, lineEnding]) <$> quasis;
-      head' = .slice [lineEnding.length] head;
-      if tail == [] then [
-        TemplateElement true head',
-      ] else [
-        TemplateElement false head',
-        ...{TemplateElement false <$> .slice [0, -1] tail},
-        ...{TemplateElement true  <$> .slice [-1]    tail},
-      ]
+      type: "MemberExpression",
+      object: fromNode object,
+      property: fromNode property,
+      computed: true,
+      optional: false,
     }
   },
-};
-
-fromMemberExpression object property = {
-  computed = not $ Node.matchOr (const false) {StringLiteral: validEsIdentifierName} property;
-  {
+  property -> {
     type: "MemberExpression",
     object: fromNode object,
-    property: if computed then fromNode property else fromEscapedIdentifierName property.value,
-    computed,
+    property: fromNode property,
+    computed: true,
     optional: false,
-  }
-};
+  },
+];
 
-fromProperty key value = {
-  computed = not $ Node.matchOr (const false) {StringLiteral: validEsIdentifierName} key;
-  esKey = if computed then fromNode key else fromEscapedIdentifierName key.value;
-  esValue = fromNode value;
-  shorthand = esKey.type == "Identifier" && esValue.type == "Identifier" && esKey.name == esValue.name;
-  {type: "Property", key: esKey, value: esValue, kind: "init", method: false, shorthand, computed}
-};
+fromProperty key value = case key of [
+  StringLiteral keyValue -> {
+    computed = not $ validEsIdentifierName keyValue;
+    esKey = if computed then fromNode key else fromEscapedIdentifierName keyValue;
+    esValue = fromNode value;
+    shorthand = esKey.type == "Identifier" && esValue.type == "Identifier" && esKey.name == esValue.name;
+    {type: "Property", key: esKey, value: esValue, kind: "init", method: false, shorthand, computed}
+  },
+  key -> {
+    esKey = fromNode key;
+    esValue = fromNode value;
+    shorthand = esKey.type == "Identifier" && esValue.type == "Identifier" && esKey.name == esValue.name;
+    {type: "Property", key: esKey, value: esValue, kind: "init", method: false, shorthand, computed: true}
+  },
+];
 
 fromBlock statements result = {
   type: "CallExpression",
@@ -153,73 +139,63 @@ fromBlock statements result = {
   optional: false,
 };
 
-fromSwitchCase predicates consequent = {
-  toReturnStatement node = {type: "ReturnStatement", argument: fromNode node};
-  predicates.map \(pred, idx, preds) -> {
-    type: "SwitchCase",
-    test: maybe null fromNode pred,
-    consequent: if idx + 1 < preds.length then [] else [
-      consequent % Node.matchOr toReturnStatement {
-        Block: \statements result -> {
-          type: "BlockStatement",
-          body: maybe id (append . toReturnStatement) result (fromNode <$> statements),
-        }
-      }
-    ],
-  }
+fromSwitchStatement discriminant cases = {
+  type: "SwitchStatement",
+  discriminant: fromNode discriminant,
+  cases: cases >>= \case [
+    SwitchCase predicates statements -> predicates <&> \predicate -> {
+      type: "SwitchCase",
+      test: maybe null fromNode predicate,
+      consequent: fromNode <$> statements,
+    }
+  ],
 };
 
-fromSwitchExpression discriminant cases = {
-  type: "CallExpression",
-  callee: {
-    type: "ArrowFunctionExpression",
-    params: [],
-    body: {
-      type: "BlockStatement",
-      body: [{
-        type: "SwitchStatement",
-        discriminant: fromNode discriminant,
-        cases: cases >>= fromNode,
-      }],
-    },
-    expression: false,
-  },
-  arguments: [],
-  optional: false,
-};
-
-fromNode = Node.match {
-  NullLiteral:                {type: "Literal", value: null},
-  BooleanLiteral:             \value -> {type: "Literal", value},
-  NumberLiteral:              \value -> {type: "Literal", value},
-  StringLiteral:              \value -> {type: "Literal", value},
-  TemplateLiteral:            fromTemplateLiteral,
-  MemberExpression:           fromMemberExpression,
-  Identifier:                 fromIdentifier,
-  ArrayExpression:            \elements -> {type: "ArrayExpression", elements: fromNode <$> elements},
-  ObjectExpression:           \properties -> {type: "ObjectExpression", properties: fromNode <$> properties},
-  ArrowFunctionExpression:    \parameters body -> { esBody = fromNode body; {type: "ArrowFunctionExpression", params: fromNode <$> parameters, body: esBody, expression: esBody.type != "BlockStatement"} },
-  Block:                      fromBlock,
-  PrefixExpression:           \operator operand -> {type: "UnaryExpression", operator, argument: fromNode operand, prefix: true},
-  InfixExpression:            \operator left right -> {type: if operator in ["&&", "||", "??"] then "LogicalExpression" else "BinaryExpression", operator, left: fromNode left, right: fromNode right},
-  ConditionalExpression:      \predicate consequent alternative -> {type: "ConditionalExpression", test: fromNode predicate, consequent: fromNode consequent, alternate: maybe {type: "Literal", value: undefined} fromNode alternative},
-  SwitchExpression:           fromSwitchExpression,
-  SwitchCase:                 fromSwitchCase,
-  CallExpression:             \callee arguments -> {type: "CallExpression", callee: fromNode callee, arguments: fromNode <$> arguments, optional: false},
-  SpreadElement:              \argument -> {type: "SpreadElement", argument: fromNode argument},
-  ExpressionStatement:        \expression -> {type: "ExpressionStatement", expression: fromNode expression},
-  VariableDeclaration:        \pattern expression -> {type: "VariableDeclaration", kind: "const", declarations: [{type: "VariableDeclarator", id: fromNode pattern, init: fromNode expression}]},
-  Property:                   fromProperty,
-  ArrayPattern:               \elements -> {type: "ArrayPattern", elements: fromNode <$> elements},
-  Elision:                    null,
-  ObjectPattern:              \properties -> {type: "ObjectPattern", properties: fromNode <$> properties},
-  RestElement:                \argument -> {type: "RestElement", argument: fromNode argument},
-  ImportDeclaration:          \source specifiers -> {type: "ImportDeclaration", specifiers: fromNode <$> specifiers, source: fromNode source},
-  ImportDefaultSpecifier:     \local -> {type: "ImportDefaultSpecifier", local: fromNode local},
-  ImportNamespaceSpecifier:   \local -> {type: "ImportNamespaceSpecifier", local: fromNode local},
-  ImportSpecifier:            \imported local -> {type: "ImportSpecifier", imported: fromNode imported, local: fromNode local},
-  ExportNamedDeclaration:     \specifiers -> {type: "ExportNamedDeclaration", specifiers: fromNode <$> specifiers},
-  ExportDefaultDeclaration:   \declaration -> {type: "ExportDefaultDeclaration", declaration: fromNode declaration},
-  ExportSpecifier:            \local exported -> {type: "ExportSpecifier", local: fromNode local, exported: fromNode exported},
-  Module:                     \imports exports statements -> {type: "Program", sourceType: "module", body: fromNode <$> imports <> statements <> exports},
-};
+fromNode node = case node of [
+  BooleanLiteral value                                    -> {type: "Literal", value},
+  NumberLiteral value                                     -> {type: "Literal", value},
+  StringLiteral value                                     -> {type: "Literal", value},
+  MemberExpression object property                        -> fromMemberExpression object property,
+  Identifier name                                         -> fromIdentifier name,
+  ThisExpression                                          -> {type: "ThisExpression"},
+  ArrayExpression elements                                -> {type: "ArrayExpression", elements: fromNode <$> elements},
+  ObjectExpression properties                             -> {type: "ObjectExpression", properties: fromNode <$> properties},
+  ArrowFunctionExpression parameters body                 -> { esBody = fromNode body; {type: "ArrowFunctionExpression", params: fromNode <$> parameters, body: esBody, expression: esBody.type /= "BlockStatement"} },
+  FunctionExpression parameters body                      -> {type: "FunctionExpression", params: fromNode <$> parameters, body: {type: "BlockStatement", body: [{type: "ReturnStatement", argument: fromNode body}]}, expression: false},
+  GeneratorFunctionDeclaration identifier parameters body -> {type: "FunctionDeclaration", id: fromNode identifier, params: fromNode <$> parameters, body: fromNode body, generator: true},
+  Block statements result                                 -> fromBlock statements result,
+  BlockStatement statements                               -> {type: "BlockStatement", body: fromNode <$> statements},
+  PrefixExpression operator operand                       -> {type: "UnaryExpression", operator, argument: fromNode operand, prefix: true},
+  IfStatement predicate consequent                        -> {type: "IfStatement", test: fromNode predicate, consequent: fromNode consequent, alternate: null},
+  IfElseStatement predicate consequent alternative        -> {type: "IfStatement", test: fromNode predicate, consequent: fromNode consequent, alternate: fromNode alternative},
+  InfixExpression (EsOperator "&&")     left right        -> {type: "LogicalExpression", operator: "&&", left: fromNode left, right: fromNode right},
+  InfixExpression (EsOperator "||")     left right        -> {type: "LogicalExpression", operator: "||", left: fromNode left, right: fromNode right},
+  InfixExpression (EsOperator operator) left right        -> {type: "BinaryExpression", operator, left: fromNode left, right: fromNode right},
+  ConditionalExpression predicate consequent alternative  -> {type: "ConditionalExpression", test: fromNode predicate, consequent: fromNode consequent, alternate: maybe {type: "Literal", value: undefined} fromNode alternative},
+  SwitchStatement discriminant cases                      -> fromSwitchStatement discriminant cases,
+  CallExpression callee arguments                         -> {type: "CallExpression", callee: fromNode callee, arguments: fromNode <$> arguments, optional: false},
+  SpreadElement argument                                  -> {type: "SpreadElement", argument: fromNode argument},
+  ExpressionStatement expression                          -> {type: "ExpressionStatement", expression: fromNode expression},
+  VariableDeclaration pattern expression                  -> {type: "VariableDeclaration", kind: "const", declarations: [{type: "VariableDeclarator", id: fromNode pattern, init: fromNode expression}]},
+  LetDeclaration pattern expression                       -> {type: "VariableDeclaration", kind: "let", declarations: [{type: "VariableDeclarator", id: fromNode pattern, init: fromNode expression}]},
+  Property key value                                      -> fromProperty key value,
+  ArrayPattern elements                                   -> {type: "ArrayPattern", elements: fromNode <$> elements},
+  ObjectPattern properties                                -> {type: "ObjectPattern", properties: fromNode <$> properties},
+  RestElement argument                                    -> {type: "RestElement", argument: fromNode argument},
+  ReturnStatement argument                                -> {type: "ReturnStatement", argument: fromNode argument},
+  AssignmentExpression operator left right                -> {type: "AssignmentExpression", operator, left: fromNode left, right: fromNode right},
+  UpdateExpression prefix? operator argument              -> {type: "UpdateExpression", prefix: prefix?, operator, argument: fromNode argument},
+  WhileStatement test body                                -> {type: "WhileStatement", test: fromNode test, body: fromNode body},
+  ForStatement init test update body                      -> {type: "ForStatement", init: fromNode init, test: fromNode test, update: fromNode update, body: fromNode body},
+  BreakStatement                                          -> {type: "BreakStatement", label: null},
+  LabeledStatement label body                             -> {type: "LabeledStatement", label: fromNode label, body: fromNode body},
+  ContinueStatement label                                 -> {type: "ContinueStatement", label: fromNode label},
+  ImportDeclaration source specifiers                     -> {type: "ImportDeclaration", specifiers: fromNode <$> specifiers, source: fromNode source},
+  ImportDefaultSpecifier local                            -> {type: "ImportDefaultSpecifier", local: fromNode local},
+  ImportNamespaceSpecifier local                          -> {type: "ImportNamespaceSpecifier", local: fromNode local},
+  ImportSpecifier imported local                          -> {type: "ImportSpecifier", imported: fromNode imported, local: fromNode local},
+  ExportNamedDeclaration specifiers                       -> {type: "ExportNamedDeclaration", specifiers: fromNode <$> specifiers},
+  ExportDefaultDeclaration declaration                    -> {type: "ExportDefaultDeclaration", declaration: fromNode declaration},
+  ExportSpecifier local exported                          -> {type: "ExportSpecifier", local: fromNode local, exported: fromNode exported},
+  Module imports exports statements                       -> {type: "Program", sourceType: "module", body: fromNode <$> imports <> statements <> exports},
+];

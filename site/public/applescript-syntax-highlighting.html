@@ -85,7 +85,7 @@ else
         delay 0.5
     end repeat
 end if
-</code></pre>
+  </code></pre>
           <p class="caption">Live rendering of AppleScript snippet</p>
           <h3 id="setup">Setup</h3>
           <p>To add AppleScript syntax highlighting to your own site or blog, do the following:</p>
@@ -96,18 +96,18 @@ end if
             <li><p>Include the brush like so:</p><pre><code>&lt;script src="/path/to/scripts/shCore.js"&gt;&lt;/script&gt;
 &lt;script src="/path/to/scripts/shBrushAppleScript.js"&gt;&lt;/script&gt;
 &lt;script&gt;SyntaxHighlighter.all()&lt;/script&gt;
-</code></pre></li>
+      </code></pre></li>
           </ol>
           <h3 id="usage">Usage</h3>
           <p>To have SyntaxHighlighter parse a block of AppleScript, wrap the code in <code>pre</code> tags like so:</p>
           <pre><code>&lt;pre class="brush: applescript; class-name: applescript;"&gt;&lt;/pre&gt;
-</code></pre>
+  </code></pre>
           <p><code>brush: applescript;</code> tells SyntaxHighlighter to use the AppleScript brush for the text within the pre tag. <code>class-name: applescript;</code> tells SyntaxHighlighter to add the class name "applescript" to the container div that is inserted into the page. (Hopefully I'm able to convince Alex that the brush name should be added as a class name automatically, which would remove the need to include <code>class-name: applescript;</code> each time.)</p>
           <div class="update">
             <h4>Update — <time datetime="2012-02-22T23:11:00.000-08:00">22 February 2012</time></h4>
             <p>Providing a <code>class-name</code> in the, ahem, class name is no longer necessary (apparently I made a convincing argument). This is now sufficient:</p>
             <pre><code>&lt;pre class="brush:applescript"&gt;&lt;/pre&gt;
-</code></pre>
+    </code></pre>
           </div>
           <p>Note that including <code>ruler: true;</code> will have no effect. Since AppleScript is displayed in a variable-width font, the ruler serves no purpose. The ruler is still inserted into the page (unless <code>ruler: false;</code> is included), but is hidden by the style sheet.</p>
           <footer class="metadata">

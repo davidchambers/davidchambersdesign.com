@@ -5,9 +5,9 @@ const body = [p([img({
   src: "/images/posts/92/helveticards.jpg"
 })]), blockquote([p([a({
   href: "http://helveticards.uberdm.com/"
-})(["Helveticards"]), "\n      are a set of über minimalist typographic playing cards by designer ", a({
+})(["Helveticards"]), " ", "are a set of über minimalist typographic playing cards by designer ", a({
   href: "https://twitter.com/uberryan"
-})(["Ryan Myers"]), "."])]), p(["I love these! I designed a set of playing cards several years ago while\n    at university, but I certainly didn't think of doing ", em(["this"]), "."]), p(["Via ", a({
+})(["Ryan Myers"]), "."])]), p(["I love these! I designed a set of playing cards several years ago while ", "at university, but I certainly didn't think of doing ", em(["this"]), "."]), p(["Via ", a({
   href: "http://laughingsquid.com/helveticards-minimalist-typographic-playing-cards/"
 })(["Laughing Squid"]), "."])];
 export default {

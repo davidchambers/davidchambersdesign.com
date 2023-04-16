@@ -14,32 +14,32 @@ export default {
 body = [
 
   p [
-   "JavaScript's regular expressions are less than awesome, sadly.
-    One limitation is the lack of start of string and end of string
-    anchors. In Perl, for example, ", code ["\\A"], " matches the
-    start of a string, ", code ["\\Z"], " the end.",
+    "JavaScript's regular expressions are less than awesome, sadly. ",
+    "One limitation is the lack of start of string and end of string ",
+    "anchors. In Perl, for example, ", code ["\\A"], " matches the ",
+    "start of a string, ", code ["\\Z"], " the end.",
   ],
 
   p [
-   "Most of the time it's possible to get by with ", code ["^"], " and ",
+    "Most of the time it's possible to get by with ", code ["^"], " and ",
     code ["$"], " which act like ", code ["\\A"], " and ", code ["\\Z"], " ",
-    strong ["except in multiline mode"], " where they match the start and
-    end of any line.",
+    strong ["except in multiline mode"], " where they match the start and ",
+    "end of any line.",
   ],
 
   p [
-   "It's possible, though, to have a lookahead act as an end of string
-    anchor in multiline mode:",
+    "It's possible, though, to have a lookahead act as an end of string ",
+    "anchor in multiline mode:",
   ],
 
-  code-block "javascript" """
-    > /bar(?![\\s\\S])/m.test('foo\\nbar')
+  code-block "javascript" [|
+    > /bar(?![\s\S])/m.test('foo\nbar')
     true
-    > /bar(?![\\s\\S])/m.test('foo\\nbar\\n')
+    > /bar(?![\s\S])/m.test('foo\nbar\n')
     false
-    > /bar(?![\\s\\S])/m.test('foo\\nbar\\nbaz')
+    > /bar(?![\s\S])/m.test('foo\nbar\nbaz')
     false
-  """,
+  |],
 
   p [
     code ["(?![\\s\\S])"], " at the end of the pattern is equivalent to ",
@@ -49,8 +49,8 @@ body = [
   h3 ["Start of string anchor?"],
 
   p [
-   "Unfortunately, since JavaScript offers lookahead but not lookbehind,
-    this approach can't be used to simulate ", code ["\\A"], ".",
+    "Unfortunately, since JavaScript offers lookahead but not lookbehind, ",
+    "this approach can't be used to simulate ", code ["\\A"], ".",
   ],
 
 ];

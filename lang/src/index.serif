@@ -17,8 +17,9 @@ parse filename sourceText = {
 };
 
 changeExtensionInImportDeclaration {source, specifiers} = {
-  source' = StringLiteral $ .replace [RegExp "[.]serif$", ".js"] source.value;
-  ImportDeclaration source' specifiers
+  s = source.value;
+  suffix = ".serif";
+  ImportDeclaration (StringLiteral $ if endsWith suffix s then sliceTo (negate suffix.length) s <> ".js" else s) specifiers
 };
 
 changeExtensions {imports, exports, statements} = {

@@ -3,100 +3,12 @@ import {code$002Dblock, $2014} from "../components.js";
 import datetime from "../datetime.js";
 const excerpt = [p(["There's no shortage of blog posts which", $2014, "like this one", $2014, "provide an introduction to ", a({
   href: "http://socket.io/"
-})(["Socket.IO"]), ". Many, though, were\n    written prior to the release of 0.7, which ushered in ", a({
+})(["Socket.IO"]), ". Many, though, were ", "written prior to the release of 0.7, which ushered in ", a({
   href: "https://github.com/LearnBoost/Socket.IO/wiki/Migrating-0.6-to-0.7"
-})(["significant API changes"]), ". Here I'll provide examples\n    of server- and client-side code using APIs provided by the ", em(["current"]), " version (0.7.4 at time of writing)."])];
+})(["significant API changes"]), ". Here I'll provide examples ", "of server- and client-side code using APIs provided by the ", em(["current"]), " version (0.7.4 at time of writing)."])];
 const body = [...excerpt, p(["The code snippets are in ", a({
   href: "http://jashkenas.github.com/coffee-script/"
-})(["CoffeeScript"]), "\n    and as such are largely free of the parentheses, squiggly brackets,\n    and semicolons that riddle the equivalent JavaScript code. For those\n    unfamiliar with CoffeeScript's syntax, here's the fifteen second\n    rundown:"]), code$002Dblock("coffeescript")(`qux = foo 'bar', (baz) -> 'Hello, world!'
-`), p(["The above is equivalent to:"]), code$002Dblock("javascript")(`var qux = foo('bar', function (baz) {
-  return 'Hello, world!';
-});
-`), p(["CoffeeScript uses ", code(["->"]), " rather than the ", code(["function"]), " keyword, and parentheses are optional\n    for most function invocations. Now, let's get started."]), h3(["Step 1: Create a server"]), p(["This is Node 101 stuff:"]), code$002Dblock("coffeescript")(`fs   = require 'fs'
-http = require 'http'
-
-server = http.createServer (req, res) ->
-  fs.readFile "#{__dirname}/socket.io.demo.html", (err, data) ->
-    res.writeHead 200, 'Content-Type': 'text/html'
-    res.end data, 'utf8'
-
-server.listen 1337
-`), p([`The server we've created simply responds to any request on
-    port 1337 with the contents of "socket.io.demo.html", which
-    must reside in the same directory as the script we're creating.`]), h3(["Step 2: Add server-side event handlers"]), code$002Dblock("coffeescript")(`io = require('socket.io').listen server
-
-io.sockets.on 'connection', (socket) ->
-
-  socket.on 'publish', (message) ->
-    io.sockets.send message
-
-  socket.on 'broadcast', (message) ->
-    socket.broadcast.send message
-
-  socket.on 'whisper', (message) ->
-    socket.broadcast.emit 'secret', message
-`), p([`Here we've instructed our server to listen for three custom
-    events: "publish", "broadcast", and "whisper". Note that these
-    particular names are not special in any way.`]), p(["When the server receives one of these events, it invokes the\n    appropriate handler with the event's data as the sole argument.\n    Since we're expecting a string argument in each of these cases,\n    we've named the parameter ", code(["message"]), "."]), p(["The \"publish\" handler passes ", code(["message"]), " to ", code(["io.sockets.send"]), ", which forwards it to all the clients.\n    The \"broadcast\" handler invokes ", code(["socket.broadcast.send"]), ",\n    which forwards ", code(["message"]), " to all the clients ", em([`except the one that emitted the "broadcast" event`]), ".\n    The \"whisper\" handler is very different in that it doesn't send\n    a message at all. Rather, it emits yet another event. Again, the\n    name of this event", $2014, "\"secret\"", $2014, "is not special in any way."]), p(["Having completed these two steps our server-side code is done,\n    so we could now run ", code(["coffee -c -b socket.io.demo.coffee"]), "\n    to produce the actual JavaScript file we'll run in Node. We're now\n    ready to tackle the client-side component."]), h3(["Step 3: Create the HTML file"]), code$002Dblock("html")(`<!doctype html>
-<html>
-  <head>
-    <title>Socket.IO demo</title>
-  </head>
-  <body>
-    <h1>Socket.IO demo</h1>
-    <input type="text" autofocus="autofocus" />
-    <button type="button">publish</button>
-    <button type="button">broadcast</button>
-    <button type="button">whisper</button>
-    <p>Status: <span id="status">Undefined</span></p>
-    <ol id="messages"></ol>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="http://jashkenas.github.com/coffee-script/extras/coffee-script.js"></script>
-    <script type="text/coffeescript">
-
-      jQuery ($) ->
-
-        // TODO: add client-side logic
-
-    </script>
-  </body>
-</html>
-`), p([code([`<script src="/socket.io/socket.io.js"></script>`]), "\n    was the line that most confused me in the tutorials I read.\n    I assumed that I'd need to serve this file myself, which\n    turned out not to be the case. Somehow, it just works."]), p([`Note the inclusion of "coffee-script.js", which enables
-    us to write our client-side logic in CoffeeScript, too. :)`]), h3(["Step 4: Add client-side Socket.IO event handlers"]), code$002Dblock("coffeescript")(`$status = $ '#status'
-socket = io.connect()
-
-socket.on 'connect', ->
-  $status.text 'Connected'
-
-socket.on 'disconnect', ->
-  $status.text 'Disconnected'
-
-socket.on 'reconnecting', (seconds) ->
-  $status.text "Reconnecting in #{seconds} seconds"
-
-socket.on 'reconnect', ->
-  $status.text 'Reconnected'
-
-socket.on 'reconnect_failed', ->
-  $status.text 'Failed to reconnect'
-
-socket.on 'message', (message) ->
-  $('<li>').text(message).appendTo $('#messages')
-
-socket.on 'secret', (message) ->
-  console.log message
-`), p(["The first five events", $2014, "\"connect\", \"disconnect\",\n    \"reconnecting\", \"reconnect\", and \"reconnect_failed\"", $2014, "are emitted by Socket.IO in response to changes in the\n    connection status. We've registered a handler for each\n    in order to expose this information to users."]), p(["We've also added handlers for \"message\" and \"secret\"\n    events. Our \"message\" handler will be called whenever\n    the server receives a \"publish\" or \"broadcast\" event\n    (", code(["io.sockets.send"]), " and ", code(["socket.broadcast.send"]), "\n    emit \"message\" events). Our \"secret\" handler will be\n    called whenever the server receives a \"whisper\" event."]), p(["All that remains is to have the client emit appropriate\n    custom events in response to input from users."]), h3(["Step 5: Add DOM event handlers which emit custom events"]), code$002Dblock("coffeescript")(`$input = $ 'input'
-
-$('button').click ->
-  socket.emit $(this).text(), $input.val()
-  $input.val('').focus()
-`), p([`Here, we've bound a "click" handler to the three buttons. Whenever one
-    of these buttons is clicked the appropriate event is emitted ("publish",
-    "broadcast", or "whisper" depending on the button clicked). The current
-    value of the text input is used as the event's data.`]), p(["That's it. We can now run ", code(["node socket.io.demo.js"]), "\n    to start our server and confirm that things behave as expected."]), h3(["How it all fits together"]), p([`Let's look at exactly what happens when a user types "the password
-    is 1234" into the text field and clicks "whisper".`]), p([`First, our "click" handler captures the DOM event and in turn emits
-    our custom "whisper" event with "the password is 1234" as its data.`]), p(["Next, the server", $2014, "which is listening for our custom events", $2014, "captures the \"whisper\" event. It then emits a \"secret\" event\n    to all clients except the one that sent the \"whisper\", passing\n    along the event data."]), p(["Finally, each client", $2014, "bar the originator of this chain of events", $2014, "captures the \"secret\" event and logs \"the password is 1234\" to the\n    console."]), h3(["Code"]), p(["The ", a({
+})(["CoffeeScript"]), " ", "and as such are largely free of the parentheses, squiggly brackets, ", "and semicolons that riddle the equivalent JavaScript code. For those ", "unfamiliar with CoffeeScript's syntax, here's the fifteen second ", "rundown:"]), code$002Dblock("coffeescript")("qux = foo 'bar', (baz) -> 'Hello, world!'\n  "), p(["The above is equivalent to:"]), code$002Dblock("javascript")("var qux = foo('bar', function (baz) {\n  return 'Hello, world!';\n});\n  "), p(["CoffeeScript uses ", code(["->"]), " rather than the ", code(["function"]), " keyword, and parentheses are optional ", "for most function invocations. Now, let's get started."]), h3(["Step 1: Create a server"]), p(["This is Node 101 stuff:"]), code$002Dblock("coffeescript")("fs   = require 'fs'\nhttp = require 'http'\n\nserver = http.createServer (req, res) ->\n  fs.readFile \"#{__dirname}/socket.io.demo.html\", (err, data) ->\n    res.writeHead 200, 'Content-Type': 'text/html'\n    res.end data, 'utf8'\n\nserver.listen 1337\n  "), p(["The server we've created simply responds to any request on ", "port 1337 with the contents of \"socket.io.demo.html\", which ", "must reside in the same directory as the script we're creating."]), h3(["Step 2: Add server-side event handlers"]), code$002Dblock("coffeescript")("io = require('socket.io').listen server\n\nio.sockets.on 'connection', (socket) ->\n\n  socket.on 'publish', (message) ->\n    io.sockets.send message\n\n  socket.on 'broadcast', (message) ->\n    socket.broadcast.send message\n\n  socket.on 'whisper', (message) ->\n    socket.broadcast.emit 'secret', message\n  "), p(["Here we've instructed our server to listen for three custom ", "events: \"publish\", \"broadcast\", and \"whisper\". Note that ", "these particular names are not special in any way."]), p(["When the server receives one of these events, it invokes the ", "appropriate handler with the event's data as the sole argument. ", "Since we're expecting a string argument in each of these cases, ", "we've named the parameter ", code(["message"]), "."]), p(["The \"publish\" handler passes ", code(["message"]), " to ", code(["io.sockets.send"]), ", which forwards it to all the clients. ", "The \"broadcast\" handler invokes ", code(["socket.broadcast.send"]), ", ", "which forwards ", code(["message"]), " to all the clients ", em(["except the one that emitted the \"broadcast\" event"]), ". ", "The \"whisper\" handler is very different in that it doesn't send ", "a message at all. Rather, it emits yet another event. Again, the ", "name of this event", $2014, "\"secret\"", $2014, "is not special in any way."]), p(["Having completed these two steps our server-side code is done, ", "so we could now run ", code(["coffee -c -b socket.io.demo.coffee"]), " ", "to produce the actual JavaScript file we'll run in Node. We're now ", "ready to tackle the client-side component."]), h3(["Step 3: Create the HTML file"]), code$002Dblock("html")("<!doctype html>\n<html>\n  <head>\n    <title>Socket.IO demo</title>\n  </head>\n  <body>\n    <h1>Socket.IO demo</h1>\n    <input type=\"text\" autofocus=\"autofocus\" />\n    <button type=\"button\">publish</button>\n    <button type=\"button\">broadcast</button>\n    <button type=\"button\">whisper</button>\n    <p>Status: <span id=\"status\">Undefined</span></p>\n    <ol id=\"messages\"></ol>\n    <script src=\"/socket.io/socket.io.js\"></script>\n    <script src=\"http://code.jquery.com/jquery-latest.js\"></script>\n    <script src=\"http://jashkenas.github.com/coffee-script/extras/coffee-script.js\"></script>\n    <script type=\"text/coffeescript\">\n\n      jQuery ($) ->\n\n        // TODO: add client-side logic\n\n    </script>\n  </body>\n</html>\n  "), p([code(["<script src=\"/socket.io/socket.io.js\"></script>"]), " ", "was the line that most confused me in the tutorials I read. ", "I assumed that I'd need to serve this file myself, which ", "turned out not to be the case. Somehow, it just works."]), p(["Note the inclusion of \"coffee-script.js\", which enables ", "us to write our client-side logic in CoffeeScript, too. :)"]), h3(["Step 4: Add client-side Socket.IO event handlers"]), code$002Dblock("coffeescript")("$status = $ '#status'\nsocket = io.connect()\n\nsocket.on 'connect', ->\n  $status.text 'Connected'\n\nsocket.on 'disconnect', ->\n  $status.text 'Disconnected'\n\nsocket.on 'reconnecting', (seconds) ->\n  $status.text \"Reconnecting in #{seconds} seconds\"\n\nsocket.on 'reconnect', ->\n  $status.text 'Reconnected'\n\nsocket.on 'reconnect_failed', ->\n  $status.text 'Failed to reconnect'\n\nsocket.on 'message', (message) ->\n  $('<li>').text(message).appendTo $('#messages')\n\nsocket.on 'secret', (message) ->\n  console.log message\n  "), p(["The first five events", $2014, "\"connect\", \"disconnect\", ", "\"reconnecting\", \"reconnect\", and \"reconnect_failed\"", $2014, "are emitted by Socket.IO in response to changes in the ", "connection status. We've registered a handler for each ", "in order to expose this information to users."]), p(["We've also added handlers for \"message\" and \"secret\" ", "events. Our \"message\" handler will be called whenever ", "the server receives a \"publish\" or \"broadcast\" event ", "(", code(["io.sockets.send"]), " and ", code(["socket.broadcast.send"]), " ", "emit \"message\" events). Our \"secret\" handler will be ", "called whenever the server receives a \"whisper\" event."]), p(["All that remains is to have the client emit appropriate ", "custom events in response to input from users."]), h3(["Step 5: Add DOM event handlers which emit custom events"]), code$002Dblock("coffeescript")("$input = $ 'input'\n\n$('button').click ->\n  socket.emit $(this).text(), $input.val()\n  $input.val('').focus()\n  "), p(["Here, we've bound a \"click\" handler to the three buttons. ", "Whenever one of these buttons is clicked the appropriate event ", "is emitted (\"publish\", \"broadcast\", or \"whisper\" depending ", "on the button clicked). The current value of the text input is ", "used as the event's data."]), p(["That's it. We can now run ", code(["node socket.io.demo.js"]), " ", "to start our server and confirm that things behave as expected."]), h3(["How it all fits together"]), p(["Let's look at exactly what happens when a user types \"the password ", "is 1234\" into the text field and clicks \"whisper\"."]), p(["First, our \"click\" handler captures the DOM event and in turn emits ", "our custom \"whisper\" event with \"the password is 1234\" as its data."]), p(["Next, the server", $2014, "which is listening for our custom events", $2014, "captures the \"whisper\" event. It then emits a \"secret\" event ", "to all clients except the one that sent the \"whisper\", passing ", "along the event data."]), p(["Finally, each client", $2014, "bar the originator of this chain of events", $2014, "captures the \"secret\" event and logs \"the password is 1234\" to the ", "console."]), h3(["Code"]), p(["The ", a({
   href: "https://bitbucket.org/davidchambers/socket.io.demo"
 })(["code used in this tutorial"]), " is available on Bitbucket."])];
 export default {

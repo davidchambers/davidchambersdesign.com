@@ -1,9 +1,9 @@
 import {article$0027, h1, h3$0027, h4, header, footer$0027, ol, ul, li$0027, li, a, time} from "./elements.js";
 import tags from "./tags.js";
-const equals = this$ => that => (() => {
+const equals = this$ => that => (function () {
   switch (globalThis.Object.prototype.toString.call(this$)) {
     case "[object Array]":
-      return (() => {
+      return (function () {
         switch (globalThis.Object.prototype.toString.call(that)) {
           case "[object Array]":
             return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
@@ -15,7 +15,7 @@ const equals = this$ => that => (() => {
       return this$ === that;
   }
 })();
-const map = f => xs => (() => {
+const map = f => xs => (function () {
   switch (globalThis.Object.prototype.toString.call(xs)) {
     case "[object Array]":
       return xs.map(x => f(x));
@@ -34,11 +34,15 @@ const render$002Dpost = post => related$002Dposts => [article$0027(equals(undefi
   class: "shorturl"
 })([a({
   href: "http://dċd.ws/" + post.id + "/"
-})(["Short URL"])])]), ...equals([])(post.tags) ? [] : [h4(["This post has the following tags:"]), ol(map(tag => li([a({
-  href: "/tag/" + tag + "/"
-})([tags[tag]])]))(post.tags))]]), ...equals([])(related$002Dposts) ? [] : [h3$0027({
+})(["Short URL"])])]), ...equals([])(post.tags) ? [] : [h4(["This post has the following tags:"]), ol(map(function (tag) {
+  return li([a({
+    href: "/tag/" + tag + "/"
+  })([tags[tag]])]);
+})(post.tags))]]), ...equals([])(related$002Dposts) ? [] : [h3$0027({
   id: "related"
-})(["Possibly related posts"]), ul(map(post => li([a({
-  href: "/" + post.slug + "/"
-})(post.title)]))(related$002Dposts))]])];
+})(["Possibly related posts"]), ul(map(function (post) {
+  return li([a({
+    href: "/" + post.slug + "/"
+  })(post.title)]);
+})(related$002Dposts))]])];
 export default render$002Dpost;

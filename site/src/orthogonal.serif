@@ -11,7 +11,7 @@ simplify paths = {
       reduce (\[prev, path] curr -> {
                 if curr[0] == "M" then {
                   if (prev[0] == "M" || prev[0] == "m") then {
-                    [curr, path]  ;; ignore previous move
+                    [curr, path]  -- ignore previous move
                   } else {
                     [curr, [...path, prev]]
                   }
@@ -30,14 +30,14 @@ simplify paths = {
   }
 };
 
-render = S.unwords . S.join . simplify;
+render = S.unwords . join . simplify;
 
 ⇦ x = ["m", [-x, 0]];
-⇨ x = ["m", [+x, 0]];
+⇨ x = ["m", [ x, 0]];
 ⇧ y = ["m", [0, -y]];
-⇩ y = ["m", [0, +y]];
+⇩ y = ["m", [0,  y]];
 
 ← x = ["h", -x];
-→ x = ["h", +x];
+→ x = ["h",  x];
 ↑ y = ["v", -y];
-↓ y = ["v", +y];
+↓ y = ["v",  y];

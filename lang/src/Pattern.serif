@@ -1,0 +1,46 @@
+import * from "./Node.serif";
+
+export {
+  names,
+  serialize,
+};
+
+names = \case [
+  Identifier "_" -> [],
+  Identifier name -> [name],
+  RestElement (Identifier name) -> [name],
+  ArrayExpression patterns -> patterns >>= names,
+  DataConstructorPattern _ patterns -> patterns >>= names,
+  _ -> [],
+];
+
+serialize = \case [
+  Identifier "_" -> ObjectExpression [
+    Property (StringLiteral "type") (StringLiteral "any"),
+  ],
+  Identifier name -> ObjectExpression [
+    Property (StringLiteral "type") (StringLiteral "identifier"),
+    Property (StringLiteral "name") (StringLiteral name),
+  ],
+  RestElement (Identifier name) -> ObjectExpression [
+    Property (StringLiteral "type") (StringLiteral "slice"),
+    Property (StringLiteral "name") (StringLiteral name),
+  ],
+  NumberLiteral value -> ObjectExpression [
+    Property (StringLiteral "type") (StringLiteral "literal"),
+    Property (StringLiteral "value") (NumberLiteral value),
+  ],
+  StringLiteral value -> ObjectExpression [
+    Property (StringLiteral "type") (StringLiteral "literal"),
+    Property (StringLiteral "value") (StringLiteral value),
+  ],
+  ArrayExpression patterns -> ObjectExpression [
+    Property (StringLiteral "type") (StringLiteral "array"),
+    Property (StringLiteral "patterns") (ArrayExpression $ serialize <$> patterns),
+  ],
+  DataConstructorPattern (Identifier tag) patterns -> ObjectExpression [
+    Property (StringLiteral "type") (StringLiteral "data"),
+    Property (StringLiteral "tag") (StringLiteral tag),
+    Property (StringLiteral "patterns") (ArrayExpression $ serialize <$> patterns),
+  ],
+];

@@ -1,0 +1,21 @@
+export default {
+  Nil,
+  Cons,
+  fantasy-land/of: \x -> Cons x Nil,
+};
+export {Nil, Cons};
+
+type List = Nil | Cons head tail implements {
+  fantasy-land/concat: \that -> case this of [
+    Nil -> that,
+    Cons head tail -> Cons head $ tail.fantasy-land/concat that,
+  ],
+  fantasy-land/reduce: \(f, y) -> case this of [
+    Nil -> y,
+    Cons head tail -> tail.fantasy-land/reduce (f, f (y, head)),
+  ],
+  fantasy-land/filter: \pred -> case this of [
+    Nil -> Nil,
+    Cons head tail -> if pred head then Cons head (tail.fantasy-land/filter pred) else tail.fantasy-land/filter pred,
+  ],
+};

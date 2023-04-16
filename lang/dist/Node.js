@@ -1,454 +1,428 @@
-const map = f => xs => (() => {
-  switch (globalThis.Object.prototype.toString.call(xs)) {
+const null$ = globalThis.JSON.parse("null");
+const typeof$ = x => x === null$ ? "null" : typeof x;
+const equals = this$ => that => (() => {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
     case "[object Array]":
-      return xs.map(x => f(x));
+      return (() => {
+        switch (globalThis.Object.prototype.toString.call(that)) {
+          case "[object Array]":
+            return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
+          default:
+            return false;
+        }
+      })();
+    case "[object Object]":
+      return (() => {
+        switch (globalThis.Object.prototype.toString.call(that)) {
+          case "[object Object]":
+            return typeof$(this$["fantasy-land/equals"]) === "function" ? this$["fantasy-land/equals"](that) : this$ === that;
+          default:
+            return false;
+        }
+      })();
     default:
-      return xs["fantasy-land/map"](f);
+      return this$ === that;
   }
 })();
-const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, Block, BooleanLiteral, CallExpression, ConditionalExpression, DataConstructorDefinition, DataConstructorParameter, DataTypeDeclaration, DoBlockExpression, Elision, EmptySection, ExportAllSpecifier, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, InfixExpression, LeftSection, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PrefixExpression, Property, PropertyAccessor, RestElement, RightSection, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, VariableDeclaration} = (() => {
-  const ArrayExpression = elements => ({
-    [Symbol.for("tag")]: "ArrayExpression",
+const {ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, AssignmentExpression, Block, BlockStatement, BooleanLiteral, BreakStatement, CallExpression, CaseClause, CaseExpression, ConditionalExpression, ContinueStatement, DataConstructorDefinition, DataConstructorPattern, DataTypeDeclaration, DoBlockExpression, EmptySection, ExportAllSpecifier, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, ForStatement, FunctionDeclaration, FunctionExpression, GeneratorFunctionDeclaration, Identifier, IfStatement, IfElseStatement, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, InfixExpression, LabeledStatement, LambdaCaseExpression, LeftSection, LetDeclaration, MemberExpression, MethodCallExpression, Module, NumberLiteral, ObjectExpression, ObjectPattern, PrefixExpression, Property, PropertyAccessor, Quasiquotation, RestElement, ReturnStatement, RightSection, SpreadElement, StringLiteral, SwitchCase, SwitchStatement, ThisExpression, UpdateExpression, VariableDeclaration, WhileStatement} = (() => {
+  const $prototype = {
+    ["fantasy-land/equals"]: function (that) {
+      return equals(this.$tag)(that.$tag) && equals(this.$values)(that.$values);
+    }
+  };
+  const ArrayExpression = elements => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ArrayExpression",
+    $values: [elements],
     elements
   });
-  const ArrayPattern = elements => ({
-    [Symbol.for("tag")]: "ArrayPattern",
+  const ArrayPattern = elements => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ArrayPattern",
+    $values: [elements],
     elements
   });
-  const ArrowAssignmentStatement = pattern => expression => ({
-    [Symbol.for("tag")]: "ArrowAssignmentStatement",
+  const ArrowAssignmentStatement = pattern => expression => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ArrowAssignmentStatement",
+    $values: [pattern, expression],
     pattern,
     expression
   });
-  const ArrowFunctionExpression = parameters => body => ({
-    [Symbol.for("tag")]: "ArrowFunctionExpression",
+  const ArrowFunctionExpression = parameters => body => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ArrowFunctionExpression",
+    $values: [parameters, body],
     parameters,
     body
   });
-  const Block = statements => result => ({
-    [Symbol.for("tag")]: "Block",
+  const AssignmentExpression = operator => left => right => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "AssignmentExpression",
+    $values: [operator, left, right],
+    operator,
+    left,
+    right
+  });
+  const Block = statements => result => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "Block",
+    $values: [statements, result],
     statements,
     result
   });
-  const BooleanLiteral = value => ({
-    [Symbol.for("tag")]: "BooleanLiteral",
+  const BlockStatement = statements => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "BlockStatement",
+    $values: [statements],
+    statements
+  });
+  const BooleanLiteral = value => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "BooleanLiteral",
+    $values: [value],
     value
   });
-  const CallExpression = callee => arguments$ => ({
-    [Symbol.for("tag")]: "CallExpression",
+  const BreakStatement = globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "BreakStatement",
+    $values: []
+  });
+  const CallExpression = callee => arguments$ => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "CallExpression",
+    $values: [callee, arguments$],
     callee,
     arguments: arguments$
   });
-  const ConditionalExpression = predicate => consequent => alternative => ({
-    [Symbol.for("tag")]: "ConditionalExpression",
+  const CaseClause = predicate => consequent => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "CaseClause",
+    $values: [predicate, consequent],
+    predicate,
+    consequent
+  });
+  const CaseExpression = discriminant => cases => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "CaseExpression",
+    $values: [discriminant, cases],
+    discriminant,
+    cases
+  });
+  const ConditionalExpression = predicate => consequent => alternative => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ConditionalExpression",
+    $values: [predicate, consequent, alternative],
     predicate,
     consequent,
     alternative
   });
-  const DataConstructorDefinition = identifier => parameters => ({
-    [Symbol.for("tag")]: "DataConstructorDefinition",
+  const ContinueStatement = label => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ContinueStatement",
+    $values: [label],
+    label
+  });
+  const DataConstructorDefinition = identifier => parameters => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "DataConstructorDefinition",
+    $values: [identifier, parameters],
     identifier,
     parameters
   });
-  const DataConstructorParameter = identifier => recursionDepth => ({
-    [Symbol.for("tag")]: "DataConstructorParameter",
+  const DataConstructorPattern = identifier => arguments$ => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "DataConstructorPattern",
+    $values: [identifier, arguments$],
     identifier,
-    recursionDepth
+    arguments: arguments$
   });
-  const DataTypeDeclaration = identifier => constructors => ({
-    [Symbol.for("tag")]: "DataTypeDeclaration",
+  const DataTypeDeclaration = identifier => constructors => implementations => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "DataTypeDeclaration",
+    $values: [identifier, constructors, implementations],
     identifier,
-    constructors
+    constructors,
+    implementations
   });
-  const DoBlockExpression = operations => result => ({
-    [Symbol.for("tag")]: "DoBlockExpression",
+  const DoBlockExpression = operations => result => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "DoBlockExpression",
+    $values: [operations, result],
     operations,
     result
   });
-  const Elision = {
-    [Symbol.for("tag")]: "Elision"
-  };
-  const EmptySection = operator => ({
-    [Symbol.for("tag")]: "EmptySection",
+  const EmptySection = operator => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "EmptySection",
+    $values: [operator],
     operator
   });
-  const ExportAllSpecifier = hiding => ({
-    [Symbol.for("tag")]: "ExportAllSpecifier",
+  const ExportAllSpecifier = hiding => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ExportAllSpecifier",
+    $values: [hiding],
     hiding
   });
-  const ExportDefaultDeclaration = declaration => ({
-    [Symbol.for("tag")]: "ExportDefaultDeclaration",
+  const ExportDefaultDeclaration = declaration => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ExportDefaultDeclaration",
+    $values: [declaration],
     declaration
   });
-  const ExportNamedDeclaration = specifiers => ({
-    [Symbol.for("tag")]: "ExportNamedDeclaration",
+  const ExportNamedDeclaration = specifiers => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ExportNamedDeclaration",
+    $values: [specifiers],
     specifiers
   });
-  const ExportSpecifier = local => exported => ({
-    [Symbol.for("tag")]: "ExportSpecifier",
+  const ExportSpecifier = local => exported => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ExportSpecifier",
+    $values: [local, exported],
     local,
     exported
   });
-  const ExpressionStatement = expression => ({
-    [Symbol.for("tag")]: "ExpressionStatement",
+  const ExpressionStatement = expression => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ExpressionStatement",
+    $values: [expression],
     expression
   });
-  const FunctionDeclaration = name => parameters => body => ({
-    [Symbol.for("tag")]: "FunctionDeclaration",
-    name,
+  const ForStatement = init => test => update => body => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ForStatement",
+    $values: [init, test, update, body],
+    init,
+    test,
+    update,
+    body
+  });
+  const FunctionDeclaration = identifier => parameters => body => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "FunctionDeclaration",
+    $values: [identifier, parameters, body],
+    identifier,
     parameters,
     body
   });
-  const Identifier = name => ({
-    [Symbol.for("tag")]: "Identifier",
+  const FunctionExpression = parameters => body => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "FunctionExpression",
+    $values: [parameters, body],
+    parameters,
+    body
+  });
+  const GeneratorFunctionDeclaration = identifier => parameters => body => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "GeneratorFunctionDeclaration",
+    $values: [identifier, parameters, body],
+    identifier,
+    parameters,
+    body
+  });
+  const Identifier = name => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "Identifier",
+    $values: [name],
     name
   });
-  const ImportAllSpecifier = hiding => ({
-    [Symbol.for("tag")]: "ImportAllSpecifier",
+  const IfStatement = predicate => consequent => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "IfStatement",
+    $values: [predicate, consequent],
+    predicate,
+    consequent
+  });
+  const IfElseStatement = predicate => consequent => alternative => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "IfElseStatement",
+    $values: [predicate, consequent, alternative],
+    predicate,
+    consequent,
+    alternative
+  });
+  const ImportAllSpecifier = hiding => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ImportAllSpecifier",
+    $values: [hiding],
     hiding
   });
-  const ImportDeclaration = source => specifiers => ({
-    [Symbol.for("tag")]: "ImportDeclaration",
+  const ImportDeclaration = source => specifiers => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ImportDeclaration",
+    $values: [source, specifiers],
     source,
     specifiers
   });
-  const ImportDefaultSpecifier = local => ({
-    [Symbol.for("tag")]: "ImportDefaultSpecifier",
+  const ImportDefaultSpecifier = local => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ImportDefaultSpecifier",
+    $values: [local],
     local
   });
-  const ImportNamespaceSpecifier = local => ({
-    [Symbol.for("tag")]: "ImportNamespaceSpecifier",
+  const ImportNamespaceSpecifier = local => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ImportNamespaceSpecifier",
+    $values: [local],
     local
   });
-  const ImportSpecifier = imported => local => ({
-    [Symbol.for("tag")]: "ImportSpecifier",
+  const ImportSpecifier = imported => local => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ImportSpecifier",
+    $values: [imported, local],
     imported,
     local
   });
-  const InfixCallExpression = operator => left => right => ({
-    [Symbol.for("tag")]: "InfixCallExpression",
+  const InfixCallExpression = operator => left => right => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "InfixCallExpression",
+    $values: [operator, left, right],
     operator,
     left,
     right
   });
-  const InfixExpression = operator => left => right => ({
-    [Symbol.for("tag")]: "InfixExpression",
+  const InfixExpression = operator => left => right => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "InfixExpression",
+    $values: [operator, left, right],
     operator,
     left,
     right
   });
-  const LeftSection = operator => operand => ({
-    [Symbol.for("tag")]: "LeftSection",
+  const LabeledStatement = label => body => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "LabeledStatement",
+    $values: [label, body],
+    label,
+    body
+  });
+  const LambdaCaseExpression = cases => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "LambdaCaseExpression",
+    $values: [cases],
+    cases
+  });
+  const LeftSection = operator => operand => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "LeftSection",
+    $values: [operator, operand],
     operator,
     operand
   });
-  const MemberExpression = object => property => ({
-    [Symbol.for("tag")]: "MemberExpression",
+  const LetDeclaration = pattern => expression => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "LetDeclaration",
+    $values: [pattern, expression],
+    pattern,
+    expression
+  });
+  const MemberExpression = object => property => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "MemberExpression",
+    $values: [object, property],
     object,
     property
   });
-  const MethodCallExpression = name => ({
-    [Symbol.for("tag")]: "MethodCallExpression",
+  const MethodCallExpression = name => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "MethodCallExpression",
+    $values: [name],
     name
   });
-  const Module = imports => exports => statements => ({
-    [Symbol.for("tag")]: "Module",
+  const Module = imports => exports => statements => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "Module",
+    $values: [imports, exports, statements],
     imports,
     exports,
     statements
   });
-  const NullLiteral = {
-    [Symbol.for("tag")]: "NullLiteral"
-  };
-  const NumberLiteral = value => ({
-    [Symbol.for("tag")]: "NumberLiteral",
+  const NumberLiteral = value => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "NumberLiteral",
+    $values: [value],
     value
   });
-  const ObjectExpression = properties => ({
-    [Symbol.for("tag")]: "ObjectExpression",
+  const ObjectExpression = properties => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ObjectExpression",
+    $values: [properties],
     properties
   });
-  const ObjectPattern = properties => ({
-    [Symbol.for("tag")]: "ObjectPattern",
+  const ObjectPattern = properties => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ObjectPattern",
+    $values: [properties],
     properties
   });
-  const PrefixExpression = operator => operand => ({
-    [Symbol.for("tag")]: "PrefixExpression",
+  const PrefixExpression = operator => operand => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "PrefixExpression",
+    $values: [operator, operand],
     operator,
     operand
   });
-  const Property = key => value => ({
-    [Symbol.for("tag")]: "Property",
+  const Property = key => value => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "Property",
+    $values: [key, value],
     key,
     value
   });
-  const PropertyAccessor = identifier => ({
-    [Symbol.for("tag")]: "PropertyAccessor",
-    identifier
+  const PropertyAccessor = identifiers => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "PropertyAccessor",
+    $values: [identifiers],
+    identifiers
   });
-  const RestElement = argument => ({
-    [Symbol.for("tag")]: "RestElement",
+  const Quasiquotation = value => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "Quasiquotation",
+    $values: [value],
+    value
+  });
+  const RestElement = argument => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "RestElement",
+    $values: [argument],
     argument
   });
-  const RightSection = operator => operand => ({
-    [Symbol.for("tag")]: "RightSection",
+  const ReturnStatement = argument => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ReturnStatement",
+    $values: [argument],
+    argument
+  });
+  const RightSection = operator => operand => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "RightSection",
+    $values: [operator, operand],
     operator,
     operand
   });
-  const SpreadElement = argument => ({
-    [Symbol.for("tag")]: "SpreadElement",
+  const SpreadElement = argument => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "SpreadElement",
+    $values: [argument],
     argument
   });
-  const StringLiteral = value => ({
-    [Symbol.for("tag")]: "StringLiteral",
+  const StringLiteral = value => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "StringLiteral",
+    $values: [value],
     value
   });
-  const SwitchCase = predicates => consequent => ({
-    [Symbol.for("tag")]: "SwitchCase",
+  const SwitchCase = predicates => statements => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "SwitchCase",
+    $values: [predicates, statements],
     predicates,
-    consequent
+    statements
   });
-  const SwitchExpression = discriminant => cases => ({
-    [Symbol.for("tag")]: "SwitchExpression",
+  const SwitchStatement = discriminant => cases => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "SwitchStatement",
+    $values: [discriminant, cases],
     discriminant,
     cases
   });
-  const TemplateLiteral = quasis => expressions => ({
-    [Symbol.for("tag")]: "TemplateLiteral",
-    quasis,
-    expressions
+  const ThisExpression = globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "ThisExpression",
+    $values: []
   });
-  const VariableDeclaration = pattern => expression => ({
-    [Symbol.for("tag")]: "VariableDeclaration",
+  const UpdateExpression = prefix$003F => operator => argument => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "UpdateExpression",
+    $values: [prefix$003F, operator, argument],
+    ["prefix?"]: prefix$003F,
+    operator,
+    argument
+  });
+  const VariableDeclaration = pattern => expression => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "VariableDeclaration",
+    $values: [pattern, expression],
     pattern,
     expression
   });
-  const $matchOr = $default => $cases => node => Object.hasOwn($cases, node[Symbol.for("tag")]) ? (() => {
-    switch (node[Symbol.for("tag")]) {
-      case "ArrayExpression":
-        return $cases.ArrayExpression(node.elements);
-      case "ArrayPattern":
-        return $cases.ArrayPattern(node.elements);
-      case "ArrowAssignmentStatement":
-        return $cases.ArrowAssignmentStatement(node.pattern)(node.expression);
-      case "ArrowFunctionExpression":
-        return $cases.ArrowFunctionExpression(node.parameters)(node.body);
-      case "Block":
-        return $cases.Block(node.statements)(node.result);
-      case "BooleanLiteral":
-        return $cases.BooleanLiteral(node.value);
-      case "CallExpression":
-        return $cases.CallExpression(node.callee)(node.arguments);
-      case "ConditionalExpression":
-        return $cases.ConditionalExpression(node.predicate)(node.consequent)(node.alternative);
-      case "DataConstructorDefinition":
-        return $cases.DataConstructorDefinition(node.identifier)(node.parameters);
-      case "DataConstructorParameter":
-        return $cases.DataConstructorParameter(node.identifier)(node.recursionDepth);
-      case "DataTypeDeclaration":
-        return $cases.DataTypeDeclaration(node.identifier)(node.constructors);
-      case "DoBlockExpression":
-        return $cases.DoBlockExpression(node.operations)(node.result);
-      case "Elision":
-        return $cases.Elision;
-      case "EmptySection":
-        return $cases.EmptySection(node.operator);
-      case "ExportAllSpecifier":
-        return $cases.ExportAllSpecifier(node.hiding);
-      case "ExportDefaultDeclaration":
-        return $cases.ExportDefaultDeclaration(node.declaration);
-      case "ExportNamedDeclaration":
-        return $cases.ExportNamedDeclaration(node.specifiers);
-      case "ExportSpecifier":
-        return $cases.ExportSpecifier(node.local)(node.exported);
-      case "ExpressionStatement":
-        return $cases.ExpressionStatement(node.expression);
-      case "FunctionDeclaration":
-        return $cases.FunctionDeclaration(node.name)(node.parameters)(node.body);
-      case "Identifier":
-        return $cases.Identifier(node.name);
-      case "ImportAllSpecifier":
-        return $cases.ImportAllSpecifier(node.hiding);
-      case "ImportDeclaration":
-        return $cases.ImportDeclaration(node.source)(node.specifiers);
-      case "ImportDefaultSpecifier":
-        return $cases.ImportDefaultSpecifier(node.local);
-      case "ImportNamespaceSpecifier":
-        return $cases.ImportNamespaceSpecifier(node.local);
-      case "ImportSpecifier":
-        return $cases.ImportSpecifier(node.imported)(node.local);
-      case "InfixCallExpression":
-        return $cases.InfixCallExpression(node.operator)(node.left)(node.right);
-      case "InfixExpression":
-        return $cases.InfixExpression(node.operator)(node.left)(node.right);
-      case "LeftSection":
-        return $cases.LeftSection(node.operator)(node.operand);
-      case "MemberExpression":
-        return $cases.MemberExpression(node.object)(node.property);
-      case "MethodCallExpression":
-        return $cases.MethodCallExpression(node.name);
-      case "Module":
-        return $cases.Module(node.imports)(node.exports)(node.statements);
-      case "NullLiteral":
-        return $cases.NullLiteral;
-      case "NumberLiteral":
-        return $cases.NumberLiteral(node.value);
-      case "ObjectExpression":
-        return $cases.ObjectExpression(node.properties);
-      case "ObjectPattern":
-        return $cases.ObjectPattern(node.properties);
-      case "PrefixExpression":
-        return $cases.PrefixExpression(node.operator)(node.operand);
-      case "Property":
-        return $cases.Property(node.key)(node.value);
-      case "PropertyAccessor":
-        return $cases.PropertyAccessor(node.identifier);
-      case "RestElement":
-        return $cases.RestElement(node.argument);
-      case "RightSection":
-        return $cases.RightSection(node.operator)(node.operand);
-      case "SpreadElement":
-        return $cases.SpreadElement(node.argument);
-      case "StringLiteral":
-        return $cases.StringLiteral(node.value);
-      case "SwitchCase":
-        return $cases.SwitchCase(node.predicates)(node.consequent);
-      case "SwitchExpression":
-        return $cases.SwitchExpression(node.discriminant)(node.cases);
-      case "TemplateLiteral":
-        return $cases.TemplateLiteral(node.quasis)(node.expressions);
-      case "VariableDeclaration":
-        return $cases.VariableDeclaration(node.pattern)(node.expression);
-    }
-  })() : $default(node);
-  const $match = $matchOr(node => CasesNotExhaustive);
-  const $transform = $cases => (() => {
-    const recur = $matchOr(Node)({
-      ArrayExpression: elements => ArrayExpression(map(recur)(elements)),
-      ArrayPattern: elements => ArrayPattern(map(recur)(elements)),
-      ArrowAssignmentStatement: pattern => expression => ArrowAssignmentStatement(recur(pattern))(recur(expression)),
-      ArrowFunctionExpression: parameters => body => ArrowFunctionExpression(map(recur)(parameters))(recur(body)),
-      Block: statements => result => Block(map(recur)(statements))(map(recur)(result)),
-      BooleanLiteral: value => BooleanLiteral(value),
-      CallExpression: callee => arguments$ => CallExpression(recur(callee))(map(recur)(arguments$)),
-      ConditionalExpression: predicate => consequent => alternative => ConditionalExpression(recur(predicate))(recur(consequent))(map(recur)(alternative)),
-      DataConstructorDefinition: identifier => parameters => DataConstructorDefinition(recur(identifier))(map(recur)(parameters)),
-      DataConstructorParameter: identifier => recursionDepth => DataConstructorParameter(recur(identifier))(recursionDepth),
-      DataTypeDeclaration: identifier => constructors => DataTypeDeclaration(recur(identifier))(map(recur)(constructors)),
-      DoBlockExpression: operations => result => DoBlockExpression(map(recur)(operations))(recur(result)),
-      Elision,
-      EmptySection: operator => EmptySection(operator),
-      ExportAllSpecifier: hiding => ExportAllSpecifier(map(recur)(hiding)),
-      ExportDefaultDeclaration: declaration => ExportDefaultDeclaration(recur(declaration)),
-      ExportNamedDeclaration: specifiers => ExportNamedDeclaration(map(recur)(specifiers)),
-      ExportSpecifier: local => exported => ExportSpecifier(recur(local))(recur(exported)),
-      ExpressionStatement: expression => ExpressionStatement(recur(expression)),
-      FunctionDeclaration: name => parameters => body => FunctionDeclaration(name)(map(recur)(parameters))(recur(body)),
-      Identifier: name => Identifier(name),
-      ImportAllSpecifier: hiding => ImportAllSpecifier(map(recur)(hiding)),
-      ImportDeclaration: source => specifiers => ImportDeclaration(source)(map(recur)(specifiers)),
-      ImportDefaultSpecifier: local => ImportDefaultSpecifier(recur(local)),
-      ImportNamespaceSpecifier: local => ImportNamespaceSpecifier(recur(local)),
-      ImportSpecifier: imported => local => ImportSpecifier(recur(imported))(recur(local)),
-      InfixCallExpression: operator => left => right => InfixCallExpression(operator)(recur(left))(recur(right)),
-      InfixExpression: operator => left => right => InfixExpression(operator)(recur(left))(recur(right)),
-      LeftSection: operator => operand => LeftSection(operator)(recur(operand)),
-      MemberExpression: object => property => MemberExpression(recur(object))(recur(property)),
-      MethodCallExpression: name => MethodCallExpression(name),
-      Module: imports => exports => statements => Module(map(recur)(imports))(map(recur)(exports))(map(recur)(statements)),
-      NullLiteral,
-      NumberLiteral: value => NumberLiteral(value),
-      ObjectExpression: properties => ObjectExpression(map(recur)(properties)),
-      ObjectPattern: properties => ObjectPattern(map(recur)(properties)),
-      PrefixExpression: operator => operand => PrefixExpression(operator)(recur(operand)),
-      Property: key => value => Property(recur(key))(recur(value)),
-      PropertyAccessor: identifier => PropertyAccessor(recur(identifier)),
-      RestElement: argument => RestElement(recur(argument)),
-      RightSection: operator => operand => RightSection(operator)(recur(operand)),
-      SpreadElement: argument => SpreadElement(recur(argument)),
-      StringLiteral: value => StringLiteral(value),
-      SwitchCase: predicates => consequent => SwitchCase(map(map(recur))(predicates))(recur(consequent)),
-      SwitchExpression: discriminant => cases => SwitchExpression(recur(discriminant))(map(recur)(cases)),
-      TemplateLiteral: quasis => expressions => TemplateLiteral(quasis)(map(recur)(expressions)),
-      VariableDeclaration: pattern => expression => VariableDeclaration(recur(pattern))(recur(expression)),
-      ...$cases
-    });
-    return recur;
-  })();
-  const $foldRec = $cases => (() => {
-    const recur = $matchOr(Node)({
-      ArrayExpression: elements => $cases.ArrayExpression(map(recur)(elements)),
-      ArrayPattern: elements => $cases.ArrayPattern(map(recur)(elements)),
-      ArrowAssignmentStatement: pattern => expression => $cases.ArrowAssignmentStatement(recur(pattern))(recur(expression)),
-      ArrowFunctionExpression: parameters => body => $cases.ArrowFunctionExpression(map(recur)(parameters))(recur(body)),
-      Block: statements => result => $cases.Block(map(recur)(statements))(map(recur)(result)),
-      BooleanLiteral: value => $cases.BooleanLiteral(value),
-      CallExpression: callee => arguments$ => $cases.CallExpression(recur(callee))(map(recur)(arguments$)),
-      ConditionalExpression: predicate => consequent => alternative => $cases.ConditionalExpression(recur(predicate))(recur(consequent))(map(recur)(alternative)),
-      DataConstructorDefinition: identifier => parameters => $cases.DataConstructorDefinition(recur(identifier))(map(recur)(parameters)),
-      DataConstructorParameter: identifier => recursionDepth => $cases.DataConstructorParameter(recur(identifier))(recursionDepth),
-      DataTypeDeclaration: identifier => constructors => $cases.DataTypeDeclaration(recur(identifier))(map(recur)(constructors)),
-      DoBlockExpression: operations => result => $cases.DoBlockExpression(map(recur)(operations))(recur(result)),
-      Elision: $cases.Elision,
-      EmptySection: operator => $cases.EmptySection(operator),
-      ExportAllSpecifier: hiding => $cases.ExportAllSpecifier(map(recur)(hiding)),
-      ExportDefaultDeclaration: declaration => $cases.ExportDefaultDeclaration(recur(declaration)),
-      ExportNamedDeclaration: specifiers => $cases.ExportNamedDeclaration(map(recur)(specifiers)),
-      ExportSpecifier: local => exported => $cases.ExportSpecifier(recur(local))(recur(exported)),
-      ExpressionStatement: expression => $cases.ExpressionStatement(recur(expression)),
-      FunctionDeclaration: name => parameters => body => $cases.FunctionDeclaration(name)(map(recur)(parameters))(recur(body)),
-      Identifier: name => $cases.Identifier(name),
-      ImportAllSpecifier: hiding => $cases.ImportAllSpecifier(map(recur)(hiding)),
-      ImportDeclaration: source => specifiers => $cases.ImportDeclaration(source)(map(recur)(specifiers)),
-      ImportDefaultSpecifier: local => $cases.ImportDefaultSpecifier(recur(local)),
-      ImportNamespaceSpecifier: local => $cases.ImportNamespaceSpecifier(recur(local)),
-      ImportSpecifier: imported => local => $cases.ImportSpecifier(recur(imported))(recur(local)),
-      InfixCallExpression: operator => left => right => $cases.InfixCallExpression(operator)(recur(left))(recur(right)),
-      InfixExpression: operator => left => right => $cases.InfixExpression(operator)(recur(left))(recur(right)),
-      LeftSection: operator => operand => $cases.LeftSection(operator)(recur(operand)),
-      MemberExpression: object => property => $cases.MemberExpression(recur(object))(recur(property)),
-      MethodCallExpression: name => $cases.MethodCallExpression(name),
-      Module: imports => exports => statements => $cases.Module(map(recur)(imports))(map(recur)(exports))(map(recur)(statements)),
-      NullLiteral: $cases.NullLiteral,
-      NumberLiteral: value => $cases.NumberLiteral(value),
-      ObjectExpression: properties => $cases.ObjectExpression(map(recur)(properties)),
-      ObjectPattern: properties => $cases.ObjectPattern(map(recur)(properties)),
-      PrefixExpression: operator => operand => $cases.PrefixExpression(operator)(recur(operand)),
-      Property: key => value => $cases.Property(recur(key))(recur(value)),
-      PropertyAccessor: identifier => $cases.PropertyAccessor(recur(identifier)),
-      RestElement: argument => $cases.RestElement(recur(argument)),
-      RightSection: operator => operand => $cases.RightSection(operator)(recur(operand)),
-      SpreadElement: argument => $cases.SpreadElement(recur(argument)),
-      StringLiteral: value => $cases.StringLiteral(value),
-      SwitchCase: predicates => consequent => $cases.SwitchCase(map(map(recur))(predicates))(recur(consequent)),
-      SwitchExpression: discriminant => cases => $cases.SwitchExpression(recur(discriminant))(map(recur)(cases)),
-      TemplateLiteral: quasis => expressions => $cases.TemplateLiteral(quasis)(map(recur)(expressions)),
-      VariableDeclaration: pattern => expression => $cases.VariableDeclaration(recur(pattern))(recur(expression))
-    });
-    return recur;
-  })();
+  const WhileStatement = test => body => globalThis.Object.assign(globalThis.Object.create($prototype), {
+    $tag: "WhileStatement",
+    $values: [test, body],
+    test,
+    body
+  });
   return {
     ArrayExpression,
     ArrayPattern,
     ArrowAssignmentStatement,
     ArrowFunctionExpression,
+    AssignmentExpression,
     Block,
+    BlockStatement,
     BooleanLiteral,
+    BreakStatement,
     CallExpression,
+    CaseClause,
+    CaseExpression,
     ConditionalExpression,
+    ContinueStatement,
     DataConstructorDefinition,
-    DataConstructorParameter,
+    DataConstructorPattern,
     DataTypeDeclaration,
     DoBlockExpression,
-    Elision,
     EmptySection,
     ExportAllSpecifier,
     ExportDefaultDeclaration,
     ExportNamedDeclaration,
     ExportSpecifier,
     ExpressionStatement,
+    ForStatement,
     FunctionDeclaration,
+    FunctionExpression,
+    GeneratorFunctionDeclaration,
     Identifier,
+    IfStatement,
+    IfElseStatement,
     ImportAllSpecifier,
     ImportDeclaration,
     ImportDefaultSpecifier,
@@ -456,32 +430,31 @@ const {Node, ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunct
     ImportSpecifier,
     InfixCallExpression,
     InfixExpression,
+    LabeledStatement,
+    LambdaCaseExpression,
     LeftSection,
+    LetDeclaration,
     MemberExpression,
     MethodCallExpression,
     Module,
-    NullLiteral,
     NumberLiteral,
     ObjectExpression,
     ObjectPattern,
     PrefixExpression,
     Property,
     PropertyAccessor,
+    Quasiquotation,
     RestElement,
+    ReturnStatement,
     RightSection,
     SpreadElement,
     StringLiteral,
     SwitchCase,
-    SwitchExpression,
-    TemplateLiteral,
+    SwitchStatement,
+    ThisExpression,
+    UpdateExpression,
     VariableDeclaration,
-    Node: {
-      matchOr: $matchOr,
-      match: $match,
-      transform: $transform,
-      foldRec: $foldRec
-    }
+    WhileStatement
   };
 })();
-export default Node;
-export {ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, Block, BooleanLiteral, CallExpression, ConditionalExpression, DataConstructorDefinition, DataConstructorParameter, DataTypeDeclaration, DoBlockExpression, Elision, EmptySection, ExportAllSpecifier, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, FunctionDeclaration, Identifier, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, InfixExpression, LeftSection, MemberExpression, MethodCallExpression, Module, NullLiteral, NumberLiteral, ObjectExpression, ObjectPattern, PrefixExpression, Property, PropertyAccessor, RestElement, RightSection, SpreadElement, StringLiteral, SwitchCase, SwitchExpression, TemplateLiteral, VariableDeclaration};
+export {ArrayExpression, ArrayPattern, ArrowAssignmentStatement, ArrowFunctionExpression, AssignmentExpression, Block, BlockStatement, BooleanLiteral, BreakStatement, CallExpression, CaseClause, CaseExpression, ConditionalExpression, ContinueStatement, DataConstructorDefinition, DataConstructorPattern, DataTypeDeclaration, DoBlockExpression, EmptySection, ExportAllSpecifier, ExportDefaultDeclaration, ExportNamedDeclaration, ExportSpecifier, ExpressionStatement, ForStatement, FunctionDeclaration, FunctionExpression, GeneratorFunctionDeclaration, Identifier, IfStatement, IfElseStatement, ImportAllSpecifier, ImportDeclaration, ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier, InfixCallExpression, InfixExpression, LabeledStatement, LambdaCaseExpression, LeftSection, LetDeclaration, MemberExpression, MethodCallExpression, Module, NumberLiteral, ObjectExpression, ObjectPattern, PrefixExpression, Property, PropertyAccessor, Quasiquotation, RestElement, ReturnStatement, RightSection, SpreadElement, StringLiteral, SwitchCase, SwitchStatement, ThisExpression, UpdateExpression, VariableDeclaration, WhileStatement};

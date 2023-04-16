@@ -47,7 +47,7 @@
           </dl>
           <p>One uses a sprite by applying a background image to an element using CSS. One could start with an empty span element:</p>
           <pre><code>&lt;span class="day-1"&gt;&lt;/span&gt;
-</code></pre>
+  </code></pre>
           <p>The following CSS sets the width and height of the element and sets the sprite as its background image:</p>
           <pre><code>span.day-1
 {
@@ -57,7 +57,7 @@
     background-image: url(/path/to/images/calendar.png);
     background-repeat: no-repeat;
 }
-</code></pre>
+  </code></pre>
           <p>By default the top left corner of an element's background image is aligned with the element's top left corner, so at this stage all that's displayed is a 16px by 16px white box:</p>
           <dl>
             <dt><img alt="Calendar sprite applied as background image using default positioning" src="/images/posts/23/calendar-span-default-bg-pos.png" /></dt>
@@ -73,7 +73,7 @@
     background-repeat: no-repeat;
     background-position: -60px -20px;
 }
-</code></pre>
+  </code></pre>
           <p>This drags the background image 60px to the left, and lifts it 20px:</p>
           <dl>
             <dt><img alt="Calendar sprite applied as background image using correct positioning" src="/images/posts/23/calendar-span-specified-bg-pos.png" /></dt>
@@ -126,10 +126,10 @@ span.day-28 { background-position:  -40px -100px; }
 span.day-29 { background-position:  -60px -100px; }
 span.day-30 { background-position:  -80px -100px; }
 span.day-31 { background-position: -100px -100px; }
-</code></pre>
+  </code></pre>
           <p>Note that I introduced the class name <strong>day</strong> to streamline the CSS. This must appear in the HTML, as in this example:</p>
           <pre><code>&lt;span class="day day-31"&gt;&lt;/span&gt;
-</code></pre>
+  </code></pre>
           <footer class="metadata">
             <ul>
               <li class="shorturl"><a href="http://dċd.ws/23/">Short URL</a></li>

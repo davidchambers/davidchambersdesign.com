@@ -2,8 +2,6 @@ export * hiding {
   escape,
   render-attribute,
   render-attributes,
-  render-block-element,
-  render-inline-element,
   string-to-text-node,
   block-element,
   inline-element,
@@ -12,9 +10,9 @@ export * hiding {
 
 escape s = {
   s
-  % .replaceAll ["&", "&amp;"]
-  % .replaceAll ["<", "&lt;"]
-  % .replaceAll [">", "&gt;"]
+  & .replaceAll ["&", "&amp;"]
+  & .replaceAll ["<", "&lt;"]
+  & .replaceAll [">", "&gt;"]
 };
 
 text value = {
@@ -25,116 +23,91 @@ text value = {
 
 render-attribute [name, value] = {
   value
-  % String
-  % .trim []
-  % .replaceAll ["\n", " "]
-  % escape
-  % \value -> " " + name + "=\"" + value + "\""  ;; TODO: escape double quotes
+  & String
+  & .trim []
+  & .replaceAll ["\n", " "]
+  & escape
+  & \value -> " " + name + "=\"" + value + "\""  -- TODO: escape double quotes
 };
 
 render-attributes attrs = {
   attrs
-  % Object.entries
-  % map render-attribute
-  % .join [""]
+  & Object.entries
+  & map render-attribute
+  & joinWith ""
 };
 
-render-block-element context element = {
-  .repeat [context.level] context.indent
-  + "<"
-  + element.name
-  + render-attributes element.attributes
-  + ">\n"
-  + (element.children
-     % map (.render [{indent: context.indent, level: context.level + 1, inline: context.inline}])
-     % .join [""])
-  + .repeat [context.level] context.indent
-  + "</"
-  + element.name
-  + ">\n"
-};
-
-render-inline-element context element = {
-  .repeat [context.level] context.indent
-  + "<"
-  + element.name
-  + render-attributes element.attributes
-  + ">"
-  + (element.children
-     % map (.render [{indent: context.indent, level: 0, inline: true}])
-     % .join [""])
-  + "</"
-  + element.name
-  + ">"
-  + (if context.inline then "" else "\n")
-};
-
-string-to-text-node string-or-node = {
-  if typeof string-or-node == "object" then string-or-node else {
-    string-or-node
-    % .replaceAll [RegExp ("^[ ]+", "gm"), " "]
-    % .replaceAll ["\n", ""]
-    % text
-  }
+string-to-text-node node = {
+  if typeof node == "string" then text node else node
 };
 
 block-element name attributes children! = {
   children = string-to-text-node <$> children!;
-  element = {
+  {
     type: "element",
     format: "block",
     name,
     attributes,
     children,
-    toString: \() -> .join [""] $ String <$> children,
-    render: \context -> render-block-element context element,
-  };
-  element
+    toString: \() -> joinWith "" $ String <$> children,
+    render: \{indent, level, inline} -> {
+      → level = .repeat [level] indent;
+      "<" + name + render-attributes attributes + ">"
+      + joinWith "" ((\child -> "\n" <> → (level + 1) <> child.render {indent, level: level + 1, inline}) <$> children)
+      + "\n" + → level + "</" + name + ">"
+    },
+  }
 };
 
 inline-element name attributes children! = {
   children = string-to-text-node <$> children!;
-  format = if .some [\node -> node.format == "block"] children then "block" else "inline";
-  element = {
+  format = if .some [\node -> node.format == "block"] children then "inline-block" else "inline";
+  {
     type: "element",
     format,
     name,
     attributes,
     children,
-    toString: \() -> .join [""] $ String <$> children,
-    render: \context -> {
-      switch format
-      when "inline" then render-inline-element context element
-      when "block"  then render-block-element context element
-    },
-  };
-  element
+    toString: \() -> joinWith "" $ String <$> children,
+    render: \{indent, level, inline} -> case format of [
+      "inline" -> {
+        "<" + name + render-attributes attributes + ">"
+        + joinWith "" ((.render [{indent, level, inline}]) <$> children)
+        + "</" + name + ">"
+      },
+      "inline-block" -> {
+        → level = .repeat [level] indent;
+        render-child indent? child = {
+          child.render {indent, level: level + 1, inline}
+          & (if indent? then ("\n" <> → (level + 1) <>) else id)
+        };
+        "<" + name + render-attributes attributes + ">"
+        + joinWith "" (
+            if children == [] then [] else {
+              [head, ...tail] = children;
+              [render-child true head] <> (tail <&> \child -> render-child (child.format == "block") child)
+            }
+          )
+        + "\n" + → level + "</" + name + ">"
+      },
+    ],
+  }
 };
 
 self-closing-element name attributes = {
-  element = {
-    type: "element",
-    format: "inline",
-    name,
-    attributes,
-    toString: \() -> "",
-    render: \{indent, level, inline} -> {
-      .repeat [level] indent
-      + "<"
-      + name
-      + render-attributes attributes
-      + " />"
-      + (if inline then "" else "\n")
-    },
-  };
-  element
+  type: "element",
+  format: "inline",
+  name,
+  attributes,
+  toString: \() -> "",
+  render: \_ -> "<" + name + render-attributes attributes + " />",
 };
 
-;; 4.1 The document element
+-- 4.1 The document element
 html' = block-element "html";
 html = html' {};
 
-;; 4.2 Document metadata
+-- 4.2 Document metadata
 head' = block-element "head";
 head = head' {};
 title' = inline-element "title";
@@ -144,7 +117,7 @@ link = self-closing-element "link";
 meta = self-closing-element "meta";
 style' = block-element "style";
 
-;; 4.3 Sections
+-- 4.3 Sections
 body' = block-element "body";
 body = body' {};
 article' = block-element "article";
@@ -173,7 +146,7 @@ footer' = block-element "footer";
 footer = footer' {};
 address' = block-element "address";
 
-;; 4.4 Grouping content
+-- 4.4 Grouping content
 p' = inline-element "p";
 p = p' {};
 hr' = self-closing-element "hr";
@@ -198,19 +171,32 @@ dd = dd' {};
 figure' = block-element "figure";
 figcaption' = block-element "figcaption";
 main' = block-element "main";
+main = main' {};
 div = block-element "div";
+table' = block-element "table";
+table = table' {};
+thead' = block-element "thead";
+thead = thead' {};
+tbody' = block-element "tbody";
+tbody = tbody' {};
+tr' = block-element "tr";
+tr = tr' {};
+th' = inline-element "th";
+th = th' {};
+td' = inline-element "td";
+td = td' {};
 
 b                        = inline-element "b" {};
 mask                     = block-element "mask";
 rect                     = self-closing-element "rect";
-;; The opening and closing tags of each of the following elements
-;; are always rendered on their own lines.
+-- The opening and closing tags of each of the following elements
+-- are always rendered on their own lines.
 linearGradient           = block-element "linearGradient";
 object                   = block-element "object";
 svg                      = block-element "svg";
-;; The opening and closing tags of each of the following elements
-;; are rendered inline unless the element contains an element
-;; whose opening and closing tags are rendered on their own lines.
+-- The opening and closing tags of each of the following elements
+-- are rendered inline unless the element contains an element
+-- whose opening and closing tags are rendered on their own lines.
 a                       = inline-element "a";
 code'                   = inline-element "code";
 code                    = inline-element "code" {};
@@ -230,7 +216,7 @@ time                    = inline-element "time";
 var'                    = inline-element "var";
 var                     = inline-element "var" {};
 video                   = inline-element "video";
-;; The following self-closing elements are always rendered inline.
+-- The following self-closing elements are always rendered inline.
 embed                   = self-closing-element "embed";
 img                     = self-closing-element "img";
 param                   = self-closing-element "param";

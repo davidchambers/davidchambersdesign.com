@@ -14,21 +14,21 @@ export default {
 body = [
 
   p [
-   "Generally speaking browsers rerender elements as required
-    – in response to DOM changes effected via JavaScript, for
-    instance. There are times, though, when the browser ",
-    em ["Internet Explorer, I'm looking at you!"], "
-    needs a gentle nudge.",
+    "Generally speaking browsers rerender elements as required ",
+    "– in response to DOM changes effected via JavaScript, for ",
+    "instance. There are times, though, when the browser ",
+    em ["Internet Explorer, I'm looking at you!"], " ",
+    "needs a gentle nudge.",
   ],
 
   p [
     a {href: "http://ajaxian.com/archives/forcing-a-ui-redraw-from-javascript"}
-      ["Forcing a UI redraw from JavaScript"], " highlights the solution
-    employed by Thomas Fuchs, creator of the popular JavaScript library ",
+      ["Forcing a UI redraw from JavaScript"], " highlights the solution ",
+    "employed by Thomas Fuchs, creator of the popular JavaScript library ",
     a {href: "http://script.aculo.us/"} ["script.aculo.us"], ":",
   ],
 
-  code-block "javascript" """
+  code-block "javascript" [|
     Element.addMethods({
         redraw: function (element) {
             element = $(element);
@@ -38,20 +38,20 @@ body = [
             return element;
         }
     });
-  """,
+  |],
 
   p [
-   "The post's first comment includes an alternative approach:",
+    "The post's first comment includes an alternative approach:",
   ],
 
-  code-block "javascript" """
+  code-block "javascript" [|
     element.className = element.className;
-  """,
+  |],
 
   p [
-   "I gather that there are situations in which this simple solution fails",
-    —, "it's no silver bullet", —, "but it fixed a problem I encountered in
-    IE8 earlier this evening so I'm pleased to have discovered it!",
+    "I gather that there are situations in which this simple solution fails",
+    —, "it's no silver bullet", —, "but it fixed a problem I encountered in ",
+    "IE8 earlier this evening so I'm pleased to have discovered it!",
   ],
 
 ];

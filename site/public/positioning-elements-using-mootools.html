@@ -43,10 +43,10 @@
           <p>Simple arithmetic dictates how long to make the scrollbar and where to position it, but I could not get my theoretical calculations to play out in the browser.</p>
           <p>It turns out that I'd been calling the wrong MooTools method. I'd been doing...</p>
           <pre><code>element.setStyle('left', offset);
-</code></pre>
+  </code></pre>
           <p>rather than...</p>
           <pre><code>element.setPosition({ x: offset });
-</code></pre>
+  </code></pre>
           <p>Frustratingly, <code>setStyle('left', offset)</code> <em>appeared</em> to work, but its behaviour was unpredictable. I'm still confused by this, but at least I'm no longer stuck.</p>
           <footer class="metadata">
             <ul>

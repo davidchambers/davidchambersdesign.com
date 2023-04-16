@@ -1,6 +1,6 @@
 import {p, a, i} from "../elements.js";
 import datetime from "../datetime.js";
-const body = [p(["In this performance from ", i(["Ukraine's Got Talent"]), ",\n    Kseniya Simonova uses the simplest of tools (a lightbox,\n    sand, and her own body) to create a captivating animation.\n    I really enjoyed the accompanying \"Nothing Else Matters\"\n    instrumental, as well."]), p([a({
+const body = [p(["In this performance from ", i(["Ukraine's Got Talent"]), ", ", "Kseniya Simonova uses the simplest of tools (a lightbox, ", "sand, and her own body) to create a captivating animation. ", "I really enjoyed the accompanying \"Nothing Else Matters\" ", "instrumental, as well."]), p([a({
   href: "http://www.youtube.com/watch?v=518XP8prwZo"
 })(["Kseniya Simonova on Ukraine's Got Talent"])])];
 export default {

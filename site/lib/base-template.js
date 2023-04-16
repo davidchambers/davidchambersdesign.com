@@ -1,5 +1,5 @@
 import {text, html, head, title, link, meta, body, nav$0027, header, footer, p, hr, ul, li, div as $div, a, script, span, strong} from "./elements.js";
-const map = f => xs => (() => {
+const map = f => xs => (function () {
   switch (globalThis.Object.prototype.toString.call(xs)) {
     case "[object Array]":
       return xs.map(x => f(x));
@@ -46,17 +46,17 @@ const base$002Dtemplate = document$002Dtitle => main => html([head([meta({
   id: "nav"
 })([ul([li([a({
   href: "/about/"
-})([span({})([strong(["About."]), "\n                      Who I am and what I do."])])]), li([a({
+})([span({})([strong(["About."]), " ", "Who I am and what I do."])])]), li([a({
   href: "/contact/"
-})([span({})([strong(["Contact."]), "\n                      Just in case you want to get in touch."])])]), li([a({
+})([span({})([strong(["Contact."]), " ", "Just in case you want to get in touch."])])]), li([a({
   href: "/archives/"
-})([span({})([strong(["Archives."]), "\n                      Old posts, recent posts, they're all here."])])]), li([a({
+})([span({})([strong(["Archives."]), " ", "Old posts, recent posts, they're all here."])])]), li([a({
   href: "/tags/"
-})([span({})([strong(["Tags."]), "\n                      Helpful if you're after posts on a particular topic."])])]), li([a({
+})([span({})([strong(["Tags."]), " ", "Helpful if you're after posts on a particular topic."])])]), li([a({
   href: "https://bitbucket.org/davidchambers"
-})([span({})([strong(["Bitbucket."]), "\n                      Home to most of my open-source projects."])])]), li([a({
+})([span({})([strong(["Bitbucket."]), " ", "Home to most of my open-source projects."])])]), li([a({
   href: "/twitter/"
-})([span({})([strong(["Twitter."]), "\n                      It's where I chirrup… or chirp… or something."])])])])])])]), $div({
+})([span({})([strong(["Twitter."]), " ", "It's where I chirrup… or chirp… or something."])])])])])])]), $div({
   id: "main"
 })(main)]), footer([p(["Powered by ", a({
   href: "http://mango.io/wtf?",

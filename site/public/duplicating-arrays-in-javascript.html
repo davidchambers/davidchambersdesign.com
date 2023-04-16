@@ -43,17 +43,17 @@
           <pre><code>var fruits = ['orange', 'lime'];
 var colours = fruits; // naïve attempt to duplicate array
 colours.push('yellow');
-</code></pre>
+  </code></pre>
           <p>One might be surprised to learn that <code>fruits</code> now contains not just "orange" and "lime" but also "yellow". Oops! Here's how it went wrong:</p>
           <pre><code>var fruits = ['orange', 'lime'];
 // fruits points to array containing "orange" and "lime"
 
 var colours = fruits;
 // colours now points to that same array!
-</code></pre>
+  </code></pre>
           <p>How, then, does one create a copy of the original array? <em>Slice!</em></p>
           <pre><code>var colours = fruits.slice();
-</code></pre>
+  </code></pre>
           <aside id="footnote">* Languages such as C. Like <a href="http://www.quirksmode.org/about/">ppk</a>, I take care to include quotation marks. ;)</aside>
           <footer class="metadata">
             <ul>

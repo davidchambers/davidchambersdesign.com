@@ -1,23 +1,30 @@
 import sanctuary from "sanctuary";
 import {path} from "./elements.js";
 import {render, $21E8, $21E7, $21E9, $2190, $2192, $2191, $2193} from "./orthogonal.js";
-const subtract = rhs => lhs => (() => {
-  switch (globalThis.Object.prototype.toString.call(rhs)) {
-    case "[object Set]":
-      return globalThis.Reflect.construct(globalThis.Set, [[...lhs].filter(x => !rhs.has(x))]);
+const equals = this$ => that => (function () {
+  switch (globalThis.Object.prototype.toString.call(this$)) {
+    case "[object Array]":
+      return (function () {
+        switch (globalThis.Object.prototype.toString.call(that)) {
+          case "[object Array]":
+            return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
+          default:
+            return false;
+        }
+      })();
     default:
-      return lhs - rhs;
+      return this$ === that;
   }
 })();
-const reduce = f => y => xs => (() => {
+const reduce = f => y => xs => (function () {
   switch (globalThis.Object.prototype.toString.call(xs)) {
     case "[object Array]":
       return xs.reduce((y, x) => f(y)(x), y);
     default:
-      return xs["fantasy-land/reduce"](f, y);
+      return xs["fantasy-land/reduce"]((y, x) => f(y)(x), y);
   }
 })();
-const map = f => xs => (() => {
+const map = f => xs => (function () {
   switch (globalThis.Object.prototype.toString.call(xs)) {
     case "[object Array]":
       return xs.map(x => f(x));
@@ -25,7 +32,7 @@ const map = f => xs => (() => {
       return xs["fantasy-land/map"](f);
   }
 })();
-const chain = f => x => (() => {
+const chain = f => x => (function () {
   switch (globalThis.Object.prototype.toString.call(x)) {
     case "[object Array]":
       return x.flatMap(x => f(x));
@@ -81,61 +88,62 @@ const fill$002Dchars = {
   S: [$21E8(1), $21E9(13), $2192(8), $2193(1), $2190(8), $2191(1), $21E8(0), $21E9(10), $2192(10), $2191(12), $2192(1), $2193(13), $2190(11), $2191(1), $21E8(2), $21E7(20), $2192(8), $2191(2), $2192(1), $2193(3), $2190(8), $2193(7), $2190(1), $2191(8)],
   V: [$21E8(1), $21E9(23), $2192(12), $2191(22), $2192(1), $2193(23), $2190(13), $2191(1), $21E8(2), $21E7(22), $2192(1), $2193(20), $2190(1), $2191(20)]
 };
-const next = ({w, x, y}) => ([dir, mag]) => (() => {
-  switch (dir) {
-    case "h":
-      {
-        const dx = mag;
-        const x$0027 = x + dx;
-        return {
-          w: S.max(w)(x$0027),
-          x: x$0027,
-          y
-        };
-      }
-    case "v":
-      {
-        const dy = mag;
-        const y$0027 = y + dy;
-        return {
-          w,
-          x,
-          y: y$0027
-        };
-      }
-    case "m":
-      {
-        const [dx, dy] = mag;
-        const x$0027 = x + dx;
-        const y$0027 = y + dy;
-        return {
-          w: S.max(w)(x$0027),
-          x: x$0027,
-          y: y$0027
-        };
-      }
-  }
-})();
+const next = ({w, x, y}) => ([dir, mag]) => ($discriminant => equals("h")($discriminant) ? (() => {
+  const dx = mag;
+  const x$0027 = x + dx;
+  return {
+    w: S.max(w)(x$0027),
+    x: x$0027,
+    y
+  };
+})() : equals("v")($discriminant) ? (() => {
+  const dy = mag;
+  const y$0027 = y + dy;
+  return {
+    w,
+    x,
+    y: y$0027
+  };
+})() : equals("m")($discriminant) ? (() => {
+  const [dx, dy] = mag;
+  const x$0027 = x + dx;
+  const y$0027 = y + dy;
+  return {
+    w: S.max(w)(x$0027),
+    x: x$0027,
+    y: y$0027
+  };
+})() : CasesNotExhaustive)(dir);
 const reset = path => (() => {
   const {w, x, y} = reduce(next)({
     w: 0,
     x: 0,
     y: 0
   })(path);
-  return ["m", [subtract(x)(w), -y]];
+  return ["m", [w - x, -y]];
 })();
-const paths = chars => [...chain(char => [["M", [0, 0]], ...char, reset(char)])((args => target => target.slice.apply(target, args))([0, 1])(chars)), ...chain(char => [["m", [6, 0]], ...char, reset(char)])((args => target => target.slice.apply(target, args))([1])(chars))];
+const paths = chars => [...chain(function (char) {
+  return [["M", [0, 0]], ...char, reset(char)];
+})((args => target => target.slice.apply(target, args))([0, 1])(chars)), ...chain(function (char) {
+  return [["m", [6, 0]], ...char, reset(char)];
+})((args => target => target.slice.apply(target, args))([1])(chars))];
 const chars = Array.from("DAVIDCHAMBERSDESIGN");
 const mask = [path({
-  d: render(paths(map(char => mask$002Dchars[char])(chars))),
+  d: render(paths(map(function (char) {
+    return mask$002Dchars[char];
+  })(chars))),
   fill: "#000",
   ["fill-rule"]: "evenodd"
 })];
 const fill = [path({
-  d: render(paths(map(char => line$002Dchars[char])(chars))),
+  d: render(paths(map(function (char) {
+    return line$002Dchars[char];
+  })(chars))),
   fill: "#999"
 }), path({
-  d: render(paths(map(char => fill$002Dchars[char])(chars))),
+  d: render(paths(map(function (char) {
+    return fill$002Dchars[char];
+  })(chars))),
   fill: "#666"
 })];
 export {fill, mask};

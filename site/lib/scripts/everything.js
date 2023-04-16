@@ -20,7 +20,7 @@ import icons$002Ftwitter from "../icons/twitter.js";
 import {date$002D0, date$002D1, date$002D2, date$002D3, date$002D4, date$002D5, date$002D6, date$002D7, date$002D8, date$002D9} from "../icons/dates.js";
 import pages from "../pages/index.js";
 import posts from "../posts/index.js";
-const map = f => xs => (() => {
+const map = f => xs => (function () {
   switch (globalThis.Object.prototype.toString.call(xs)) {
     case "[object Array]":
       return xs.map(x => f(x));
@@ -32,15 +32,15 @@ const dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const public$ = components => path.join(dirname, "..", "..", "public", ...components);
 const write$002Dfile = filename => data => fs.writeFileSync(filename, data);
 write$002Dfile(public$(["css", "screen.css"]))(css$002Fscreen);
-const render$002Dsvg = attrs => paths => `<?xml version="1.0" standalone="no"?>\n${svg({
-  xmlns: "http://www.w3.org/2000/svg",
-  version: "1.1",
-  ...attrs
-})(paths).render({
+const render$002Dsvg = attrs => paths => "<?xml version=\"1.0\" standalone=\"no\"?>" + "\n" + (args => target => target.render.apply(target, args))([{
   indent: "  ",
   level: 0,
   inline: false
-})}`;
+}])(svg({
+  xmlns: "http://www.w3.org/2000/svg",
+  version: "1.1",
+  ...attrs
+})(paths)) + "\n";
 write$002Dfile(public$(["svg", "masthead.svg"]))(render$002Dsvg({})(masthead.fill));
 write$002Dfile(public$(["svg", "masthead-mask.svg"]))(render$002Dsvg({})(masthead.mask));
 write$002Dfile(public$(["svg", "dates-0.svg"]))(render$002Dsvg({})(date$002D0));
@@ -81,12 +81,16 @@ write$002Dfile(public$(["svg", "twitter.svg"]))(render$002Dsvg({
   width: 16,
   height: 16
 })(icons$002Ftwitter));
-const render$002Ddocument = element => `<!DOCTYPE html>\n${element.render({
+const render$002Ddocument = element => "<!DOCTYPE html>\n" + element.render({
   indent: "  ",
   level: 0,
   inline: false
-})}`;
+}) + "\n";
 write$002Dfile(public$(["archives.html"]))(render$002Ddocument(base$002Dtemplate(["Archives"])(render$002Darchives(posts))));
 write$002Dfile(public$(["tags.html"]))(render$002Ddocument(base$002Dtemplate(["Tags"])(render$002Dtags(posts))));
-map(page => write$002Dfile(public$([page.slug + ".html"]))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page)))))(pages);
-map(post => write$002Dfile(public$([post.slug + ".html"]))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post))))))(posts);
+map(function (page) {
+  return write$002Dfile(public$([page.slug + ".html"]))(render$002Ddocument(base$002Dtemplate(page.title)(render$002Dpage(page))));
+})(pages);
+map(function (post) {
+  return write$002Dfile(public$([post.slug + ".html"]))(render$002Ddocument(base$002Dtemplate(post.title)(render$002Dpost(post)(related$002Dposts(posts)(post)))));
+})(posts);

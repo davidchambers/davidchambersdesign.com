@@ -3,29 +3,18 @@ export {
   Just,
   maybe,
   fromMaybe,
-  fromJust!,
   fromNullable,
 };
 
-Nothing = {
-  [Symbol.for "tag"]: "Nothing",
-  fantasy-land/map: \f -> Nothing,
+type Maybe = Nothing | Just value implements {
+  fantasy-land/map: \f -> case this of [
+    Nothing -> Nothing,
+    Just x -> Just $ f x,
+  ],
 };
 
-Just value = {
-  [Symbol.for "tag"]: "Just",
-  value,
-  fantasy-land/map: \f -> Just $ f value,
-};
-
-maybe y f m = {
-  switch m[Symbol.for "tag"]
-  when "Nothing" then y
-  when "Just"    then f m.value
-};
+maybe y f m = case m of [Nothing -> y, Just x -> f x];
 
 fromMaybe default = maybe default id;
-
-fromJust! = flip (maybe (\_ -> fromJust) const) null;
 
 fromNullable x = if x == null || x == undefined then Nothing else Just x;
