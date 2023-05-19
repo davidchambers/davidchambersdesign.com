@@ -1,0 +1,154 @@
+import * from "./InternalNode.serif";
+import {Nothing} from "./Maybe.serif";
+
+export default convert;
+
+#$value         = Identifier "$value";
+#globalThis     = Identifier "globalThis";
+
+'$size          = String "$size";
+'$tag           = String "$tag";
+'Array          = String "Array";
+'Error          = String "Error";
+'Reflect        = String "Reflect";
+'at             = String "at";
+'construct      = String "construct";
+'isArray        = String "isArray";
+'length         = String "length";
+'slice          = String "slice";
+
+If' predicate statements = If predicate (Block statements) Nothing;
+
+codeForPattern pattern #value consequent = case pattern of [
+  Any -> consequent,
+  As name pattern -> Block [Var "const" (Identifier name) #value, codeForPattern pattern #value consequent],
+  bool:(Boolean _)  -> If' (Infix "===" #value bool)   [consequent],
+  number:(Number _) -> If' (Infix "===" #value number) [consequent],
+  string:(String _) -> If' (Infix "===" #value string) [consequent],
+  Identifier name -> Block [Var "const" (Identifier name) #value, consequent],
+  Data name patterns -> (
+    If' (
+      Infix "&&" (Infix "===" (Member #value '$tag) (String name))
+                 (Infix "===" (Member #value '$size) (Number patterns.length))
+    ) [
+      reduce (\take pattern -> take \index wrap give ->
+        give (index + 1) $ wrap . codeForPattern pattern (Member #value $ Number index)
+      ) (\give -> give 0 id) patterns (\index wrap -> wrap consequent)
+    ]
+  ),
+  Array patterns -> {
+    count = reduce (\count -> \case [Slice _ -> count + 1, _ -> count]) 0 patterns;
+    return (
+      If' (Call (Member (Member #globalThis 'Array) 'isArray) [#value]) [
+        If' (
+          if count == 1
+          then Infix ">="  (Member #value 'length) $ Number $ patterns.length - count
+          else Infix "===" (Member #value 'length) $ Number patterns.length
+        ) [
+          reduce (\take pattern -> take \index after wrap give -> case pattern of [
+            Slice identifier -> (
+              give (index + 1) true $ wrap . codeForPattern identifier (
+                Call (Member #value 'slice) (
+                  if index + 1 == patterns.length
+                  then [Number index]
+                  else [Number index, Number $ index + 1 - patterns.length]
+                )
+              )
+            ),
+            pattern -> (
+              give (index + 1) after $ wrap . codeForPattern pattern (
+                if after
+                then Call (Member #value 'at) [Number $ index - patterns.length]
+                else Member #value $ Number index
+              )
+            )
+          ]) (\give -> give 0 false id) patterns (\index after wrap -> wrap consequent)
+        ]
+      ]
+    );
+  },
+];
+
+convert sourceNode = case sourceNode of [
+  Array elements -> Array (convert <$> elements),
+  ArrowFunctionExpression parameters body -> ArrowFunctionExpression parameters (convert body),
+  Block [block:(Block _)] -> convert block,
+  Block statements -> Block (convert <$> statements),
+  Boolean value -> Boolean value,
+  Call (Member object (String "new")) arguments -> (
+    convert $ Call (Member (Member #globalThis 'Reflect) 'construct) [object, Array arguments]
+  ),
+  Call callee arguments -> Call (convert callee) (convert <$> arguments),
+  CaseExpression discriminant cases -> (
+    let cases' = cases <&> \case [
+          CaseClause pattern block:(Block _) -> codeForPattern pattern #$value block,
+          CaseClause pattern consequent -> codeForPattern pattern #$value $ Return consequent,
+        ],
+        throw = case cases of [
+          [..._, CaseClause Any _] -> [],
+          [..._, CaseClause (Identifier _) _] -> [],
+          _ -> [Throw $ Call (Member #globalThis 'Error) [String "Pattern matching failure"]]
+        ]
+    in  convert $ Call (ArrowFunctionExpression [#$value] $ Block $ cases' <> throw) [discriminant]
+  ),
+  ConditionalExpression predicate consequent alternative -> ConditionalExpression (convert predicate) (convert consequent) (convert alternative),
+  DataConstructorPattern identifier arguments -> DataConstructorPattern identifier arguments,
+  ExportDefaultDeclaration declaration -> ExportDefaultDeclaration (convert declaration),
+  ExportNamedDeclaration specifiers -> ExportNamedDeclaration (convert <$> specifiers),
+  ExportSpecifier local exported -> ExportSpecifier (convert local) (convert exported),
+  Expression expression -> Expression (convert expression),
+  FunctionExpression parameters body -> FunctionExpression parameters (convert body),
+  Identifier name -> Identifier name,
+  If predicate consequent alternative -> If (convert predicate) (convert consequent) (convert <$> alternative),
+  ImportDeclaration source specifiers -> ImportDeclaration source (convert <$> specifiers),
+  ImportDefaultSpecifier local -> ImportDefaultSpecifier (convert local),
+  ImportNamespaceSpecifier local -> ImportNamespaceSpecifier (convert local),
+  ImportSpecifier imported local -> ImportSpecifier (convert imported) (convert local),
+  Infix "==" lhs:(Number _) rhs -> Infix "===" (convert lhs) (convert rhs),
+  Infix "==" lhs rhs:(Number _) -> Infix "===" (convert lhs) (convert rhs),
+  Infix "/=" lhs:(Number _) rhs -> Infix "!==" (convert lhs) (convert rhs),
+  Infix "/=" lhs rhs:(Number _) -> Infix "!==" (convert lhs) (convert rhs),
+  Infix "==" lhs:(String _) rhs -> Infix "===" (convert lhs) (convert rhs),
+  Infix "==" lhs rhs:(String _) -> Infix "===" (convert lhs) (convert rhs),
+  Infix "/=" lhs:(String _) rhs -> Infix "!==" (convert lhs) (convert rhs),
+  Infix "/=" lhs rhs:(String _) -> Infix "!==" (convert lhs) (convert rhs),
+  Infix operator lhs rhs -> case operator of [
+    "."      -> convert $ ArrowFunctionExpression [Identifier "$"] $ Call lhs [Call rhs [Identifier "$"]],
+    "<>"     -> convert $ Call (Call (Identifier "concat"  ) [lhs]) [rhs],
+    ",.."    -> convert $ Call (Call (Identifier "prepend" ) [lhs]) [rhs],
+    "..,"    -> convert $ Call (Call (Identifier "append"  ) [rhs]) [lhs],
+    "has"    -> convert $ Call (Member lhs $ String "has") [rhs],
+    "in"     -> convert $ Call (Call (Identifier "contains") [lhs]) [rhs],
+    "=="     -> convert $ Call (Call (Identifier "equals"  ) [lhs]) [rhs],
+    "/="     -> Prefix "!" $ convert $ Infix "==" lhs rhs,
+    "<$>"    -> convert $ Call (Call (Identifier "map"     ) [lhs]) [rhs],
+    "<&>"    -> convert $ Call (Call (Identifier "map"     ) [rhs]) [lhs],
+    "<*>"    -> convert $ Call (Call (Identifier "ap"      ) [lhs]) [rhs],
+    ">>="    -> convert $ Call (Call (Identifier "chain"   ) [rhs]) [lhs],
+    "$"      -> convert $ Call lhs [rhs],
+    "&"      -> convert $ Call rhs [lhs],
+    "^"      -> Infix "**"     (convert lhs) (convert rhs),
+    ".&."    -> Infix "&"      (convert lhs) (convert rhs),
+    ".|."    -> Infix "|"      (convert lhs) (convert rhs),
+    ".^."    -> Infix "^"      (convert lhs) (convert rhs),
+    operator -> Infix operator (convert lhs) (convert rhs),
+  ],
+  Member object property -> Member (convert object) (convert property),
+  Module imports exports statements -> Module (convert <$> imports) (convert <$> exports) (convert <$> statements),
+  Number value -> Number value,
+  Object properties -> Object (convert <$> properties),
+  Prefix operator operand -> Prefix operator (convert operand),
+  Property key value -> Property (convert key) (convert value),
+  Return argument -> Return (convert argument),
+  Spread argument -> Spread (convert argument),
+  String value -> String value,
+  This -> This,
+  Throw argument -> Throw (convert argument),
+  Var "var"   pattern expression -> Var "let"   pattern (convert expression),
+  Var "const" pattern expression -> Var "const" pattern (convert expression),
+  While predicate body -> While (convert predicate) (convert body),
+  sourceNode -> {
+    console.error ("(convert)", sourceNode["$tag"]);
+    return sourceNode;
+  }
+];

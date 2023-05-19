@@ -1,32 +1,27 @@
-import * from "./Maybe.serif";
-import * from "./Node.serif";
-import * from "./Operator.serif";
-import * as Pattern from "./Pattern.serif";
+import * from "./InternalNode.serif";
+import convert from "./convert.serif";
+import desugar from "./desugar.serif";
 import globals from "./globals.serif";
 import Prelude from "./prelude.serif";
-import vars from "./vars.serif";
 
 export default rewriteModule;
 
-preludeNames = Set.new $ Object.keys Prelude;
+preludeNames = Set.new $ globalThis.Object.keys Prelude;
 
-removeUnreferencedPreludeFunctions module = {
-  {declared, referenced} = vars module;
-  unreferenced = reject (referenced has) declared;
-  statements = reject (\case [VariableDeclaration (Identifier name) _ -> unreferenced has name && preludeNames has name, _ -> false]) module.statements;
-  if statements.length == module.statements.length
-  then module
-  else removeUnreferencedPreludeFunctions $ Module module.imports module.exports statements
-};
+removeUnreferencedPreludeFunctions module = (
+  let {declared, referenced} = vars module,
+      unreferenced = reject (referenced has) declared,
+      statements = reject (\case [Var _ (Identifier name) _ -> unreferenced has name && preludeNames has name, _ -> false]) module.statements
+  in  if statements.length == module.statements.length
+      then module
+      else removeUnreferencedPreludeFunctions $ Module module.imports module.exports statements
+);
 
 rewriteModule module = {
   -- desugar first to simplify subsequent steps
-  module' = rewriteNode module;
+  module' = convert $ desugar module;
   -- create renaming function based on variable and function declarations
-  rename = reduce (\rename -> \case [
-    VariableDeclaration pattern expression -> updateRenamerFromPattern rename pattern,
-    _ -> rename,
-  ]) id module'.statements;
+  rename = reduce (\rename -> \case [Var _ pattern _ -> updateRenamerFromPattern rename pattern, _ -> rename]) id module'.statements;
   -- wrap renaming function based on import declarations
   rename' = reduce (\rename -> \case [
     ImportSpecifier (Identifier imported) (Identifier local) -> \name -> if name == imported then local else rename name,
@@ -36,7 +31,7 @@ rewriteModule module = {
   -- rename identifiers
   module'' = renameIdentifiers rename' module';
   -- insert prelude
-  prelude = (\[name, value] -> VariableDeclaration (Identifier name) value) <$> Object.entries Prelude;
+  prelude = \case [[name, value] -> Var "const" (Identifier name) value] <$> globalThis.Object.entries Prelude;
   module''' = Module module''.imports module''.exports $ prelude <> module''.statements;
   -- remove unreferenced prelude functions
   module'''' = removeUnreferencedPreludeFunctions module''';
@@ -51,277 +46,19 @@ rewriteModule module = {
     "fetch",
     "window",
   ];
-  undeclared' = {
+  undeclared' = (
     undeclared
     & reject (globals has)
     & reject (ignored has)
-  };
-  if unreferenced.size > 0 then (unreferenced & Array.from & joinWith ", " & concat "unreferenced: " & console.error);
-  if undeclared'.size  > 0 then (undeclared'  & Array.from & joinWith ", " & concat "undeclared: "   & console.error);
-  module''''
+  );
+  if unreferenced.size > 0 then (unreferenced & globalThis.Array.from & joinWith ", " & concat "unreferenced: " & console.error) else undefined;
+  if undeclared'.size  > 0 then (undeclared'  & globalThis.Array.from & joinWith ", " & concat "undeclared: "   & console.error) else undefined;
+  return module'''';
 };
-
-#$                  = Identifier "$";
-#$lhs               = Identifier "$lhs";
-#$match             = Identifier "$match";
-#$prototype         = Identifier "$prototype";
-#$result            = Identifier "$result";
-#$rhs               = Identifier "$rhs";
-#$value             = Identifier "$value";
-#args               = Identifier "args";
-#flip               = Identifier "flip";
-#globalThis         = Identifier "globalThis";
-#match              = Identifier "match";
-#null               = Identifier "null";
-#target             = Identifier "target";
-
-'$tag               = StringLiteral "$tag";
-'$values            = StringLiteral "$values";
-'Object             = StringLiteral "Object";
-'Reflect            = StringLiteral "Reflect";
-'apply              = StringLiteral "apply";
-'assign             = StringLiteral "assign";
-'construct          = StringLiteral "construct";
-'create             = StringLiteral "create";
-'has                = StringLiteral "has";
-
-apply = reduce $ (. Array.of) . CallExpression;
-
-construct object arguments = {
-  CallExpression (MemberExpression (MemberExpression #globalThis 'Reflect) 'construct) [
-    object,
-    arguments,
-  ]
-};
-
-countSpaces string index = {
-  if charAt index string == " "
-  then 1 + countSpaces string (index + 1)
-  else 0
-};
-
-rewriteNode node = case node of [
-  Quasiquotation value -> (rewriteNode . StringLiteral) {
-    case charAt 0 value of [
-      "\n" -> {
-        counts = splitOn "\n" value >>= \line -> {
-          count = countSpaces line 0;
-          if count == line.length then [] else [count]
-        };
-        dedent = case counts of [
-          []         -> id,
-          [n, ...ns] -> replaceAll ("\n" <> repeat (reduce min n ns) " ") "\n",
-        ];
-        sliceFrom "\n".length $ dedent value
-      },
-      _ -> value,
-    ]
-  },
-  PropertyAccessor identifiers -> {
-    identifiers
-    & map (\case [Identifier name -> StringLiteral name])
-    & reduce MemberExpression #$
-    & ArrowFunctionExpression [#$]
-    & rewriteNode
-  },
-  LeftSection operator lhs -> {
-    rewriteNode $ ArrowFunctionExpression [#$rhs] $ InfixExpression operator lhs #$rhs
-  },
-  RightSection operator rhs -> {
-    rewriteNode $ ArrowFunctionExpression [#$lhs] $ InfixExpression operator #$lhs rhs
-  },
-  EmptySection operator -> {
-    rewriteNode $ ArrowFunctionExpression [#$lhs] $ ArrowFunctionExpression [#$rhs] $ InfixExpression operator #$lhs #$rhs
-  },
-  Block [] (Just result) -> rewriteNode result,
-  Block statements result -> Block (rewriteNode <$> statements) (rewriteNode <$> result),
-  DoBlockExpression operations result -> {
-    rewriteNode $ reduceRight (\result -> \case [
-      ArrowAssignmentStatement pattern expression -> {
-        InfixExpression (Operator ">>=") expression (ArrowFunctionExpression [pattern] result)
-      },
-      VariableDeclaration pattern expression -> {
-        apply (ArrowFunctionExpression [pattern] result) [expression]
-      },
-      FunctionDeclaration identifier parameters body -> {
-        apply (ArrowFunctionExpression [identifier] result) [
-          reduceRight (\body param -> ArrowFunctionExpression [param] body) body parameters,
-        ]
-      },
-      ExpressionStatement expression -> {
-        Block [ExpressionStatement expression] $ Just result
-      },
-    ]) result operations
-  },
-  InfixCallExpression operator lhs rhs -> rewriteNode $ apply operator [lhs, rhs],
-  InfixExpression (Operator "."     ) lhs rhs -> rewriteNode $ ArrowFunctionExpression [#$] $ apply lhs [apply rhs [#$]],
-  InfixExpression (Operator "<>"    ) lhs rhs -> rewriteNode $ apply (Identifier "concat"  ) [lhs, rhs],
-  InfixExpression (Operator "has"   ) lhs rhs -> rewriteNode $ apply (MemberExpression lhs 'has) [rhs],
-  InfixExpression (Operator "in"    ) lhs rhs -> rewriteNode $ apply (Identifier "contains") [lhs, rhs],
-  InfixExpression (Operator "=="    ) lhs rhs -> rewriteNode $ apply (Identifier "equals"  ) [lhs, rhs],
-  InfixExpression (Operator "/="    ) lhs rhs -> rewriteNode $ PrefixExpression "!" $ InfixExpression (Operator "==") lhs rhs,
-  InfixExpression (Operator "<$>"   ) lhs rhs -> rewriteNode $ apply (Identifier "map"     ) [lhs, rhs],
-  InfixExpression (Operator "<&>"   ) lhs rhs -> rewriteNode $ apply (Identifier "map"     ) [rhs, lhs],
-  InfixExpression (Operator "<*>"   ) lhs rhs -> rewriteNode $ apply (Identifier "ap"      ) [lhs, rhs],
-  InfixExpression (Operator ">>="   ) lhs rhs -> rewriteNode $ apply (Identifier "chain"   ) [rhs, lhs],
-  InfixExpression (Operator "$"     ) lhs rhs -> rewriteNode $ apply lhs [rhs],
-  InfixExpression (Operator "&"     ) lhs rhs -> rewriteNode $ apply rhs [lhs],
-  InfixExpression (Operator "^"     ) lhs rhs -> rewriteNode $ InfixExpression (EsOperator "**")     lhs rhs,
-  InfixExpression (Operator ".&."   ) lhs rhs -> rewriteNode $ InfixExpression (EsOperator "&")      lhs rhs,
-  InfixExpression (Operator ".|."   ) lhs rhs -> rewriteNode $ InfixExpression (EsOperator "|")      lhs rhs,
-  InfixExpression (Operator ".^."   ) lhs rhs -> rewriteNode $ InfixExpression (EsOperator "^")      lhs rhs,
-  InfixExpression (Operator operator) lhs rhs -> rewriteNode $ InfixExpression (EsOperator operator) lhs rhs,
-  InfixExpression (EsOperator operator) lhs rhs -> InfixExpression (EsOperator operator) (rewriteNode lhs) (rewriteNode rhs),
-  MethodCallExpression name -> {
-    rewriteNode {
-      ArrowFunctionExpression [#args] {
-        ArrowFunctionExpression [#target] {
-          CallExpression (MemberExpression (MemberExpression #target $ StringLiteral name) 'apply) [#target, #args]
-        }
-      }
-    }
-  },
-  CallExpression (PropertyAccessor identifiers) [argument] -> rewriteNode {
-    reduce MemberExpression argument (identifiers <&> \case [Identifier name -> StringLiteral name])
-  },
-  MemberExpression object (StringLiteral "new") -> {
-    rewriteNode $ ArrowFunctionExpression [RestElement #args] $ construct object #args
-  },
-  CallExpression (MemberExpression object (StringLiteral "new")) arguments -> {
-    rewriteNode $ construct object $ ArrayExpression arguments
-  },
-  CallExpression callee arguments -> {
-    CallExpression (rewriteNode callee) (rewriteNode <$> arguments)
-  },
-  LambdaCaseExpression cases -> {
-    rewriteNode $ ArrowFunctionExpression [#$] $ CaseExpression #$ cases
-  },
-  CaseExpression discriminant cases -> rewriteNode {
-    apply (
-      ArrowFunctionExpression [#$value] $ BlockStatement (
-        prepend (VariableDeclaration #$match $ apply #flip [#match, #$value]) $ cases <&> \case [
-          CaseClause predicate consequent -> {
-            BlockStatement [
-              VariableDeclaration #$result $ apply #$match [Pattern.serialize predicate],
-              IfStatement (InfixExpression (EsOperator "!=") #$result #null) {
-                BlockStatement [
-                  ReturnStatement {
-                    apply (
-                      ArrowFunctionExpression [
-                        ObjectPattern {
-                          Pattern.names predicate <&> \name -> {
-                            Property (StringLiteral name) (Identifier name)
-                          }
-                        }
-                      ] consequent
-                    ) [#$result]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      )
-    ) [discriminant]
-  },
-  FunctionDeclaration identifier parameters body -> rewriteNode {
-    VariableDeclaration identifier $ reduceRight (flip $ ArrowFunctionExpression . Array.of) body parameters
-  },
-  DataTypeDeclaration identifier constructors implementations -> rewriteNode {
-    #member = Identifier $ toLower (sliceTo 1 identifier.name) <> sliceFrom 1 identifier.name;
-
-    pattern = ObjectPattern $ constructors <&> \case [
-      DataConstructorDefinition identifier parameters -> Property identifier identifier
-    ];
-    VariableDeclaration pattern {
-      variableDeclarationFromConstructor constructor = case constructor of [
-        DataConstructorDefinition (Identifier tag) parameters -> {
-          VariableDeclaration (Identifier tag) {
-            reduceRight
-              (\body parameter -> ArrowFunctionExpression [parameter] body)
-              (CallExpression (MemberExpression (MemberExpression #globalThis 'Object) 'assign) [
-                 CallExpression (MemberExpression (MemberExpression #globalThis 'Object) 'create) [#$prototype],
-                 ObjectExpression {
-                   fields = {
-                     parameters <&> \case [
-                       Identifier name -> Property (StringLiteral name) (Identifier name)
-                     ]
-                   };
-                   elements = {
-                     parameters.map (\(parameter, index) -> case parameter of [
-                       Identifier name -> Property (NumberLiteral index) (Identifier name)
-                     ])
-                   };
-                   [
-                     Property '$tag (StringLiteral tag),
-                     Property '$values (ArrayExpression parameters),
-                     ...fields,
-                   ]
-                 }
-               ])
-              parameters
-          }
-        },
-      ];
-
-      Block (
-        [VariableDeclaration #$prototype implementations]
-        <> (constructors <&> variableDeclarationFromConstructor)
-      ) {
-        Just $ ObjectExpression {
-          constructors <&> \case [
-            DataConstructorDefinition (Identifier name) parameters -> {
-              Property (StringLiteral name) (Identifier name)
-            }
-          ]
-        }
-      }
-    }
-  },
-  ArrayExpression elements -> ArrayExpression (rewriteNode <$> elements),
-  ArrayPattern elements -> ArrayPattern (rewriteNode <$> elements),
-  ArrowAssignmentStatement pattern expression -> ArrowAssignmentStatement (rewriteNode pattern) (rewriteNode expression),
-  ArrowFunctionExpression parameters body -> ArrowFunctionExpression (rewriteNode <$> parameters) (rewriteNode body),
-  BlockStatement statements -> BlockStatement (rewriteNode <$> statements),
-  CallExpression callee arguments -> CallExpression (rewriteNode callee) (rewriteNode <$> arguments),
-  CaseClause predicate consequent -> CaseClause predicate (rewriteNode consequent),
-  ConditionalExpression predicate consequent alternative -> ConditionalExpression (rewriteNode predicate) (rewriteNode consequent) (rewriteNode <$> alternative),
-  DataConstructorDefinition identifier parameters -> DataConstructorDefinition (rewriteNode identifier) (rewriteNode <$> parameters),
-  DataTypeDeclaration identifier constructors implementations -> DataTypeDeclaration (rewriteNode identifier) (rewriteNode <$> constructors) (rewriteNode implementations),
-  DoBlockExpression operations result -> DoBlockExpression (rewriteNode <$> operations) (rewriteNode result),
-  ExportAllSpecifier hiding -> ExportAllSpecifier (rewriteNode <$> hiding),
-  ExportDefaultDeclaration declaration -> ExportDefaultDeclaration (rewriteNode declaration),
-  ExportNamedDeclaration specifiers -> ExportNamedDeclaration (rewriteNode <$> specifiers),
-  ExportSpecifier local exported -> ExportSpecifier (rewriteNode local) (rewriteNode exported),
-  ExpressionStatement expression -> ExpressionStatement (rewriteNode expression),
-  FunctionDeclaration identifier parameters body -> FunctionDeclaration (rewriteNode identifier) (rewriteNode <$> parameters) (rewriteNode body),
-  FunctionExpression parameters body -> FunctionExpression (rewriteNode <$> parameters) (rewriteNode body),
-  IfStatement predicate consequent -> IfStatement (rewriteNode predicate) (rewriteNode consequent),
-  ImportAllSpecifier hiding -> ImportAllSpecifier (rewriteNode <$> hiding),
-  ImportDeclaration source specifiers -> ImportDeclaration source (rewriteNode <$> specifiers),
-  ImportDefaultSpecifier local -> ImportDefaultSpecifier (rewriteNode local),
-  ImportNamespaceSpecifier local -> ImportNamespaceSpecifier (rewriteNode local),
-  ImportSpecifier imported local -> ImportSpecifier (rewriteNode imported) (rewriteNode local),
-  MemberExpression object property -> MemberExpression (rewriteNode object) (rewriteNode property),
-  Module imports exports statements -> Module (rewriteNode <$> imports) (rewriteNode <$> exports) (rewriteNode <$> statements),
-  ObjectExpression properties -> ObjectExpression (rewriteNode <$> properties),
-  ObjectPattern properties -> ObjectPattern (rewriteNode <$> properties),
-  PrefixExpression operator operand -> PrefixExpression operator (rewriteNode operand),
-  Property key value -> Property (rewriteNode key) (rewriteNode value),
-  PropertyAccessor identifiers -> PropertyAccessor (rewriteNode <$> identifiers),
-  RestElement argument -> RestElement (rewriteNode argument),
-  ReturnStatement argument -> ReturnStatement (rewriteNode argument),
-  SpreadElement argument -> SpreadElement (rewriteNode argument),
-  VariableDeclaration pattern expression -> VariableDeclaration (rewriteNode pattern) (rewriteNode expression),
-  node -> node,
-];
 
 updateRenamerFromPattern rename pattern = case pattern of [
-  Identifier name           -> if preludeNames has name then \s -> if s == name then "$" + s else rename s else rename,
-  ArrayPattern elements     -> reduce updateRenamerFromPattern rename elements,
-  ObjectPattern properties  -> reduce updateRenamerFromPattern rename properties,
-  Property key value        -> updateRenamerFromPattern rename value,
-  RestElement argument      -> updateRenamerFromPattern rename argument,
+  Identifier name    -> if preludeNames has name then \s -> if s == name then "$" + s else rename s else rename,
+  Property key value -> updateRenamerFromPattern rename value,
 ];
 
 renameIdentifiers rename node = case node of [
@@ -329,27 +66,23 @@ renameIdentifiers rename node = case node of [
   ImportSpecifier imported local -> ImportSpecifier imported (renameIdentifiers rename local),
   ExportSpecifier local exported -> ExportSpecifier (renameIdentifiers rename local) exported,
 
-  ArrayExpression elements -> ArrayExpression (renameIdentifiers rename <$> elements),
-  ArrayPattern elements -> ArrayPattern (renameIdentifiers rename <$> elements),
+  Array elements -> Array (renameIdentifiers rename <$> elements),
   ArrowFunctionExpression parameters body -> ArrowFunctionExpression (renameIdentifiers rename <$> parameters) (renameIdentifiers rename body),
-  Block statements result -> Block (renameIdentifiers rename <$> statements) (renameIdentifiers rename <$> result),
-  CallExpression callee arguments -> CallExpression (renameIdentifiers rename callee) (renameIdentifiers rename <$> arguments),
-  ConditionalExpression predicate consequent alternative -> ConditionalExpression (renameIdentifiers rename predicate) (renameIdentifiers rename consequent) (renameIdentifiers rename <$> alternative),
+  Call callee arguments -> Call (renameIdentifiers rename callee) (renameIdentifiers rename <$> arguments),
+  ConditionalExpression predicate consequent alternative -> ConditionalExpression (renameIdentifiers rename predicate) (renameIdentifiers rename consequent) (renameIdentifiers rename alternative),
   ExportDefaultDeclaration declaration -> ExportDefaultDeclaration (renameIdentifiers rename declaration),
   ExportNamedDeclaration specifiers -> ExportNamedDeclaration (renameIdentifiers rename <$> specifiers),
-  ExpressionStatement expression -> ExpressionStatement (renameIdentifiers rename expression),
+  Expression expression -> Expression (renameIdentifiers rename expression),
   ImportDeclaration source specifiers -> ImportDeclaration source (renameIdentifiers rename <$> specifiers),
   ImportDefaultSpecifier local -> ImportDefaultSpecifier (renameIdentifiers rename local),
   ImportNamespaceSpecifier local -> ImportNamespaceSpecifier (renameIdentifiers rename local),
-  InfixExpression operator left right -> InfixExpression operator (renameIdentifiers rename left) (renameIdentifiers rename right),
-  MemberExpression object property -> MemberExpression (renameIdentifiers rename object) (renameIdentifiers rename property),
+  Infix operator left right -> Infix operator (renameIdentifiers rename left) (renameIdentifiers rename right),
+  Member object property -> Member (renameIdentifiers rename object) (renameIdentifiers rename property),
   Module imports exports statements -> Module (renameIdentifiers rename <$> imports) (renameIdentifiers rename <$> exports) (renameIdentifiers rename <$> statements),
-  ObjectExpression properties -> ObjectExpression (renameIdentifiers rename <$> properties),
-  ObjectPattern properties -> ObjectPattern (renameIdentifiers rename <$> properties),
-  PrefixExpression operator operand -> PrefixExpression operator (renameIdentifiers rename operand),
+  Object properties -> Object (renameIdentifiers rename <$> properties),
+  Prefix operator operand -> Prefix operator (renameIdentifiers rename operand),
   Property key value -> Property (renameIdentifiers rename key) (renameIdentifiers rename value),
-  RestElement argument -> RestElement (renameIdentifiers rename argument),
-  SpreadElement argument -> SpreadElement (renameIdentifiers rename argument),
-  VariableDeclaration pattern expression -> VariableDeclaration (renameIdentifiers rename pattern) (renameIdentifiers rename expression),
+  Spread argument -> Spread (renameIdentifiers rename argument),
+  Var kind pattern expression -> Var kind (renameIdentifiers rename pattern) (renameIdentifiers rename expression),
   node -> node,
 ];

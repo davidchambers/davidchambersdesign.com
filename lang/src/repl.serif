@@ -1,9 +1,10 @@
 import {attempt, fork, resolve} from "fluture";
 import {generate} from "astring";
 
-import {Just} from "./Maybe.serif";
-import * from "./Node.serif";
-import * as serif from "./index.serif";
+import * from "./InternalNode.serif";
+import codegen from "./codegen.serif";
+import * as grammar from "./grammar.js";
+import rewrite from "./rewrite.serif";
 
 #0  = "\x1B[0m";
 #1  = "\x1B[1m";
@@ -14,7 +15,7 @@ import * as serif from "./index.serif";
 #33 = "\x1B[33m";
 #35 = "\x1B[35m";
 
-print x = case Object.prototype.toString.call x of [
+print x = case globalThis.Object.prototype.toString.call x of [
   "[object Null]"      -> #35 + x + #0,
   "[object Undefined]" -> #35 + x + #0,
   "[object Boolean]"   -> #35 + x + #0,
@@ -23,28 +24,34 @@ print x = case Object.prototype.toString.call x of [
   "[object Symbol]"    -> "Symbol.for " + (print $ Symbol.keyFor x),
   "[object Date]"      -> "Date.new " + (print $ Number x),
   "[object RegExp]"    -> if x.flags == "" then "RegExp " + (print x.source) else "RegExp (" + (print x.source) + ", " + (print x.flags) + ")",
-  "[object Set]"       -> "Set.new " + (print $ Array.from x),
-  "[object Map]"       -> "Map.new " + (print $ Array.from x),
+  "[object Set]"       -> "Set.new " + (print $ globalThis.Array.from x),
+  "[object Map]"       -> "Map.new " + (print $ globalThis.Array.from x),
   "[object Array]"     -> "[" + (joinWith ", " $ print <$> x) + "]",
   "[object Object]"    -> "{" + (joinWith ", " $ map (\k -> "[" + (print k) + "]: " + (print x[k])) $ Reflect.ownKeys x) + "}",
   x                    -> String x,
 ];
 
 processInput serifSourceText = do {
-  serifAst <- serif.parse "[repl]" $ "export default " <> serifSourceText <> ";";
-  serifAst = serif.rewrite serifAst;
-  {exports, statements} = serif.changeExtensions serifAst;
-  esAst = serif.esModuleFromSerifModule $ Block statements $ Just exports[0].declaration;
+  serifAst <- attempt \() -> grammar.parse ("export default " <> serifSourceText <> ";", {grammarSource: "[repl]"});
+  serifAst = rewrite serifAst;
+  esAst = case serifAst of [
+    Module _ [ExportDefaultDeclaration declaration] statements -> (
+      codegen $ Block [...statements, Expression declaration]
+    )
+  ];
   esSourceText = generate esAst;
+  console.error esSourceText;
   esResult <- attempt \() -> eval esSourceText;
   resolve $ print esResult
 };
 
 repl _ = {
   input = window.prompt "\n>>>";
-  if trim input in [":exit", ":quit"]
-  then { console.log ""; Deno.exit () }
-  else fork (repl . console.error) (repl . console.log) (processInput input)
+  case trim input of [
+    ":exit" -> { console.log ""; Deno.exit (); },
+    ":quit" -> { console.log ""; Deno.exit (); },
+    _       -> { fork (repl . console.error) (repl . console.log) (processInput input); }
+  ];
 };
 console.log $ #7 <> " Serif REPL " <> #27 <> " " <> #1 <> ":quit" <> #22 <> " to exit";
 repl 8;

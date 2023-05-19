@@ -1,178 +1,58 @@
 const null$ = globalThis.JSON.parse("null");
 const typeof$ = x => x === null$ ? "null" : typeof x;
 const id = x => x;
-const equals = this$ => that => (() => {
-  switch (globalThis.Object.prototype.toString.call(this$)) {
-    case "[object Array]":
-      return (() => {
-        switch (globalThis.Object.prototype.toString.call(that)) {
-          case "[object Array]":
-            return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
-          default:
-            return false;
-        }
-      })();
-    case "[object Object]":
-      return (() => {
-        switch (globalThis.Object.prototype.toString.call(that)) {
-          case "[object Object]":
-            return typeof$(this$["fantasy-land/equals"]) === "function" ? this$["fantasy-land/equals"](that) : this$ === that;
-          default:
-            return false;
-        }
-      })();
-    default:
-      return this$ === that;
+const equals = this$ => that => ($discriminant => {
+  if ($discriminant === "[object Array]") {
+    return ($discriminant => {
+      if ($discriminant === "[object Array]") {
+        return this$.length === that.length && this$.every((x, idx) => equals(x)(that[idx]));
+      }
+      return false;
+    })(globalThis.Object.prototype.toString.call(that));
   }
-})();
-const flip = f => y => x => f(x)(y);
-const match = pattern => value => {
-  switch (pattern.type) {
-    case "any":
-      return {};
-    case "identifier":
-      return {
-        [pattern.name]: value
-      };
-    case "literal":
-      if (equals(pattern.value)(value)) return {};
-      return null$;
-    case "data":
-      if (typeof$(value) === "object" && value.$tag === pattern.tag && value.$values.length === pattern.patterns.length) {
-        const context = {};
-        for (let index = 0; index < pattern.patterns.length; index += 1) {
-          const fragment = match(pattern.patterns[index])(value.$values[index]);
-          if (fragment === null$) return null$;
-          globalThis.Object.assign(context, fragment);
-        }
-        return context;
+  if ($discriminant === "[object Object]") {
+    return ($discriminant => {
+      if ($discriminant === "[object Object]") {
+        return typeof$(this$["fantasy-land/equals"]) === "function" ? this$["fantasy-land/equals"](that) : this$ === that;
       }
-      return null$;
-    case "array":
-      if (globalThis.Array.isArray(value)) {
-        const patterns = pattern.patterns;
-        const lengths = [];
-        let slices = 0;
-        for (let index = 0; index < patterns.length; index += 1) {
-          if (patterns[index].type === "slice") {
-            lengths[patterns[index].index = slices] = 0;
-            slices += 1;
-          }
-        }
-        if (slices === 0) {
-          if (value.length !== patterns.length) return null$;
-          const context = {};
-          for (let index = 0; index < value.length; index += 1) {
-            const fragment = match(patterns[index])(value[index]);
-            if (fragment === null$) return null$;
-            globalThis.Object.assign(context, fragment);
-          }
-          return context;
-        }
-        const min = patterns.length - slices;
-        if (value.length < min) return null$;
-        const lastIndex = slices - 1;
-        lengths[lastIndex] = value.length - min;
-        const fragments = globalThis.Array(patterns.length);
-        while (true) {
-          let index = 0;
-          let valid = true;
-          for (let patternIndex = 0; patternIndex < fragments.length; patternIndex += 1) {
-            const pattern = patterns[patternIndex];
-            const fragment = pattern.type === "slice" ? match({
-              type: "identifier",
-              name: pattern.name
-            })(value.slice(index, index += lengths[pattern.index])) : match(pattern)(value[index++]);
-            if (fragment === null$) {
-              valid = false;
-              break;
-            }
-            fragments[patternIndex] = fragment;
-          }
-          if (valid) return globalThis.Object.assign({}, ...fragments);
-          index = lastIndex;
-          while (lengths[index] === 0) index -= 1;
-          if (index === 0) return null$;
-          lengths[index - 1] += 1;
-          while (index < lastIndex) lengths[index++] = 0;
-          lengths[lastIndex] = value.length - min;
-          index = 0;
-          while (index < lastIndex) lengths[lastIndex] -= lengths[index++];
-        }
+      return false;
+    })(globalThis.Object.prototype.toString.call(that));
+  }
+  return this$ === that;
+})(globalThis.Object.prototype.toString.call(this$));
+const $prototype = {
+  ["fantasy-land/map"]: function (f) {
+    return ($value => {
+      if ($value.$tag === "Nothing" && $value.$size === 0) {
+        return Nothing;
       }
-      return null$;
+      if ($value.$tag === "Just" && $value.$size === 1) {
+        const x = $value[0];
+        return Just(f(x));
+      }
+      throw globalThis.Error("Pattern matching failure");
+    })(this);
   }
 };
-const {Nothing, Just} = (() => {
-  const $prototype = {
-    ["fantasy-land/map"]: function (f) {
-      return ($value => {
-        const $match = flip(match)($value);
-        {
-          const $result = $match({
-            type: "data",
-            tag: "Nothing",
-            patterns: []
-          });
-          if ($result != null$) {
-            return (({}) => Nothing)($result);
-          }
-        }
-        {
-          const $result = $match({
-            type: "data",
-            tag: "Just",
-            patterns: [{
-              type: "identifier",
-              name: "x"
-            }]
-          });
-          if ($result != null$) {
-            return (({x}) => Just(f(x)))($result);
-          }
-        }
-      })(this);
-    }
-  };
-  const Nothing = globalThis.Object.assign(globalThis.Object.create($prototype), {
-    $tag: "Nothing",
-    $values: []
-  });
-  const Just = value => globalThis.Object.assign(globalThis.Object.create($prototype), {
-    $tag: "Just",
-    $values: [value],
-    value
-  });
-  return {
-    Nothing,
-    Just
-  };
-})();
+const Nothing = globalThis.Object.assign(globalThis.Object.create($prototype), {
+  $tag: "Nothing",
+  $size: 0
+});
+const Just = value => globalThis.Object.assign(globalThis.Object.create($prototype), {
+  $tag: "Just",
+  $size: 1,
+  [0]: value,
+  value
+});
 const maybe = y => f => m => ($value => {
-  const $match = flip(match)($value);
-  {
-    const $result = $match({
-      type: "data",
-      tag: "Nothing",
-      patterns: []
-    });
-    if ($result != null$) {
-      return (({}) => y)($result);
-    }
+  if ($value.$tag === "Nothing" && $value.$size === 0) {
+    return y;
   }
-  {
-    const $result = $match({
-      type: "data",
-      tag: "Just",
-      patterns: [{
-        type: "identifier",
-        name: "x"
-      }]
-    });
-    if ($result != null$) {
-      return (({x}) => f(x))($result);
-    }
+  if ($value.$tag === "Just" && $value.$size === 1) {
+    const x = $value[0];
+    return f(x);
   }
+  throw globalThis.Error("Pattern matching failure");
 })(m);
 const fromMaybe = default$ => maybe(default$)(id);
 const fromNullable = x => equals(x)(null$) || equals(x)(undefined) ? Nothing : Just(x);

@@ -7,7 +7,7 @@
   }
 
   const lassoc = head => tail => tail.reduce(
-    (left, [operator, right]) => Node.InfixExpression(operator)(left)(right),
+    (left, [operator, right]) => Node.Infix(operator)(left)(right),
     head
   );
   const rassoc = head => tail => {
@@ -18,7 +18,7 @@
       [[], head]
     );
     return init.reduceRight(
-      (rhs, {lhs, operator}) => Node.InfixExpression(operator)(lhs)(rhs),
+      (rhs, {lhs, operator}) => Node.Infix(operator)(lhs)(rhs),
       last
     );
   };
@@ -28,41 +28,9 @@
       throw new PrecedenceParsingError(`Cannot mix ‘${op1}’ and ‘${op2}’ in the same infix expression`);
     }
     return tail.reduce(
-      (left, [operator, right]) => Node.InfixExpression(operator)(left)(right),
+      (left, [operator, right]) => Node.Infix(operator)(left)(right),
       head
     );
-  };
-
-  const infixOperators = {
-    '.'    : Operator('.'),
-    '^'    : Operator('^'),
-    '*'    : Operator('*'),
-    '/'    : Operator('/'),
-    '+'    : Operator('+'),
-    '-'    : Operator('-'),
-    '.<.'  : Operator('.<.'),
-    '.>.'  : Operator('.>.'),
-    '.0>.' : Operator('.0>.'),
-    '.&.'  : Operator('.&.'),
-    '.^.'  : Operator('.^.'),
-    '.|.'  : Operator('.|.'),
-    '<>'   : Operator('<>'),
-    '<$>'  : Operator('<$>'),
-    '<*>'  : Operator('<*>'),
-    '<'    : Operator('<'),
-    '>'    : Operator('>'),
-    '<='   : Operator('<='),
-    '>='   : Operator('>='),
-    'has'  : Operator('has'),
-    'in'   : Operator('in'),
-    '=='   : Operator('=='),
-    '/='   : Operator('/='),
-    '&&'   : Operator('&&'),
-    '||'   : Operator('||'),
-    '<&>'  : Operator('<&>'),
-    '>>='  : Operator('>>='),
-    '&'    : Operator('&'),
-    '$'    : Operator('$'),
   };
 }}
 
@@ -96,7 +64,7 @@ ImportDeclaration
       / defaultSpecifier:ImportDefaultSpecifier                                                     { return [defaultSpecifier]; }
       / namespaceSpecifier:ImportNamespaceSpecifier                                                 { return [namespaceSpecifier]; }
       / ImportSpecifiers
-    ) _ FromToken _ source:StringLiteral _ ';'
+    ) _ FromToken _ source:String _ ';'
     { return Node.ImportDeclaration(source)(specifiers); }
 
 ExportSpecifier
@@ -119,24 +87,24 @@ ExportDeclaration
   = ExportDefaultDeclaration
   / ExportNamedDeclaration
 
-BooleanLiteral
-  = TrueToken   { return Node.BooleanLiteral(true); }
-  / FalseToken  { return Node.BooleanLiteral(false); }
+Boolean
+  = TrueToken   { return Node.Boolean(true); }
+  / FalseToken  { return Node.Boolean(false); }
 
-NumberLiteral
+Number
   = BinaryNumber
   / OctalNumber
   / HexadecimalNumber
   / DecimalNumber
 
-BinaryNumber      = '0' 'b' digits:$[0-1]+                  { return Node.NumberLiteral(parseInt(digits, 0b10)); }
-OctalNumber       = '0' 'o' digits:$[0-7]+                  { return Node.NumberLiteral(parseInt(digits, 0o10)); }
-HexadecimalNumber = '0' 'x' digits:$[0-9A-F]+               { return Node.NumberLiteral(parseInt(digits, 0x10)); }
-DecimalNumber     = ('0' / ([1-9] [0-9]*)) ('.' [0-9]+)?    { return Node.NumberLiteral(parseFloat(text())); }
+BinaryNumber      = '0' 'b' digits:$[0-1]+                  { return Node.Number(parseInt(digits, 0b10)); }
+OctalNumber       = '0' 'o' digits:$[0-7]+                  { return Node.Number(parseInt(digits, 0o10)); }
+HexadecimalNumber = '0' 'x' digits:$[0-9A-F]+               { return Node.Number(parseInt(digits, 0x10)); }
+DecimalNumber     = ('0' / ([1-9] [0-9]*)) ('.' [0-9]+)?    { return Node.Number(parseFloat(text())); }
 
-StringLiteral
+String
   = '"' chars:StringCharacter* '"'
-    { return Node.StringLiteral(chars.join('')); }
+    { return Node.String(chars.join('')); }
 
 StringCharacter
   = '\\' '\n' ' '* '\\' { return ''; }
@@ -166,67 +134,80 @@ HidingToken         = @'hiding'         !IdentifierPart
 IfToken             = @'if'             !IdentifierPart
 ImplementsToken     = @'implements'     !IdentifierPart
 ImportToken         = @'import'         !IdentifierPart
+InToken             = @'in'             !IdentifierPart
+LetToken            = @'let'            !IdentifierPart
 OfToken             = @'of'             !IdentifierPart
+ReturnToken         = @'return'         !IdentifierPart
 ThenToken           = @'then'           !IdentifierPart
 ThisToken           = @'this'           !IdentifierPart
 TrueToken           = @'true'           !IdentifierPart
 TypeToken           = @'type'           !IdentifierPart
+VarToken            = @'var'            !IdentifierPart
 WhenToken           = @'when'           !IdentifierPart
+WhileToken          = @'while'          !IdentifierPart
 
 // prefix
 PrefixOperator
   = '-'
 
 // infix
+ReassignmentOperator
+  = @':='    !IdentifierPart
 CompositionOperator
-  = '.'       !IdentifierPart { return infixOperators['.']; }
+  = @'.'    !IdentifierPart
 ExponentiationOperator
-  = '^'       !IdentifierPart { return infixOperators['^']; }
+  = @'^'    !IdentifierPart
 MultiplicativeOperator
-  = '*'       !IdentifierPart { return infixOperators['*']; }
-  / '/'       !IdentifierPart { return infixOperators['/']; }
+  = @'*'    !IdentifierPart
+  / @'/'    !IdentifierPart
 AdditiveOperator
-  = '+'       !IdentifierPart { return infixOperators['+']; }
-  / '-'       !IdentifierPart { return infixOperators['-']; }
+  = @'+'    !IdentifierPart
+  / @'-'    !IdentifierPart
 ShiftOperator
-  = '.<.'     !IdentifierPart { return infixOperators['.<.']; }
-  / '.>.'     !IdentifierPart { return infixOperators['.>.']; }
-  / '.0>.'    !IdentifierPart { return infixOperators['.0>.']; }
+  = @'.<.'  !IdentifierPart
+  / @'.>.'  !IdentifierPart
+  / @'.0>.' !IdentifierPart
 BitwiseANDOperator
-  = '.&.'     !IdentifierPart { return infixOperators['.&.']; }
+  = @'.&.'  !IdentifierPart
 BitwiseXOROperator
-  = '.^.'     !IdentifierPart { return infixOperators['.^.']; }
+  = @'.^.'  !IdentifierPart
 BitwiseOROperator
-  = '.|.'     !IdentifierPart { return infixOperators['.|.']; }
+  = @'.|.'  !IdentifierPart
 ConcatenationOperator
-  = '<>'      !IdentifierPart { return infixOperators['<>']; }
+  = @'<>'   !IdentifierPart
+PrependOperator
+  = @',..'  !IdentifierPart
+AppendOperator
+  = @'..,'  !IdentifierPart
 LeftInfixOperator9
-  = '<$>'     !IdentifierPart { return infixOperators['<$>']; }
-  / '<*>'     !IdentifierPart { return infixOperators['<*>']; }
+  = @'<$>'  !IdentifierPart
+  / @'<*>'  !IdentifierPart
 RelationalOperator
-  = '<'       !IdentifierPart { return infixOperators['<']; }
-  / '>'       !IdentifierPart { return infixOperators['>']; }
-  / '<='      !IdentifierPart { return infixOperators['<=']; }
-  / '>='      !IdentifierPart { return infixOperators['>=']; }
-  / 'has'     !IdentifierPart { return infixOperators['has']; }
-  / 'in'      !IdentifierPart { return infixOperators['in']; }
+  = @'<'    !IdentifierPart
+  / @'>'    !IdentifierPart
+  / @'<='   !IdentifierPart
+  / @'>='   !IdentifierPart
+  / @'has'  !IdentifierPart
+/// @'in'   !IdentifierPart
 EqualityOperator
-  = '=='      !IdentifierPart { return infixOperators['==']; }
-  / '/='      !IdentifierPart { return infixOperators['/=']; }
+  = @'=='   !IdentifierPart
+  / @'/='   !IdentifierPart
 LogicalANDOperator
-  = '&&'      !IdentifierPart { return infixOperators['&&']; }
+  = @'&&'   !IdentifierPart
 LogicalOROperator
-  = '||'      !IdentifierPart { return infixOperators['||']; }
+  = @'||'   !IdentifierPart
 LeftInfixOperator3
-  = '<&>'     !IdentifierPart { return infixOperators['<&>']; }
-  / '>>='     !IdentifierPart { return infixOperators['>>=']; }
+  = @'<&>'  !IdentifierPart
+  / @'>>='  !IdentifierPart
 PipeOperator
-  = '&'       !IdentifierPart { return infixOperators['&']; }
+  = @'&'    !IdentifierPart
 ApplicationOperator
-  = '$'       !IdentifierPart { return infixOperators['$']; }
+  = @'$'    !IdentifierPart
 
 InfixOperator
-  = CompositionOperator     // .
+  = PrependOperator         // ,..
+  / AppendOperator          // ..,
+  / CompositionOperator     // .
   / ExponentiationOperator  // ^
   / MultiplicativeOperator  // * /
   / AdditiveOperator        // + -
@@ -257,6 +238,11 @@ ReservedWord
   / ExportToken
   / ThisToken
   / ImplementsToken
+  / InToken
+  / LetToken
+  / ReturnToken
+  / VarToken
+  / WhileToken
 
 IdentifierName
   = !ReservedWord @$(IdentifierStart IdentifierPart*)
@@ -285,6 +271,7 @@ IdentifierStart
     !'$'
     !'|'
     !'%'
+    !'@'
     .
 
 IdentifierPart
@@ -296,24 +283,24 @@ IdentifierPart
   / '|'
   / '%'
 
-ThisExpression
+This
   = ThisToken
-    { return Node.ThisExpression; }
+    { return Node.This; }
 
-ArrayExpression
-  = '[' _ ']'                                                                   { return Node.ArrayExpression([]); }
-  / '[' _ elements:ArrayElement|1.., CommaSeparator| TrailingComma ']'          { return Node.ArrayExpression(elements); }
+Array
+  = '[' _ ']'                                                                   { return Node.Array([]); }
+  / '[' _ elements:ArrayElement|1.., CommaSeparator| TrailingComma ']'          { return Node.Array(elements); }
 
 ArrayElement
-  = SpreadElement
+  = Spread
   / Expression
 
-ObjectExpression
-  = '{' _ '}'                                                                   { return Node.ObjectExpression([]); }
-  / '{' _ properties:ObjectElement|1.., CommaSeparator| TrailingComma '}'       { return Node.ObjectExpression(properties); }
+Object
+  = '{' _ '}'                                                                   { return Node.Object([]); }
+  / '{' _ properties:ObjectElement|1.., CommaSeparator| TrailingComma '}'       { return Node.Object(properties); }
 
 ObjectElement
-  = SpreadElement
+  = Spread
   / Property
 
 Property
@@ -321,93 +308,71 @@ Property
   / key:PropertyName value:(_ ':' _ @Expression)?                               { return Node.Property(key)(value ?? Node.Identifier(key.value)); }
 
 PropertyName
-  = name:$(IdentifierStart IdentifierPart*)                                     { return Node.StringLiteral(name); }
+  = name:$(IdentifierStart IdentifierPart*)                                     { return Node.String(name); }
 
 PropertyAccess
   = _ '.' @PropertyName
   / '[' _ @Expression _ ']'
 
 PrimaryExpression
-  = BooleanLiteral
-  / NumberLiteral
-  / StringLiteral
+  = Boolean
+  / Number
+  / String
   / Quasiquotation
-  / BlockExpression
-  / BlockStatement
   / DoBlockExpression
-  / ObjectExpression
-  / ArrayExpression
+  / Object
+  / Array
   / Identifier
-  / ThisExpression
-  / PropertyAccessor
+  / This
   / LeftSection
   / RightSection
   / EmptySection
+  / PropertyAccessor
 
-MemberExpression
+Member
   = object:PrimaryExpression properties:PropertyAccess*
-    { return properties.reduce((object, property) => Node.MemberExpression(object)(property), object); }
+    { return properties.reduce((object, property) => Node.Member(object)(property), object); }
 
 FunctionExpression
-  = '\\' parameterss:ArrowFunctionParameters|1.., __| _ ArrowToken _ body:Expression
-    { return parameterss.reduceRight((body, parameters) => Node.FunctionExpression(parameters)(body), body); }
+  = '\\' parameterss:ArrowFunctionParameters|1.., __| _ ArrowToken _ body:(Expression / Block)
+    { return parameterss.reduceRight((body, parameters) => Node.ArrowFunctionExpression(parameters)(body), body); }
 
-MethodCallExpression
+MethodCall
   = '.' name:IdentifierName
-    { return Node.MethodCallExpression(name); }
+    { return Node.MethodCall(name); }
 
 LeftHandSideExpression
   = FunctionExpression
-  / MethodCallExpression
-  / MemberExpression
+  / MethodCall
+  / Member
   / '(' _ @Expression _ ')'
 
-CallExpression
+Call
   = BackslashCaseToken _ cases:CaseClauses
-    { return Node.LambdaCaseExpression(cases); }
+    { return Node.LambdaCase(cases); }
   / head:LeftHandSideExpression
     tail:(
-        __ arg:LeftHandSideExpression   { return callee => Node.CallExpression(callee)([arg]); }
-      / _ args:Arguments                { return callee => Node.CallExpression(callee)(args); }
-      / property:PropertyAccess         { return object => Node.MemberExpression(object)(property); }
+        __ arg:LeftHandSideExpression   { return callee => Node.Call(callee)([arg]); }
+      / _ args:Arguments                { return callee => Node.Call(callee)(args); }
+      / property:PropertyAccess         { return object => Node.Member(object)(property); }
     )*
     { return tail.reduce((expr, wrap) => wrap(expr), head); }
 
 Arguments
   = '(' _ ')'                                                                       { return []; }
-  / '(' _ @(SpreadElement / Expression)|1.., CommaSeparator| TrailingComma ')'
+  / '(' _ @(Spread / Expression)|1.., CommaSeparator| TrailingComma ')'
 
 ArrowFunctionParameters
   = '(' _ ')'                                                                       { return []; }
   / '(' _ @Pattern|1.., CommaSeparator| TrailingComma ')'
   / parameter:Pattern                                                               { return [parameter]; }
 
-Pattern
-  = ArrayPattern
-  / ObjectPattern
-  / RestElement
-  / Identifier
+Prefix
+  = operator:PrefixOperator _ argument:Call                                         { return Node.Prefix(operator)(argument); }
+  / Call
 
-ArrayPattern
-  = '[' _ ']'                                                                       { return Node.ArrayPattern([]); }
-  / '[' _ elements:Pattern|1.., CommaSeparator| TrailingComma ']'                   { return Node.ArrayPattern(elements); }
-
-ObjectPattern
-  = '{' _ '}'                                                                       { return Node.ObjectPattern([]); }
-  / '{' _ properties:ObjectPatternProperty|1.., CommaSeparator| TrailingComma '}'   { return Node.ObjectPattern(properties); }
-
-ObjectPatternProperty
-  = key:PropertyName pattern:(_ ':' _ @Pattern)?                                    { return Node.Property(key)(pattern ?? Node.Identifier(key.value)); }
-
-RestElement
-  = '...' argument:Identifier                                                       { return Node.RestElement(argument); }
-
-PrefixExpression
-  = operator:PrefixOperator _ argument:CallExpression                               { return Node.PrefixExpression(operator)(argument); }
-  / CallExpression
-
-CompositionExpression       = head:PrefixExpression         tail:(_ @CompositionOperator    _ @PrefixExpression)*           { return rassoc(head)(tail); }
-InfixCallExpression         = head:CompositionExpression    tail:(_ '`' @Identifier '`'     _ @CompositionExpression)*      { return tail.reduce((lhs, [operator, rhs]) => Node.InfixCallExpression(operator)(lhs)(rhs), head); }
+CompositionExpression       = head:Prefix                   tail:(_ @CompositionOperator    _ @Prefix)*                     { return rassoc(head)(tail); }
+InfixCallExpression         = head:CompositionExpression    tail:(_ '`' @Identifier '`'     _ @CompositionExpression)*      { return tail.reduce((lhs, [operator, rhs]) => Node.InfixCall(operator)(lhs)(rhs), head); }
 ExponentiationExpression    = head:InfixCallExpression      tail:(_ @ExponentiationOperator _ @InfixCallExpression)*        { return rassoc(head)(tail); }
 MultiplicativeExpression    = head:ExponentiationExpression tail:(_ @MultiplicativeOperator _ @ExponentiationExpression)*   { return lassoc(head)(tail); }
 AdditiveExpression          = head:MultiplicativeExpression tail:(_ @AdditiveOperator       _ @MultiplicativeExpression)*   { return lassoc(head)(tail); }
@@ -416,48 +381,77 @@ BitwiseANDExpression        = head:ShiftExpression          tail:(_ @BitwiseANDO
 BitwiseXORExpression        = head:BitwiseANDExpression     tail:(_ @BitwiseXOROperator     _ @BitwiseANDExpression)*       { return lassoc(head)(tail); }
 BitwiseORExpression         = head:BitwiseXORExpression     tail:(_ @BitwiseOROperator      _ @BitwiseXORExpression)*       { return lassoc(head)(tail); }
 ConcatenationExpression     = head:BitwiseORExpression      tail:(_ @ConcatenationOperator  _ @BitwiseORExpression)*        { return rassoc(head)(tail); }
-LeftInfixExpression9        = head:ConcatenationExpression  tail:(_ @LeftInfixOperator9     _ @ConcatenationExpression)*    { return lassoc(head)(tail); }
-RelationalExpression        = head:LeftInfixExpression9     tail:(_ @RelationalOperator     _ @LeftInfixExpression9)*       { return xassoc(head)(tail); }
+PrependExpression           = head:ConcatenationExpression  tail:(_ @PrependOperator        _ @ConcatenationExpression)*    { return rassoc(head)(tail); }
+AppendExpression            = head:PrependExpression        tail:(_ @AppendOperator         _ @PrependExpression)*          { return lassoc(head)(tail); }
+LeftInfix9                  = head:AppendExpression         tail:(_ @LeftInfixOperator9     _ @AppendExpression)*           { return lassoc(head)(tail); }
+RelationalExpression        = head:LeftInfix9               tail:(_ @RelationalOperator     _ @LeftInfix9)*                 { return xassoc(head)(tail); }
 EqualityExpression          = head:RelationalExpression     tail:(_ @EqualityOperator       _ @RelationalExpression)*       { return xassoc(head)(tail); }
 LogicalANDExpression        = head:EqualityExpression       tail:(_ @LogicalANDOperator     _ @EqualityExpression)*         { return lassoc(head)(tail); }
 LogicalORExpression         = head:LogicalANDExpression     tail:(_ @LogicalOROperator      _ @LogicalANDExpression)*       { return lassoc(head)(tail); }
-LeftInfixExpression3        = head:LogicalORExpression      tail:(_ @LeftInfixOperator3     _ @LogicalORExpression)*        { return lassoc(head)(tail); }
-PipeExpression              = head:LeftInfixExpression3     tail:(_ @PipeOperator           _ @LeftInfixExpression3)*       { return lassoc(head)(tail); }
+LeftInfix3                  = head:LogicalORExpression      tail:(_ @LeftInfixOperator3     _ @LogicalORExpression)*        { return lassoc(head)(tail); }
+PipeExpression              = head:LeftInfix3               tail:(_ @PipeOperator           _ @LeftInfix3)*                 { return lassoc(head)(tail); }
 ApplicationExpression       = head:CaseExpression           tail:(_ @ApplicationOperator    _ @ApplicationExpression)*      { return rassoc(head)(tail); }
+ReassignmentExpression      = head:ApplicationExpression    tail:(_ @ReassignmentOperator   _ @ReassignmentExpression)*     { return rassoc(head)(tail); }
 
 ConditionalExpression
-  = IfToken _ predicate:Expression _ ThenToken _ consequent:Expression alternative:(_ ElseToken _ @Expression)?
-    { return Node.ConditionalExpression(predicate)(consequent)(Maybe.fromNullable(alternative)); }
+  = IfToken _ predicate:Expression _ ThenToken _ consequent:Expression _ ElseToken _ alternative:Expression
+    { return Node.ConditionalExpression(predicate)(consequent)(alternative); }
   / PipeExpression
+
+LetExpression
+  = LetToken _ bindings:LetBinding|1.., CommaSeparator| _ InToken _ expression:Expression
+    { return Node.LetExpression(bindings.map((binding, index) => binding(index)))(expression); }
+  / ConditionalExpression
+
+LetBinding
+  = pattern:Pattern _ '=' _ expression:Expression
+    { return index => Node.LetBinding(index)(pattern)(expression); }
 
 CaseExpression
   = CaseToken _ discriminant:Expression _ OfToken _ cases:CaseClauses
     { return Node.CaseExpression(discriminant)(cases); }
-  / ConditionalExpression
+  / LetExpression
 
 CaseClauses
   = '[' _ ']' { return []; }
   / '[' _ @CaseClause|1.., CommaSeparator| TrailingComma ']'
 
 CaseClause
-  = predicate:CaseClausePredicate _ ArrowToken _ consequent:Expression
+  = predicate:Pattern _ ArrowToken _ consequent:(Expression / Block)
     { return Node.CaseClause(predicate)(consequent); }
 
-CaseClausePredicate
-  = CaseClauseArrayPredicate
-  / NumberLiteral
-  / StringLiteral
-  / DataConstructorPattern
-  / Identifier
+Pattern
+  = '(' _ @Pattern _ ')'
+  / Any
+  / bool:Boolean                                                        { return Pattern.Boolean(bool.value); }
+  / number:Number                                                       { return Pattern.Number(number.value); }
+  / string:String                                                       { return Pattern.String(string.value); }
+  / identifier:Identifier _ ':' _ pattern:Pattern                       { return Pattern.As(identifier.name)(pattern); }
+  / & [A-Z] identifier:Identifier args:(_ @Pattern)*                    { return Pattern.Data(identifier.name)(args); }
+  / identifier:Identifier                                               { return Pattern.Identifier(identifier.name); }
+  / '[' _ patterns:(Pattern / Slice)|.., CommaSeparator| _ ']'          { return Pattern.Array(patterns); }
+  / '{' _ properties:PropertyPattern|.., CommaSeparator| _ '}'          { return Pattern.Object(properties); }
 
-DataConstructorPattern
-  = & [A-Z] identifier:Identifier args:(_ @CaseClausePredicate)*
-    { return Node.DataConstructorPattern(identifier)(args); }
-  / '(' _ @DataConstructorPattern _ ')'
+InlinePattern
+  = '(' _ @InlinePattern _ ')'
+  / identifier:Identifier _ ':' _ pattern:InlinePattern                 { return Pattern.As(identifier.name)(pattern); }
+  / & [A-Z] identifier:Identifier args:(_ @InlinePattern)+              { return Pattern.Data(identifier.name)(args); }
+  / identifier:Identifier                                               { return Pattern.Identifier(identifier.name); }
+  / '[' _ patterns:InlinePattern|.., CommaSeparator| _ ']'              { return Pattern.Array(patterns); }
+  / '[' _ before:(@InlinePattern CommaSeparator)*
+          slice:Slice
+          after:(CommaSeparator @InlinePattern)* _ ']'                  { return Pattern.Array([...before, slice, ...after]); }
+  / '{' _ properties:PropertyPattern|.., CommaSeparator| _ '}'          { return Pattern.Object(properties); }
 
-CaseClauseArrayPredicate
-  = '[' _ ']'                                                                                   { return Node.ArrayExpression([]); }
-  / '[' _ elements:(CaseClausePredicate / RestElement)|1.., CommaSeparator| TrailingComma ']'  { return Node.ArrayExpression(elements); }
+Any
+  = '_'                                                                 { return Pattern.Any; }
+
+Slice
+  = '...' pattern:Pattern                                               { return Pattern.Slice(pattern); }
+  / '...'                                                               { return Pattern.Slice(Pattern.Any); }
+
+PropertyPattern
+  = name:PropertyName pattern:(_ ':' _ @Pattern)?                       { return Pattern.Property(name.value)(pattern ?? Pattern.Identifier(name.value)); }
 
 PropertyAccessor
   = '(' identifiers:('.' @Identifier)+ ')'
@@ -466,16 +460,6 @@ PropertyAccessor
 LeftSection   = '(' lhs:Expression __ operator:InfixOperator ')'    { return Node.LeftSection(operator)(lhs); }
 RightSection  = '(' operator:InfixOperator __ rhs:Expression ')'    { return Node.RightSection(operator)(rhs); }
 EmptySection  = '(' operator:InfixOperator ')'                      { return Node.EmptySection(operator); }
-
-BlockExpression
-  = '{' _ result:Expression _ '}' ! { return result.$tag === 'Identifier'; }  // treat {foo} as an object expression
-    { return Node.Block([])(Maybe.Just(result)); }
-  / '{' _ statements:Statement|1.., _| _ result:Expression _ '}'
-    { return Node.Block(statements)(Maybe.Just(result)); }
-
-BlockStatement
-  = '{' _ statements:Statement|1.., _| _ '}'
-    { return Node.Block(statements)(Maybe.Nothing); }
 
 DoBlockExpression
   = DoToken _ '{' _ operations:DoOperation|.., _| _ result:Expression _ '}'
@@ -488,22 +472,43 @@ DoOperation
   / ExpressionStatement
 
 ArrowAssignmentStatement
-  = pattern:Pattern _ '<-' _ expression:Expression _ ';'
+  = pattern:InlinePattern _ '<-' _ expression:Expression _ ';'
     { return Node.ArrowAssignmentStatement(pattern)(expression); }
 
 Statement
   = DataTypeDeclaration
   / FunctionDeclaration
   / VariableDeclaration
+  / VarToken _ identifier:Identifier _ ';' { return Node.VarDeclaration(identifier); }
   / ExpressionStatement
+  / Return
+  / While
+  / Block
+  / If
 
 FunctionDeclaration
-  = ident:Identifier parameters:(__ @Pattern)+ _ '=' _ body:Expression _ ';'
+  = ident:Identifier parameters:(__ @Identifier)+ _ '=' _ body:(Expression / Block) _ ';'
     { return Node.FunctionDeclaration(ident)(parameters)(body); }
 
 VariableDeclaration
-  = pattern:Pattern _ '=' _ expression:Expression _ ';'
-    { return Node.VariableDeclaration(pattern)(expression); }
+  = pattern:InlinePattern _ '=' _ expression:Expression _ ';'
+    { return Node.Var('const')(pattern)(expression); }
+
+Return
+  = ReturnToken _ argument:Expression _ ';'
+    { return Node.Return(argument); }
+
+While
+  = WhileToken _ '(' _ predicate:Expression _ ')' _ body:Statement
+    { return Node.While(predicate)(body); }
+
+Block
+  = '{' _ statements:Statement|1.., _| _ '}'
+    { return Node.Block(statements); }
+
+If
+  = IfToken _ predicate:Expression _ ThenToken _ consequent:Statement alternative:(_ ElseToken _ @Statement)?
+    { return Node.If(predicate)(consequent)(Maybe.fromNullable(alternative)); }
 
 DataTypeDeclaration
   = TypeToken
@@ -511,9 +516,9 @@ DataTypeDeclaration
     _ '='
     _ '|'?
     _ constructors:DataConstructorDefinition|1.., _ '|' _|
-    _ implementations:(ImplementsToken _ @ObjectExpression)?
+    _ implementations:(ImplementsToken _ @Object)?
     _ ';'
-    { return Node.DataTypeDeclaration(identifier)(constructors)(implementations ?? Node.ObjectExpression([])); }
+    { return Node.DataTypeDeclaration(identifier)(constructors)(implementations ?? Node.Object([])); }
 
 DataConstructorDefinition
   = identifier:Identifier parameters:(_ @Identifier)*
@@ -521,11 +526,11 @@ DataConstructorDefinition
 
 ExpressionStatement
   = expression:Expression _ ';'
-    { return Node.ExpressionStatement(expression); }
+    { return Node.Expression(expression); }
 
-SpreadElement
+Spread
   = '...' argument:Expression
-    { return Node.SpreadElement(argument); }
+    { return Node.Spread(argument); }
 
 LineTerminator
   = '\u000A' // LINE FEED (LF)
@@ -573,4 +578,4 @@ TrailingComma
   = _ ','? _
 
 Expression
-  = ApplicationExpression
+  = ReassignmentExpression

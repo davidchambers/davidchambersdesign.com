@@ -1,0 +1,236 @@
+import * as Pattern from "./Pattern.serif";
+import * from "./SourceNode.serif";
+
+export default desugar;
+
+Function = ArrowFunctionExpression;
+
+#$              = Identifier "$";
+#$lhs           = Identifier "$lhs";
+#$prototype     = Identifier "$prototype";
+#$rhs           = Identifier "$rhs";
+#args           = Identifier "args";
+#globalThis     = Identifier "globalThis";
+#target         = Identifier "target";
+
+'$size          = String "$size";
+'$tag           = String "$tag";
+'Object         = String "Object";
+'apply          = String "apply";
+'assign         = String "assign";
+'at             = String "at";
+'create         = String "create";
+'slice          = String "slice";
+
+countSpaces string index = (
+  if charAt index string == " "
+  then 1 + countSpaces string (index + 1)
+  else 0
+);
+
+variableDeclarationFromConstructor = \DataConstructorDefinition (Identifier tag) params -> (
+  Var "const" (Identifier tag) (
+    reduceRight
+      (\body param -> Function [param] body)
+      (Call (Member (Member #globalThis 'Object) 'assign) [
+         Call (Member (Member #globalThis 'Object) 'create) [#$prototype],
+         reduceRight
+           (\give param index props -> give (index + 1) (props .., Property (Number index) param))
+           (\_ props -> Object (
+              Property '$tag (String tag) ,..
+              Property '$size (Number params.length) ,..
+              props <>
+              (params <&> \case [param:(Identifier name) -> Property (String name) param])
+            ))
+           params
+           0
+           []
+       ])
+      params
+  )
+);
+
+codeForInlinePattern pattern #value = case pattern of [
+  Any               -> [],
+  As name pattern   -> [Var "const" (Identifier name) #value] <> codeForInlinePattern pattern #value,
+  Identifier name   -> [Var "const" (Identifier name) #value],
+  Data _ patterns   -> patterns.flatMap \(pattern, index) -> codeForInlinePattern pattern (Member #value $ Number index),
+  Object properties -> properties >>= \case [Property name pattern -> codeForInlinePattern pattern (Member #value $ String name)],
+  Array  patterns   -> (
+    reduceRight (\give pattern index after statements -> case pattern of [
+      Slice pattern -> give (index + 1) true $ statements <> codeForInlinePattern pattern (
+        Call (Member #value 'slice) (
+          if index + 1 == patterns.length
+          then [Number index]
+          else [Number index, Number $ index + 1 - patterns.length]
+        )
+      ),
+      pattern -> give (index + 1) after $ statements <> codeForInlinePattern pattern (
+        if after
+        then Call (Member #value 'at) [Number $ index - patterns.length]
+        else Member #value $ Number index
+      )
+    ]) (\index after statements -> statements) patterns 0 false []
+  ),
+];
+
+desugar sourceNode = case sourceNode of [
+  Quasiquotation value -> desugar $ String (
+    case charAt 0 value of [
+      "\n" -> {
+        counts = splitOn "\n" value >>= \line -> (
+          let count = countSpaces line 0 in if count == line.length then [] else [count]
+        );
+        dedent = case counts of [
+          []         -> id,
+          [n, ...ns] -> replaceAll ("\n" <> repeat (reduce min n ns) " ") "\n",
+        ];
+        return sliceFrom "\n".length $ dedent value;
+      },
+      _ -> value,
+    ]
+  ),
+  Call (PropertyAccessor identifiers) [argument] -> (
+    desugar $ reduce Member argument (identifiers <&> \case [Identifier name -> String name])
+  ),
+  PropertyAccessor identifiers -> (
+    desugar $ Function [#$] $ reduce Member #$ $ identifiers <&> \case [Identifier name -> String name]
+  ),
+  LeftSection operator lhs -> (
+    desugar $ Function [#$rhs] $ Infix operator lhs #$rhs
+  ),
+  RightSection operator rhs -> (
+    desugar $ Function [#$lhs] $ Infix operator #$lhs rhs
+  ),
+  EmptySection operator -> (
+    desugar $ Function [#$lhs] $ Function [#$rhs] $ Infix operator #$lhs #$rhs
+  ),
+  DoBlockExpression operations result -> desugar (
+    reduceRight (\result -> \case [
+      ArrowAssignmentStatement pattern expression -> (
+        Infix ">>=" expression $ Function [pattern] result
+      ),
+      Var "const" pattern expression -> (
+        Call (Function [pattern] result) [expression]
+      ),
+      FunctionDeclaration identifier parameters body -> (
+        Call (Function [identifier] result) [reduceRight (\body param -> Function [param] body) body parameters]
+      ),
+      Expression expression -> (
+        Block [Expression expression, Return result]
+      ),
+    ]) result operations
+  ),
+  InfixCall operator lhs rhs -> (
+    desugar $ Call (Call operator [lhs]) [rhs]
+  ),
+  LambdaCase cases -> (
+    desugar $ Function [#$] $ CaseExpression #$ cases
+  ),
+  MethodCall name -> (
+    desugar $ Function [#args] $ Function [#target] $ Call (Member (Member #target $ String name) 'apply) [#target, #args]
+  ),
+  FunctionDeclaration identifier parameters body -> (
+    desugar $ Var "const" identifier $ reduceRight (\body parameter -> Function [parameter] body) body parameters
+  ),
+  Module imports exports statements -> Module (desugar <$> imports) (desugar <$> exports) $ statements >>= \case [
+    DataTypeDeclaration (Identifier name) constructors implementations -> (
+      case desugar implementations of [
+        Object properties -> (
+          let prototype = Var "const" #$prototype $ Object $ properties <&> \case [
+                Property key (ArrowFunctionExpression parameters body:(Block _)) -> (
+                  Property key (FunctionExpression parameters body)
+                ),
+                Property key (ArrowFunctionExpression parameters expression) -> (
+                  Property key (FunctionExpression parameters $ Block [Return expression])
+                ),
+                property -> property
+              ]
+          in  prototype ,.. (desugar . variableDeclarationFromConstructor <$> constructors)
+        )
+      ]
+    ),
+    Var kind pattern expression -> codeForInlinePattern pattern (desugar expression),
+    statement -> [desugar statement]
+  ],
+  LetExpression bindings consequent -> desugar (
+    Call (
+      ArrowFunctionExpression [] $ Block (
+        (.., Return consequent) $ bindings >>= \LetBinding index pattern discriminant -> (
+          case pattern of [
+            identifier:(Identifier _) -> codeForInlinePattern identifier discriminant,
+            pattern -> (
+              let identifier = Identifier ("$" <> .toString [] index)
+              in  Var "const" identifier discriminant ,.. codeForInlinePattern pattern identifier
+            )
+          ]
+        )
+      )
+    ) []
+  ),
+  Block statements -> Block (
+    statements >>= \case [
+      Var kind pattern expression -> codeForInlinePattern pattern (desugar expression),
+      statement -> [desugar statement]
+    ]
+  ),
+
+  Array elements -> Array (desugar <$> elements),
+  ArrowFunctionExpression [parameter:Any] body -> desugar $ ArrowFunctionExpression [Pattern.Identifier "_"] body,
+  ArrowFunctionExpression [parameter:(Identifier _)] body -> ArrowFunctionExpression [parameter] (desugar body),
+  ArrowFunctionExpression parameters (Block statements) -> (
+    reduce
+      (\take parameter -> take \index parameters declarations give -> case parameter of [
+         Identifier name -> (
+           give (index + 1)
+                (parameters .., Pattern.Identifier name)
+                declarations
+         ),
+         _ -> (
+           give (index + 1)
+                (parameters .., Pattern.Identifier ("$" <> .toString [] index))
+                (declarations <> codeForInlinePattern parameter (Pattern.Identifier ("$" <> .toString [] index)))
+         )
+       ])
+      (\give -> give 0 [] [])
+      parameters
+      (\index parameters declarations -> ArrowFunctionExpression parameters $ desugar $ Block $ declarations <> statements)
+  ),
+  ArrowFunctionExpression parameters expression -> desugar $ Function parameters $ Block [Return expression],
+  Boolean value -> Boolean value,
+  Call callee arguments -> Call (desugar callee) (desugar <$> arguments),
+  CaseClause predicate consequent -> CaseClause predicate (desugar consequent),
+  CaseExpression discriminant cases -> CaseExpression (desugar discriminant) (desugar <$> cases),
+  ConditionalExpression predicate consequent alternative -> ConditionalExpression (desugar predicate) (desugar consequent) (desugar alternative),
+  DataConstructorPattern identifier arguments -> DataConstructorPattern identifier arguments,
+  ExportAllSpecifier hiding -> ExportAllSpecifier (desugar <$> hiding),
+  ExportDefaultDeclaration declaration -> ExportDefaultDeclaration (desugar declaration),
+  ExportNamedDeclaration specifiers -> ExportNamedDeclaration (desugar <$> specifiers),
+  ExportSpecifier local exported -> ExportSpecifier (desugar local) (desugar exported),
+  Expression expression -> Expression (desugar expression),
+  Function parameters body -> Function (desugar <$> parameters) (desugar body),
+  Identifier name -> Identifier name,
+  If predicate consequent alternative -> If (desugar predicate) (desugar consequent) (desugar <$> alternative),
+  ImportAllSpecifier hiding -> ImportAllSpecifier (desugar <$> hiding),
+  ImportDeclaration source specifiers -> ImportDeclaration source (desugar <$> specifiers),
+  ImportDefaultSpecifier local -> ImportDefaultSpecifier (desugar local),
+  ImportNamespaceSpecifier local -> ImportNamespaceSpecifier (desugar local),
+  ImportSpecifier imported local -> ImportSpecifier (desugar imported) (desugar local),
+  Infix operator left right -> Infix operator (desugar left) (desugar right),
+  Member object property -> Member (desugar object) (desugar property),
+  Number value -> Number value,
+  Object properties -> Object (desugar <$> properties),
+  Prefix operator operand -> Prefix operator (desugar operand),
+  Property key value -> Property (desugar key) (desugar value),
+  Return argument -> Return (desugar argument),
+  Spread argument -> Spread (desugar argument),
+  String value -> String value,
+  This -> This,
+  Var kind pattern expression -> Var kind pattern (desugar expression),
+  While predicate body -> While (desugar predicate) (desugar body),
+  sourceNode -> {
+    console.error (sourceNode, typeof sourceNode);
+    console.error ("(desugar)", sourceNode["$tag"]);
+    return sourceNode;
+  }
+];

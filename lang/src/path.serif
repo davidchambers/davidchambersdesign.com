@@ -7,18 +7,18 @@ export {
   relative,
 };
 
-basename path_ suffix = {
+basename path_ suffix = (
   path.basename (path_, suffix)
-};
+);
 
-dirname = {
+dirname = (
   path.dirname
-};
+);
 
-join components = {
+join components = (
   path.join (...components)
-};
+);
 
-relative from to = {
+relative from to = (
   path.relative (from, to)
-};
+);

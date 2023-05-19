@@ -1,0 +1,95 @@
+import List, {Nil} from "./List.serif";
+import {maybe} from "./Maybe.serif";
+
+export *;
+
+type SourceExpression =
+| Array elements
+| ArrowAssignmentStatement pattern expression
+| ArrowFunctionExpression parameters body
+| Boolean value
+| Call callee arguments
+| CaseClause predicate consequent
+| CaseExpression discriminant cases
+| ConditionalExpression predicate consequent alternative
+| DataConstructorDefinition identifier parameters
+| DataConstructorPattern identifier arguments
+| DataTypeDeclaration identifier constructors implementations
+| DoBlockExpression operations result
+| EmptySection operator
+| ExportAllSpecifier hiding
+| ExportDefaultDeclaration declaration
+| ExportNamedDeclaration specifiers
+| ExportSpecifier local exported
+| FunctionDeclaration identifier parameters body
+| Identifier name
+| ImportAllSpecifier hiding
+| ImportDeclaration source specifiers
+| ImportDefaultSpecifier local
+| ImportNamespaceSpecifier local
+| ImportSpecifier imported local
+| Infix operator left right
+| InfixCall operator left right
+| LambdaCase cases
+| LeftSection operator operand
+| Member object property
+| MethodCall name
+| Module imports exports statements
+| Number value
+| Object properties
+| Prefix operator operand
+| Property key value
+| PropertyAccessor identifiers
+| Quasiquotation value
+| RightSection operator operand
+| Spread argument
+| String value
+| This
+;
+
+vars = {
+  emptyVariables = {declared: Nil, referenced: Nil};
+
+  without lhs rhs = reject (in rhs) lhs;
+
+  merge lhs rhs = {
+    declared:   lhs.declared <> rhs.declared,
+    referenced: lhs.referenced <> rhs.referenced,
+  };
+
+  mergeAll = reduce merge emptyVariables;
+
+  vars node = case node of [
+    Array properties                                            -> mergeAll (vars <$> properties),
+    ArrowFunctionExpression parameters body                     -> {declared: Nil, referenced: (.referenced) (vars body) `without` (.referenced) (mergeAll $ vars <$> parameters)},
+    Block statements result                                     -> { {declared, referenced} = maybe id merge (vars <$> result) $ mergeAll (vars <$> statements); {declared: Nil, referenced: referenced `without` declared} },
+    Call callee arguments                                       -> vars callee `merge` mergeAll (vars <$> arguments),
+    CaseClause _ consequent                                     -> vars consequent,
+    CaseExpression discriminant cases                           -> vars discriminant `merge` mergeAll (vars <$> cases),
+    ConditionalExpression predicate consequent alternative      -> vars predicate `merge` vars consequent `merge` vars alternative,
+    DataConstructorDefinition (Identifier name) _               -> {declared: Nil, referenced: pure List name},
+    DataTypeDeclaration identifier constructors implementations -> {declared: (.referenced) $ mergeAll (vars <$> constructors), referenced: Nil},
+    DoBlockExpression operations result                         -> mergeAll (vars <$> operations) `merge` vars result,
+    FunctionExpression parameters body                          -> {declared: Nil, referenced: (.referenced) (vars body) `without` (.referenced) (mergeAll $ vars <$> parameters)},
+    Identifier name                                             -> {declared: Nil, referenced: pure List name},
+    ImportDeclaration _ specifiers                              -> mergeAll $ vars <$> specifiers,
+    ImportDefaultSpecifier local                                -> {declared: (.referenced) $ vars local, referenced: Nil},
+    ImportNamespaceSpecifier local                              -> {declared: (.referenced) $ vars local, referenced: Nil},
+    ImportSpecifier imported local                              -> {declared: (.referenced) $ vars local, referenced: Nil},
+    Infix _ left right                                          -> vars left `merge` vars right,
+    InfixCall _ left right                                      -> vars left `merge` vars right,
+    LambdaCase cases                                            -> mergeAll (vars <$> cases),
+    Member object property                                      -> vars object `merge` vars property,
+    Object properties                                           -> mergeAll $ vars <$> properties,
+    Prefix _ operand                                            -> vars operand,
+    Property key value                                          -> vars key `merge` vars value,
+    Return argument                                             -> vars argument,
+    Spread argument                                             -> vars argument,
+    _                                                           -> emptyVariables,
+  ];
+  \node -> {
+    {declared, referenced} = vars node;
+    add! set x = set.add x;
+    {declared: reduce add! (Set.new []) declared, referenced: reduce add! (Set.new []) referenced}
+  }
+};

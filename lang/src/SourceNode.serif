@@ -1,0 +1,176 @@
+import List, {Nil} from "./List.serif";
+import {maybe} from "./Maybe.serif";
+
+export *;
+
+type SourceNode =
+| Array elements
+| ArrowAssignmentStatement pattern expression
+| ArrowFunctionExpression parameters body
+| Block statements
+| Boolean value
+| Call callee arguments
+| CaseClause predicate consequent
+| CaseExpression discriminant cases
+| ConditionalExpression predicate consequent alternative
+| DataConstructorDefinition identifier parameters
+| DataConstructorPattern identifier arguments
+| DataTypeDeclaration identifier constructors implementations
+| DoBlockExpression operations result
+| EmptySection operator
+| ExportAllSpecifier hiding
+| ExportDefaultDeclaration declaration
+| ExportNamedDeclaration specifiers
+| ExportSpecifier local exported
+| Expression expression
+| FunctionDeclaration identifier parameters body
+| FunctionExpression parameters body
+| Identifier name
+| If predicate consequent alternative
+| ImportAllSpecifier hiding
+| ImportDeclaration source specifiers
+| ImportDefaultSpecifier local
+| ImportNamespaceSpecifier local
+| ImportSpecifier imported local
+| Infix operator left right
+| InfixCall operator left right
+| LambdaCase cases
+| LeftSection operator operand
+| LetBinding index pattern expression
+| LetExpression bindings expression
+| Member object property
+| MethodCall name
+| Module imports exports statements
+| Number value
+| Object properties
+| Prefix operator operand
+| Property key value
+| PropertyAccessor identifiers
+| Quasiquotation value
+| Return argument
+| RightSection operator operand
+| Spread argument
+| String value
+| This
+| Var kind pattern expression
+| VarDeclaration identifier
+| While predicate body
+;
+
+vars = (
+  let
+  emptyVariables = {declared: Nil, referenced: Nil},
+  without = \lhs rhs -> reject (flip contains rhs) lhs,
+  merge = \lhs rhs -> {
+    declared:   lhs.declared <> rhs.declared,
+    referenced: lhs.referenced <> rhs.referenced,
+  },
+  mergeAll = reduce merge emptyVariables,
+  vars = \case [
+    Array properties -> (
+      mergeAll (vars <$> properties)
+    ),
+    ArrowAssignmentStatement pattern expression -> (
+      {declared: (.referenced) $ vars pattern, referenced: Nil} `merge` vars expression
+    ),
+    ArrowFunctionExpression parameters body -> (
+      {declared: Nil, referenced: (.referenced) (vars body) `without` (.referenced) (mergeAll $ vars <$> parameters)}
+    ),
+    Block statements -> (
+      let {declared, referenced} = mergeAll (vars <$> statements)
+      in  {declared: Nil, referenced: referenced `without` declared}
+    ),
+    Call callee arguments -> (
+      vars callee `merge` mergeAll (vars <$> arguments)
+    ),
+    CaseClause _ consequent -> (
+      vars consequent
+    ),
+    CaseExpression discriminant cases -> (
+      vars discriminant `merge` mergeAll (vars <$> cases)
+    ),
+    ConditionalExpression predicate consequent alternative -> (
+      vars predicate `merge` vars consequent `merge` vars alternative
+    ),
+    DataConstructorDefinition (Identifier name) _ -> (
+      {declared: Nil, referenced: pure List name}
+    ),
+    DataTypeDeclaration identifier constructors implementations -> (
+      {declared: (.referenced) $ mergeAll (vars <$> constructors), referenced: Nil}
+    ),
+    DoBlockExpression operations result -> (
+      mergeAll (vars <$> operations) `merge` vars result
+    ),
+    ExportDefaultDeclaration declaration -> (
+      vars declaration
+    ),
+    ExportNamedDeclaration specifiers -> (
+      mergeAll $ vars <$> specifiers
+    ),
+    ExportSpecifier local exported -> (
+      vars local
+    ),
+    Expression expression -> (
+      vars expression
+    ),
+    FunctionDeclaration (Identifier name) parameters body -> (
+      {declared: pure List name, referenced: reject (== name) $ (.referenced) (vars body) `without` (.referenced) (mergeAll $ vars <$> parameters)}
+    ),
+    FunctionExpression parameters body -> (
+      {declared: Nil, referenced: (.referenced) (vars body) `without` (.referenced) (mergeAll $ vars <$> parameters)}
+    ),
+    Identifier name -> (
+      {declared: Nil, referenced: pure List name}
+    ),
+    If predicate consequent alternative -> (
+      vars predicate `merge` vars consequent `merge` maybe emptyVariables vars alternative
+    ),
+    ImportDeclaration _ specifiers -> (
+      mergeAll $ vars <$> specifiers
+    ),
+    ImportDefaultSpecifier local -> (
+      {declared: (.referenced) $ vars local, referenced: Nil}
+    ),
+    ImportNamespaceSpecifier local -> (
+      {declared: (.referenced) $ vars local, referenced: Nil}
+    ),
+    ImportSpecifier imported local -> (
+      {declared: (.referenced) $ vars local, referenced: Nil}
+    ),
+    Infix _ left right -> (
+      vars left `merge` vars right
+    ),
+    InfixCall _ left right -> (
+      vars left `merge` vars right
+    ),
+    LambdaCase cases -> (
+      mergeAll (vars <$> cases)
+    ),
+    LetExpression bindings expression -> (
+      let {declared, referenced} = vars expression `merge` mergeAll (bindings <&> \case [
+            LetBinding _ (Identifier name) expression -> {declared: pure List name, referenced: Nil} `merge` vars expression,
+            LetBinding _ (Object _) expression -> vars expression,
+            LetBinding (Identifier name) expression -> {declared: pure List name, referenced: Nil} `merge` vars expression,
+            LetBinding (Object properties) expression -> vars expression,
+          ])
+      in  {declared: Nil, referenced: referenced `without` declared}
+    ),
+    Member object property                                      -> vars object `merge` vars property,
+    Module imports exports statements                           -> mergeAll (vars <$> imports) `merge` mergeAll (vars <$> exports) `merge` mergeAll (vars <$> statements),
+    Object properties                                           -> mergeAll $ vars <$> properties,
+    Prefix _ operand                                            -> vars operand,
+    Property key value                                          -> vars key `merge` vars value,
+    Return argument                                             -> vars argument,
+    Spread argument                                             -> vars argument,
+    Var _ pattern expression                                    -> { declared = (.referenced) $ vars pattern; return {declared, referenced: (.referenced) (vars expression) `without` declared}; },
+    VarDeclaration (Identifier name)                            -> {declared: pure List name, referenced: Nil},
+    While predicate body                                        -> vars predicate `merge` vars body,
+    _                                                           -> emptyVariables,
+  ]
+  in
+  \node -> (
+    let {declared, referenced} = vars node,
+        add! = \set x -> set.add x
+    in  {declared: reduce add! (Set.new []) declared, referenced: reduce add! (Set.new []) referenced}
+  )
+);

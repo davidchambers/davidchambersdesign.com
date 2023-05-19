@@ -6,14 +6,14 @@ export {
   writeFile,
 };
 
-mkdir options path = {
+mkdir options path = (
   attemptP \() -> Deno.mkdir (path, options)
-};
+);
 
-readFile filename = {
+readFile filename = (
   attemptP \() -> Deno.readTextFile filename
-};
+);
 
-writeFile filename data = {
+writeFile filename data = (
   attemptP \() -> Deno.writeTextFile (filename, data)
-};
+);

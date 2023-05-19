@@ -1,358 +1,208 @@
-import {Nothing, Just} from "./Maybe.serif";
-import * from "./Node.serif";
-import {EsOperator} from "./Operator.serif";
+import * from "./InternalNode.serif";
+import {Nothing} from "./Maybe.serif";
 
 export default Prelude;
 
-ident   = Identifier;
-boolean = BooleanLiteral;
-number  = NumberLiteral;
-string  = StringLiteral;
-array   = ArrayExpression;
-object  = ObjectExpression;
-spread  = SpreadElement;
-member  = MemberExpression;
-member* = reduce member;
-prefix  = PrefixExpression;
-infix   = InfixExpression;
-lambda  = flip $ reduceRight $ flip $ ArrowFunctionExpression . Array.of;
-call*   = CallExpression;
-call callee argument = call* callee [argument];
+Function = ArrowFunctionExpression;
 
-#DivisionByZero     = ident "DivisionByZero";
-#chain              = ident "chain";
-#concat             = ident "concat";
-#constructor        = ident "constructor";
-#context            = ident "context";
-#count              = ident "count";
-#equals             = ident "equals";
-#f                  = ident "f";
-#filter             = ident "filter";
-#fragment           = ident "fragment";
-#fragments          = ident "fragments";
-#from               = ident "from";
-#g                  = ident "g";
-#globalThis         = ident "globalThis";
-#id                 = ident "id";
-#idx                = ident "idx";
-#index              = ident "index";
-#lastIndex          = ident "lastIndex";
-#lengths            = ident "lengths";
-#lhs                = ident "lhs";
-#match              = ident "match";
-#min                = ident "min";
-#null               = ident "null";
-#pattern            = ident "pattern";
-#patternIndex       = ident "patternIndex";
-#patterns           = ident "patterns";
-#prefix             = ident "prefix";
-#pure               = ident "pure";
-#reduce             = ident "reduce";
-#replacement        = ident "replacement";
-#rhs                = ident "rhs";
-#separator          = ident "separator";
-#slices             = ident "slices";
-#string             = ident "string";
-#suffix             = ident "suffix";
-#test               = ident "test";
-#that               = ident "that";
-#these              = ident "these";
-#this               = ident "this";
-#to                 = ident "to";
-#typeRep            = ident "typeRep";
-#typeof             = ident "typeof";
-#valid              = ident "valid";
-#value              = ident "value";
-#x                  = ident "x";
-#xs                 = ident "xs";
-#y                  = ident "y";
+#$discriminant      = Identifier "$discriminant";
+#DivisionByZero     = Identifier "DivisionByZero";
+#chain              = Identifier "chain";
+#concat             = Identifier "concat";
+#constructor        = Identifier "constructor";
+#count              = Identifier "count";
+#equals             = Identifier "equals";
+#f                  = Identifier "f";
+#filter             = Identifier "filter";
+#from               = Identifier "from";
+#g                  = Identifier "g";
+#globalThis         = Identifier "globalThis";
+#id                 = Identifier "id";
+#idx                = Identifier "idx";
+#index              = Identifier "index";
+#lhs                = Identifier "lhs";
+#null               = Identifier "null";
+#pattern            = Identifier "pattern";
+#prefix             = Identifier "prefix";
+#pure               = Identifier "pure";
+#reduce             = Identifier "reduce";
+#replacement        = Identifier "replacement";
+#rhs                = Identifier "rhs";
+#separator          = Identifier "separator";
+#string             = Identifier "string";
+#suffix             = Identifier "suffix";
+#that               = Identifier "that";
+#these              = Identifier "these";
+#this               = Identifier "this";
+#to                 = Identifier "to";
+#typeRep            = Identifier "typeRep";
+#typeof             = Identifier "typeof";
+#x                  = Identifier "x";
+#xs                 = Identifier "xs";
+#y                  = Identifier "y";
 
-'$tag                   = string "$tag";
-'$values                = string "$values";
-'Array                  = string "Array";
-'JSON                   = string "JSON";
-'Map                    = string "Map";
-'Math                   = string "Math";
-'Object                 = string "Object";
-'Reflect                = string "Reflect";
-'Set                    = string "Set";
-'any                    = string "any";
-'array                  = string "array";
-'assign                 = string "assign";
-'call                   = string "call";
-'charAt                 = string "charAt";
-'charCodeAt             = string "charCodeAt";
-'codePointAt            = string "codePointAt";
-'concat                 = string "concat";
-'construct              = string "construct";
-'constructor            = string "constructor";
-'data                   = string "data";
-'endsWith               = string "endsWith";
-'every                  = string "every";
-'fantasy-land/ap        = string "fantasy-land/ap";
-'fantasy-land/chain     = string "fantasy-land/chain";
-'fantasy-land/compose   = string "fantasy-land/compose";
-'fantasy-land/concat    = string "fantasy-land/concat";
-'fantasy-land/empty     = string "fantasy-land/empty";
-'fantasy-land/equals    = string "fantasy-land/equals";
-'fantasy-land/filter    = string "fantasy-land/filter";
-'fantasy-land/map       = string "fantasy-land/map";
-'fantasy-land/of        = string "fantasy-land/of";
-'fantasy-land/reduce    = string "fantasy-land/reduce";
-'filter                 = string "filter";
-'flatMap                = string "flatMap";
-'floor                  = string "floor";
-'identifier             = string "identifier";
-'index                  = string "index";
-'isArray                = string "isArray";
-'join                   = string "join";
-'length                 = string "length";
-'literal                = string "literal";
-'map                    = string "map";
-'name                   = string "name";
-'null                   = string "null";
-'object                 = string "object";
-'of                     = string "of";
-'parse                  = string "parse";
-'patterns               = string "patterns";
-'prototype              = string "prototype";
-'reduce                 = string "reduce";
-'reduceRight            = string "reduceRight";
-'repeat                 = string "repeat";
-'replace                = string "replace";
-'replaceAll             = string "replaceAll";
-'slice                  = string "slice";
-'split                  = string "split";
-'startsWith             = string "startsWith";
-'tag                    = string "tag";
-'toLowerCase            = string "toLowerCase";
-'toString               = string "toString";
-'toUpperCase            = string "toUpperCase";
-'trim                   = string "trim";
-'trimEnd                = string "trimEnd";
-'trimStart              = string "trimStart";
-'type                   = string "type";
-'value                  = string "value";
+'Array                  = String "Array";
+'JSON                   = String "JSON";
+'Map                    = String "Map";
+'Math                   = String "Math";
+'Object                 = String "Object";
+'Reflect                = String "Reflect";
+'Set                    = String "Set";
+'call                   = String "call";
+'charAt                 = String "charAt";
+'charCodeAt             = String "charCodeAt";
+'codePointAt            = String "codePointAt";
+'concat                 = String "concat";
+'construct              = String "construct";
+'constructor            = String "constructor";
+'endsWith               = String "endsWith";
+'every                  = String "every";
+'fantasy-land/ap        = String "fantasy-land/ap";
+'fantasy-land/chain     = String "fantasy-land/chain";
+'fantasy-land/compose   = String "fantasy-land/compose";
+'fantasy-land/concat    = String "fantasy-land/concat";
+'fantasy-land/empty     = String "fantasy-land/empty";
+'fantasy-land/equals    = String "fantasy-land/equals";
+'fantasy-land/filter    = String "fantasy-land/filter";
+'fantasy-land/map       = String "fantasy-land/map";
+'fantasy-land/of        = String "fantasy-land/of";
+'fantasy-land/reduce    = String "fantasy-land/reduce";
+'filter                 = String "filter";
+'flatMap                = String "flatMap";
+'floor                  = String "floor";
+'function               = String "function";
+'join                   = String "join";
+'length                 = String "length";
+'map                    = String "map";
+'name                   = String "name";
+'null                   = String "null";
+'of                     = String "of";
+'parse                  = String "parse";
+'prototype              = String "prototype";
+'reduce                 = String "reduce";
+'reduceRight            = String "reduceRight";
+'repeat                 = String "repeat";
+'replace                = String "replace";
+'replaceAll             = String "replaceAll";
+'slice                  = String "slice";
+'split                  = String "split";
+'startsWith             = String "startsWith";
+'toLowerCase            = String "toLowerCase";
+'toString               = String "toString";
+'toUpperCase            = String "toUpperCase";
+'trim                   = String "trim";
+'trimEnd                = String "trimEnd";
+'trimStart              = String "trimStart";
 
-'/'                 = infix $ EsOperator "/";
-'%'                 = infix $ EsOperator "%";
-'+'                 = infix $ EsOperator "+";
-'-'                 = infix $ EsOperator "-";
-'<'                 = infix $ EsOperator "<";
-'<='                = infix $ EsOperator "<=";
-'instanceof'        = infix $ EsOperator "instanceof";
-'==='               = infix $ EsOperator "===";
-'!=='               = infix $ EsOperator "!==";
-'|'                 = infix $ EsOperator "|";
-'&&'                = infix $ EsOperator "&&";
-'||'                = infix $ EsOperator "||";
-'='                 = AssignmentExpression "=";
-'+='                = AssignmentExpression "+=";
-'-='                = AssignmentExpression "-=";
-'++'                = UpdateExpression false "++";
-
-construct constructor arguments = {
-  call* (member* #globalThis ['Reflect, 'construct]) [
+construct constructor arguments = (
+  Call (Member (Member #globalThis 'Reflect) 'construct) [
     constructor,
     arguments,
   ]
-};
+);
 
-Set values  = construct (member #globalThis 'Set) (array [values]);
-Map entries = construct (member #globalThis 'Map) (array [entries]);
+Set values  = construct (Member #globalThis 'Set) (Array [values]);
+Map entries = construct (Member #globalThis 'Map) (Array [entries]);
 
-cond predicate consequent alternative = {
-  ConditionalExpression predicate consequent $ Just alternative
-};
+defineSwitch discriminant transform default cases = (
+  Call (
+    Function [#$discriminant] (
+      Block (
+        (.., Return default) (
+          globalThis.Object.entries cases <&> \case [
+            [name, consequent] -> (
+              If (Infix "===" #$discriminant $ String $ transform name) (
+                Block [Return consequent]
+              ) Nothing
+            )
+          ]
+        )
+      )
+    )
+  ) [discriminant]
+);
 
-defineSwitch discriminant transform default cases = {
-  call* (
-    ArrowFunctionExpression [] $ BlockStatement [
-      SwitchStatement discriminant {
-        (Object.entries cases <&> \[names, expr] -> SwitchCase (Just . string . transform <$> splitOn "/" names) [ReturnStatement expr])
-        <> [SwitchCase [Nothing] [ReturnStatement default]]
-      }
-    ]
-  ) []
-};
+typeSwitch identifier = (
+  defineSwitch (Call (Member (Member (Member (Member #globalThis 'Object) 'prototype) 'toString) 'call) [identifier]) \tag -> "[object " + tag + "]"
+);
 
-typeSwitch identifier = {
-  defineSwitch (call (member* #globalThis ['Object, 'prototype, 'toString, 'call]) identifier) \tag -> "[object " + tag + "]"
-};
-
-typeRepSwitch typeRep = {
-  defineSwitch (member typeRep 'name) id
-};
-
-filter predicate xs = call (member xs 'filter) predicate;
-zero = number 0;
-one = number 1;
+typeRepSwitch typeRep = (
+  defineSwitch (Member typeRep 'name) id
+);
 
 Prelude = {
-  null:           call (member* #globalThis ['JSON, 'parse]) 'null,
-  complement:     lambda [#rhs] $ prefix "~" #rhs,
-  instanceof:     lambda [#constructor, #x] $ 'instanceof' #x #constructor,
-  typeof:         lambda [#x] $ cond ('===' #x #null) 'null (prefix "typeof" #x),
-  id:             lambda [#x] #x,
-  const:          lambda [#x, #y] #x,
-  not:            lambda [#x] $ prefix "!" #x,
-  negate:         lambda [#x] $ prefix "-" #x,
-  quot:           lambda [#lhs, #rhs] $ cond ('===' #rhs zero) #DivisionByZero $ '|' ('/' #lhs #rhs) zero,
-  rem:            lambda [#lhs, #rhs] $ cond ('===' #rhs zero) #DivisionByZero $ '%' #lhs #rhs,
-  div:            lambda [#lhs, #rhs] $ cond ('===' #rhs zero) #DivisionByZero $ call (member* #globalThis ['Math, 'floor]) $ '/' #lhs #rhs,
-  mod:            lambda [#lhs, #rhs] $ cond ('===' #rhs zero) #DivisionByZero $ '%' ('+' ('%' #lhs #rhs) #rhs) #rhs,
-  charAt:         lambda [#index, #string] $ call (member #string 'charAt) #index,
-  charCodeAt:     lambda [#index, #string] $ call (member #string 'charCodeAt) #index,
-  codePointAt:    lambda [#index, #string] $ call (member #string 'codePointAt) #index,
-  startsWith:     lambda [#prefix, #string] $ call (member #string 'startsWith) #prefix,
-  endsWith:       lambda [#suffix, #string] $ call (member #string 'endsWith) #suffix,
-  toLower:        lambda [#string] $ call* (member #string 'toLowerCase) [],
-  toUpper:        lambda [#string] $ call* (member #string 'toUpperCase) [],
-  trim:           lambda [#string] $ call* (member #string 'trim) [],
-  trimStart:      lambda [#string] $ call* (member #string 'trimStart) [],
-  trimEnd:        lambda [#string] $ call* (member #string 'trimEnd) [],
-  repeat:         lambda [#count, #string] $ call (member #string 'repeat) #count,
-  replace:        lambda [#pattern, #replacement, #string] $ call* (member #string 'replace) [#pattern, #replacement],
-  replaceAll:     lambda [#pattern, #replacement, #string] $ call* (member #string 'replaceAll) [#pattern, #replacement],
-  splitOn:        lambda [#separator, #string] $ call (member #string 'split) #separator,
-  joinWith:       lambda [#separator, #xs] $ call (member #xs 'join) #separator,
-  slice:          lambda [#from, #to, #xs] $ call* (member #xs 'slice) [#from, #to],
-  sliceFrom:      lambda [#from,      #xs] $ call* (member #xs 'slice) [#from],
-  sliceTo:        lambda [       #to, #xs] $ call* (member #xs 'slice) [ zero, #to],
+  null:           Call (Member (Member #globalThis 'JSON) 'parse) ['null],
+  complement:     Function [#rhs] $ Prefix "~" #rhs,
+  instanceof:     Function [#constructor] $ Function [#x] $ Infix "instanceof" #x #constructor,
+  typeof:         Function [#x] $ ConditionalExpression (Infix "===" #x #null) 'null (Prefix "typeof" #x),
+  id:             Function [#x] #x,
+  const:          Function [#x] $ Function [#y] #x,
+  not:            Function [#x] $ Prefix "!" #x,
+  negate:         Function [#x] $ Prefix "-" #x,
+  quot:           Function [#lhs] $ Function [#rhs] $ Block [Return $ ConditionalExpression (Infix "===" #rhs $ Number 0) #DivisionByZero $ Infix "|" (Infix "/" #lhs #rhs) $ Number 0],
+  rem:            Function [#lhs] $ Function [#rhs] $ ConditionalExpression (Infix "===" #rhs $ Number 0) #DivisionByZero $ Infix "%" #lhs #rhs,
+  div:            Function [#lhs] $ Function [#rhs] $ ConditionalExpression (Infix "===" #rhs $ Number 0) #DivisionByZero $ Call (Member (Member #globalThis 'Math) 'floor) [Infix "/" #lhs #rhs],
+  mod:            Function [#lhs] $ Function [#rhs] $ ConditionalExpression (Infix "===" #rhs $ Number 0) #DivisionByZero $ Infix "%" (Infix "+" (Infix "%" #lhs #rhs) #rhs) #rhs,
+  charAt:         Function [#index] $ Function [#string] $ Call (Member #string 'charAt) [#index],
+  charCodeAt:     Function [#index] $ Function [#string] $ Call (Member #string 'charCodeAt) [#index],
+  codePointAt:    Function [#index] $ Function [#string] $ Call (Member #string 'codePointAt) [#index],
+  startsWith:     Function [#prefix] $ Function [#string] $ Call (Member #string 'startsWith) [#prefix],
+  endsWith:       Function [#suffix] $ Function [#string] $ Call (Member #string 'endsWith) [#suffix],
+  toLower:        Function [#string] $ Call (Member #string 'toLowerCase) [],
+  toUpper:        Function [#string] $ Call (Member #string 'toUpperCase) [],
+  trim:           Function [#string] $ Call (Member #string 'trim) [],
+  trimStart:      Function [#string] $ Call (Member #string 'trimStart) [],
+  trimEnd:        Function [#string] $ Call (Member #string 'trimEnd) [],
+  repeat:         Function [#count] $ Function [#string] $ Call (Member #string 'repeat) [#count],
+  replace:        Function [#pattern] $ Function [#replacement] $ Function [#string] $ Call (Member #string 'replace) [#pattern, #replacement],
+  replaceAll:     Function [#pattern] $ Function [#replacement] $ Function [#string] $ Call (Member #string 'replaceAll) [#pattern, #replacement],
+  splitOn:        Function [#separator] $ Function [#string] $ Call (Member #string 'split) [#separator],
+  joinWith:       Function [#separator] $ Function [#xs] $ Call (Member #xs 'join) [#separator],
+  slice:          Function [#from] $ Function [#to] $ Function [#xs] $ Call (Member #xs 'slice) [#from, #to],
+  sliceFrom:      Function [#from] $ Function [#xs] $ Call (Member #xs 'slice) [#from],
+  sliceTo:        Function [#to] $ Function [#xs] $ Call (Member #xs 'slice) [Number 0, #to],
   -- TODO: generalize to setoid
-  equals: {
-    lambda [#this, #that] {
-      typeSwitch #this ('===' #this #that) {
-        Array: {
-          typeSwitch #that (boolean false) {
-            Array: '&&' ('===' (member #this 'length) (member #that 'length)) (call (member #this 'every) $ ArrowFunctionExpression [#x, #idx] $ (call (call #equals #x) $ member #that #idx)),
-          }
-        },
-        Object: {
-          typeSwitch #that (boolean false) {
-            Object: cond ('===' (call (ident "typeof") $ member #this 'fantasy-land/equals) (StringLiteral "function"))
-                         (call (member #this 'fantasy-land/equals) #that)
-                         ('===' #this #that),
-          }
-        },
-      }
-    }
-  },
+  equals: (
+    Function [#this] (
+      Function [#that] (
+        typeSwitch #this (Infix "===" #this #that) {
+          Array: (
+            typeSwitch #that (Boolean false) {
+              Array: Infix "&&" (Infix "===" (Member #this 'length) (Member #that 'length)) (Call (Member #this 'every) [Function [#x, #idx] $ Call (Call #equals [#x]) [Member #that #idx]]),
+            }
+          ),
+          Object: (
+            typeSwitch #that (Boolean false) {
+              Object: ConditionalExpression (Infix "===" (Call #typeof [Member #this 'fantasy-land/equals]) 'function)
+                                            (Call (Member #this 'fantasy-land/equals) [#that])
+                                            (Infix "===" #this #that),
+            }
+          ),
+        }
+      )
+    )
+  ),
   -- TODO: generalize to ord
-  min:            lambda [#x, #y] $ cond ('<=' #x #y) #x #y,
+  min:            Function [#x] $ Function [#y] $ ConditionalExpression (Infix "<=" #x #y) #x #y,
   -- TODO: generalize to ord
-  max:            lambda [#x, #y] $ cond ('<=' #x #y) #y #x,
-  compose:        lambda [#f, #g] $ typeSwitch #g (call (member #g 'fantasy-land/compose) #f) {Function: lambda [#x] $ call #f $ call #g #x},
-  concat:         lambda [#this, #that] $ typeSwitch #this (call (member #this 'fantasy-land/concat) #that) {Array/String: call (member #this 'concat) #that},
-  empty:          lambda [#typeRep] $ typeRepSwitch #typeRep (call* (member #typeRep 'fantasy-land/empty) []) {Array: array [], Object: object [], String: string "", Set: Set $ array [], Map: Map $ array []},
-  reduce:         lambda [#f, #y, #xs] $ typeSwitch #xs (call* (member #xs 'fantasy-land/reduce) [ArrowFunctionExpression [#y, #x] $ (call (call #f #y) #x), #y]) {Array: call* (member #xs 'reduce) [ArrowFunctionExpression [#y, #x] $ call (call #f #y) #x, #y]},
+  max:            Function [#x] $ Function [#y] $ ConditionalExpression (Infix "<=" #x #y) #y #x,
+  compose:        Function [#f] $ Function [#g] $ typeSwitch #g (Call (Member #g 'fantasy-land/compose) [#f]) {Function: Function [#x] $ Call #f [Call #g [#x]]},
+  concat:         Function [#this] $ Function [#that] $ typeSwitch #this (Call (Member #this 'fantasy-land/concat) [#that]) {Array: Call (Member #this 'concat) [#that], String: Call (Member #this 'concat) [#that]},
+  empty:          Function [#typeRep] $ typeRepSwitch #typeRep (Call (Member #typeRep 'fantasy-land/empty) []) {Array: Array [], Object: Object [], String: String "", Set: Set $ Array [], Map: Map $ Array []},
+  reduce:         Function [#f] $ Function [#y] $ Function [#xs] $ typeSwitch #xs (Call (Member #xs 'fantasy-land/reduce) [Function [#y, #x] $ Call (Call #f [#y]) [#x], #y]) {Array: Call (Member #xs 'reduce) [Function [#y, #x] $ Call (Call #f [#y]) [#x], #y]},
   -- TODO: generalize to foldable
-  reduceRight:    lambda [#f, #y, #x] $ call* (member #x 'reduceRight) [ArrowFunctionExpression [#y, #x] $ call (call #f #y) #x, #y],
-  filter:         lambda [#f, #xs] $ typeSwitch #xs (call (member #xs 'fantasy-land/filter) #f) {Array: filter (lambda [#x] $ call #f #x) #xs, Set: Set $ call (call #filter #f) $ array [spread #xs]},
-  reject:         lambda [#f] $ call #filter $ lambda [#x] $ prefix "!" $ call #f #x,
-  map:            lambda [#f, #xs] $ typeSwitch #xs (call (member #xs 'fantasy-land/map) #f) {Array: call (member #xs 'map) $ lambda [#x] $ call #f #x},
+  reduceRight:    Function [#f] $ Function [#y] $ Function [#x] $ Call (Member #x 'reduceRight) [Function [#y, #x] $ Call (Call #f [#y]) [#x], #y],
+  filter:         Function [#f] $ Function [#xs] $ typeSwitch #xs (Call (Member #xs 'fantasy-land/filter) [#f]) {Array: Call (Member #xs 'filter) [Function [#x] $ Call #f [#x]], Set: Set $ Call (Call #filter [#f]) [Array [Spread #xs]]},
+  reject:         Function [#f] $ Call #filter [Function [#x] $ Prefix "!" $ Call #f [#x]],
+  map:            Function [#f] $ Function [#xs] $ typeSwitch #xs (Call (Member #xs 'fantasy-land/map) [#f]) {Array: Call (Member #xs 'map) [Function [#x] $ Call #f [#x]]},
   -- TODO: generalize to functor
-  flip:           lambda [#f, #y, #x] $ call (call #f #x) #y,
-  pure:           lambda [#typeRep] $ typeRepSwitch #typeRep (member #typeRep 'fantasy-land/of) {Array: member* #globalThis ['Array, 'of], Function: lambda [#x, #y] #x, Set: lambda [#x] $ Set $ array [#x]},
+  flip:           Function [#f] $ Function [#y] $ Function [#x] $ Call (Call #f [#x]) [#y],
+  pure:           Function [#typeRep] $ typeRepSwitch #typeRep (Member #typeRep 'fantasy-land/of) {Array: Member (Member #globalThis 'Array) 'of, Function: Function [#x] $ Function [#y] #x, Set: Function [#x] $ Set $ Array [#x]},
   -- TODO: generalize to apply
-  ap:             lambda [#lhs, #rhs] $ typeSwitch #lhs (call (member #rhs 'fantasy-land/ap) #lhs) {Array: call (member #lhs 'flatMap) $ lambda [#f] $ call (member #rhs 'map) $ lambda [#x] $ call #f #x},
-  append:         lambda [#x, #xs] $ call (call #concat #xs) $ call (call #pure $ member #xs 'constructor) #x,
-  prepend:        lambda [#x, #xs] $ call (call #concat $ call (call #pure $ member #xs 'constructor) #x) #xs,
-  chain:          lambda [#f, #x] $ typeSwitch #x (call (member #x 'fantasy-land/chain) #f) {Array: call (member #x 'flatMap) $ lambda [#x] $ call #f #x, Function: lambda [#y] $ call (call #x $ call #f #y) #y},
-  join:           call #chain #id,
-  contains:       lambda [#this, #these] $ call (call (call #reduce $ lambda [#x, #that] $ '||' #x $ call (call #equals #this) #that) $ boolean false) #these,
-
-  match: lambda [#pattern, #value] {
-    BlockStatement [
-      SwitchStatement (member #pattern 'type) [
-        SwitchCase [Just 'any] [
-          ReturnStatement $ ObjectExpression []
-        ],
-        SwitchCase [Just 'identifier] [
-          ReturnStatement $ ObjectExpression [Property (member #pattern 'name) #value]
-        ],
-        SwitchCase [Just 'literal] [
-          IfStatement (call (call #equals $ member #pattern 'value) #value) {
-            ReturnStatement $ ObjectExpression []
-          },
-          ReturnStatement #null
-        ],
-        SwitchCase [Just 'data] [
-          IfStatement (
-            '&&' ('&&' ('===' (call #typeof #value) 'object)
-                       ('===' (member #value '$tag) (member #pattern 'tag)))
-                 ('===' (member (member #value '$values) 'length) (member (member #pattern 'patterns) 'length))
-          ) {
-            BlockStatement [
-              VariableDeclaration #context $ ObjectExpression [],
-              ForStatement (LetDeclaration #index zero) ('<' #index $ member (member #pattern 'patterns) 'length) ('+=' #index one) $ BlockStatement [
-                VariableDeclaration #fragment $ call (call #match $ member (member #pattern 'patterns) #index) $ member (member #value '$values) #index,
-                IfStatement ('===' #fragment #null) $ ReturnStatement #null,
-                ExpressionStatement $ call* (member (member #globalThis 'Object) 'assign) [#context, #fragment],
-              ],
-              ReturnStatement #context
-            ]
-          },
-          ReturnStatement #null
-        ],
-        SwitchCase [Just 'array] [
-          IfStatement (call (member (member #globalThis 'Array) 'isArray) #value) $ BlockStatement [
-            VariableDeclaration #patterns $ member #pattern 'patterns,
-            VariableDeclaration #lengths $ ArrayExpression [],
-            LetDeclaration #slices zero,
-            ForStatement (LetDeclaration #index zero) ('<' #index $ member #patterns 'length) ('+=' #index one) $ BlockStatement [
-              IfStatement ('===' (member (member #patterns #index) 'type) 'slice) $ BlockStatement [
-                ExpressionStatement $ '=' (member #lengths $ '=' (member (member #patterns #index) 'index) #slices) zero,
-                ExpressionStatement $ '+=' #slices one,
-              ]
-            ],
-            IfStatement ('===' #slices zero) $ BlockStatement [
-              IfStatement ('!==' (member #value 'length) (member #patterns 'length)) $ ReturnStatement #null,
-              VariableDeclaration #context $ ObjectExpression [],
-              ForStatement (LetDeclaration #index zero) ('<' #index $ member #value 'length) ('+=' #index one) $ BlockStatement [
-                VariableDeclaration #fragment $ call (call #match $ member #patterns #index) $ member #value #index,
-                IfStatement ('===' #fragment #null) $ ReturnStatement #null,
-                ExpressionStatement $ call* (member (member #globalThis 'Object) 'assign) [#context, #fragment],
-              ],
-              ReturnStatement #context
-            ],
-            VariableDeclaration #min $ '-' (member #patterns 'length) #slices,
-            IfStatement ('<' (member #value 'length) #min) $ ReturnStatement #null,
-            VariableDeclaration #lastIndex $ '-' #slices one,
-            ExpressionStatement $ '=' (member #lengths #lastIndex) $ '-' (member #value 'length) #min,
-            VariableDeclaration #fragments $ call (member #globalThis 'Array) $ member #patterns 'length,
-            WhileStatement (boolean true) $ BlockStatement [
-              LetDeclaration #index zero,
-              LetDeclaration #valid $ boolean true,
-              ForStatement (LetDeclaration #patternIndex zero) ('<' #patternIndex $ member #fragments 'length) ('+=' #patternIndex one) $ BlockStatement [
-                VariableDeclaration #pattern $ member #patterns #patternIndex,
-                VariableDeclaration #fragment (
-                  cond ('===' (member #pattern 'type) 'slice)
-                       (call (call #match $ ObjectExpression [Property 'type 'identifier, Property 'name $ member #pattern 'name])
-                             (call* (member #value 'slice) [#index, '+=' #index $ member #lengths $ member #pattern 'index]))
-                       (call (call #match #pattern)
-                             (member #value $ '++' #index))
-                ),
-                IfStatement ('===' #fragment #null) $ BlockStatement [
-                  ExpressionStatement $ '=' #valid $ boolean false,
-                  BreakStatement,
-                ],
-                ExpressionStatement $ '=' (member #fragments #patternIndex) #fragment,
-              ],
-              IfStatement #valid $ ReturnStatement $ call* (member (member #globalThis 'Object) 'assign) [ObjectExpression [], spread #fragments],
-              ExpressionStatement $ '=' #index #lastIndex,
-              WhileStatement ('===' (member #lengths #index) zero) $ ExpressionStatement $ '-=' #index one,
-              IfStatement ('===' #index zero) $ ReturnStatement #null,
-              ExpressionStatement $ '+=' (member #lengths $ '-' #index one) one,
-              WhileStatement ('<' #index #lastIndex) $ ExpressionStatement $ '=' (member #lengths $ '++' #index) zero,
-              ExpressionStatement $ '=' (member #lengths #lastIndex) $ '-' (member #value 'length) #min,
-              ExpressionStatement $ '=' #index zero,
-              WhileStatement ('<' #index #lastIndex) $ ExpressionStatement $ '-=' (member #lengths #lastIndex) $ member #lengths $ '++' #index,
-            ]
-          ],
-          ReturnStatement #null
-        ],
-      ]
-    ]
-  },
+  ap:             Function [#lhs] $ Function [#rhs] $ typeSwitch #lhs (Call (Member #rhs 'fantasy-land/ap) [#lhs]) {Array: Call (Member #lhs 'flatMap) [Function [#f] $ Call (Member #rhs 'map) [Function [#x] $ Call #f [#x]]]},
+  append:         Function [#x] $ Function [#xs] $ Call (Call #concat [#xs]) [Call (Call #pure [Member #xs 'constructor]) [#x]],
+  prepend:        Function [#x] $ Function [#xs] $ Call (Call #concat [Call (Call #pure [Member #xs 'constructor]) [#x]]) [#xs],
+  chain:          Function [#f] $ Function [#x] $ typeSwitch #x (Call (Member #x 'fantasy-land/chain) [#f]) {Array: Call (Member #x 'flatMap) [Function [#x] $ Call #f [#x]], Function: Function [#y] $ Call (Call #x [Call #f [#y]]) [#y]},
+  join:           Call #chain [#id],
+  contains:       Function [#this] $ Function [#these] $ Call (Call (Call #reduce [Function [#x] $ Function [#that] $ Infix "||" #x $ Call (Call #equals [#this]) [#that]]) [Boolean false]) [#these],
 };
